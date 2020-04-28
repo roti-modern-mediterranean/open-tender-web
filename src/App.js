@@ -1,56 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React from "react";
+// import logo from "./logo.svg";
+// import { Counter } from "./features/counter/Counter";
+import Routes from "./features/Routes";
+import "./App.scss";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div className="app">
+      {/* <BrandStyle />*/}
+      {/* <Nav brand={brand} customer={customer} /> */}
+      {/* <SystemNotifications /> */}
+      <div className="container">
+        {/* <AppBackground brand={brand} /> */}
+        <Routes />
+      </div>
+      {/* <div className="CartButton__container fixed b0 r0 mr1 md:mr3 mb1 md:col-6 lg:col-5 z1">
+          <CartButton
+            className="right"
+            onClick={() => get(actions, "setSideCurtain", (f) => f)(MINI_CART)}
+            currentLineItems={lineItems}
+          />
+        </div> */}
+      {/* <Modal />
+        <Drawer />
+        <SideCurtain />
+        <Footer brand={brand} /> */}
     </div>
   );
 }
