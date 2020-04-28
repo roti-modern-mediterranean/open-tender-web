@@ -1,39 +1,34 @@
-.App {
-  text-align: center;
+@import './src/sass/_reset';
+
+.app {
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
+.container {
+  // position: relative;
+  padding: 0 3rem;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5rem;
+  border-bottom: 0.1rem solid #ddd;
+}
+
+.logo {
+  height: 3rem;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
-}
-
-.App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
-
-.App-link {
-  color: rgb(112, 76, 182);
-}
-
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+.main {
+  padding-top: 5rem;
 }

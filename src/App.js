@@ -1,19 +1,21 @@
-import React from "react";
-// import logo from "./logo.svg";
+import React from 'react'
 // import { Counter } from "./features/counter/Counter";
-import Routes from "./features/Routes";
-import "./App.scss";
+import Routes from './features/Routes'
+import Header from './features/header/Header'
+import './App.scss'
 
-function App() {
+const App = () => {
   return (
     <div className="app">
       {/* <BrandStyle />*/}
-      {/* <Nav brand={brand} customer={customer} /> */}
+      <Header />
       {/* <SystemNotifications /> */}
-      <div className="container">
-        {/* <AppBackground brand={brand} /> */}
-        <Routes />
-      </div>
+      <main className="main">
+        <div className="container">
+          {/* <AppBackground brand={brand} /> */}
+          <Routes />
+        </div>
+      </main>
       {/* <div className="CartButton__container fixed b0 r0 mr1 md:mr3 mb1 md:col-6 lg:col-5 z1">
           <CartButton
             className="right"
@@ -26,7 +28,7 @@ function App() {
         <SideCurtain />
         <Footer brand={brand} /> */}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

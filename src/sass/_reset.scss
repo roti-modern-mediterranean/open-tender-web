@@ -1,0 +1,53 @@
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  font-family: sans-serif;
+}
+
+// @media only screen and (min-width: $bp-mobile-land + 1px) and (max-width: $bp-tablet-land) {
+//   html {
+//     font-size: 56.25%;
+//   }
+// }
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+button {
+  background: transparent;
+  appearance: none;
+  border: none;
+  padding: 0;
+}

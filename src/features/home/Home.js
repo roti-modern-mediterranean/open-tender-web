@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from 'react'
 
 const Home = () => {
   return (
@@ -6,7 +6,7 @@ const Home = () => {
       <h1>Here's the landing page</h1>
       <p>Some text will go here</p>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
