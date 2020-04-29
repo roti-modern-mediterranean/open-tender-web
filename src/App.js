@@ -1,7 +1,7 @@
 import React from 'react'
 // import { Counter } from "./features/counter/Counter";
-import Routes from './features/Routes'
-import Header from './features/header/Header'
+import Routes from './components/Routes'
+import Header from './components/Header'
 import './App.scss'
 
 const App = () => {
@@ -10,8 +10,8 @@ const App = () => {
       {/* <BrandStyle />*/}
       <Header />
       {/* <SystemNotifications /> */}
-      <main className="main">
-        <div className="container">
+      <main className="main container">
+        <div className="content">
           {/* <AppBackground brand={brand} /> */}
           <Routes />
         </div>

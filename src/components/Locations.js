@@ -4,7 +4,7 @@ import {
   fetchLocations,
   loadingLocations,
   selectLocations,
-} from './locationsSlice'
+} from '../slices/locationsSlice'
 
 const Locations = () => {
   const dispatch = useDispatch()
