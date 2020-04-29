@@ -1,11 +1,14 @@
 import React from 'react'
 import { OrderPicker } from './OrderPicker'
+import { useSelector } from 'react-redux'
+import { config } from '../slices/configSlice'
 
 const Home = () => {
+  const { home } = useSelector(config)
+  const bgStyle = { backgroundImage: `url(${home.background}` }
   return (
-    <div>
-      {/* <h1>Here's the landing page</h1>
-      <p>Some text will go here</p> */}
+    <div className="content">
+      <div className="background" style={bgStyle}></div>
       <OrderPicker />
     </div>
   )

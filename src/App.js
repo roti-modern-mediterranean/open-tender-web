@@ -2,6 +2,7 @@ import React from 'react'
 // import { Counter } from "./features/counter/Counter";
 import Routes from './components/Routes'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import './App.scss'
 
 const App = () => {
@@ -11,10 +12,7 @@ const App = () => {
       <Header />
       {/* <SystemNotifications /> */}
       <main className="main container">
-        <div className="content">
-          {/* <AppBackground brand={brand} /> */}
-          <Routes />
-        </div>
+        <Routes />
       </main>
       {/* <div className="CartButton__container fixed b0 r0 mr1 md:mr3 mb1 md:col-6 lg:col-5 z1">
           <CartButton
@@ -23,10 +21,10 @@ const App = () => {
             currentLineItems={lineItems}
           />
         </div> */}
-      {/* <Modal />
-        <Drawer />
-        <SideCurtain />
-        <Footer brand={brand} /> */}
+      {/* <Modal /> */}
+      {/* <Drawer /> */}
+      {/* <SideCurtain /> */}
+      <Footer />
     </div>
   )
 }

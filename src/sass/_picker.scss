@@ -1,15 +1,15 @@
 .picker {
-  width: 33.3%;
-  max-width: 48rem;
-  padding: 5rem;
-  border-style: solid;
-  border-width: 0.1rem;
+  width: 90%;
+  width: 48rem;
+  padding: 3rem 2rem;
   border-radius: 1rem;
-  margin: 0rem 0 0 5rem;
+  // margin: 0rem 0 0 5rem;
 
   &__header {
-    p {
-      margin-top: 1rem;
+    text-align: center;
+    h1 {
+      font-size: 1.8em;
+      margin: 2rem 0 2rem;
     }
   }
 
@@ -21,11 +21,17 @@
 
   &__button {
     display: flex;
-    padding: 1.5rem 2.5rem;
-    border-style: solid;
-    border-width: 0.1rem;
+    padding: 2rem 2.5rem;
     border-radius: 0.5rem;
     margin: 0 0 1rem;
     font-size: 1.8rem;
+    background-color: $bg-color;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.15s ease;
+
+    &:hover,
+    &:focus {
+      background-color: $bg-secondary-color;
+    }
   }
 }

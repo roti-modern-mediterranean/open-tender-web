@@ -7,6 +7,7 @@ body {
   // font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   //   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
   //   sans-serif;
+  // min-height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -22,7 +23,7 @@ body {
 
 .container {
   // position: relative;
-  padding: 0 5rem;
+  padding: 0 6rem;
 }
 
 .flex {
@@ -36,9 +37,12 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 5rem;
-  border-style: solid;
-  border-bottom-width: 0.1rem;
+  height: $header-height;
+}
+
+.footer {
+  width: 100%;
+  height: 18rem;
 }
 
 .logo {
@@ -47,11 +51,25 @@ body {
 }
 
 .main {
-  padding: 5rem 0 15rem;
+  padding: $header-height 0 0;
+  min-height: 100vh;
 }
 
 .content {
-  padding: 5rem;
+  padding: $header-height;
+}
+
+.background {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
 }
 
 .btn {
@@ -66,4 +84,10 @@ body {
   &:active {
     outline: none;
   }
+}
+
+.preface {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
