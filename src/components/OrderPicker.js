@@ -15,7 +15,7 @@ export const OrderPicker = () => {
   } = picker
   const dispatch = useDispatch()
   return (
-    <div className="picker overlay">
+    <div className="picker overlay slide-up">
       <div className="picker__header">
         <p className="preface secondary">{subtitle}</p>
         <h1>{title}</h1>
