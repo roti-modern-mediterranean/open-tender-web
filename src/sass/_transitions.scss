@@ -35,6 +35,12 @@ $transition: $transition-duration $transition-easing;
   }
 }
 
+.fade-in {
+  opacity: 0;
+  animation: fade-in $transition-duration $transition-easing
+    $transition-duration-short forwards;
+}
+
 $fade-up-speed: 500ms;
 
 .fade-up-enter {

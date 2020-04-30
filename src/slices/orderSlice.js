@@ -1,14 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const initialState = {
+  orderType: null,
+  serviceType: null,
+  location: null,
+  requestedAt: 'asap',
+}
+
 const orderSlice = createSlice({
   name: 'order',
-  initialState: {
-    orderType: null,
-    serviceType: null,
-    location: null,
-    requestedAt: 'asap',
-  },
+  initialState,
   reducers: {
+    startOver: () => initialState,
     chooseOrderType: (state, action) => {
       state.orderType = action.payload
     },
@@ -27,14 +30,16 @@ const orderSlice = createSlice({
 })
 
 export const {
+  startOver,
   chooseOrderType,
   chooseServiceType,
   chooseOrderServiceType,
   chooseLocation,
 } = orderSlice.actions
 
-export const orderType = (state) => state.order.orderType
-export const serviceType = (state) => state.order.serviceType
-export const location = (state) => state.order.location
+export const selectOrder = (state) => state.order
+export const selectOrderType = (state) => state.order.orderType
+export const selectServiceType = (state) => state.order.serviceType
+export const selectLocation = (state) => state.order.location
 
 export default orderSlice.reducer

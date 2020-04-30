@@ -1,10 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { chooseOrderServiceType } from '../slices/orderSlice'
-import { config } from '../slices/configSlice'
+import { selectConfig } from '../slices/configSlice'
 
-export const OrderPicker = () => {
-  const { picker } = useSelector(config)
+const HomeCard = () => {
+  const { home: homeConfig } = useSelector(selectConfig)
   const {
     title,
     subtitle,
@@ -12,32 +12,32 @@ export const OrderPicker = () => {
     buttonPickup,
     buttonDelivery,
     buttonCatering,
-  } = picker
+  } = homeConfig
   const dispatch = useDispatch()
   return (
-    <div className="picker overlay slide-up">
-      <div className="picker__header">
+    <div className="card overlay slide-up">
+      <div className="card__header">
         <p className="preface secondary">{subtitle}</p>
         <h1>{title}</h1>
         <p className="secondary">{content}</p>
       </div>
-      <div className="picker__buttons">
+      <div className="card__buttons">
         <button
-          className="picker__button heading"
+          className="card__button heading"
           aria-label="Order for Pickup"
           onClick={() => dispatch(chooseOrderServiceType(['OLO', 'PICKUP']))}
         >
           {buttonPickup}
         </button>
         <button
-          className="picker__button heading"
+          className="card__button heading"
           aria-label="Order for Delivery"
           onClick={() => dispatch(chooseOrderServiceType(['OLO', 'DELIVERY']))}
         >
           {buttonDelivery}
         </button>
         <button
-          className="picker__button heading"
+          className="card__button heading"
           aria-label="Order Catering"
           onClick={() =>
             dispatch(chooseOrderServiceType(['CATERING', 'DELIVERY']))
@@ -49,3 +49,5 @@ export const OrderPicker = () => {
     </div>
   )
 }
+
+export default HomeCard

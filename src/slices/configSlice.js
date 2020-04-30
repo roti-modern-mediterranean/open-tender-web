@@ -21,6 +21,6 @@ const configSlice = createSlice({
   },
 })
 
-export const config = (state) => state.config
+export const selectConfig = (state) => state.config
 
 export default configSlice.reducer

@@ -1,15 +1,26 @@
-import React from 'react'
-import { OrderPicker } from './OrderPicker'
+import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+import HomeCard from './HomeCard'
 import { useSelector } from 'react-redux'
-import { config } from '../slices/configSlice'
+import { selectConfig } from '../slices/configSlice'
+import { selectOrder } from '../slices/orderSlice'
+import Background from './Background'
 
 const Home = () => {
-  const { home } = useSelector(config)
-  const bgStyle = { backgroundImage: `url(${home.background}` }
+  const history = useHistory()
+  const { home: homeConfig } = useSelector(selectConfig)
+  // const bgStyle = { backgroundImage: `url(${home.background}` }
+  const order = useSelector(selectOrder)
+  const hasTypes = order.orderType && order.serviceType
+
+  useEffect(() => {
+    if (hasTypes) history.push('/locations')
+  }, [hasTypes, history])
+
   return (
     <div className="content">
-      <div className="background" style={bgStyle}></div>
-      <OrderPicker />
+      <Background imageUrl={homeConfig.background} />
+      <HomeCard />
     </div>
   )
 }

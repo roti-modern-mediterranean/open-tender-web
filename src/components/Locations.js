@@ -1,27 +1,32 @@
 import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  fetchLocations,
-  loadingLocations,
-  selectLocations,
-} from '../slices/locationsSlice'
+import { selectConfig } from '../slices/configSlice'
+import { fetchLocations, selectLocations } from '../slices/locationsSlice'
+import { selectOrder } from '../slices/orderSlice'
+import Background from './Background'
+import { LocationsCard } from './LocationsCard'
 
 const Locations = () => {
+  const history = useHistory()
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchLocations('OLO'))
-  }, [dispatch])
+  const { locations: locationsConfig } = useSelector(selectConfig)
   const locations = useSelector(selectLocations)
-  const loading = useSelector(loadingLocations)
-  console.log(locations)
+  const { orderType, serviceType } = useSelector(selectOrder)
+  const hasTypes = orderType && serviceType
+
+  useEffect(() => {
+    if (!hasTypes) history.push('/')
+  }, [hasTypes, history])
+
+  useEffect(() => {
+    if (orderType) dispatch(fetchLocations(orderType))
+  }, [orderType, dispatch])
+
   return (
-    <div>
-      {loading === 'loading' && <p>Loading locations...</p>}
-      <ul>
-        {locations.map((i) => (
-          <li key={i.revenue_center_id}>{i.full_name}</li>
-        ))}
-      </ul>
+    <div className="content">
+      <Background imageUrl={locationsConfig.background} />
+      {locations.length ? <LocationsCard locations={locations} /> : null}
     </div>
   )
 }

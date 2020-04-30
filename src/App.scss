@@ -1,7 +1,7 @@
 @import './src/sass/_reset';
 @import './src/sass/_vars';
 @import './src/sass/_transitions';
-@import './src/sass/_picker';
+@import './src/sass/_card';
 
 body {
   // margin: 0;
@@ -73,6 +73,11 @@ body {
   background-color: transparent;
 }
 
+a,
+button {
+  transition: all 0.15s ease;
+}
+
 .btn {
   display: inline-block;
   line-height: 1;
@@ -80,7 +85,6 @@ body {
   border: 0;
   margin: 0;
   text-align: center;
-  transition: all 0.15s ease;
 
   &:active {
     outline: none;
@@ -90,5 +94,5 @@ body {
 .preface {
   font-size: 1.2rem;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
 }
