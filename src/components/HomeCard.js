@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { chooseOrderServiceType } from '../slices/orderSlice'
+import { setOrderServiceType } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
 
 const HomeCard = () => {
@@ -17,22 +17,22 @@ const HomeCard = () => {
   return (
     <div className="card overlay slide-up">
       <div className="card__header">
-        <p className="preface secondary">{subtitle}</p>
+        <p className="preface secondary-color">{subtitle}</p>
         <h1>{title}</h1>
-        <p className="secondary">{content}</p>
+        <p className="secondary-color">{content}</p>
       </div>
       <div className="card__buttons">
         <button
           className="card__button heading"
           aria-label="Order for Pickup"
-          onClick={() => dispatch(chooseOrderServiceType(['OLO', 'PICKUP']))}
+          onClick={() => dispatch(setOrderServiceType(['OLO', 'PICKUP']))}
         >
           {buttonPickup}
         </button>
         <button
           className="card__button heading"
           aria-label="Order for Delivery"
-          onClick={() => dispatch(chooseOrderServiceType(['OLO', 'DELIVERY']))}
+          onClick={() => dispatch(setOrderServiceType(['OLO', 'DELIVERY']))}
         >
           {buttonDelivery}
         </button>
@@ -40,7 +40,7 @@ const HomeCard = () => {
           className="card__button heading"
           aria-label="Order Catering"
           onClick={() =>
-            dispatch(chooseOrderServiceType(['CATERING', 'DELIVERY']))
+            dispatch(setOrderServiceType(['CATERING', 'DELIVERY']))
           }
         >
           {buttonCatering}

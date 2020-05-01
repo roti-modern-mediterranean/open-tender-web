@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import HomeCard from './HomeCard'
 import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { selectConfig } from '../slices/configSlice'
 import { selectOrder } from '../slices/orderSlice'
+import HomeCard from './HomeCard'
 import Background from './Background'
 
 const Home = () => {

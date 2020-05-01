@@ -2,6 +2,7 @@
 @import './src/sass/_vars';
 @import './src/sass/_transitions';
 @import './src/sass/_card';
+@import './src/sass/_location';
 
 body {
   // margin: 0;
@@ -35,6 +36,7 @@ body {
 
 .header {
   position: fixed;
+  z-index: 10;
   top: 0;
   left: 0;
   width: 100%;
@@ -60,6 +62,13 @@ body {
   padding: $header-height;
 }
 
+.bg-image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
 .background {
   position: fixed;
   z-index: -1;
@@ -67,10 +76,6 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: transparent;
 }
 
 a,
@@ -89,6 +94,27 @@ button {
   &:active {
     outline: none;
   }
+}
+
+.btn-icon-wrapper {
+  display: flex;
+  align-items: center;
+
+  span {
+    display: inline-block;
+  }
+}
+
+.btn-icon {
+  margin-right: 1rem;
+  position: relative;
+  top: 0.1rem;
+  width: 1.4rem;
+  height: 1.5rem;
+}
+
+.no-link {
+  text-decoration: none;
 }
 
 .preface {

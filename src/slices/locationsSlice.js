@@ -6,7 +6,15 @@ export const fetchLocations = createAsyncThunk(
   'locations/getLocations',
   async (rcType) => {
     const response = await getLocations(rcType)
-    return response.data
+    return response.data.reduce((arr, i) => {
+      const name = i.full_name
+      const slug = i.store.slug
+      const delivery_zone = i.delivery_zones[0].delivery_zone
+      delete i.delivery_zones
+      delete i.full_name
+      delete i.short_name
+      return [...arr, { ...i, name, slug, delivery_zone }]
+    }, [])
   }
 )
 

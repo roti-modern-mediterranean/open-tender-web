@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { startOver } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
+import { Location } from './Location'
 
 export const LocationsCard = ({ locations }) => {
   const { locations: locationsConfig } = useSelector(selectConfig)
@@ -27,8 +28,10 @@ export const LocationsCard = ({ locations }) => {
       </div>
       <div className="card__buttons">
         <ul>
-          {locations.map((i) => (
-            <li key={i.revenue_center_id}>{i.full_name}</li>
+          {locations.map((location) => (
+            <li key={location.revenue_center_id}>
+              <Location location={location} />
+            </li>
           ))}
         </ul>
       </div>

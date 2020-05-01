@@ -12,18 +12,18 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     startOver: () => initialState,
-    chooseOrderType: (state, action) => {
+    setOrderType: (state, action) => {
       state.orderType = action.payload
     },
-    chooseServiceType: (state, action) => {
+    setServiceType: (state, action) => {
       state.serviceType = action.payload
     },
-    chooseOrderServiceType: (state, action) => {
+    setOrderServiceType: (state, action) => {
       const [orderType, serviceType] = action.payload
       state.orderType = orderType
       state.serviceType = serviceType
     },
-    chooseLocation: (state, action) => {
+    setLocation: (state, action) => {
       state.location = action.payload
     },
   },
@@ -31,10 +31,10 @@ const orderSlice = createSlice({
 
 export const {
   startOver,
-  chooseOrderType,
-  chooseServiceType,
-  chooseOrderServiceType,
-  chooseLocation,
+  setOrderType,
+  setServiceType,
+  setOrderServiceType,
+  setLocation,
 } = orderSlice.actions
 
 export const selectOrder = (state) => state.order

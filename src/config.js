@@ -15,4 +15,8 @@ export const defaultConfig = {
     title: 'restaurants near you',
     content: 'Please choose a location',
   },
+  menu: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588218676_restaurant-front_1800x1200.jpg',
+  },
 }
