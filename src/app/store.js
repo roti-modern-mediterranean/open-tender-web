@@ -3,6 +3,7 @@ import counterReducer from '../features/counter/counterSlice'
 import configReducer from '../slices/configSlice'
 import orderReducer from '../slices/orderSlice'
 import locationsReducer from '../slices/locationsSlice'
+import menuReducer from '../slices/menuSlice'
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     config: configReducer,
     order: orderReducer,
     locations: locationsReducer,
+    menu: menuReducer,
   },
 })

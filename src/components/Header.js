@@ -7,7 +7,6 @@ import { startOver } from '../slices/orderSlice'
 import Button from './Button'
 
 const makeNav = (pathname) => {
-  console.log(pathname)
   return []
 }
 
