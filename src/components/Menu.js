@@ -20,11 +20,9 @@ const Locations = () => {
   }, [])
 
   useEffect(() => {
-    if (locationId) {
-      dispatch(fetchMenu([locationId, serviceType, requestedAt]))
-    } else {
-      history.push('/locations')
-    }
+    locationId
+      ? dispatch(fetchMenu([locationId, serviceType, requestedAt]))
+      : history.push('/locations')
   }, [locationId, serviceType, requestedAt, dispatch, history])
 
   return (
