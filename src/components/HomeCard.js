@@ -21,7 +21,7 @@ const HomeCard = () => {
         <h1>{title}</h1>
         <p className="secondary-color">{content}</p>
       </div>
-      <div className="card__buttons">
+      <div className="card__content">
         <button
           className="card__button heading"
           aria-label="Order for Pickup"

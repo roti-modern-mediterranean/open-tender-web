@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { setLocation } from '../slices/orderSlice'
 import { iconMap } from '../utils/icons'
+import Button from './Button'
 
 const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
   return (
@@ -21,7 +22,7 @@ const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
 const placeholder2 =
   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg'
 
-export const Location = ({ location }) => {
+export const Location = ({ location, classes = '', showImage, isOrder }) => {
   const [showHours, setShowHours] = useState(false)
   const dispatch = useDispatch()
   const history = useHistory()
@@ -32,6 +33,7 @@ export const Location = ({ location }) => {
   const hours = location.hours_desc
     ? location.hours_desc.replace('<p>', '').replace('</p>', '')
     : null
+  classes = `location bg-color ${classes}`
 
   const toggleHours = (evt) => {
     evt.preventDefault()
@@ -47,14 +49,22 @@ export const Location = ({ location }) => {
     evt.target.blur()
   }
 
+  const handleChange = (evt) => {
+    evt.preventDefault()
+    history.push(`/locations`)
+    evt.target.blur()
+  }
+
   return (
-    <div className="location bg-color">
-      <div
-        className="location__image bg-image bg-secondary-color"
-        style={bgStyle}
-      >
-        &nbsp;
-      </div>
+    <div className={classes}>
+      {showImage && (
+        <div
+          className="location__image bg-image bg-secondary-color"
+          style={bgStyle}
+        >
+          &nbsp;
+        </div>
+      )}
       <div className="location__content">
         <div className="location__header">
           <h2>{location.name}</h2>
@@ -85,7 +95,7 @@ export const Location = ({ location }) => {
           )}
         </div>
         <div className="location__order">
-          <button
+          {/* <button
             className="btn"
             aria-label={`Order from ${location.name}`}
             onClick={handleOrder}
@@ -94,7 +104,21 @@ export const Location = ({ location }) => {
               <span className="btn-icon">{iconMap['ShoppingBag']}</span>
               <span>Order Here</span>
             </span>
-          </button>
+          </button> */}
+          {isOrder ? (
+            <Button
+              text="Order Here"
+              ariaLabel={`Order from ${location.name}`}
+              icon="ShoppingBag"
+              onClick={handleOrder}
+            />
+          ) : (
+            <Button
+              text="Change Location"
+              icon="RefreshCw"
+              onClick={handleChange}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -14,6 +14,10 @@ const Home = () => {
   const hasTypes = order.orderType && order.serviceType
 
   useEffect(() => {
+    window.scroll(0, 0)
+  }, [])
+
+  useEffect(() => {
     if (hasTypes) history.push('/locations')
   }, [hasTypes, history])
 

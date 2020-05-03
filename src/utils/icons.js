@@ -1,5 +1,13 @@
 import React from 'react'
-import { MapPin, ArrowRight, Phone, Clock, ShoppingBag } from 'react-feather'
+import {
+  MapPin,
+  ArrowRight,
+  Phone,
+  Clock,
+  ShoppingBag,
+  User,
+  RefreshCw,
+} from 'react-feather'
 
 export const iconMap = {
   MapPin: <MapPin size={null} />,
@@ -7,4 +15,6 @@ export const iconMap = {
   Clock: <Clock size={null} />,
   ArrowRight: <ArrowRight size={null} />,
   ShoppingBag: <ShoppingBag size={null} />,
+  User: <User size={null} />,
+  RefreshCw: <RefreshCw size={null} />,
 }

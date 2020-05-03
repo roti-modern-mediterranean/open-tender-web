@@ -16,7 +16,11 @@ export const defaultConfig = {
     content: 'Please choose a location',
   },
   menu: {
+    // background:
+    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg',
     background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588218676_restaurant-front_1800x1200.jpg',
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',
+    // background:
+    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588457434_66172f8cf5eeae2433bd.jpg',
   },
 }

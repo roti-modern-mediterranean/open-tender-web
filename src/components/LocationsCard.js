@@ -9,7 +9,7 @@ export const LocationsCard = ({ locations }) => {
   const { title, content } = locationsConfig
   const dispatch = useDispatch()
   return (
-    <div className="card overlay slide-up">
+    <div className="card overlay slide-up card--location">
       <div className="card__header">
         <h1>
           {locations.length} {title}
@@ -26,11 +26,16 @@ export const LocationsCard = ({ locations }) => {
           .
         </p>
       </div>
-      <div className="card__buttons">
+      <div className="card__content">
         <ul>
           {locations.map((location) => (
             <li key={location.revenue_center_id}>
-              <Location location={location} />
+              <Location
+                location={location}
+                showImage={true}
+                isOrder={true}
+                classes="location--card"
+              />
             </li>
           ))}
         </ul>

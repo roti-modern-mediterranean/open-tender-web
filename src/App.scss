@@ -1,6 +1,9 @@
 @import './src/sass/_reset';
 @import './src/sass/_vars';
 @import './src/sass/_transitions';
+@import './src/sass/_button';
+@import './src/sass/_header';
+@import './src/sass/_footer';
 @import './src/sass/_card';
 @import './src/sass/_location';
 
@@ -23,10 +26,10 @@ body {
   padding: 0;
 }
 
-.container {
-  // position: relative;
-  padding: 0 6rem;
-}
+// .container {
+//   // position: relative;
+//   padding: 0 4rem;
+// }
 
 .flex {
   display: flex;
@@ -34,22 +37,7 @@ body {
   align-items: center;
 }
 
-.header {
-  position: fixed;
-  z-index: 10;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: $header-height;
-}
-
-.footer {
-  width: 100%;
-  height: 18rem;
-}
-
 .logo {
-  height: 3rem;
   pointer-events: none;
 }
 
@@ -78,43 +66,19 @@ body {
   right: 0;
 }
 
-a,
-button {
-  transition: all 0.15s ease;
-}
-
-.btn {
-  display: inline-block;
-  line-height: 1;
-  padding: 1rem 2.4rem 1.1rem;
-  border: 0;
-  margin: 0;
-  text-align: center;
-
-  &:active {
-    outline: none;
-  }
-}
-
-.btn-icon-wrapper {
+.hero {
+  width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
-
-  span {
-    display: inline-block;
-  }
 }
 
-.btn-icon {
-  margin-right: 1rem;
-  position: relative;
-  top: 0.1rem;
-  width: 1.4rem;
-  height: 1.5rem;
+.hero--left {
+  justify-content: flex-start;
 }
 
-.no-link {
-  text-decoration: none;
+.hero--right {
+  justify-content: flex-end;
 }
 
 .preface {
