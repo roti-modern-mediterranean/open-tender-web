@@ -1,0 +1,48 @@
+.sticky {
+  width: 100%;
+}
+
+.sticky__inner {
+  width: 100%;
+
+  .container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .stuck & {
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    right: 0;
+  }
+}
+
+.sticky__items {
+  transition: all 500ms ease;
+  line-height: 1.4;
+
+  ul {
+    display: inline-block;
+    padding-bottom: 0.3rem;
+
+    li {
+      display: inline-block;
+      padding-right: 3rem;
+
+      a {
+        cursor: pointer;
+      }
+
+      // &:after {
+      //   content: ' / ';
+      //   padding: 0 0.5rem 0 0.2rem;
+      // }
+
+      // &:last-child:after {
+      //   display: none;
+      // }
+    }
+  }
+}

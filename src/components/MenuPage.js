@@ -6,6 +6,8 @@ import Hero from './Hero'
 import { Location } from './Location'
 import { selectLocation, selectMenuVars } from '../slices/orderSlice'
 import { fetchMenu, selectMenu } from '../slices/menuSlice'
+import Menu from './Menu'
+import BarLoader from 'react-spinners/BarLoader'
 
 const MenuPage = () => {
   const history = useHistory()
@@ -14,6 +16,7 @@ const MenuPage = () => {
   const location = useSelector(selectLocation)
   const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
   const menu = useSelector(selectMenu)
+  const isLoading = menu.loading === 'pending'
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -34,15 +37,17 @@ const MenuPage = () => {
           <Location location={location} classes="location--hero slide-up" />
         )}
       </Hero>
-      <div className="content">
-        {menu.loading === 'pending' ? (
-          <p>Loading menu...</p>
-        ) : menu.error ? (
-          <h1>{menu.error}</h1>
-        ) : (
-          menu.categories.map((category) => <h2>{category.name}</h2>)
-        )}
-      </div>
+      {isLoading ? (
+        <div className="loading">
+          <div className="loading__loader">
+            <BarLoader size={100} laoding={isLoading} />
+          </div>
+        </div>
+      ) : menu.error ? (
+        <h1>{menu.error}</h1>
+      ) : (
+        <Menu categories={menu.categories} />
+      )}
     </>
   )
 }

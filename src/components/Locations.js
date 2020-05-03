@@ -10,7 +10,7 @@ export const Locations = ({ locations }) => {
   const { title, content } = locationsConfig
   const dispatch = useDispatch()
   return (
-    <div className="card overlay slide-up card--location">
+    <div className="card card--location overlay border-radius slide-up">
       <div className="card__header">
         <h1>
           {locations.length} {title}

@@ -33,7 +33,7 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
   const hours = location.hours_desc
     ? location.hours_desc.replace('<p>', '').replace('</p>', '')
     : null
-  classes = `location bg-color ${classes}`
+  classes = `location bg-color border-radius ${classes}`
 
   const toggleHours = (evt) => {
     evt.preventDefault()

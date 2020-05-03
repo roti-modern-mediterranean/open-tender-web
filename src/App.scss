@@ -2,10 +2,12 @@
 @import './src/sass/_vars';
 @import './src/sass/_transitions';
 @import './src/sass/_button';
+@import './src/sass/_sticky';
 @import './src/sass/_header';
 @import './src/sass/_footer';
 @import './src/sass/_card';
 @import './src/sass/_location';
+@import './src/sass/_menu';
 
 body {
   // margin: 0;
@@ -48,6 +50,16 @@ body {
 
 .content {
   padding: $header-height;
+}
+
+.loading {
+  width: 100%;
+  padding: 3rem;
+  text-align: center;
+}
+
+.loading__loader {
+  display: inline-block;
 }
 
 .bg-image {

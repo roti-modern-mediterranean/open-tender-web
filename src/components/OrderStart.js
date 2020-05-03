@@ -15,7 +15,7 @@ const OrderStart = () => {
   } = homeConfig
   const dispatch = useDispatch()
   return (
-    <div className="card overlay slide-up">
+    <div className="card overlay border-radius slide-up">
       <div className="card__header">
         <p className="preface secondary-color">{subtitle}</p>
         <h1>{title}</h1>
