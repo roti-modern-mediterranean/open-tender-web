@@ -1,34 +1,53 @@
-import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react'
+import propTypes from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux'
+import { startOver } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
-import { fetchLocations, selectLocations } from '../slices/locationsSlice'
-import { selectOrder } from '../slices/orderSlice'
-import Background from './Background'
-import { LocationsCard } from './LocationsCard'
+import { Location } from './Location'
 
-const Locations = () => {
-  const history = useHistory()
-  const dispatch = useDispatch()
+export const Locations = ({ locations }) => {
   const { locations: locationsConfig } = useSelector(selectConfig)
-  const locations = useSelector(selectLocations)
-  const { orderType, serviceType } = useSelector(selectOrder)
-  const hasTypes = orderType && serviceType
-
-  useEffect(() => {
-    if (!hasTypes) history.push('/')
-  }, [hasTypes, history])
-
-  useEffect(() => {
-    if (orderType) dispatch(fetchLocations(orderType))
-  }, [orderType, dispatch])
-
+  const { title, content } = locationsConfig
+  const dispatch = useDispatch()
   return (
-    <div className="content">
-      <Background imageUrl={locationsConfig.background} />
-      {locations.length ? <LocationsCard locations={locations} /> : null}
+    <div className="card overlay slide-up card--location">
+      <div className="card__header">
+        <h1>
+          {locations.length} {title}
+        </h1>
+        <p>
+          {content} or{' '}
+          <button
+            className="btn-link"
+            aria-label="Start Over"
+            onClick={() => dispatch(startOver())}
+          >
+            click here to start over
+          </button>
+          .
+        </p>
+      </div>
+      <div className="card__content">
+        <ul>
+          {locations.map((location) => (
+            <li key={location.revenue_center_id}>
+              <Location
+                location={location}
+                showImage={true}
+                isOrder={true}
+                classes="location--card"
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
+}
+
+Locations.displayName = 'Locations'
+Locations.propTypes = {
+  locations: propTypes.array,
 }
 
 export default Locations

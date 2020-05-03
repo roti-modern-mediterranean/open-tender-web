@@ -7,7 +7,7 @@ import { Location } from './Location'
 import { selectLocation, selectMenuVars } from '../slices/orderSlice'
 import { fetchMenu, selectMenu } from '../slices/menuSlice'
 
-const Locations = () => {
+const MenuPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { menu: menuConfig } = useSelector(selectConfig)
@@ -20,8 +20,10 @@ const Locations = () => {
   }, [])
 
   useEffect(() => {
+    const requestedIso =
+      requestedAt === 'asap' ? new Date().toISOString() : requestedAt
     locationId
-      ? dispatch(fetchMenu([locationId, serviceType, requestedAt]))
+      ? dispatch(fetchMenu([locationId, serviceType, requestedIso]))
       : history.push('/locations')
   }, [locationId, serviceType, requestedAt, dispatch, history])
 
@@ -38,11 +40,12 @@ const Locations = () => {
         ) : menu.error ? (
           <h1>{menu.error}</h1>
         ) : (
-          menu.entities.map((category) => <h2>{category.full_name}</h2>)
+          menu.categories.map((category) => <h2>{category.name}</h2>)
         )}
       </div>
     </>
   )
 }
 
-export default Locations
+MenuPage.displayName = 'MenuPage'
+export default MenuPage

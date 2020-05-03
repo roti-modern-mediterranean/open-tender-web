@@ -1,20 +1,20 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import Home from './Home'
-import Locations from './Locations'
-import Menu from './Menu'
+import HomePage from './HomePage'
+import LocationsPage from './LocationsPage'
+import MenuPage from './MenuPage'
 
 const Routes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <Home />
+        <HomePage />
       </Route>
       <Route path="/locations">
-        <Locations />
+        <LocationsPage />
       </Route>
       <Route path="/menu/:slug">
-        <Menu />
+        <MenuPage />
       </Route>
     </Switch>
   )

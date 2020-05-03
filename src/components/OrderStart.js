@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setOrderServiceType } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
 
-const HomeCard = () => {
+const OrderStart = () => {
   const { home: homeConfig } = useSelector(selectConfig)
   const {
     title,
@@ -50,4 +50,5 @@ const HomeCard = () => {
   )
 }
 
-export default HomeCard
+OrderStart.displayName = 'OrderStart'
+export default OrderStart
