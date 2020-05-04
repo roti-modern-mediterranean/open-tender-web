@@ -1,0 +1,106 @@
+.modal-container {
+  position: fixed;
+  z-index: 101;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: scroll;
+}
+
+.modal-overlay {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.modal {
+  position: relative;
+  width: 48rem;
+  max-width: 90%;
+  overflow: hidden;
+
+  &__close {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+  }
+
+  &__content {
+    padding: 3.5rem 3.5rem 4rem;
+    @include breakpoint(mobile) {
+      padding: 2.5rem 2.5rem 3rem;
+    }
+  }
+
+  &__image {
+    height: 24rem;
+  }
+
+  &__header {
+    margin-bottom: 2.5rem;
+
+    h2 {
+      @extend h3;
+    }
+
+    p {
+      margin-top: 1rem;
+      line-height: 1.4;
+    }
+  }
+
+  &__footer {
+    margin-top: 3rem;
+
+    &__buttons {
+      text-align: right;
+    }
+  }
+
+  &__note {
+    margin-bottom: 3rem;
+    p {
+      line-height: 1.2;
+    }
+  }
+
+  &__submitting {
+    display: inline-block;
+  }
+}
+
+.modal--big {
+  align-items: flex-start;
+  .modal {
+    margin: 2rem;
+  }
+}
+
+.modal--wide {
+  .modal {
+    width: 90%;
+    max-width: 80rem;
+  }
+}
+
+.modal--item {
+  .modal {
+    width: 90%;
+    max-width: 64rem;
+
+    &__content {
+      padding: 0;
+    }
+
+    &__header {
+      padding: 2.5rem 3.5rem 2.5rem;
+    }
+  }
+}

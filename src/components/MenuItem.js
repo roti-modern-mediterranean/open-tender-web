@@ -1,13 +1,18 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
+import { setCurrentItem } from '../slices/orderSlice'
+import { openModal } from '../slices/modalSlice'
 
-const MenuItem = ({ item, handler }) => {
+const MenuItem = ({ item }) => {
+  const dispatch = useDispatch()
   const smallImg = item.small_image_url
   const bgStyle = smallImg ? { backgroundImage: `url(${smallImg}` } : null
 
   const handleClick = (evt) => {
     evt.preventDefault()
-    handler(item)
+    dispatch(setCurrentItem(item))
+    dispatch(openModal('item'))
     evt.target.blur()
   }
 

@@ -1,8 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import HomePage from './HomePage'
-import LocationsPage from './LocationsPage'
-import MenuPage from './MenuPage'
+import { HomePage, LocationsPage, MenuPage } from './pages'
 
 const Routes = () => {
   return (

@@ -5,6 +5,7 @@ const initialState = {
   serviceType: null,
   location: null,
   requestedAt: 'asap',
+  currentItem: null,
 }
 
 const orderSlice = createSlice({
@@ -26,6 +27,9 @@ const orderSlice = createSlice({
     setLocation: (state, action) => {
       state.location = action.payload
     },
+    setCurrentItem: (state, action) => {
+      state.currentItem = action.payload
+    },
   },
 })
 
@@ -35,6 +39,7 @@ export const {
   setServiceType,
   setOrderServiceType,
   setLocation,
+  setCurrentItem,
 } = orderSlice.actions
 
 export const selectOrder = (state) => state.order
@@ -50,5 +55,6 @@ export const selectMenuVars = (state) => {
     requestedAt: state.order.requestedAt,
   }
 }
+export const selectCurrentItem = (state) => state.order.currentItem
 
 export default orderSlice.reducer

@@ -41,6 +41,34 @@ $transition: $transition-duration $transition-easing;
     $transition-duration-short forwards;
 }
 
+/* modals */
+
+$modal-speed: 250ms;
+
+.md-enter,
+.md-exit.md-exit-active {
+  transition: all $modal-speed ease;
+  opacity: 0;
+  visibility: hidden;
+
+  .modal {
+    transition: all $modal-speed ease;
+    transform: translateY(10%);
+  }
+}
+
+.md-enter.md-enter-active,
+.md-exit {
+  opacity: 1;
+  visibility: visible;
+
+  .modal {
+    transform: translateY(0);
+  }
+}
+
+/* alerts */
+
 $fade-up-speed: 500ms;
 
 .fade-up-enter {

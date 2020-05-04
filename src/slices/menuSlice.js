@@ -12,7 +12,12 @@ export const fetchMenu = createAsyncThunk('menu/getMenu', async (menuVars) => {
 
 const menuSlice = createSlice({
   name: 'menu',
-  initialState: { categories: [], soldOut: [], error: null, loading: 'idle' },
+  initialState: {
+    categories: [],
+    soldOut: [],
+    error: null,
+    loading: 'idle',
+  },
   extraReducers: {
     [fetchMenu.fulfilled]: (state, action) => {
       state.categories = action.payload.menu

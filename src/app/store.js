@@ -3,6 +3,7 @@ import throttle from 'lodash/throttle'
 import { loadState, saveState } from '../utils/localStorage'
 import counterReducer from '../features/counter/counterSlice'
 import configReducer from '../slices/configSlice'
+import modalReducer from '../slices/modalSlice'
 import orderReducer from '../slices/orderSlice'
 import locationsReducer from '../slices/locationsSlice'
 import menuReducer from '../slices/menuSlice'
@@ -10,6 +11,7 @@ import menuReducer from '../slices/menuSlice'
 const rootReducer = combineReducers({
   counter: counterReducer,
   config: configReducer,
+  modal: modalReducer,
   order: orderReducer,
   locations: locationsReducer,
   menu: menuReducer,

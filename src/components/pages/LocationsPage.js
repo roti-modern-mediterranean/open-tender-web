@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectConfig } from '../slices/configSlice'
-import { fetchLocations, selectLocations } from '../slices/locationsSlice'
-import { selectOrder } from '../slices/orderSlice'
-import Background from './Background'
-import { Locations } from './Locations'
+import { selectConfig } from '../../slices/configSlice'
+import { fetchLocations, selectLocations } from '../../slices/locationsSlice'
+import { selectOrder } from '../../slices/orderSlice'
+import Background from '../Background'
+import { Locations } from '../Locations'
 
 const LocationsPage = () => {
   const history = useHistory()

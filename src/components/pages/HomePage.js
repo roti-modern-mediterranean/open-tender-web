@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { selectConfig } from '../slices/configSlice'
-import { selectOrder } from '../slices/orderSlice'
-import OrderStart from './OrderStart'
-import Background from './Background'
+import { selectConfig } from '../../slices/configSlice'
+import { selectOrder } from '../../slices/orderSlice'
+import OrderStart from '../OrderStart'
+import Background from '../Background'
 
 const HomePage = () => {
   const history = useHistory()

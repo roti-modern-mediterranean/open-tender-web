@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectConfig } from '../slices/configSlice'
-import Hero from './Hero'
-import { Location } from './Location'
-import { selectLocation, selectMenuVars } from '../slices/orderSlice'
-import { fetchMenu, selectMenu } from '../slices/menuSlice'
-import Menu from './Menu'
 import BarLoader from 'react-spinners/BarLoader'
+import { selectConfig } from '../../slices/configSlice'
+import { selectLocation, selectMenuVars } from '../../slices/orderSlice'
+import { fetchMenu, selectMenu } from '../../slices/menuSlice'
+import Hero from '../Hero'
+import { Location } from '../Location'
+import Menu from '../Menu'
 
 const MenuPage = () => {
   const history = useHistory()
