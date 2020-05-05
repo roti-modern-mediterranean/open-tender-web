@@ -1,9 +1,10 @@
-import propTypes from 'prop-types'
 import React from 'react'
+import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectCurrentItem, setCurrentItem } from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
+import { Builder } from '../packages'
 
 const MenuItemModal = () => {
   const dispatch = useDispatch()
@@ -35,7 +36,9 @@ const MenuItemModal = () => {
           <h2>{item.name}</h2>
           {item.description && <p>{item.description}</p>}
         </div>
-        {/* <div className="modal__content"></div> */}
+        <div className="modal__body">
+          <Builder menuItem={item} />
+        </div>
       </div>
     </>
   )

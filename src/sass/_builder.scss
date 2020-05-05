@@ -1,0 +1,210 @@
+%filter-styles {
+  padding: 1rem 1.1rem 0.8rem;
+  outline: 0;
+  border-radius: 0.5rem;
+  // @extend %mono-font;
+  font-size: 1.1rem;
+  line-height: 1.1;
+}
+
+%warning {
+  padding: 0.4rem 1rem 0.6rem;
+  margin: -0.5rem 0;
+  border-radius: 1.2rem;
+  line-height: 1;
+  font-weight: 300;
+  text-transform: lowercase;
+}
+
+%warning-success {
+  @extend %warning;
+}
+
+%warning-alert {
+  @extend %warning;
+}
+
+.quantity {
+  height: 3rem;
+  @include breakpoint(mobile) {
+    height: 2rem;
+  }
+
+  label {
+    position: relative;
+    top: -0.3rem;
+    float: none;
+    display: inline-block;
+    width: 5rem;
+    margin: 0 1rem;
+    @include breakpoint(mobile) {
+      width: 3rem;
+      margin: 0 0.5rem;
+    }
+  }
+  input[type='number'],
+  input[type='text'] {
+    @extend %filter-styles;
+    text-align: center;
+    padding: 0.1rem 0 0;
+    height: 3rem;
+    line-height: 1;
+    @include breakpoint(mobile) {
+      height: 2rem;
+    }
+  }
+  button {
+    padding: 0.2rem 0 0;
+    width: 3rem;
+    height: 3rem;
+    padding: 0.7rem;
+    &:disabled {
+      opacity: 0.2;
+    }
+    @include breakpoint(mobile) {
+      width: 1.8rem;
+      height: 1.8rem;
+      padding: 0.2rem;
+      margin: 0.2rem 0 0;
+    }
+  }
+}
+
+.modal__group {
+  margin: 0 0 2rem;
+}
+
+.modal__group__header {
+  display: flex;
+  margin: 0 0 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__group__settings {
+  position: relative;
+}
+
+.modal__group__warning.-min,
+.modal__group__warning.-max {
+  padding: 0.1rem 0.8rem 0.4rem;
+  margin: 0 1rem 0 0;
+  @include breakpoint(mobile) {
+    position: absolute;
+    top: -1.7rem;
+    right: 0;
+    margin: 0;
+  }
+}
+
+.modal__group__warning.-min {
+  @extend %warning;
+}
+
+.modal__group__warning.-max {
+  @extend %warning-success;
+}
+
+.modal__options {
+  label.radio {
+    display: block;
+    width: 100%;
+    margin: 0 0 0.8rem;
+
+    span.radio__desc {
+      top: -0.6rem;
+    }
+  }
+}
+
+.modal__option {
+  display: flex;
+  width: 100%;
+  margin: 0 0 0.8rem;
+  align-items: center;
+  @include breakpoint(mobile) {
+    margin: 0 0 1.1rem;
+  }
+}
+
+.modal__option__name {
+  width: 46%;
+}
+
+.modal__option__quantity {
+  width: 30%;
+  text-align: right;
+
+  .quantity {
+    display: inline-block;
+  }
+}
+
+.modal__option__price {
+  width: 12%;
+  text-align: right;
+}
+
+.modal__item.-preview {
+  .modal__option__name {
+    width: 80%;
+  }
+  .modal__option__price {
+    width: 20%;
+  }
+}
+
+.modal__quantity {
+  display: flex;
+  // width: 24rem;
+  margin: 4rem 0 0rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__quantity__label {
+  padding: 0 0 0.2rem;
+}
+
+.modal__notes {
+  @include clearfix;
+  textarea {
+    height: 7.3rem;
+    padding: 1rem 1.3rem;
+    font-size: 1.2rem;
+  }
+}
+
+.modal__submit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__made-for {
+  width: 50%;
+  label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0;
+    input {
+      width: 10rem;
+      padding: 1rem 1.3rem;
+      margin-left: 2rem;
+      font-size: 1.2rem;
+      text-align: center;
+      // width: 42%;
+      // @extend %filter-styles;
+      // text-align: center;
+      // padding: 0.1rem 0 0;
+      // height: 3rem;
+      // line-height: 1;
+      // font-size: $font-size-small;
+      // @include breakpoint(mobile) {
+      //   height: 2rem;
+      //   font-size: $font-size-x-small;
+      // }
+    }
+  }
+}
