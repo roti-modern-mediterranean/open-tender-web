@@ -37,6 +37,7 @@ const MenuPage = () => {
           <Location location={location} classes="location--hero slide-up" />
         )}
       </Hero>
+      <h1 className="sr-only">Menu</h1>
       {isLoading ? (
         <div className="loading">
           <div className="loading__loader">
@@ -44,7 +45,7 @@ const MenuPage = () => {
           </div>
         </div>
       ) : menu.error ? (
-        <h1>{menu.error}</h1>
+        <p className="ot-error-color">{menu.error}</p>
       ) : (
         <Menu categories={menu.categories} />
       )}

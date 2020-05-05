@@ -71,5 +71,7 @@ export const selectMenuVars = (state) => {
 }
 export const selectCurrentItem = (state) => state.order.currentItem
 export const selectCart = (state) => state.order.cart
+export const selectCartQuantity = (state) =>
+  state.order.cart.reduce((t, i) => (t += i.quantity), 0)
 
 export default orderSlice.reducer

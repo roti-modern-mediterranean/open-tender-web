@@ -5,6 +5,7 @@
 @import './src/sass/_button';
 @import './src/sass/_sticky';
 @import './src/sass/_modal';
+@import './src/sass/_sidebar';
 @import './src/sass/_header';
 @import './src/sass/_footer';
 @import './src/sass/_cart-button';
@@ -23,6 +24,17 @@ body {
 body.has-modal {
   height: 100%;
   overflow: hidden;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .app {

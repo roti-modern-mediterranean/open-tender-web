@@ -6,6 +6,7 @@ import Modal from './components/Modal'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import CartButton from './components/CartButton'
+import Sidebar from './components/Sidebar'
 import './App.scss'
 
 const App = () => {
@@ -17,12 +18,12 @@ const App = () => {
         {/* <SystemNotifications /> */}
         <main className="main container">
           <Routes />
+          <CartButton />
         </main>
         {/* <Drawer /> */}
-        {/* <SideCurtain /> */}
+        <Sidebar />
         <Footer />
       </Router>
-      <CartButton />
     </div>
   )
 }

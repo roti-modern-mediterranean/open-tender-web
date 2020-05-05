@@ -5,6 +5,7 @@ import { iconMap } from '../utils/icons'
 const Button = ({ text, icon, classes, ariaLabel, onClick, children }) => {
   return (
     <button
+      type="button"
       className={`${icon ? 'btn' : ''} ${classes}`}
       aria-label={ariaLabel || text}
       onClick={onClick}
