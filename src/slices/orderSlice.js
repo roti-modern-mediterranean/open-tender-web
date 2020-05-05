@@ -6,6 +6,7 @@ const initialState = {
   location: null,
   requestedAt: 'asap',
   currentItem: null,
+  cart: [],
 }
 
 const orderSlice = createSlice({
@@ -30,6 +31,17 @@ const orderSlice = createSlice({
     setCurrentItem: (state, action) => {
       state.currentItem = action.payload
     },
+    addItemToCart: (state, action) => {
+      const item = action.payload
+      if (typeof item.index === 'undefined') {
+        state.cart.push({ ...item, index: state.cart.length })
+      } else {
+        state.cart[item.index] = item
+      }
+    },
+    removeItemFromCart: (state, action) => {
+      state.cart.splice(action.payload, 1)
+    },
   },
 })
 
@@ -40,6 +52,8 @@ export const {
   setOrderServiceType,
   setLocation,
   setCurrentItem,
+  addItemToCart,
+  removeItemFromCart,
 } = orderSlice.actions
 
 export const selectOrder = (state) => state.order

@@ -190,18 +190,16 @@ const makeOrderItem = (item, isEdit) => {
   return pricedItem
 }
 
-const Builder = ({ menuItem, addToCart }) => {
-  const [item, setItem] = useState(makeOrderItem(menuItem))
-  const props = {}
+const Builder = ({ menuItem, addItemToCart }) => {
+  const orderItem = menuItem.index ? menuItem : makeOrderItem(menuItem)
+  const [item, setItem] = useState(orderItem)
 
   const handleIncrement = (evt) => {
     evt.preventDefault()
     const newQuantity = item.maxQuantity
       ? Math.min(item.quantity + item.increment, item.maxQuantity)
       : item.quantity + item.increment
-    const orderItem = { ...item, quantity: newQuantity }
-    const pricedItem = calcPrices(orderItem)
-    setItem(pricedItem)
+    setItem(calcPrices({ ...item, quantity: newQuantity }))
     evt.target.blur()
   }
 
@@ -211,18 +209,14 @@ const Builder = ({ menuItem, addToCart }) => {
       item.quantity - item.increment,
       item.minQuantity
     )
-    const orderItem = { ...item, quantity: newQuantity }
-    const pricedItem = calcPrices(orderItem)
-    setItem(pricedItem)
+    setItem(calcPrices({ ...item, quantity: newQuantity }))
     evt.target.blur()
   }
 
   const handleAdjust = (evt) => {
     const value = parseInt(evt.target.value)
-    const quantity = isNaN(value) || value < 1 ? '' : value
-    const orderItem = { ...item, quantity: quantity }
-    const pricedItem = calcPrices(orderItem)
-    setItem(pricedItem)
+    const newQuantity = isNaN(value) || value < 1 ? '' : value
+    setItem(calcPrices({ ...item, quantity: newQuantity }))
   }
 
   const handleMadeFor = (evt) => {
@@ -245,9 +239,7 @@ const Builder = ({ menuItem, addToCart }) => {
       }
       return group
     })
-    const orderItem = { ...item, groups: groups }
-    const pricedItem = calcPrices(orderItem)
-    setItem(pricedItem)
+    setItem(calcPrices({ ...item, groups: groups }))
   }
 
   const handleIncrementOption = (evt) => {
@@ -274,9 +266,7 @@ const Builder = ({ menuItem, addToCart }) => {
       }
       return group
     })
-    const orderItem = { ...item, groups: groups }
-    const pricedItem = calcPrices(orderItem)
-    setItem(pricedItem)
+    setItem(calcPrices({ ...item, groups: groups }))
     evt.target.blur()
   }
 
@@ -296,9 +286,7 @@ const Builder = ({ menuItem, addToCart }) => {
       }
       return group
     })
-    const orderItem = { ...item, groups: groups }
-    const pricedItem = calcPrices(orderItem)
-    setItem(pricedItem)
+    setItem(calcPrices({ ...item, groups: groups }))
     evt.target.blur()
   }
 
@@ -330,14 +318,12 @@ const Builder = ({ menuItem, addToCart }) => {
       }
       return group
     })
-    const orderItem = { ...item, groups: groups }
-    const pricedItem = calcPrices(orderItem)
-    setItem(pricedItem)
+    setItem(calcPrices({ ...item, groups: groups }))
   }
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
-    props.addItemToCart()
+    addItemToCart(item)
     evt.target.blur()
   }
 

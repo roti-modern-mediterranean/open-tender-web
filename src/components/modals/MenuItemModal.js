@@ -1,7 +1,11 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectCurrentItem, setCurrentItem } from '../../slices/orderSlice'
+import {
+  selectCurrentItem,
+  setCurrentItem,
+  addItemToCart,
+} from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
 import { Builder } from '../packages'
@@ -13,7 +17,15 @@ const MenuItemModal = () => {
     ? { backgroundImage: `url(${item.large_image_url}` }
     : null
 
-  const onClick = () => {
+  const handleClose = () => {
+    dispatch(closeModal())
+    setTimeout(() => {
+      dispatch(setCurrentItem(null))
+    }, 500)
+  }
+
+  const handleAddItem = (item) => {
+    dispatch(addItemToCart(item))
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(setCurrentItem(null))
@@ -22,7 +34,7 @@ const MenuItemModal = () => {
 
   return (
     <>
-      <ModalClose classes="link-light" onClick={onClick} />
+      <ModalClose classes="link-light" onClick={handleClose} />
       <div className="modal__content">
         {bgStyle && (
           <div
@@ -37,7 +49,7 @@ const MenuItemModal = () => {
           {item.description && <p>{item.description}</p>}
         </div>
         <div className="modal__body">
-          <Builder menuItem={item} />
+          <Builder menuItem={item} addItemToCart={handleAddItem} />
         </div>
       </div>
     </>
