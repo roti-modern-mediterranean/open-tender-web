@@ -70,5 +70,6 @@ export const selectMenuVars = (state) => {
   }
 }
 export const selectCurrentItem = (state) => state.order.currentItem
+export const selectCart = (state) => state.order.cart
 
 export default orderSlice.reducer

@@ -5,6 +5,7 @@ import Routes from './components/Routes'
 import Modal from './components/Modal'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import CartButton from './components/CartButton'
 import './App.scss'
 
 const App = () => {
@@ -17,17 +18,11 @@ const App = () => {
         <main className="main container">
           <Routes />
         </main>
-        {/* <div className="CartButton__container fixed b0 r0 mr1 md:mr3 mb1 md:col-6 lg:col-5 z1">
-          <CartButton
-            className="right"
-            onClick={() => get(actions, "setSideCurtain", (f) => f)(MINI_CART)}
-            currentLineItems={lineItems}
-          />
-        </div> */}
         {/* <Drawer /> */}
         {/* <SideCurtain /> */}
         <Footer />
       </Router>
+      <CartButton />
     </div>
   )
 }
