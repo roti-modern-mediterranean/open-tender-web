@@ -1,62 +1,9 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
-import { Plus, Minus } from 'react-feather'
-import { RadioButtonGroup, QuantityInput } from './BuilderInputs'
-
-const Quantity = ({
-  name,
-  id,
-  quantity,
-  adjust,
-  increment,
-  decrement,
-  size = null,
-  classes = '',
-  incrementDisabled = false,
-}) => {
-  return (
-    <div className={`quantity ${classes}`}>
-      <button
-        className="btn"
-        id={`decrease-${id}`}
-        onClick={decrement}
-        disabled={quantity === 0}
-      >
-        <Minus size={size} />
-      </button>
-      <QuantityInput
-        name={name}
-        id={`quantity-${id}`}
-        value={quantity}
-        handler={adjust}
-      />
-      <button
-        className="btn"
-        id={`increase-${id}`}
-        onClick={increment}
-        disabled={incrementDisabled}
-      >
-        <Plus size={size} />
-      </button>
-    </div>
-  )
-}
+import { RadioButtonGroup, Quantity } from './BuilderInputs'
 
 const displayPrice = (price) => {
   return parseFloat(price).toFixed(2)
-}
-
-Quantity.displayName = 'Quantity'
-Quantity.propTypes = {
-  name: propTypes.string,
-  id: propTypes.oneOfType([propTypes.number, propTypes.string]),
-  classes: propTypes.string,
-  quantity: propTypes.oneOfType([propTypes.number, propTypes.string]),
-  adjust: propTypes.func,
-  increment: propTypes.func,
-  decrement: propTypes.func,
-  size: propTypes.number,
-  incrementDisabled: propTypes.bool,
 }
 
 export const Option = ({
@@ -65,11 +12,14 @@ export const Option = ({
   adjust,
   increment,
   decrement,
-  size = null,
   classes = '',
 }) => {
-  const name = `${option.name} quantity in ${group.name} group`
-  const isMaxedOut = group.max !== 0 && group.quantity === group.max
+  const groupAtMax = group.max !== 0 && group.quantity === group.max
+  const optionAtMax = option.max !== 0 && option.quantity === option.max
+  const incrementDisabled = groupAtMax || optionAtMax
+  const groupAtMin = group.min !== 0 && group.quantity === group.min
+  const optionAtMin = option.min !== 0 && option.quantity === option.min
+  const decrementDisabled = groupAtMin || optionAtMin || option.quantity === 0
   return (
     <li>
       <span className="modal__option">
@@ -79,15 +29,13 @@ export const Option = ({
         </span>
         <span className="modal__option__quantity">
           <Quantity
-            name={name}
-            id={`${group.id}-${option.id}`}
-            quantity={option.quantity}
+            item={option}
             adjust={adjust}
             increment={increment}
             decrement={decrement}
-            size={size}
+            incrementDisabled={incrementDisabled}
+            decrementDisabled={decrementDisabled}
             classes={classes}
-            incrementDisabled={isMaxedOut}
           />
         </span>
         <span className="modal__option__price">
@@ -194,42 +142,34 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
   const orderItem = menuItem.index ? menuItem : makeOrderItem(menuItem)
   const [item, setItem] = useState(orderItem)
 
-  const handleIncrement = (evt) => {
-    evt.preventDefault()
+  const increment = () => {
     const newQuantity = item.maxQuantity
       ? Math.min(item.quantity + item.increment, item.maxQuantity)
       : item.quantity + item.increment
     setItem(calcPrices({ ...item, quantity: newQuantity }))
-    evt.target.blur()
   }
 
-  const handleDecrement = (evt) => {
-    evt.preventDefault()
+  const decrement = () => {
     const newQuantity = Math.max(
       item.quantity - item.increment,
       item.minQuantity
     )
     setItem(calcPrices({ ...item, quantity: newQuantity }))
-    evt.target.blur()
   }
 
-  const handleAdjust = (evt) => {
-    const value = parseInt(evt.target.value)
-    const newQuantity = isNaN(value) || value < 1 ? '' : value
-    setItem(calcPrices({ ...item, quantity: newQuantity }))
+  const adjust = (quantity) => {
+    setItem(calcPrices({ ...item, quantity: quantity }))
   }
 
-  const handleMadeFor = (evt) => {
-    setItem({ ...item, madeFor: evt.target.value })
+  const setMadeFor = (madeFor) => {
+    setItem({ ...item, madeFor })
   }
 
-  const handleNotes = (evt) => {
-    setItem({ ...item, notes: evt.target.value })
+  const setNotes = (notes) => {
+    setItem({ ...item, notes })
   }
 
-  const handleRadio = (evt) => {
-    const groupId = parseInt(evt.target.name)
-    const optionId = parseInt(evt.target.value)
+  const toggleOption = (groupId, optionId) => {
     const groups = item.groups.map((group) => {
       if (group.id === groupId) {
         group.options.map((option) => {
@@ -242,11 +182,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
     setItem(calcPrices({ ...item, groups: groups }))
   }
 
-  const handleIncrementOption = (evt) => {
-    evt.preventDefault()
-    const [, groupId, optionId] = evt.target.id
-      .split('-')
-      .map((i) => parseInt(i))
+  const incrementOption = (groupId, optionId) => {
     const groups = item.groups.map((group) => {
       if (group.id === groupId) {
         const count = group.options
@@ -267,14 +203,9 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
       return group
     })
     setItem(calcPrices({ ...item, groups: groups }))
-    evt.target.blur()
   }
 
-  const handleDecrementOption = (evt) => {
-    evt.preventDefault()
-    const [, groupId, optionId] = evt.target.id
-      .split('-')
-      .map((i) => parseInt(i))
+  const decrementOption = (groupId, optionId) => {
     const groups = item.groups.map((group) => {
       if (group.id === groupId) {
         group.options.map((option) => {
@@ -287,15 +218,9 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
       return group
     })
     setItem(calcPrices({ ...item, groups: groups }))
-    evt.target.blur()
   }
 
-  const handleAdjustOption = (evt) => {
-    const [, groupId, optionId] = evt.target.id
-      .split('-')
-      .map((i) => parseInt(i))
-    const value = parseInt(evt.target.value)
-    const quantity = isNaN(value) ? '' : value
+  const adjustOption = (groupId, optionId, quantity) => {
     const groups = item.groups.map((group) => {
       if (group.id === groupId) {
         const count = group.options
@@ -327,7 +252,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
     evt.target.blur()
   }
 
-  const { id, name, price, quantity, totalPrice, groups, notes, madeFor } = item
+  const { price, totalPrice, groups, notes, madeFor } = item
   const isIncomplete = groups.filter((g) => g.quantity < g.min).length > 0
   return (
     <div className="modal__item">
@@ -345,11 +270,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
             </div>
             <div className="modal__options">
               {group.min === 1 && group.max === 1 ? (
-                <RadioButtonGroup
-                  id={group.id}
-                  options={group.options}
-                  handler={handleRadio}
-                />
+                <RadioButtonGroup group={group} handler={toggleOption} />
               ) : (
                 <ul>
                   {group.options.map((option) => {
@@ -357,9 +278,10 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
                       key: `${group.id}-${option.id}`,
                       group,
                       option,
-                      adjust: handleAdjustOption,
-                      increment: handleIncrementOption,
-                      decrement: handleDecrementOption,
+                      adjust: (quantity) =>
+                        adjustOption(group.id, option.id, quantity),
+                      increment: () => incrementOption(group.id, option.id),
+                      decrement: () => decrementOption(group.id, option.id),
                     }
                     return renderOption(optionProps)
                   })}
@@ -368,9 +290,9 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
                       key={`${group.id}-${option.id}`}
                       group={group}
                       option={option}
-                      adjust={handleAdjustOption}
-                      increment={handleIncrementOption}
-                      decrement={handleDecrementOption}
+                      adjust={adjustOption}
+                      increment={incrementOption}
+                      decrement={decrementOption}
                     />
                   ))} */}
                 </ul>
@@ -384,12 +306,10 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
             <div className="modal__option__price">${displayPrice(price)}</div>
             <div className="modal__option__quantity">
               <Quantity
-                name={`${name} quantity`}
-                id={id}
-                quantity={quantity}
-                adjust={handleAdjust}
-                increment={handleIncrement}
-                decrement={handleDecrement}
+                item={item}
+                adjust={adjust}
+                increment={increment}
+                decrement={decrement}
               />
             </div>
             <div className="modal__option__price">
@@ -403,7 +323,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
             <textarea
               id="item-notes"
               value={notes || ''}
-              onChange={handleNotes}
+              onChange={(evt) => setNotes(evt.target.value)}
             />
           </label>
         </div>
@@ -415,7 +335,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
                 id="made-for"
                 type="text"
                 value={madeFor || ''}
-                onChange={handleMadeFor}
+                onChange={(evt) => setMadeFor(evt.target.value)}
               />
             </label>
           </div>
