@@ -67,7 +67,7 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
       )}
       <div className="location__content">
         <div className="location__header">
-          <h2>{location.name}</h2>
+          <h2 className="ot-font-size-h5">{location.name}</h2>
         </div>
         <div className="location__actions">
           <a

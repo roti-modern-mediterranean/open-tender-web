@@ -13,9 +13,6 @@ import { Builder, BuilderOption } from '../packages'
 const MenuItemModal = () => {
   const dispatch = useDispatch()
   const item = useSelector(selectCurrentItem)
-  const bgStyle = item.large_image_url
-    ? { backgroundImage: `url(${item.large_image_url}` }
-    : null
 
   const handleClose = () => {
     dispatch(closeModal())
@@ -36,25 +33,11 @@ const MenuItemModal = () => {
     <>
       <ModalClose classes="link-light" onClick={handleClose} />
       <div className="modal__content">
-        {bgStyle && (
-          <div
-            className="modal__image bg-image bg-secondary-color"
-            style={bgStyle}
-          >
-            &nbsp;
-          </div>
-        )}
-        <div className="modal__header">
-          <h2>{item.name}</h2>
-          {item.description && <p>{item.description}</p>}
-        </div>
-        <div className="modal__body">
-          <Builder
-            menuItem={item}
-            addItemToCart={handleAddItem}
-            renderOption={(props) => <BuilderOption {...props} />}
-          />
-        </div>
+        <Builder
+          menuItem={item}
+          addItemToCart={handleAddItem}
+          renderOption={(props) => <BuilderOption {...props} />}
+        />
       </div>
     </>
   )

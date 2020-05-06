@@ -149,38 +149,55 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
 
   const { price, totalPrice, groups, notes, madeFor } = item
   const isIncomplete = groups.filter((g) => g.quantity < g.min).length > 0
+  const bgStyle = menuItem.large_image_url
+    ? { backgroundImage: `url(${menuItem.large_image_url}` }
+    : null
   return (
-    <div className="builder__item">
-      <form className="builder__groups">
-        {groups.map((group) => (
-          <div key={group.id} className="builder__group">
-            <div className="builder__group__header">
-              <h3 className="builder__group__name">{group.name}</h3>
-              <p className="builder__group__settings font-size-small">
-                <BuilderGroupWarning {...group} />
-                <span>
-                  {group.min} min, {group.max} max, {group.inc} included
-                </span>
-              </p>
-            </div>
-            <div className="builder__options">
-              {group.min === 1 && group.max === 1 ? (
-                <BuilderRadioGroup group={group} handler={toggleOption} />
-              ) : (
-                <ul>
-                  {group.options.map((option) => {
-                    const optionProps = {
-                      key: `${group.id}-${option.id}`,
-                      group,
-                      option,
-                      adjust: (quantity) =>
-                        setOptionQuantity(group.id, option.id, quantity),
-                      increment: () => incrementOption(group.id, option.id),
-                      decrement: () => decrementOption(group.id, option.id),
-                    }
-                    return renderOption(optionProps)
-                  })}
-                  {/* {group.options.map((option) => (
+    <form className="builder__item">
+      <div className="builder__content">
+        {bgStyle && (
+          <div
+            className="builder__image bg-image bg-secondary-color"
+            style={bgStyle}
+          >
+            &nbsp;
+          </div>
+        )}
+        <div className="builder__header bg-color">
+          <h2 className="ot-font-size-h3">{menuItem.name}</h2>
+          {menuItem.description && <p>{menuItem.description}</p>}
+        </div>
+        <div className="builder__body bg-secondary-color">
+          <div className="builder__groups">
+            {groups.map((group) => (
+              <div key={group.id} className="builder__group">
+                <div className="builder__group__header">
+                  <h3 className="builder__group__name">{group.name}</h3>
+                  <p className="builder__group__settings font-size-small">
+                    <BuilderGroupWarning {...group} />
+                    <span>
+                      {group.min} min, {group.max} max, {group.inc} included
+                    </span>
+                  </p>
+                </div>
+                <div className="builder__options">
+                  {group.min === 1 && group.max === 1 ? (
+                    <BuilderRadioGroup group={group} handler={toggleOption} />
+                  ) : (
+                    <ul>
+                      {group.options.map((option) => {
+                        const optionProps = {
+                          key: `${group.id}-${option.id}`,
+                          group,
+                          option,
+                          adjust: (quantity) =>
+                            setOptionQuantity(group.id, option.id, quantity),
+                          increment: () => incrementOption(group.id, option.id),
+                          decrement: () => decrementOption(group.id, option.id),
+                        }
+                        return renderOption(optionProps)
+                      })}
+                      {/* {group.options.map((option) => (
                     <BuilderOption
                       key={`${group.id}-${option.id}`}
                       group={group}
@@ -190,39 +207,12 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
                       decrement={decrementOption}
                     />
                   ))} */}
-                </ul>
-              )}
-            </div>
+                    </ul>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-        <div className="builder__quantity">
-          <div className="builder__option">
-            <div className="builder__option__name">Item Quantity</div>
-            <div className="builder__option__price">${displayPrice(price)}</div>
-            <div className="builder__option__quantity">
-              <BuilderQuantity
-                item={item}
-                adjust={setQuantity}
-                increment={increment}
-                decrement={decrement}
-              />
-            </div>
-            <div className="builder__option__price">
-              ${displayPrice(totalPrice)}
-            </div>
-          </div>
-        </div>
-        <div className="builder__notes">
-          <label htmlFor="item-notes" className="label">
-            <span>Notes</span>
-            <textarea
-              id="item-notes"
-              value={notes || ''}
-              onChange={(evt) => setNotes(evt.target.value)}
-            />
-          </label>
-        </div>
-        <div className="builder__submit">
           <div className="builder__made-for">
             <label htmlFor="made-for" className="label">
               <span>Made For</span>
@@ -234,16 +224,43 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
               />
             </label>
           </div>
-          <button
-            className="btn"
-            onClick={handleSubmit}
-            disabled={isIncomplete}
-          >
-            Add To Cart
-          </button>
+          <div className="builder__notes">
+            <label htmlFor="item-notes" className="label">
+              <span>Notes</span>
+              <textarea
+                id="item-notes"
+                value={notes || ''}
+                onChange={(evt) => setNotes(evt.target.value)}
+              />
+            </label>
+          </div>
         </div>
-      </form>
-    </div>
+      </div>
+      <div className="builder__footer bg-color">
+        <div className="builder__price heading ot-font-size-h3">
+          ${displayPrice(totalPrice)}
+        </div>
+        <div className="builder__actions">
+          <div className="builder__quantity">
+            <BuilderQuantity
+              item={item}
+              adjust={setQuantity}
+              increment={increment}
+              decrement={decrement}
+            />
+          </div>
+          <div className="builder__submit">
+            <button
+              className="btn"
+              onClick={handleSubmit}
+              disabled={isIncomplete}
+            >
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
   )
 }
 

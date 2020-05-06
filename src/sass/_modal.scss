@@ -28,6 +28,7 @@
 
   &__close {
     position: absolute;
+    z-index: 1;
     top: 7px;
     right: 7px;
   }
@@ -91,22 +92,18 @@
 }
 
 .modal--item {
-  align-items: flex-start;
+  // align-items: flex-start;
   .modal {
     width: 90%;
     max-width: 64rem;
-    margin: 5rem 0;
+    height: 90%;
+    // margin: 5rem 0;
+    // overflow-y: scroll;
 
     &__content {
       padding: 0;
-    }
-
-    &__header {
-      padding: 2.5rem 3.5rem 2.5rem;
-    }
-
-    &__body {
-      padding: 0 3.5rem 3.5rem;
+      height: 100%;
+      overflow: hidden;
     }
   }
 }

@@ -25,186 +25,209 @@
 }
 
 .quantity {
-  height: 3rem;
-  @include breakpoint(mobile) {
-    height: 2rem;
-  }
+  display: inline-flex;
+  align-items: center;
+  min-height: 4rem;
+  border-radius: 2rem;
 
   label {
-    position: relative;
-    top: -0.3rem;
-    float: none;
-    display: inline-block;
-    width: 5rem;
-    margin: 0 1rem;
-    @include breakpoint(mobile) {
-      width: 3rem;
-      margin: 0 0.5rem;
-    }
+    display: block;
   }
+
   input[type='number'],
   input[type='text'] {
-    @extend %filter-styles;
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0 0 0.2rem;
+    border-radius: 1.2rem;
     text-align: center;
-    padding: 0.1rem 0 0;
-    height: 3rem;
-    line-height: 1;
-    @include breakpoint(mobile) {
-      height: 2rem;
-    }
+    font-weight: bold;
   }
+
   button {
-    padding: 0.2rem 0 0;
-    width: 3rem;
-    height: 3rem;
-    padding: 0.7rem;
-    // &:disabled {
-    //   opacity: 0.2;
-    // }
-    @include breakpoint(mobile) {
-      width: 1.8rem;
-      height: 1.8rem;
-      padding: 0.2rem;
-      margin: 0.2rem 0 0;
-    }
+    width: 3.2rem;
+    height: 3.2rem;
+    padding: 0.8rem;
+  }
+
+  &__increase {
+    margin-right: 0.2rem;
+  }
+
+  &__decrease {
+    margin-left: 0.2rem;
   }
 }
 
-.builder__group {
-  margin: 0 0 2rem;
-}
-
-.builder__group__header {
-  display: flex;
-  margin: 0 0 1.5rem;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.builder__group__settings {
-  position: relative;
-}
-
-.builder__group__warning.-min,
-.builder__group__warning.-max {
-  padding: 0.1rem 0.8rem 0.4rem;
-  margin: 0 1rem 0 0;
-  @include breakpoint(mobile) {
-    position: absolute;
-    top: -1.7rem;
-    right: 0;
-    margin: 0;
-  }
-}
-
-.builder__group__warning.-min {
-  @extend %warning;
-}
-
-.builder__group__warning.-max {
-  @extend %warning-success;
-}
-
-.builder__options {
-  label.radio {
+.builder {
+  &__item {
+    position: relative;
     display: block;
     width: 100%;
-    margin: 0 0 0.8rem;
+    height: 100%;
+    padding: 0 0 8rem;
+    margin: 0;
+    // overflow-y: scroll;
+  }
 
-    span.radio__desc {
-      top: -0.6rem;
+  &__content {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+  }
+
+  &__image {
+    height: 24rem;
+  }
+
+  &__header {
+    padding: 2.5rem 3.5rem 2.5rem;
+  }
+
+  &__body {
+    padding: 0 3.5rem 2.5rem;
+
+    > div {
+      padding-top: 2.5rem;
     }
   }
-}
 
-.builder__option {
-  display: flex;
-  width: 100%;
-  margin: 0 0 0.8rem;
-  align-items: center;
-  @include breakpoint(mobile) {
-    margin: 0 0 1.1rem;
+  &__footer {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8rem;
+    padding: 0 3.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-}
 
-.builder__option__name {
-  width: 46%;
-}
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
 
-.builder__option__quantity {
-  width: 30%;
-  text-align: right;
-
-  .quantity {
+  &__quantity {
     display: inline-block;
   }
-}
 
-.builder__option__price {
-  width: 12%;
-  text-align: right;
-}
-
-.builder__item.-preview {
-  .builder__option__name {
-    width: 80%;
+  &__submit {
+    display: inline-block;
+    margin: 0 0 0 1rem;
   }
-  .builder__option__price {
-    width: 20%;
+
+  &__group {
+    margin: 0 0 2rem;
   }
-}
 
-.builder__quantity {
-  display: flex;
-  // width: 24rem;
-  margin: 4rem 0 0rem;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.builder__quantity__label {
-  padding: 0 0 0.2rem;
-}
-
-.builder__notes {
-  @include clearfix;
-  textarea {
-    height: 7.3rem;
-    padding: 1rem 1.3rem;
-    font-size: 1.2rem;
-  }
-}
-
-.builder__submit {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.builder__made-for {
-  width: 50%;
-  label {
+  &__group__header {
     display: flex;
-    justify-content: flex-start;
+    margin: 0 0 1.5rem;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 0;
-    input {
-      width: 10rem;
+  }
+
+  &__group__settings {
+    position: relative;
+  }
+
+  &__group__warning.-min,
+  &__group__warning.-max {
+    padding: 0.1rem 0.8rem 0.4rem;
+    margin: 0 1rem 0 0;
+    @include breakpoint(mobile) {
+      position: absolute;
+      top: -1.7rem;
+      right: 0;
+      margin: 0;
+    }
+  }
+
+  &__group__warning.-min {
+    @extend %warning;
+  }
+
+  &__group__warning.-max {
+    @extend %warning-success;
+  }
+
+  &__options {
+    label.radio {
+      display: block;
+      width: 100%;
+      margin: 0 0 0.8rem;
+
+      span.radio__desc {
+        top: -0.6rem;
+      }
+    }
+  }
+
+  &__option {
+    display: flex;
+    width: 100%;
+    margin: 0 0 0.8rem;
+    align-items: center;
+    @include breakpoint(mobile) {
+      margin: 0 0 1.1rem;
+    }
+  }
+
+  &__option__name {
+    width: 46%;
+  }
+
+  &__option__quantity {
+    width: 30%;
+    text-align: right;
+
+    .quantity {
+      display: inline-block;
+    }
+  }
+
+  &__option__price {
+    width: 12%;
+    text-align: right;
+  }
+
+  &__notes {
+    @include clearfix;
+    textarea {
+      height: 7.3rem;
       padding: 1rem 1.3rem;
-      margin-left: 2rem;
       font-size: 1.2rem;
-      text-align: center;
-      // width: 42%;
-      // @extend %filter-styles;
-      // text-align: center;
-      // padding: 0.1rem 0 0;
-      // height: 3rem;
-      // line-height: 1;
-      // font-size: $font-size-small;
-      // @include breakpoint(mobile) {
-      //   height: 2rem;
-      //   font-size: $font-size-x-small;
-      // }
+    }
+  }
+
+  &__made-for {
+    width: 50%;
+    label {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 0;
+      input {
+        width: 10rem;
+        padding: 1rem 1.3rem;
+        margin-left: 2rem;
+        font-size: 1.2rem;
+        text-align: center;
+        // width: 42%;
+        // @extend %filter-styles;
+        // text-align: center;
+        // padding: 0.1rem 0 0;
+        // height: 3rem;
+        // line-height: 1;
+        // font-size: $font-size-small;
+        // @include breakpoint(mobile) {
+        //   height: 2rem;
+        //   font-size: $font-size-x-small;
+        // }
+      }
     }
   }
 }

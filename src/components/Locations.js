@@ -12,7 +12,7 @@ export const Locations = ({ locations }) => {
   return (
     <div className="card card--location overlay border-radius slide-up">
       <div className="card__header">
-        <h1>
+        <h1 className="ot-font-size-h3">
           {locations.length} {title}
         </h1>
         <p>

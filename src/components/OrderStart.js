@@ -18,7 +18,7 @@ const OrderStart = () => {
     <div className="card overlay border-radius slide-up">
       <div className="card__header">
         <p className="preface secondary-color">{subtitle}</p>
-        <h1>{title}</h1>
+        <h1 className="ot-font-size-h3">{title}</h1>
         <p className="secondary-color">{content}</p>
       </div>
       <div className="card__content">
