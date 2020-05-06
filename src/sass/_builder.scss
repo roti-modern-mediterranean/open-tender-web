@@ -85,10 +85,13 @@
   }
 
   &__body {
-    padding: 0 3.5rem 2.5rem;
+    padding: 2.5rem 3.5rem 2.5rem;
 
     > div {
-      padding-top: 2.5rem;
+      margin-top: 2.5rem;
+      &:first-child {
+        margin-top: 0;
+      }
     }
   }
 
@@ -127,34 +130,46 @@
     display: flex;
     margin: 0 0 1.5rem;
     justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  &__group__name {
+    margin-bottom: 0.5rem;
+  }
+
+  &__group__quantity {
+    padding: 0 1rem;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &__group__warning {
+    height: 3.6rem;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-  }
 
-  &__group__settings {
-    position: relative;
-  }
+    span {
+      display: block;
+    }
 
-  &__group__warning.-min,
-  &__group__warning.-max {
-    padding: 0.1rem 0.8rem 0.4rem;
-    margin: 0 1rem 0 0;
-    @include breakpoint(mobile) {
-      position: absolute;
-      top: -1.7rem;
-      right: 0;
-      margin: 0;
+    span + span {
+      margin-left: 0.7rem;
     }
   }
 
-  &__group__warning.-min {
-    @extend %warning;
-  }
-
-  &__group__warning.-max {
-    @extend %warning-success;
+  &__group__alert {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 0 0 0.3rem;
+    line-height: 2rem;
+    border-radius: 1rem;
+    text-align: center;
   }
 
   &__options {
+    width: 100%;
+    padding: 1rem 2rem;
+
     label.radio {
       display: block;
       width: 100%;
@@ -169,33 +184,48 @@
   &__option {
     display: flex;
     width: 100%;
-    margin: 0 0 0.8rem;
+    padding: 1rem 0;
     align-items: center;
-    @include breakpoint(mobile) {
-      margin: 0 0 1.1rem;
+  }
+
+  &__option__image {
+    width: 6rem;
+    min-width: 6rem;
+    height: 6rem;
+  }
+
+  &__option__info {
+    display: block;
+    flex-grow: 1;
+    padding: 0 1.5rem;
+    line-height: 1.3;
+
+    > span {
+      display: block;
     }
   }
 
-  &__option__name {
-    width: 46%;
-  }
-
-  &__option__quantity {
-    width: 30%;
-    text-align: right;
-
-    .quantity {
-      display: inline-block;
-    }
+  &__option__desc {
+    margin-top: 0.2rem;
   }
 
   &__option__price {
-    width: 12%;
-    text-align: right;
+    margin-top: 0.6rem;
+  }
+
+  &__made-for,
+  &__notes {
+    width: 100%;
+    padding: 2rem 2rem;
   }
 
   &__notes {
-    @include clearfix;
+    padding-top: 1.7rem;
+    span {
+      display: block;
+      margin-bottom: 0.8rem;
+      line-height: 1;
+    }
     textarea {
       height: 7.3rem;
       padding: 1rem 1.3rem;
@@ -204,29 +234,20 @@
   }
 
   &__made-for {
-    width: 50%;
     label {
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       margin-bottom: 0;
+      span {
+        display: block;
+      }
       input {
+        display: block;
         width: 10rem;
         padding: 1rem 1.3rem;
-        margin-left: 2rem;
         font-size: 1.2rem;
         text-align: center;
-        // width: 42%;
-        // @extend %filter-styles;
-        // text-align: center;
-        // padding: 0.1rem 0 0;
-        // height: 3rem;
-        // line-height: 1;
-        // font-size: $font-size-small;
-        // @include breakpoint(mobile) {
-        //   height: 2rem;
-        //   font-size: $font-size-x-small;
-        // }
       }
     }
   }

@@ -17,12 +17,30 @@ const BuilderOption = ({
   const groupAtMin = group.min !== 0 && group.quantity === group.min
   const optionAtMin = option.min !== 0 && option.quantity === option.min
   const decrementDisabled = groupAtMin || optionAtMin || option.quantity === 0
+  const bgStyle = option.imageUrl
+    ? { backgroundImage: `url(${option.imageUrl}` }
+    : null
   return (
     <li>
       <span className="builder__option">
-        <span className="builder__option__name">{option.name}</span>
-        <span className="builder__option__price">
-          ${displayPrice(option.price)}
+        <span
+          className="builder__option__image bg-image bg-secondary-color border-radius-small"
+          style={bgStyle}
+        >
+          &nbsp;
+        </span>
+        <span className="builder__option__info">
+          <span className="builder__option__name font-size-small ot-bold">
+            {option.name}
+          </span>
+          {option.description && (
+            <span className="builder__option__desc font-size-x-small secondary-color">
+              {option.description}
+            </span>
+          )}
+          <span className="builder__option__price font-size-small ot-bold">
+            ${displayPrice(option.price)}
+          </span>
         </span>
         <span className="builder__option__quantity">
           <BuilderQuantity
@@ -34,9 +52,6 @@ const BuilderOption = ({
             decrementDisabled={decrementDisabled}
             classes={classes}
           />
-        </span>
-        <span className="builder__option__price">
-          ${displayPrice(option.totalPrice)}
         </span>
       </span>
     </li>

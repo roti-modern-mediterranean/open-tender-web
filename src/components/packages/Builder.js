@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
-import BuilderRadioGroup from './BuilderRadioGroup'
-import BuilderGroupWarning from './BuilderGroupWarning'
-import BuilderQuantity from './BuilderQuantity'
 import { displayPrice, makeOrderItem, calcPrices } from './utils'
+import BuilderGroupHeader from './BuilderGroupHeader'
+import BuilderRadioGroup from './BuilderRadioGroup'
+import BuilderQuantity from './BuilderQuantity'
 
 const useBuilder = (menuItem) => {
   const orderItem = menuItem.index ? menuItem : makeOrderItem(menuItem)
@@ -147,10 +147,10 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
     evt.target.blur()
   }
 
-  const { price, totalPrice, groups, notes, madeFor } = item
+  const { groups, notes, madeFor, totalPrice } = item
   const isIncomplete = groups.filter((g) => g.quantity < g.min).length > 0
-  const bgStyle = menuItem.large_image_url
-    ? { backgroundImage: `url(${menuItem.large_image_url}` }
+  const bgStyle = item.imageUrl
+    ? { backgroundImage: `url(${item.imageUrl}` }
     : null
   return (
     <form className="builder__item">
@@ -164,23 +164,15 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
           </div>
         )}
         <div className="builder__header bg-color">
-          <h2 className="ot-font-size-h3">{menuItem.name}</h2>
-          {menuItem.description && <p>{menuItem.description}</p>}
+          <h2 className="ot-font-size-h3">{item.name}</h2>
+          {item.description && <p>{item.description}</p>}
         </div>
         <div className="builder__body bg-secondary-color">
           <div className="builder__groups">
             {groups.map((group) => (
               <div key={group.id} className="builder__group">
-                <div className="builder__group__header">
-                  <h3 className="builder__group__name">{group.name}</h3>
-                  <p className="builder__group__settings font-size-small">
-                    <BuilderGroupWarning {...group} />
-                    <span>
-                      {group.min} min, {group.max} max, {group.inc} included
-                    </span>
-                  </p>
-                </div>
-                <div className="builder__options">
+                <BuilderGroupHeader group={group} />
+                <div className="builder__options bg-color border-radius">
                   {group.min === 1 && group.max === 1 ? (
                     <BuilderRadioGroup group={group} handler={toggleOption} />
                   ) : (
@@ -213,9 +205,9 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
               </div>
             ))}
           </div>
-          <div className="builder__made-for">
+          <div className="builder__made-for bg-color border-radius">
             <label htmlFor="made-for" className="label">
-              <span>Made For</span>
+              <span className="ot-font-size-h6 heading">Made For</span>
               <input
                 id="made-for"
                 type="text"
@@ -224,9 +216,9 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
               />
             </label>
           </div>
-          <div className="builder__notes">
+          <div className="builder__notes bg-color border-radius">
             <label htmlFor="item-notes" className="label">
-              <span>Notes</span>
+              <span className="ot-font-size-h6 heading">Notes</span>
               <textarea
                 id="item-notes"
                 value={notes || ''}
@@ -251,7 +243,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
           </div>
           <div className="builder__submit">
             <button
-              className="btn"
+              className="btn btn--big"
               onClick={handleSubmit}
               disabled={isIncomplete}
             >
