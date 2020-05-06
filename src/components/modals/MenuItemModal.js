@@ -8,8 +8,7 @@ import {
 } from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
-import { Builder } from '../packages'
-import { Option } from '../packages/Builder'
+import { Builder, BuilderOption } from '../packages'
 
 const MenuItemModal = () => {
   const dispatch = useDispatch()
@@ -53,7 +52,7 @@ const MenuItemModal = () => {
           <Builder
             menuItem={item}
             addItemToCart={handleAddItem}
-            renderOption={(props) => <Option {...props} />}
+            renderOption={(props) => <BuilderOption {...props} />}
           />
         </div>
       </div>

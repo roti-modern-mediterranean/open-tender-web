@@ -2,55 +2,7 @@ import propTypes from 'prop-types'
 import React from 'react'
 import { Plus, Minus } from 'react-feather'
 
-export const RadioButton = ({ option, handler, classes = '' }) => {
-  const price = parseFloat(option.price).toFixed(2)
-  return (
-    <label htmlFor={option.id} className={`label radio ${classes}`}>
-      <input
-        id={option.id}
-        type="radio"
-        className="radio__input"
-        checked={option.quantity >= 1}
-        onChange={handler}
-      />
-      <span className="radio__custom" />
-      <span className="radio__desc">
-        {option.name} ${price}
-      </span>
-    </label>
-  )
-}
-
-RadioButton.displayName = 'RadioButton'
-RadioButton.propTypes = {
-  groupId: propTypes.number,
-  option: propTypes.object,
-  handler: propTypes.func,
-  classes: propTypes.string,
-}
-
-export const RadioButtonGroup = ({ group, handler }) => {
-  return (
-    <fieldset>
-      {group.options.map((option) => (
-        <RadioButton
-          key={option.id}
-          option={option}
-          handler={() => handler(group.id, option.id)}
-        />
-      ))}
-    </fieldset>
-  )
-}
-
-RadioButtonGroup.displayName = 'RadioButtonGroup'
-RadioButtonGroup.propTypes = {
-  id: propTypes.number,
-  options: propTypes.array,
-  handler: propTypes.func,
-}
-
-export const Quantity = ({
+const BuilderQuantity = ({
   item,
   adjust,
   increment,
@@ -106,8 +58,8 @@ export const Quantity = ({
   )
 }
 
-Quantity.displayName = 'Quantity'
-Quantity.propTypes = {
+BuilderQuantity.displayName = 'BuilderQuantity'
+BuilderQuantity.propTypes = {
   name: propTypes.string,
   id: propTypes.oneOfType([propTypes.number, propTypes.string]),
   classes: propTypes.string,
@@ -118,3 +70,5 @@ Quantity.propTypes = {
   size: propTypes.number,
   incrementDisabled: propTypes.bool,
 }
+
+export default BuilderQuantity

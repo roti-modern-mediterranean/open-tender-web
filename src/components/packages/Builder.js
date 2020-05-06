@@ -1,142 +1,9 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
-import { RadioButtonGroup, Quantity } from './BuilderInputs'
-
-const displayPrice = (price) => {
-  return parseFloat(price).toFixed(2)
-}
-
-export const Option = ({
-  group,
-  option,
-  adjust,
-  increment,
-  decrement,
-  classes = '',
-}) => {
-  const groupAtMax = group.max !== 0 && group.quantity === group.max
-  const optionAtMax = option.max !== 0 && option.quantity === option.max
-  const incrementDisabled = groupAtMax || optionAtMax
-  const groupAtMin = group.min !== 0 && group.quantity === group.min
-  const optionAtMin = option.min !== 0 && option.quantity === option.min
-  const decrementDisabled = groupAtMin || optionAtMin || option.quantity === 0
-  return (
-    <li>
-      <span className="builder__option">
-        <span className="builder__option__name">{option.name}</span>
-        <span className="builder__option__price">
-          ${displayPrice(option.price)}
-        </span>
-        <span className="builder__option__quantity">
-          <Quantity
-            item={option}
-            adjust={adjust}
-            increment={increment}
-            decrement={decrement}
-            incrementDisabled={incrementDisabled}
-            decrementDisabled={decrementDisabled}
-            classes={classes}
-          />
-        </span>
-        <span className="builder__option__price">
-          ${displayPrice(option.totalPrice)}
-        </span>
-      </span>
-    </li>
-  )
-}
-
-Option.displayName = 'Option'
-Option.propTypes = {
-  group: propTypes.object,
-  option: propTypes.object,
-  adjust: propTypes.func,
-  increment: propTypes.func,
-  decrement: propTypes.func,
-  size: propTypes.number,
-  classes: propTypes.string,
-}
-
-const GroupWarning = ({ quantity, min, max }) => {
-  const isRadio = min === 1 && max === 1
-  if (quantity < min) {
-    return <span className="builder__group__warning -min">Below Minimum</span>
-  } else if (quantity === max && max !== 0 && !isRadio) {
-    return <span className="builder__group__warning -max">At Maximum</span>
-  } else {
-    return null
-  }
-}
-
-GroupWarning.displayName = 'GroupWarning'
-GroupWarning.propTypes = {
-  group: propTypes.object,
-}
-
-const makeOrderItemGroups = (optionGroups, isEdit) => {
-  const groups = optionGroups.map((g) => {
-    const options = g.option_items.map((o) => {
-      const quantity = o.opt_is_default && !isEdit ? 1 : 0
-      const option = {
-        id: o.id,
-        name: o.name,
-        price: parseFloat(o.price),
-        quantity: quantity,
-        isDefault: o.opt_is_default,
-        increment: o.increment,
-        maxQuantity: o.max_quantity,
-        minQuantity: o.min_quantity,
-      }
-      return option
-    })
-    const group = {
-      id: g.id,
-      name: g.name,
-      description: g.description,
-      max: g.max_options,
-      min: g.min_options,
-      inc: g.included_options,
-      options: options,
-    }
-    return group
-  })
-  return groups
-}
-
-const calcPrices = (item) => {
-  const groups = item.groups.map((g) => {
-    let groupQuantity = 0
-    const options = g.options.map((o) => {
-      const includedRemaining = Math.max(g.inc - groupQuantity, 0)
-      const priceQuantity = Math.max(o.quantity - includedRemaining, 0)
-      const option = { ...o, totalPrice: priceQuantity * o.price }
-      groupQuantity += o.quantity
-      return option
-    })
-    return { ...g, quantity: groupQuantity, options }
-  })
-  const optionsPrice = groups.reduce((t, g) => {
-    return t + g.options.reduce((ot, o) => ot + o.totalPrice, 0.0)
-  }, 0.0)
-  const totalPrice = item.quantity * (item.price + optionsPrice)
-  return { ...item, totalPrice: totalPrice, groups: groups }
-}
-
-const makeOrderItem = (item, isEdit) => {
-  const groups = makeOrderItemGroups(item.option_groups, isEdit)
-  const orderItem = {
-    id: item.id,
-    name: item.name,
-    groups: groups,
-    quantity: item.min_quantity || 1 * item.increment,
-    price: parseFloat(item.price),
-    increment: item.increment,
-    maxQuantity: item.max_quantity,
-    minQuantity: item.min_quantity,
-  }
-  const pricedItem = calcPrices(orderItem)
-  return pricedItem
-}
+import BuilderRadioGroup from './BuilderRadioGroup'
+import BuilderGroupWarning from './BuilderGroupWarning'
+import BuilderQuantity from './BuilderQuantity'
+import { displayPrice, makeOrderItem, calcPrices } from './utils'
 
 const useBuilder = (menuItem) => {
   const orderItem = menuItem.index ? menuItem : makeOrderItem(menuItem)
@@ -290,7 +157,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
             <div className="builder__group__header">
               <h3 className="builder__group__name">{group.name}</h3>
               <p className="builder__group__settings font-size-small">
-                <GroupWarning {...group} />
+                <BuilderGroupWarning {...group} />
                 <span>
                   {group.min} min, {group.max} max, {group.inc} included
                 </span>
@@ -298,7 +165,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
             </div>
             <div className="builder__options">
               {group.min === 1 && group.max === 1 ? (
-                <RadioButtonGroup group={group} handler={toggleOption} />
+                <BuilderRadioGroup group={group} handler={toggleOption} />
               ) : (
                 <ul>
                   {group.options.map((option) => {
@@ -314,7 +181,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
                     return renderOption(optionProps)
                   })}
                   {/* {group.options.map((option) => (
-                    <Option
+                    <BuilderOption
                       key={`${group.id}-${option.id}`}
                       group={group}
                       option={option}
@@ -333,7 +200,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
             <div className="builder__option__name">Item Quantity</div>
             <div className="builder__option__price">${displayPrice(price)}</div>
             <div className="builder__option__quantity">
-              <Quantity
+              <BuilderQuantity
                 item={item}
                 adjust={setQuantity}
                 increment={increment}
