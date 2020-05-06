@@ -22,12 +22,12 @@ export const Option = ({
   const decrementDisabled = groupAtMin || optionAtMin || option.quantity === 0
   return (
     <li>
-      <span className="modal__option">
-        <span className="modal__option__name">{option.name}</span>
-        <span className="modal__option__price">
+      <span className="builder__option">
+        <span className="builder__option__name">{option.name}</span>
+        <span className="builder__option__price">
           ${displayPrice(option.price)}
         </span>
-        <span className="modal__option__quantity">
+        <span className="builder__option__quantity">
           <Quantity
             item={option}
             adjust={adjust}
@@ -38,7 +38,7 @@ export const Option = ({
             classes={classes}
           />
         </span>
-        <span className="modal__option__price">
+        <span className="builder__option__price">
           ${displayPrice(option.totalPrice)}
         </span>
       </span>
@@ -60,9 +60,9 @@ Option.propTypes = {
 const GroupWarning = ({ quantity, min, max }) => {
   const isRadio = min === 1 && max === 1
   if (quantity < min) {
-    return <span className="modal__group__warning -min">Below Minimum</span>
+    return <span className="builder__group__warning -min">Below Minimum</span>
   } else if (quantity === max && max !== 0 && !isRadio) {
-    return <span className="modal__group__warning -max">At Maximum</span>
+    return <span className="builder__group__warning -max">At Maximum</span>
   } else {
     return null
   }
@@ -138,7 +138,7 @@ const makeOrderItem = (item, isEdit) => {
   return pricedItem
 }
 
-const Builder = ({ menuItem, addItemToCart, renderOption }) => {
+const useBuilder = (menuItem) => {
   const orderItem = menuItem.index ? menuItem : makeOrderItem(menuItem)
   const [item, setItem] = useState(orderItem)
 
@@ -157,7 +157,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
     setItem(calcPrices({ ...item, quantity: newQuantity }))
   }
 
-  const adjust = (quantity) => {
+  const setQuantity = (quantity) => {
     setItem(calcPrices({ ...item, quantity: quantity }))
   }
 
@@ -220,7 +220,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
     setItem(calcPrices({ ...item, groups: groups }))
   }
 
-  const adjustOption = (groupId, optionId, quantity) => {
+  const setOptionQuantity = (groupId, optionId, quantity) => {
     const groups = item.groups.map((group) => {
       if (group.id === groupId) {
         const count = group.options
@@ -246,6 +246,34 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
     setItem(calcPrices({ ...item, groups: groups }))
   }
 
+  return {
+    item,
+    increment,
+    decrement,
+    setQuantity,
+    setMadeFor,
+    setNotes,
+    toggleOption,
+    incrementOption,
+    decrementOption,
+    setOptionQuantity,
+  }
+}
+
+const Builder = ({ menuItem, addItemToCart, renderOption }) => {
+  const {
+    item,
+    increment,
+    decrement,
+    setQuantity,
+    setMadeFor,
+    setNotes,
+    toggleOption,
+    incrementOption,
+    decrementOption,
+    setOptionQuantity,
+  } = useBuilder(menuItem)
+
   const handleSubmit = (evt) => {
     evt.preventDefault()
     addItemToCart(item)
@@ -255,20 +283,20 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
   const { price, totalPrice, groups, notes, madeFor } = item
   const isIncomplete = groups.filter((g) => g.quantity < g.min).length > 0
   return (
-    <div className="modal__item">
-      <form className="modal__groups">
+    <div className="builder__item">
+      <form className="builder__groups">
         {groups.map((group) => (
-          <div key={group.id} className="modal__group">
-            <div className="modal__group__header">
-              <h3 className="modal__group__name">{group.name}</h3>
-              <p className="modal__group__settings font-size-small">
+          <div key={group.id} className="builder__group">
+            <div className="builder__group__header">
+              <h3 className="builder__group__name">{group.name}</h3>
+              <p className="builder__group__settings font-size-small">
                 <GroupWarning {...group} />
                 <span>
                   {group.min} min, {group.max} max, {group.inc} included
                 </span>
               </p>
             </div>
-            <div className="modal__options">
+            <div className="builder__options">
               {group.min === 1 && group.max === 1 ? (
                 <RadioButtonGroup group={group} handler={toggleOption} />
               ) : (
@@ -279,7 +307,7 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
                       group,
                       option,
                       adjust: (quantity) =>
-                        adjustOption(group.id, option.id, quantity),
+                        setOptionQuantity(group.id, option.id, quantity),
                       increment: () => incrementOption(group.id, option.id),
                       decrement: () => decrementOption(group.id, option.id),
                     }
@@ -300,24 +328,24 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
             </div>
           </div>
         ))}
-        <div className="modal__quantity">
-          <div className="modal__option">
-            <div className="modal__option__name">Item Quantity</div>
-            <div className="modal__option__price">${displayPrice(price)}</div>
-            <div className="modal__option__quantity">
+        <div className="builder__quantity">
+          <div className="builder__option">
+            <div className="builder__option__name">Item Quantity</div>
+            <div className="builder__option__price">${displayPrice(price)}</div>
+            <div className="builder__option__quantity">
               <Quantity
                 item={item}
-                adjust={adjust}
+                adjust={setQuantity}
                 increment={increment}
                 decrement={decrement}
               />
             </div>
-            <div className="modal__option__price">
+            <div className="builder__option__price">
               ${displayPrice(totalPrice)}
             </div>
           </div>
         </div>
-        <div className="modal__notes">
+        <div className="builder__notes">
           <label htmlFor="item-notes" className="label">
             <span>Notes</span>
             <textarea
@@ -327,8 +355,8 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
             />
           </label>
         </div>
-        <div className="modal__submit">
-          <div className="modal__made-for">
+        <div className="builder__submit">
+          <div className="builder__made-for">
             <label htmlFor="made-for" className="label">
               <span>Made For</span>
               <input

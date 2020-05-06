@@ -70,23 +70,23 @@
   }
 }
 
-.modal__group {
+.builder__group {
   margin: 0 0 2rem;
 }
 
-.modal__group__header {
+.builder__group__header {
   display: flex;
   margin: 0 0 1.5rem;
   justify-content: space-between;
   align-items: center;
 }
 
-.modal__group__settings {
+.builder__group__settings {
   position: relative;
 }
 
-.modal__group__warning.-min,
-.modal__group__warning.-max {
+.builder__group__warning.-min,
+.builder__group__warning.-max {
   padding: 0.1rem 0.8rem 0.4rem;
   margin: 0 1rem 0 0;
   @include breakpoint(mobile) {
@@ -97,15 +97,15 @@
   }
 }
 
-.modal__group__warning.-min {
+.builder__group__warning.-min {
   @extend %warning;
 }
 
-.modal__group__warning.-max {
+.builder__group__warning.-max {
   @extend %warning-success;
 }
 
-.modal__options {
+.builder__options {
   label.radio {
     display: block;
     width: 100%;
@@ -117,7 +117,7 @@
   }
 }
 
-.modal__option {
+.builder__option {
   display: flex;
   width: 100%;
   margin: 0 0 0.8rem;
@@ -127,11 +127,11 @@
   }
 }
 
-.modal__option__name {
+.builder__option__name {
   width: 46%;
 }
 
-.modal__option__quantity {
+.builder__option__quantity {
   width: 30%;
   text-align: right;
 
@@ -140,21 +140,21 @@
   }
 }
 
-.modal__option__price {
+.builder__option__price {
   width: 12%;
   text-align: right;
 }
 
-.modal__item.-preview {
-  .modal__option__name {
+.builder__item.-preview {
+  .builder__option__name {
     width: 80%;
   }
-  .modal__option__price {
+  .builder__option__price {
     width: 20%;
   }
 }
 
-.modal__quantity {
+.builder__quantity {
   display: flex;
   // width: 24rem;
   margin: 4rem 0 0rem;
@@ -162,11 +162,11 @@
   align-items: center;
 }
 
-.modal__quantity__label {
+.builder__quantity__label {
   padding: 0 0 0.2rem;
 }
 
-.modal__notes {
+.builder__notes {
   @include clearfix;
   textarea {
     height: 7.3rem;
@@ -175,13 +175,13 @@
   }
 }
 
-.modal__submit {
+.builder__submit {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.modal__made-for {
+.builder__made-for {
   width: 50%;
   label {
     display: flex;
