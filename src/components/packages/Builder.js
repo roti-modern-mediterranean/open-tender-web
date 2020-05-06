@@ -59,7 +59,7 @@ Quantity.propTypes = {
   incrementDisabled: propTypes.bool,
 }
 
-const Option = ({
+export const Option = ({
   group,
   option,
   adjust,
@@ -71,7 +71,7 @@ const Option = ({
   const name = `${option.name} quantity in ${group.name} group`
   const isMaxedOut = group.max !== 0 && group.quantity === group.max
   return (
-    <li key={option.id}>
+    <li>
       <span className="modal__option">
         <span className="modal__option__name">{option.name}</span>
         <span className="modal__option__price">
@@ -190,7 +190,7 @@ const makeOrderItem = (item, isEdit) => {
   return pricedItem
 }
 
-const Builder = ({ menuItem, addItemToCart }) => {
+const Builder = ({ menuItem, addItemToCart, renderOption }) => {
   const orderItem = menuItem.index ? menuItem : makeOrderItem(menuItem)
   const [item, setItem] = useState(orderItem)
 
@@ -352,7 +352,18 @@ const Builder = ({ menuItem, addItemToCart }) => {
                 />
               ) : (
                 <ul>
-                  {group.options.map((option) => (
+                  {group.options.map((option) => {
+                    const optionProps = {
+                      key: `${group.id}-${option.id}`,
+                      group,
+                      option,
+                      adjust: handleAdjustOption,
+                      increment: handleIncrementOption,
+                      decrement: handleDecrementOption,
+                    }
+                    return renderOption(optionProps)
+                  })}
+                  {/* {group.options.map((option) => (
                     <Option
                       key={`${group.id}-${option.id}`}
                       group={group}
@@ -361,7 +372,7 @@ const Builder = ({ menuItem, addItemToCart }) => {
                       increment={handleIncrementOption}
                       decrement={handleDecrementOption}
                     />
-                  ))}
+                  ))} */}
                 </ul>
               )}
             </div>

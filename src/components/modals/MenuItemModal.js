@@ -9,6 +9,7 @@ import {
 import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
 import { Builder } from '../packages'
+import { Option } from '../packages/Builder'
 
 const MenuItemModal = () => {
   const dispatch = useDispatch()
@@ -49,7 +50,11 @@ const MenuItemModal = () => {
           {item.description && <p>{item.description}</p>}
         </div>
         <div className="modal__body">
-          <Builder menuItem={item} addItemToCart={handleAddItem} />
+          <Builder
+            menuItem={item}
+            addItemToCart={handleAddItem}
+            renderOption={(props) => <Option {...props} />}
+          />
         </div>
       </div>
     </>
