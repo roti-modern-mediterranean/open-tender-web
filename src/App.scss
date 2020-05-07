@@ -12,6 +12,7 @@
 @import './src/sass/_card';
 @import './src/sass/_location';
 @import './src/sass/_menu';
+@import './src/sass/_quantity';
 @import './src/sass/_builder';
 
 body {
@@ -74,7 +75,7 @@ body.has-modal {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: transparent;
+  // background-color: transparent;
 }
 
 .background {

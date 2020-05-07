@@ -2,9 +2,11 @@ import propTypes from 'prop-types'
 import React from 'react'
 
 const BuilderRadio = ({ option, handler, classes = '' }) => {
-  const price = parseFloat(option.price).toFixed(2)
   return (
-    <label htmlFor={option.id} className={`label radio ${classes}`}>
+    <label
+      htmlFor={option.id}
+      className={`label radio builder__radio ${classes}`}
+    >
       <input
         id={option.id}
         type="radio"
@@ -13,9 +15,6 @@ const BuilderRadio = ({ option, handler, classes = '' }) => {
         onChange={handler}
       />
       <span className="radio__custom" />
-      <span className="radio__desc">
-        {option.name} ${price}
-      </span>
     </label>
   )
 }

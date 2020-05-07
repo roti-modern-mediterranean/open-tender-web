@@ -1,64 +1,3 @@
-%filter-styles {
-  padding: 1rem 1.1rem 0.8rem;
-  outline: 0;
-  border-radius: 0.5rem;
-  // @extend %mono-font;
-  font-size: 1.1rem;
-  line-height: 1.1;
-}
-
-%warning {
-  padding: 0.4rem 1rem 0.6rem;
-  margin: -0.5rem 0;
-  border-radius: 1.2rem;
-  line-height: 1;
-  font-weight: 300;
-  text-transform: lowercase;
-}
-
-%warning-success {
-  @extend %warning;
-}
-
-%warning-alert {
-  @extend %warning;
-}
-
-.quantity {
-  display: inline-flex;
-  align-items: center;
-  min-height: 4rem;
-  border-radius: 2rem;
-
-  label {
-    display: block;
-  }
-
-  input[type='number'],
-  input[type='text'] {
-    width: 2.4rem;
-    height: 2.4rem;
-    padding: 0 0 0.2rem;
-    border-radius: 1.2rem;
-    text-align: center;
-    font-weight: bold;
-  }
-
-  button {
-    width: 3.2rem;
-    height: 3.2rem;
-    padding: 0.8rem;
-  }
-
-  &__increase {
-    margin-right: 0.2rem;
-  }
-
-  &__decrease {
-    margin-left: 0.2rem;
-  }
-}
-
 .builder {
   &__item {
     position: relative;
@@ -169,16 +108,13 @@
   &__options {
     width: 100%;
     padding: 1rem 2rem;
+  }
 
-    label.radio {
-      display: block;
-      width: 100%;
-      margin: 0 0 0.8rem;
-
-      span.radio__desc {
-        top: -0.6rem;
-      }
-    }
+  &__radio {
+    display: block;
+    width: 9.2rem;
+    min-width: 9.2rem;
+    text-align: center;
   }
 
   &__option {
