@@ -67,6 +67,23 @@ $modal-speed: 250ms;
   }
 }
 
+/* reveal */
+
+$reveal-speed: 250ms;
+
+.reveal-enter,
+.reveal-exit.reveal-exit-active {
+  transition: all $reveal-speed ease;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.reveal-enter.reveal-enter-active,
+.reveal-exit {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* alerts */
 
 $fade-up-speed: 500ms;

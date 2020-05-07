@@ -127,7 +127,13 @@ const useBuilder = (menuItem) => {
   }
 }
 
-const Builder = ({ menuItem, addItemToCart, renderOption }) => {
+const Builder = ({
+  menuItem,
+  addItemToCart,
+  showImage,
+  renderHeader,
+  renderOption,
+}) => {
   const {
     item,
     increment,
@@ -149,24 +155,11 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
 
   const { groups, notes, madeFor, totalPrice } = item
   const isIncomplete = groups.filter((g) => g.quantity < g.min).length > 0
-  const bgStyle = item.imageUrl
-    ? { backgroundImage: `url(${item.imageUrl}` }
-    : null
+
   return (
     <form className="builder__item">
       <div className="builder__content">
-        {bgStyle && (
-          <div
-            className="builder__image bg-image bg-secondary-color"
-            style={bgStyle}
-          >
-            &nbsp;
-          </div>
-        )}
-        <div className="builder__header bg-color">
-          <h2 className="ot-font-size-h3">{item.name}</h2>
-          {item.description && <p>{item.description}</p>}
-        </div>
+        {renderHeader({ item, showImage })}
         <div className="builder__body bg-secondary-color">
           <div className="builder__groups">
             {groups.map((group) => (
@@ -229,8 +222,11 @@ const Builder = ({ menuItem, addItemToCart, renderOption }) => {
         </div>
       </div>
       <div className="builder__footer bg-color">
-        <div className="builder__price heading ot-font-size-h3">
-          ${displayPrice(totalPrice)}
+        <div className="builder__price ot-font-size-h5 ot-bold">
+          <span>${displayPrice(totalPrice)}</span>
+          {item.cals && (
+            <span className="secondary-color">{item.cals} cal</span>
+          )}
         </div>
         <div className="builder__actions">
           <div className="builder__quantity">

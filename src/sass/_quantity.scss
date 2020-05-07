@@ -1,15 +1,23 @@
 .quantity {
   display: inline-flex;
+  justify-content: center;
   align-items: center;
+  min-width: 9.2rem;
   min-height: 4rem;
   border-radius: 2rem;
+  text-align: center;
 
   label {
     display: block;
   }
 
+  button {
+    transition: none;
+  }
+
   input[type='number'],
-  input[type='text'] {
+  input[type='text'],
+  &__increase__zero {
     width: 2.4rem;
     height: 2.4rem;
     padding: 0 0 0.2rem;
@@ -18,7 +26,13 @@
     font-weight: bold;
   }
 
-  button {
+  &__increase__zero {
+    display: block;
+    padding: 0.4rem;
+  }
+
+  &__increase,
+  &__decrease {
     width: 3.2rem;
     height: 3.2rem;
     padding: 0.8rem;

@@ -29,7 +29,17 @@ const BuilderQuantity = ({
     evt.target.blur()
   }
 
-  return (
+  return item.quantity === 0 ? (
+    <div className={`quantity quantity--zero ${classes}`}>
+      <button
+        className="quantity__increase__zero border-radio"
+        onClick={handleIncrement}
+        disabled={incrementDisabled}
+      >
+        <Plus size={null} />
+      </button>
+    </div>
+  ) : (
     <div className={`quantity bg-secondary-color ${classes}`}>
       <button
         className="quantity__decrease"
