@@ -15,6 +15,7 @@ export const makeModifierNames = (item) => {
 }
 
 const makeOrderItemGroups = (optionGroups, isEdit) => {
+  if (!optionGroups) return []
   const groups = optionGroups.map((g) => {
     const options = g.option_items.map((o) => {
       const quantity = o.opt_is_default && !isEdit ? o.min_quantity || 1 : 0
@@ -97,4 +98,47 @@ export const calcCartCounts = (cart) => {
     const newCount = (obj[item.id] || 0) + item.quantity
     return { ...obj, [item.id]: newCount }
   }, {})
+}
+
+export const addItem = (cart, item) => {
+  if (typeof item.index === 'undefined') {
+    cart.push({ ...item, index: cart.length })
+  } else {
+    cart[item.index] = item
+  }
+  const cartCounts = calcCartCounts(cart)
+  return { cart, cartCounts }
+}
+
+export const removeItem = (cart, index) => {
+  cart.splice(index, 1)
+  cart = cart.map((i, index) => ({ ...i, index: index }))
+  const cartCounts = calcCartCounts(cart)
+  return { cart, cartCounts }
+}
+
+export const incrementItem = (cart, index) => {
+  const item = cart[index]
+  if (item.max === 0 || item.quantity < item.max) {
+    let newQuantity = item.quantity + item.increment
+    newQuantity = item.max === 0 ? newQuantity : Math.min(item.max, newQuantity)
+    const newItem = calcPrices({ ...item, quantity: newQuantity })
+    cart[index] = newItem
+  }
+  const cartCounts = calcCartCounts(cart)
+  return { cart, cartCounts }
+}
+
+export const decrementItem = (cart, index) => {
+  const item = cart[index]
+  const newQuantity = Math.max(item.quantity - item.increment, 0)
+  if (newQuantity === 0) {
+    cart.splice(index, 1)
+    cart = cart.map((i, index) => ({ ...i, index: index }))
+  } else {
+    const newItem = calcPrices({ ...item, quantity: newQuantity })
+    cart[index] = newItem
+  }
+  const cartCounts = calcCartCounts(cart)
+  return { cart, cartCounts }
 }

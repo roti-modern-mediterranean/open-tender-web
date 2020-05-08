@@ -18,7 +18,7 @@ const MenuItemModal = () => {
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(setCurrentItem(null))
-    }, 500)
+    }, 250)
   }
 
   const handleAddItem = (item) => {
@@ -26,7 +26,7 @@ const MenuItemModal = () => {
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(setCurrentItem(null))
-    }, 500)
+    }, 250)
   }
 
   return (

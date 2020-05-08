@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { calcPrices, calcCartCounts } from '../components/packages/utils'
+import {
+  addItem,
+  removeItem,
+  incrementItem,
+  decrementItem,
+} from '../components/packages/utils'
 
 const initialState = {
   orderType: null,
@@ -34,42 +39,30 @@ const orderSlice = createSlice({
       state.currentItem = { ...action.payload }
     },
     addItemToCart: (state, action) => {
-      const item = action.payload
-      if (typeof item.index === 'undefined') {
-        state.cart.push({ ...item, index: state.cart.length })
-      } else {
-        state.cart[item.index] = item
-      }
-      state.cartCounts = calcCartCounts(state.cart)
+      const { cart, cartCounts } = addItem([...state.cart], action.payload)
+      state.cart = cart
+      state.cartCounts = cartCounts
     },
     removeItemFromCart: (state, action) => {
-      state.cart.splice(action.payload, 1)
-      state.cart = state.cart.map((i, index) => ({ ...i, index: index }))
-      state.cartCounts = calcCartCounts(state.cart)
+      const { cart, cartCounts } = removeItem([...state.cart], action.payload)
+      state.cart = cart
+      state.cartCounts = cartCounts
     },
     incrementItemInCart: (state, action) => {
-      const index = action.payload
-      const item = state.cart[index]
-      if (item.max === 0 || item.quantity < item.max) {
-        let newQuantity = item.quantity + item.increment
-        newQuantity =
-          item.max === 0 ? newQuantity : Math.min(item.max, newQuantity)
-        const newItem = calcPrices({ ...item, quantity: newQuantity })
-        state.cart[index] = newItem
-      }
-      state.cartCounts = calcCartCounts(state.cart)
+      const { cart, cartCounts } = incrementItem(
+        [...state.cart],
+        action.payload
+      )
+      state.cart = cart
+      state.cartCounts = cartCounts
     },
     decrementItemInCart: (state, action) => {
-      const index = action.payload
-      const item = state.cart[index]
-      const newQuantity = Math.max(item.quantity - item.increment, 0)
-      if (newQuantity === 0) {
-        state.cart.splice(index, 1)
-      } else {
-        const newItem = calcPrices({ ...item, quantity: newQuantity })
-        state.cart[index] = newItem
-      }
-      state.cartCounts = calcCartCounts(state.cart)
+      const { cart, cartCounts } = decrementItem(
+        [...state.cart],
+        action.payload
+      )
+      state.cart = cart
+      state.cartCounts = cartCounts
     },
   },
 })
