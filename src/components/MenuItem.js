@@ -1,11 +1,13 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
-import { setCurrentItem } from '../slices/orderSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCurrentItem, selectCartCounts } from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
 
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
+  const cartCounts = useSelector(selectCartCounts)
+  const cartCount = cartCounts[item.id] || 0
   const smallImg = item.small_image_url
   const bgStyle = smallImg ? { backgroundImage: `url(${smallImg}` } : null
 
@@ -17,14 +19,18 @@ const MenuItem = ({ item }) => {
   }
 
   return (
-    <div key={item.id} className="menu__item">
+    <div className="menu__item">
       <button className="font-size" onClick={handleClick}>
-        {smallImg && (
-          <div
-            className="menu__item__image bg-image bg-secondary-color border-radius"
-            style={bgStyle}
-          />
-        )}
+        <div
+          className="menu__item__image bg-image bg-secondary-color border-radius"
+          style={bgStyle}
+        >
+          {cartCount > 0 && (
+            <div className="menu__item__count btn--cart-count font-size-small">
+              {cartCount}
+            </div>
+          )}
+        </div>
         <div className="menu__item__content">
           <h3 className="menu__item__name font-size-big">{item.name}</h3>
           {item.description && (

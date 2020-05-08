@@ -5,6 +5,7 @@ import {
   incrementItemInCart,
   decrementItemInCart,
   selectCart,
+  removeItemFromCart,
 } from '../slices/orderSlice'
 import {} from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
@@ -14,10 +15,16 @@ const Cart = () => {
   const dispatch = useDispatch()
   const cart = useSelector(selectCart)
 
-  const handleClick = (evt, item) => {
+  const editItem = (evt, item) => {
     evt.preventDefault()
     dispatch(setCurrentItem(item))
     dispatch(openModal('item'))
+    evt.target.blur()
+  }
+
+  const removeItem = (evt, item) => {
+    evt.preventDefault()
+    dispatch(removeItemFromCart(item.index))
     evt.target.blur()
   }
 
@@ -28,7 +35,8 @@ const Cart = () => {
           <li key={`${item.id}-${index}`}>
             <BuilderOptionWrapper
               option={item}
-              editItem={(evt) => handleClick(evt, item)}
+              editItem={(evt) => editItem(evt, item)}
+              removeItem={(evt) => removeItem(evt, item)}
             >
               <BuilderQuantity
                 item={item}

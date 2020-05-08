@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { calcPrices } from '../components/packages/utils'
+import { calcPrices, calcCartCounts } from '../components/packages/utils'
 
 const initialState = {
   orderType: null,
@@ -8,6 +8,7 @@ const initialState = {
   requestedAt: 'asap',
   currentItem: null,
   cart: [],
+  cartCounts: {},
 }
 
 const orderSlice = createSlice({
@@ -39,9 +40,12 @@ const orderSlice = createSlice({
       } else {
         state.cart[item.index] = item
       }
+      state.cartCounts = calcCartCounts(state.cart)
     },
     removeItemFromCart: (state, action) => {
       state.cart.splice(action.payload, 1)
+      state.cart = state.cart.map((i, index) => ({ ...i, index: index }))
+      state.cartCounts = calcCartCounts(state.cart)
     },
     incrementItemInCart: (state, action) => {
       const index = action.payload
@@ -53,6 +57,7 @@ const orderSlice = createSlice({
         const newItem = calcPrices({ ...item, quantity: newQuantity })
         state.cart[index] = newItem
       }
+      state.cartCounts = calcCartCounts(state.cart)
     },
     decrementItemInCart: (state, action) => {
       const index = action.payload
@@ -64,6 +69,7 @@ const orderSlice = createSlice({
         const newItem = calcPrices({ ...item, quantity: newQuantity })
         state.cart[index] = newItem
       }
+      state.cartCounts = calcCartCounts(state.cart)
     },
   },
 })
@@ -103,5 +109,6 @@ export const selectCartQuantity = (state) =>
   state.order.cart.reduce((t, i) => (t += i.quantity), 0)
 export const selectCartTotal = (state) =>
   state.order.cart.reduce((t, i) => (t += i.totalPrice), 0)
+export const selectCartCounts = (state) => state.order.cartCounts
 
 export default orderSlice.reducer

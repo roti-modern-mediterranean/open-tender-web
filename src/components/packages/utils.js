@@ -91,3 +91,10 @@ export const makeOrderItem = (item, isEdit) => {
   const pricedItem = calcPrices(orderItem)
   return pricedItem
 }
+
+export const calcCartCounts = (cart) => {
+  return cart.reduce((obj, item) => {
+    const newCount = (obj[item.id] || 0) + item.quantity
+    return { ...obj, [item.id]: newCount }
+  }, {})
+}
