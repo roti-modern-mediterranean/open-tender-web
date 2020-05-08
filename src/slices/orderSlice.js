@@ -42,6 +42,26 @@ const orderSlice = createSlice({
     removeItemFromCart: (state, action) => {
       state.cart.splice(action.payload, 1)
     },
+    incrementItemInCart: (state, action) => {
+      const index = action.payload
+      const item = state.cart[index]
+      if (item.max === 0 || item.quantity < item.max) {
+        const newQuantity = item.quantity + item.increment
+        state.cart[index].quantity =
+          item.max === 0 ? newQuantity : Math.min(item.max, newQuantity)
+      }
+    },
+    decrementItemInCart: (state, action) => {
+      const index = action.payload
+      const item = state.cart[index]
+      if (item.quantity > Math.max(item.min, 0)) {
+        state.cart[index].quantity = Math.max(
+          item.min,
+          item.quantity - item.increment,
+          0
+        )
+      }
+    },
   },
 })
 
@@ -54,12 +74,17 @@ export const {
   setCurrentItem,
   addItemToCart,
   removeItemFromCart,
+  incrementItemInCart,
+  decrementItemInCart,
 } = orderSlice.actions
 
 export const selectOrder = (state) => state.order
 export const selectOrderType = (state) => state.order.orderType
 export const selectServiceType = (state) => state.order.serviceType
 export const selectLocation = (state) => state.order.location
+// TODO: need to replace this
+export const selectLocationName = (state) =>
+  state.order.location ? state.order.location.store.full_name : null
 export const selectRequestedAt = (state) => state.order.requestedAt
 export const selectMenuVars = (state) => {
   if (!state.order.location) return {}
@@ -73,5 +98,7 @@ export const selectCurrentItem = (state) => state.order.currentItem
 export const selectCart = (state) => state.order.cart
 export const selectCartQuantity = (state) =>
   state.order.cart.reduce((t, i) => (t += i.quantity), 0)
+export const selectCartTotal = (state) =>
+  state.order.cart.reduce((t, i) => (t += i.quantity * i.totalPrice), 0)
 
 export default orderSlice.reducer

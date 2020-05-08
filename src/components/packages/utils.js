@@ -2,6 +2,18 @@ export const displayPrice = (price) => {
   return parseFloat(price).toFixed(2)
 }
 
+const getItemOptions = (item) => {
+  return item.groups
+    .map((group) => group.options.filter((option) => option.quantity > 0))
+    .flat()
+}
+
+export const makeModifierNames = (item) => {
+  return getItemOptions(item)
+    .map((option) => option.name)
+    .join(', ')
+}
+
 const makeOrderItemGroups = (optionGroups, isEdit) => {
   const groups = optionGroups.map((g) => {
     const options = g.option_items.map((o) => {
@@ -19,8 +31,8 @@ const makeOrderItemGroups = (optionGroups, isEdit) => {
         quantity: quantity,
         isDefault: o.opt_is_default,
         increment: o.increment,
-        maxQuantity: o.max_quantity,
-        minQuantity: o.min_quantity,
+        max: o.max_quantity,
+        min: o.min_quantity,
       }
       return option
     })
@@ -29,9 +41,9 @@ const makeOrderItemGroups = (optionGroups, isEdit) => {
       name: g.name,
       description: g.description,
       imageUrl: g.small_image_url,
+      included: g.included_options,
       max: g.max_options,
       min: g.min_options,
-      inc: g.included_options,
       options: options,
     }
     return group
@@ -43,7 +55,7 @@ export const calcPrices = (item) => {
   const groups = item.groups.map((g) => {
     let groupQuantity = 0
     const options = g.options.map((o) => {
-      const includedRemaining = Math.max(g.inc - groupQuantity, 0)
+      const includedRemaining = Math.max(g.included - groupQuantity, 0)
       const priceQuantity = Math.max(o.quantity - includedRemaining, 0)
       const option = { ...o, totalPrice: priceQuantity * o.price }
       groupQuantity += o.quantity
@@ -73,8 +85,8 @@ export const makeOrderItem = (item, isEdit) => {
     quantity: item.min_quantity || 1 * item.increment,
     price: parseFloat(item.price),
     increment: item.increment,
-    maxQuantity: item.max_quantity,
-    minQuantity: item.min_quantity,
+    max: item.max_quantity,
+    min: item.min_quantity,
   }
   const pricedItem = calcPrices(orderItem)
   return pricedItem

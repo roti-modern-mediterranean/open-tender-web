@@ -4,7 +4,7 @@ import { displayPrice } from './utils'
 import BuilderNutrition from './BuilderNutrition'
 
 const BuilderHeader = ({ item, showImage }) => {
-  const [showInfo, setShowInfo] = useState(true)
+  const [showInfo, setShowInfo] = useState(false)
 
   const toggleShow = (evt) => {
     evt.preventDefault()

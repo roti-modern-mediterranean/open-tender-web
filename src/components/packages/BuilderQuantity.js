@@ -11,12 +11,6 @@ const BuilderQuantity = ({
   decrementDisabled,
   classes = '',
 }) => {
-  const handleDecrement = (evt) => {
-    evt.preventDefault()
-    decrement()
-    evt.target.blur()
-  }
-
   const handleAdjust = (evt) => {
     const value = parseInt(evt.target.value)
     const quantity = isNaN(value) || value < 1 ? '' : value
@@ -24,8 +18,16 @@ const BuilderQuantity = ({
   }
 
   const handleIncrement = (evt) => {
+    console.log(evt)
     evt.preventDefault()
+    console.log(increment)
     increment()
+    evt.target.blur()
+  }
+
+  const handleDecrement = (evt) => {
+    evt.preventDefault()
+    decrement()
     evt.target.blur()
   }
 

@@ -10,17 +10,14 @@ const useBuilder = (menuItem) => {
   const [item, setItem] = useState(orderItem)
 
   const increment = () => {
-    const newQuantity = item.maxQuantity
-      ? Math.min(item.quantity + item.increment, item.maxQuantity)
+    const newQuantity = item.max
+      ? Math.min(item.quantity + item.increment, item.max)
       : item.quantity + item.increment
     setItem(calcPrices({ ...item, quantity: newQuantity }))
   }
 
   const decrement = () => {
-    const newQuantity = Math.max(
-      item.quantity - item.increment,
-      item.minQuantity
-    )
+    const newQuantity = Math.max(item.quantity - item.increment, item.min)
     setItem(calcPrices({ ...item, quantity: newQuantity }))
   }
 
@@ -60,7 +57,7 @@ const useBuilder = (menuItem) => {
           if (option.id === optionId) {
             const quantity = option.quantity + option.increment
             const quantities = [quantity]
-            if (option.maxQuantity !== 0) quantities.push(option.maxQuantity)
+            if (option.max !== 0) quantities.push(option.max)
             if (group.max !== 0) quantities.push(group.max - count)
             option.quantity = Math.min(...quantities)
           }
@@ -100,7 +97,7 @@ const useBuilder = (menuItem) => {
               option.quantity = ''
             } else {
               const quantities = [quantity]
-              if (option.maxQuantity !== 0) quantities.push(option.maxQuantity)
+              if (option.max !== 0) quantities.push(option.max)
               if (group.max !== 0) quantities.push(group.max - count)
               option.quantity = Math.min(...quantities)
             }

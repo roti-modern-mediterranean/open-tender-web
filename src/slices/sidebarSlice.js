@@ -10,6 +10,9 @@ const sidebarSlice = createSlice({
   reducers: {
     toggleSidebar: (state) => {
       state.isOpen = !state.isOpen
+      state.isOpen
+        ? document.body.classList.add('has-modal')
+        : document.body.classList.remove('has-modal')
     },
   },
 })

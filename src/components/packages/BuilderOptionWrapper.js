@@ -1,11 +1,13 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { displayPrice } from './utils'
+import { displayPrice, makeModifierNames } from './utils'
 
-const BuilderOptionWrapper = ({ option, children }) => {
+const BuilderOptionWrapper = ({ option, isCart, children }) => {
   const bgStyle = option.imageUrl
     ? { backgroundImage: `url(${option.imageUrl}` }
     : null
+  const desc = isCart ? makeModifierNames(option) : option.description
+  const price = isCart ? option.totalPrice : option.price
   return (
     <span className="builder__option">
       <span
@@ -18,13 +20,13 @@ const BuilderOptionWrapper = ({ option, children }) => {
         <span className="builder__option__name font-size-small ot-bold">
           {option.name}
         </span>
-        {option.description && (
+        {desc && (
           <span className="builder__option__desc font-size-x-small secondary-color">
-            {option.description}
+            {desc}
           </span>
         )}
         <span className="builder__option__price font-size-small ot-bold">
-          ${displayPrice(option.price)}
+          ${displayPrice(price)}
         </span>
       </span>
       <span className="builder__option__quantity">{children}</span>

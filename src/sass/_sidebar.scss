@@ -13,7 +13,7 @@
   top: 0;
   bottom: 0;
   right: 0;
-  width: 36rem;
+  width: 44rem;
   transform: translateX(100%);
   transition: all 0.25s ease;
 
@@ -22,24 +22,51 @@
   }
 
   &__container {
-    position: relative;
     width: 100%;
     height: 100%;
-    padding-bottom: 5rem;
-    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    // position: relative;
+
+    // padding-bottom: 5rem;
+    // overflow-y: scroll;
   }
 
   &__header {
     width: 100%;
     padding: 1.5rem 2rem;
     text-align: center;
+
+    span {
+      padding: 0 0.2rem;
+      // font-size: 110%;
+    }
+  }
+
+  &__title {
+    margin-bottom: 1rem;
+  }
+
+  &__content {
+    width: 100%;
+    flex-grow: 1;
+    overflow-y: scroll;
+    padding: 2rem 2rem;
+  }
+
+  &__cart {
+    padding: 1rem 2rem;
   }
 
   &__footer {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    // position: absolute;
+    // left: 0;
+    // right: 0;
+    // bottom: 0;
+    // width: 100%;
+    width: 100%;
     height: 7rem;
     display: flex;
     justify-content: center;
