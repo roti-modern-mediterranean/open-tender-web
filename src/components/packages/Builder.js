@@ -6,7 +6,8 @@ import BuilderRadioGroup from './BuilderRadioGroup'
 import BuilderQuantity from './BuilderQuantity'
 
 const useBuilder = (menuItem) => {
-  const orderItem = menuItem.index ? menuItem : makeOrderItem(menuItem)
+  const orderItem =
+    menuItem.index !== undefined ? menuItem : makeOrderItem(menuItem)
   const [item, setItem] = useState(orderItem)
 
   const increment = () => {
@@ -53,16 +54,18 @@ const useBuilder = (menuItem) => {
           .filter((o) => o.id !== optionId)
           .reduce((t, o) => t + o.quantity, 0)
         if (group.max !== 0 && count >= group.max) return group
-        group.options.map((option) => {
+        const options = group.options.map((option) => {
           if (option.id === optionId) {
-            const quantity = option.quantity + option.increment
+            let quantity = option.quantity + option.increment
             const quantities = [quantity]
             if (option.max !== 0) quantities.push(option.max)
             if (group.max !== 0) quantities.push(group.max - count)
-            option.quantity = Math.min(...quantities)
+            quantity = Math.min(...quantities)
+            return { ...option, quantity }
           }
           return option
         })
+        return { ...group, options }
       }
       return group
     })
@@ -72,12 +75,14 @@ const useBuilder = (menuItem) => {
   const decrementOption = (groupId, optionId) => {
     const groups = item.groups.map((group) => {
       if (group.id === groupId) {
-        group.options.map((option) => {
+        const options = group.options.map((option) => {
           if (option.id === optionId) {
-            option.quantity = Math.max(option.quantity - option.increment, 0)
+            const quantity = Math.max(option.quantity - option.increment, 0)
+            return { ...option, quantity }
           }
           return option
         })
+        return { ...group, options }
       }
       return group
     })
@@ -91,19 +96,22 @@ const useBuilder = (menuItem) => {
           .filter((o) => o.id !== optionId)
           .reduce((t, o) => t + o.quantity, 0)
         if (group.max !== 0 && count >= group.max) return group
-        group.options.map((option) => {
+        const options = group.options.map((option) => {
           if (option.id === optionId) {
             if (quantity === '') {
-              option.quantity = ''
+              return { ...option, quantity }
             } else {
               const quantities = [quantity]
               if (option.max !== 0) quantities.push(option.max)
               if (group.max !== 0) quantities.push(group.max - count)
-              option.quantity = Math.min(...quantities)
+              quantity = Math.min(...quantities)
+              quantity = Math.max(quantity, option.min)
+              return { ...option, quantity }
             }
           }
           return option
         })
+        return { ...group, options }
       }
       return group
     })

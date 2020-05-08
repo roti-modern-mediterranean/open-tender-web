@@ -30,7 +30,7 @@ const orderSlice = createSlice({
       state.location = action.payload
     },
     setCurrentItem: (state, action) => {
-      state.currentItem = action.payload
+      state.currentItem = { ...action.payload }
     },
     addItemToCart: (state, action) => {
       const item = action.payload

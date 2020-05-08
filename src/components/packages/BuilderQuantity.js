@@ -18,9 +18,7 @@ const BuilderQuantity = ({
   }
 
   const handleIncrement = (evt) => {
-    console.log(evt)
     evt.preventDefault()
-    console.log(increment)
     increment()
     evt.target.blur()
   }

@@ -1,11 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectSidebar, toggleSidebar } from '../slices/sidebarSlice'
-import {
-  selectCart,
-  selectCartQuantity,
-  selectCartTotal,
-} from '../slices/orderSlice'
+import { selectCartQuantity, selectCartTotal } from '../slices/orderSlice'
 import SidebarOverlay from './SidebarOverlay'
 import Button from './Button'
 import Cart from './Cart'
@@ -15,7 +11,6 @@ const Sidebar = () => {
   const { isOpen } = useSelector(selectSidebar)
   const cartCount = useSelector(selectCartQuantity)
   const cartTotal = useSelector(selectCartTotal)
-  // const locationName = useSelector(selectLocationName)
   const classes = `sidebar bg-secondary-color ${isOpen ? 'is-open' : ''}`
 
   const handleClick = (evt) => {

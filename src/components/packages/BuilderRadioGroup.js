@@ -7,7 +7,7 @@ const BuilderRadioGroup = ({ group, handler }) => {
   return (
     <fieldset>
       {group.options.map((option) => (
-        <BuilderOptionWrapper option={option}>
+        <BuilderOptionWrapper key={`${group.id}-${option.id}`} option={option}>
           <BuilderRadio
             key={option.id}
             option={option}

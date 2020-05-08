@@ -58,7 +58,7 @@ export const calcPrices = (item) => {
       const includedRemaining = Math.max(g.included - groupQuantity, 0)
       const priceQuantity = Math.max(o.quantity - includedRemaining, 0)
       const option = { ...o, totalPrice: priceQuantity * o.price }
-      groupQuantity += o.quantity
+      groupQuantity += o.quantity || 0
       return option
     })
     return { ...g, quantity: groupQuantity, options }

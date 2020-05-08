@@ -2,12 +2,13 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { displayPrice, makeModifierNames } from './utils'
 
-const BuilderOptionWrapper = ({ option, isCart, children }) => {
+const BuilderOptionWrapper = ({ option, editItem, children }) => {
   const bgStyle = option.imageUrl
     ? { backgroundImage: `url(${option.imageUrl}` }
     : null
-  const desc = isCart ? makeModifierNames(option) : option.description
-  const price = isCart ? option.totalPrice / option.quantity : option.price
+  const desc = editItem ? makeModifierNames(option) : option.description
+  const price = editItem ? option.totalPrice / option.quantity : option.price
+
   return (
     <span className="builder__option">
       <span
@@ -29,20 +30,30 @@ const BuilderOptionWrapper = ({ option, isCart, children }) => {
           <span className="builder__option__details__price ot-bold">
             ${displayPrice(price)}
           </span>
-          {!isCart && option.cals && (
-            <span className="builder__option__details__cals ot-bold secondary-color">
-              {option.cals} cal
+          {editItem ? (
+            <span className="builder__option__details__edit ot-bold">
+              <button className="btn-link" onClick={editItem}>
+                edit
+              </button>
             </span>
-          )}
-          {!isCart && option.allergens && (
-            <span className="builder__option__details__allergens ot-alert-color">
-              {option.allergens}
-            </span>
-          )}
-          {!isCart && option.tags && (
-            <span className="builder__option__details__tags secondary-color">
-              {option.tags}
-            </span>
+          ) : (
+            <>
+              {option.cals && (
+                <span className="builder__option__details__cals ot-bold secondary-color">
+                  {option.cals} cal
+                </span>
+              )}
+              {option.allergens && (
+                <span className="builder__option__details__allergens ot-alert-color">
+                  {option.allergens}
+                </span>
+              )}
+              {option.tags && (
+                <span className="builder__option__details__tags secondary-color">
+                  {option.tags}
+                </span>
+              )}
+            </>
           )}
         </span>
       </span>
