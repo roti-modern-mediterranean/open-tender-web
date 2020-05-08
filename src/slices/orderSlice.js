@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { calcPrices } from '../components/packages/utils'
 
 const initialState = {
   orderType: null,
@@ -46,20 +47,22 @@ const orderSlice = createSlice({
       const index = action.payload
       const item = state.cart[index]
       if (item.max === 0 || item.quantity < item.max) {
-        const newQuantity = item.quantity + item.increment
-        state.cart[index].quantity =
+        let newQuantity = item.quantity + item.increment
+        newQuantity =
           item.max === 0 ? newQuantity : Math.min(item.max, newQuantity)
+        const newItem = calcPrices({ ...item, quantity: newQuantity })
+        state.cart[index] = newItem
       }
     },
     decrementItemInCart: (state, action) => {
       const index = action.payload
       const item = state.cart[index]
-      if (item.quantity > Math.max(item.min, 0)) {
-        state.cart[index].quantity = Math.max(
-          item.min,
-          item.quantity - item.increment,
-          0
-        )
+      const newQuantity = Math.max(item.quantity - item.increment, 0)
+      if (newQuantity === 0) {
+        state.cart.splice(index, 1)
+      } else {
+        const newItem = calcPrices({ ...item, quantity: newQuantity })
+        state.cart[index] = newItem
       }
     },
   },
@@ -99,6 +102,6 @@ export const selectCart = (state) => state.order.cart
 export const selectCartQuantity = (state) =>
   state.order.cart.reduce((t, i) => (t += i.quantity), 0)
 export const selectCartTotal = (state) =>
-  state.order.cart.reduce((t, i) => (t += i.quantity * i.totalPrice), 0)
+  state.order.cart.reduce((t, i) => (t += i.totalPrice), 0)
 
 export default orderSlice.reducer

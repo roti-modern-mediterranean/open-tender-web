@@ -2,21 +2,17 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectSidebar, toggleSidebar } from '../slices/sidebarSlice'
 import {
-  incrementItemInCart,
-  decrementItemInCart,
   selectCart,
   selectCartQuantity,
   selectCartTotal,
 } from '../slices/orderSlice'
-// import { iconMap } from '../utils/icons'
 import SidebarOverlay from './SidebarOverlay'
 import Button from './Button'
-import { BuilderOptionWrapper, BuilderQuantity } from './packages'
+import Cart from './Cart'
 
 const Sidebar = () => {
   const dispatch = useDispatch()
   const { isOpen } = useSelector(selectSidebar)
-  const cart = useSelector(selectCart)
   const cartCount = useSelector(selectCartQuantity)
   const cartTotal = useSelector(selectCartTotal)
   // const locationName = useSelector(selectLocationName)
@@ -36,37 +32,23 @@ const Sidebar = () => {
           <div className="sidebar__header bg-color">
             {/* <h2 className="ot-font-size-h5">Your Order from {locationName}</h2> */}
             <h2 className="sidebar__title ot-font-size-h3">Your Order</h2>
-            <p className="font-size-small secondary-color">
-              <span className="ot-bold body-color">{cartCount} items</span> for
-              a total of{' '}
-              <span className="ot-bold body-color">
-                ${cartTotal.toFixed(2)}
-              </span>{' '}
-              before tax
-            </p>
+            {cartCount === 0 ? (
+              <p className="font-size-small ot-alert-color">
+                Your cart is currently empty. Please add some items.
+              </p>
+            ) : (
+              <p className="font-size-small secondary-color">
+                <span className="ot-bold body-color">{cartCount} items</span>{' '}
+                for a total of{' '}
+                <span className="ot-bold body-color">
+                  ${cartTotal.toFixed(2)}
+                </span>{' '}
+                before tax
+              </p>
+            )}
           </div>
           <div className="sidebar__content">
-            <ul className="sidebar__cart bg-color border-radius">
-              {cart.map((item, index) => {
-                return (
-                  <li key={`${item.id}-${index}`}>
-                    <BuilderOptionWrapper option={item} isCart={true}>
-                      <BuilderQuantity
-                        item={item}
-                        adjust={null}
-                        increment={() => dispatch(incrementItemInCart(index))}
-                        decrement={() => dispatch(decrementItemInCart(index))}
-                        incrementDisabled={item.quantity === item.max}
-                        decrementDisabled={
-                          item.quantity === Math.max(0, item.min)
-                        }
-                        classes={null}
-                      />
-                    </BuilderOptionWrapper>
-                  </li>
-                )
-              })}
-            </ul>
+            <Cart />
           </div>
           <div className="sidebar__footer bg-color">
             {/* <Button
@@ -84,6 +66,7 @@ const Sidebar = () => {
               <Button
                 onClick={handleClick}
                 classes="btn btn--big btn--checkout"
+                disabled={cartCount === 0}
               >
                 Checkout
               </Button>

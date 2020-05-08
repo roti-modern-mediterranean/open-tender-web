@@ -17,7 +17,7 @@ export const makeModifierNames = (item) => {
 const makeOrderItemGroups = (optionGroups, isEdit) => {
   const groups = optionGroups.map((g) => {
     const options = g.option_items.map((o) => {
-      const quantity = o.opt_is_default && !isEdit ? 1 : 0
+      const quantity = o.opt_is_default && !isEdit ? o.min_quantity || 1 : 0
       const option = {
         id: o.id,
         name: o.name,

@@ -14,9 +14,10 @@ const BuilderOption = ({
   const groupAtMax = group.max !== 0 && group.quantity === group.max
   const optionAtMax = option.max !== 0 && option.quantity === option.max
   const incrementDisabled = groupAtMax || optionAtMax
-  const groupAtMin = group.min !== 0 && group.quantity === group.min
-  const optionAtMin = option.min !== 0 && option.quantity === option.min
-  const decrementDisabled = groupAtMin || optionAtMin || option.quantity === 0
+  // const groupAtMin = group.min !== 0 && group.quantity === group.min
+  // const optionAtMin = option.min !== 0 && option.quantity === option.min
+  // const decrementDisabled = groupAtMin || optionAtMin || option.quantity === 0
+  const decrementDisabled = option.quantity === 0
   return (
     <li>
       <BuilderOptionWrapper option={option}>

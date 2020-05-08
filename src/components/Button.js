@@ -2,13 +2,22 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { iconMap } from '../utils/icons'
 
-const Button = ({ text, icon, classes, ariaLabel, onClick, children }) => {
+const Button = ({
+  text,
+  icon,
+  classes,
+  ariaLabel,
+  onClick,
+  disabled,
+  children,
+}) => {
   return (
     <button
       type="button"
       className={`${icon ? 'btn' : ''} ${classes}`}
       aria-label={ariaLabel || text}
       onClick={onClick}
+      disabled={disabled}
     >
       {icon ? (
         <span className="btn-icon-wrapper">

@@ -174,8 +174,18 @@
     margin-top: 0.2rem;
   }
 
-  &__option__price {
+  &__option__details {
     margin-top: 0.6rem;
+    // display: flex;
+    // align-items: center;
+
+    // span {
+    //   display: block;
+    // }
+
+    span + span {
+      padding-left: 2rem;
+    }
   }
 
   &__made-for,

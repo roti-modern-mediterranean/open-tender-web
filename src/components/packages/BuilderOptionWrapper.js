@@ -7,7 +7,7 @@ const BuilderOptionWrapper = ({ option, isCart, children }) => {
     ? { backgroundImage: `url(${option.imageUrl}` }
     : null
   const desc = isCart ? makeModifierNames(option) : option.description
-  const price = isCart ? option.totalPrice : option.price
+  const price = isCart ? option.totalPrice / option.quantity : option.price
   return (
     <span className="builder__option">
       <span
@@ -25,8 +25,25 @@ const BuilderOptionWrapper = ({ option, isCart, children }) => {
             {desc}
           </span>
         )}
-        <span className="builder__option__price font-size-small ot-bold">
-          ${displayPrice(price)}
+        <span className="builder__option__details font-size-small">
+          <span className="builder__option__details__price ot-bold">
+            ${displayPrice(price)}
+          </span>
+          {!isCart && option.cals && (
+            <span className="builder__option__details__cals ot-bold secondary-color">
+              {option.cals} cal
+            </span>
+          )}
+          {!isCart && option.allergens && (
+            <span className="builder__option__details__allergens ot-alert-color">
+              {option.allergens}
+            </span>
+          )}
+          {!isCart && option.tags && (
+            <span className="builder__option__details__tags secondary-color">
+              {option.tags}
+            </span>
+          )}
         </span>
       </span>
       <span className="builder__option__quantity">{children}</span>

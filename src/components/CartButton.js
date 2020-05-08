@@ -19,7 +19,11 @@ const CartButton = () => {
   return (
     <div className="cart-button">
       <div className="cart-button__container">
-        <div className="cart-button__count btn--cart-count">{cartquantity}</div>
+        {cartquantity > 0 && (
+          <div className="cart-button__count btn--cart-count">
+            {cartquantity}
+          </div>
+        )}
         <Button onClick={handleClick} classes="cart-button__button btn--cart">
           <div className="cart-button__icon">{iconMap['ShoppingBag']}</div>
         </Button>
