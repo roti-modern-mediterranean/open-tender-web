@@ -1,0 +1,30 @@
+.form {
+  &__fieldset {
+    margin: 2.5rem 0;
+  }
+
+  &__legend {
+    margin: 0 0 1.5rem;
+  }
+
+  &__inputs {
+    width: 100%;
+    padding: 2rem 2.5rem 0.5rem;
+  }
+
+  &__input {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1.75rem;
+  }
+
+  &__input--left {
+    width: 47.5%;
+    margin-right: 2.5%;
+  }
+
+  &__input--right {
+    width: 47.5%;
+    margin-left: 2.5%;
+  }
+}

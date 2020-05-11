@@ -27,9 +27,9 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const { address } = location
+  // const { address } = location
   const bgStyle = { backgroundImage: `url(${placeholder2}` }
-  const phone = address.phone ? `tel:${address.phone}` : null
+  const phoneUrl = location.phone ? `tel:${location.phone}` : null
   const hours = location.hours_desc
     ? location.hours_desc.replace('<p>', '').replace('</p>', '')
     : null
@@ -44,7 +44,7 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
   const handleOrder = (evt) => {
     evt.preventDefault()
     dispatch(setLocation(location))
-    const rcType = location.revenue_center_type.toLowerCase()
+    const rcType = location.order_types[0]
     history.push(`/menu/${location.slug}-${rcType}`)
     evt.target.blur()
   }
@@ -72,20 +72,20 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
         <div className="location__actions">
           <a
             className="no-link"
-            href={address.directions_link}
+            href={location.directions_link}
             rel="noopener noreferrer"
             target="_blank"
           >
-            <LocationAction icon="MapPin" text={address.street} />
+            <LocationAction icon="MapPin" text={location.street_address} />
           </a>
-          {phone && (
+          {phoneUrl && (
             <a
               className="no-link"
-              href={phone}
+              href={phoneUrl}
               rel="noopener noreferrer"
               target="_blank"
             >
-              <LocationAction icon="Phone" text={address.phone} />
+              <LocationAction icon="Phone" text={location.phone} />
             </a>
           )}
           {hours && (

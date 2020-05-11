@@ -7,6 +7,9 @@ import BuilderOptionWrapper from './BuilderOptionWrapper'
 import BuilderQuantity from './BuilderQuantity'
 import BuilderRadioGroup from './BuilderRadioGroup'
 import BuilderRadio from './BuilderRadio'
+import CheckoutForm from './CheckoutForm'
+import Check from './Check'
+import { Label, Error, Input } from './Inputs'
 
 export {
   Builder,
@@ -18,4 +21,9 @@ export {
   BuilderQuantity,
   BuilderRadioGroup,
   BuilderRadio,
+  CheckoutForm,
+  Check,
+  Label,
+  Error,
+  Input,
 }

@@ -23,4 +23,8 @@ export const defaultConfig = {
     // background:
     //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588457434_66172f8cf5eeae2433bd.jpg',
   },
+  checkout: {
+    title: "Let's get you checked out...",
+    subtitle: "Hurry up! We're timing you",
+  },
 }

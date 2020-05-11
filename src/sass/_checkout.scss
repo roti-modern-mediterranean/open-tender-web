@@ -1,0 +1,11 @@
+.checkout {
+  display: flex;
+  justify-content: space-between;
+
+  &__form {
+    width: 45%;
+  }
+  &__totals {
+    width: 45%;
+  }
+}

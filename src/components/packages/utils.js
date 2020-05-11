@@ -142,3 +142,47 @@ export const decrementItem = (cart, index) => {
   const cartCounts = calcCartCounts(cart)
   return { cart, cartCounts }
 }
+
+const makeSimpleCart = (cart) => {
+  const simpleCart = cart.map((i) => {
+    const groups = i.groups.map((g) => {
+      const options = g.options
+        .filter((o) => o.quantity !== 0)
+        .map((o) => ({ id: o.id, quantity: o.quantity }))
+      return { id: g.id, options: options }
+    })
+    return {
+      id: i.id,
+      quantity: i.quantity,
+      groups: groups,
+      made_for: i.madeFor || '',
+      notes: i.notes || '',
+    }
+  })
+  return simpleCart
+}
+
+export const prepareOrder = (
+  locationId,
+  serviceType,
+  requestedAt,
+  cart,
+  customer = {},
+  address = null,
+  isValidate = true
+) => {
+  const requestedIso =
+    requestedAt === 'asap' ? new Date().toISOString() : requestedAt
+  const data = {
+    validate: isValidate,
+    save: false,
+    device_type: 'desktop', // TODO: need to enable device detection
+    location_id: locationId,
+    service_type: serviceType.toLowerCase(),
+    requested_at: requestedIso,
+    cart: makeSimpleCart(cart),
+    customer: customer,
+    address: address,
+  }
+  return data
+}

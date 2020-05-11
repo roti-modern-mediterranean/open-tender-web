@@ -83,15 +83,24 @@ export const {
 export const selectOrder = (state) => state.order
 export const selectOrderType = (state) => state.order.orderType
 export const selectServiceType = (state) => state.order.serviceType
+
 export const selectLocation = (state) => state.order.location
 // TODO: need to replace this
 export const selectLocationName = (state) =>
-  state.order.location ? state.order.location.store.full_name : null
+  state.order.location ? state.order.location.name : null
+
+const makeMenuSlug = (location) => {
+  if (!location) return '/'
+  const { slug, order_types } = location
+  return `/menu/${slug}-${order_types[0]}`
+}
+export const selectMenuSlug = (state) => makeMenuSlug(state.order.location)
+
 export const selectRequestedAt = (state) => state.order.requestedAt
 export const selectMenuVars = (state) => {
   if (!state.order.location) return {}
   return {
-    locationId: state.order.location.revenue_center_id,
+    locationId: state.order.location.location_id,
     serviceType: state.order.serviceType,
     requestedAt: state.order.requestedAt,
   }

@@ -6,7 +6,7 @@ export const fetchMenu = createAsyncThunk('menu/getMenu', async (menuVars) => {
   try {
     return await getMenu(locationId, serviceType, requestedAt)
   } catch (err) {
-    throw Error(err.detail || err.message)
+    throw new Error(err.detail || err.message)
   }
 })
 

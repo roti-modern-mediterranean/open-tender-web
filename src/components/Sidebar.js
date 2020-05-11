@@ -1,21 +1,39 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { selectSidebar, toggleSidebar } from '../slices/sidebarSlice'
-import { selectCartQuantity, selectCartTotal } from '../slices/orderSlice'
+import {
+  selectCartQuantity,
+  selectCartTotal,
+  selectMenuSlug,
+} from '../slices/orderSlice'
 import SidebarOverlay from './SidebarOverlay'
 import Button from './Button'
 import Cart from './Cart'
 
 const Sidebar = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
+  const { pathname } = useLocation()
   const { isOpen } = useSelector(selectSidebar)
   const cartCount = useSelector(selectCartQuantity)
   const cartTotal = useSelector(selectCartTotal)
+  const menuSlug = useSelector(selectMenuSlug)
   const classes = `sidebar bg-secondary-color ${isOpen ? 'is-open' : ''}`
+  const isMenu = pathname.includes('menu')
+  const isCheckout = pathname.includes('checkout')
 
-  const handleClick = (evt) => {
+  const handleBack = (evt) => {
     evt.preventDefault()
     dispatch(toggleSidebar())
+    if (!isMenu) history.push(menuSlug)
+    evt.target.blur()
+  }
+
+  const handleCheckout = (evt) => {
+    evt.preventDefault()
+    dispatch(toggleSidebar())
+    if (!isCheckout) history.push(`/checkout`)
     evt.target.blur()
   }
 
@@ -46,24 +64,19 @@ const Sidebar = () => {
             <Cart />
           </div>
           <div className="sidebar__footer bg-color">
-            {/* <Button
-              onClick={handleClick}
-              icon="ChevronLeft"
-              text="Back To Order"
-            />
-            <Button onClick={handleClick} icon="DollarSign" text="Checkout" /> */}
             <div className="sidebar__back">
-              <Button onClick={handleClick} classes="btn btn--big">
-                Back To Order
+              <Button onClick={handleBack} classes="btn btn--big">
+                Back To {isMenu ? 'Order' : 'Menu'}
               </Button>
             </div>
             <div className="sidebar__checkout">
               <Button
-                onClick={handleClick}
+                onClick={handleCheckout}
+                // classes={`btn btn--big ${!isCheckout ? 'btn--checkout' : ''}`}
                 classes="btn btn--big btn--checkout"
                 disabled={cartCount === 0}
               >
-                Checkout
+                {isCheckout ? 'Close Sidebar' : 'Checkout'}
               </Button>
             </div>
           </div>

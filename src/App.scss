@@ -15,6 +15,9 @@
 @import './src/sass/_nutrition';
 @import './src/sass/_builder';
 @import './src/sass/_cart';
+@import './src/sass/_checkout';
+@import './src/sass/_form';
+@import './src/sass/_content';
 
 body {
   // margin: 0;
@@ -56,10 +59,6 @@ body.has-modal {
 .main {
   padding: $header-height 0 0;
   min-height: 100vh;
-}
-
-.content {
-  padding: $header-height;
 }
 
 .loading {

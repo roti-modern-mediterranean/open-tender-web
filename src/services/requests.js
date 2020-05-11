@@ -1,5 +1,5 @@
 const baseUrl = process.env.REACT_APP_API_URL
-const token = process.env.REACT_APP_TOKEN
+const clientId = process.env.REACT_APP_CLIENT_ID
 const brandId = process.env.REACT_APP_BRAND_ID
 
 const requestException = (message, response, exception, extracted) => {
@@ -40,7 +40,8 @@ export const request = (
   endpoint,
   method = 'GET',
   data = null,
-  timeout = null
+  timeout = null,
+  token = null
 ) => {
   let didTimeOut = false
   return new Promise((resolve, reject) => {
@@ -51,14 +52,16 @@ export const request = (
         reject(new Error('Request timed out'))
       }, timeout)
     }
+    const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'client-id': `${clientId}`,
+      'brand-id': `${brandId}`,
+    }
+    if (token) headers.Authorization = `Bearer ${token}`
     let options = {
       method: method,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-        'brand-id': `${brandId}`,
-      },
+      headers: headers,
     }
     if (data) options.body = JSON.stringify(data)
     fetch(`${baseUrl}${endpoint}`, options)

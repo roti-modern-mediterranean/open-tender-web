@@ -12,6 +12,13 @@ const LineItem = ({ name, value, unit = '' }) => (
   </li>
 )
 
+LineItem.displayName = 'LineItem'
+LineItem.propTypes = {
+  name: propTypes.string,
+  value: propTypes.string,
+  unit: propTypes.string,
+}
+
 const BuilderNutrition = ({ nutritionalInfo, show = true }) => {
   const {
     calories,
