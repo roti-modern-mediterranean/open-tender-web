@@ -19,6 +19,11 @@ const checkoutSlice = createSlice({
     errors: null,
     loading: 'idle',
   },
+  reducers: {
+    updateOrder: (state, action) => {
+      state.order = { ...state.order, ...action.payload }
+    },
+  },
   extraReducers: {
     [submitOrder.fulfilled]: (state, action) => {
       console.log(action.payload)
@@ -36,6 +41,8 @@ const checkoutSlice = createSlice({
   },
 })
 
-export const selectCheckoutOrder = (state) => state.order
+export const { updateOrder } = checkoutSlice.actions
+
+export const selectCheckoutOrder = (state) => state.checkout.order
 
 export default checkoutSlice.reducer

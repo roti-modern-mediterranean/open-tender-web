@@ -1,11 +1,29 @@
 .checkout {
-  display: flex;
-  justify-content: space-between;
+  &__header {
+    margin: 0 0 4rem;
+    text-align: center;
+  }
+
+  &__title {
+    margin-bottom: 1rem;
+  }
+
+  &__content {
+    max-width: 140rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+  }
 
   &__form {
-    width: 45%;
+    flex-grow: 1;
+    padding: 0 4rem;
   }
-  &__totals {
-    width: 45%;
+
+  &__deals,
+  &__check {
+    flex-shrink: 0;
+    width: 25%;
+    max-width: 36rem;
   }
 }

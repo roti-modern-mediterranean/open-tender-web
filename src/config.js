@@ -26,5 +26,6 @@ export const defaultConfig = {
   checkout: {
     title: "Let's get you checked out...",
     subtitle: "Hurry up! We're timing you",
+    check_title: 'Order Totals',
   },
 }

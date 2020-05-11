@@ -4,7 +4,7 @@ import propTypes from 'prop-types'
 const CheckItem = ({ label, value, classes = '' }) => (
   <li className={`check__item border-color ${classes}`}>
     <span>{label}</span>
-    <span>{value}</span>
+    <span>${value}</span>
   </li>
 )
 
@@ -15,7 +15,7 @@ CheckItem.propTypes = {
   unit: propTypes.string,
 }
 
-const Check = ({ order }) => {
+const Check = ({ check, title }) => {
   const {
     subtotal,
     surcharges,
@@ -24,10 +24,13 @@ const Check = ({ order }) => {
     discount,
     taxes,
     total,
-  } = order
-  const totalBeforeTax = subtotal + surcharge + discount
+  } = check
+  const totalBeforeTax = [subtotal, surcharge, discount]
+    .reduce((t, i) => (t += parseFloat(i)), 0.0)
+    .toFixed(2)
   return (
-    <div className="check">
+    <div className="check border-radius bg-color ot-box-shadow">
+      <h2 className="check__title ot-font-size-h4">{title}</h2>
       <ul className="check__items">
         <CheckItem label="Subtotal" value={subtotal} />
         {surcharges.map((surcharge) => (
@@ -44,11 +47,13 @@ const Check = ({ order }) => {
             value={discount.amount}
           />
         ))}
-        <CheckItem
-          label="Total before Tax"
-          value={totalBeforeTax}
-          classes="check__item--total"
-        />
+        {subtotal !== totalBeforeTax && (
+          <CheckItem
+            label="Total before Tax"
+            value={totalBeforeTax}
+            classes="check__item--total"
+          />
+        )}
         {taxes.map((tax) => (
           <CheckItem key={tax.tax_id} label={tax.name} value={tax.amount} />
         ))}
@@ -64,9 +69,8 @@ const Check = ({ order }) => {
 
 Check.displayName = 'Check'
 Check.propTypes = {
-  name: propTypes.string,
-  value: propTypes.string,
-  unit: propTypes.string,
+  check: propTypes.object,
+  title: propTypes.string,
 }
 
 export default Check

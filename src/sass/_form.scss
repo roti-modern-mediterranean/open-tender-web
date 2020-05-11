@@ -1,16 +1,16 @@
 .form {
   &__fieldset {
-    margin: 2.5rem 0;
+    margin: 0;
   }
 
   &__legend {
-    margin: 0 0 1.5rem;
+    margin: 0 0 2rem;
   }
 
-  &__inputs {
-    width: 100%;
-    padding: 2rem 2.5rem 0.5rem;
-  }
+  // &__inputs {
+  //   width: 100%;
+  //   padding: 2rem 2.5rem 0.5rem;
+  // }
 
   &__input {
     display: inline-block;

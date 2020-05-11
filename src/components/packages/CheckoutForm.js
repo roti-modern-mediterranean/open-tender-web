@@ -33,7 +33,7 @@ const CheckoutForm = ({ order, postSubmit }) => {
         <legend className="form__legend heading ot-font-size-h5">
           Contact Info
         </legend>
-        <div className="form__inputs border-radius bg-color">
+        <div className="form__inputs">
           <Input
             label="First Name"
             name="first_name"
