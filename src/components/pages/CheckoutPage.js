@@ -9,7 +9,11 @@ import {
   selectMenuSlug,
   selectMenuVars,
 } from '../../slices/orderSlice'
-import { submitOrder, selectCheckoutOrder } from '../../slices/checkoutSlice'
+import {
+  selectCheckoutOrder,
+  updateOrder,
+  submitOrder,
+} from '../../slices/checkoutSlice'
 import { CheckoutForm, Check } from '../packages'
 import { prepareOrder } from '../packages/utils'
 
@@ -23,7 +27,7 @@ const CheckoutPage = () => {
   const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
   const order = useSelector(selectCheckoutOrder)
   const { check } = order || {}
-  console.log(order)
+  // console.log(order)
   // console.log(order.check)
 
   useEffect(() => {
@@ -41,23 +45,35 @@ const CheckoutPage = () => {
   }, [cartCount, menuSlug, history])
 
   return (
-    <div className="content bg-secondary-color">
-      <div className="checkout">
-        <div className="checkout__header">
-          <h1 className="checkout__title ot-font-size-h2">
-            {checkoutConfig.title}
-          </h1>
-          <p className="checkout__subtitle">{checkoutConfig.subtitle}</p>
-        </div>
-        <div className="checkout__content">
-          <div className="checkout__deals"></div>
-          <div className="checkout__form">
-            <CheckoutForm order={order} />
+    <div className="checkout">
+      <div className="checkout__content">
+        <div className="checkout__content__wrapper">
+          <div className="checkout__content__container">
+            <div className="checkout__form">
+              <div className="checkout__header">
+                <h1 className="checkout__title ot-font-size-h2">
+                  {checkoutConfig.title}
+                </h1>
+                <p className="checkout__subtitle">{checkoutConfig.subtitle}</p>
+              </div>
+              <CheckoutForm
+                order={order}
+                updateOrder={(payload) => dispatch(updateOrder(payload))}
+                config={checkoutConfig}
+              />
+            </div>
           </div>
-          <div className="checkout__check">
-            {check && (
-              <Check check={check} title={checkoutConfig.check_title} />
-            )}
+        </div>
+      </div>
+      <div className="checkout__sidebar bg-secondary-color">
+        <div className="checkout__sidebar__wrapper">
+          <div className="checkout__sidebar__container">
+            <div className="checkout__totals">
+              {check && (
+                <Check check={check} title={checkoutConfig.check_title} />
+              )}
+              {/* <div>Content goes here</div> */}
+            </div>
           </div>
         </div>
       </div>

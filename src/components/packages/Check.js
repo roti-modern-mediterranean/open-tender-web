@@ -29,7 +29,7 @@ const Check = ({ check, title }) => {
     .reduce((t, i) => (t += parseFloat(i)), 0.0)
     .toFixed(2)
   return (
-    <div className="check border-radius bg-color ot-box-shadow">
+    <div className="check border-radius bg-color">
       <h2 className="check__title ot-font-size-h4">{title}</h2>
       <ul className="check__items">
         <CheckItem label="Subtotal" value={subtotal} />

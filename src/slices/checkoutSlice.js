@@ -21,6 +21,7 @@ const checkoutSlice = createSlice({
   },
   reducers: {
     updateOrder: (state, action) => {
+      // console.log(JSON.stringify(action.payload.customer))
       state.order = { ...state.order, ...action.payload }
     },
   },

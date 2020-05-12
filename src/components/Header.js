@@ -10,6 +10,10 @@ const makeNav = (pathname) => {
   return []
 }
 
+const makeClasses = (pathname) => {
+  return ['checkout'].map((i) => (pathname.includes(i) ? 'header__stuck' : ''))
+}
+
 const Header = () => {
   const { pathname } = useLocation()
   const history = useHistory()
@@ -23,8 +27,10 @@ const Header = () => {
     evt.target.blur()
   }
 
+  const classes = makeClasses(pathname)
+
   return (
-    <header className="header container flex">
+    <header className={`header container flex ${classes}`}>
       <div className="header__nav">
         <div className="header__logo">
           <Button onClick={handleLogo}>

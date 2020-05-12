@@ -29,13 +29,13 @@
     border-radius: 0.5rem;
     margin: 0 0 1rem;
     font-size: 1.8rem;
-    background-color: $bg-color;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    // background-color: $bg-color;
+    // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
     // transition: all 0.15s ease;
 
-    &:hover,
-    &:focus {
-      background-color: $bg-secondary-color;
-    }
+    // &:hover,
+    // &:focus {
+    //   background-color: $bg-secondary-color;
+    // }
   }
 }

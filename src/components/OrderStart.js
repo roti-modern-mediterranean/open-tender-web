@@ -23,21 +23,21 @@ const OrderStart = () => {
       </div>
       <div className="card__content">
         <button
-          className="card__button heading"
+          className="card__button heading bg-color bg-hover-light ot-box-shadow"
           aria-label="Order for Pickup"
           onClick={() => dispatch(setOrderServiceType(['OLO', 'PICKUP']))}
         >
           {buttonPickup}
         </button>
         <button
-          className="card__button heading"
+          className="card__button heading bg-color bg-hover-light ot-box-shadow"
           aria-label="Order for Delivery"
           onClick={() => dispatch(setOrderServiceType(['OLO', 'DELIVERY']))}
         >
           {buttonDelivery}
         </button>
         <button
-          className="card__button heading"
+          className="card__button heading bg-color bg-hover-light ot-box-shadow"
           aria-label="Order Catering"
           onClick={() =>
             dispatch(setOrderServiceType(['CATERING', 'DELIVERY']))
