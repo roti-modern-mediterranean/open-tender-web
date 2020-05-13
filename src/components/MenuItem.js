@@ -32,7 +32,7 @@ const MenuItem = ({ item }) => {
           )}
         </div>
         <div className="menu__item__content">
-          <h3 className="menu__item__name font-size-big">{item.name}</h3>
+          <p className="menu__item__name ot-bold">{item.name}</p>
           {item.description && (
             <p className="menu__item__desc font-size-small">
               {item.description}

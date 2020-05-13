@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 export const Label = ({ text, required }) => (
-  <span className="label heading">
+  <span className="label ot-bold">
     {text}
     {required ? <span className="required">*</span> : null}
   </span>

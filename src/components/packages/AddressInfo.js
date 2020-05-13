@@ -24,7 +24,8 @@ const AddressInfo = ({
 
   const handleChange = (evt) => {
     const { id, value } = evt.target
-    const newAddress = { ...address, [id]: value }
+    const field = id.replace('address-', '')
+    const newAddress = { ...address, [field]: value }
     setAddress(newAddress)
     debouncedUpdate(newAddress)
   }
@@ -36,12 +37,12 @@ const AddressInfo = ({
   const phoneRequired = requiredFields.includes('phone')
   return (
     <fieldset className="form__fieldset">
-      <legend className="form__legend heading ot-font-size-h5">{title}</legend>
+      <legend className="form__legend heading ot-font-size-h4">{title}</legend>
       <div className="form__inputs">
         {unitRequired && (
           <Input
             label="Unit / Suite"
-            name="unit"
+            name="address-unit"
             type="text"
             value={address.unit}
             onChange={handleChange}
@@ -53,7 +54,7 @@ const AddressInfo = ({
         {companyRequired && (
           <Input
             label="Company"
-            name="company"
+            name="address-company"
             type="text"
             value={address.company}
             onChange={handleChange}
@@ -65,7 +66,7 @@ const AddressInfo = ({
         {contactRequired && (
           <Input
             label="Contact Person"
-            name="contact"
+            name="address-contact"
             type="text"
             value={address.contact}
             onChange={handleChange}
@@ -77,7 +78,7 @@ const AddressInfo = ({
         {phoneRequired && (
           <Input
             label="Contact Phone"
-            name="phone"
+            name="address-phone"
             type="tel"
             value={address.phone}
             onChange={handleChange}

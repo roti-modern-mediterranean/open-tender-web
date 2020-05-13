@@ -23,6 +23,8 @@ const Check = ({ check, title }) => {
     discounts,
     discount,
     taxes,
+    tip,
+    shipping,
     total,
   } = check
   const totalBeforeTax = [subtotal, surcharge, discount]
@@ -57,10 +59,12 @@ const Check = ({ check, title }) => {
         {taxes.map((tax) => (
           <CheckItem key={tax.tax_id} label={tax.name} value={tax.amount} />
         ))}
+        <CheckItem label="Tip" value={tip} />
+        {shipping !== '0.00' && <CheckItem label="Shipping" value={shipping} />}
         <CheckItem
           label="Total"
           value={total}
-          classes="check__item--grand-total"
+          classes="check__item--grand-total ot-bold"
         />
       </ul>
     </div>

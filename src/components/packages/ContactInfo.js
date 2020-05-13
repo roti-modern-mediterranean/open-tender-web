@@ -27,7 +27,8 @@ const ContactInfo = ({
 
   const handleChange = (evt) => {
     const { id, value } = evt.target
-    const newCustomer = { ...customer, [id]: value }
+    const field = id.replace('customer-', '')
+    const newCustomer = { ...customer, [field]: value }
     setCustomer(newCustomer)
     debouncedUpdate(newCustomer)
   }
@@ -40,7 +41,7 @@ const ContactInfo = ({
       <div className="form__inputs">
         <Input
           label="First Name"
-          name="first_name"
+          name="customer-first_name"
           type="text"
           value={customer.first_name}
           onChange={handleChange}
@@ -50,7 +51,7 @@ const ContactInfo = ({
         />
         <Input
           label="Last Name"
-          name="last_name"
+          name="customer-last_name"
           type="text"
           value={customer.last_name}
           onChange={handleChange}
@@ -60,7 +61,7 @@ const ContactInfo = ({
         />
         <Input
           label="Email"
-          name="email"
+          name="customer-email"
           type="email"
           value={customer.email}
           onChange={handleChange}
@@ -69,7 +70,7 @@ const ContactInfo = ({
         />
         <Input
           label="Phone"
-          name="phone"
+          name="customer-phone"
           type="tel"
           value={customer.phone}
           onChange={handleChange}
@@ -80,7 +81,7 @@ const ContactInfo = ({
         {companyRequired && (
           <Input
             label="Company"
-            name="company"
+            name="customer-company"
             type="text"
             value={customer.company}
             onChange={handleChange}
