@@ -6,6 +6,8 @@ import {
   Clock,
   ShoppingBag,
   User,
+  Users,
+  UserPlus,
   RefreshCw,
   ChevronLeft,
   ChevronRight,
@@ -13,9 +15,14 @@ import {
   ChevronDown,
   ArrowLeft,
   DollarSign,
+  AlertCircle,
+  AlertTriangle,
+  Sliders,
+  Truck,
 } from 'react-feather'
 
 export const iconMap = {
+  RefreshCw: <RefreshCw size={null} />,
   MapPin: <MapPin size={null} />,
   Phone: <Phone size={null} />,
   Clock: <Clock size={null} />,
@@ -28,5 +35,10 @@ export const iconMap = {
   ShoppingBag: <ShoppingBag size={null} />,
   DollarSign: <DollarSign size={null} />,
   User: <User size={null} />,
-  RefreshCw: <RefreshCw size={null} />,
+  Users: <Users size={null} />,
+  UserPlus: <UserPlus size={null} />,
+  AlertCircle: <AlertCircle size={null} />,
+  AlertTriangle: <AlertTriangle size={null} />,
+  Sliders: <Sliders size={null} />,
+  Truck: <Truck size={null} />,
 }

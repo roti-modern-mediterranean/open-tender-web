@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react'
 import propTypes from 'prop-types'
-import ContactInfo from './ContactInfo'
-import AddressInfo from './AddressInfo'
+import CheckoutDetails from './CheckoutDetails'
+import CheckoutContact from './CheckoutContact'
+import CheckoutAddress from './CheckoutAddress'
 
 const CheckoutForm = ({ order, check, updateCheck, config }) => {
   const [isWorking, setIsWorking] = useState(false)
@@ -9,6 +10,7 @@ const CheckoutForm = ({ order, check, updateCheck, config }) => {
   if (!check || !check.config) return null
   const hasCustomer = check.customer && check.customer.customer_id
   const { required_fields: required } = check.config
+  const isDelivery = order.serviceType === 'DELIVERY'
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
@@ -17,15 +19,18 @@ const CheckoutForm = ({ order, check, updateCheck, config }) => {
 
   return (
     <form id="checkout-form" className="form" onSubmit={handleSubmit}>
-      <AddressInfo
-        title={config.address_info_title}
-        requiredFields={required.address}
-        updateCheck={updateCheck}
-        order={order}
-      />
+      <CheckoutDetails title={config.details_title} order={order} />
+      {isDelivery && (
+        <CheckoutAddress
+          title={config.address_title}
+          requiredFields={required.address}
+          updateCheck={updateCheck}
+          order={order}
+        />
+      )}
       {!hasCustomer && (
-        <ContactInfo
-          title={config.contact_info_title}
+        <CheckoutContact
+          title={config.contact_title}
           requiredFields={required.customer}
           updateCheck={updateCheck}
         />

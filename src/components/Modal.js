@@ -4,10 +4,14 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { selectModal, closeModal } from '../slices/modalSlice'
 import ModalOverlay from './ModalOverlay'
 import ModalLoading from './ModalLoading'
-import { MenuItemModal } from './modals'
+import { LoginModal, AllergensModal, MenuItemModal } from './modals'
 
 const makeModal = (type, windowRef) => {
   switch (type) {
+    case 'login':
+      return <LoginModal />
+    case 'allergens':
+      return <AllergensModal />
     case 'item':
       return <MenuItemModal />
     default:
@@ -17,6 +21,7 @@ const makeModal = (type, windowRef) => {
 
 const classesMap = {
   item: 'modal--item',
+  allergens: '',
 }
 
 const Modal = () => {

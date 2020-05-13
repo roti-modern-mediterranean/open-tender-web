@@ -9,18 +9,19 @@ const LocationButton = ({ classes = 'btn' }) => {
   const location = useSelector(selectLocation)
   const history = useHistory()
 
-  const handleChange = (evt) => {
+  const handleClick = (evt) => {
     evt.preventDefault()
     history.push(`/locations`)
     evt.target.blur()
   }
+
   return (
     <Button
       text={location.name}
       ariaLabel={`Change location from ${location.name}`}
       icon="MapPin"
       classes={classes}
-      onClick={handleChange}
+      onClick={handleClick}
     />
   )
 }

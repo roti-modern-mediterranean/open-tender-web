@@ -46,15 +46,11 @@
 
   &__header {
     margin-bottom: 2.5rem;
+  }
 
-    h2 {
-      @extend h3;
-    }
-
-    p {
-      margin-top: 1rem;
-      line-height: 1.4;
-    }
+  &__subtitle {
+    margin-top: 1rem;
+    line-height: 1.4;
   }
 
   &__footer {

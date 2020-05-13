@@ -39,22 +39,6 @@ const AddressInfo = ({
   return (
     <fieldset className="form__fieldset">
       <legend className="form__legend heading ot-font-size-h4">{title}</legend>
-      <div className="form__lines">
-        <div className="form__line">
-          <div className="form__line__label">Service Type</div>
-          <div className="form__line__value">
-            {order.serviceType.toLowerCase()}
-          </div>
-        </div>
-      </div>
-      <div className="form__lines">
-        <div className="form__line">
-          <div className="form__line__label">
-            {order.serviceType.toLowerCase()} Time
-          </div>
-          <div className="form__line__value">{order.requestedAt}</div>
-        </div>
-      </div>
       <div className="form__inputs">
         {unitRequired && (
           <Input

@@ -88,7 +88,8 @@ export const selectOrderTypeName = (state) =>
 export const selectServiceType = (state) => state.order.serviceType
 export const selectServiceTypeName = (state) =>
   serviceTypeNamesMap[state.order.serviceType]
-export const selectRequestedAt = (state) => state.order.requestedAt
+export const selectRequestedAt = (state) =>
+  state.order.requestedAt === 'asap' ? 'ASAP' : state.order.requestedAt
 
 export const selectLocation = (state) => state.order.location
 // TODO: need to replace this

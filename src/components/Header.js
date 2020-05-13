@@ -8,6 +8,9 @@ import Button from './Button'
 import LocationButton from './LocationButton'
 import RequestedAtButton from './RequestedAtButton'
 import ServiceTypeButton from './ServiceTypeButton'
+import AllergensButton from './AllergensButton'
+import GroupOrderButton from './GroupOrderButton'
+import AccountButton from './AccountButton'
 
 const makeNav = (pathname) => {
   return []
@@ -23,6 +26,7 @@ const Header = () => {
   const dispatch = useDispatch()
   const navLinks = makeNav(pathname)
   const order = useSelector(selectOrder)
+  const isMenu = pathname.includes('menu')
 
   const handleLogo = (evt) => {
     evt.preventDefault()
@@ -54,16 +58,16 @@ const Header = () => {
         ) : null}
       </div>
       <div className="header__actions">
-        <Button
-          text="Login"
-          ariaLabel="Log into your account"
-          icon="User"
-          classes="btn--header"
-          onClick={() => dispatch(startOver())}
-        />
+        <AccountButton classes="btn--header" />
         {order.location && <LocationButton classes="btn--header" />}
         {order.serviceType && <ServiceTypeButton classes="btn--header" />}
         {order.location && <RequestedAtButton classes="btn--header" />}
+        {isMenu && (
+          <>
+            <AllergensButton classes="btn--header" />
+            <GroupOrderButton classes="btn--header" />
+          </>
+        )}
       </div>
     </header>
   )

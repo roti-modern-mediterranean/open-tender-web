@@ -1,11 +1,12 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectServiceTypeName } from '../slices/orderSlice'
+import { selectServiceType, selectServiceTypeName } from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
 import Button from './Button'
 
 const ServiceTypeButton = ({ classes = 'btn' }) => {
+  const serviceType = useSelector(selectServiceType)
   const serviceTypeName = useSelector(selectServiceTypeName)
   const dispatch = useDispatch()
 
@@ -18,7 +19,7 @@ const ServiceTypeButton = ({ classes = 'btn' }) => {
     <Button
       text={serviceTypeName}
       ariaLabel={`Change service type from ${serviceTypeName}`}
-      icon="MapPin"
+      icon={serviceType === 'PICKUP' ? 'ShoppingBag' : 'Truck'}
       classes={classes}
       onClick={handleClick}
     />
