@@ -15,22 +15,22 @@ export const submitOrder = createAsyncThunk(
 const checkoutSlice = createSlice({
   name: 'checkout',
   initialState: {
-    order: null,
+    check: null,
     errors: null,
     loading: 'idle',
   },
   reducers: {
-    updateOrder: (state, action) => {
+    updateCheck: (state, action) => {
       // console.log(JSON.stringify(action.payload.customer))
-      state.order = { ...state.order, ...action.payload }
+      state.check = { ...state.check, ...action.payload }
     },
   },
   extraReducers: {
     [submitOrder.fulfilled]: (state, action) => {
       console.log(action.payload)
-      state.order = action.payload
+      state.check = action.payload
+      state.errors = null
       state.loading = 'idle'
-      state.error = null
     },
     [submitOrder.pending]: (state, action) => {
       state.loading = 'pending'
@@ -42,8 +42,8 @@ const checkoutSlice = createSlice({
   },
 })
 
-export const { updateOrder } = checkoutSlice.actions
+export const { updateCheck } = checkoutSlice.actions
 
-export const selectCheckoutOrder = (state) => state.checkout.order
+export const selectCheck = (state) => state.checkout.check
 
 export default checkoutSlice.reducer

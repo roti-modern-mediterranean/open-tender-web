@@ -15,7 +15,7 @@ CheckItem.propTypes = {
   unit: propTypes.string,
 }
 
-const Check = ({ check, title }) => {
+const Check = ({ title, totals }) => {
   const {
     subtotal,
     surcharges,
@@ -26,7 +26,7 @@ const Check = ({ check, title }) => {
     tip,
     shipping,
     total,
-  } = check
+  } = totals
   const totalBeforeTax = [subtotal, surcharge, discount]
     .reduce((t, i) => (t += parseFloat(i)), 0.0)
     .toFixed(2)
@@ -73,8 +73,8 @@ const Check = ({ check, title }) => {
 
 Check.displayName = 'Check'
 Check.propTypes = {
-  check: propTypes.object,
   title: propTypes.string,
+  totals: propTypes.object,
 }
 
 export default Check

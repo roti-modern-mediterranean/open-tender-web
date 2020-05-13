@@ -11,14 +11,15 @@ const initialState = {
 }
 
 const AddressInfo = ({
-  updateOrder,
+  title = 'Order Details',
   requiredFields,
-  title = 'Address Info',
+  updateCheck,
+  order,
 }) => {
   const [address, setAddress] = useState(initialState)
 
   const debouncedUpdate = useCallback(
-    debounce((newAddress) => updateOrder({ address: newAddress }), 500),
+    debounce((newAddress) => updateCheck({ address: newAddress }), 500),
     []
   )
 
@@ -38,6 +39,22 @@ const AddressInfo = ({
   return (
     <fieldset className="form__fieldset">
       <legend className="form__legend heading ot-font-size-h4">{title}</legend>
+      <div className="form__lines">
+        <div className="form__line">
+          <div className="form__line__label">Service Type</div>
+          <div className="form__line__value">
+            {order.serviceType.toLowerCase()}
+          </div>
+        </div>
+      </div>
+      <div className="form__lines">
+        <div className="form__line">
+          <div className="form__line__label">
+            {order.serviceType.toLowerCase()} Time
+          </div>
+          <div className="form__line__value">{order.requestedAt}</div>
+        </div>
+      </div>
       <div className="form__inputs">
         {unitRequired && (
           <Input
@@ -94,8 +111,10 @@ const AddressInfo = ({
 
 AddressInfo.displayName = 'AddressInfo'
 AddressInfo.propTypes = {
-  updateOrder: propTypes.func,
+  title: propTypes.string,
+  updateCheck: propTypes.func,
   requiredFields: propTypes.array,
+  order: propTypes.object,
 }
 
 export default AddressInfo

@@ -1,35 +1,14 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useRef } from 'react'
 import propTypes from 'prop-types'
 import ContactInfo from './ContactInfo'
 import AddressInfo from './AddressInfo'
 
-// const useForm = () => {
-//   const [inputs, setInputs] = useState({})
-//   const [isWorking, setIsWorking] = useState(false)
-//   const [errors, setErrors] = useState({})
-
-//   // useEffect(() => setInputs(data), [data])
-
-//   const handleChange = (evt) => {
-//     const { id, type, value, checked } = evt.target
-//     const inputValue = type === 'checkbox' ? checked : value
-//     setInputs({ ...inputs, [id]: inputValue })
-//   }
-
-//   const handleSubmit = (evt) => {
-//     evt.preventDefault()
-//     setIsWorking(true)
-//   }
-
-//   return { inputs, handleChange, handleSubmit, isWorking, errors }
-// }
-
-const CheckoutForm = ({ order, updateOrder, config }) => {
+const CheckoutForm = ({ order, check, updateCheck, config }) => {
   const [isWorking, setIsWorking] = useState(false)
   const submitButton = useRef()
-  const hasCustomer = order.customer && order.customer.customer_id
-  const { required_fields: required } = order.config
-  // const { inputs, handleChange, handleSubmit, isWorking, errors } = useForm()
+  if (!check || !check.config) return null
+  const hasCustomer = check.customer && check.customer.customer_id
+  const { required_fields: required } = check.config
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
@@ -38,18 +17,19 @@ const CheckoutForm = ({ order, updateOrder, config }) => {
 
   return (
     <form id="checkout-form" className="form" onSubmit={handleSubmit}>
+      <AddressInfo
+        title={config.address_info_title}
+        requiredFields={required.address}
+        updateCheck={updateCheck}
+        order={order}
+      />
       {!hasCustomer && (
         <ContactInfo
-          updateOrder={updateOrder}
-          requiredFields={required.customer}
           title={config.contact_info_title}
+          requiredFields={required.customer}
+          updateCheck={updateCheck}
         />
       )}
-      <AddressInfo
-        updateOrder={updateOrder}
-        requiredFields={required.address}
-        title={config.address_info_title}
-      />
       <input
         className="btn btn--big"
         type="submit"
@@ -63,8 +43,10 @@ const CheckoutForm = ({ order, updateOrder, config }) => {
 
 CheckoutForm.displayName = 'CheckoutForm'
 CheckoutForm.propTypes = {
+  config: propTypes.object,
   order: propTypes.object,
-  updateOrder: propTypes.func,
+  check: propTypes.object,
+  updateCheck: propTypes.func,
 }
 
 export default CheckoutForm

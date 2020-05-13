@@ -24,8 +24,9 @@ export const defaultConfig = {
     //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588457434_66172f8cf5eeae2433bd.jpg',
   },
   checkout: {
-    title: "Let's get you checked out...",
-    subtitle: "Hurry up! We're timing you",
-    check_title: 'Order Totals',
+    title: "Let's get you checked out",
+    subtitle: '',
+    check_title: 'Order Summary',
+    details_title: 'Order Details',
   },
 }

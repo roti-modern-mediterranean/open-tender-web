@@ -5,6 +5,7 @@ import {
   incrementItem,
   decrementItem,
 } from '../components/packages/utils'
+import { serviceTypeNamesMap, orderTypeNamesMap } from '../utils/constants'
 
 const initialState = {
   orderType: null,
@@ -82,7 +83,12 @@ export const {
 
 export const selectOrder = (state) => state.order
 export const selectOrderType = (state) => state.order.orderType
+export const selectOrderTypeName = (state) =>
+  orderTypeNamesMap[state.order.orderType]
 export const selectServiceType = (state) => state.order.serviceType
+export const selectServiceTypeName = (state) =>
+  serviceTypeNamesMap[state.order.serviceType]
+export const selectRequestedAt = (state) => state.order.requestedAt
 
 export const selectLocation = (state) => state.order.location
 // TODO: need to replace this
@@ -96,7 +102,6 @@ const makeMenuSlug = (location) => {
 }
 export const selectMenuSlug = (state) => makeMenuSlug(state.order.location)
 
-export const selectRequestedAt = (state) => state.order.requestedAt
 export const selectMenuVars = (state) => {
   if (!state.order.location) return {}
   return {

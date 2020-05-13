@@ -12,7 +12,7 @@ const initialState = {
 }
 
 const ContactInfo = ({
-  updateOrder,
+  updateCheck,
   requiredFields,
   title = 'Contact Info',
 }) => {
@@ -21,7 +21,7 @@ const ContactInfo = ({
   // https://medium.com/p/5489fc3461b3/responses/show
   // https://codesandbox.io/s/functional-component-debounce-cunf7
   const debouncedUpdate = useCallback(
-    debounce((newCustomer) => updateOrder({ customer: newCustomer }), 500),
+    debounce((newCustomer) => updateCheck({ customer: newCustomer }), 500),
     []
   )
 
@@ -97,7 +97,7 @@ const ContactInfo = ({
 
 ContactInfo.displayName = 'ContactInfo'
 ContactInfo.propTypes = {
-  updateOrder: propTypes.func,
+  updateCheck: propTypes.func,
   requiredFields: propTypes.array,
 }
 

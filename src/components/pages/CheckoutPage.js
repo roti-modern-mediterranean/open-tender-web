@@ -8,10 +8,11 @@ import {
   selectLocation,
   selectMenuSlug,
   selectMenuVars,
+  selectOrder,
 } from '../../slices/orderSlice'
 import {
-  selectCheckoutOrder,
-  updateOrder,
+  selectCheck,
+  updateCheck,
   submitOrder,
 } from '../../slices/checkoutSlice'
 import { CheckoutForm, Check } from '../packages'
@@ -25,8 +26,9 @@ const CheckoutPage = () => {
   const cartCount = useSelector(selectCartQuantity)
   const menuSlug = useSelector(selectMenuSlug)
   const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
-  const order = useSelector(selectCheckoutOrder)
-  const { check } = order || {}
+  const order = useSelector(selectOrder)
+  const check = useSelector(selectCheck)
+  const { totals } = check || {}
   // console.log(order)
   // console.log(order.check)
 
@@ -57,9 +59,10 @@ const CheckoutPage = () => {
                 <p className="checkout__subtitle">{checkoutConfig.subtitle}</p>
               </div>
               <CheckoutForm
-                order={order}
-                updateOrder={(payload) => dispatch(updateOrder(payload))}
                 config={checkoutConfig}
+                order={order}
+                check={check}
+                updateCheck={(payload) => dispatch(updateCheck(payload))}
               />
             </div>
           </div>
@@ -69,8 +72,8 @@ const CheckoutPage = () => {
         <div className="checkout__sidebar__wrapper">
           <div className="checkout__sidebar__container">
             <div className="checkout__totals">
-              {check && (
-                <Check check={check} title={checkoutConfig.check_title} />
+              {totals && (
+                <Check title={checkoutConfig.check_title} totals={totals} />
               )}
               {/* <div>Content goes here</div> */}
             </div>

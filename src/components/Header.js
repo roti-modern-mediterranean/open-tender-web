@@ -2,9 +2,12 @@ import React from 'react'
 // import propTypes from 'prop-types'
 import logo from '../logo.png'
 import { NavLink, useLocation, useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { startOver } from '../slices/orderSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import { startOver, selectOrder } from '../slices/orderSlice'
 import Button from './Button'
+import LocationButton from './LocationButton'
+import RequestedAtButton from './RequestedAtButton'
+import ServiceTypeButton from './ServiceTypeButton'
 
 const makeNav = (pathname) => {
   return []
@@ -19,6 +22,7 @@ const Header = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const navLinks = makeNav(pathname)
+  const order = useSelector(selectOrder)
 
   const handleLogo = (evt) => {
     evt.preventDefault()
@@ -57,6 +61,9 @@ const Header = () => {
           classes="btn--header"
           onClick={() => dispatch(startOver())}
         />
+        {order.location && <LocationButton classes="btn--header" />}
+        {order.serviceType && <ServiceTypeButton classes="btn--header" />}
+        {order.location && <RequestedAtButton classes="btn--header" />}
       </div>
     </header>
   )
