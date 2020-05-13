@@ -37,7 +37,7 @@ const Button = ({
 Button.displayName = 'Hero'
 Button.propTypes = {
   text: propTypes.string,
-  icon: propTypes.oneOf([propTypes.string, propTypes.element]),
+  icon: propTypes.oneOfType([propTypes.string, propTypes.element]),
   classes: propTypes.string,
   ariaLabel: propTypes.string,
   onClick: propTypes.func,

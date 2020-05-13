@@ -49,6 +49,16 @@
     margin-left: 2.5%;
   }
 
+  &__input--small {
+    margin: 0;
+
+    input {
+      max-width: 6rem;
+      padding: 0.8rem 1.3rem 0.8rem;
+      text-align: right;
+    }
+  }
+
   &__footer {
     margin-top: 10rem;
   }

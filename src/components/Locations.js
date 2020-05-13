@@ -30,7 +30,7 @@ export const Locations = ({ locations }) => {
       <div className="card__content">
         <ul>
           {locations.map((location) => (
-            <li key={location.revenue_center_id}>
+            <li key={location.location_id}>
               <Location
                 location={location}
                 showImage={true}

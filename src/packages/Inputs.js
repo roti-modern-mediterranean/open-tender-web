@@ -40,15 +40,18 @@ export const Input = ({
   onChange,
   error,
   placeholder = '',
+  showLabel = true,
   disabled = false,
   readOnly = false,
   required = false,
   classes = '',
+  inputClasses = '',
 }) => {
   return (
     <label htmlFor={name} className={`form__input ${classes}`}>
-      <Label text={label} required={required} />
+      {showLabel && <Label text={label} required={required} />}
       <input
+        aria-label={label}
         id={name}
         name={name}
         type={type}
@@ -59,6 +62,7 @@ export const Input = ({
         required={required}
         autoComplete={type === 'password' ? `current-${name}` : null}
         onChange={onChange}
+        className={inputClasses}
       />
       {error ? <Error error={error} /> : null}
     </label>

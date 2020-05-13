@@ -19,7 +19,13 @@ const CheckoutForm = ({ order, check, updateCheck, config }) => {
 
   return (
     <form id="checkout-form" className="form" onSubmit={handleSubmit}>
-      <CheckoutDetails title={config.details_title} order={order} />
+      <CheckoutDetails
+        title={config.details_title}
+        order={order}
+        requiredFields={required.details}
+        checkoutDetails={check.details}
+        updateCheck={updateCheck}
+      />
       {isDelivery && (
         <CheckoutAddress
           title={config.address_title}
