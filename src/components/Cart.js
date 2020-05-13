@@ -9,7 +9,7 @@ import {
 } from '../slices/orderSlice'
 import {} from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
-import { BuilderOptionWrapper, BuilderQuantity } from './packages'
+import { BuilderOptionWrapper, BuilderQuantity } from '../packages'
 
 const Cart = () => {
   const dispatch = useDispatch()

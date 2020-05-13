@@ -4,13 +4,15 @@ import logo from '../logo.png'
 import { NavLink, useLocation, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { startOver, selectOrder } from '../slices/orderSlice'
-import Button from './Button'
-import LocationButton from './LocationButton'
-import RequestedAtButton from './RequestedAtButton'
-import ServiceTypeButton from './ServiceTypeButton'
-import AllergensButton from './AllergensButton'
-import GroupOrderButton from './GroupOrderButton'
-import AccountButton from './AccountButton'
+import {
+  Button,
+  ButtonAccount,
+  ButtonAllergens,
+  ButtonGroupOrder,
+  ButtonLocation,
+  ButtonRequestedAt,
+  ButtonServiceType,
+} from '../packages'
 
 const makeNav = (pathname) => {
   return []
@@ -58,14 +60,14 @@ const Header = () => {
         ) : null}
       </div>
       <div className="header__actions">
-        <AccountButton classes="btn--header" />
-        {order.location && <LocationButton classes="btn--header" />}
-        {order.serviceType && <ServiceTypeButton classes="btn--header" />}
-        {order.location && <RequestedAtButton classes="btn--header" />}
+        <ButtonAccount classes="btn--header" />
+        {order.location && <ButtonLocation classes="btn--header" />}
+        {order.serviceType && <ButtonServiceType classes="btn--header" />}
+        {order.location && <ButtonRequestedAt classes="btn--header" />}
         {isMenu && (
           <>
-            <AllergensButton classes="btn--header" />
-            <GroupOrderButton classes="btn--header" />
+            <ButtonAllergens classes="btn--header" />
+            <ButtonGroupOrder classes="btn--header" />
           </>
         )}
       </div>

@@ -4,7 +4,7 @@ import {
   removeItem,
   incrementItem,
   decrementItem,
-} from '../components/packages/utils'
+} from '../packages/utils'
 import { serviceTypeNamesMap, orderTypeNamesMap } from '../utils/constants'
 
 const initialState = {

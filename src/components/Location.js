@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { setLocation } from '../slices/orderSlice'
-import { iconMap } from '../utils/icons'
-import Button from './Button'
+import { iconMap } from '../packages/icons'
+import { Button } from '../packages'
 
 const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
   return (

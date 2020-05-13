@@ -8,7 +8,7 @@ import {
 } from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
-import { Builder, BuilderOption, BuilderHeader } from '../packages'
+import { Builder, BuilderOption, BuilderHeader } from '../../packages'
 
 const MenuItemModal = () => {
   const dispatch = useDispatch()

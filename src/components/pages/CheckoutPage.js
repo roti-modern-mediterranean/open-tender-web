@@ -15,8 +15,8 @@ import {
   updateCheck,
   submitOrder,
 } from '../../slices/checkoutSlice'
-import { CheckoutForm, Check } from '../packages'
-import { prepareOrder } from '../packages/utils'
+import { CheckoutForm, Check } from '../../packages'
+import { prepareOrder } from '../../packages/utils'
 
 const CheckoutPage = () => {
   const history = useHistory()

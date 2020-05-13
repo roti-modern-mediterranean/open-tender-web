@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { iconMap } from '../utils/icons'
+import { iconMap } from './icons'
 
 const Button = ({
   text,
@@ -11,17 +11,18 @@ const Button = ({
   disabled,
   children,
 }) => {
+  const btnIcon = typeof icon === 'string' ? iconMap[icon] : icon
   return (
     <button
       type="button"
-      className={`${icon ? 'btn' : ''} ${classes}`}
+      className={`${btnIcon ? 'btn' : ''} ${classes}`}
       aria-label={ariaLabel || text}
       onClick={onClick}
       disabled={disabled}
     >
-      {icon ? (
+      {btnIcon ? (
         <span className="btn-icon-wrapper">
-          <span className="btn-icon">{iconMap[icon]}</span>
+          <span className="btn-icon">{btnIcon}</span>
           <span>{text}</span>
         </span>
       ) : text ? (
@@ -36,7 +37,7 @@ const Button = ({
 Button.displayName = 'Hero'
 Button.propTypes = {
   text: propTypes.string,
-  icon: propTypes.string,
+  icon: propTypes.oneOf([propTypes.string, propTypes.element]),
   classes: propTypes.string,
   ariaLabel: propTypes.string,
   onClick: propTypes.func,

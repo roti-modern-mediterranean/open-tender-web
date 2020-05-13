@@ -3,8 +3,8 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCartQuantity } from '../slices/orderSlice'
 import { toggleSidebar } from '../slices/sidebarSlice'
-import { iconMap } from '../utils/icons'
-import Button from './Button'
+import { Button } from '../packages'
+import { ShoppingBag } from 'react-feather'
 
 const CartButton = () => {
   const dispatch = useDispatch()
@@ -25,7 +25,9 @@ const CartButton = () => {
           </div>
         )}
         <Button onClick={handleClick} classes="cart-button__button btn--cart">
-          <div className="cart-button__icon">{iconMap['ShoppingBag']}</div>
+          <div className="cart-button__icon">
+            <ShoppingBag size={null} />
+          </div>
         </Button>
       </div>
     </div>

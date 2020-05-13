@@ -8,7 +8,7 @@ import {
   selectMenuSlug,
 } from '../slices/orderSlice'
 import SidebarOverlay from './SidebarOverlay'
-import Button from './Button'
+import { Button } from '../packages'
 import Cart from './Cart'
 
 const Sidebar = () => {
