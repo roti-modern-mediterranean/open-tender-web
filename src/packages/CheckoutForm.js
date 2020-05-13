@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import propTypes from 'prop-types'
 import CheckoutDetails from './CheckoutDetails'
-import CheckoutContact from './CheckoutContact'
+import CheckoutContact from './CheckoutAccount'
 import CheckoutAddress from './CheckoutAddress'
 
 const CheckoutForm = ({ order, check, updateCheck, config }) => {
@@ -35,13 +35,15 @@ const CheckoutForm = ({ order, check, updateCheck, config }) => {
           updateCheck={updateCheck}
         />
       )}
-      <input
-        className="btn btn--big"
-        type="submit"
-        value="Submit Order"
-        disabled={isWorking}
-        ref={submitButton}
-      />
+      <div className="form__footer">
+        <input
+          className="btn btn--big"
+          type="submit"
+          value="Submit Order"
+          disabled={isWorking}
+          ref={submitButton}
+        />
+      </div>
     </form>
   )
 }

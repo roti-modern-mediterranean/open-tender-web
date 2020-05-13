@@ -14,7 +14,7 @@ const initialState = {
 const ContactInfo = ({
   updateCheck,
   requiredFields,
-  title = 'Contact Info',
+  title = 'Checkout as a Guest',
 }) => {
   const [customer, setCustomer] = useState(initialState)
 

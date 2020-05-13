@@ -29,6 +29,6 @@ export const defaultConfig = {
     check_title: 'Check Summary',
     details_title: 'Order Details',
     address_title: 'Address Info',
-    contact_title: 'Contact Info',
+    contact_title: 'Checkout as a Guest',
   },
 }

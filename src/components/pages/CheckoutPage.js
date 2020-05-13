@@ -5,7 +5,6 @@ import { selectConfig } from '../../slices/configSlice'
 import {
   selectCart,
   selectCartQuantity,
-  selectLocation,
   selectMenuSlug,
   selectMenuVars,
   selectOrder,

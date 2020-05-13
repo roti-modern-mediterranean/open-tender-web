@@ -38,7 +38,7 @@ const AddressInfo = ({
   const phoneRequired = requiredFields.includes('phone')
   return (
     <fieldset className="form__fieldset">
-      <legend className="form__legend heading ot-font-size-h4">{title}</legend>
+      <legend className="form__legend heading ot-font-size-h5">{title}</legend>
       <div className="form__inputs">
         {unitRequired && (
           <Input

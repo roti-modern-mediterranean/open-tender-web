@@ -14,11 +14,13 @@ import ButtonGroupOrder from './ButtonGroupOrder'
 import ButtonLocation from './ButtonLocation'
 import ButtonRequestedAt from './ButtonRequestedAt'
 import ButtonServiceType from './ButtonServiceType'
+import ButtonSignUp from './ButtonSignUp'
 import Check from './Check'
 import CheckoutAddress from './CheckoutAddress'
-import CheckoutContact from './CheckoutContact'
+import CheckoutContact from './CheckoutAccount'
 import CheckoutDetails from './CheckoutDetails'
 import CheckoutForm from './CheckoutForm'
+import CheckoutGuest from './CheckoutGuest'
 import { Label, Error, Input } from './Inputs'
 
 export {
@@ -38,11 +40,13 @@ export {
   ButtonLocation,
   ButtonRequestedAt,
   ButtonServiceType,
+  ButtonSignUp,
   Check,
-  CheckoutForm,
   CheckoutAddress,
   CheckoutContact,
   CheckoutDetails,
+  CheckoutForm,
+  CheckoutGuest,
   Label,
   Error,
   Input,

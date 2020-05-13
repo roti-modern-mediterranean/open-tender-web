@@ -29,6 +29,7 @@ const Header = () => {
   const navLinks = makeNav(pathname)
   const order = useSelector(selectOrder)
   const isMenu = pathname.includes('menu')
+  const isCheckout = pathname.includes('checkout')
 
   const handleLogo = (evt) => {
     evt.preventDefault()
@@ -61,9 +62,15 @@ const Header = () => {
       </div>
       <div className="header__actions">
         <ButtonAccount classes="btn--header" />
-        {order.location && <ButtonLocation classes="btn--header" />}
-        {order.serviceType && <ButtonServiceType classes="btn--header" />}
-        {order.location && <ButtonRequestedAt classes="btn--header" />}
+        {order.location && !isCheckout && (
+          <ButtonLocation classes="btn--header" />
+        )}
+        {order.serviceType && !isCheckout && (
+          <ButtonServiceType classes="btn--header" />
+        )}
+        {order.location && !isCheckout && (
+          <ButtonRequestedAt classes="btn--header" />
+        )}
         {isMenu && (
           <>
             <ButtonAllergens classes="btn--header" />

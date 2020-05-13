@@ -5,7 +5,7 @@ import {
   incrementItem,
   decrementItem,
 } from '../packages/utils'
-import { serviceTypeNamesMap, orderTypeNamesMap } from '../utils/constants'
+import { serviceTypeNamesMap, orderTypeNamesMap } from '../packages/constants'
 
 const initialState = {
   orderType: null,
