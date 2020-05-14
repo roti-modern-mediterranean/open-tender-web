@@ -10,15 +10,7 @@ import {
 } from './index'
 import { serviceTypeNamesMap } from './constants'
 import { Textarea } from './Inputs'
-
-const CheckoutLine = ({ label, action, classes = '' }) => {
-  return (
-    <div className={`form__line border-color ${classes}`}>
-      <div className="form__line__label">{label}</div>
-      <div className="form__line__value">{action}</div>
-    </div>
-  )
-}
+import CheckoutLineItem from './CheckoutLineItem'
 
 const CheckoutDetails = ({
   title = 'Please review your order details',
@@ -57,81 +49,65 @@ const CheckoutDetails = ({
     <div className="form__fieldset">
       <div className="form__legend heading ot-font-size-h5">{title}</div>
       <div className="form__inputs">
-        <CheckoutLine
-          label="Location"
-          action={<ButtonLocation classes="btn--header" />}
-        />
-        <CheckoutLine
-          label="Service Type"
-          action={<ButtonServiceType classes="btn--header" />}
-        />
-        <CheckoutLine
-          label={`${serviceTypeName} Time`}
-          action={<ButtonRequestedAt classes="btn--header" />}
-        />
+        <CheckoutLineItem label="Location">
+          <ButtonLocation classes="btn--header" />
+        </CheckoutLineItem>
+        <CheckoutLineItem label="Service Type">
+          <ButtonServiceType classes="btn--header" />
+        </CheckoutLineItem>
+        <CheckoutLineItem label={`${serviceTypeName} Time`}>
+          <ButtonRequestedAt classes="btn--header" />
+        </CheckoutLineItem>
         {eatingUtensilsRequired && (
-          <CheckoutLine
-            label="Eating Utensils"
-            action={
-              <Switch
-                label="Eating Utensils"
-                id="details-eating_utensils"
-                on={details.eating_utensils}
-                onChange={handleChange}
-              />
-            }
-          />
+          <CheckoutLineItem label="Eating Utensils">
+            <Switch
+              label="Eating Utensils"
+              id="details-eating_utensils"
+              on={details.eating_utensils}
+              onChange={handleChange}
+            />
+          </CheckoutLineItem>
         )}
         {servingUtensilsRequired && (
-          <CheckoutLine
-            label="Serving Utensils"
-            action={
-              <Switch
-                label="Serving Utensils"
-                id="details-serving_utensils"
-                on={details.serving_utensils}
-                handleChange={handleChange}
-              />
-            }
-          />
+          <CheckoutLineItem label="Serving Utensils">
+            <Switch
+              label="Serving Utensils"
+              id="details-serving_utensils"
+              on={details.serving_utensils}
+              handleChange={handleChange}
+            />
+          </CheckoutLineItem>
         )}
         {personCountRequired && (
-          <CheckoutLine
-            label="No. of People"
-            action={
-              <Input
-                label="Person Count"
-                name="details-person_count"
-                type="text"
-                value={details.person_count}
-                onChange={handleChange}
-                error={errors.person_count}
-                required={true}
-                classes="form__input--small"
-                inputClasses="font-size-small"
-                showLabel={false}
-              />
-            }
-          />
+          <CheckoutLineItem label="No. of People">
+            <Input
+              label="Person Count"
+              name="details-person_count"
+              type="text"
+              value={details.person_count}
+              onChange={handleChange}
+              error={errors.person_count}
+              required={true}
+              classes="form__input--small"
+              inputClasses="font-size-small"
+              showLabel={false}
+            />
+          </CheckoutLineItem>
         )}
         {notesRequired && (
-          <CheckoutLine
-            label="Notes"
-            classes="-textarea"
-            action={
-              <Textarea
-                label="Notes"
-                name="details-notes"
-                value={details.notes}
-                onChange={handleChange}
-                error={errors.notes}
-                required={true}
-                classes="form__input--small -textarea"
-                inputClasses="font-size-small"
-                showLabel={false}
-              />
-            }
-          />
+          <CheckoutLineItem label="Notes" classes="-textarea">
+            <Textarea
+              label="Notes"
+              name="details-notes"
+              value={details.notes}
+              onChange={handleChange}
+              error={errors.notes}
+              required={true}
+              classes="form__input--small -textarea"
+              inputClasses="font-size-small"
+              showLabel={false}
+            />
+          </CheckoutLineItem>
         )}
       </div>
     </div>
