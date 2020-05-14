@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getMenu } from '../services/menu'
+import { getMenu } from '../services/requests'
 
 export const fetchMenu = createAsyncThunk('menu/getMenu', async (menuVars) => {
   const [locationId, serviceType, requestedAt] = menuVars

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getConfig } from '../services/config'
+import { getConfig } from '../services/requests'
 import { defaultConfig } from '../config'
 
 export const fetchConfig = createAsyncThunk('config/getConfig', async () => {

@@ -21,6 +21,7 @@ import CheckoutContact from './CheckoutAccount'
 import CheckoutDetails from './CheckoutDetails'
 import CheckoutForm from './CheckoutForm'
 import CheckoutGuest from './CheckoutGuest'
+import CheckoutLineItem from './CheckoutLineItem'
 import { Label, Error, Input, Switch } from './Inputs'
 
 export {
@@ -47,6 +48,7 @@ export {
   CheckoutDetails,
   CheckoutForm,
   CheckoutGuest,
+  CheckoutLineItem,
   Error,
   Input,
   Label,

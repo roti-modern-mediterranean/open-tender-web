@@ -1,14 +1,13 @@
 import React, { useState, useRef } from 'react'
 import propTypes from 'prop-types'
 import CheckoutDetails from './CheckoutDetails'
-import CheckoutContact from './CheckoutAccount'
+import CheckoutAccount from './CheckoutAccount'
 import CheckoutAddress from './CheckoutAddress'
 
-const CheckoutForm = ({ order, check, updateCheck, config }) => {
+const CheckoutForm = ({ config, order, check, updateCheck }) => {
   const [isWorking, setIsWorking] = useState(false)
   const submitButton = useRef()
   if (!check || !check.config) return null
-  const hasCustomer = check.customer && check.customer.customer_id
   const { required_fields: required } = check.config
   const isDelivery = order.serviceType === 'DELIVERY'
 
@@ -34,13 +33,12 @@ const CheckoutForm = ({ order, check, updateCheck, config }) => {
           order={order}
         />
       )}
-      {!hasCustomer && (
-        <CheckoutContact
-          title={config.contact_title}
-          requiredFields={required.customer}
-          updateCheck={updateCheck}
-        />
-      )}
+      <CheckoutAccount
+        title={config.contact_title}
+        requiredFields={required.customer}
+        checkoutCustomer={check.customer}
+        updateCheck={updateCheck}
+      />
       <div className="form__footer">
         <input
           className="btn btn--big"

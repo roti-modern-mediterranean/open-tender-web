@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import propTypes from 'prop-types'
 import { Input } from './Inputs'
+import CheckoutLineItem from './CheckoutLineItem'
 import debounce from 'lodash/debounce'
 
 const initialState = {
@@ -11,12 +12,39 @@ const initialState = {
   company: '',
 }
 
-const ContactInfo = ({
-  updateCheck,
-  requiredFields,
+const makeContactConfig = (requiredFields) => {
+  return {
+    first_name: { label: 'First Name', included: true, required: true },
+    last_name: { label: 'Last Name', included: true, required: true },
+    email: { label: 'Email', included: true, required: true },
+    phone: { label: 'Phone', included: true, required: true },
+    company: {
+      label: 'Company',
+      included: requiredFields.includes('company'),
+      required: requiredFields.includes('company'),
+    },
+  }
+}
+
+const fields = [
+  { name: 'first_name', type: 'text' },
+  { name: 'last_name', type: 'text' },
+  { name: 'email', type: 'email' },
+  { name: 'phone', type: 'tel' },
+  { name: 'company', type: 'text' },
+]
+
+const CheckoutGuest = ({
   title = 'Checkout as a Guest',
+  requiredFields,
+  checkoutCustomer,
+  updateCheck,
 }) => {
-  const [customer, setCustomer] = useState(initialState)
+  const [customer, setCustomer] = useState(checkoutCustomer || initialState)
+
+  useEffect(() => {
+    setCustomer(checkoutCustomer || initialState)
+  }, [checkoutCustomer])
 
   // https://medium.com/p/5489fc3461b3/responses/show
   // https://codesandbox.io/s/functional-component-debounce-cunf7
@@ -34,71 +62,47 @@ const ContactInfo = ({
   }
 
   const errors = {}
-  const companyRequired = requiredFields.includes('company')
+  const contactConfig = makeContactConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">
       <legend className="form__legend heading ot-font-size-h5">{title}</legend>
       <div className="form__inputs">
-        <Input
-          label="First Name"
-          name="customer-first_name"
-          type="text"
-          value={customer.first_name}
-          onChange={handleChange}
-          error={errors.first_name}
-          required={true}
-          classes="form__input--left"
-        />
-        <Input
-          label="Last Name"
-          name="customer-last_name"
-          type="text"
-          value={customer.last_name}
-          onChange={handleChange}
-          error={errors.last_name}
-          required={true}
-          classes="form__input--right"
-        />
-        <Input
-          label="Email"
-          name="customer-email"
-          type="email"
-          value={customer.email}
-          onChange={handleChange}
-          error={errors.email}
-          required={true}
-        />
-        <Input
-          label="Phone"
-          name="customer-phone"
-          type="tel"
-          value={customer.phone}
-          onChange={handleChange}
-          error={errors.phone}
-          required={true}
-          classes={`${companyRequired ? 'form__input--left' : ''}`}
-        />
-        {companyRequired && (
-          <Input
-            label="Company"
-            name="customer-company"
-            type="text"
-            value={customer.company}
-            onChange={handleChange}
-            error={errors.company}
-            required={true}
-            classes="form__input--right"
-          />
-        )}
+        {fields.map((field) => {
+          return (
+            contactConfig[field.name] &&
+            contactConfig[field.name].included && (
+              <CheckoutLineItem
+                key={field.name}
+                label={contactConfig[field.name].label}
+                required={contactConfig[field.name].required}
+                classes="form__line__input"
+              >
+                <Input
+                  label={contactConfig[field.name].label}
+                  name={`customer-${field.name}`}
+                  type={field.type}
+                  value={customer[field.name]}
+                  onChange={handleChange}
+                  error={errors[field.name]}
+                  required={contactConfig[field.name].required}
+                  classes="form__input--small"
+                  inputClasses=""
+                  showLabel={false}
+                />
+              </CheckoutLineItem>
+            )
+          )
+        })}
       </div>
     </fieldset>
   )
 }
 
-ContactInfo.displayName = 'ContactInfo'
-ContactInfo.propTypes = {
+CheckoutGuest.displayName = 'CheckoutGuest'
+CheckoutGuest.propTypes = {
+  customer: propTypes.object,
   updateCheck: propTypes.func,
   requiredFields: propTypes.array,
 }
 
-export default ContactInfo
+export default CheckoutGuest

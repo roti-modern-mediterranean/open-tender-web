@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getLocations } from '../services/locations'
+import { getLocations } from '../services/requests'
 
 // First, create the thunk
 export const fetchLocations = createAsyncThunk(

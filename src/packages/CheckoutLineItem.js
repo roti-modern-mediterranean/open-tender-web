@@ -1,10 +1,13 @@
 import React from 'react'
 import propTypes from 'prop-types'
 
-const CheckoutLineItem = ({ label, classes = '', children }) => {
+const CheckoutLineItem = ({ label, required, classes = '', children }) => {
   return (
     <div className={`form__line border-color ${classes}`}>
-      <div className="form__line__label">{label}</div>
+      <div className="form__line__label">
+        {label}
+        {required ? <span className="required">*</span> : null}
+      </div>
       <div className="form__line__value">{children}</div>
     </div>
   )

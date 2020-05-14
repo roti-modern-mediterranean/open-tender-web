@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { postOrder } from '../services/calls'
+import { postOrder } from '../services/requests'
 
 export const submitOrder = createAsyncThunk(
   'checkout/submitOrder',

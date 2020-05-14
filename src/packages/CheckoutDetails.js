@@ -79,7 +79,10 @@ const CheckoutDetails = ({
           </CheckoutLineItem>
         )}
         {personCountRequired && (
-          <CheckoutLineItem label="No. of People">
+          <CheckoutLineItem
+            label="No. of People"
+            classes="form__line__input person-count"
+          >
             <Input
               label="Person Count"
               name="details-person_count"
@@ -89,13 +92,13 @@ const CheckoutDetails = ({
               error={errors.person_count}
               required={true}
               classes="form__input--small"
-              inputClasses="font-size-small"
+              inputClasses=""
               showLabel={false}
             />
           </CheckoutLineItem>
         )}
         {notesRequired && (
-          <CheckoutLineItem label="Notes" classes="-textarea">
+          <CheckoutLineItem label="Notes" classes="form__line__textarea">
             <Textarea
               label="Notes"
               name="details-notes"
@@ -103,8 +106,8 @@ const CheckoutDetails = ({
               onChange={handleChange}
               error={errors.notes}
               required={true}
-              classes="form__input--small -textarea"
-              inputClasses="font-size-small"
+              classes="form__input--small"
+              inputClasses=""
               showLabel={false}
             />
           </CheckoutLineItem>

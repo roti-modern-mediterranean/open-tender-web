@@ -5,12 +5,13 @@ import ButtonSignUp from './ButtonSignUp'
 import { CheckoutGuest } from '.'
 
 const CheckoutAccount = ({
-  customer,
-  updateCheck,
+  title = 'Checkout as a guest',
   requiredFields,
-  title = 'Contact Info',
+  checkoutCustomer,
+  updateCheck,
 }) => {
   const [showGuest, setShowGuest] = useState(false)
+  const hasAccount = checkoutCustomer && checkoutCustomer.customer_id
 
   const handleGuest = (evt) => {
     evt.preventDefault()
@@ -18,7 +19,7 @@ const CheckoutAccount = ({
     evt.target.blur()
   }
 
-  return customer ? (
+  return hasAccount ? (
     <div className="form__fieldset">
       <div className="form__legend">Your Account</div>
     </div>
@@ -48,9 +49,10 @@ const CheckoutAccount = ({
       </div>
       {showGuest && (
         <CheckoutGuest
-          updateCheck={updateCheck}
-          requiredFields={requiredFields}
           title={title}
+          requiredFields={requiredFields}
+          checkoutCustomer={checkoutCustomer}
+          updateCheck={updateCheck}
         />
       )}
     </>
