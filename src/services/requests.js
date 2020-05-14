@@ -1,4 +1,4 @@
-import { request } from './request'
+import { request, authRequest } from './request'
 
 export const getConfig = () => {
   return request(`/config`)
@@ -18,4 +18,27 @@ export const getMenu = (locationId, serviceType, requestedAt) => {
 
 export const postOrder = (order) => {
   return request(`/orders/validate`, 'POST', order)
+}
+
+export const getCustomer = (token) => {
+  return request(`/customer`, 'GET', null, null, token)
+}
+
+export const loginCustomer = (email, password) => {
+  let auth
+  const data = {
+    grant_type: 'password',
+    username: email,
+    password: password,
+  }
+  return authRequest('/token', data)
+    .then((resp) => {
+      auth = resp
+      return getCustomer(auth.access_token)
+    })
+    .then((customer) => ({ auth, customer }))
+}
+
+export const logoutCustomer = (token) => {
+  return authRequest('/revoke', { token })
 }

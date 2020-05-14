@@ -1,4 +1,7 @@
+import { serialize } from '../utils/helpers'
+
 const baseUrl = process.env.REACT_APP_API_URL
+const authUrl = process.env.REACT_APP_AUTH_URL
 const clientId = process.env.REACT_APP_CLIENT_ID
 const brandId = process.env.REACT_APP_BRAND_ID
 
@@ -76,6 +79,26 @@ export const request = (
       })
       .finally(() => {
         if (timeout) clearTimeout(timer)
+      })
+  })
+}
+
+export const authRequest = (endpoint, data) => {
+  return new Promise((resolve, reject) => {
+    data.client_id = clientId
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: serialize(data),
+    }
+    fetch(`${authUrl}/oauth2${endpoint}`, options)
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.error) throw new Error(json.error_description)
+        resolve(json)
+      })
+      .catch((err) => {
+        reject(err)
       })
   })
 }

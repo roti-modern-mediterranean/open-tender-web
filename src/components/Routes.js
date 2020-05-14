@@ -1,6 +1,12 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { HomePage, LocationsPage, MenuPage, CheckoutPage } from './pages'
+import {
+  HomePage,
+  LocationsPage,
+  MenuPage,
+  CheckoutPage,
+  AccountPage,
+} from './pages'
 
 const Routes = () => {
   return (
@@ -8,14 +14,17 @@ const Routes = () => {
       <Route exact path="/">
         <HomePage />
       </Route>
-      <Route path="/locations">
+      <Route exact path="/locations">
         <LocationsPage />
       </Route>
       <Route path="/menu/:slug">
         <MenuPage />
       </Route>
-      <Route path="/checkout">
+      <Route exact path="/checkout">
         <CheckoutPage />
+      </Route>
+      <Route exact path="/account">
+        <AccountPage />
       </Route>
     </Switch>
   )

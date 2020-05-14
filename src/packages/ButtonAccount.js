@@ -1,20 +1,18 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../slices/modalSlice'
+import { selectCustomer, submitLogout } from '../slices/customerSlice'
 import Button from './Button'
 
 const AccountButton = ({ classes = 'btn' }) => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const customer = null
-
-  const handleAccount = (evt) => {
-    evt.preventDefault()
-    history.push(`/locations`)
-    evt.target.blur()
-  }
+  const { pathname } = useLocation()
+  const isAccount = pathname.includes('account')
+  const customer = useSelector(selectCustomer)
+  const { account, auth } = customer
 
   const handleLogin = (evt) => {
     evt.preventDefault()
@@ -22,14 +20,36 @@ const AccountButton = ({ classes = 'btn' }) => {
     evt.target.blur()
   }
 
-  return customer ? (
-    <Button
-      text="Account"
-      ariaLabel="View your account"
-      icon="User"
-      classes={classes}
-      onClick={handleAccount}
-    />
+  const handleAccount = (evt) => {
+    evt.preventDefault()
+    history.push(`/account`)
+    evt.target.blur()
+  }
+
+  const handleLogout = (evt) => {
+    evt.preventDefault()
+    dispatch(submitLogout(auth.access_token))
+    evt.target.blur()
+  }
+
+  return account ? (
+    isAccount ? (
+      <Button
+        text="Logout"
+        ariaLabel="Log out of your account"
+        icon="User"
+        classes={classes}
+        onClick={handleLogout}
+      />
+    ) : (
+      <Button
+        text="Account"
+        ariaLabel="View your account"
+        icon="User"
+        classes={classes}
+        onClick={handleAccount}
+      />
+    )
   ) : (
     <Button
       text="Login"

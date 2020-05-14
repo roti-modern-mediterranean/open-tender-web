@@ -14,10 +14,16 @@ const CheckoutForm = ({ config, order, check, updateCheck }) => {
   const handleSubmit = (evt) => {
     evt.preventDefault()
     setIsWorking(true)
+    submitButton.current.blur()
   }
 
   return (
-    <form id="checkout-form" className="form" onSubmit={handleSubmit}>
+    <form
+      id="checkout-form"
+      className="form"
+      onSubmit={handleSubmit}
+      noValidate
+    >
       <CheckoutDetails
         title={config.details_title}
         order={order}

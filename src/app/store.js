@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import throttle from 'lodash/throttle'
 import { loadState, saveState } from '../utils/localStorage'
 import configReducer from '../slices/configSlice'
+import customerReducer from '../slices/customerSlice'
 import modalReducer from '../slices/modalSlice'
 import sidebarReducer from '../slices/sidebarSlice'
 import orderReducer from '../slices/orderSlice'
@@ -11,6 +12,7 @@ import checkoutReducer from '../slices/checkoutSlice'
 
 const rootReducer = combineReducers({
   config: configReducer,
+  customer: customerReducer,
   modal: modalReducer,
   sidebar: sidebarReducer,
   order: orderReducer,
