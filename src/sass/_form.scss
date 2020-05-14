@@ -28,6 +28,16 @@
     border-bottom-width: 0.1rem;
     border-bottom-style: solid;
 
+    &.-textarea {
+      align-items: flex-start;
+
+      .form__line__value {
+        flex-grow: 1;
+        // max-width: 48rem;
+        margin: 0 0 0 4rem;
+      }
+    }
+
     &:last-child {
       border-bottom-width: 0;
     }

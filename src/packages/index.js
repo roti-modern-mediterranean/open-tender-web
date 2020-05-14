@@ -21,8 +21,7 @@ import CheckoutContact from './CheckoutAccount'
 import CheckoutDetails from './CheckoutDetails'
 import CheckoutForm from './CheckoutForm'
 import CheckoutGuest from './CheckoutGuest'
-import { Label, Error, Input } from './Inputs'
-import Toggle from './Toggle'
+import { Label, Error, Input, Switch } from './Inputs'
 
 export {
   Builder,
@@ -51,5 +50,5 @@ export {
   Error,
   Input,
   Label,
-  Toggle,
+  Switch,
 }

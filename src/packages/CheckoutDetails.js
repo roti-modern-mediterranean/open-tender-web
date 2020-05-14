@@ -5,14 +5,15 @@ import {
   ButtonLocation,
   ButtonServiceType,
   ButtonRequestedAt,
-  Toggle,
   Input,
+  Switch,
 } from './index'
 import { serviceTypeNamesMap } from './constants'
+import { Textarea } from './Inputs'
 
-const CheckoutLine = ({ label, action }) => {
+const CheckoutLine = ({ label, action, classes = '' }) => {
   return (
-    <div className="form__line border-color">
+    <div className={`form__line border-color ${classes}`}>
       <div className="form__line__label">{label}</div>
       <div className="form__line__value">{action}</div>
     </div>
@@ -20,7 +21,7 @@ const CheckoutLine = ({ label, action }) => {
 }
 
 const CheckoutDetails = ({
-  title = 'Order Details',
+  title = 'Please review your order details',
   order,
   requiredFields,
   checkoutDetails,
@@ -51,9 +52,10 @@ const CheckoutDetails = ({
   const eatingUtensilsRequired = requiredFields.includes('eating_utensils')
   const servingUtensilsRequired = requiredFields.includes('serving_utensils')
   const personCountRequired = requiredFields.includes('person_count')
+  const notesRequired = requiredFields.includes('notes')
   return (
     <div className="form__fieldset">
-      {/* <div className="form__legend heading ot-font-size-h5">{title}</div> */}
+      <div className="form__legend heading ot-font-size-h5">{title}</div>
       <div className="form__inputs">
         <CheckoutLine
           label="Location"
@@ -71,11 +73,11 @@ const CheckoutDetails = ({
           <CheckoutLine
             label="Eating Utensils"
             action={
-              <Toggle
+              <Switch
                 label="Eating Utensils"
                 id="details-eating_utensils"
                 on={details.eating_utensils}
-                handleChange={handleChange}
+                onChange={handleChange}
               />
             }
           />
@@ -84,7 +86,7 @@ const CheckoutDetails = ({
           <CheckoutLine
             label="Serving Utensils"
             action={
-              <Toggle
+              <Switch
                 label="Serving Utensils"
                 id="details-serving_utensils"
                 on={details.serving_utensils}
@@ -106,6 +108,25 @@ const CheckoutDetails = ({
                 error={errors.person_count}
                 required={true}
                 classes="form__input--small"
+                inputClasses="font-size-small"
+                showLabel={false}
+              />
+            }
+          />
+        )}
+        {notesRequired && (
+          <CheckoutLine
+            label="Notes"
+            classes="-textarea"
+            action={
+              <Textarea
+                label="Notes"
+                name="details-notes"
+                value={details.notes}
+                onChange={handleChange}
+                error={errors.notes}
+                required={true}
+                classes="form__input--small -textarea"
                 inputClasses="font-size-small"
                 showLabel={false}
               />

@@ -26,9 +26,9 @@ export const defaultConfig = {
   checkout: {
     title: "Let's get you checked out",
     subtitle: '',
-    check_title: 'Check Summary',
-    details_title: 'Order Details',
-    address_title: 'Address Info',
-    contact_title: 'Checkout as a Guest',
+    check_title: 'Order Summary',
+    details_title: 'Please review your order details',
+    address_title: 'Confirm your address',
+    contact_title: 'Checkout as a guest',
   },
 }
