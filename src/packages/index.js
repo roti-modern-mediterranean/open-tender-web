@@ -16,12 +16,14 @@ import ButtonRequestedAt from './ButtonRequestedAt'
 import ButtonServiceType from './ButtonServiceType'
 import ButtonSignUp from './ButtonSignUp'
 import Check from './Check'
+import CheckoutAccount from './CheckoutAccount'
 import CheckoutAddress from './CheckoutAddress'
-import CheckoutContact from './CheckoutAccount'
+import CheckoutCustomer from './CheckoutCustomer'
 import CheckoutDetails from './CheckoutDetails'
 import CheckoutForm from './CheckoutForm'
 import CheckoutGuest from './CheckoutGuest'
 import CheckoutLineItem from './CheckoutLineItem'
+import CheckoutSignUp from './CheckoutSignUp'
 import { Label, Error, Input, Switch } from './Inputs'
 
 export {
@@ -43,12 +45,14 @@ export {
   ButtonServiceType,
   ButtonSignUp,
   Check,
+  CheckoutAccount,
   CheckoutAddress,
-  CheckoutContact,
+  CheckoutCustomer,
   CheckoutDetails,
   CheckoutForm,
   CheckoutGuest,
   CheckoutLineItem,
+  CheckoutSignUp,
   Error,
   Input,
   Label,

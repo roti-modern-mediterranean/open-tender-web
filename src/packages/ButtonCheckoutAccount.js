@@ -1,0 +1,34 @@
+import React from 'react'
+import propTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectAccount } from '../slices/customerSlice'
+import Button from './Button'
+
+const ButtonCheckoutAccount = ({ classes = 'btn' }) => {
+  const customer = useSelector(selectAccount)
+  const history = useHistory()
+
+  const handleClick = (evt) => {
+    evt.preventDefault()
+    history.push(`/account`)
+    evt.target.blur()
+  }
+
+  return (
+    <Button
+      text={`${customer.first_name} ${customer.last_name}`}
+      ariaLabel="Go to account to update name or email"
+      icon="User"
+      classes={classes}
+      onClick={handleClick}
+    />
+  )
+}
+
+ButtonCheckoutAccount.displayName = 'ButtonCheckoutAccount'
+ButtonCheckoutAccount.propTypes = {
+  classes: propTypes.string,
+}
+
+export default ButtonCheckoutAccount

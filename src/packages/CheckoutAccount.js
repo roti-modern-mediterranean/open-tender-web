@@ -1,66 +1,113 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import propTypes from 'prop-types'
-import Button from './Button'
-import ButtonSignUp from './ButtonSignUp'
-import { CheckoutGuest } from '.'
+import { Input } from './Inputs'
+import CheckoutLineItem from './CheckoutLineItem'
+import debounce from 'lodash/debounce'
+import ButtonCheckoutAccount from './ButtonCheckoutAccount'
+
+const initialState = {
+  first_name: '',
+  last_name: '',
+  emaiil: '',
+  phone: '',
+  company: '',
+}
+
+const makeAccountConfig = (requiredFields) => {
+  return {
+    phone: { label: 'Phone', included: true, required: true },
+    company: {
+      label: 'Company',
+      included: requiredFields.includes('company'),
+      required: requiredFields.includes('company'),
+    },
+  }
+}
+
+const fields = [
+  { name: 'first_name', type: 'text' },
+  { name: 'last_name', type: 'text' },
+  { name: 'email', type: 'email' },
+  { name: 'phone', type: 'tel' },
+  { name: 'company', type: 'text' },
+]
 
 const CheckoutAccount = ({
-  title = 'Checkout as a guest',
+  title = 'Nice to see you again',
   requiredFields,
   checkoutCustomer,
   updateCheck,
 }) => {
-  const [showGuest, setShowGuest] = useState(false)
-  const hasAccount = checkoutCustomer && checkoutCustomer.customer_id
+  const [customer, setCustomer] = useState(checkoutCustomer || initialState)
 
-  const handleGuest = (evt) => {
-    evt.preventDefault()
-    setShowGuest(!showGuest)
-    evt.target.blur()
+  useEffect(() => {
+    setCustomer(checkoutCustomer || initialState)
+  }, [checkoutCustomer])
+
+  const debouncedUpdate = useCallback(
+    debounce((newCustomer) => updateCheck({ customer: newCustomer }), 500),
+    []
+  )
+
+  const handleChange = (evt) => {
+    const { id, value } = evt.target
+    const field = id.replace('customer-', '')
+    const newCustomer = { ...customer, [field]: value }
+    setCustomer(newCustomer)
+    debouncedUpdate(newCustomer)
   }
 
-  return hasAccount ? (
-    <div className="form__fieldset">
-      <div className="form__legend">Your Account</div>
-    </div>
-  ) : (
-    <>
-      <div className="form__fieldset">
-        <div className="form__legend">
-          <p className="form__legend__title heading ot-font-size-h4">
-            Wanna create an account?
-          </p>
-          <p className="form__legend__subtitle">
-            Order history, saved favorites & allergens, saved credit cards, and
-            much more. Signing up takes two seconds - start reaping the benefits
-            today!
-          </p>
-        </div>
-        <div className="form__inputs">
-          <div className="form__input">
-            <ButtonSignUp />
-            <Button
-              classes="btn-link"
-              text="or checkout as a guest"
-              onClick={handleGuest}
-            />
-          </div>
-        </div>
+  const errors = {}
+  const accountConfig = makeAccountConfig(requiredFields)
+  return (
+    <fieldset className="form__fieldset">
+      <div className="form__legend">
+        <p className="form__legend__title heading ot-font-size-h4">
+          {title}
+          {/* {customer.first_name} */}
+        </p>
+        <p className="form__legend__subtitle">
+          You can update your phone or company name for this order below.
+        </p>
       </div>
-      {showGuest && (
-        <CheckoutGuest
-          title={title}
-          requiredFields={requiredFields}
-          checkoutCustomer={checkoutCustomer}
-          updateCheck={updateCheck}
-        />
-      )}
-    </>
+      <div className="form__inputs">
+        <CheckoutLineItem label="Service Type">
+          <ButtonCheckoutAccount classes="btn--header" />
+        </CheckoutLineItem>
+        {fields.map((field) => {
+          return (
+            accountConfig[field.name] &&
+            accountConfig[field.name].included && (
+              <CheckoutLineItem
+                key={field.name}
+                label={accountConfig[field.name].label}
+                required={accountConfig[field.name].required}
+                classes="form__line__input"
+              >
+                <Input
+                  label={accountConfig[field.name].label}
+                  name={`customer-${field.name}`}
+                  type={field.type}
+                  value={customer[field.name]}
+                  onChange={handleChange}
+                  error={errors[field.name]}
+                  required={accountConfig[field.name].required}
+                  classes="form__input--small"
+                  inputClasses=""
+                  showLabel={false}
+                />
+              </CheckoutLineItem>
+            )
+          )
+        })}
+      </div>
+    </fieldset>
   )
 }
 
-CheckoutAccount.displayName = 'ContactInfo'
+CheckoutAccount.displayName = 'CheckoutAccount'
 CheckoutAccount.propTypes = {
+  customer: propTypes.object,
   updateCheck: propTypes.func,
   requiredFields: propTypes.array,
 }

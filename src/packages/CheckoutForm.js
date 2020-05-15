@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import propTypes from 'prop-types'
 import CheckoutDetails from './CheckoutDetails'
-import CheckoutAccount from './CheckoutAccount'
+import CheckoutCustomer from './CheckoutCustomer'
 import CheckoutAddress from './CheckoutAddress'
 
 const CheckoutForm = ({ config, order, check, updateCheck }) => {
@@ -39,8 +39,8 @@ const CheckoutForm = ({ config, order, check, updateCheck }) => {
           order={order}
         />
       )}
-      <CheckoutAccount
-        title={config.contact_title}
+      <CheckoutCustomer
+        config={config}
         requiredFields={required.customer}
         checkoutCustomer={check.customer}
         updateCheck={updateCheck}

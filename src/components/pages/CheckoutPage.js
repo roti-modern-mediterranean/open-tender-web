@@ -16,6 +16,7 @@ import {
 } from '../../slices/checkoutSlice'
 import { CheckoutForm, Check } from '../../packages'
 import { prepareOrder } from '../../packages/utils'
+import { selectAccount } from '../../slices/customerSlice'
 
 const CheckoutPage = () => {
   const history = useHistory()
@@ -27,6 +28,7 @@ const CheckoutPage = () => {
   const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
   const order = useSelector(selectOrder)
   const check = useSelector(selectCheck)
+  const customer = useSelector(selectAccount)
   const { totals } = check || {}
   // console.log(order)
   // console.log(order.check)
@@ -37,9 +39,15 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (!locationId) history.push('/')
-    const order = prepareOrder(locationId, serviceType, requestedAt, cart)
+    const order = prepareOrder(
+      locationId,
+      serviceType,
+      requestedAt,
+      cart,
+      customer
+    )
     dispatch(submitOrder(order))
-  }, [locationId, serviceType, requestedAt, cart, dispatch, history])
+  }, [locationId, serviceType, requestedAt, cart, customer, dispatch, history])
 
   useEffect(() => {
     if (cartCount === 0) history.push(menuSlug)
