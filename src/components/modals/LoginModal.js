@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 // import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { closeModal } from '../../slices/modalSlice'
-import { submitLogin, selectCustomer } from '../../slices/customerSlice'
+import { loginCustomer, selectCustomer } from '../../slices/customerSlice'
 import ModalClose from '../ModalClose'
 import { Input } from '../../packages'
 
@@ -28,7 +28,7 @@ const LoginModal = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
-    dispatch(submitLogin(data))
+    dispatch(loginCustomer(data))
     submitButton.current.blur()
   }
 

@@ -15,16 +15,16 @@ import CheckoutLineItem from './CheckoutLineItem'
 const CheckoutDetails = ({
   title = 'Please review your order details',
   order,
-  requiredFields,
-  checkoutDetails,
+  checkConfig,
+  checkDetails,
   updateCheck,
 }) => {
   const serviceTypeName = serviceTypeNamesMap[order.serviceType]
-  const [details, setDetails] = useState(checkoutDetails)
+  const [details, setDetails] = useState(checkDetails)
 
   useEffect(() => {
-    setDetails(checkoutDetails)
-  }, [checkoutDetails])
+    setDetails(checkDetails)
+  }, [checkDetails])
 
   const debouncedUpdate = useCallback(
     debounce((newDetails) => updateCheck({ details: newDetails }), 500),
@@ -41,6 +41,8 @@ const CheckoutDetails = ({
   }
 
   const errors = {}
+  const allowTaxExempt = checkConfig.allow_tax_exempt
+  const requiredFields = checkConfig.required_fields.details
   const eatingUtensilsRequired = requiredFields.includes('eating_utensils')
   const servingUtensilsRequired = requiredFields.includes('serving_utensils')
   const personCountRequired = requiredFields.includes('person_count')
@@ -78,10 +80,30 @@ const CheckoutDetails = ({
             />
           </CheckoutLineItem>
         )}
+        {allowTaxExempt && (
+          <CheckoutLineItem
+            label="Tax Exempt ID"
+            classes="form__line__input person-count"
+          >
+            <Input
+              label="Tax Exempt ID"
+              name="details-tax_exempt_id"
+              type="text"
+              value={details.tax_exempt_id}
+              onChange={handleChange}
+              error={errors.tax_exempt_id}
+              required={false}
+              classes="form__input--small"
+              inputClasses=""
+              showLabel={false}
+            />
+          </CheckoutLineItem>
+        )}
         {personCountRequired && (
           <CheckoutLineItem
             label="No. of People"
             classes="form__line__input person-count"
+            required={personCountRequired}
           >
             <Input
               label="Person Count"
@@ -98,7 +120,11 @@ const CheckoutDetails = ({
           </CheckoutLineItem>
         )}
         {notesRequired && (
-          <CheckoutLineItem label="Notes" classes="form__line__textarea">
+          <CheckoutLineItem
+            label="Notes"
+            classes="form__line__textarea"
+            required={notesRequired}
+          >
             <Textarea
               label="Notes"
               name="details-notes"
@@ -121,8 +147,8 @@ CheckoutDetails.displayName = 'CheckoutDetails'
 CheckoutDetails.propTypes = {
   title: propTypes.string,
   order: propTypes.object,
-  requiredFields: propTypes.array,
-  checkoutDetails: propTypes.object,
+  checkConfig: propTypes.object,
+  checkDetails: propTypes.object,
   updateCheck: propTypes.func,
 }
 

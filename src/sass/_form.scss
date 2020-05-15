@@ -57,6 +57,16 @@
     }
   }
 
+  &__line__label {
+    // span {
+    //   display: block;
+    // }
+    span + span {
+      margin-top: 0.5rem;
+      display: block;
+    }
+  }
+
   &__error {
     display: inline-block;
     width: 100%;

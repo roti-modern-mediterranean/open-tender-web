@@ -16,6 +16,7 @@ const checkoutSlice = createSlice({
   name: 'checkout',
   initialState: {
     check: null,
+    discounts: [],
     errors: null,
     loading: 'idle',
   },
@@ -23,6 +24,10 @@ const checkoutSlice = createSlice({
     updateCheck: (state, action) => {
       // console.log(JSON.stringify(action.payload.customer))
       state.check = { ...state.check, ...action.payload }
+    },
+    updateDiscounts: (state, action) => {
+      // console.log(JSON.stringify(action.payload.customer))
+      state.discounts = action.payload
     },
   },
   extraReducers: {
@@ -42,8 +47,10 @@ const checkoutSlice = createSlice({
   },
 })
 
-export const { updateCheck } = checkoutSlice.actions
+export const { updateCheck, updateDiscounts } = checkoutSlice.actions
 
+export const selectCheckout = (state) => state.checkout
 export const selectCheck = (state) => state.checkout.check
+export const selectDiscounts = (state) => state.checkout.discounts
 
 export default checkoutSlice.reducer

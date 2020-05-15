@@ -15,7 +15,7 @@ const ButtonCheckoutAccount = ({ classes = 'btn' }) => {
     evt.target.blur()
   }
 
-  return (
+  return customer ? (
     <Button
       text={`${customer.first_name} ${customer.last_name}`}
       ariaLabel="Go to account to update name or email"
@@ -23,7 +23,7 @@ const ButtonCheckoutAccount = ({ classes = 'btn' }) => {
       classes={classes}
       onClick={handleClick}
     />
-  )
+  ) : null
 }
 
 ButtonCheckoutAccount.displayName = 'ButtonCheckoutAccount'

@@ -24,7 +24,7 @@ export const getCustomer = (token) => {
   return request(`/customer`, 'GET', null, null, token)
 }
 
-export const loginCustomer = (email, password) => {
+export const postLogin = (email, password) => {
   let auth
   const data = {
     grant_type: 'password',
@@ -39,6 +39,6 @@ export const loginCustomer = (email, password) => {
     .then((customer) => ({ auth, customer }))
 }
 
-export const logoutCustomer = (token) => {
+export const postLogout = (token) => {
   return authRequest('/revoke', { token })
 }

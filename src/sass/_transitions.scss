@@ -84,6 +84,25 @@ $reveal-speed: 250ms;
   visibility: visible;
 }
 
+/* slide-in-from-right */
+
+$slide-in-from-right-speed: 250ms;
+
+.slide-in-from-right-enter,
+.slide-in-from-right-exit.slide-in-from-right-exit-active {
+  transition: all $slide-in-from-right-speed ease;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-25%);
+}
+
+.slide-in-from-right-enter.slide-in-from-right-enter-active,
+.slide-in-from-right-exit {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
 /* alerts */
 
 $fade-up-speed: 500ms;

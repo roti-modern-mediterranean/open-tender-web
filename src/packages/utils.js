@@ -168,6 +168,7 @@ export const prepareOrder = (
   requestedAt,
   cart,
   customer = {},
+  discounts,
   address = null,
   isValidate = true
 ) => {
@@ -181,8 +182,24 @@ export const prepareOrder = (
     service_type: serviceType.toLowerCase(),
     requested_at: requestedIso,
     cart: makeSimpleCart(cart),
-    customer: customer,
     address: address,
+    customer: customer,
+    discounts: discounts,
   }
   return data
+}
+
+export const addCommas = (x, d) => {
+  return x.toFixed(d).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
+export const formatQuantity = (n) => {
+  return addCommas(parseFloat(n), 0)
+}
+
+export const formatDollars = (str, space = '') => {
+  const floatPrice = parseFloat(str)
+  return floatPrice < 0
+    ? `($${addCommas(Math.abs(floatPrice), 2)})`
+    : `$${addCommas(floatPrice, 2)}${space}`
 }

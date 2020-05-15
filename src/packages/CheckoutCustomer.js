@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import { CheckoutAccount, CheckoutSignUp, CheckoutGuest } from '.'
+import TransitionWrapper from './TransitionWrapper'
 
 const CheckoutCustomer = ({
   config,
   requiredFields,
   checkoutCustomer,
   updateCheck,
+  login,
+  logout,
 }) => {
   const [showGuest, setShowGuest] = useState(false)
   const hasAccount = checkoutCustomer && checkoutCustomer.customer_id
@@ -23,18 +26,24 @@ const CheckoutCustomer = ({
       requiredFields={requiredFields}
       checkoutCustomer={checkoutCustomer}
       updateCheck={updateCheck}
+      logout={logout}
     />
   ) : (
     <>
       <CheckoutSignUp handleGuest={handleGuest} config={config.sign_up} />
-      {showGuest && (
+      <TransitionWrapper
+        on={showGuest}
+        key="guest"
+        // effect="slide-in-from-right"
+      >
         <CheckoutGuest
           title={config.guest_title}
           requiredFields={requiredFields}
           checkoutCustomer={checkoutCustomer}
           updateCheck={updateCheck}
+          login={login}
         />
-      )}
+      </TransitionWrapper>
     </>
   )
 }

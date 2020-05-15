@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { loginCustomer, logoutCustomer } from '../services/requests'
+import { postLogin, postLogout } from '../services/requests'
 
 const initialState = {
   auth: null,
@@ -8,11 +8,11 @@ const initialState = {
   loading: 'idle',
 }
 
-export const submitLogin = createAsyncThunk(
-  'customer/submitLogin',
+export const loginCustomer = createAsyncThunk(
+  'customer/loginCustomer',
   async ({ email, password }, thunkAPI) => {
     try {
-      return await loginCustomer(email, password)
+      return await postLogin(email, password)
     } catch (err) {
       console.log(err.message)
       return thunkAPI.rejectWithValue(err.message)
@@ -20,11 +20,11 @@ export const submitLogin = createAsyncThunk(
   }
 )
 
-export const submitLogout = createAsyncThunk(
-  'customer/submitLogout',
+export const logoutCustomer = createAsyncThunk(
+  'customer/logoutCustomer',
   async (token, thunkAPI) => {
     try {
-      return await logoutCustomer(token)
+      return await postLogout(token)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -49,24 +49,24 @@ const customerSlice = createSlice({
     logoutCustomer: () => initialState,
   },
   extraReducers: {
-    [submitLogin.fulfilled]: (state, action) => {
+    [loginCustomer.fulfilled]: (state, action) => {
       state.auth = action.payload.auth
       state.account = action.payload.customer
       state.error = null
       state.loading = 'idle'
     },
-    [submitLogin.pending]: (state, action) => {
+    [loginCustomer.pending]: (state, action) => {
       state.loading = 'pending'
     },
-    [submitLogin.rejected]: (state, action) => {
+    [loginCustomer.rejected]: (state, action) => {
       state.error = action.payload
       state.loading = 'idle'
     },
-    [submitLogout.fulfilled]: () => initialState,
-    [submitLogout.pending]: (state, action) => {
+    [logoutCustomer.fulfilled]: () => initialState,
+    [logoutCustomer.pending]: (state, action) => {
       state.loading = 'pending'
     },
-    [submitLogout.rejected]: () => initialState,
+    [logoutCustomer.rejected]: () => initialState,
   },
 })
 

@@ -4,6 +4,7 @@ import { Input } from './Inputs'
 import CheckoutLineItem from './CheckoutLineItem'
 import debounce from 'lodash/debounce'
 import ButtonCheckoutAccount from './ButtonCheckoutAccount'
+import Button from './Button'
 
 const initialState = {
   first_name: '',
@@ -37,6 +38,7 @@ const CheckoutAccount = ({
   requiredFields,
   checkoutCustomer,
   updateCheck,
+  logout,
 }) => {
   const [customer, setCustomer] = useState(checkoutCustomer || initialState)
 
@@ -67,11 +69,18 @@ const CheckoutAccount = ({
           {/* {customer.first_name} */}
         </p>
         <p className="form__legend__subtitle">
-          You can update your phone or company name for this order below.
+          Please verify your account information for your order.{' '}
+          <Button
+            text="Click here to logout"
+            ariaLabel="Log out of your account"
+            classes="btn-link"
+            onClick={logout}
+          />{' '}
+          if you want to switch accounts or check out as a guest.
         </p>
       </div>
       <div className="form__inputs">
-        <CheckoutLineItem label="Service Type">
+        <CheckoutLineItem label="Account">
           <ButtonCheckoutAccount classes="btn--header" />
         </CheckoutLineItem>
         {fields.map((field) => {

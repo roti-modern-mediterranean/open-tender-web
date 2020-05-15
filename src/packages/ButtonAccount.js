@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../slices/modalSlice'
-import { selectCustomer, submitLogout } from '../slices/customerSlice'
+import { selectCustomer, logoutCustomer } from '../slices/customerSlice'
 import Button from './Button'
 
 const AccountButton = ({ classes = 'btn' }) => {
@@ -28,7 +28,7 @@ const AccountButton = ({ classes = 'btn' }) => {
 
   const handleLogout = (evt) => {
     evt.preventDefault()
-    dispatch(submitLogout(auth.access_token))
+    dispatch(logoutCustomer(auth.access_token))
     evt.target.blur()
   }
 

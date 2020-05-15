@@ -19,6 +19,11 @@ import {
   AlertTriangle,
   Sliders,
   Truck,
+  Gift,
+  Delete,
+  XCircle,
+  PlusCircle,
+  CheckCircle,
 } from 'react-feather'
 
 export const iconMap = {
@@ -41,4 +46,9 @@ export const iconMap = {
   AlertTriangle: <AlertTriangle size={null} />,
   Sliders: <Sliders size={null} />,
   Truck: <Truck size={null} />,
+  Gift: <Gift size={null} />,
+  Delete: <Delete size={null} />,
+  XCircle: <XCircle size={null} />,
+  PlusCircle: <PlusCircle size={null} />,
+  CheckCircle: <CheckCircle size={null} />,
 }

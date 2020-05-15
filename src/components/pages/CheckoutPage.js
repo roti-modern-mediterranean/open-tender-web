@@ -10,13 +10,15 @@ import {
   selectOrder,
 } from '../../slices/orderSlice'
 import {
-  selectCheck,
   updateCheck,
+  updateDiscounts,
   submitOrder,
+  selectCheckout,
 } from '../../slices/checkoutSlice'
+import { openModal } from '../../slices/modalSlice'
+import { logoutCustomer, selectAccount } from '../../slices/customerSlice'
 import { CheckoutForm, Check } from '../../packages'
 import { prepareOrder } from '../../packages/utils'
-import { selectAccount } from '../../slices/customerSlice'
 
 const CheckoutPage = () => {
   const history = useHistory()
@@ -27,31 +29,42 @@ const CheckoutPage = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
   const order = useSelector(selectOrder)
-  const check = useSelector(selectCheck)
   const customer = useSelector(selectAccount)
+  const { access_token } = customer ? customer.auth || {} : {}
+  const { check, discounts, loading } = useSelector(selectCheckout)
   const { totals } = check || {}
-  // console.log(order)
-  // console.log(order.check)
 
   useEffect(() => {
     window.scroll(0, 0)
   }, [])
 
   useEffect(() => {
-    if (!locationId) history.push('/')
+    if (!locationId) return history.push('/')
     const order = prepareOrder(
       locationId,
       serviceType,
       requestedAt,
       cart,
-      customer
+      customer,
+      discounts
     )
     dispatch(submitOrder(order))
-  }, [locationId, serviceType, requestedAt, cart, customer, dispatch, history])
+  }, [
+    locationId,
+    serviceType,
+    requestedAt,
+    cart,
+    customer,
+    discounts,
+    dispatch,
+    history,
+  ])
 
   useEffect(() => {
     if (cartCount === 0) history.push(menuSlug)
   }, [cartCount, menuSlug, history])
+
+  const pending = loading === 'pending'
 
   return (
     <div className="checkout">
@@ -70,6 +83,11 @@ const CheckoutPage = () => {
                 order={order}
                 check={check}
                 updateCheck={(payload) => dispatch(updateCheck(payload))}
+                updateDiscounts={(discounts) =>
+                  dispatch(updateDiscounts(discounts))
+                }
+                login={() => dispatch(openModal('login'))}
+                logout={() => dispatch(logoutCustomer(access_token))}
               />
             </div>
           </div>
@@ -80,7 +98,11 @@ const CheckoutPage = () => {
           <div className="checkout__sidebar__container">
             <div className="checkout__totals">
               {totals && (
-                <Check title={checkoutConfig.check_title} totals={totals} />
+                <Check
+                  title={checkoutConfig.check_title}
+                  totals={totals}
+                  updating={pending}
+                />
               )}
               {/* <div>Content goes here</div> */}
             </div>

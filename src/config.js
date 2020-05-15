@@ -30,11 +30,11 @@ export const defaultConfig = {
     details_title: 'Please review your order details',
     address_title: 'Confirm your address',
     guest_title: 'Checkout as a guest',
-    account_title: 'Nice to see you again',
+    account_title: 'Nice to see you again!',
     sign_up: {
       title: 'Wanna create an account?',
       subtitle:
-        'Order history, saved favorites & allergens, saved credit cards, and much more.Signing up takes two seconds - start reaping the benefits today!',
+        'Order history, saved favorites & allergens, saved credit cards, and much more. Signing up takes two seconds - start reaping the benefits today!',
     },
   },
   account: {
