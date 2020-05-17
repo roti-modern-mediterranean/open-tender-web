@@ -57,6 +57,12 @@
     }
   }
 
+  &__line__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   &__line__label {
     // span {
     //   display: block;
@@ -65,6 +71,11 @@
       margin-top: 0.5rem;
       display: block;
     }
+  }
+
+  &__line__success {
+    display: inline-block;
+    margin: 0 0.9rem 0 0;
   }
 
   &__error {

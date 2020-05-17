@@ -92,6 +92,7 @@ const CheckoutPage = () => {
                 order={order}
                 check={check}
                 form={form}
+                loading={loading}
                 errors={errors}
                 updateForm={(payload) => dispatch(updateForm(payload))}
                 login={() => dispatch(openModal('login'))}

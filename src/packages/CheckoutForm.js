@@ -12,6 +12,7 @@ const CheckoutForm = ({
   order,
   check,
   form,
+  loading,
   errors,
   updateForm,
   login,
@@ -32,7 +33,17 @@ const CheckoutForm = ({
 
   return (
     <FormContext.Provider
-      value={{ config, order, check, form, errors, updateForm, login, logout }}
+      value={{
+        config,
+        order,
+        check,
+        form,
+        loading,
+        errors,
+        updateForm,
+        login,
+        logout,
+      }}
     >
       <form
         id="checkout-form"
@@ -64,6 +75,7 @@ CheckoutForm.propTypes = {
   order: propTypes.object,
   check: propTypes.object,
   form: propTypes.object,
+  loading: propTypes.string,
   errors: propTypes.object,
   updateForm: propTypes.func,
   login: propTypes.func,
