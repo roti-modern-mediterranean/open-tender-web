@@ -11,7 +11,7 @@ import {
 } from '../../slices/orderSlice'
 import {
   updateForm,
-  resetCustomer,
+  updateCustomer,
   submitOrder,
   selectCheckout,
 } from '../../slices/checkoutSlice'
@@ -45,9 +45,7 @@ const CheckoutPage = () => {
   }, [cartCount, menuSlug, history])
 
   useEffect(() => {
-    account
-      ? dispatch(updateForm({ customer: account }))
-      : dispatch(resetCustomer())
+    dispatch(updateCustomer(account))
   }, [dispatch, account])
 
   useEffect(() => {
@@ -59,7 +57,8 @@ const CheckoutPage = () => {
       requestedAt,
       cart,
       orderCustomer,
-      discounts
+      discounts,
+      promoCodes
     )
     dispatch(submitOrder(order))
   }, [
@@ -69,6 +68,7 @@ const CheckoutPage = () => {
     cart,
     account,
     discounts,
+    promoCodes,
     dispatch,
     history,
   ])
@@ -92,11 +92,8 @@ const CheckoutPage = () => {
                 order={order}
                 check={check}
                 form={form}
+                errors={errors}
                 updateForm={(payload) => dispatch(updateForm(payload))}
-                // updateCheck={(payload) => dispatch(updateCheck(payload))}
-                // updateDiscounts={(discounts) =>
-                //   dispatch(updateDiscounts(discounts))
-                // }
                 login={() => dispatch(openModal('login'))}
                 logout={() => dispatch(logoutCustomer(access_token))}
               />

@@ -12,6 +12,7 @@ const CheckoutForm = ({
   order,
   check,
   form,
+  errors,
   updateForm,
   login,
   logout,
@@ -19,10 +20,6 @@ const CheckoutForm = ({
   const [isWorking, setIsWorking] = useState(false)
   const submitButton = useRef()
   if (!check || !check.config) return null
-  // const { required_fields: required } = check.config
-  // const isDelivery = order.serviceType === 'DELIVERY'
-  // const discountsOptional =
-  //   check.discounts_optional.length > 0 ? check.discounts_optional : null
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
@@ -30,9 +27,12 @@ const CheckoutForm = ({
     submitButton.current.blur()
   }
 
+  // const isDelivery = order.serviceType === 'DELIVERY'
+  const isDelivery = true
+
   return (
     <FormContext.Provider
-      value={{ config, order, check, form, updateForm, login, logout }}
+      value={{ config, order, check, form, errors, updateForm, login, logout }}
     >
       <form
         id="checkout-form"
@@ -40,37 +40,10 @@ const CheckoutForm = ({
         onSubmit={handleSubmit}
         noValidate
       >
-        <CheckoutDetails
-        // title={config.details_title}
-        // order={order}
-        // check={check}
-        // form={form}
-        // updateForm={updateForm}
-        />
-        {/* {isDelivery && (
-        <CheckoutAddress
-          title={config.address_title}
-          requiredFields={required.address}
-          updateForm={updateForm}
-          order={order}
-        />
-      )}
-      <CheckoutCustomer
-        config={config}
-        requiredFields={required.customer}
-        formCustomer={form.customer}
-        updateForm={updateForm}
-        login={login}
-        logout={logout}
-      />
-      {discountsOptional && (
-        <CheckoutDiscounts
-          title={config.discounts_title}
-          discountsOptional={discountsOptional}
-          discounts={check.discounts}
-          updateForm={updateForm}
-        />
-      )} */}
+        <CheckoutDetails />
+        {isDelivery && <CheckoutAddress />}
+        <CheckoutCustomer />
+        <CheckoutDiscounts />
         <div className="form__footer">
           <input
             className="btn btn--big"
@@ -90,7 +63,11 @@ CheckoutForm.propTypes = {
   config: propTypes.object,
   order: propTypes.object,
   check: propTypes.object,
-  updateCheck: propTypes.func,
+  form: propTypes.object,
+  errors: propTypes.object,
+  updateForm: propTypes.func,
+  login: propTypes.func,
+  logout: propTypes.func,
 }
 
 export default CheckoutForm

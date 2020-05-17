@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from 'react'
-import propTypes from 'prop-types'
+import React, { useState, useCallback, useContext } from 'react'
 import debounce from 'lodash/debounce'
 import {
   ButtonLocation,

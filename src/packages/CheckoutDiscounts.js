@@ -1,7 +1,7 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import React, { useContext } from 'react'
 import CheckoutLineItem from './CheckoutLineItem'
 import Button from './Button'
+import { FormContext } from './CheckoutForm'
 
 const CheckoutDiscountLabel = ({ discount }) => (
   <>
@@ -10,34 +10,36 @@ const CheckoutDiscountLabel = ({ discount }) => (
   </>
 )
 
-const CheckoutDiscounts = ({
-  title = 'Redeem your loyalty rewards',
-  discountsOptional,
-  discounts,
-  updateDiscounts,
-}) => {
-  const discountIds = discounts.map((i) => i.discount_id)
+const CheckoutDiscounts = () => {
+  const formContext = useContext(FormContext)
+  const { config, check, form, updateForm } = formContext
+  const discountsOptional = check.discounts_optional.length
+    ? check.discounts_optional
+    : null
+  if (!discountsOptional) return null
 
   const applyDiscount = (evt, discountId, extId) => {
     evt.preventDefault()
     const newDiscount = { discount_id: discountId, ext_id: extId || '' }
-    updateDiscounts([...discounts, newDiscount])
+    updateForm({ discounts: [...form.discounts, newDiscount] })
     evt.target.blur()
   }
 
   const removeDiscount = (evt, discountId) => {
     evt.preventDefault()
-    updateDiscounts(discounts.filter((i) => i.discount_id !== discountId))
+    const filtered = form.discounts.filter((i) => i.discount_id !== discountId)
+    updateForm({ discounts: filtered })
     evt.target.blur()
   }
 
+  const discountIds = form.discounts.map((i) => i.discount_id)
   return (
     <fieldset className="form__fieldset">
       <div className="form__legend">
-        <p className="form__legend__title heading ot-font-size-h4">{title}</p>
-        <p className="form__legend__subtitle">
-          Apply one or more discounts below.
+        <p className="form__legend__title heading ot-font-size-h4">
+          {config.discounts.title}
         </p>
+        <p className="form__legend__subtitle">{config.discounts.subtitle}</p>
       </div>
       <div className="form__inputs">
         {discountsOptional.map((i) => (
@@ -70,10 +72,5 @@ const CheckoutDiscounts = ({
 }
 
 CheckoutDiscounts.displayName = 'CheckoutDiscounts'
-CheckoutDiscounts.propTypes = {
-  customer: propTypes.object,
-  updateCheck: propTypes.func,
-  requiredFields: propTypes.array,
-}
 
 export default CheckoutDiscounts

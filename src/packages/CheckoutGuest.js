@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import propTypes from 'prop-types'
+import React, { useState, useCallback, useContext } from 'react'
+import debounce from 'lodash/debounce'
 import { Input } from './Inputs'
 import CheckoutLineItem from './CheckoutLineItem'
-import debounce from 'lodash/debounce'
+import { FormContext } from './CheckoutForm'
 
 const initialState = {
   first_name: '',
@@ -34,22 +34,19 @@ const fields = [
   { name: 'company', type: 'text' },
 ]
 
-const CheckoutGuest = ({
-  title = 'Checkout as a Guest',
-  requiredFields,
-  checkoutCustomer,
-  updateCheck,
-}) => {
-  const [customer, setCustomer] = useState(checkoutCustomer || initialState)
+const CheckoutGuest = () => {
+  const formContext = useContext(FormContext)
+  const { config, check, form, updateForm } = formContext
+  const [customer, setCustomer] = useState(form.customer || initialState)
 
-  useEffect(() => {
-    setCustomer(checkoutCustomer || initialState)
-  }, [checkoutCustomer])
+  // useEffect(() => {
+  //   setCustomer(checkoutCustomer || initialState)
+  // }, [checkoutCustomer])
 
   // https://medium.com/p/5489fc3461b3/responses/show
   // https://codesandbox.io/s/functional-component-debounce-cunf7
   const debouncedUpdate = useCallback(
-    debounce((newCustomer) => updateCheck({ customer: newCustomer }), 500),
+    debounce((newCustomer) => updateForm({ customer: newCustomer }), 500),
     []
   )
 
@@ -62,10 +59,13 @@ const CheckoutGuest = ({
   }
 
   const errors = {}
+  const requiredFields = check.config.required_fields.customer
   const contactConfig = makeContactConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">
-      <legend className="form__legend heading ot-font-size-h5">{title}</legend>
+      <legend className="form__legend heading ot-font-size-h5">
+        {config.guest.title}
+      </legend>
       <div className="form__inputs">
         {fields.map((field) => {
           return (
@@ -99,10 +99,5 @@ const CheckoutGuest = ({
 }
 
 CheckoutGuest.displayName = 'CheckoutGuest'
-CheckoutGuest.propTypes = {
-  customer: propTypes.object,
-  updateCheck: propTypes.func,
-  requiredFields: propTypes.array,
-}
 
 export default CheckoutGuest

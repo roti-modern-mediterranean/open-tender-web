@@ -168,7 +168,8 @@ export const prepareOrder = (
   requestedAt,
   cart,
   customer = {},
-  discounts,
+  discounts = [],
+  promoCodes = [],
   address = null,
   isValidate = true
 ) => {
@@ -185,6 +186,7 @@ export const prepareOrder = (
     address: address,
     customer: customer,
     discounts: discounts,
+    promoCodes: promoCodes,
   }
   return data
 }

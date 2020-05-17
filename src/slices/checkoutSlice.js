@@ -25,13 +25,21 @@ const checkoutSlice = createSlice({
       // console.log(JSON.stringify(action.payload.customer))
       state.form = { ...state.form, ...action.payload }
     },
-    resetCustomer: (state) => {
-      state.form = { ...state.form, customer: {}, discounts: [] }
+    updateCustomer: (state, action) => {
+      const account = action.payload
+      const customer = state.form.customer
+      const customerId = customer ? customer.customer_id : null
+      if (!account) {
+        state.form.discounts = []
+        if (customerId) state.form.customer = {}
+      } else if (customerId && account.customer_id !== customerId) {
+        state.form.customer = customer
+        state.form.discounts = []
+      } else if (account && !customerId) {
+        state.form.customer = account
+        state.form.discounts = []
+      }
     },
-    // updateCustomer: (state, action) => {
-    //   state.customer = { ...state.customer, ...action.payload }
-    // },
-
     // updateDiscounts: (state, action) => {
     //   // console.log(JSON.stringify(action.payload.customer))
     //   state.discounts = action.payload
@@ -54,7 +62,7 @@ const checkoutSlice = createSlice({
   },
 })
 
-export const { updateForm, resetCustomer } = checkoutSlice.actions
+export const { updateForm, updateCustomer } = checkoutSlice.actions
 
 export const selectCheckout = (state) => state.checkout
 export const selectCheck = (state) => state.checkout.check

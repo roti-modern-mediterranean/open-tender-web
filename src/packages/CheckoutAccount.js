@@ -1,18 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import propTypes from 'prop-types'
+import React, { useState, useCallback, useContext } from 'react'
 import { Input } from './Inputs'
 import CheckoutLineItem from './CheckoutLineItem'
 import debounce from 'lodash/debounce'
 import ButtonCheckoutAccount from './ButtonCheckoutAccount'
 import Button from './Button'
-
-const initialState = {
-  first_name: '',
-  last_name: '',
-  emaiil: '',
-  phone: '',
-  company: '',
-}
+import { FormContext } from './CheckoutForm'
 
 const makeAccountConfig = (requiredFields) => {
   return {
@@ -33,18 +25,10 @@ const fields = [
   { name: 'company', type: 'text' },
 ]
 
-const CheckoutAccount = ({
-  title = 'Nice to see you again',
-  requiredFields,
-  formCustomer,
-  updateForm,
-  logout,
-}) => {
-  const [customer, setCustomer] = useState(formCustomer || initialState)
-
-  useEffect(() => {
-    setCustomer(formCustomer || initialState)
-  }, [formCustomer])
+const CheckoutAccount = () => {
+  const formContext = useContext(FormContext)
+  const { config, check, form, updateForm, logout } = formContext
+  const [customer, setCustomer] = useState(form.customer)
 
   const debouncedUpdate = useCallback(
     debounce((newCustomer) => updateForm({ customer: newCustomer }), 500),
@@ -60,12 +44,13 @@ const CheckoutAccount = ({
   }
 
   const errors = {}
+  const requiredFields = check.config.required_fields.customer
   const accountConfig = makeAccountConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">
       <div className="form__legend">
         <p className="form__legend__title heading ot-font-size-h4">
-          {title}
+          {config.account.title}
           {/* {customer.first_name} */}
         </p>
         <p className="form__legend__subtitle">
@@ -115,12 +100,5 @@ const CheckoutAccount = ({
 }
 
 CheckoutAccount.displayName = 'CheckoutAccount'
-CheckoutAccount.propTypes = {
-  title: propTypes.string,
-  requiredFields: propTypes.array,
-  formCustomer: propTypes.object,
-  updateForm: propTypes.func,
-  logout: propTypes.func,
-}
 
 export default CheckoutAccount

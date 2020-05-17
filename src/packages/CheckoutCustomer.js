@@ -1,18 +1,13 @@
-import React, { useState } from 'react'
-import propTypes from 'prop-types'
+import React, { useState, useContext } from 'react'
 import { CheckoutAccount, CheckoutSignUp, CheckoutGuest } from '.'
-import TransitionWrapper from './TransitionWrapper'
+// import TransitionWrapper from './TransitionWrapper'
+import { FormContext } from './CheckoutForm'
 
-const CheckoutCustomer = ({
-  config,
-  requiredFields,
-  formCustomer,
-  updateForm,
-  login,
-  logout,
-}) => {
+const CheckoutCustomer = () => {
+  const formContext = useContext(FormContext)
+  const { form } = formContext
   const [showGuest, setShowGuest] = useState(false)
-  const hasAccount = formCustomer && formCustomer.customer_id
+  const hasAccount = form.customer && form.customer.customer_id
 
   const handleGuest = (evt) => {
     evt.preventDefault()
@@ -21,41 +16,18 @@ const CheckoutCustomer = ({
   }
 
   return hasAccount ? (
-    <CheckoutAccount
-      title={config.account_title}
-      requiredFields={requiredFields}
-      formCustomer={formCustomer}
-      updateForm={updateForm}
-      logout={logout}
-    />
+    <CheckoutAccount />
   ) : (
     <>
-      <CheckoutSignUp handleGuest={handleGuest} config={config.sign_up} />
-      <TransitionWrapper
-        on={showGuest}
-        transitionKey="guest"
-        // effect="slide-in-from-right"
-      >
-        <CheckoutGuest
-          title={config.guest_title}
-          requiredFields={requiredFields}
-          formCustomer={formCustomer}
-          updateForm={updateForm}
-          login={login}
-        />
-      </TransitionWrapper>
+      <CheckoutSignUp handleGuest={handleGuest} />
+      {showGuest && <CheckoutGuest />}
+      {/* <TransitionWrapper on={showGuest} transitionKey="guest">
+        <CheckoutGuest />
+      </TransitionWrapper> */}
     </>
   )
 }
 
 CheckoutCustomer.displayName = 'CheckoutCustomer'
-CheckoutCustomer.propTypes = {
-  config: propTypes.object,
-  requiredFields: propTypes.array,
-  formCustomer: propTypes.object,
-  updateForm: propTypes.func,
-  login: propTypes.func,
-  logout: propTypes.func,
-}
 
 export default CheckoutCustomer

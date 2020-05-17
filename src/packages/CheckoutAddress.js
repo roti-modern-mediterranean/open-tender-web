@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react'
-import propTypes from 'prop-types'
-import { Input } from './Inputs'
+import React, { useState, useCallback, useContext } from 'react'
 import debounce from 'lodash/debounce'
+import { Input } from './Inputs'
+import CheckoutLineItem from './CheckoutLineItem'
+import { FormContext } from './CheckoutForm'
 
 const initialState = {
   unit: '',
@@ -10,16 +11,45 @@ const initialState = {
   phone: '',
 }
 
-const AddressInfo = ({
-  title = 'Order Details',
-  requiredFields,
-  updateCheck,
-  order,
-}) => {
-  const [address, setAddress] = useState(initialState)
+const makeAddressConfig = (requiredFields) => {
+  return {
+    unit: {
+      label: 'Unit / Suite',
+      included: requiredFields.includes('unit'),
+      required: requiredFields.includes('unit'),
+    },
+    company: {
+      label: 'Company',
+      included: requiredFields.includes('company'),
+      required: requiredFields.includes('company'),
+    },
+    contact: {
+      label: 'Contact Person',
+      included: requiredFields.includes('contact'),
+      required: requiredFields.includes('contact'),
+    },
+    phone: {
+      label: 'Contact Phone',
+      included: requiredFields.includes('phone'),
+      required: requiredFields.includes('phone'),
+    },
+  }
+}
+
+const fields = [
+  { name: 'unit', type: 'text' },
+  { name: 'company', type: 'text' },
+  { name: 'contact', type: 'text' },
+  { name: 'phone', type: 'text' },
+]
+
+const CheckoutAddress = () => {
+  const formContext = useContext(FormContext)
+  const { config, check, form, updateForm } = formContext
+  const [address, setAddress] = useState(form.address || initialState)
 
   const debouncedUpdate = useCallback(
-    debounce((newAddress) => updateCheck({ address: newAddress }), 500),
+    debounce((newAddress) => updateForm({ address: newAddress }), 500),
     []
   )
 
@@ -32,73 +62,45 @@ const AddressInfo = ({
   }
 
   const errors = {}
-  const unitRequired = requiredFields.includes('unit')
-  const companyRequired = requiredFields.includes('company')
-  const contactRequired = requiredFields.includes('contact')
-  const phoneRequired = requiredFields.includes('phone')
+  const requiredFields = check.config.required_fields.address
+  const addressConfig = makeAddressConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">
-      <legend className="form__legend heading ot-font-size-h5">{title}</legend>
+      <legend className="form__legend heading ot-font-size-h5">
+        {config.address.title}
+      </legend>
       <div className="form__inputs">
-        {unitRequired && (
-          <Input
-            label="Unit / Suite"
-            name="address-unit"
-            type="text"
-            value={address.unit}
-            onChange={handleChange}
-            error={errors.unit}
-            required={true}
-            classes={`${companyRequired ? 'form__input--left' : ''}`}
-          />
-        )}
-        {companyRequired && (
-          <Input
-            label="Company"
-            name="address-company"
-            type="text"
-            value={address.company}
-            onChange={handleChange}
-            error={errors.company}
-            required={true}
-            classes={`${unitRequired ? 'form__input--right' : ''}`}
-          />
-        )}
-        {contactRequired && (
-          <Input
-            label="Contact Person"
-            name="address-contact"
-            type="text"
-            value={address.contact}
-            onChange={handleChange}
-            error={errors.contact}
-            required={true}
-            classes={`${phoneRequired ? 'form__input--left' : ''}`}
-          />
-        )}
-        {phoneRequired && (
-          <Input
-            label="Contact Phone"
-            name="address-phone"
-            type="tel"
-            value={address.phone}
-            onChange={handleChange}
-            error={errors.phone}
-            required={true}
-            classes={`${contactRequired ? 'form__input--right' : ''}`}
-          />
-        )}
+        {fields.map((field) => {
+          return (
+            addressConfig[field.name] &&
+            addressConfig[field.name].included && (
+              <CheckoutLineItem
+                key={field.name}
+                label={addressConfig[field.name].label}
+                required={addressConfig[field.name].required}
+                classes="form__line__input"
+              >
+                <Input
+                  label={addressConfig[field.name].label}
+                  name={`address-${field.name}`}
+                  type={field.type}
+                  value={address[field.name]}
+                  onChange={handleChange}
+                  error={errors[field.name]}
+                  required={addressConfig[field.name].required}
+                  classes="form__input--small"
+                  inputClasses=""
+                  showLabel={false}
+                />
+              </CheckoutLineItem>
+            )
+          )
+        })}
       </div>
     </fieldset>
   )
 }
 
-AddressInfo.displayName = 'AddressInfo'
-AddressInfo.propTypes = {
-  title: propTypes.string,
-  updateCheck: propTypes.func,
-  requiredFields: propTypes.array,
-  order: propTypes.object,
-}
+CheckoutAddress.displayName = 'CheckoutAddress'
 
-export default AddressInfo
+export default CheckoutAddress

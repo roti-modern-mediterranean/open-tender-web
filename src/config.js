@@ -26,15 +26,27 @@ export const defaultConfig = {
   checkout: {
     title: "Let's get you checked out",
     subtitle: '',
-    check_title: 'Order Summary',
-    details_title: 'Please review your order details',
-    address_title: 'Confirm your address',
-    guest_title: 'Checkout as a guest',
-    account_title: 'Nice to see you again!',
+    check: {
+      title: 'Order Summary',
+    },
+    details: {
+      title: 'Please review your order details',
+    },
+    address: { title: 'Confirm your address' },
     sign_up: {
       title: 'Wanna create an account?',
       subtitle:
         'Order history, saved favorites & allergens, saved credit cards, and much more. Signing up takes two seconds - start reaping the benefits today!',
+    },
+    guest: {
+      title: 'Checkout as a guest',
+    },
+    account: {
+      title: 'Nice to see you again!',
+    },
+    discounts: {
+      title: 'Redeem your loyalty rewards',
+      subtitle: 'Apply one or more discounts below.',
     },
   },
   account: {
