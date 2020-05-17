@@ -16,7 +16,12 @@ const checkoutSlice = createSlice({
   name: 'checkout',
   initialState: {
     check: null,
+    details: {},
+    address: {},
+    customer: {},
     discounts: [],
+    promoCodes: [],
+    tenders: [],
     errors: null,
     loading: 'idle',
   },
@@ -24,6 +29,13 @@ const checkoutSlice = createSlice({
     updateCheck: (state, action) => {
       // console.log(JSON.stringify(action.payload.customer))
       state.check = { ...state.check, ...action.payload }
+    },
+    updateCustomer: (state, action) => {
+      state.customer = { ...state.customer, ...action.payload }
+    },
+    resetCustomer: (state) => {
+      state.customer = {}
+      state.discounts = []
     },
     updateDiscounts: (state, action) => {
       // console.log(JSON.stringify(action.payload.customer))
@@ -47,7 +59,12 @@ const checkoutSlice = createSlice({
   },
 })
 
-export const { updateCheck, updateDiscounts } = checkoutSlice.actions
+export const {
+  updateCheck,
+  updateCustomer,
+  resetCustomer,
+  updateDiscounts,
+} = checkoutSlice.actions
 
 export const selectCheckout = (state) => state.checkout
 export const selectCheck = (state) => state.checkout.check

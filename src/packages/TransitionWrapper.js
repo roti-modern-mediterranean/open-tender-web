@@ -4,14 +4,14 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 const TransitionWrapper = ({
   on,
-  key,
+  transitionKey,
   effect = 'reveal',
   timeout = 250,
   children,
 }) => (
   <TransitionGroup component={null}>
     {on ? (
-      <CSSTransition key={key} classNames={effect} timeout={timeout}>
+      <CSSTransition key={transitionKey} classNames={effect} timeout={timeout}>
         {children}
       </CSSTransition>
     ) : null}

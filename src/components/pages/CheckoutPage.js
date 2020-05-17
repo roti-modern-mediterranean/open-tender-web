@@ -11,12 +11,14 @@ import {
 } from '../../slices/orderSlice'
 import {
   updateCheck,
+  updateCustomer,
+  resetCustomer,
   updateDiscounts,
   submitOrder,
   selectCheckout,
 } from '../../slices/checkoutSlice'
 import { openModal } from '../../slices/modalSlice'
-import { logoutCustomer, selectAccount } from '../../slices/customerSlice'
+import { logoutCustomer, selectCustomer } from '../../slices/customerSlice'
 import { CheckoutForm, Check } from '../../packages'
 import { prepareOrder } from '../../packages/utils'
 
@@ -29,8 +31,9 @@ const CheckoutPage = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
   const order = useSelector(selectOrder)
-  const customer = useSelector(selectAccount)
-  const { access_token } = customer ? customer.auth || {} : {}
+  const customer = useSelector(selectCustomer)
+  const { account, auth } = customer
+  const { access_token } = auth || {}
   const { check, discounts, loading } = useSelector(selectCheckout)
   const { totals } = check || {}
 
@@ -39,13 +42,22 @@ const CheckoutPage = () => {
   }, [])
 
   useEffect(() => {
+    if (cartCount === 0) history.push(menuSlug)
+  }, [cartCount, menuSlug, history])
+
+  useEffect(() => {
+    account ? dispatch(updateCustomer(account)) : dispatch(resetCustomer())
+  }, [dispatch, account])
+
+  useEffect(() => {
     if (!locationId) return history.push('/')
+    const orderCustomer = account ? { customer_id: account.customer_id } : null
     const order = prepareOrder(
       locationId,
       serviceType,
       requestedAt,
       cart,
-      customer,
+      orderCustomer,
       discounts
     )
     dispatch(submitOrder(order))
@@ -54,15 +66,11 @@ const CheckoutPage = () => {
     serviceType,
     requestedAt,
     cart,
-    customer,
+    account,
     discounts,
     dispatch,
     history,
   ])
-
-  useEffect(() => {
-    if (cartCount === 0) history.push(menuSlug)
-  }, [cartCount, menuSlug, history])
 
   const pending = loading === 'pending'
 

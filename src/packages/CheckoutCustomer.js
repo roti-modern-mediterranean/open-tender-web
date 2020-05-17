@@ -33,7 +33,7 @@ const CheckoutCustomer = ({
       <CheckoutSignUp handleGuest={handleGuest} config={config.sign_up} />
       <TransitionWrapper
         on={showGuest}
-        key="guest"
+        transitionKey="guest"
         // effect="slide-in-from-right"
       >
         <CheckoutGuest

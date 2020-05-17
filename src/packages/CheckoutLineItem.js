@@ -15,7 +15,12 @@ const CheckoutLineItem = ({ label, required, classes = '', children }) => {
 
 CheckoutLineItem.displayName = 'CheckoutLineItem'
 CheckoutLineItem.propTypes = {
-  label: propTypes.string,
+  label: propTypes.oneOfType([
+    propTypes.arrayOf(propTypes.node),
+    propTypes.node,
+    propTypes.string,
+    propTypes.object,
+  ]),
   classes: propTypes.string,
 }
 

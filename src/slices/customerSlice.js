@@ -14,7 +14,6 @@ export const loginCustomer = createAsyncThunk(
     try {
       return await postLogin(email, password)
     } catch (err) {
-      console.log(err.message)
       return thunkAPI.rejectWithValue(err.message)
     }
   }
