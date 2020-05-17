@@ -6,13 +6,13 @@ import TransitionWrapper from './TransitionWrapper'
 const CheckoutCustomer = ({
   config,
   requiredFields,
-  checkoutCustomer,
-  updateCheck,
+  formCustomer,
+  updateForm,
   login,
   logout,
 }) => {
   const [showGuest, setShowGuest] = useState(false)
-  const hasAccount = checkoutCustomer && checkoutCustomer.customer_id
+  const hasAccount = formCustomer && formCustomer.customer_id
 
   const handleGuest = (evt) => {
     evt.preventDefault()
@@ -24,8 +24,8 @@ const CheckoutCustomer = ({
     <CheckoutAccount
       title={config.account_title}
       requiredFields={requiredFields}
-      checkoutCustomer={checkoutCustomer}
-      updateCheck={updateCheck}
+      formCustomer={formCustomer}
+      updateForm={updateForm}
       logout={logout}
     />
   ) : (
@@ -39,8 +39,8 @@ const CheckoutCustomer = ({
         <CheckoutGuest
           title={config.guest_title}
           requiredFields={requiredFields}
-          checkoutCustomer={checkoutCustomer}
-          updateCheck={updateCheck}
+          formCustomer={formCustomer}
+          updateForm={updateForm}
           login={login}
         />
       </TransitionWrapper>
@@ -48,10 +48,14 @@ const CheckoutCustomer = ({
   )
 }
 
-CheckoutCustomer.displayName = 'ContactInfo'
+CheckoutCustomer.displayName = 'CheckoutCustomer'
 CheckoutCustomer.propTypes = {
-  updateCheck: propTypes.func,
+  config: propTypes.object,
   requiredFields: propTypes.array,
+  formCustomer: propTypes.object,
+  updateForm: propTypes.func,
+  login: propTypes.func,
+  logout: propTypes.func,
 }
 
 export default CheckoutCustomer

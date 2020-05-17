@@ -10,10 +10,8 @@ import {
   selectOrder,
 } from '../../slices/orderSlice'
 import {
-  updateCheck,
-  updateCustomer,
+  updateForm,
   resetCustomer,
-  updateDiscounts,
   submitOrder,
   selectCheckout,
 } from '../../slices/checkoutSlice'
@@ -34,7 +32,8 @@ const CheckoutPage = () => {
   const customer = useSelector(selectCustomer)
   const { account, auth } = customer
   const { access_token } = auth || {}
-  const { check, discounts, loading } = useSelector(selectCheckout)
+  const { check, form, loading, errors } = useSelector(selectCheckout)
+  const { discounts, promoCodes } = form
   const { totals } = check || {}
 
   useEffect(() => {
@@ -46,7 +45,9 @@ const CheckoutPage = () => {
   }, [cartCount, menuSlug, history])
 
   useEffect(() => {
-    account ? dispatch(updateCustomer(account)) : dispatch(resetCustomer())
+    account
+      ? dispatch(updateForm({ customer: account }))
+      : dispatch(resetCustomer())
   }, [dispatch, account])
 
   useEffect(() => {
@@ -90,10 +91,12 @@ const CheckoutPage = () => {
                 config={checkoutConfig}
                 order={order}
                 check={check}
-                updateCheck={(payload) => dispatch(updateCheck(payload))}
-                updateDiscounts={(discounts) =>
-                  dispatch(updateDiscounts(discounts))
-                }
+                form={form}
+                updateForm={(payload) => dispatch(updateForm(payload))}
+                // updateCheck={(payload) => dispatch(updateCheck(payload))}
+                // updateDiscounts={(discounts) =>
+                //   dispatch(updateDiscounts(discounts))
+                // }
                 login={() => dispatch(openModal('login'))}
                 logout={() => dispatch(logoutCustomer(access_token))}
               />

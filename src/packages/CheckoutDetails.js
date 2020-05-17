@@ -15,11 +15,12 @@ import CheckoutLineItem from './CheckoutLineItem'
 const CheckoutDetails = ({
   title = 'Please review your order details',
   order,
-  checkConfig,
-  checkDetails,
-  updateCheck,
+  check,
+  form,
+  updateForm,
 }) => {
   const serviceTypeName = serviceTypeNamesMap[order.serviceType]
+  const checkDetails = form.details || check.details
   const [details, setDetails] = useState(checkDetails)
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const CheckoutDetails = ({
   }, [checkDetails])
 
   const debouncedUpdate = useCallback(
-    debounce((newDetails) => updateCheck({ details: newDetails }), 500),
+    debounce((newDetails) => updateForm({ details: newDetails }), 500),
     []
   )
 
@@ -41,8 +42,8 @@ const CheckoutDetails = ({
   }
 
   const errors = {}
-  const allowTaxExempt = checkConfig.allow_tax_exempt
-  const requiredFields = checkConfig.required_fields.details
+  const allowTaxExempt = check.config.allow_tax_exempt
+  const requiredFields = check.config.required_fields.details
   const eatingUtensilsRequired = requiredFields.includes('eating_utensils')
   const servingUtensilsRequired = requiredFields.includes('serving_utensils')
   const personCountRequired = requiredFields.includes('person_count')
@@ -149,7 +150,7 @@ CheckoutDetails.propTypes = {
   order: propTypes.object,
   checkConfig: propTypes.object,
   checkDetails: propTypes.object,
-  updateCheck: propTypes.func,
+  updateForm: propTypes.func,
 }
 
 export default CheckoutDetails

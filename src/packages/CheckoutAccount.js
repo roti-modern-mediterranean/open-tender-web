@@ -36,18 +36,18 @@ const fields = [
 const CheckoutAccount = ({
   title = 'Nice to see you again',
   requiredFields,
-  checkoutCustomer,
-  updateCheck,
+  formCustomer,
+  updateForm,
   logout,
 }) => {
-  const [customer, setCustomer] = useState(checkoutCustomer || initialState)
+  const [customer, setCustomer] = useState(formCustomer || initialState)
 
   useEffect(() => {
-    setCustomer(checkoutCustomer || initialState)
-  }, [checkoutCustomer])
+    setCustomer(formCustomer || initialState)
+  }, [formCustomer])
 
   const debouncedUpdate = useCallback(
-    debounce((newCustomer) => updateCheck({ customer: newCustomer }), 500),
+    debounce((newCustomer) => updateForm({ customer: newCustomer }), 500),
     []
   )
 
@@ -116,9 +116,11 @@ const CheckoutAccount = ({
 
 CheckoutAccount.displayName = 'CheckoutAccount'
 CheckoutAccount.propTypes = {
-  customer: propTypes.object,
-  updateCheck: propTypes.func,
+  title: propTypes.string,
   requiredFields: propTypes.array,
+  formCustomer: propTypes.object,
+  updateForm: propTypes.func,
+  logout: propTypes.func,
 }
 
 export default CheckoutAccount

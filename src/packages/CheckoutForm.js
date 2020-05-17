@@ -9,8 +9,8 @@ const CheckoutForm = ({
   config,
   order,
   check,
-  updateCheck,
-  updateDiscounts,
+  form,
+  updateForm,
   login,
   logout,
 }) => {
@@ -38,23 +38,23 @@ const CheckoutForm = ({
       <CheckoutDetails
         title={config.details_title}
         order={order}
-        checkConfig={check.config}
-        checkDetails={check.details}
-        updateCheck={updateCheck}
+        check={check}
+        form={form}
+        updateForm={updateForm}
       />
       {isDelivery && (
         <CheckoutAddress
           title={config.address_title}
           requiredFields={required.address}
-          updateCheck={updateCheck}
+          updateForm={updateForm}
           order={order}
         />
       )}
       <CheckoutCustomer
         config={config}
         requiredFields={required.customer}
-        checkoutCustomer={check.customer}
-        updateCheck={updateCheck}
+        formCustomer={form.customer}
+        updateForm={updateForm}
         login={login}
         logout={logout}
       />
@@ -63,7 +63,7 @@ const CheckoutForm = ({
           title={config.discounts_title}
           discountsOptional={discountsOptional}
           discounts={check.discounts}
-          updateDiscounts={updateDiscounts}
+          updateForm={updateForm}
         />
       )}
       <div className="form__footer">
