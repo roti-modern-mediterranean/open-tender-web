@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useContext } from 'react'
 import propTypes from 'prop-types'
 import debounce from 'lodash/debounce'
 import {
@@ -11,21 +11,17 @@ import {
 import { serviceTypeNamesMap } from './constants'
 import { Textarea } from './Inputs'
 import CheckoutLineItem from './CheckoutLineItem'
+import { FormContext } from './CheckoutForm'
 
-const CheckoutDetails = ({
-  title = 'Please review your order details',
-  order,
-  check,
-  form,
-  updateForm,
-}) => {
-  const serviceTypeName = serviceTypeNamesMap[order.serviceType]
+const CheckoutDetails = () => {
+  const formContext = useContext(FormContext)
+  const { config, order, check, form, updateForm } = formContext
   const checkDetails = form.details || check.details
   const [details, setDetails] = useState(checkDetails)
 
-  useEffect(() => {
-    setDetails(checkDetails)
-  }, [checkDetails])
+  // useEffect(() => {
+  //   setDetails(checkDetails)
+  // }, [checkDetails])
 
   const debouncedUpdate = useCallback(
     debounce((newDetails) => updateForm({ details: newDetails }), 500),
@@ -42,6 +38,7 @@ const CheckoutDetails = ({
   }
 
   const errors = {}
+  const serviceTypeName = serviceTypeNamesMap[order.serviceType]
   const allowTaxExempt = check.config.allow_tax_exempt
   const requiredFields = check.config.required_fields.details
   const eatingUtensilsRequired = requiredFields.includes('eating_utensils')
@@ -50,7 +47,9 @@ const CheckoutDetails = ({
   const notesRequired = requiredFields.includes('notes')
   return (
     <div className="form__fieldset">
-      <div className="form__legend heading ot-font-size-h5">{title}</div>
+      <div className="form__legend heading ot-font-size-h5">
+        {config.details_title}
+      </div>
       <div className="form__inputs">
         <CheckoutLineItem label="Location">
           <ButtonLocation classes="btn--header" />
@@ -145,12 +144,5 @@ const CheckoutDetails = ({
 }
 
 CheckoutDetails.displayName = 'CheckoutDetails'
-CheckoutDetails.propTypes = {
-  title: propTypes.string,
-  order: propTypes.object,
-  checkConfig: propTypes.object,
-  checkDetails: propTypes.object,
-  updateForm: propTypes.func,
-}
 
 export default CheckoutDetails

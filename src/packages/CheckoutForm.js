@@ -1,9 +1,11 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, createContext } from 'react'
 import propTypes from 'prop-types'
 import CheckoutDetails from './CheckoutDetails'
 import CheckoutCustomer from './CheckoutCustomer'
 import CheckoutAddress from './CheckoutAddress'
 import CheckoutDiscounts from './CheckoutDiscounts'
+
+export const FormContext = createContext(null)
 
 const CheckoutForm = ({
   config,
@@ -17,10 +19,10 @@ const CheckoutForm = ({
   const [isWorking, setIsWorking] = useState(false)
   const submitButton = useRef()
   if (!check || !check.config) return null
-  const { required_fields: required } = check.config
-  const isDelivery = order.serviceType === 'DELIVERY'
-  const discountsOptional =
-    check.discounts_optional.length > 0 ? check.discounts_optional : null
+  // const { required_fields: required } = check.config
+  // const isDelivery = order.serviceType === 'DELIVERY'
+  // const discountsOptional =
+  //   check.discounts_optional.length > 0 ? check.discounts_optional : null
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
@@ -29,20 +31,23 @@ const CheckoutForm = ({
   }
 
   return (
-    <form
-      id="checkout-form"
-      className="form"
-      onSubmit={handleSubmit}
-      noValidate
+    <FormContext.Provider
+      value={{ config, order, check, form, updateForm, login, logout }}
     >
-      <CheckoutDetails
-        title={config.details_title}
-        order={order}
-        check={check}
-        form={form}
-        updateForm={updateForm}
-      />
-      {isDelivery && (
+      <form
+        id="checkout-form"
+        className="form"
+        onSubmit={handleSubmit}
+        noValidate
+      >
+        <CheckoutDetails
+        // title={config.details_title}
+        // order={order}
+        // check={check}
+        // form={form}
+        // updateForm={updateForm}
+        />
+        {/* {isDelivery && (
         <CheckoutAddress
           title={config.address_title}
           requiredFields={required.address}
@@ -65,17 +70,18 @@ const CheckoutForm = ({
           discounts={check.discounts}
           updateForm={updateForm}
         />
-      )}
-      <div className="form__footer">
-        <input
-          className="btn btn--big"
-          type="submit"
-          value="Submit Order"
-          disabled={isWorking}
-          ref={submitButton}
-        />
-      </div>
-    </form>
+      )} */}
+        <div className="form__footer">
+          <input
+            className="btn btn--big"
+            type="submit"
+            value="Submit Order"
+            disabled={isWorking}
+            ref={submitButton}
+          />
+        </div>
+      </form>
+    </FormContext.Provider>
   )
 }
 
