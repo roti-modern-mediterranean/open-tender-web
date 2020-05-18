@@ -52,6 +52,10 @@ export const defaultConfig = {
       title: 'Apply a promo code',
       subtitle: 'Enter a promo code below & hit the apply button',
     },
+    giftCards: {
+      title: 'Apply a gift card',
+      subtitle: 'Apply an existing gift card or add a new one',
+    },
   },
   account: {
     background:

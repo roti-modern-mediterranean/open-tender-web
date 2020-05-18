@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import propTypes from 'prop-types'
-import { formatDollars } from './utils'
+import { formatDollars, checkAmountRemaining, makeTenderName } from './utils'
 import BarLoader from 'react-spinners/BarLoader'
 
 const CheckItem = ({ label, value, classes = '' }) => (
@@ -26,7 +26,7 @@ const CheckUpdating = () => (
   </div>
 )
 
-const Check = ({ title, totals, updating = false }) => {
+const Check = ({ title, totals, tenders, updating = false }) => {
   const [isSticky, setSticky] = useState(false)
   const stickyRef = useRef(null)
   const handleScroll = () => {
@@ -54,9 +54,14 @@ const Check = ({ title, totals, updating = false }) => {
     shipping,
     total,
   } = totals
+
   const totalBeforeTax = [subtotal, surcharge, discount]
     .reduce((t, i) => (t += parseFloat(i)), 0.0)
     .toFixed(2)
+  // const tendersTotal = tenders
+  //   .reduce((t, i) => (t += parseFloat(i.amount)), 0.0)
+  //   .toFixed(2)
+  const amountRemaiing = checkAmountRemaining(total, tenders)
 
   return (
     <div
@@ -124,6 +129,25 @@ const Check = ({ title, totals, updating = false }) => {
             value={total}
             classes="check__item--grand-total ot-bold"
           />
+          {tenders.length ? (
+            <>
+              <ul className="check__items__section font-size-small">
+                {tenders.map((tender, index) => (
+                  <CheckItem
+                    key={`${tender.tender_type}-${tender.amount}-${index}`}
+                    label={`${makeTenderName(tender)}`}
+                    value={tender.amount}
+                  />
+                ))}
+              </ul>
+              {/* <CheckItem label="Total Tenders" value={tendersTotal} /> */}
+              <CheckItem
+                label="Amount Remaining"
+                value={amountRemaiing}
+                classes="check__item--grand-total ot-bold"
+              />
+            </>
+          ) : null}
         </ul>
       </div>
     </div>

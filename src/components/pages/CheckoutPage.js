@@ -33,7 +33,7 @@ const CheckoutPage = () => {
   const { account, auth } = customer
   const { access_token } = auth || {}
   const { check, form, loading, errors } = useSelector(selectCheckout)
-  const { discounts, promoCodes } = form
+  const { discounts, promoCodes, tenders } = form
   const { totals } = check || {}
 
   useEffect(() => {
@@ -110,6 +110,7 @@ const CheckoutPage = () => {
                 <Check
                   title={checkoutConfig.check.title}
                   totals={totals}
+                  tenders={tenders}
                   updating={pending}
                 />
               )}

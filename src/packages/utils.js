@@ -217,3 +217,19 @@ export const handleOrderErrors = (errors, isValidate = true) => {
     return { ...obj, [entity]: newErrors }
   }, {})
 }
+
+export const checkAmountRemaining = (total, tenders) => {
+  return (
+    parseFloat(total) -
+    tenders.reduce((t, i) => (t += parseFloat(i.amount)), 0.0)
+  )
+}
+
+export const makeTenderName = (tender) => {
+  switch (tender.tender_type) {
+    case 'GIFT_CARD':
+      return `Gift Card ${tender.card_number}`
+    default:
+      return `${tender.tender_type}`
+  }
+}
