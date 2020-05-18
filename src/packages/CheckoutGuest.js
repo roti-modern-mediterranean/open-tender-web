@@ -36,7 +36,7 @@ const fields = [
 
 const CheckoutGuest = () => {
   const formContext = useContext(FormContext)
-  const { config, check, form, updateForm } = formContext
+  const { config, check, form, errors, updateForm } = formContext
   const [customer, setCustomer] = useState(form.customer || initialState)
 
   // useEffect(() => {
@@ -58,7 +58,6 @@ const CheckoutGuest = () => {
     debouncedUpdate(newCustomer)
   }
 
-  const errors = {}
   const requiredFields = check.config.required_fields.customer
   const contactConfig = makeContactConfig(requiredFields)
   return (

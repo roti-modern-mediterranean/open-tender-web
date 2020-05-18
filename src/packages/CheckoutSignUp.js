@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
-import propTypes from 'prop-types'
 import Button from './Button'
 import ButtonSignUp from './ButtonSignUp'
 import { FormContext } from './CheckoutForm'
 
-const CheckoutSignUp = ({ handleGuest }) => {
+const CheckoutSignUp = () => {
   const formContext = useContext(FormContext)
-  const { config } = formContext
+  const { config, login } = formContext
   return (
     <div className="form__fieldset">
       <div className="form__legend">
@@ -20,8 +19,8 @@ const CheckoutSignUp = ({ handleGuest }) => {
           <ButtonSignUp />
           <Button
             classes="btn-link"
-            text="or checkout as a guest"
-            onClick={handleGuest}
+            text="or log into an existing account"
+            onClick={login}
           />
         </div>
       </div>
@@ -30,8 +29,5 @@ const CheckoutSignUp = ({ handleGuest }) => {
 }
 
 CheckoutSignUp.displayName = 'CheckoutSignUp'
-CheckoutSignUp.propTypes = {
-  handleGuest: propTypes.func,
-}
 
 export default CheckoutSignUp

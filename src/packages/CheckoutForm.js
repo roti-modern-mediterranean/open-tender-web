@@ -4,6 +4,7 @@ import CheckoutDetails from './CheckoutDetails'
 import CheckoutCustomer from './CheckoutCustomer'
 import CheckoutAddress from './CheckoutAddress'
 import CheckoutDiscounts from './CheckoutDiscounts'
+import CheckoutPromoCodes from './CheckoutPromoCodes'
 
 export const FormContext = createContext(null)
 
@@ -28,8 +29,7 @@ const CheckoutForm = ({
     submitButton.current.blur()
   }
 
-  // const isDelivery = order.serviceType === 'DELIVERY'
-  const isDelivery = true
+  const isDelivery = order.serviceType === 'DELIVERY'
 
   return (
     <FormContext.Provider
@@ -55,6 +55,7 @@ const CheckoutForm = ({
         {isDelivery && <CheckoutAddress />}
         <CheckoutCustomer />
         <CheckoutDiscounts />
+        <CheckoutPromoCodes />
         <div className="form__footer">
           <input
             className="btn btn--big"

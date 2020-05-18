@@ -16,8 +16,13 @@ const checkoutSlice = createSlice({
   name: 'checkout',
   initialState: {
     check: null,
-    form: {},
-    errors: null,
+    form: {
+      customer: {},
+      discounts: [],
+      promoCodes: [],
+      tenders: [],
+    },
+    errors: {},
     loading: 'idle',
   },
   reducers: {
@@ -49,7 +54,7 @@ const checkoutSlice = createSlice({
     [submitOrder.fulfilled]: (state, action) => {
       console.log(action.payload)
       state.check = action.payload
-      state.errors = null
+      state.errors = action.payload.errors || {}
       state.loading = 'idle'
     },
     [submitOrder.pending]: (state, action) => {

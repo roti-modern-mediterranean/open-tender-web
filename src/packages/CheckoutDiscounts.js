@@ -60,7 +60,7 @@ const CheckoutDiscounts = () => {
             >
               <div className="form__line__wrapper">
                 {isApplied && (
-                  <span className="form__line__success ot-success-color">
+                  <span className="form__line__success">
                     <CircleLoader complete={!isPending} />
                   </span>
                 )}

@@ -37,8 +37,8 @@
         margin: 0 0 0 4rem;
       }
 
-      &.person-count .form__line__value {
-        max-width: 10rem;
+      &.-narrow .form__line__value {
+        max-width: 12rem;
       }
     }
 
@@ -59,7 +59,7 @@
 
   &__line__wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
   }
 

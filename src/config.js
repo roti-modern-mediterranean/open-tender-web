@@ -48,6 +48,9 @@ export const defaultConfig = {
       title: 'Redeem your loyalty rewards',
       subtitle: 'Apply one or more discounts below.',
     },
+    promoCodes: {
+      title: 'Apply a promo code',
+    },
   },
   account: {
     background:

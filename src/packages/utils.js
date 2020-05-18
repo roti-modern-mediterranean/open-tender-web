@@ -186,7 +186,7 @@ export const prepareOrder = (
     address: address,
     customer: customer,
     discounts: discounts,
-    promoCodes: promoCodes,
+    promo_codes: promoCodes,
   }
   return data
 }

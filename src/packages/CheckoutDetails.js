@@ -82,7 +82,7 @@ const CheckoutDetails = () => {
         {allowTaxExempt && (
           <CheckoutLineItem
             label="Tax Exempt ID"
-            classes="form__line__input person-count"
+            classes="form__line__input -narrow"
           >
             <Input
               label="Tax Exempt ID"
@@ -101,7 +101,7 @@ const CheckoutDetails = () => {
         {personCountRequired && (
           <CheckoutLineItem
             label="No. of People"
-            classes="form__line__input person-count"
+            classes="form__line__input -narrow"
             required={personCountRequired}
           >
             <Input
