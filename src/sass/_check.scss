@@ -1,7 +1,7 @@
 .check {
   z-index: 10;
   width: 100%;
-  padding: 2rem 2.5rem;
+  padding: 3rem 2.5rem;
 
   &.stuck {
     position: fixed;
@@ -36,18 +36,45 @@
   &__item {
     width: 100%;
     padding: 1rem 0 0.9rem;
-    border-bottom-width: 0.1rem;
-    border-bottom-style: solid;
+    // border-bottom-width: 0.1rem;
+    // border-bottom-style: solid;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    &:last-child {
-      border: 0;
-    }
+    // &:last-child {
+    //   border: 0;
+    // }
 
     span {
       display: block;
+    }
+  }
+
+  // &__item--total {
+  //   border-top-width: 0.1rem;
+  //   border-top-style: solid;
+  // }
+
+  &__item--grand-total {
+    border-top-width: 0.1rem;
+    border-top-style: solid;
+    border-bottom-width: 0.3rem;
+    border-bottom-style: double;
+  }
+
+  &__items__section {
+    margin-top: 0.7rem;
+
+    .check__item {
+      padding: 0.5rem 0 0.9rem;
+    }
+
+    & + {
+      .check__item {
+        border-top-width: 0.1rem;
+        border-top-style: solid;
+      }
     }
   }
 

@@ -49,6 +49,7 @@ const Check = ({ title, totals, updating = false }) => {
     discounts,
     discount,
     taxes,
+    tax,
     tip,
     shipping,
     total,
@@ -67,30 +68,53 @@ const Check = ({ title, totals, updating = false }) => {
         <h2 className="check__title ot-font-size-h4">{title}</h2>
         <ul className="check__items">
           <CheckItem label="Subtotal" value={subtotal} />
-          {surcharges.map((surcharge) => (
-            <CheckItem
-              key={surcharge.surcharge_id}
-              label={surcharge.name}
-              value={surcharge.amount}
-            />
-          ))}
-          {discounts.map((discount) => (
-            <CheckItem
-              key={discount.discount_id}
-              label={`Discount: ${discount.name}`}
-              value={discount.amount}
-            />
-          ))}
+          {surcharges.length ? (
+            <>
+              <ul className="check__items__section font-size-small">
+                {surcharges.map((surcharge) => (
+                  <CheckItem
+                    key={surcharge.surcharge_id}
+                    label={`${surcharge.name}`}
+                    value={surcharge.amount}
+                  />
+                ))}
+              </ul>
+              <CheckItem label="Surcharge" value={surcharge} />
+            </>
+          ) : null}
+          {discounts.length ? (
+            <>
+              <ul className="check__items__section font-size-small">
+                {discounts.map((discount) => (
+                  <CheckItem
+                    key={discount.discount_id}
+                    label={`${discount.name}`}
+                    value={discount.amount}
+                  />
+                ))}
+              </ul>
+              <CheckItem label="Discount" value={discount} />
+            </>
+          ) : null}
           {subtotal !== totalBeforeTax && (
             <CheckItem
               label="Total before Tax"
               value={totalBeforeTax}
-              classes="check__item--total"
+              classes="check__item--total ot-bold"
             />
           )}
-          {taxes.map((tax) => (
-            <CheckItem key={tax.tax_id} label={tax.name} value={tax.amount} />
-          ))}
+          {taxes.length > 1 ? (
+            <ul className="check__items__section font-size-small">
+              {taxes.map((tax) => (
+                <CheckItem
+                  key={tax.tax_id}
+                  label={`${tax.name}`}
+                  value={tax.amount}
+                />
+              ))}
+            </ul>
+          ) : null}
+          <CheckItem label="Tax" value={tax} />
           <CheckItem label="Tip" value={tip} />
           {shipping !== '0.00' && (
             <CheckItem label="Shipping" value={shipping} />
