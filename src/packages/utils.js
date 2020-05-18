@@ -2,6 +2,21 @@ export const displayPrice = (price) => {
   return parseFloat(price).toFixed(2)
 }
 
+export const addCommas = (x, d) => {
+  return x.toFixed(d).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
+export const formatQuantity = (n) => {
+  return addCommas(parseFloat(n), 0)
+}
+
+export const formatDollars = (str, space = '') => {
+  const floatPrice = parseFloat(str)
+  return floatPrice < 0
+    ? `($${addCommas(Math.abs(floatPrice), 2)})`
+    : `$${addCommas(floatPrice, 2)}${space}`
+}
+
 const getItemOptions = (item) => {
   return item.groups
     .map((group) => group.options.filter((option) => option.quantity > 0))
@@ -191,17 +206,14 @@ export const prepareOrder = (
   return data
 }
 
-export const addCommas = (x, d) => {
-  return x.toFixed(d).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-}
-
-export const formatQuantity = (n) => {
-  return addCommas(parseFloat(n), 0)
-}
-
-export const formatDollars = (str, space = '') => {
-  const floatPrice = parseFloat(str)
-  return floatPrice < 0
-    ? `($${addCommas(Math.abs(floatPrice), 2)})`
-    : `$${addCommas(floatPrice, 2)}${space}`
+export const handleOrderErrors = (errors, isValidate = true) => {
+  return Object.entries(errors).reduce((obj, error) => {
+    const [key, value] = error
+    let [, entity, field] = key.split('.')
+    field = field || entity
+    const newErrors = obj[entity]
+      ? { ...obj[entity], [field]: value.detail }
+      : { [field]: value.detail }
+    return { ...obj, [entity]: newErrors }
+  }, {})
 }

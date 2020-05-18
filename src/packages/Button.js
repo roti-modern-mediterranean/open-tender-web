@@ -34,13 +34,18 @@ const Button = ({
   )
 }
 
-Button.displayName = 'Hero'
+Button.displayName = 'Button'
 Button.propTypes = {
   text: propTypes.string,
   icon: propTypes.oneOfType([propTypes.string, propTypes.element]),
   classes: propTypes.string,
   ariaLabel: propTypes.string,
   onClick: propTypes.func,
+  disabled: propTypes.bool,
+  children: propTypes.oneOfType([
+    propTypes.arrayOf(propTypes.node),
+    propTypes.node,
+  ]),
 }
 
 export default Button

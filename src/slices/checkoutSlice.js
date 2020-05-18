@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { postOrder } from '../services/requests'
+import { handleOrderErrors } from '../packages/utils'
 
 export const submitOrder = createAsyncThunk(
   'checkout/submitOrder',
@@ -36,7 +37,10 @@ const checkoutSlice = createSlice({
       const customerId = customer ? customer.customer_id : null
       if (!account) {
         state.form.discounts = []
-        if (customerId) state.form.customer = {}
+        if (customerId) {
+          state.form.customer = {}
+          state.form.promoCodes = []
+        }
       } else if (customerId && account.customer_id !== customerId) {
         state.form.customer = customer
         state.form.discounts = []
@@ -54,8 +58,11 @@ const checkoutSlice = createSlice({
     [submitOrder.fulfilled]: (state, action) => {
       console.log(action.payload)
       state.check = action.payload
-      state.errors = action.payload.errors || {}
+      state.errors = action.payload.errors
+        ? handleOrderErrors(action.payload.errors)
+        : {}
       state.loading = 'idle'
+      // state.form.promoCodes = action.payload.promo_codes
     },
     [submitOrder.pending]: (state, action) => {
       state.loading = 'pending'

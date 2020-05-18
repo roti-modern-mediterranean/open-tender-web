@@ -11,7 +11,7 @@ export const Label = ({ text, required }) => (
 
 export const Error = ({ error }) => {
   return (
-    <TransitionGroup>
+    <TransitionGroup component={null}>
       {error ? (
         <CSSTransition
           key="form-error"
@@ -46,6 +46,7 @@ export const Input = ({
   placeholder = '',
   classes = '',
   inputClasses = '',
+  children,
 }) => {
   return (
     <label htmlFor={name} className={`form__input ${classes}`}>
@@ -64,6 +65,7 @@ export const Input = ({
         className={inputClasses}
         onChange={onChange}
       />
+      {children}
       {error ? <Error error={error} /> : null}
     </label>
   )

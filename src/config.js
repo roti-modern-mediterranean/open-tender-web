@@ -50,6 +50,7 @@ export const defaultConfig = {
     },
     promoCodes: {
       title: 'Apply a promo code',
+      subtitle: 'Enter a promo code below & hit the apply button',
     },
   },
   account: {

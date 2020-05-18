@@ -108,7 +108,7 @@ const CheckoutPage = () => {
             <div className="checkout__totals">
               {totals && (
                 <Check
-                  title={checkoutConfig.check_title}
+                  title={checkoutConfig.check.title}
                   totals={totals}
                   updating={pending}
                 />
