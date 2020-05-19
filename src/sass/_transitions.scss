@@ -103,6 +103,25 @@ $slide-in-from-right-speed: 250ms;
   transform: translateX(0);
 }
 
+/* modals */
+
+$slide-up-reveal-speed: 250ms;
+
+.slide-up-reveal-enter,
+.slide-up-reveal-exit.slide-up-reveal-exit-active {
+  transition: all $slide-up-reveal-speed ease;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(100%);
+}
+
+.slide-up-reveal-enter.slide-up-reveal-enter-active,
+.slide-up-reveal-exit {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 /* alerts */
 
 $fade-up-speed: 500ms;
