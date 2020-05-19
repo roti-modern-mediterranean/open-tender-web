@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import propTypes from 'prop-types'
-import { formatDollars, checkAmountRemaining, makeTenderName } from './utils'
+import { formatDollars, checkAmountRemaining } from './utils'
+import { makeTenderName } from './TenderTypes'
 import BarLoader from 'react-spinners/BarLoader'
 
 const CheckItem = ({ label, value, classes = '' }) => (
@@ -143,7 +144,7 @@ const Check = ({ title, totals, tenders, updating = false }) => {
               {/* <CheckItem label="Total Tenders" value={tendersTotal} /> */}
               <CheckItem
                 label="Amount Remaining"
-                value={amountRemaiing}
+                value={amountRemaiing.toFixed(2)}
                 classes="check__item--grand-total ot-bold"
               />
             </>

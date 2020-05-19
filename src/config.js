@@ -56,6 +56,10 @@ export const defaultConfig = {
       title: 'Apply a gift card',
       subtitle: 'Apply an existing gift card or add a new one',
     },
+    tenders: {
+      title: 'How would you like to pay?',
+      subtitle: 'Please add one or more payments below',
+    },
   },
   account: {
     background:

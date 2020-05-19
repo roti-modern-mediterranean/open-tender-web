@@ -24,6 +24,9 @@ import {
   XCircle,
   PlusCircle,
   CheckCircle,
+  CreditCard,
+  Home,
+  Grid,
 } from 'react-feather'
 
 export const iconMap = {
@@ -39,6 +42,9 @@ export const iconMap = {
   ChevronDown: <ChevronDown size={null} />,
   ShoppingBag: <ShoppingBag size={null} />,
   DollarSign: <DollarSign size={null} />,
+  CreditCard: <CreditCard size={null} />,
+  Home: <Home size={null} />,
+  Grid: <Grid size={null} />,
   User: <User size={null} />,
   Users: <Users size={null} />,
   UserPlus: <UserPlus size={null} />,
