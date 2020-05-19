@@ -26,10 +26,11 @@ const CheckoutGiftCards = () => {
       ? check.customer.gift_cards
       : null
   if (!giftCards) return null
-
   const giftCardsApplied = form.tenders
     .filter((i) => i.tender_type === 'GIFT_CARD')
     .reduce((obj, i) => ({ ...obj, [i.card_number]: i.amount }), {})
+  const amountRemaining = checkAmountRemaining(check.totals.total, form.tenders)
+  const isPaid = Math.abs(amountRemaining).toFixed(2) === '0.00'
 
   const applyGiftCard = (evt, cardNumber, balance) => {
     evt.preventDefault()
@@ -47,16 +48,24 @@ const CheckoutGiftCards = () => {
 
   const removeGiftCard = (evt, cardNumber) => {
     evt.preventDefault()
+    // const removed = form.tenders.find((i) => i.card_number === cardNumber)
     const filtered = form.tenders.filter((i) => i.card_number !== cardNumber)
     const nonGiftCard = filtered.filter((i) => i.tender_type !== 'GIFT_CARD')
+    const giftCard = filtered.filter((i) => i.tender_type === 'GIFT_CARD')
     let remaining = checkAmountRemaining(check.totals.total, nonGiftCard)
-    const adjusted = filtered.map((i) => {
+    const adjusted = giftCard.map((i) => {
       const newAmount = Math.min(remaining, parseFloat(i.balance))
       remaining -= newAmount
       return { ...i, amount: newAmount.toFixed(2) }
     })
     const nonZero = adjusted.filter((i) => i.amount !== '0.00')
-    updateForm({ tenders: [...nonGiftCard, ...nonZero] })
+    const adjustedOther = nonGiftCard.map((i) => {
+      const newAmount = parseFloat(i.amount) + remaining
+      remaining = 0.0
+      return { ...i, amount: newAmount.toFixed(2) }
+    })
+    const nonZeroOther = adjustedOther.filter((i) => i.amount !== '0.00')
+    updateForm({ tenders: [...nonZeroOther, ...nonZero] })
     evt.target.blur()
   }
 
@@ -99,6 +108,7 @@ const CheckoutGiftCards = () => {
                     onClick={(evt) =>
                       applyGiftCard(evt, i.card_number, i.balance)
                     }
+                    disabled={isPaid}
                   />
                 )}
               </div>

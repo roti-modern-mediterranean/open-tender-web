@@ -6,8 +6,8 @@ import CheckoutAddress from './CheckoutAddress'
 import CheckoutDiscounts from './CheckoutDiscounts'
 import CheckoutPromoCodes from './CheckoutPromoCodes'
 import CheckoutGiftCards from './CheckoutGiftCards'
-import { checkAmountRemaining } from './utils'
 import CheckoutTenders from './CheckoutTenders'
+// import { checkAmountRemaining } from './utils'
 
 export const FormContext = createContext(null)
 
@@ -34,10 +34,10 @@ const CheckoutForm = ({
 
   const isDelivery = order.serviceType === 'DELIVERY'
   const hasGiftCardTender = check.config.tender_types.includes('GIFT_CARD')
-  const amountRemaining = checkAmountRemaining(check.totals.total, form.tenders)
-  const isBalance = amountRemaining !== 0
-  const showGiftCards = hasGiftCardTender && (isBalance || form.giftCards)
-  const showTenders = isBalance || form.tenders
+  // const amountRemaining = checkAmountRemaining(check.totals.total, form.tenders)
+  // const isBalance = amountRemaining !== 0
+  // const showGiftCards = hasGiftCardTender && (isBalance || form.giftCards)
+  // const showTenders = isBalance || form.tenders
 
   return (
     <FormContext.Provider
@@ -64,8 +64,8 @@ const CheckoutForm = ({
         <CheckoutCustomer />
         <CheckoutDiscounts />
         <CheckoutPromoCodes />
-        {showGiftCards && <CheckoutGiftCards />}
-        {showTenders && <CheckoutTenders />}
+        {hasGiftCardTender && <CheckoutGiftCards />}
+        <CheckoutTenders />
         <div className="form__footer">
           <input
             className="btn btn--big"
