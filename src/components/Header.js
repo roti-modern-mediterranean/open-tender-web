@@ -1,6 +1,6 @@
 import React from 'react'
 // import propTypes from 'prop-types'
-import logo from '../logo.png'
+import logo from '../assets/logo.png'
 import { NavLink, useLocation, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { startOver, selectOrder } from '../slices/orderSlice'

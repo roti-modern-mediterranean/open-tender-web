@@ -47,6 +47,8 @@ export const makeTenderTypeLabel = (tenderType) => {
 
 export const makeTenderName = (tender) => {
   switch (tender.tender_type) {
+    case 'CREDIT':
+      return `${tender.card_type_name} ending in ${tender.last4}`
     case 'GIFT_CARD':
       return `Gift Card ${tender.card_number}`
     default:

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import CheckoutLineItem from './CheckoutLineItem'
 import Button from './Button'
 import CircleLoader from './CircleLoader'
@@ -6,27 +6,34 @@ import { FormContext } from './CheckoutForm'
 import { checkAmountRemaining } from './utils'
 import { makeTenderTypeLabel } from './TenderTypes'
 import { tenderTypeNamesMap } from './constants'
+import CheckoutCreditCards from './CheckoutCreditCards'
 
 const CheckoutTenders = () => {
   const formContext = useContext(FormContext)
   const { config, check, form, updateForm } = formContext
+  const [showCredit, setShowCredit] = useState(false)
 
   const tenderTypes = check.config.tender_types.filter((i) => i !== 'GIFT_CARD')
   const tenderTypesApplied = form.tenders.map((i) => i.tender_type)
   const amountRemaining = checkAmountRemaining(check.totals.total, form.tenders)
   const isPaid = Math.abs(amountRemaining).toFixed(2) === '0.00'
 
-  const applyTender = (evt, tenderType) => {
+  useEffect(() => {
+    tenderTypesApplied.includes('CREDIT')
+      ? setShowCredit(true)
+      : setShowCredit(false)
+  }, [])
+
+  const addTender = (evt, tender) => {
     evt.preventDefault()
-    const remaining = checkAmountRemaining(check.totals.total, form.tenders)
-    const tender = { tender_type: tenderType, amount: remaining.toFixed(2) }
-    switch (tenderType) {
-      case 'CREDIT':
-        break
-      default:
-        updateForm({ tenders: [...form.tenders, tender] })
-        break
-    }
+    const newTender = { ...tender, amount: amountRemaining.toFixed(2) }
+    updateForm({ tenders: [...form.tenders, newTender] })
+    evt.target.blur()
+  }
+
+  const addCredit = (evt) => {
+    evt.preventDefault()
+    setShowCredit(true)
     evt.target.blur()
   }
 
@@ -43,6 +50,7 @@ const CheckoutTenders = () => {
     })
     const nonZero = adjusted.filter((i) => i.amount !== '0.00')
     updateForm({ tenders: [...giftCard, ...nonZero] })
+    if (tenderType === 'CREDIT') setShowCredit(false)
     evt.target.blur()
   }
 
@@ -59,34 +67,46 @@ const CheckoutTenders = () => {
           const label = makeTenderTypeLabel(tenderType)
           const name = tenderTypeNamesMap[tenderType]
           const isApplied = tenderTypesApplied.includes(tenderType)
+          const applyTender =
+            tenderType === 'CREDIT'
+              ? addCredit
+              : (evt) => addTender(evt, { tender_type: tenderType })
           return (
-            <CheckoutLineItem key={tenderType} label={label}>
-              <div className="form__line__wrapper">
-                {isApplied ? (
-                  <>
-                    <span className="form__line__success">
-                      <CircleLoader complete={true} />
-                    </span>
+            <>
+              <CheckoutLineItem key={tenderType} label={label}>
+                <div className="form__line__wrapper">
+                  {isApplied ? (
+                    <>
+                      <span className="form__line__success">
+                        <CircleLoader complete={true} />
+                      </span>
+                      <Button
+                        text={`Remove ${name} Payment`}
+                        ariaLabel={`Remove ${name} Payment`}
+                        icon="XCircle"
+                        classes="btn--header"
+                        onClick={(evt) => removeTender(evt, tenderType)}
+                      />
+                    </>
+                  ) : (
                     <Button
-                      text={`Remove ${name} Payment`}
-                      ariaLabel={`Remove ${name} Payment`}
-                      icon="XCircle"
+                      text={`Pay with ${name}`}
+                      ariaLabel={`Pay with ${name}`}
+                      icon="PlusCircle"
                       classes="btn--header"
-                      onClick={(evt) => removeTender(evt, tenderType)}
+                      onClick={applyTender}
+                      disabled={isPaid}
                     />
-                  </>
-                ) : (
-                  <Button
-                    text={`Pay with ${name}`}
-                    ariaLabel={`Pay with ${name}`}
-                    icon="PlusCircle"
-                    classes="btn--header"
-                    onClick={(evt) => applyTender(evt, tenderType)}
-                    disabled={isPaid}
-                  />
-                )}
-              </div>
-            </CheckoutLineItem>
+                  )}
+                </div>
+              </CheckoutLineItem>
+              {tenderType === 'CREDIT' && showCredit && (
+                <CheckoutCreditCards
+                  addTender={addTender}
+                  removeTender={removeTender}
+                />
+              )}
+            </>
           )
         })}
       </div>

@@ -7,7 +7,7 @@ import CheckoutDiscounts from './CheckoutDiscounts'
 import CheckoutPromoCodes from './CheckoutPromoCodes'
 import CheckoutGiftCards from './CheckoutGiftCards'
 import CheckoutTenders from './CheckoutTenders'
-// import { checkAmountRemaining } from './utils'
+import { checkAmountRemaining } from './utils'
 
 export const FormContext = createContext(null)
 
@@ -34,7 +34,8 @@ const CheckoutForm = ({
 
   const isDelivery = order.serviceType === 'DELIVERY'
   const hasGiftCardTender = check.config.tender_types.includes('GIFT_CARD')
-  // const amountRemaining = checkAmountRemaining(check.totals.total, form.tenders)
+  const amountRemaining = checkAmountRemaining(check.totals.total, form.tenders)
+  const isPaid = Math.abs(amountRemaining).toFixed(2) === '0.00'
   // const isBalance = amountRemaining !== 0
   // const showGiftCards = hasGiftCardTender && (isBalance || form.giftCards)
   // const showTenders = isBalance || form.tenders
@@ -71,7 +72,7 @@ const CheckoutForm = ({
             className="btn btn--big"
             type="submit"
             value="Submit Order"
-            disabled={isWorking}
+            disabled={isWorking || !isPaid}
             ref={submitButton}
           />
         </div>
