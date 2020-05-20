@@ -1,11 +1,10 @@
 import React from 'react'
 // import propTypes from 'prop-types'
-import logo from '../assets/logo.png'
-import { NavLink, useLocation, useHistory } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { startOver, selectOrder } from '../slices/orderSlice'
+// import logo from '../assets/logo.png'
+import { NavLink, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectOrder } from '../slices/orderSlice'
 import {
-  Button,
   ButtonAccount,
   ButtonAllergens,
   ButtonGroupOrder,
@@ -13,6 +12,7 @@ import {
   ButtonRequestedAt,
   ButtonServiceType,
 } from '../packages'
+import HeaderLogo from './HeaderLogo'
 
 const makeNav = (pathname) => {
   return []
@@ -23,20 +23,12 @@ const makeClasses = (pathname) => {
 }
 
 const Header = () => {
-  const { pathname } = useLocation()
-  const history = useHistory()
-  const dispatch = useDispatch()
-  const navLinks = makeNav(pathname)
   const order = useSelector(selectOrder)
-  const isMenu = pathname.includes('menu')
+  const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
-
-  const handleLogo = (evt) => {
-    evt.preventDefault()
-    dispatch(startOver())
-    history.push(`/`)
-    evt.target.blur()
-  }
+  if (isCheckout) return null
+  const isMenu = pathname.includes('menu')
+  const navLinks = makeNav(pathname)
 
   const classes = makeClasses(pathname)
 
@@ -44,9 +36,7 @@ const Header = () => {
     <header className={`header container flex ${classes}`}>
       <div className="header__nav">
         <div className="header__logo">
-          <Button onClick={handleLogo}>
-            <img src={logo} className="logo" alt="logo" />
-          </Button>
+          <HeaderLogo />
         </div>
         {navLinks.length ? (
           <nav className="header__nav">

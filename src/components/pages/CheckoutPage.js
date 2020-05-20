@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectConfig } from '../../slices/configSlice'
@@ -17,12 +17,15 @@ import {
 } from '../../slices/checkoutSlice'
 import { openModal } from '../../slices/modalSlice'
 import { logoutCustomer, selectCustomer } from '../../slices/customerSlice'
-import { CheckoutForm, Check } from '../../packages'
+import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../../packages'
 import { prepareOrder } from '../../packages/utils'
+import HeaderLogo from '../HeaderLogo'
 
 const CheckoutPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const [isSticky, setSticky] = useState(false)
+  const stickyRef = useRef(null)
   const { checkout: checkoutConfig } = useSelector(selectConfig)
   const cart = useSelector(selectCart)
   const cartCount = useSelector(selectCartQuantity)
@@ -75,13 +78,41 @@ const CheckoutPage = () => {
 
   const pending = loading === 'pending'
 
+  const handleScroll = () => {
+    if (stickyRef.current) {
+      setSticky(stickyRef.current.getBoundingClientRect().top <= 35)
+    }
+  }
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', () => handleScroll)
+    }
+  }, [])
+  const stuckClass = isSticky ? '-stuck' : ''
+
   return (
     <div className="checkout">
+      <div className="checkout__header bg-color">
+        <div className="checkout__header__wrapper">
+          <div className="checkout__header__container">
+            <div className="checkout__logo__container">
+              <div className="checkout__logo">
+                <HeaderLogo />
+              </div>
+              <div className="checkout__actions">
+                <ButtonMenu classes="btn--header" />
+                <ButtonAccount classes="btn--header" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="checkout__content">
         <div className="checkout__content__wrapper">
           <div className="checkout__content__container">
             <div className="checkout__form">
-              <div className="checkout__header">
+              <div className="checkout__form__header">
                 <h1 className="checkout__title ot-font-size-h2">
                   {checkoutConfig.title}
                 </h1>
@@ -105,7 +136,7 @@ const CheckoutPage = () => {
       <div className="checkout__sidebar bg-secondary-color">
         <div className="checkout__sidebar__wrapper">
           <div className="checkout__sidebar__container">
-            <div className="checkout__totals">
+            <div className={`checkout__totals ${stuckClass}`} ref={stickyRef}>
               {totals && (
                 <Check
                   title={checkoutConfig.check.title}

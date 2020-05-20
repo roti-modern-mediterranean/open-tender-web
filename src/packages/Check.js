@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React from 'react'
 import propTypes from 'prop-types'
 import { formatDollars, checkAmountRemaining } from './utils'
 import { makeTenderName } from './TenderTypes'
@@ -28,21 +28,6 @@ const CheckUpdating = () => (
 )
 
 const Check = ({ title, totals, tenders, updating = false }) => {
-  const [isSticky, setSticky] = useState(false)
-  const stickyRef = useRef(null)
-  const handleScroll = () => {
-    if (stickyRef.current) {
-      setSticky(stickyRef.current.getBoundingClientRect().top <= 110)
-    }
-  }
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-    return () => {
-      window.removeEventListener('scroll', () => handleScroll)
-    }
-  }, [])
-  const stuckClass = isSticky ? 'stuck' : ''
-
   const {
     subtotal,
     surcharges,
@@ -50,7 +35,7 @@ const Check = ({ title, totals, tenders, updating = false }) => {
     discounts,
     discount,
     taxes,
-    tax,
+    // tax,
     tip,
     shipping,
     total,
@@ -65,15 +50,14 @@ const Check = ({ title, totals, tenders, updating = false }) => {
   const amountRemaiing = checkAmountRemaining(total, tenders)
 
   return (
-    <div
-      className={`check border-radius bg-color ${stuckClass}`}
-      ref={stickyRef}
-    >
+    <div className="check border-radius bg-color">
       <div className="check__container">
         {updating && <CheckUpdating />}
-        <h2 className="check__title ot-font-size-h4">{title}</h2>
+        <p className="check__title font-size-big ot-bold border-bottom">
+          {title}
+        </p>
         <ul className="check__items">
-          <CheckItem label="Subtotal" value={subtotal} />
+          <CheckItem label="Cart Total" value={subtotal} />
           {surcharges.length ? (
             <>
               <ul className="check__items__section font-size-small">
@@ -85,7 +69,7 @@ const Check = ({ title, totals, tenders, updating = false }) => {
                   />
                 ))}
               </ul>
-              <CheckItem label="Surcharge" value={surcharge} />
+              {/* <CheckItem label="Surcharge" value={surcharge} /> */}
             </>
           ) : null}
           {discounts.length ? (
@@ -99,7 +83,7 @@ const Check = ({ title, totals, tenders, updating = false }) => {
                   />
                 ))}
               </ul>
-              <CheckItem label="Discount" value={discount} />
+              {/* <CheckItem label="Discount" value={discount} /> */}
             </>
           ) : null}
           {subtotal !== totalBeforeTax && (
@@ -109,7 +93,7 @@ const Check = ({ title, totals, tenders, updating = false }) => {
               classes="check__item--total ot-bold"
             />
           )}
-          {taxes.length > 1 ? (
+          {taxes.length ? (
             <ul className="check__items__section font-size-small">
               {taxes.map((tax) => (
                 <CheckItem
@@ -119,8 +103,10 @@ const Check = ({ title, totals, tenders, updating = false }) => {
                 />
               ))}
             </ul>
-          ) : null}
-          <CheckItem label="Tax" value={tax} />
+          ) : (
+            <CheckItem label="Tax (tax exempt)" value={0} />
+          )}
+          {/* <CheckItem label="Tax" value={tax} /> */}
           <CheckItem label="Tip" value={tip} />
           {shipping !== '0.00' && (
             <CheckItem label="Shipping" value={shipping} />
@@ -143,9 +129,9 @@ const Check = ({ title, totals, tenders, updating = false }) => {
               </ul>
               {/* <CheckItem label="Total Tenders" value={tendersTotal} /> */}
               <CheckItem
-                label="Amount Remaining"
+                label="Remaining Amount Due"
                 value={amountRemaiing.toFixed(2)}
-                classes="check__item--grand-total ot-bold"
+                classes="check__item--amount-due ot-bold"
               />
             </>
           ) : null}

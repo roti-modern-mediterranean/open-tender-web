@@ -6,7 +6,7 @@ import { openModal } from '../slices/modalSlice'
 import { selectCustomer, logoutCustomer } from '../slices/customerSlice'
 import Button from './Button'
 
-const AccountButton = ({ classes = 'btn' }) => {
+const ButtonAccount = ({ classes = 'btn' }) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { pathname } = useLocation()
@@ -61,9 +61,9 @@ const AccountButton = ({ classes = 'btn' }) => {
   )
 }
 
-AccountButton.displayName = 'AccountButton'
-AccountButton.propTypes = {
+ButtonAccount.displayName = 'ButtonAccount'
+ButtonAccount.propTypes = {
   classes: propTypes.string,
 }
 
-export default AccountButton
+export default ButtonAccount

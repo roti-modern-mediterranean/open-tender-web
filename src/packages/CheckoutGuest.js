@@ -5,9 +5,9 @@ import CheckoutLineItem from './CheckoutLineItem'
 import { FormContext } from './CheckoutForm'
 
 const initialState = {
+  emaiil: '',
   first_name: '',
   last_name: '',
-  emaiil: '',
   phone: '',
   company: '',
 }
@@ -27,9 +27,9 @@ const makeContactConfig = (requiredFields) => {
 }
 
 const fields = [
+  { name: 'email', type: 'email' },
   { name: 'first_name', type: 'text' },
   { name: 'last_name', type: 'text' },
-  { name: 'email', type: 'email' },
   { name: 'phone', type: 'tel' },
   { name: 'company', type: 'text' },
 ]
@@ -62,7 +62,7 @@ const CheckoutGuest = () => {
   const contactConfig = makeContactConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">
-      <legend className="form__legend heading ot-font-size-h5">
+      <legend className="form__legend heading ot-font-size-h4">
         {config.guest.title}
       </legend>
       <div className="form__inputs">

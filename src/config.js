@@ -1,4 +1,8 @@
 export const defaultConfig = {
+  brand: {
+    logo: 'http://s3.amazonaws.com/betterboh/u/img/local/2/1589984577_logo.png',
+    title: 'Open Tender',
+  },
   home: {
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588197308_asian-food-spread-top-down_color_1800x1200.jpg',
@@ -39,7 +43,7 @@ export const defaultConfig = {
         'Order history, saved favorites & allergens, saved credit cards, and much more. Signing up takes two seconds - start reaping the benefits today!',
     },
     guest: {
-      title: 'Checkout as a guest',
+      title: 'Or continue to checkout as a guest',
     },
     account: {
       title: 'Nice to see you again!',

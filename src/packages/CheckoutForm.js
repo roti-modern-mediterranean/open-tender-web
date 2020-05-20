@@ -60,9 +60,9 @@ const CheckoutForm = ({
         onSubmit={handleSubmit}
         noValidate
       >
+        <CheckoutCustomer />
         <CheckoutDetails />
         {isDelivery && <CheckoutAddress />}
-        <CheckoutCustomer />
         <CheckoutDiscounts />
         <CheckoutPromoCodes />
         {hasGiftCardTender && <CheckoutGiftCards />}

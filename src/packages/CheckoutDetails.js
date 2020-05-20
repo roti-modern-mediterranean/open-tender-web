@@ -46,8 +46,8 @@ const CheckoutDetails = () => {
   const notesRequired = requiredFields.includes('notes')
   return (
     <div className="form__fieldset">
-      <div className="form__legend heading ot-font-size-h5">
-        {config.details_title}
+      <div className="form__legend heading ot-font-size-h4">
+        {config.details.title}
       </div>
       <div className="form__inputs">
         <CheckoutLineItem label="Location">

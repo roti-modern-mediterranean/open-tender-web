@@ -12,6 +12,7 @@ import ButtonAccount from './ButtonAccount'
 import ButtonAllergens from './ButtonAllergens'
 import ButtonGroupOrder from './ButtonGroupOrder'
 import ButtonLocation from './ButtonLocation'
+import ButtonMenu from './ButtonMenu'
 import ButtonRequestedAt from './ButtonRequestedAt'
 import ButtonServiceType from './ButtonServiceType'
 import ButtonSignUp from './ButtonSignUp'
@@ -41,6 +42,7 @@ export {
   Button,
   ButtonGroupOrder,
   ButtonLocation,
+  ButtonMenu,
   ButtonRequestedAt,
   ButtonServiceType,
   ButtonSignUp,

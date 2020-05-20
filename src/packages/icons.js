@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   MapPin,
+  Map,
   ArrowRight,
   Phone,
   Clock,
@@ -31,6 +32,7 @@ import {
 
 export const iconMap = {
   RefreshCw: <RefreshCw size={null} />,
+  Map: <Map size={null} />,
   MapPin: <MapPin size={null} />,
   Phone: <Phone size={null} />,
   Clock: <Clock size={null} />,

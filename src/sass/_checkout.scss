@@ -2,9 +2,51 @@
   display: flex;
   justify-content: space-between;
 
+  &__header {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 55%;
+    height: $header-height;
+  }
+
+  &__header__wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &__header__container {
+    flex-grow: 1;
+    max-width: 70.4rem;
+    padding: 0 3.5rem;
+  }
+
+  &__logo__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    max-width: 14rem;
+    margin-top: 0.4rem;
+  }
+
+  &__actions {
+    button {
+      margin: 0 0 0 1rem;
+      &:first-child {
+        margin: 0;
+      }
+    }
+  }
+
   &__content {
     width: 55%;
-    padding: 5rem 0;
+    padding: 8rem 0;
   }
 
   &__content__wrapper {
@@ -38,7 +80,7 @@
     margin: 0 0 10rem;
   }
 
-  &__header {
+  &__form__header {
     margin: 0 0 4rem;
     // text-align: center;
   }
