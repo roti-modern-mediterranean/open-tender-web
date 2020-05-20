@@ -2,18 +2,10 @@ import React, { useContext, useState } from 'react'
 import propTypes from 'prop-types'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { FormContext } from './CheckoutForm'
-import { amex, discover, mastercard, visa, creditcard } from './assets'
 import { iconMap } from './icons'
+import { cardIcons } from './constants'
 import CircleLoader from './CircleLoader'
 import CheckoutNewCardForm from './CheckoutNewCardForm'
-
-const cardIcons = {
-  VISA: visa,
-  MC: mastercard,
-  DISC: discover,
-  AMEX: amex,
-  OTHER: creditcard,
-}
 
 const NewCard = ({ appliedCards, addTender, showNewCard, setShowNewCard }) => {
   const isApplied = appliedCards.find((i) => i.acct)
@@ -27,22 +19,8 @@ const NewCard = ({ appliedCards, addTender, showNewCard, setShowNewCard }) => {
     evt.target.blur()
   }
 
-  return (
+  return !isDisabled ? (
     <li>
-      <TransitionGroup component={null}>
-        {showNewCard ? (
-          <CSSTransition
-            key="modal"
-            classNames="slide-up-reveal"
-            timeout={{ enter: 250, exit: 250 }}
-          >
-            <CheckoutNewCardForm
-              addTender={addTender}
-              setShowNewCard={setShowNewCard}
-            />
-          </CSSTransition>
-        ) : null}
-      </TransitionGroup>
       <div className={classes}>
         <div className="cards__card__image">
           <img src={cardIcons['OTHER']} alt="New Credit Card" />
@@ -63,8 +41,22 @@ const NewCard = ({ appliedCards, addTender, showNewCard, setShowNewCard }) => {
           )}
         </div>
       </div>
+      <TransitionGroup component={null}>
+        {showNewCard ? (
+          <CSSTransition
+            key="modal"
+            classNames="slide-toggle-down"
+            timeout={250}
+          >
+            <CheckoutNewCardForm
+              addTender={addTender}
+              setShowNewCard={setShowNewCard}
+            />
+          </CSSTransition>
+        ) : null}
+      </TransitionGroup>
     </li>
-  )
+  ) : null
 }
 
 NewCard.displayName = 'NewCard'
@@ -79,7 +71,7 @@ const ExistingCard = ({ card, appliedCards, existingCards, addTender }) => {
   const isDisabled = appliedCards.length && !isApplied
   const disabled = isDisabled ? '-disabled' : ''
   const classes = `cards__card bg-color border-radius ${disabled}`
-  return (
+  return !isDisabled ? (
     <li>
       <div className={classes}>
         <div className="cards__card__image">
@@ -105,7 +97,7 @@ const ExistingCard = ({ card, appliedCards, existingCards, addTender }) => {
         </div>
       </div>
     </li>
-  )
+  ) : null
 }
 
 ExistingCard.displayName = 'ExistingCard'

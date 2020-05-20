@@ -31,13 +31,11 @@
     &.-disabled {
       opacity: 0.5;
     }
+
     &__image {
       width: 6rem;
       min-width: 6rem;
       height: auto;
-      img {
-        fill: #000;
-      }
     }
 
     &__name {
@@ -55,27 +53,27 @@
   }
 
   &__new {
-    position: absolute;
-    z-index: 2;
-    bottom: 100%;
-    left: 50%;
-    width: 40rem;
-    margin: 0 0 0 -20rem;
-    // height: 40rem;
-    // padding: 2rem;
-    // border-bottom-width: 0.1rem;
-    // border-bottom-style: solid;
-    // border-bottom-left-radius: 0;
-    // border-bottom-right-radius: 0;
-    // overflow: hidden;
+    max-width: 48rem;
+    padding: 2rem 0 0;
+    margin: 0 auto;
 
     &__container {
       padding: 2rem;
-      box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.3);
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
     }
 
     &__header {
+      position: relative;
       padding: 0rem 0 2rem;
+    }
+
+    &__image {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 6rem;
+      min-width: 6rem;
+      height: auto;
     }
 
     label {

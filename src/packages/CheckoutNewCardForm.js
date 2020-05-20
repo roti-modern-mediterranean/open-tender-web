@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import Button from './Button'
 import { Input } from './Inputs'
+import { cardIcons, cardNames } from './constants'
+import { getCardType, makeAcctNumber } from './utils'
 
 const initialState = {
   acct: '',
@@ -13,33 +15,37 @@ const initialState = {
 const fields = [
   {
     label: 'Card Number',
-    placeholder: 'xxxx xxxx xxxx xxxx',
+    placeholder: '#### #### #### ####',
     name: 'acct',
-    type: 'number',
+    type: 'text',
   },
   { label: 'Expiration', placeholder: 'MMYY', name: 'exp', type: 'number' },
-  { label: 'CVV', placeholder: 'xxxx', name: 'cvv', type: 'number' },
-  { label: 'Zip Code', placeholder: 'xxxxx', name: 'zip', type: 'number' },
+  { label: 'CVV', placeholder: '###', name: 'cvv', type: 'number' },
+  { label: 'Zip Code', placeholder: '#####', name: 'zip', type: 'number' },
 ]
-
-// const chunkString = (str, length) => {
-//   return str.match(new RegExp('.{1,' + length + '}', 'g'))
-// }
 
 const CheckoutNewCardForm = ({ addTender, setShowNewCard }) => {
   const [newCard, setNewCard] = useState(initialState)
+  const [cardType, setCardType] = useState('OTHER')
 
   const handleChange = (evt) => {
     let { id, value } = evt.target
-    // if (id === 'acct') {
-    //   value = chunkString(value.replace(' ', ''), 4).join(' ')
-    // }
+    if (id === 'acct') {
+      const currentType = getCardType(value.replace(/\s/g, ''))
+      setCardType(currentType)
+      value = makeAcctNumber(value, currentType)
+    }
     setNewCard({ ...newCard, [id]: value })
   }
 
   const submitTender = (evt) => {
-    const last4 = newCard.acct.slice(-4)
-    const tender = { ...newCard, tender_type: 'CREDIT', last4 }
+    const tender = {
+      ...newCard,
+      tender_type: 'CREDIT',
+      card_type: cardType,
+      card_type_name: cardNames[cardType],
+      last4: newCard.acct.slice(-4),
+    }
     addTender(evt, tender)
     setShowNewCard(false)
   }
@@ -54,6 +60,9 @@ const CheckoutNewCardForm = ({ addTender, setShowNewCard }) => {
           <p className="cards__new__title font-size-big ot-bold">
             Add a new card
           </p>
+          <div className="cards__new__image">
+            <img src={cardIcons[cardType]} alt={cardNames[cardType]} />
+          </div>
         </div>
         <div className="cards__new__content">
           {fields.map((field) => {

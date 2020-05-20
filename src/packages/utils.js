@@ -1,3 +1,17 @@
+import { cardNumbersRegex } from './constants'
+
+export const getCardType = (cardNumber) => {
+  const number = cardNumber
+  let re
+  for (const [card, pattern] of Object.entries(cardNumbersRegex)) {
+    re = new RegExp(pattern)
+    if (number.match(re) !== null) {
+      return card
+    }
+  }
+  return 'OTHER' // default type
+}
+
 export const displayPrice = (price) => {
   return parseFloat(price).toFixed(2)
 }
@@ -223,4 +237,36 @@ export const checkAmountRemaining = (total, tenders) => {
     parseFloat(total) -
     tenders.reduce((t, i) => (t += parseFloat(i.amount)), 0.0)
   return remaining === -0.0 ? 0.0 : remaining
+}
+
+const chunks = [
+  [0, 4],
+  [4, 8],
+  [8, 12],
+  [12, 16],
+]
+
+const amexChunks = [
+  [0, 4],
+  [4, 10],
+  [10, 15],
+]
+
+export const makeAcctNumber = (str, cardType) => {
+  str = str.match(/\d+/g) // limit to numerical input, returns an array
+  if (!str) return ''
+  str = str.join('').replace(/\s/g, '')
+  if (cardType === 'AMEX') {
+    return amexChunks
+      .map(([start, end]) => str.slice(start, end))
+      .filter((i) => i.length)
+      .join(' ')
+      .slice(0, 18)
+  } else {
+    return chunks
+      .map(([start, end]) => str.slice(start, end))
+      .filter((i) => i.length)
+      .join(' ')
+      .slice(0, 19)
+  }
 }
