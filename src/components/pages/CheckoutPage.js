@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectConfig } from '../../slices/configSlice'
@@ -24,8 +24,6 @@ import HeaderLogo from '../HeaderLogo'
 const CheckoutPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const [isSticky, setSticky] = useState(false)
-  const stickyRef = useRef(null)
   const { checkout: checkoutConfig } = useSelector(selectConfig)
   const cart = useSelector(selectCart)
   const cartCount = useSelector(selectCartQuantity)
@@ -78,18 +76,18 @@ const CheckoutPage = () => {
 
   const pending = loading === 'pending'
 
-  const handleScroll = () => {
-    if (stickyRef.current) {
-      setSticky(stickyRef.current.getBoundingClientRect().top <= 35)
-    }
-  }
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-    return () => {
-      window.removeEventListener('scroll', () => handleScroll)
-    }
-  }, [])
-  const stuckClass = isSticky ? '-stuck' : ''
+  // const handleScroll = () => {
+  //   if (stickyRef.current) {
+  //     setSticky(stickyRef.current.getBoundingClientRect().top <= 35)
+  //   }
+  // }
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll)
+  //   return () => {
+  //     window.removeEventListener('scroll', () => handleScroll)
+  //   }
+  // }, [])
+  // const stuckClass = isSticky ? '-stuck' : ''
 
   return (
     <div className="checkout">
@@ -136,7 +134,7 @@ const CheckoutPage = () => {
       <div className="checkout__sidebar bg-secondary-color">
         <div className="checkout__sidebar__wrapper">
           <div className="checkout__sidebar__container">
-            <div className={`checkout__totals ${stuckClass}`} ref={stickyRef}>
+            <div className="checkout__totals">
               {totals && (
                 <Check
                   title={checkoutConfig.check.title}

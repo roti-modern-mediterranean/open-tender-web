@@ -67,6 +67,14 @@
       padding: 0rem 0 2rem;
     }
 
+    &__errors {
+      margin: 1rem 0;
+
+      p {
+        margin: 0.5em 0;
+      }
+    }
+
     &__image {
       position: absolute;
       top: 0;
@@ -85,6 +93,8 @@
     &__exp,
     &__cvv,
     &__zip {
+      // display: block;
+      // float: left;
       width: 30%;
       margin-right: 5%;
       &:last-child {
@@ -95,7 +105,7 @@
     &__footer {
       display: flex;
       justify-content: space-between;
-      padding: 1rem 0 0;
+      padding: 1.5rem 0 0;
 
       button {
         display: block;

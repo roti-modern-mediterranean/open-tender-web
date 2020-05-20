@@ -101,10 +101,7 @@ const CheckoutTenders = () => {
                 </div>
               </CheckoutLineItem>
               {tenderType === 'CREDIT' && showCredit && (
-                <CheckoutCreditCards
-                  addTender={addTender}
-                  removeTender={removeTender}
-                />
+                <CheckoutCreditCards addTender={addTender} />
               )}
             </>
           )

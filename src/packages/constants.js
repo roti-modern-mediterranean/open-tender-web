@@ -20,6 +20,7 @@ export const tenderTypeNamesMap = {
   COMP: 'Comp',
 }
 
+// https://github.com/muffinresearch/payment-icons
 export const cardIcons = {
   VISA: visa,
   MC: mastercard,
@@ -36,6 +37,7 @@ export const cardNames = {
   OTHER: 'Other Credit Card',
 }
 
+// https://github.com/jasminmif/react-interactive-paycard
 export const cardNumbersRegex = {
   VISA: '^4',
   MC: '^5[1-5]',

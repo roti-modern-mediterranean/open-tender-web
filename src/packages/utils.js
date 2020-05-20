@@ -270,3 +270,64 @@ export const makeAcctNumber = (str, cardType) => {
       .slice(0, 19)
   }
 }
+
+export const isString = (str) => {
+  return typeof str === 'string'
+}
+
+export const isObject = (obj) => {
+  return typeof obj === 'object' && obj !== null
+}
+
+export const isEmpty = (obj) => {
+  return (
+    !obj || (obj.constructor === Object && Object.entries(obj).length === 0)
+  )
+}
+
+export const isNum = (s) => /^\d+$/.test(s)
+
+export const validateCreditCard = (card, cardType) => {
+  const errors = {}
+  let { acct, exp, cvv, zip } = card
+
+  const acctLength = cardType === 'AMEX' ? 15 : 16
+  acct = acct ? acct.replace(/\s/g, '') : ''
+  if (!isNum(acct)) {
+    errors.acct = 'Card number must be only numbers'
+  } else if (acct.length !== acctLength) {
+    errors.acct = `Card number must be ${acctLength} digits`
+  }
+
+  exp = (exp ? exp.replace(/\s/g, '') : '').padStart(4, '0')
+  const expMonth = exp.slice(0, 2)
+  const expYear = exp.slice(2, 4)
+  if (!isNum(exp) || exp.length !== 4) {
+    errors.exp = 'Expiration must be 4 digits in MMYY format'
+  } else if (expMonth < 1 || expMonth > 12) {
+    errors.exp = 'Expiration month must be number between 1 and 12'
+  } else if (expYear < 20) {
+    errors.exp = 'Expiration year must be 2020 or later'
+  }
+
+  const cvvLength = cardType === 'AMEX' ? 4 : 3
+  cvv = cvv ? cvv.replace(/\s/g, '') : ''
+  if (!isNum(cvv)) {
+    errors.cvv = 'CVV must be only numbers'
+  } else if (cvv.length !== cvvLength) {
+    errors.cvv = `CVV must be ${cvvLength} digits`
+  }
+
+  zip = zip ? zip.replace(/\s/g, '') : ''
+  if (!isNum(zip)) {
+    errors.zip = 'Zip code must be only numbers'
+  } else if (zip.length !== 5) {
+    errors.zip = 'Zip code must be 5 digits'
+  }
+
+  if (!isEmpty(errors)) {
+    return { card, errors }
+  }
+  card = { ...card, acct, exp, cvv, zip }
+  return { card, errors: null }
+}

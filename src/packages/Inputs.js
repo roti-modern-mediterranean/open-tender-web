@@ -157,9 +157,45 @@ export const Switch = ({ label, id, on, onChange, disabled, classes = '' }) => {
 
 Switch.displayName = 'Switch'
 Switch.propTypes = {
+  label: propTypes.string,
   id: propTypes.string,
-  checked: propTypes.bool,
+  on: propTypes.bool,
+  onChange: propTypes.func,
   disabled: propTypes.bool,
-  handler: propTypes.func,
-  klass: propTypes.string,
+  classes: propTypes.string,
+}
+
+export const Checkbox = ({
+  label,
+  id,
+  on,
+  onChange,
+  disabled,
+  classes = '',
+}) => {
+  return (
+    <label htmlFor={id} className={`label checkbox ${classes || ''}`}>
+      <input
+        aria-label={label}
+        id={id}
+        type="checkbox"
+        className="checkbox__input"
+        checked={on}
+        disabled={disabled}
+        onChange={onChange}
+      />
+      <span className="checkbox__custom" />
+      {label ? <span className="checkbox__desc">{label}</span> : null}
+    </label>
+  )
+}
+
+Checkbox.displayName = 'Checkbox'
+Checkbox.propTypes = {
+  label: propTypes.string,
+  id: propTypes.string,
+  on: propTypes.bool,
+  onChange: propTypes.func,
+  disabled: propTypes.bool,
+  classes: propTypes.string,
 }

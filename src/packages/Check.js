@@ -44,13 +44,10 @@ const Check = ({ title, totals, tenders, updating = false }) => {
   const totalBeforeTax = [subtotal, surcharge, discount]
     .reduce((t, i) => (t += parseFloat(i)), 0.0)
     .toFixed(2)
-  // const tendersTotal = tenders
-  //   .reduce((t, i) => (t += parseFloat(i.amount)), 0.0)
-  //   .toFixed(2)
   const amountRemaiing = checkAmountRemaining(total, tenders)
 
   return (
-    <div className="check border-radius bg-color">
+    <div className="check border-radius bg-color ot-box-shadow">
       <div className="check__container">
         {updating && <CheckUpdating />}
         <p className="check__title font-size-big ot-bold border-bottom">

@@ -1,20 +1,7 @@
 .check {
-  z-index: 10;
-  width: 100%;
   padding: 2rem 2rem 0;
-
-  .-stuck & {
-    position: fixed;
-    top: 3.5rem;
-    // bottom: 0rem;
-    left: 55%;
-    right: 3.5rem;
-    margin-left: 3.5rem;
-    width: auto;
-    max-width: 50.6rem;
-    max-height: calc(100% - 3.5rem);
-    overflow-y: scroll;
-  }
+  width: auto;
+  max-width: 50.6rem;
 
   &__container {
     position: relative;

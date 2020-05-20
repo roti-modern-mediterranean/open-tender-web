@@ -8,7 +8,9 @@ import CircleLoader from './CircleLoader'
 import CheckoutNewCardForm from './CheckoutNewCardForm'
 
 const NewCard = ({ appliedCards, addTender, showNewCard, setShowNewCard }) => {
-  const isApplied = appliedCards.find((i) => i.acct)
+  const newCard = appliedCards.find((i) => i.acct)
+  const newCardType = newCard ? newCard.card_type : 'OTHER'
+  const isApplied = !!newCard
   const isDisabled = appliedCards.length && !isApplied
   const disabled = isDisabled ? '-disabled' : ''
   const classes = `cards__card bg-color border-radius ${disabled}`
@@ -23,9 +25,13 @@ const NewCard = ({ appliedCards, addTender, showNewCard, setShowNewCard }) => {
     <li>
       <div className={classes}>
         <div className="cards__card__image">
-          <img src={cardIcons['OTHER']} alt="New Credit Card" />
+          <img src={cardIcons[newCardType]} alt="New Credit Card" />
         </div>
-        <div className="cards__card__name">Add a new credit card</div>
+        <div className="cards__card__name">
+          {isApplied
+            ? `New ${newCard.card_type} ending in ${newCard.last4}`
+            : 'Add a new credit card'}
+        </div>
         <div className="cards__card__add">
           {isApplied ? (
             <CircleLoader complete={true} />
@@ -108,7 +114,7 @@ ExistingCard.propTypes = {
   addTender: propTypes.func,
 }
 
-const CheckoutCreditCards = ({ addTender, removeTender }) => {
+const CheckoutCreditCards = ({ addTender }) => {
   const [showNewCard, setShowNewCard] = useState(false)
   const formContext = useContext(FormContext)
   const { check, form } = formContext
@@ -143,7 +149,6 @@ const CheckoutCreditCards = ({ addTender, removeTender }) => {
 CheckoutCreditCards.displayName = 'CheckoutCreditCards'
 CheckoutCreditCards.prototypes = {
   addTender: propTypes.func,
-  removeTender: propTypes.func,
 }
 
 export default CheckoutCreditCards

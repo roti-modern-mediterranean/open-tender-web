@@ -46,7 +46,7 @@
 
   &__content {
     width: 55%;
-    padding: 8rem 0;
+    padding: 8.5rem 0;
   }
 
   &__content__wrapper {
@@ -61,11 +61,14 @@
   }
 
   &__sidebar {
+    position: relative;
     width: 45%;
-    padding: 5rem 0;
+    padding: 3.5rem 0;
   }
 
   &__sidebar__wrapper {
+    position: sticky;
+    top: 3.5rem;
     display: flex;
     justify-content: flex-start;
   }
