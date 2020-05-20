@@ -1,15 +1,17 @@
 import React, { useState, useCallback, useContext } from 'react'
 import debounce from 'lodash/debounce'
 import {
+  Button,
   ButtonLocation,
   ButtonServiceType,
   ButtonRequestedAt,
+  CheckoutLineItem,
+  CheckoutTip,
   Input,
+  Textarea,
   Switch,
 } from './index'
 import { serviceTypeNamesMap } from './constants'
-import { Textarea } from './Inputs'
-import CheckoutLineItem from './CheckoutLineItem'
 import { FormContext } from './CheckoutForm'
 
 const CheckoutDetails = () => {
@@ -17,6 +19,8 @@ const CheckoutDetails = () => {
   const { config, order, check, form, updateForm } = formContext
   const checkDetails = form.details || check.details
   const [details, setDetails] = useState(checkDetails)
+  const [showTip, setShowTip] = useState(false)
+  // const [pendingTip, setPendingTip] = useState(null)
 
   // useEffect(() => {
   //   setDetails(checkDetails)
@@ -36,10 +40,17 @@ const CheckoutDetails = () => {
     debouncedUpdate(newDetails)
   }
 
+  const handleShowTip = (evt) => {
+    evt.preventDefault()
+    setShowTip(!showTip)
+    evt.target.blur()
+  }
+
   const errors = {}
   const serviceTypeName = serviceTypeNamesMap[order.serviceType]
   const allowTaxExempt = check.config.allow_tax_exempt
   const requiredFields = check.config.required_fields.details
+  const tipSettings = check.config.tip_settings
   const eatingUtensilsRequired = requiredFields.includes('eating_utensils')
   const servingUtensilsRequired = requiredFields.includes('serving_utensils')
   const personCountRequired = requiredFields.includes('person_count')
@@ -59,6 +70,21 @@ const CheckoutDetails = () => {
         <CheckoutLineItem label={`${serviceTypeName} Time`}>
           <ButtonRequestedAt classes="btn--header" />
         </CheckoutLineItem>
+        {tipSettings.has_tip && (
+          <>
+            <CheckoutLineItem label="Tip">
+              <Button
+                text={`${check.totals.tip}`}
+                ariaLabel={`Adjust tip of $${check.totals.tip}`}
+                icon="DollarSign"
+                classes="btn--header"
+                onClick={handleShowTip}
+              />
+            </CheckoutLineItem>
+            {showTip && <CheckoutTip setShowTip={setShowTip} />}
+          </>
+        )}
+
         {eatingUtensilsRequired && (
           <CheckoutLineItem label="Eating Utensils">
             <Switch

@@ -34,12 +34,12 @@
 
       .form__line__value {
         flex-grow: 1;
-        max-width: 24rem;
+        max-width: 50%;
         margin: 0 0 0 4rem;
       }
 
       &.-narrow .form__line__value {
-        max-width: 12rem;
+        max-width: 25%;
       }
     }
 
@@ -52,6 +52,7 @@
 
       .form__line__value {
         flex-grow: 1;
+        max-width: 50%;
         margin: 0 0 0 4rem;
       }
     }
@@ -123,6 +124,10 @@
 
   &__input--small {
     margin: 0;
+  }
+
+  &__input--small.-custom-tip {
+    max-width: 16rem;
   }
 
   &__line__value {

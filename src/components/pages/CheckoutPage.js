@@ -34,7 +34,7 @@ const CheckoutPage = () => {
   const { account, auth } = customer
   const { access_token } = auth || {}
   const { check, form, loading, errors } = useSelector(selectCheckout)
-  const { discounts, promoCodes, tenders } = form
+  const { discounts, promoCodes, tenders, tip } = form
   const { totals } = check || {}
 
   useEffect(() => {
@@ -59,7 +59,8 @@ const CheckoutPage = () => {
       cart,
       orderCustomer,
       discounts,
-      promoCodes
+      promoCodes,
+      tip
     )
     dispatch(submitOrder(order))
   }, [
@@ -70,6 +71,7 @@ const CheckoutPage = () => {
     account,
     discounts,
     promoCodes,
+    tip,
     dispatch,
     history,
   ])

@@ -18,10 +18,12 @@ const checkoutSlice = createSlice({
   initialState: {
     check: null,
     form: {
+      details: {},
       customer: {},
       discounts: [],
       promoCodes: [],
       tenders: [],
+      tip: null,
     },
     errors: {},
     loading: 'idle',

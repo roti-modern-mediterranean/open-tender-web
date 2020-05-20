@@ -199,6 +199,7 @@ export const prepareOrder = (
   customer = {},
   discounts = [],
   promoCodes = [],
+  tip = null,
   address = null,
   isValidate = true
 ) => {
@@ -217,6 +218,7 @@ export const prepareOrder = (
     discounts: discounts,
     promo_codes: promoCodes,
   }
+  if (tip) data.tip = tip
   return data
 }
 

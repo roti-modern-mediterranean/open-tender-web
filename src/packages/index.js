@@ -25,7 +25,8 @@ import CheckoutForm from './CheckoutForm'
 import CheckoutGuest from './CheckoutGuest'
 import CheckoutLineItem from './CheckoutLineItem'
 import CheckoutSignUp from './CheckoutSignUp'
-import { Label, Error, Input, Switch } from './Inputs'
+import CheckoutTip from './CheckoutTip'
+import { Label, Error, Input, Textarea, Switch, Checkbox } from './Inputs'
 
 export {
   Builder,
@@ -55,8 +56,11 @@ export {
   CheckoutGuest,
   CheckoutLineItem,
   CheckoutSignUp,
+  CheckoutTip,
   Error,
   Input,
+  Textarea,
   Label,
   Switch,
+  Checkbox,
 }
