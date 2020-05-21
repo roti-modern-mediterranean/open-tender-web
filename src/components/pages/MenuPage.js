@@ -45,7 +45,9 @@ const MenuPage = () => {
           </div>
         </div>
       ) : menu.error ? (
-        <p className="ot-error-color">{menu.error}</p>
+        <div className="loading">
+          <p className="ot-error-color">{menu.error}</p>
+        </div>
       ) : (
         <Menu categories={menu.categories} />
       )}

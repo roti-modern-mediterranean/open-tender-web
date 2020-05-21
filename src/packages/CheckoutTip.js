@@ -50,7 +50,7 @@ const CheckoutTip = ({ setShowTip }) => {
               <button
                 type="button"
                 onClick={(evt) => chooseTip(evt, i.amount)}
-                className="font-size"
+                className="btn--tip font-size"
               >
                 <div className="cards__card bg-color border-radius">
                   <div className="cards__card__name">

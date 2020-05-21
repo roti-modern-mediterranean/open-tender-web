@@ -30,17 +30,6 @@ export const logoutCustomer = createAsyncThunk(
   }
 )
 
-// export const getCustomer = createAsyncThunk(
-//   'customer/getCustomer',
-//   async ({ email, password }, thunkAPI) => {
-//     try {
-//       return await loginCustomer({ email, password })
-//     } catch (err) {
-//       return thunkAPI.rejectWithValue(err)
-//     }
-//   }
-// )
-
 const customerSlice = createSlice({
   name: 'customer',
   initialState,

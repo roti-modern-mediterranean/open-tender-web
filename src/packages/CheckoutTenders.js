@@ -1,12 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
-import CheckoutLineItem from './CheckoutLineItem'
-import Button from './Button'
-import CircleLoader from './CircleLoader'
 import { FormContext } from './CheckoutForm'
 import { checkAmountRemaining } from './utils'
-import { makeTenderTypeLabel } from './TenderTypes'
-import { tenderTypeNamesMap } from './constants'
-import CheckoutCreditCards from './CheckoutCreditCards'
+import { CheckoutTender } from './index'
 
 const CheckoutTenders = () => {
   const formContext = useContext(FormContext)
@@ -63,49 +58,18 @@ const CheckoutTenders = () => {
         <p className="form__legend__subtitle">{config.tenders.subtitle}</p>
       </div>
       <div className="form__inputs">
-        {tenderTypes.map((tenderType) => {
-          const label = makeTenderTypeLabel(tenderType)
-          const name = tenderTypeNamesMap[tenderType]
-          const isApplied = tenderTypesApplied.includes(tenderType)
-          const applyTender =
-            tenderType === 'CREDIT'
-              ? addCredit
-              : (evt) => addTender(evt, { tender_type: tenderType })
-          return (
-            <>
-              <CheckoutLineItem key={tenderType} label={label}>
-                <div className="form__line__wrapper">
-                  {isApplied ? (
-                    <>
-                      <span className="form__line__success">
-                        <CircleLoader complete={true} />
-                      </span>
-                      <Button
-                        text={`Remove ${name} Payment`}
-                        ariaLabel={`Remove ${name} Payment`}
-                        icon="XCircle"
-                        classes="btn--header"
-                        onClick={(evt) => removeTender(evt, tenderType)}
-                      />
-                    </>
-                  ) : (
-                    <Button
-                      text={`Pay with ${name}`}
-                      ariaLabel={`Pay with ${name}`}
-                      icon="PlusCircle"
-                      classes="btn--header"
-                      onClick={applyTender}
-                      disabled={isPaid}
-                    />
-                  )}
-                </div>
-              </CheckoutLineItem>
-              {tenderType === 'CREDIT' && showCredit && (
-                <CheckoutCreditCards addTender={addTender} />
-              )}
-            </>
-          )
-        })}
+        {tenderTypes.map((tenderType) => (
+          <CheckoutTender
+            key={tenderType}
+            tenderType={tenderType}
+            isPaid={isPaid}
+            tenderTypesApplied={tenderTypesApplied}
+            showCredit={showCredit}
+            addTender={addTender}
+            addCredit={addCredit}
+            removeTender={removeTender}
+          />
+        ))}
       </div>
     </fieldset>
   )

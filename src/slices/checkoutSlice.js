@@ -1,6 +1,32 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { postOrder } from '../services/requests'
+import { postOrderValidate, postOrder } from '../services/requests'
 import { handleOrderErrors } from '../packages/utils'
+
+const initialState = {
+  check: null,
+  completedOrder: null,
+  form: {
+    details: {},
+    customer: {},
+    discounts: [],
+    promoCodes: [],
+    tenders: [],
+    tip: null,
+  },
+  errors: {},
+  loading: 'idle',
+}
+
+export const validateOrder = createAsyncThunk(
+  'checkout/validateOrder',
+  async (order, thunkAPI) => {
+    try {
+      return await postOrderValidate(order)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
 
 export const submitOrder = createAsyncThunk(
   'checkout/submitOrder',
@@ -15,19 +41,7 @@ export const submitOrder = createAsyncThunk(
 
 const checkoutSlice = createSlice({
   name: 'checkout',
-  initialState: {
-    check: null,
-    form: {
-      details: {},
-      customer: {},
-      discounts: [],
-      promoCodes: [],
-      tenders: [],
-      tip: null,
-    },
-    errors: {},
-    loading: 'idle',
-  },
+  initialState: initialState,
   reducers: {
     updateForm: (state, action) => {
       // console.log(JSON.stringify(action.payload.customer))
@@ -57,20 +71,32 @@ const checkoutSlice = createSlice({
     // },
   },
   extraReducers: {
-    [submitOrder.fulfilled]: (state, action) => {
+    [validateOrder.fulfilled]: (state, action) => {
       console.log(action.payload)
       state.check = action.payload
       state.errors = action.payload.errors
         ? handleOrderErrors(action.payload.errors)
         : {}
       state.loading = 'idle'
-      // state.form.promoCodes = action.payload.promo_codes
     },
-    [submitOrder.pending]: (state, action) => {
+    [validateOrder.pending]: (state) => {
+      state.loading = 'pending'
+    },
+    [validateOrder.rejected]: (state, action) => {
+      // TODO: this might not be right
+      state.errors = action.payload.params
+      state.loading = 'idle'
+    },
+    [submitOrder.fulfilled]: (state, action) => {
+      console.log(action.payload)
+      state = { ...initialState }
+      state.completedOrder = action.payload
+    },
+    [submitOrder.pending]: (state) => {
       state.loading = 'pending'
     },
     [submitOrder.rejected]: (state, action) => {
-      state.errors = action.payload.params
+      state.errors = handleOrderErrors(action.payload)
       state.loading = 'idle'
     },
   },
@@ -80,6 +106,7 @@ export const { updateForm, updateCustomer } = checkoutSlice.actions
 
 export const selectCheckout = (state) => state.checkout
 export const selectCheck = (state) => state.checkout.check
+export const selectCompletedOrder = (state) => state.checkout.completedOrder
 export const selectDiscounts = (state) => state.checkout.discounts
 
 export default checkoutSlice.reducer

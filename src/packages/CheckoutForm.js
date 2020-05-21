@@ -57,6 +57,7 @@ const CheckoutForm = ({
   loading,
   errors,
   updateForm,
+  submitOrder,
   login,
   logout,
 }) => {
@@ -79,6 +80,7 @@ const CheckoutForm = ({
   const handleSubmit = (evt) => {
     evt.preventDefault()
     setIsWorking(true)
+    submitOrder()
     submitButton.current.blur()
   }
 
@@ -92,6 +94,7 @@ const CheckoutForm = ({
         loading,
         errors,
         updateForm,
+        submitOrder,
         login,
         logout,
       }}
@@ -144,6 +147,7 @@ CheckoutForm.propTypes = {
   loading: propTypes.string,
   errors: propTypes.object,
   updateForm: propTypes.func,
+  submitOrder: propTypes.func,
   login: propTypes.func,
   logout: propTypes.func,
 }

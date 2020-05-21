@@ -200,8 +200,9 @@ export const prepareOrder = (
   discounts = [],
   promoCodes = [],
   tip = null,
-  address = null,
-  isValidate = true
+  tenders = null,
+  isValidate = true,
+  address = null
 ) => {
   const requestedIso =
     requestedAt === 'asap' ? new Date().toISOString() : requestedAt
@@ -219,6 +220,7 @@ export const prepareOrder = (
     promo_codes: promoCodes,
   }
   if (tip) data.tip = tip
+  if (tenders) data.tenders = tenders
   return data
 }
 

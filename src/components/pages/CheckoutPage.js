@@ -12,8 +12,10 @@ import {
 import {
   updateForm,
   updateCustomer,
+  validateOrder,
   submitOrder,
   selectCheckout,
+  selectCompletedOrder,
 } from '../../slices/checkoutSlice'
 import { openModal } from '../../slices/modalSlice'
 import { logoutCustomer, selectCustomer } from '../../slices/customerSlice'
@@ -30,12 +32,12 @@ const CheckoutPage = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
   const order = useSelector(selectOrder)
-  const customer = useSelector(selectCustomer)
-  const { account, auth } = customer
+  const { account, auth } = useSelector(selectCustomer)
   const { access_token } = auth || {}
   const { check, form, loading, errors } = useSelector(selectCheckout)
-  const { discounts, promoCodes, tenders, tip } = form
+  const { customer, discounts, promoCodes, tenders, tip } = form
   const { totals } = check || {}
+  const completedOrder = useSelector(selectCompletedOrder)
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -46,23 +48,29 @@ const CheckoutPage = () => {
   }, [cartCount, menuSlug, history])
 
   useEffect(() => {
+    if (completedOrder) history.push('/confirmation')
+  }, [completedOrder, history])
+
+  useEffect(() => {
     dispatch(updateCustomer(account))
   }, [dispatch, account])
 
   useEffect(() => {
     if (!locationId) return history.push('/')
-    const orderCustomer = account ? { customer_id: account.customer_id } : null
+    const customerValidate = account
+      ? { customer_id: account.customer_id }
+      : null
     const order = prepareOrder(
       locationId,
       serviceType,
       requestedAt,
       cart,
-      orderCustomer,
+      customerValidate,
       discounts,
       promoCodes,
       tip
     )
-    dispatch(submitOrder(order))
+    dispatch(validateOrder(order))
   }, [
     locationId,
     serviceType,
@@ -78,18 +86,19 @@ const CheckoutPage = () => {
 
   const pending = loading === 'pending'
 
-  // const handleScroll = () => {
-  //   if (stickyRef.current) {
-  //     setSticky(stickyRef.current.getBoundingClientRect().top <= 35)
-  //   }
-  // }
-  // useEffect(() => {
-  //   window.addEventListener('scroll', handleScroll)
-  //   return () => {
-  //     window.removeEventListener('scroll', () => handleScroll)
-  //   }
-  // }, [])
-  // const stuckClass = isSticky ? '-stuck' : ''
+  const isValidate = false
+  const preparedOrder = prepareOrder(
+    locationId,
+    serviceType,
+    requestedAt,
+    cart,
+    customer,
+    discounts,
+    promoCodes,
+    tip,
+    tenders,
+    isValidate
+  )
 
   return (
     <div className="checkout">
@@ -125,7 +134,8 @@ const CheckoutPage = () => {
                 form={form}
                 loading={loading}
                 errors={errors}
-                updateForm={(payload) => dispatch(updateForm(payload))}
+                updateForm={(form) => dispatch(updateForm(form))}
+                submitOrder={() => dispatch(submitOrder(preparedOrder))}
                 login={() => dispatch(openModal('login'))}
                 logout={() => dispatch(logoutCustomer(access_token))}
               />
@@ -145,7 +155,6 @@ const CheckoutPage = () => {
                   updating={pending}
                 />
               )}
-              {/* <div>Content goes here</div> */}
             </div>
           </div>
         </div>

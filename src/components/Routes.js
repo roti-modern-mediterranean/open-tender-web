@@ -6,6 +6,7 @@ import {
   MenuPage,
   CheckoutPage,
   AccountPage,
+  ConfirmationPage,
 } from './pages'
 
 const Routes = () => {
@@ -25,6 +26,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/account">
         <AccountPage />
+      </Route>
+      <Route exact path="/confirmation">
+        <ConfirmationPage />
       </Route>
     </Switch>
   )

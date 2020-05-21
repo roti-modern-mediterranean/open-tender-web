@@ -16,8 +16,12 @@ export const getMenu = (locationId, serviceType, requestedAt) => {
   return request(`/menus?${params}`)
 }
 
-export const postOrder = (order) => {
+export const postOrderValidate = (order) => {
   return request(`/orders/validate`, 'POST', order)
+}
+
+export const postOrder = (order) => {
+  return request(`/orders`, 'POST', order)
 }
 
 export const getCustomer = (token) => {
