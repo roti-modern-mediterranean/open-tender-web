@@ -2,12 +2,15 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectConfig } from '../../slices/configSlice'
+import { openModal } from '../../slices/modalSlice'
+import { logoutCustomer, selectCustomer } from '../../slices/customerSlice'
 import {
   selectCart,
   selectCartQuantity,
   selectMenuSlug,
   selectMenuVars,
   selectOrder,
+  resetOrder,
 } from '../../slices/orderSlice'
 import {
   updateForm,
@@ -16,9 +19,9 @@ import {
   submitOrder,
   selectCheckout,
   selectCompletedOrder,
+  clearCompletedOrder,
 } from '../../slices/checkoutSlice'
-import { openModal } from '../../slices/modalSlice'
-import { logoutCustomer, selectCustomer } from '../../slices/customerSlice'
+import { setCompletedOrder } from '../../slices/confirmationSlice'
 import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../../packages'
 import { prepareOrder } from '../../packages/utils'
 import HeaderLogo from '../HeaderLogo'
@@ -35,7 +38,7 @@ const CheckoutPage = () => {
   const { account, auth } = useSelector(selectCustomer)
   const { access_token } = auth || {}
   const { check, form, loading, errors } = useSelector(selectCheckout)
-  const { customer, discounts, promoCodes, tenders, tip } = form
+  const { customer, details, discounts, promoCodes, tenders, tip } = form
   const { totals } = check || {}
   const completedOrder = useSelector(selectCompletedOrder)
 
@@ -44,12 +47,8 @@ const CheckoutPage = () => {
   }, [])
 
   useEffect(() => {
-    if (cartCount === 0) history.push(menuSlug)
+    if (cartCount === 0) return history.push(menuSlug)
   }, [cartCount, menuSlug, history])
-
-  useEffect(() => {
-    if (completedOrder) history.push('/confirmation')
-  }, [completedOrder, history])
 
   useEffect(() => {
     dispatch(updateCustomer(account))
@@ -57,19 +56,27 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (!locationId) return history.push('/')
+    if (completedOrder) {
+      dispatch(setCompletedOrder(completedOrder))
+      dispatch(clearCompletedOrder())
+      dispatch(resetOrder())
+      return history.push('/confirmation')
+    }
     const customerValidate = account
       ? { customer_id: account.customer_id }
       : null
-    const order = prepareOrder(
+    const data = {
       locationId,
       serviceType,
       requestedAt,
       cart,
-      customerValidate,
+      customer: customerValidate,
       discounts,
       promoCodes,
-      tip
-    )
+      tip,
+    }
+    const order = prepareOrder(data)
+    // console.log('/orders/validate', order)
     dispatch(validateOrder(order))
   }, [
     locationId,
@@ -80,25 +87,27 @@ const CheckoutPage = () => {
     discounts,
     promoCodes,
     tip,
+    completedOrder,
     dispatch,
     history,
   ])
 
   const pending = loading === 'pending'
 
-  const isValidate = false
-  const preparedOrder = prepareOrder(
+  const data = {
     locationId,
     serviceType,
     requestedAt,
     cart,
     customer,
+    details,
     discounts,
     promoCodes,
     tip,
     tenders,
-    isValidate
-  )
+  }
+  const preparedOrder = prepareOrder(data)
+  // console.log('/orders', preparedOrder)
 
   return (
     <div className="checkout">

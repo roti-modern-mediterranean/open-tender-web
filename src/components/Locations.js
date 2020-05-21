@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { startOver } from '../slices/orderSlice'
+import { resetOrder } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
 import { Location } from './Location'
 
@@ -20,7 +20,7 @@ export const Locations = ({ locations }) => {
           <button
             className="btn-link"
             aria-label="Start Over"
-            onClick={() => dispatch(startOver())}
+            onClick={() => dispatch(resetOrder())}
           >
             click here to start over
           </button>

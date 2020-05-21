@@ -4,7 +4,6 @@ import { handleOrderErrors } from '../packages/utils'
 
 const initialState = {
   check: null,
-  completedOrder: null,
   form: {
     details: {},
     customer: {},
@@ -13,6 +12,7 @@ const initialState = {
     tenders: [],
     tip: null,
   },
+  completedOrder: null,
   errors: {},
   loading: 'idle',
 }
@@ -44,7 +44,6 @@ const checkoutSlice = createSlice({
   initialState: initialState,
   reducers: {
     updateForm: (state, action) => {
-      // console.log(JSON.stringify(action.payload.customer))
       state.form = { ...state.form, ...action.payload }
     },
     updateCustomer: (state, action) => {
@@ -65,14 +64,13 @@ const checkoutSlice = createSlice({
         state.form.discounts = []
       }
     },
-    // updateDiscounts: (state, action) => {
-    //   // console.log(JSON.stringify(action.payload.customer))
-    //   state.discounts = action.payload
-    // },
+    clearCompletedOrder: (state) => {
+      state.completedOrder = null
+    },
   },
   extraReducers: {
     [validateOrder.fulfilled]: (state, action) => {
-      console.log(action.payload)
+      // console.log('validateOrder.fulfilled', action.payload)
       state.check = action.payload
       state.errors = action.payload.errors
         ? handleOrderErrors(action.payload.errors)
@@ -88,9 +86,12 @@ const checkoutSlice = createSlice({
       state.loading = 'idle'
     },
     [submitOrder.fulfilled]: (state, action) => {
-      console.log(action.payload)
-      state = { ...initialState }
+      // console.log('submitOrder.fulfilled', action.payload)
       state.completedOrder = action.payload
+      state.check = null
+      state.form = initialState.form
+      state.errors = initialState.errors
+      state.loading = 'idle'
     },
     [submitOrder.pending]: (state) => {
       state.loading = 'pending'
@@ -102,7 +103,11 @@ const checkoutSlice = createSlice({
   },
 })
 
-export const { updateForm, updateCustomer } = checkoutSlice.actions
+export const {
+  updateForm,
+  updateCustomer,
+  clearCompletedOrder,
+} = checkoutSlice.actions
 
 export const selectCheckout = (state) => state.checkout
 export const selectCheck = (state) => state.checkout.check

@@ -191,37 +191,33 @@ const makeSimpleCart = (cart) => {
   return simpleCart
 }
 
-export const prepareOrder = (
-  locationId,
-  serviceType,
-  requestedAt,
-  cart,
-  customer = {},
-  discounts = [],
-  promoCodes = [],
-  tip = null,
-  tenders = null,
-  isValidate = true,
-  address = null
-) => {
+export const prepareOrder = (data) => {
+  data = data || {}
   const requestedIso =
-    requestedAt === 'asap' ? new Date().toISOString() : requestedAt
-  const data = {
-    validate: isValidate,
-    save: false,
-    device_type: 'desktop', // TODO: need to enable device detection
-    location_id: locationId,
-    service_type: serviceType.toLowerCase(),
+    !data.requestedAt || data.requestedAt === 'asap'
+      ? new Date().toISOString()
+      : data.requestedAt
+  const order = {
+    location_id: data.locationId || null,
+    service_type: data.serviceType || 'PICKUP',
     requested_at: requestedIso,
-    cart: makeSimpleCart(cart),
-    address: address,
-    customer: customer,
-    discounts: discounts,
-    promo_codes: promoCodes,
+    cart: data.cart ? makeSimpleCart(data.cart) : [],
   }
-  if (tip) data.tip = tip
-  if (tenders) data.tenders = tenders
-  return data
+  if (data.customer) order.customer = data.customer
+  // if (data.details) order.details = data.details
+  if (data.details) {
+    const details = { ...data.details }
+    // person_count must be submitted as integer
+    if (details.person_count)
+      details.person_count = parseInt(details.person_count)
+    order.details = { ...details }
+  }
+  if (data.discounts) order.discounts = data.discounts
+  if (data.promoCodes) order.promo_codes = data.promoCodes
+  if (data.tip) order.tip = data.tip
+  if (data.tenders) order.tenders = data.tenders
+  if (data.address) order.address = data.address
+  return order
 }
 
 export const handleOrderErrors = (errors, isValidate = true) => {

@@ -21,7 +21,7 @@ const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-    startOver: () => initialState,
+    resetOrder: () => initialState,
     setOrderType: (state, action) => {
       state.orderType = action.payload
     },
@@ -69,7 +69,7 @@ const orderSlice = createSlice({
 })
 
 export const {
-  startOver,
+  resetOrder,
   setOrderType,
   setServiceType,
   setOrderServiceType,

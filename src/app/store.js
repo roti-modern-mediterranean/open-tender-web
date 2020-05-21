@@ -9,6 +9,7 @@ import orderReducer from '../slices/orderSlice'
 import locationsReducer from '../slices/locationsSlice'
 import menuReducer from '../slices/menuSlice'
 import checkoutReducer from '../slices/checkoutSlice'
+import confirmationReducer from '../slices/confirmationSlice'
 
 const rootReducer = combineReducers({
   config: configReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   locations: locationsReducer,
   menu: menuReducer,
   checkout: checkoutReducer,
+  confirmation: confirmationReducer,
 })
 
 const persistedState = loadState()

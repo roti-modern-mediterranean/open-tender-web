@@ -7,7 +7,7 @@ import CheckoutDiscounts from './CheckoutDiscounts'
 import CheckoutPromoCodes from './CheckoutPromoCodes'
 import CheckoutGiftCards from './CheckoutGiftCards'
 import CheckoutTenders from './CheckoutTenders'
-import { checkAmountRemaining } from './utils'
+import { checkAmountRemaining, isEmpty } from './utils'
 
 export const FormContext = createContext(null)
 
@@ -71,6 +71,10 @@ const CheckoutForm = ({
   useEffect(() => {
     adjustTenders(tenders, isPaid, amountRemaining, updateForm)
   }, [tenders, isPaid, amountRemaining, updateForm])
+
+  useEffect(() => {
+    if (!isEmpty(errors)) setIsWorking(false)
+  }, [errors])
 
   if (!check || !check.config) return null
 

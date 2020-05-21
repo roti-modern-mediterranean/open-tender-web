@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectConfig } from '../../slices/configSlice'
-import { selectCompletedOrder } from '../../slices/checkoutSlice'
+import { selectCompletedOrder } from '../../slices/confirmationSlice'
 import Hero from '../Hero'
 
 const ConfirmationPage = () => {
@@ -18,6 +18,7 @@ const ConfirmationPage = () => {
   return (
     <>
       <Hero imageUrl={accountConfig.background} />
+
       <h1 className="sr-only">ConfirmationPage</h1>
       <h2>Thanks for your order!</h2>
       {/* <pre>{completedOrder}</pre> */}

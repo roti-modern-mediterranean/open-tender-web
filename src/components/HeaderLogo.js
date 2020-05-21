@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { startOver } from '../slices/orderSlice'
+import { resetOrder } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
 import { Button } from '../packages'
 
@@ -12,7 +12,7 @@ const HeaderLogo = () => {
 
   const handleLogo = (evt) => {
     evt.preventDefault()
-    dispatch(startOver())
+    dispatch(resetOrder())
     history.push(`/`)
     evt.target.blur()
   }

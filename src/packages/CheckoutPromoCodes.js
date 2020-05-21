@@ -13,7 +13,7 @@ const CheckoutPromoCodes = () => {
   const { config, check, form, loading, errors, updateForm } = formContext
   const { promo_codes: checkPromoCodes } = check
   const { email } = form.customer || {}
-  const promoCodeErrors = errors.promo_codes || null
+  const promoCodeErrors = errors ? errors.promo_codes || null : null
   const promoCodeError = promoCodeErrors ? promoCodeErrors.promo_code : null
 
   useEffect(() => {

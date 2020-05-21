@@ -4,7 +4,6 @@ import { FormContext } from './CheckoutForm'
 import { iconMap } from './icons'
 import CircleLoader from './CircleLoader'
 import { Input } from './Inputs'
-import Button from './Button'
 
 const CheckoutTip = ({ setShowTip }) => {
   const formContext = useContext(FormContext)
