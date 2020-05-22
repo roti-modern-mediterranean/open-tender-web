@@ -27,10 +27,13 @@ import CheckoutLineItem from './CheckoutLineItem'
 import CheckoutSignUp from './CheckoutSignUp'
 import CheckoutTender from './CheckoutTender'
 import CheckoutTip from './CheckoutTip'
-import GoogleMap from './GoogleMap'
 import useGoogleMap from './useGoogleMap'
 import useGoogleMapsAutocomplete from './useGoogleMapsAutocomplete'
+import useGoogleMapsPlace from './useGoogleMapsPlace'
+import GoogleMap from './GoogleMap'
+import GoogleMapsAutocomplete from './GoogleMapsAutocomplete'
 import { Label, Error, Input, Textarea, Switch, Checkbox } from './Inputs'
+import { makeAddress } from './utils/address'
 
 export {
   Builder,
@@ -62,9 +65,12 @@ export {
   CheckoutSignUp,
   CheckoutTender,
   CheckoutTip,
-  GoogleMap,
   useGoogleMap,
   useGoogleMapsAutocomplete,
+  useGoogleMapsPlace,
+  GoogleMap,
+  GoogleMapsAutocomplete,
+  makeAddress,
   Error,
   Input,
   Textarea,

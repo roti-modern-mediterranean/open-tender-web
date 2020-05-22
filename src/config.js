@@ -33,7 +33,7 @@ export const defaultConfig = {
   map: {
     title: "Let's find the nearest location",
     subtitle: "We'll make this quick",
-    content: 'Please start typing below and select your address.',
+    content: 'Please start typing below and then select your address.',
   },
   menu: {
     // background:

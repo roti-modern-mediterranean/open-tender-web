@@ -1,40 +1,52 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Input, useGoogleMapsAutocomplete } from '../packages'
+import React from 'react'
+import propTypes from 'prop-types'
+import { useSelector, useDispatch } from 'react-redux'
+import { GoogleMapsAutocomplete } from '../packages'
 import { selectConfig } from '../slices/configSlice'
+import { setAddress } from '../slices/orderSlice'
+import { Location } from './Location'
 
-const MapCard = ({ locations, maps }) => {
-  // const autocomplete = new maps.places.AutocompleteService()
-  const [input, setInput] = useState('')
-  const predictions = useGoogleMapsAutocomplete(maps, input)
+const MapCard = ({ locations, setCenter, maps, map }) => {
+  const dispatch = useDispatch()
   const { map: mapConfig } = useSelector(selectConfig)
   const { title, subtitle, content } = mapConfig
 
   return (
-    <div className="card card--map overlay border-radius slide-up ot-box-shadow">
+    <div className="card map__card overlay border-radius slide-up ot-box-shadow">
       <div className="card__header">
         <p className="preface secondary-color">{subtitle}</p>
         <h1 className="ot-font-size-h3">{title}</h1>
         <p className="secondary-color">{content}</p>
       </div>
       <div className="card__content">
-        <Input
-          label="Please enter your address"
-          name="address"
-          type="text"
-          value={input}
-          onChange={(evt) => setInput(evt.target.value)}
-          showLabel={false}
+        <GoogleMapsAutocomplete
+          maps={maps}
+          map={map}
+          setAddress={(address) => dispatch(setAddress(address))}
+          setCenter={setCenter}
         />
-        <ul>
-          {predictions.map((prediction, index) => (
-            <li key={index}>{prediction.description}</li>
-          ))}
-        </ul>
+        {/* <div className="map__locations">
+          <ul>
+            {locations.map((location) => (
+              <li key={location.location_id}>
+                <Location
+                  location={location}
+                  showImage={true}
+                  isOrder={true}
+                  classes="location--card"
+                />
+              </li>
+            ))}
+          </ul>
+        </div> */}
       </div>
     </div>
   )
 }
 
 MapCard.displayName = 'MapCard'
+MapCard.propTypes = {
+  maps: propTypes.object,
+  locationns: propTypes.array,
+}
 export default MapCard

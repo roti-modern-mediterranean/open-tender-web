@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { selectGoogleMapsConfig } from '../../slices/configSlice'
@@ -9,6 +9,7 @@ import MapCard from '../MapCard'
 
 const MapPage = () => {
   // const [bound, setBound] = useState({})
+  const [center, setCenter] = useState({ lat: 40.7572285, lng: -73.9729147 })
   const history = useHistory()
   const dispatch = useDispatch()
   const config = useSelector(selectGoogleMapsConfig)
@@ -30,10 +31,10 @@ const MapPage = () => {
         apiKey={config.apiKey}
         zoom={config.zoom}
         styles={config.styles}
-        center={{ lat: 40.7572285, lng: -73.9729147 }}
+        center={center}
         // events={{ onBoundsChangerd: (arg) => setBound(arg) }}
       >
-        <MapCard locations={locations} />
+        <MapCard locations={locations} setCenter={setCenter} />
         {/* {locations.map((m, index) => (
           <Marker
             key={m.id}

@@ -12,6 +12,7 @@ const initialState = {
   serviceType: null,
   location: null,
   requestedAt: 'asap',
+  address: null,
   currentItem: null,
   cart: [],
   cartCounts: {},
@@ -35,6 +36,9 @@ const orderSlice = createSlice({
     },
     setLocation: (state, action) => {
       state.location = action.payload
+    },
+    setAddress: (state, action) => {
+      state.address = action.payload
     },
     setCurrentItem: (state, action) => {
       state.currentItem = { ...action.payload }
@@ -74,6 +78,7 @@ export const {
   setServiceType,
   setOrderServiceType,
   setLocation,
+  setAddress,
   setCurrentItem,
   addItemToCart,
   removeItemFromCart,
