@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import {
   HomePage,
   LocationsPage,
+  MapPage,
   MenuPage,
   CheckoutPage,
   AccountPage,
@@ -17,6 +18,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/locations">
         <LocationsPage />
+      </Route>
+      <Route exact path="/map">
+        <MapPage />
       </Route>
       <Route path="/menu/:slug">
         <MenuPage />

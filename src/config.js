@@ -3,6 +3,17 @@ export const defaultConfig = {
     logo: 'http://s3.amazonaws.com/betterboh/u/img/local/2/1589984577_logo.png',
     title: 'Open Tender',
   },
+  googleMaps: {
+    apiKey: 'AIzaSyCkllc7M-cYNzSRXO7KE-ZZKTPW59RroDk',
+    zoom: 14,
+    styles: {
+      labelColor: '#5a5aff',
+      roadColor: '#edeaff',
+      featureColor: '#edeaff',
+      waterColor: '#e8f4fd',
+      backgroundColor: '#ffffff',
+    },
+  },
   home: {
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588197308_asian-food-spread-top-down_color_1800x1200.jpg',

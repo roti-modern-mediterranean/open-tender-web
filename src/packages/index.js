@@ -27,6 +27,9 @@ import CheckoutLineItem from './CheckoutLineItem'
 import CheckoutSignUp from './CheckoutSignUp'
 import CheckoutTender from './CheckoutTender'
 import CheckoutTip from './CheckoutTip'
+import GoogleMap from './GoogleMap'
+import useGoogleMap from './useGoogleMap'
+import useGoogleMapsAutocomplete from './useGoogleMapsAutocomplete'
 import { Label, Error, Input, Textarea, Switch, Checkbox } from './Inputs'
 
 export {
@@ -59,6 +62,9 @@ export {
   CheckoutSignUp,
   CheckoutTender,
   CheckoutTip,
+  GoogleMap,
+  useGoogleMap,
+  useGoogleMapsAutocomplete,
   Error,
   Input,
   Textarea,
