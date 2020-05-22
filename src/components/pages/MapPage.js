@@ -1,12 +1,29 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { selectGoogleMapsConfig } from '../../slices/configSlice'
-import { GoogleMap, Input } from '../../packages'
+import { fetchLocations, selectLocations } from '../../slices/locationsSlice'
+import { selectOrder } from '../../slices/orderSlice'
+import { GoogleMap } from '../../packages'
+import MapCard from '../MapCard'
 
 const MapPage = () => {
-  const [input, setInput] = useState('')
   // const [bound, setBound] = useState({})
+  const history = useHistory()
+  const dispatch = useDispatch()
   const config = useSelector(selectGoogleMapsConfig)
+  const locations = useSelector(selectLocations)
+  const { orderType, serviceType } = useSelector(selectOrder)
+  const hasTypes = orderType && serviceType
+
+  useEffect(() => {
+    if (!hasTypes) history.push('/')
+  }, [hasTypes, history])
+
+  useEffect(() => {
+    if (orderType) dispatch(fetchLocations(orderType))
+  }, [orderType, dispatch])
+
   return (
     <div className="content">
       <GoogleMap
@@ -15,30 +32,20 @@ const MapPage = () => {
         styles={config.styles}
         center={{ lat: 40.7572285, lng: -73.9729147 }}
         // events={{ onBoundsChangerd: (arg) => setBound(arg) }}
-      />
-      <div className="card overlay border-radius slide-up ot-box-shadow">
-        <div className="card__header">
-          <h1 className="ot-font-size-h3">Find the closest location</h1>
-          <p>
-            Please start typing your address below and select the best option.
-          </p>
-        </div>
-        <div className="card__content">
-          <Input
-            label="Please enter your address"
-            name="address"
-            type="text"
-            value={input}
-            onChange={(evt) => setInput(evt.target.value)}
-            showLabel={false}
+      >
+        <MapCard locations={locations} />
+        {/* {locations.map((m, index) => (
+          <Marker
+            key={m.id}
+            // active={placeIndex === index}
+            title={'marker id: ' + m.id}
+            position={{ lat: m.lat, lng: m.lng }}
+            events={{
+              onClick: () => window.alert(`marker ${index} clicked`),
+            }}
           />
-          {/* <ul>
-            {predictions.map((prediction, index) => (
-              <li key={index}>{prediction}</li>
-            ))}
-          </ul> */}
-        </div>
-      </div>
+        ))} */}
+      </GoogleMap>
     </div>
   )
 }

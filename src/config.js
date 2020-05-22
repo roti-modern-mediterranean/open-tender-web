@@ -30,6 +30,11 @@ export const defaultConfig = {
     title: 'restaurants near you',
     content: 'Please choose a location',
   },
+  map: {
+    title: "Let's find the nearest location",
+    subtitle: "We'll make this quick",
+    content: 'Please start typing below and select your address.',
+  },
   menu: {
     // background:
     //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg',

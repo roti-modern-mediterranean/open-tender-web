@@ -18,11 +18,11 @@ const GoogleMap = ({ apiKey, center, zoom, styles, events, children }) => {
 
   return (
     <div className="map">
-      <div ref={mapRef} className="map-ref" />
       {!loading &&
         React.Children.map(children, (child) => {
           return React.cloneElement(child, { map, maps })
         })}
+      <div ref={mapRef} className="map-ref" />
     </div>
   )
 }

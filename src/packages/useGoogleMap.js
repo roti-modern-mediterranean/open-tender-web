@@ -16,13 +16,12 @@ const useGoogleMap = ({ apiKey, zoom, styles, center, events = {} }) => {
   const mapRef = useRef()
   useEffect(() => {
     const mapStyles = makeMapStyles(styles)
-    GoogleMapsApiLoader({ apiKey }).then((google) => {
-      const map = new google.maps.Map(mapRef.current, {
+    GoogleMapsApiLoader({ libraries: ['places'], apiKey }).then((googleApi) => {
+      const map = new googleApi.maps.Map(mapRef.current, {
         zoom,
         center,
         styles: mapStyles,
-        // scrollwheel: false,
-        // draggableCursor: 'crosshair',
+        scrollwheel: false,
       })
       Object.keys(events).forEach((eventName) =>
         map.addListener(eventsMapping[eventName][0], () =>
@@ -30,7 +29,7 @@ const useGoogleMap = ({ apiKey, zoom, styles, center, events = {} }) => {
         )
       )
 
-      setMapState({ maps: google.maps, map, loading: false })
+      setMapState({ maps: googleApi.maps, map, loading: false })
     })
   }, [])
   return { mapRef, ...mapState }
