@@ -31,12 +31,9 @@ const MapCard = ({
   const serviceTypeLower = serviceType ? serviceType.toLowerCase() : 'pickup'
   const formattedAddress = address ? address.formatted_address : ''
   const [title, setTitle] = useState(mapConfig.title)
-  // const [subtitle, setSubtitle] = useState(mapConfig.subtitle)
   const [msg, setMsg] = useState(content[serviceTypeLower] || defaultMsg)
   const [error, setError] = useState(null)
   const { locations, loading } = useSelector(selectLocations)
-  // const { map: mapConfig } = useSelector(selectConfig)
-  // const { title, subtitle, content } = mapConfig
 
   useEffect(() => {
     setMsg(content[serviceTypeLower])
@@ -71,7 +68,7 @@ const MapCard = ({
         {error ? (
           <p className="ot-error-color">{error}</p>
         ) : address ? (
-          <p className="ot-success-color">
+          <p className="secondary-color">
             Address found! Please choose a location below.
           </p>
         ) : (
@@ -95,7 +92,7 @@ const MapCard = ({
             </div>
             <p>Retrieving nearest locations</p>
           </div>
-        ) : locations.length ? (
+        ) : !error && locations.length ? (
           <div className="locations">
             <ul>
               {locations.map((location) => (

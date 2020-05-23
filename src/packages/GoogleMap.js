@@ -24,7 +24,7 @@ const GoogleMap = ({ apiKey, center, zoom, styles, events, children }) => {
   }, [center.lat, center.lng])
 
   return (
-    <div className="map">
+    <>
       {!loading &&
         React.Children.map(children, (child) => {
           return React.cloneElement(child, {
@@ -34,8 +34,10 @@ const GoogleMap = ({ apiKey, center, zoom, styles, events, children }) => {
             autocomplete,
           })
         })}
-      <div ref={mapRef} className="map-ref" />
-    </div>
+      <div className="map">
+        <div ref={mapRef} className="map-ref" />
+      </div>
+    </>
   )
 }
 
