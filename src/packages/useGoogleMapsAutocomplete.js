@@ -2,11 +2,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import debounce from 'lodash/debounce'
 
-const useGoogleMapsAutocomplete = (maps, input) => {
+// IMPORTANT: need to pass down token from parent component so a new
+// token isn't created on every render
+const useGoogleMapsAutocomplete = (sessionToken, autocomplete, input) => {
   const [predictions, setPredictions] = useState([])
-
-  const sessionToken = new maps.places.AutocompleteSessionToken()
-  const autocomplete = new maps.places.AutocompleteService()
 
   const getPlacePredictions = (input) => {
     if (input.length) {

@@ -95,6 +95,7 @@ const makeComponents = (components) => {
 export const makeAddress = (place) => {
   const { address_components, formatted_address, geometry } = place
   const components = makeComponents(address_components)
+  console.log(components)
   const {
     street_number,
     route,
@@ -105,7 +106,7 @@ export const makeAddress = (place) => {
   const streetNumber = street_number ? street_number.short_name : ''
   const street = route ? route.long_name : ''
   return {
-    street: `${streetNumber} ${street}`,
+    street: `${streetNumber} ${street}`.trim(),
     city: city ? city.long_name : '',
     state: state ? state.short_name : '',
     postal_code: postalCode ? postalCode.short_name : '',

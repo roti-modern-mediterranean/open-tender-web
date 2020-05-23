@@ -4,7 +4,14 @@ import propTypes from 'prop-types'
 import useGoogleMap from './useGoogleMap'
 
 const GoogleMap = ({ apiKey, center, zoom, styles, events, children }) => {
-  const { maps, map, mapRef, loading } = useGoogleMap({
+  const {
+    maps,
+    map,
+    sessionToken,
+    autocomplete,
+    mapRef,
+    loading,
+  } = useGoogleMap({
     apiKey,
     zoom,
     styles,
@@ -20,7 +27,12 @@ const GoogleMap = ({ apiKey, center, zoom, styles, events, children }) => {
     <div className="map">
       {!loading &&
         React.Children.map(children, (child) => {
-          return React.cloneElement(child, { map, maps })
+          return React.cloneElement(child, {
+            map,
+            maps,
+            sessionToken,
+            autocomplete,
+          })
         })}
       <div ref={mapRef} className="map-ref" />
     </div>

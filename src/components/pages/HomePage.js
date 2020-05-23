@@ -18,7 +18,7 @@ const HomePage = () => {
   }, [])
 
   useEffect(() => {
-    if (hasTypes) history.push('/locations')
+    if (hasTypes) history.push('/map')
   }, [hasTypes, history])
 
   return (

@@ -17,6 +17,8 @@ const useGoogleMap = ({ apiKey, zoom, styles, center, events = {} }) => {
   useEffect(() => {
     const mapStyles = makeMapStyles(styles)
     GoogleMapsApiLoader({ libraries: ['places'], apiKey }).then((googleApi) => {
+      const sessionToken = new googleApi.maps.places.AutocompleteSessionToken()
+      const autocomplete = new googleApi.maps.places.AutocompleteService()
       const map = new googleApi.maps.Map(mapRef.current, {
         zoom,
         center,
@@ -29,7 +31,13 @@ const useGoogleMap = ({ apiKey, zoom, styles, center, events = {} }) => {
         )
       )
 
-      setMapState({ maps: googleApi.maps, map, loading: false })
+      setMapState({
+        maps: googleApi.maps,
+        map,
+        sessionToken,
+        autocomplete,
+        loading: false,
+      })
     })
   }, [])
   return { mapRef, ...mapState }

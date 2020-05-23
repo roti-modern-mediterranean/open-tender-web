@@ -6,7 +6,14 @@ import { selectConfig } from '../slices/configSlice'
 import { setAddress } from '../slices/orderSlice'
 import { Location } from './Location'
 
-const MapCard = ({ locations, setCenter, maps, map }) => {
+const MapCard = ({
+  locations,
+  setCenter,
+  maps,
+  map,
+  sessionToken,
+  autocomplete,
+}) => {
   const dispatch = useDispatch()
   const { map: mapConfig } = useSelector(selectConfig)
   const { title, subtitle, content } = mapConfig
@@ -22,6 +29,8 @@ const MapCard = ({ locations, setCenter, maps, map }) => {
         <GoogleMapsAutocomplete
           maps={maps}
           map={map}
+          sessionToken={sessionToken}
+          autocomplete={autocomplete}
           setAddress={(address) => dispatch(setAddress(address))}
           setCenter={setCenter}
         />
@@ -46,7 +55,11 @@ const MapCard = ({ locations, setCenter, maps, map }) => {
 
 MapCard.displayName = 'MapCard'
 MapCard.propTypes = {
-  maps: propTypes.object,
   locationns: propTypes.array,
+  setCenter: propTypes.func,
+  maps: propTypes.object,
+  map: propTypes.object,
+  sessionToken: propTypes.object,
+  autocomplete: propTypes.object,
 }
 export default MapCard

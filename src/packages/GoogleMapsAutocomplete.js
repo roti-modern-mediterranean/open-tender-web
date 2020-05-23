@@ -14,11 +14,22 @@ const keys = {
   down: 40,
 }
 
-const GoogleMapsAutocomplete = ({ maps, map, setAddress, setCenter }) => {
+const GoogleMapsAutocomplete = ({
+  maps,
+  map,
+  sessionToken,
+  autocomplete,
+  setAddress,
+  setCenter,
+}) => {
   const [input, setInput] = useState('')
   const [activeIndex, setActiveIndex] = useState(null)
   const [placeId, setPlaceId] = useState(null)
-  const predictions = useGoogleMapsAutocomplete(maps, input)
+  const predictions = useGoogleMapsAutocomplete(
+    sessionToken,
+    autocomplete,
+    input
+  )
   const place = useGoogleMapsPlace(maps, map, placeId)
   // console.log(predictions.length)
   // console.log(place)
@@ -79,7 +90,7 @@ const GoogleMapsAutocomplete = ({ maps, map, setAddress, setCenter }) => {
       if (lat && lng) setCenter({ lat, lng })
     }
     const address = place ? makeAddress(place) : null
-    // console.log(address)
+    console.log(address)
     setAddress(address)
   }, [place])
 
@@ -124,6 +135,10 @@ const GoogleMapsAutocomplete = ({ maps, map, setAddress, setCenter }) => {
 GoogleMapsAutocomplete.displayName = 'MapCard'
 GoogleMapsAutocomplete.propTypes = {
   maps: propTypes.object,
+  map: propTypes.object,
+  sessionToken: propTypes.object,
+  autocomplete: propTypes.object,
   setAddress: propTypes.func,
+  setCenter: propTypes.func,
 }
 export default GoogleMapsAutocomplete
