@@ -1,39 +1,52 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getLocations } from '../services/requests'
 
-// First, create the thunk
+const initialState = { locations: [], loading: 'idle', error: null }
+
 export const fetchLocations = createAsyncThunk(
   'locations/getLocations',
-  async (rcType) => {
-    const response = await getLocations(rcType)
-    // console.log(response.data)
-    return response.data.reduce((arr, i) => {
-      const name = i.full_name
-      const phone = i.phone_number
-      delete i.full_name
-      delete i.phone_number
-      delete i.dayparts
-      return [...arr, { ...i, name, phone }]
-    }, [])
+  async (rcType, thunkAPI) => {
+    try {
+      const response = await getLocations(rcType)
+      // console.log(response.data)
+      return response.data.reduce((arr, i) => {
+        const name = i.full_name
+        const phone = i.phone_number
+        delete i.full_name
+        delete i.phone_number
+        delete i.dayparts
+        return [...arr, { ...i, name, phone }]
+      }, [])
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
   }
 )
 
-// Then, handle actions in your reducers:
 const locationsSlice = createSlice({
   name: 'locations',
-  initialState: { entities: [], loading: 'idle' },
+  initialState,
   reducers: {
-    // standard reducer logic, with auto-generated action types per reducer
+    resetLocations: () => initialState,
   },
   extraReducers: {
-    // Add reducers for additional action types here, and handle loading state as needed
     [fetchLocations.fulfilled]: (state, action) => {
-      state.entities = action.payload
+      state.locations = action.payload
+      state.loading = 'idle'
+    },
+    [fetchLocations.pending]: (state) => {
+      state.loading = 'pending'
+    },
+    [fetchLocations.rejected]: (state, action) => {
+      // TODO: this might not be right
+      state.errors = action.payload.params
+      state.loading = 'idle'
     },
   },
 })
 
-export const loadingLocations = (state) => state.locations.loading
-export const selectLocations = (state) => state.locations.entities
+export const { resetLocations } = locationsSlice.actions
+
+export const selectLocations = (state) => state.locations
 
 export default locationsSlice.reducer

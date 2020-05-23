@@ -5,14 +5,7 @@ import { selectConfig } from '../slices/configSlice'
 
 const OrderStart = () => {
   const { home: homeConfig } = useSelector(selectConfig)
-  const {
-    title,
-    subtitle,
-    content,
-    buttonPickup,
-    buttonDelivery,
-    buttonCatering,
-  } = homeConfig
+  const { title, subtitle, content, buttons } = homeConfig
   const dispatch = useDispatch()
   return (
     <div className="card overlay border-radius slide-up">
@@ -27,14 +20,14 @@ const OrderStart = () => {
           aria-label="Order for Pickup"
           onClick={() => dispatch(setOrderServiceType(['OLO', 'PICKUP']))}
         >
-          {buttonPickup}
+          {buttons.pickup || 'Order Pickup'}
         </button>
         <button
           className="card__button heading bg-color bg-hover-light ot-box-shadow"
           aria-label="Order for Delivery"
           onClick={() => dispatch(setOrderServiceType(['OLO', 'DELIVERY']))}
         >
-          {buttonDelivery}
+          {buttons.delivery || 'Order Delivery'}
         </button>
         <button
           className="card__button heading bg-color bg-hover-light ot-box-shadow"
@@ -43,7 +36,7 @@ const OrderStart = () => {
             dispatch(setOrderServiceType(['CATERING', 'DELIVERY']))
           }
         >
-          {buttonCatering}
+          {buttons.catering || 'Order Catering'}
         </button>
       </div>
     </div>

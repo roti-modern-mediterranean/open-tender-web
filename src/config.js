@@ -10,8 +10,12 @@ export const defaultConfig = {
       labelColor: '#5a5aff',
       roadColor: '#edeaff',
       featureColor: '#edeaff',
-      waterColor: '#e8f4fd',
-      backgroundColor: '#ffffff',
+      // waterColor: '#e8f4fd',
+      // waterColor: '#97d2fb',
+      waterColor: '#cbe9fd',
+      //  backgroundColor: '#ffffff',
+      //  backgroundColor: '#f4f2ff',
+      backgroundColor: '#f6f5ff',
     },
   },
   home: {
@@ -20,9 +24,11 @@ export const defaultConfig = {
     title: 'How can we help you today?',
     subtitle: "Let's get started, shall we?",
     content: 'Select an order type from the options below.',
-    buttonPickup: 'Order for Pickup',
-    buttonDelivery: 'Order for Delivery',
-    buttonCatering: 'Order Catering',
+    buttons: {
+      pickup: 'Order for Pickup',
+      delivery: 'Order for Delivery',
+      catering: 'Order Catering',
+    },
   },
   locations: {
     background:
@@ -33,7 +39,10 @@ export const defaultConfig = {
   map: {
     title: "Let's find the nearest location",
     subtitle: "We'll make this quick",
-    content: 'Please start typing below and then select your address.',
+    content: {
+      pickup: 'Please enter your zip code & choose an option.',
+      delivery: 'Please start typing below and then select your address.',
+    },
   },
   menu: {
     // background:

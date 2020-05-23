@@ -19,11 +19,13 @@ const GoogleMapsAutocomplete = ({
   map,
   sessionToken,
   autocomplete,
+  formattedAddress,
   setAddress,
   setCenter,
+  error,
 }) => {
-  const [input, setInput] = useState('')
-  const [activeIndex, setActiveIndex] = useState(null)
+  const [input, setInput] = useState(formattedAddress || '')
+  const [activeIndex, setActiveIndex] = useState(0)
   const [placeId, setPlaceId] = useState(null)
   const predictions = useGoogleMapsAutocomplete(
     sessionToken,
@@ -38,15 +40,17 @@ const GoogleMapsAutocomplete = ({
     evt.preventDefault()
     setPlaceId(placeId)
     setInput(description)
-    setActiveIndex(null)
+    setActiveIndex(0)
     evt.target.blur()
   }
 
   const handleKeyPress = useCallback(
     (evt) => {
       const handleEnter = (evt) => {
-        if (!predictions.length || activeIndex === null) return
-        const prediction = predictions.find((i, index) => index === activeIndex)
+        if (!predictions.length) return
+        const prediction = activeIndex
+          ? predictions.find((i, index) => index === activeIndex)
+          : predictions[0]
         if (prediction) {
           const { place_id, description } = prediction
           choosePlace(evt, place_id, description)
@@ -55,7 +59,7 @@ const GoogleMapsAutocomplete = ({
 
       const handleMove = (increment) => {
         evt.preventDefault()
-        if (!predictions.length) setActiveIndex(null)
+        if (!predictions.length) setActiveIndex(0)
         let val = activeIndex === null ? 0 : activeIndex + increment
         const max = predictions.length - 1
         val = val < 0 ? 0 : val > max ? max : val
@@ -105,27 +109,30 @@ const GoogleMapsAutocomplete = ({
         onChange={(evt) => setInput(evt.target.value)}
         showLabel={false}
         classes="autocomplete__input"
+        error={error}
       >
         <div className="autocomplete__predictions bg-color border-radius border-color">
-          <ul>
-            {predictions.map((i, index) => {
-              const active = activeIndex === index ? 'bg-secondary-color' : ''
-              let classes =
-                'autocomplete__prediction border-color font-size-small '
-              classes += active
-              return (
-                <li key={i.place_id} className={classes}>
-                  <button
-                    onClick={(evt) =>
-                      choosePlace(evt, i.place_id, i.description)
-                    }
-                  >
-                    {i.description}
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
+          {predictions ? (
+            <ul>
+              {predictions.map((i, index) => {
+                const active = activeIndex === index ? 'bg-secondary-color' : ''
+                let classes =
+                  'autocomplete__prediction border-color font-size-small '
+                classes += active
+                return (
+                  <li key={i.place_id} className={classes}>
+                    <button
+                      onClick={(evt) =>
+                        choosePlace(evt, i.place_id, i.description)
+                      }
+                    >
+                      {i.description}
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          ) : null}
         </div>
       </Input>
     </div>
@@ -140,5 +147,6 @@ GoogleMapsAutocomplete.propTypes = {
   autocomplete: propTypes.object,
   setAddress: propTypes.func,
   setCenter: propTypes.func,
+  error: propTypes.string,
 }
 export default GoogleMapsAutocomplete

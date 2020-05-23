@@ -101,6 +101,8 @@ export const selectLocation = (state) => state.order.location
 export const selectLocationName = (state) =>
   state.order.location ? state.order.location.name : null
 
+export const selectAddress = (state) => state.order.address
+
 const makeMenuSlug = (location) => {
   if (!location) return '/'
   const { slug, order_types } = location
