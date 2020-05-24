@@ -23,9 +23,7 @@ const MapCard = ({
   autocomplete,
 }) => {
   const dispatch = useDispatch()
-  const { map: mapConfig, locations: locationsConfig } = useSelector(
-    selectConfig
-  )
+  const { map: mapConfig, locations: locConfig } = useSelector(selectConfig)
   const { content } = mapConfig
   const { serviceType, orderType, address } = useSelector(selectOrder)
   const serviceTypeLower = serviceType ? serviceType.toLowerCase() : 'pickup'
@@ -47,10 +45,10 @@ const MapCard = ({
       : null
     setError(errMsg)
     const count = !errMsg && address ? locations.length : 0
-    const locationsTitle = locationsConfig.title || 'locations near you'
+    const locationsTitle = locConfig.title || 'locations near you'
     const countMsg = count ? `${count} ${locationsTitle}` : title
     setTitle(countMsg)
-  }, [serviceType, address, locations, locationsConfig.title, title])
+  }, [serviceType, address, locations, locConfig.title, title])
 
   useEffect(() => {
     orderType && address

@@ -17,6 +17,15 @@ export const defaultConfig = {
       //  backgroundColor: '#f4f2ff',
       backgroundColor: '#f6f5ff',
     },
+    marker_size: { width: 30, height: 40 },
+    icons: {
+      user:
+        'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271579_map-marker_red-dark-red_120x160.png',
+      active:
+        'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271604_map-marker_black_120x160.png',
+      inactive:
+        'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271631_map-marker_purple_120x160.png',
+    },
   },
   home: {
     background:

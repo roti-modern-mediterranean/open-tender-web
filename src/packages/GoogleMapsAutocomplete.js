@@ -94,7 +94,7 @@ const GoogleMapsAutocomplete = ({
       if (lat && lng) setCenter({ lat, lng })
     }
     const address = place ? makeAddress(place) : null
-    console.log(address)
+    // console.log(address)
     setAddress(address)
   }, [place])
 

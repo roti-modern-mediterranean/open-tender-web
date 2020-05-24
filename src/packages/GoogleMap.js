@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import useGoogleMap from './useGoogleMap'
 
+// https://codesandbox.io/s/lx947qjv0z?file=/src/Consumer.jsx
+
 const GoogleMap = ({ apiKey, center, zoom, styles, events, children }) => {
   const {
     maps,
@@ -27,12 +29,15 @@ const GoogleMap = ({ apiKey, center, zoom, styles, events, children }) => {
     <>
       {!loading &&
         React.Children.map(children, (child) => {
-          return React.cloneElement(child, {
-            map,
-            maps,
-            sessionToken,
-            autocomplete,
-          })
+          return (
+            child &&
+            React.cloneElement(child, {
+              map,
+              maps,
+              sessionToken,
+              autocomplete,
+            })
+          )
         })}
       <div className="map">
         <div ref={mapRef} className="map-ref" />

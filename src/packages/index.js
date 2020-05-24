@@ -30,8 +30,11 @@ import CheckoutTip from './CheckoutTip'
 import useGoogleMap from './useGoogleMap'
 import useGoogleMapsAutocomplete from './useGoogleMapsAutocomplete'
 import useGoogleMapsPlace from './useGoogleMapsPlace'
+import useGoogleMapsMarker from './useGoogleMapsMarker'
 import GoogleMap from './GoogleMap'
 import GoogleMapsAutocomplete from './GoogleMapsAutocomplete'
+import GoogleMapsMarker from './GoogleMapsMarker'
+import AddressMarker from './AddressMarker'
 import { Label, Error, Input, Textarea, Switch, Checkbox } from './Inputs'
 import { makeAddress } from './utils/address'
 
@@ -68,8 +71,11 @@ export {
   useGoogleMap,
   useGoogleMapsAutocomplete,
   useGoogleMapsPlace,
+  useGoogleMapsMarker,
   GoogleMap,
   GoogleMapsAutocomplete,
+  GoogleMapsMarker,
+  AddressMarker,
   makeAddress,
   Error,
   Input,
