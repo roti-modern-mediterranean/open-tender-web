@@ -12,17 +12,27 @@ const AddressMarker = ({
   // const [currentPosition, setCurrentPosition] = useState(null)
 
   useEffect(() => {
-    if (marker) marker.setMap(null)
+    if (marker) {
+      marker.setPosition(position)
+    }
+  }, [position])
+
+  useEffect(() => {
     const newMarker = new maps.Marker({
       position,
       map,
+      animation: maps.Animation.DROP,
       icon: {
         url: icon,
         scaledSize: new maps.Size(size.width, size.height),
       },
     })
     setMarker(newMarker)
-  }, [position])
+    return () => {
+      marker && marker.setMap(null)
+      setMarker(null)
+    }
+  }, [])
 
   return null
 }

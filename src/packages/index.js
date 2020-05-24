@@ -30,7 +30,6 @@ import CheckoutTip from './CheckoutTip'
 import useGoogleMap from './useGoogleMap'
 import useGoogleMapsAutocomplete from './useGoogleMapsAutocomplete'
 import useGoogleMapsPlace from './useGoogleMapsPlace'
-import useGoogleMapsMarker from './useGoogleMapsMarker'
 import GoogleMap from './GoogleMap'
 import GoogleMapsAutocomplete from './GoogleMapsAutocomplete'
 import GoogleMapsMarker from './GoogleMapsMarker'
@@ -71,7 +70,6 @@ export {
   useGoogleMap,
   useGoogleMapsAutocomplete,
   useGoogleMapsPlace,
-  useGoogleMapsMarker,
   GoogleMap,
   GoogleMapsAutocomplete,
   GoogleMapsMarker,

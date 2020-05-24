@@ -91,11 +91,12 @@ const GoogleMapsAutocomplete = ({
     if (place) {
       const lat = place.geometry.location.lat()
       const lng = place.geometry.location.lng()
-      if (lat && lng) setCenter({ lat, lng })
+      if (lat && lng) {
+        setCenter({ lat, lng })
+        const address = makeAddress(place)
+        setAddress(address)
+      }
     }
-    const address = place ? makeAddress(place) : null
-    // console.log(address)
-    setAddress(address)
   }, [place])
 
   return (

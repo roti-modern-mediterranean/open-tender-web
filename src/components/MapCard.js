@@ -5,11 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { GoogleMapsAutocomplete } from '../packages'
 import { selectConfig } from '../slices/configSlice'
 import { setAddress, selectOrder } from '../slices/orderSlice'
-import {
-  fetchLocations,
-  selectLocations,
-  resetLocations,
-} from '../slices/locationsSlice'
+import { fetchLocations, selectLocations } from '../slices/locationsSlice'
 import { Location } from './Location'
 
 const defaultMsg = 'Please enter your street address & choose an option.'
@@ -51,9 +47,9 @@ const MapCard = ({
   }, [serviceType, address, locations, locConfig.title, title])
 
   useEffect(() => {
-    orderType && address
-      ? dispatch(fetchLocations(orderType))
-      : dispatch(resetLocations())
+    if (orderType && address) {
+      dispatch(fetchLocations(orderType))
+    }
   }, [orderType, address, center, dispatch])
 
   const isLoading = loading === 'pending'
@@ -90,7 +86,7 @@ const MapCard = ({
             </div>
             <p>Retrieving nearest locations</p>
           </div>
-        ) : !error && locations.length ? (
+        ) : !error && address && locations.length ? (
           <div className="locations">
             <ul>
               {locations.map((location) => (
