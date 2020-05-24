@@ -8,7 +8,7 @@ export const getLocations = (rcType) => {
   // const params =
   //   '&with_related=delivery_zones&with_settings=address&expand=store'
   const params = ''
-  return request(`/locations?location_type=${rcType}${params}`)
+  return request(`/revenue-centers?revenue_center_type=${rcType}${params}`)
 }
 
 export const getMenu = (locationId, serviceType, requestedAt) => {

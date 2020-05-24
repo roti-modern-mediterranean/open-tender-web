@@ -8,15 +8,8 @@ export const fetchLocations = createAsyncThunk(
   async (rcType, thunkAPI) => {
     try {
       const response = await getLocations(rcType)
-      // console.log(response.data)
-      return response.data.reduce((arr, i) => {
-        const name = i.full_name
-        const phone = i.phone_number
-        delete i.full_name
-        delete i.phone_number
-        delete i.dayparts
-        return [...arr, { ...i, name, phone }]
-      }, [])
+      console.log(response.data)
+      return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }

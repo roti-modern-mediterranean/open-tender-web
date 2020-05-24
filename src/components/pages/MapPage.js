@@ -49,7 +49,7 @@ const MapPage = () => {
             <GoogleMapsMarker
               key={i.location_id}
               title={i.name}
-              position={{ lat: i.latitude, lng: i.longitude }}
+              position={{ lat: i.address.lat, lng: i.address.lng }}
               icon={icon}
               size={marker_size}
               // active={isActive}
