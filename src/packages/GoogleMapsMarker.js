@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react'
-// import useGoogleMapsMarker from './useGoogleMapsMarker'
+import { useState, useEffect } from 'react'
+import propTypes from 'prop-types'
 
 const eventMapping = {
   onClick: 'click',
@@ -10,15 +10,33 @@ const eventMapping = {
 const GoogleMapsMarker = ({
   maps,
   map,
-  position,
   title,
+  position,
   icon,
   size = { width: 30, height: 40 },
-  // active = false,
   events,
 }) => {
+  const [marker, setMarker] = useState(null)
+
   useEffect(() => {
-    const marker = new maps.Marker({
+    if (marker) {
+      // console.log('position updated', title, marker)
+      marker.setPosition(position)
+    }
+  }, [position.lat, position.lng])
+
+  useEffect(() => {
+    if (marker) {
+      // console.log('icon updated', title, marker)
+      marker.setIcon({
+        url: icon,
+        scaledSize: new maps.Size(size.width, size.height),
+      })
+    }
+  }, [icon])
+
+  useEffect(() => {
+    const newMarker = new maps.Marker({
       position,
       map,
       title,
@@ -28,30 +46,31 @@ const GoogleMapsMarker = ({
         scaledSize: new maps.Size(size.width, size.height),
       },
     })
-    Object.keys(events).forEach((eventName) =>
-      marker.addListener(eventMapping[eventName], events[eventName])
-    )
-  }, [position])
-
-  // const marker = useGoogleMapsMarker({
-  //   maps,
-  //   map,
-  //   position,
-  //   title,
-  //   icon,
-  //   size,
-  //   events,
-  // })
-
-  // useEffect(() => {
-  //   marker &&
-  //     (active
-  //       ? marker.setIcon(icon).setSize(size)
-  //       : marker.setIcon(icon).setSize(size))
-  // }, [active])
+    if (events) {
+      Object.keys(events).forEach((eventName) =>
+        newMarker.addListener(eventMapping[eventName], events[eventName])
+      )
+    }
+    // console.log('new marker created', title, newMarker)
+    setMarker(newMarker)
+    return () => {
+      // console.log('marker removed', title, marker)
+      marker && marker.setMap(null)
+      setMarker(null)
+    }
+  }, [])
 
   return null
 }
 
 GoogleMapsMarker.displayName = 'GoogleMapsMarker'
+GoogleMapsMarker.propTypes = {
+  maps: propTypes.object,
+  map: propTypes.object,
+  title: propTypes.string,
+  position: propTypes.object,
+  icon: propTypes.string,
+  size: propTypes.object,
+  events: propTypes.object,
+}
 export default GoogleMapsMarker

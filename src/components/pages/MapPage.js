@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { selectConfig } from '../../slices/configSlice'
 import { selectOrder } from '../../slices/orderSlice'
 import { selectLocations, fetchLocations } from '../../slices/locationsSlice'
-import { GoogleMap, AddressMarker } from '../../packages'
+import { GoogleMap, GoogleMapsMarker } from '../../packages'
 import MapCard from '../MapCard'
 
 const MapPage = () => {
@@ -51,9 +51,8 @@ const MapPage = () => {
         {locations.map((i) => {
           const isActive = i.location_id === activeMarker
           const icon = isActive ? icons.active : icons.inactive
-          console.log(i.location_id, isActive)
           return (
-            <AddressMarker
+            <GoogleMapsMarker
               key={i.location_id}
               title={i.name}
               position={{ lat: i.address.lat, lng: i.address.lng }}
@@ -66,7 +65,7 @@ const MapPage = () => {
           )
         })}
         {address && (
-          <AddressMarker
+          <GoogleMapsMarker
             title="Your Location"
             position={{ lat: center.lat, lng: center.lng }}
             icon={icons.user}
