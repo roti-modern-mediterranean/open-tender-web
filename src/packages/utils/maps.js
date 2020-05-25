@@ -1,3 +1,5 @@
+import inside from 'point-in-polygon'
+
 // seee example Google Maps Place at bottom of file
 const makeComponents = (components) => {
   return components.reduce((obj, i) => {
@@ -37,8 +39,8 @@ export const RADIUS_KM = 6371 // radius of the earth in kilometers
 
 // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
 export const getDistance = (pointA, pointB, inMiles = true) => {
-  const [lat1, lng1] = pointA
-  const [lat2, lng2] = pointB
+  const { lat: lat1, lng: lng1 } = pointA
+  const { lat: lat2, lng: lng2 } = pointB
   const R = inMiles ? RADIUS_MILES : RADIUS_KM
   const dLat = deg2rad(lat2 - lat1) // see deg2rad below
   const dLng = deg2rad(lng2 - lng1)
@@ -57,59 +59,41 @@ const deg2rad = (deg) => {
   return deg * (Math.PI / 180)
 }
 
-// export const inZone = (point, polygon) => {
-//   return inside(point, polygon)
-// }
-
-export const parseDeliveryZone = (delivery_zones) => {
-  try {
-    const { coordinates, priority } = delivery_zones[0].delivery_zone
-    return [JSON.parse(coordinates), priority]
-  } catch {
-    return [null, 0]
-  }
+export const inZone = (address, polygon) => {
+  const point = [address.lat, address.lng]
+  return inside(point, polygon)
 }
 
-export const getLatLng = (address) => {
-  let latLng
-  try {
-    latLng = [parseFloat(address.latitude), parseFloat(address.longitude)]
-  } catch {
-    latLng = null
-  }
-  return latLng
+export const addDistance = (revenueCenters, address) => {
+  if (!address) return revenueCenters
+  const withDistance = revenueCenters.map((i) => {
+    const latLng = i.address.lat
+      ? { lat: i.address.lat, lng: i.address.lng }
+      : null
+    i.distance = latLng ? getDistance(address, latLng) : 1000
+    const { coordinates, priority } = i.delivery_zone
+    i.inZone = coordinates ? inZone(address, coordinates) : false
+    i.priority = priority
+    return i
+  })
+  return withDistance
 }
 
-// export const sortRevenueCenters = (rcs, latLng) => {
-//   const open = rcs.filter((i) => !i.closed).filter((i) => !i.store.is_master)
-//   let sorting = { sortBy: 'full_name', sortType: 'alpha' }
-//   if (!latLng) return sortItems(open, sorting)
-//   const d = open.map((i) => {
-//     const rcLatLng = i.address.latitude
-//       ? [i.address.latitude, i.address.longitude]
-//       : null
-//     i.distance = rcLatLng ? getDistance(latLng, rcLatLng) : 1000
-//     const [zone, priority] = parseDeliveryZone(i.delivery_zones)
-//     i.zone = zone
-//     i.priority = priority
-//     i.inZone = zone ? inZone(latLng, zone) : false
-//     return i
-//   })
-//   sorting = { sortBy: 'distance', sortType: 'order' }
-//   const inZoneWithPriority = sortItems(
-//     d.filter((i) => i.inZone && i.priority),
-//     sorting
-//   )
-//   const inZoneWithoutPriority = sortItems(
-//     d.filter((i) => i.inZone && !i.priority),
-//     sorting
-//   )
-//   const outOfZone = sortItems(
-//     d.filter((i) => !i.inZone),
-//     sorting
-//   )
-//   return [...inZoneWithPriority, ...inZoneWithoutPriority, ...outOfZone]
-// }
+export const sortRevenueCenters = (revenueCenters, isDelivery = false) => {
+  if (!isDelivery) {
+    return [...revenueCenters].sort((a, b) => a.distance - b.distance)
+  }
+  const inZoneWithPriority = revenueCenters
+    .filter((i) => i.inZone && i.priority)
+    .sort((a, b) => a.priority - b.priority)
+  const inZoneWithoutPriority = revenueCenters
+    .filter((i) => i.inZone && !i.priority)
+    .sort((a, b) => a.distance - b.distance)
+  const outOfZone = revenueCenters
+    .filter((i) => !i.inZone)
+    .sort((a, b) => a.distance - b.distance)
+  return [...inZoneWithPriority, ...inZoneWithoutPriority, ...outOfZone]
+}
 
 const makeMapStyles = ({
   labelColor,

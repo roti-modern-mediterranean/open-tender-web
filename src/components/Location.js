@@ -57,6 +57,10 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
 
   console.log(location.name)
   console.log(settings.first_times)
+  // const distanceInWords = location.distance
+  //   ? ` (${location.distance.toFixed(2)} miles away)`
+  //   : ''
+  // const streetAddress = `${address.street}${distanceInWords}`
 
   return (
     <div className={classes}>
@@ -71,6 +75,11 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
       <div className="location__content">
         <div className="location__header">
           <h2 className="ot-font-size-h5">{location.name}</h2>
+          {location.distance && (
+            <p className="font-size-small secondary-color">
+              {location.distance.toFixed(2)} miles away
+            </p>
+          )}
         </div>
         <div className="location__actions">
           <a

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getLocations } from '../services/requests'
+import { addDistance } from '../packages/utils/maps'
 
 const initialState = { locations: [], loading: 'idle', error: null }
 
@@ -10,8 +11,15 @@ export const fetchLocations = createAsyncThunk(
       if (lat) lat = parseFloat(lat).toFixed(7)
       if (lng) lng = parseFloat(lng).toFixed(7)
       const response = await getLocations(revenue_center_type, lat, lng)
-      console.log(response.data)
-      return response.data
+      let revenueCenters = []
+      if (lat && lng) {
+        const address = { lat: lat, lng: lng }
+        revenueCenters = addDistance(response.data, address)
+      } else {
+        revenueCenters = response.data
+      }
+      console.log(revenueCenters)
+      return revenueCenters
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }

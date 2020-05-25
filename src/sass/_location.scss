@@ -17,7 +17,18 @@
   }
 
   &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1.5rem;
+
+    & > * {
+      display: block;
+    }
+
+    p {
+      padding-top: 0.4rem;
+    }
   }
 
   &__actions {

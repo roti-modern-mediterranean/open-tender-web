@@ -8,6 +8,7 @@ import { setAddress, selectOrder } from '../slices/orderSlice'
 import { fetchLocations, selectLocations } from '../slices/locationsSlice'
 import { Location } from './Location'
 import { Link } from 'react-router-dom'
+import { sortRevenueCenters } from '../packages/utils/maps'
 
 const fallbackMsg = 'Please enter your street address & choose an option.'
 
@@ -56,11 +57,14 @@ const SelectLocation = ({
           setTitle(mapConfig.title)
         } else {
           setError(null)
-          const deliveryLocations = locations.filter(
-            (i) => i.user.in_delivery_zone
+          const hasDelivery = locations.filter((i) =>
+            i.settings.service_types.includes('DELIVERY')
           )
-          setDisplayedLocations(deliveryLocations)
-          const count = deliveryLocations.length
+          const sorted = sortRevenueCenters(hasDelivery, true)
+          const inZone = sorted.filter((i) => i.inZone)
+          // inZone.map((i) => console.log(i.name, i.distance, i.priority))
+          setDisplayedLocations(inZone)
+          const count = inZone.length
           const newTitle = count
             ? 'Delivery is available!'
             : 'Delivery not available in your area'
@@ -71,7 +75,8 @@ const SelectLocation = ({
             `${count} ${restaurantMsg} to your address. Please choose one below.`
           ) : (
             <span>
-              We're sorry about that.{' '}
+              We're sorry about that.
+              <br />
               <Link to="/">
                 Click here to head back and place a pickup order.
               </Link>
@@ -81,7 +86,8 @@ const SelectLocation = ({
         }
       } else {
         setError(null)
-        setDisplayedLocations(locations)
+        const sorted = sortRevenueCenters(locations)
+        setDisplayedLocations(sorted)
         const count = locations.length
         const newTitle = `${count} restaurants near you`
         const newMsg = 'Please choose a location below.'
