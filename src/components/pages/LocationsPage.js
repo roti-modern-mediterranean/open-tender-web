@@ -20,7 +20,7 @@ const LocationsPage = () => {
   }, [hasTypes, history])
 
   useEffect(() => {
-    if (orderType) dispatch(fetchLocations(orderType))
+    if (orderType) dispatch(fetchLocations({ revenue_center_type: orderType }))
   }, [orderType, dispatch])
 
   return (

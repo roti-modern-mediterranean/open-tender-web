@@ -5,9 +5,11 @@ const initialState = { locations: [], loading: 'idle', error: null }
 
 export const fetchLocations = createAsyncThunk(
   'locations/getLocations',
-  async (rcType, thunkAPI) => {
+  async ({ revenue_center_type, lat, lng }, thunkAPI) => {
     try {
-      const response = await getLocations(rcType)
+      if (lat) lat = parseFloat(lat).toFixed(7)
+      if (lng) lng = parseFloat(lng).toFixed(7)
+      const response = await getLocations(revenue_center_type, lat, lng)
       console.log(response.data)
       return response.data
     } catch (err) {

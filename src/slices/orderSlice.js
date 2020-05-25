@@ -105,8 +105,8 @@ export const selectAddress = (state) => state.order.address
 
 const makeMenuSlug = (location) => {
   if (!location) return '/'
-  const { slug, order_types } = location
-  return `/menu/${slug}-${order_types[0]}`
+  const { slug, revenue_center_type } = location
+  return `/menu/${slug}-${revenue_center_type.toLowerCase()}`
 }
 export const selectMenuSlug = (state) => makeMenuSlug(state.order.location)
 

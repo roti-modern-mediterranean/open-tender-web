@@ -1,4 +1,8 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import {
+  configureStore,
+  combineReducers,
+  getDefaultMiddleware,
+} from '@reduxjs/toolkit'
 import throttle from 'lodash/throttle'
 import { loadState, saveState } from '../utils/localStorage'
 import configReducer from '../slices/configSlice'
@@ -24,9 +28,16 @@ const rootReducer = combineReducers({
 })
 
 const persistedState = loadState()
+
+const customizedMiddleware = getDefaultMiddleware({
+  immutableCheck: false,
+  serializableCheck: false,
+})
+
 const store = configureStore({
   reducer: rootReducer,
   preloadedState: persistedState,
+  middleware: customizedMiddleware,
 })
 
 store.subscribe(

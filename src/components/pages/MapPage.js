@@ -29,7 +29,7 @@ const MapPage = () => {
   }, [hasTypes, history])
 
   useEffect(() => {
-    orderType && dispatch(fetchLocations(orderType))
+    orderType && dispatch(fetchLocations({ revenue_center_type: orderType }))
   }, [orderType, dispatch])
 
   return (

@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { setLocation } from '../slices/orderSlice'
 import { iconMap } from '../packages/icons'
 import { Button } from '../packages'
+import { stripTags } from '../utils/helpers'
 
 const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
   return (
@@ -17,8 +18,6 @@ const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
   )
 }
 
-// const placeholder1 =
-//   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303421_cff321067bf020a3dd8f.jpg'
 const placeholder2 =
   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg'
 
@@ -28,11 +27,12 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
   const history = useHistory()
 
   // const { address } = location
-  const bgStyle = { backgroundImage: `url(${placeholder2}` }
-  const phoneUrl = location.phone ? `tel:${location.phone}` : null
-  const hours = location.hours_desc
-    ? location.hours_desc.replace('<p>', '').replace('</p>', '')
-    : null
+  const { address, images, hours } = location
+  let smallImage = images.find((i) => i.type === 'SMALL_IMAGE')
+  smallImage = smallImage ? smallImage.url : null
+  const bgStyle = { backgroundImage: `url(${smallImage || placeholder2}` }
+  const phoneUrl = address.phone ? `tel:${address.phone}` : null
+  const hoursDesc = hours.description ? stripTags(hours.description) : null
   classes = `location bg-color border-radius ${classes}`
 
   const toggleHours = (evt) => {
@@ -44,7 +44,7 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
   const handleOrder = (evt) => {
     evt.preventDefault()
     dispatch(setLocation(location))
-    const rcType = location.order_types[0]
+    const rcType = location.revenue_center_type.toLowerCase()
     history.push(`/menu/${location.slug}-${rcType}`)
     evt.target.blur()
   }
@@ -72,11 +72,11 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
         <div className="location__actions">
           <a
             className="no-link"
-            href={location.directions_link}
+            href={location.directions_url}
             rel="noopener noreferrer"
             target="_blank"
           >
-            <LocationAction icon="MapPin" text={location.street_address} />
+            <LocationAction icon="MapPin" text={address.street} />
           </a>
           {phoneUrl && (
             <a
@@ -85,26 +85,16 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
               rel="noopener noreferrer"
               target="_blank"
             >
-              <LocationAction icon="Phone" text={location.phone} />
+              <LocationAction icon="Phone" text={address.phone} />
             </a>
           )}
-          {hours && (
+          {hoursDesc && (
             <button onClick={toggleHours}>
-              <LocationAction icon="Clock" text={hours} />
+              <LocationAction icon="Clock" text={hoursDesc} />
             </button>
           )}
         </div>
         <div className="location__order">
-          {/* <button
-            className="btn"
-            aria-label={`Order from ${location.name}`}
-            onClick={handleOrder}
-          >
-            <span className="btn-icon-wrapper">
-              <span className="btn-icon">{iconMap['ShoppingBag']}</span>
-              <span>Order Here</span>
-            </span>
-          </button> */}
           {isOrder ? (
             <Button
               text="Order Here"

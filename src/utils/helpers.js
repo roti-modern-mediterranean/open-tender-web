@@ -11,6 +11,8 @@ export const slugify = (text) => {
     .replace(/-+$/, '') // Trim - from end of text
 }
 
+export const stripTags = (s) => s.replace(/(<([^>]+)>)/gi, '')
+
 export const serialize = (obj) => {
   var str = []
   for (var p in obj)

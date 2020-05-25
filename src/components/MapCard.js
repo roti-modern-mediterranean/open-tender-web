@@ -48,7 +48,12 @@ const MapCard = ({
 
   useEffect(() => {
     if (orderType && address) {
-      dispatch(fetchLocations(orderType))
+      const params = {
+        revenue_center_type: orderType,
+        lat: address.lat,
+        lng: address.lng,
+      }
+      dispatch(fetchLocations(params))
     }
   }, [orderType, address, center, dispatch])
 
@@ -79,7 +84,7 @@ const MapCard = ({
           setAddress={(address) => dispatch(setAddress(address))}
           setCenter={setCenter}
         />
-        {isLoading ? (
+        {isLoading && address ? (
           <div className="loading">
             <div className="loading__loader">
               <BarLoader size={100} laoding={isLoading} />

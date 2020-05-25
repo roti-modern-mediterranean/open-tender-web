@@ -4,11 +4,10 @@ export const getConfig = () => {
   return request(`/config`)
 }
 
-export const getLocations = (rcType) => {
-  // const params =
-  //   '&with_related=delivery_zones&with_settings=address&expand=store'
-  const params = ''
-  return request(`/revenue-centers?revenue_center_type=${rcType}${params}`)
+export const getLocations = (revenue_center_type, lat, lng) => {
+  let params = `revenue_center_type=${revenue_center_type}`
+  if (lat && lng) params += `&lat=${lat}&lng=${lng}`
+  return request(`/revenue-centers?${params}`)
 }
 
 export const getMenu = (locationId, serviceType, requestedAt) => {
