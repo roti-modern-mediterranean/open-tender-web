@@ -1,6 +1,6 @@
 import React from 'react'
 import { iconMap } from './icons'
-import { tenderTypeNamesMap } from './constants'
+import { tenderTypeNamesMap } from './utils/constants'
 
 export const Cash = () => (
   <div className="form__line__wrapper">

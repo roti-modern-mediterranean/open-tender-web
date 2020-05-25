@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { formatDollars, checkAmountRemaining } from './utils'
+import { formatDollars, checkAmountRemaining } from './utils/cart'
 import { makeTenderName } from './TenderTypes'
 import BarLoader from 'react-spinners/BarLoader'
 

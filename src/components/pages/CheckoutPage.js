@@ -23,7 +23,7 @@ import {
 } from '../../slices/checkoutSlice'
 import { setCompletedOrder } from '../../slices/confirmationSlice'
 import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../../packages'
-import { prepareOrder } from '../../packages/utils'
+import { prepareOrder } from '../../packages/utils/cart'
 import HeaderLogo from '../HeaderLogo'
 
 const CheckoutPage = () => {

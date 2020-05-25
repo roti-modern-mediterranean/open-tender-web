@@ -27,7 +27,7 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
   const history = useHistory()
 
   // const { address } = location
-  const { address, images, hours } = location
+  const { address, images, hours, settings } = location
   let smallImage = images.find((i) => i.type === 'SMALL_IMAGE')
   smallImage = smallImage ? smallImage.url : null
   const bgStyle = { backgroundImage: `url(${smallImage || placeholder2}` }
@@ -54,6 +54,9 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
     history.push(`/locations`)
     evt.target.blur()
   }
+
+  console.log(location.name)
+  console.log(settings.first_times)
 
   return (
     <div className={classes}>

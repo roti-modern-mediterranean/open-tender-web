@@ -35,7 +35,7 @@ import GoogleMapsAutocomplete from './GoogleMapsAutocomplete'
 import GoogleMapsMarker from './GoogleMapsMarker'
 import LocationMarkers from './LocationMarkers'
 import { Label, Error, Input, Textarea, Switch, Checkbox } from './Inputs'
-import { makeAddress } from './utils/address'
+import { makeAddress } from './utils/maps'
 
 export {
   Builder,

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useEffect } from 'react'
 import { FormContext } from './CheckoutForm'
-import { checkAmountRemaining } from './utils'
+import { checkAmountRemaining } from './utils/cart'
 import { CheckoutTender } from './index'
 
 const CheckoutTenders = () => {

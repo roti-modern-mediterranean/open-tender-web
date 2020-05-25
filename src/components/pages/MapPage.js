@@ -6,7 +6,7 @@ import { selectConfig } from '../../slices/configSlice'
 import { selectOrder } from '../../slices/orderSlice'
 import { selectLocations, fetchLocations } from '../../slices/locationsSlice'
 import { GoogleMap, GoogleMapsMarker } from '../../packages'
-import MapCard from '../MapCard'
+import SelectLocation from '../SelectLocation'
 
 const MapPage = () => {
   const history = useHistory()
@@ -47,7 +47,7 @@ const MapPage = () => {
         center={center}
         // events={null}
       >
-        <MapCard setCenter={setCenter} center={center} />
+        <SelectLocation setCenter={setCenter} center={center} />
         {locations.map((i) => {
           const isActive = i.location_id === activeMarker
           const icon = isActive ? icons.active : icons.inactive

@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { displayPrice, makeModifierNames } from './utils'
+import { displayPrice, makeModifierNames } from './utils/cart'
 
 const BuilderOptionWrapper = ({ option, editItem, removeItem, children }) => {
   const bgStyle = option.imageUrl

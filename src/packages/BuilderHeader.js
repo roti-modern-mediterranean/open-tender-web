@@ -1,6 +1,6 @@
 import propTypes from 'prop-types'
 import React, { useState } from 'react'
-import { displayPrice } from './utils'
+import { displayPrice } from './utils/cart'
 import BuilderNutrition from './BuilderNutrition'
 
 const BuilderHeader = ({ item, showImage }) => {

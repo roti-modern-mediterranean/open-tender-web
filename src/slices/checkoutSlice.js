@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { postOrderValidate, postOrder } from '../services/requests'
-import { handleOrderErrors } from '../packages/utils'
+import { handleOrderErrors } from '../packages/utils/cart'
 
 const initialState = {
   check: null,

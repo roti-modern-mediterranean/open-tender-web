@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
-import { displayPrice, makeOrderItem, calcPrices } from './utils'
+import { displayPrice, makeOrderItem, calcPrices } from './utils/cart'
 import BuilderGroupHeader from './BuilderGroupHeader'
 import BuilderRadioGroup from './BuilderRadioGroup'
 import BuilderQuantity from './BuilderQuantity'

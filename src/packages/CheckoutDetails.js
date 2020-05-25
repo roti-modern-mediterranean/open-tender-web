@@ -11,7 +11,7 @@ import {
   Textarea,
   Switch,
 } from './index'
-import { serviceTypeNamesMap } from './constants'
+import { serviceTypeNamesMap } from './utils/constants'
 import { FormContext } from './CheckoutForm'
 
 const CheckoutDetails = () => {

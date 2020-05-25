@@ -7,7 +7,8 @@ import CheckoutDiscounts from './CheckoutDiscounts'
 import CheckoutPromoCodes from './CheckoutPromoCodes'
 import CheckoutGiftCards from './CheckoutGiftCards'
 import CheckoutTenders from './CheckoutTenders'
-import { checkAmountRemaining, isEmpty } from './utils'
+import { checkAmountRemaining } from './utils/cart'
+import { isEmpty } from './utils/helpers'
 
 export const FormContext = createContext(null)
 

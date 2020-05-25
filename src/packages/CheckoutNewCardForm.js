@@ -2,8 +2,13 @@ import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import Button from './Button'
 import { Input, Checkbox } from './Inputs'
-import { cardIcons, cardNames } from './constants'
-import { getCardType, makeAcctNumber, validateCreditCard } from './utils'
+import {
+  cardIcons,
+  cardNames,
+  getCardType,
+  makeAcctNumber,
+  validateCreditCard,
+} from './utils/cards'
 
 // https://github.com/muffinresearch/payment-icons
 // https://github.com/jasminmif/react-interactive-paycard

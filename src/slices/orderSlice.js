@@ -4,8 +4,11 @@ import {
   removeItem,
   incrementItem,
   decrementItem,
-} from '../packages/utils'
-import { serviceTypeNamesMap, orderTypeNamesMap } from '../packages/constants'
+} from '../packages/utils/cart'
+import {
+  serviceTypeNamesMap,
+  orderTypeNamesMap,
+} from '../packages/utils/constants'
 
 const initialState = {
   orderType: null,

@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { FormContext } from './CheckoutForm'
 import { iconMap } from './icons'
-import { cardIcons } from './constants'
+import { cardIcons } from './utils/cards'
 import CircleLoader from './CircleLoader'
 import CheckoutNewCardForm from './CheckoutNewCardForm'
 

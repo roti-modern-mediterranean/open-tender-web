@@ -4,7 +4,7 @@ import CheckoutLineItem from './CheckoutLineItem'
 import Button from './Button'
 import CircleLoader from './CircleLoader'
 import { makeTenderTypeLabel } from './TenderTypes'
-import { tenderTypeNamesMap } from './constants'
+import { tenderTypeNamesMap } from './utils/constants'
 import CheckoutCreditCards from './CheckoutCreditCards'
 
 const CheckoutTender = ({
