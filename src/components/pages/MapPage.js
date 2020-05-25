@@ -28,7 +28,7 @@ const MapPage = () => {
   }, [hasTypes, history])
 
   useEffect(() => {
-    if (orderType) {
+    if (orderType && !address) {
       const params = {
         revenue_center_type: orderType,
         lat: center.lat,
