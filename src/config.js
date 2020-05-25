@@ -5,6 +5,7 @@ export const defaultConfig = {
   },
   googleMaps: {
     apiKey: 'AIzaSyCkllc7M-cYNzSRXO7KE-ZZKTPW59RroDk',
+    defaultCenter: { lat: 40.7572285, lng: -73.9729147 },
     zoom: 14,
     styles: {
       labelColor: '#5a5aff',

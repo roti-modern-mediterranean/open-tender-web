@@ -1,25 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { selectConfig } from '../../slices/configSlice'
 import { selectOrder } from '../../slices/orderSlice'
 import { selectLocations, fetchLocations } from '../../slices/locationsSlice'
-import { GoogleMap, GoogleMapsMarker, AddressMarker } from '../../packages'
+import { GoogleMap, AddressMarker } from '../../packages'
 import MapCard from '../MapCard'
-
-const defaultCenter = { lat: 40.7572285, lng: -73.9729147 }
 
 const MapPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const [activeMarker, setActiveMarker] = useState(null)
   const { orderType, serviceType, address } = useSelector(selectOrder)
+  const { googleMaps: mapConfig } = useSelector(selectConfig)
+  const { apiKey, defaultCenter, zoom, styles, icons, marker_size } = mapConfig
   const initialCenter = address
     ? { lat: address.lat, lng: address.lng }
     : defaultCenter
   const [center, setCenter] = useState(initialCenter)
-  const { googleMaps: mapConfig } = useSelector(selectConfig)
-  const { apiKey, zoom, styles, icons, marker_size } = mapConfig
 
   const { locations } = useSelector(selectLocations)
   const hasTypes = orderType && serviceType
@@ -29,7 +28,14 @@ const MapPage = () => {
   }, [hasTypes, history])
 
   useEffect(() => {
-    orderType && dispatch(fetchLocations({ revenue_center_type: orderType }))
+    if (orderType) {
+      const params = {
+        revenue_center_type: orderType,
+        lat: center.lat,
+        lng: center.lng,
+      }
+      dispatch(fetchLocations(params))
+    }
   }, [orderType, dispatch])
 
   return (
@@ -45,14 +51,14 @@ const MapPage = () => {
         {locations.map((i) => {
           const isActive = i.location_id === activeMarker
           const icon = isActive ? icons.active : icons.inactive
+          console.log(i.location_id, isActive)
           return (
-            <GoogleMapsMarker
+            <AddressMarker
               key={i.location_id}
               title={i.name}
               position={{ lat: i.address.lat, lng: i.address.lng }}
               icon={icon}
               size={marker_size}
-              // active={isActive}
               events={{
                 onClick: () => setActiveMarker(i.location_id),
               }}
@@ -61,6 +67,7 @@ const MapPage = () => {
         })}
         {address && (
           <AddressMarker
+            title="Your Location"
             position={{ lat: center.lat, lng: center.lng }}
             icon={icons.user}
             size={marker_size}

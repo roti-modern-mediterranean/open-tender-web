@@ -22,6 +22,7 @@ const GoogleMapsMarker = ({
       position,
       map,
       title,
+      animation: maps.Animation.DROP,
       icon: {
         url: icon,
         scaledSize: new maps.Size(size.width, size.height),
