@@ -21,14 +21,21 @@ const RequestedAtModal = () => {
 
   return (
     <>
-      <ModalClose classes="" onClick={handleClose} />
+      <ModalClose onClick={handleClose} />
       <div className="modal__content">
-        <p>Content goes here.</p>
-        {/* <RequestedAtPicker
+        <div className="modal__header">
+          <p className="modal__title heading ot-font-size-h3">
+            Adjust your order time
+          </p>
+          <p className="modal__subtitle">
+            Your current order time is {requestedAt}
+          </p>
+        </div>
+        <RequestedAtPicker
           requestedAt={requestedAt}
           setRequestedAt={handleRequestedAt}
           location={location}
-        /> */}
+        />
       </div>
     </>
   )

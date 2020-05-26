@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import DatePicker from 'react-datepicker'
-import { dateToIso } from './utils/datetimes'
+import { dateToIso, isoToDate } from './utils/datetimes'
 
 const RequestedAtPicker = ({ requestedAt, setRequestedAt, location }) => {
-  const [date, setDate] = useState(requestedAt)
-  const { timezone, settings } = location
+  const requestedAtDate = requestedAt === 'asap' ? null : isoToDate(requestedAt)
+  const [date, setDate] = useState(requestedAtDate)
+  const { timezone } = location
 
   const submitDate = () => {
     const reqestedAtIso = dateToIso(date, timezone)

@@ -1,5 +1,5 @@
-import { parseISO, add, sub } from 'date-fns'
-// import { format, toDate, utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
+import { parseISO, add } from 'date-fns'
+// import { utcToZonedTime } from 'date-fns-tz'
 import { format, toDate, zonedTimeToUtc } from 'date-fns-tz'
 
 /* CONSTANTS */
@@ -72,6 +72,10 @@ export const formatTimeString = (str) => {
 
 export const dateToIso = (date, tz) => {
   return zonedTimeToUtc(date, tz).toISOString()
+}
+
+export const isoToDate = (iso) => {
+  return parseISO(iso)
 }
 
 export const isoToDateStr = (iso, fmt = DATETIME) => {
