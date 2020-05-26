@@ -32,6 +32,7 @@ const SelectLocation = ({
   const [msg, setMsg] = useState(defaultMsg)
   const [error, setError] = useState(null)
   const [displayedLocations, setDisplayedLocations] = useState([])
+  const isLoading = loading === 'pending'
 
   useEffect(() => {
     setMsg(content[serviceTypeLower])
@@ -62,7 +63,6 @@ const SelectLocation = ({
           )
           const sorted = sortRevenueCenters(hasDelivery, true)
           const inZone = sorted.filter((i) => i.inZone)
-          // inZone.map((i) => console.log(i.name, i.distance, i.priority))
           setDisplayedLocations(inZone)
           const count = inZone.length
           const newTitle = count
@@ -73,7 +73,7 @@ const SelectLocation = ({
             count > 1 ? 'restaurants deliver' : 'restaurant delivers'
           const newMsg = count ? (
             `${count} ${restaurantMsg} to your address. Please choose one below.`
-          ) : (
+          ) : !isLoading ? (
             <span>
               We're sorry about that.
               <br />
@@ -81,6 +81,8 @@ const SelectLocation = ({
                 Click here to head back and place a pickup order.
               </Link>
             </span>
+          ) : (
+            defaultMsg
           )
           setMsg(newMsg)
         }
@@ -109,9 +111,8 @@ const SelectLocation = ({
     locConfig.title,
     mapConfig.title,
     defaultMsg,
+    isLoading,
   ])
-
-  const isLoading = loading === 'pending'
 
   return (
     <div className="card map__card overlay border-radius slide-up ot-box-shadow">

@@ -145,4 +145,7 @@ export const selectCartTotal = (state) =>
   state.order.cart.reduce((t, i) => (t += i.totalPrice), 0)
 export const selectCartCounts = (state) => state.order.cartCounts
 
+export const selectCanCheckout = (state) =>
+  state.order.location && state.order.serviceType && state.order.requestedAt
+
 export default orderSlice.reducer

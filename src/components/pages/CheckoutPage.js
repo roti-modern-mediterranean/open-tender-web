@@ -11,6 +11,8 @@ import {
   selectMenuVars,
   selectOrder,
   resetOrder,
+  resetOrderType,
+  selectTimezone,
 } from '../../slices/orderSlice'
 import {
   updateForm,
@@ -35,6 +37,7 @@ const CheckoutPage = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
   const order = useSelector(selectOrder)
+  const tz = useSelector(selectTimezone)
   const { account, auth } = useSelector(selectCustomer)
   const { access_token } = auth || {}
   const { check, form, loading, errors } = useSelector(selectCheckout)
@@ -55,7 +58,7 @@ const CheckoutPage = () => {
   }, [dispatch, account])
 
   useEffect(() => {
-    if (!locationId) return history.push('/')
+    if (!locationId || !serviceType) return history.push('/')
     if (completedOrder) {
       dispatch(setCompletedOrder(completedOrder))
       dispatch(clearCompletedOrder())
@@ -109,6 +112,47 @@ const CheckoutPage = () => {
   const preparedOrder = prepareOrder(data)
   // console.log('/orders', preparedOrder)
 
+  const handleBackToMenu = (evt) => {
+    evt.preventDefault()
+    history.push(menuSlug)
+    evt.target.blur()
+  }
+
+  const handleLogin = (evt) => {
+    evt.preventDefault()
+    dispatch(openModal('login'))
+    evt.target.blur()
+  }
+
+  const handleAccount = (evt) => {
+    evt.preventDefault()
+    history.push(`/account`)
+    evt.target.blur()
+  }
+
+  const handleLogout = (evt) => {
+    evt.preventDefault()
+    dispatch(logoutCustomer(auth.access_token))
+    evt.target.blur()
+  }
+
+  const handleServiceType = (evt) => {
+    evt.preventDefault()
+    dispatch(resetOrderType())
+    return history.push(`/`)
+  }
+
+  const handleLocation = (evt) => {
+    evt.preventDefault()
+    return history.push(`/locations`)
+  }
+
+  const handleRequestedAt = (evt) => {
+    evt.preventDefault()
+    dispatch(openModal('requestedAt'))
+    evt.target.blur()
+  }
+
   return (
     <div className="checkout">
       <div className="checkout__header bg-color">
@@ -119,8 +163,15 @@ const CheckoutPage = () => {
                 <HeaderLogo />
               </div>
               <div className="checkout__actions">
-                <ButtonMenu classes="btn--header" />
-                <ButtonAccount classes="btn--header" />
+                <ButtonMenu onClick={handleBackToMenu} classes="btn--header" />
+                <ButtonAccount
+                  account={account}
+                  isAccount={false}
+                  login={handleLogin}
+                  logout={handleLogout}
+                  goToAccount={handleAccount}
+                  classes="btn--header"
+                />
               </div>
             </div>
           </div>
@@ -139,6 +190,7 @@ const CheckoutPage = () => {
               <CheckoutForm
                 config={checkoutConfig}
                 order={order}
+                tz={tz}
                 check={check}
                 form={form}
                 loading={loading}
@@ -147,6 +199,9 @@ const CheckoutPage = () => {
                 submitOrder={() => dispatch(submitOrder(preparedOrder))}
                 login={() => dispatch(openModal('login'))}
                 logout={() => dispatch(logoutCustomer(access_token))}
+                updateRequestedAt={handleRequestedAt}
+                updateLocation={handleLocation}
+                updateServiceType={handleServiceType}
               />
             </div>
           </div>

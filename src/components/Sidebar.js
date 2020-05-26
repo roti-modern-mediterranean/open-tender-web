@@ -6,6 +6,7 @@ import {
   selectCartQuantity,
   selectCartTotal,
   selectMenuSlug,
+  selectCanCheckout,
 } from '../slices/orderSlice'
 import SidebarOverlay from './SidebarOverlay'
 import { Button } from '../packages'
@@ -19,6 +20,7 @@ const Sidebar = () => {
   const cartCount = useSelector(selectCartQuantity)
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
+  const canCheckout = useSelector(selectCanCheckout)
   const classes = `sidebar bg-secondary-color ${isOpen ? 'is-open' : ''}`
   const isMenu = pathname.includes('menu')
   const isCheckout = pathname.includes('checkout')
@@ -65,7 +67,11 @@ const Sidebar = () => {
           </div>
           <div className="sidebar__footer bg-color">
             <div className="sidebar__back">
-              <Button onClick={handleBack} classes="btn btn--big">
+              <Button
+                onClick={handleBack}
+                classes="btn btn--big"
+                disabled={!canCheckout}
+              >
                 Back To {isMenu ? 'Order' : 'Menu'}
               </Button>
             </div>
@@ -74,7 +80,7 @@ const Sidebar = () => {
                 onClick={handleCheckout}
                 // classes={`btn btn--big ${!isCheckout ? 'btn--highlight' : ''}`}
                 classes="btn btn--big btn--highlight"
-                disabled={cartCount === 0}
+                disabled={cartCount === 0 || !canCheckout}
               >
                 {isCheckout ? 'Close Sidebar' : 'Checkout'}
               </Button>

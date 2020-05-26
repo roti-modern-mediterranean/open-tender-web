@@ -8,6 +8,7 @@ import {
   resetOrderType,
 } from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
+import { selectCustomer, logoutCustomer } from '../slices/customerSlice'
 import {
   ButtonAccount,
   ButtonAllergens,
@@ -27,17 +28,37 @@ const Header = () => {
   const history = useHistory()
   const { location, serviceType, requestedAt } = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
+  const customer = useSelector(selectCustomer)
+  const { account, auth } = customer
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
   if (isCheckout) return null
   const isMenu = pathname.includes('menu')
+  const isAccount = pathname.includes('account')
 
   const classes = makeClasses(pathname)
+
+  const handleLogin = (evt) => {
+    evt.preventDefault()
+    dispatch(openModal('login'))
+    evt.target.blur()
+  }
+
+  const handleAccount = (evt) => {
+    evt.preventDefault()
+    history.push(`/account`)
+    evt.target.blur()
+  }
+
+  const handleLogout = (evt) => {
+    evt.preventDefault()
+    dispatch(logoutCustomer(auth.access_token))
+    evt.target.blur()
+  }
 
   const handleServiceType = (evt) => {
     evt.preventDefault()
     dispatch(resetOrderType())
-    // history.push(`/`)
     evt.target.blur()
   }
 
@@ -53,6 +74,18 @@ const Header = () => {
     evt.target.blur()
   }
 
+  const handleAllergens = (evt) => {
+    evt.preventDefault()
+    dispatch(openModal('allergens'))
+    evt.target.blur()
+  }
+
+  const handleGroupOrder = (evt) => {
+    evt.preventDefault()
+    dispatch(openModal('groupOrder'))
+    evt.target.blur()
+  }
+
   return (
     <header className={`header container flex ${classes}`}>
       <div className="header__nav">
@@ -61,7 +94,14 @@ const Header = () => {
         </div>
       </div>
       <div className="header__actions">
-        <ButtonAccount classes="btn--header" />
+        <ButtonAccount
+          account={account}
+          isAccount={isAccount}
+          login={handleLogin}
+          logout={handleLogout}
+          goToAccount={handleAccount}
+          classes="btn--header"
+        />
         {location && !isCheckout && (
           <ButtonLocation
             location={location}
@@ -86,8 +126,11 @@ const Header = () => {
         )}
         {isMenu && (
           <>
-            <ButtonAllergens classes="btn--header" />
-            <ButtonGroupOrder classes="btn--header" />
+            <ButtonAllergens onClick={handleAllergens} classes="btn--header" />
+            <ButtonGroupOrder
+              onClick={handleGroupOrder}
+              classes="btn--header"
+            />
           </>
         )}
       </div>

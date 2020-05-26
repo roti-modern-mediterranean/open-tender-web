@@ -1,37 +1,15 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory, useLocation } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { openModal } from '../slices/modalSlice'
-import { selectCustomer, logoutCustomer } from '../slices/customerSlice'
 import Button from './Button'
 
-const ButtonAccount = ({ classes = 'btn' }) => {
-  const history = useHistory()
-  const dispatch = useDispatch()
-  const { pathname } = useLocation()
-  const isAccount = pathname.includes('account')
-  const customer = useSelector(selectCustomer)
-  const { account, auth } = customer
-
-  const handleLogin = (evt) => {
-    evt.preventDefault()
-    dispatch(openModal('login'))
-    evt.target.blur()
-  }
-
-  const handleAccount = (evt) => {
-    evt.preventDefault()
-    history.push(`/account`)
-    evt.target.blur()
-  }
-
-  const handleLogout = (evt) => {
-    evt.preventDefault()
-    dispatch(logoutCustomer(auth.access_token))
-    evt.target.blur()
-  }
-
+const ButtonAccount = ({
+  account,
+  isAccount,
+  login,
+  logout,
+  goToAccount,
+  classes = 'btn',
+}) => {
   return account ? (
     isAccount ? (
       <Button
@@ -39,7 +17,7 @@ const ButtonAccount = ({ classes = 'btn' }) => {
         ariaLabel="Log out of your account"
         icon="User"
         classes={classes}
-        onClick={handleLogout}
+        onClick={logout}
       />
     ) : (
       <Button
@@ -47,7 +25,7 @@ const ButtonAccount = ({ classes = 'btn' }) => {
         ariaLabel="View your account"
         icon="User"
         classes={classes}
-        onClick={handleAccount}
+        onClick={goToAccount}
       />
     )
   ) : (
@@ -56,13 +34,18 @@ const ButtonAccount = ({ classes = 'btn' }) => {
       ariaLabel="Log into your account"
       icon="User"
       classes={classes}
-      onClick={handleLogin}
+      onClick={login}
     />
   )
 }
 
 ButtonAccount.displayName = 'ButtonAccount'
 ButtonAccount.propTypes = {
+  account: propTypes.object,
+  isAccount: propTypes.bool,
+  login: propTypes.func,
+  logout: propTypes.func,
+  goToAccount: propTypes.func,
   classes: propTypes.string,
 }
 

@@ -53,6 +53,7 @@ const adjustTenders = (tenders, isPaid, amountRemaining, updateForm) => {
 const CheckoutForm = ({
   config,
   order,
+  tz,
   check,
   form,
   loading,
@@ -61,6 +62,9 @@ const CheckoutForm = ({
   submitOrder,
   login,
   logout,
+  updateRequestedAt,
+  updateLocation,
+  updateServiceType,
 }) => {
   const [isWorking, setIsWorking] = useState(false)
   const submitButton = useRef()
@@ -94,6 +98,7 @@ const CheckoutForm = ({
       value={{
         config,
         order,
+        tz,
         check,
         form,
         loading,
@@ -102,6 +107,9 @@ const CheckoutForm = ({
         submitOrder,
         login,
         logout,
+        updateRequestedAt,
+        updateLocation,
+        updateServiceType,
       }}
     >
       <form

@@ -19,9 +19,12 @@ const MapPage = () => {
     ? { lat: address.lat, lng: address.lng }
     : defaultCenter
   const [center, setCenter] = useState(initialCenter)
-
   const { locations } = useSelector(selectLocations)
   const hasTypes = orderType && serviceType
+
+  useEffect(() => {
+    window.scroll(0, 0)
+  }, [])
 
   useEffect(() => {
     if (!hasTypes) history.push('/')

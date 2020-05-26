@@ -16,7 +16,17 @@ import { FormContext } from './CheckoutForm'
 
 const CheckoutDetails = () => {
   const formContext = useContext(FormContext)
-  const { config, order, check, form, updateForm } = formContext
+  const {
+    config,
+    order,
+    tz,
+    check,
+    form,
+    updateForm,
+    updateRequestedAt,
+    updateLocation,
+    updateServiceType,
+  } = formContext
   const checkDetails = form.details || check.details
   const [details, setDetails] = useState(checkDetails)
   const [showTip, setShowTip] = useState(false)
@@ -62,13 +72,26 @@ const CheckoutDetails = () => {
       </div>
       <div className="form__inputs">
         <CheckoutLineItem label="Location">
-          <ButtonLocation classes="btn--header" />
+          <ButtonLocation
+            location={order.location}
+            onClick={updateLocation}
+            classes="btn--header"
+          />
         </CheckoutLineItem>
         <CheckoutLineItem label="Service Type">
-          <ButtonServiceType classes="btn--header" />
+          <ButtonServiceType
+            serviceType={order.serviceType}
+            onClick={updateServiceType}
+            classes="btn--header"
+          />
         </CheckoutLineItem>
         <CheckoutLineItem label={`${serviceTypeName} Time`}>
-          <ButtonRequestedAt classes="btn--header" />
+          <ButtonRequestedAt
+            requestedAt={order.requestedAt}
+            tz={tz}
+            onClick={updateRequestedAt}
+            classes="btn--header"
+          />
         </CheckoutLineItem>
         {tipSettings.has_tip && (
           <>
