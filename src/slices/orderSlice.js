@@ -43,6 +43,9 @@ const orderSlice = createSlice({
     setAddress: (state, action) => {
       state.address = action.payload
     },
+    setRequestedAt: (state, action) => {
+      state.requestedAt = action.payload
+    },
     setCurrentItem: (state, action) => {
       state.currentItem = { ...action.payload }
     },
@@ -80,6 +83,7 @@ export const {
   setOrderType,
   setServiceType,
   setOrderServiceType,
+  setRequestedAt,
   setLocation,
   setAddress,
   setCurrentItem,

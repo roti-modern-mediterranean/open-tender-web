@@ -1,23 +1,21 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useSelector, useDispatch } from 'react-redux'
-import { selectRequestedAt } from '../slices/orderSlice'
-import { openModal } from '../slices/modalSlice'
 import Button from './Button'
+import { makeRequestedAtString } from './utils/datetimes'
 
-const RequestedAtButton = ({ classes = 'btn' }) => {
-  const requestedAt = useSelector(selectRequestedAt)
-  const dispatch = useDispatch()
-
+const ButtonRequestedAt = ({ requestedAt, action, classes = 'btn' }) => {
   const handleChange = (evt) => {
     evt.preventDefault()
-    dispatch(openModal('requestedAt'))
+    action()
     evt.target.blur()
   }
+
+  const requestedAtText = makeRequestedAtString(requestedAt)
+
   return (
     <Button
-      text={requestedAt}
-      ariaLabel={`Change time from ${requestedAt}`}
+      text={requestedAtText}
+      ariaLabel={`Change time from ${requestedAtText}`}
       icon="Clock"
       classes={classes}
       onClick={handleChange}
@@ -25,9 +23,9 @@ const RequestedAtButton = ({ classes = 'btn' }) => {
   )
 }
 
-RequestedAtButton.displayName = 'RequestedAtButton'
-RequestedAtButton.propTypes = {
+ButtonRequestedAt.displayName = 'ButtonRequestedAt'
+ButtonRequestedAt.propTypes = {
   classes: propTypes.string,
 }
 
-export default RequestedAtButton
+export default ButtonRequestedAt

@@ -2,8 +2,9 @@ import React from 'react'
 // import propTypes from 'prop-types'
 // import logo from '../assets/logo.png'
 import { NavLink, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { selectOrder } from '../slices/orderSlice'
+import { openModal } from '../slices/modalSlice'
 import {
   ButtonAccount,
   ButtonAllergens,
@@ -23,7 +24,8 @@ const makeClasses = (pathname) => {
 }
 
 const Header = () => {
-  const order = useSelector(selectOrder)
+  const dispatch = useDispatch()
+  const { location, serviceType, requestedAt } = useSelector(selectOrder)
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
   if (isCheckout) return null
@@ -52,14 +54,16 @@ const Header = () => {
       </div>
       <div className="header__actions">
         <ButtonAccount classes="btn--header" />
-        {order.location && !isCheckout && (
-          <ButtonLocation classes="btn--header" />
-        )}
-        {order.serviceType && !isCheckout && (
+        {location && !isCheckout && <ButtonLocation classes="btn--header" />}
+        {serviceType && !isCheckout && (
           <ButtonServiceType classes="btn--header" />
         )}
-        {order.location && !isCheckout && (
-          <ButtonRequestedAt classes="btn--header" />
+        {location && !isCheckout && (
+          <ButtonRequestedAt
+            classes="btn--header"
+            action={() => dispatch(openModal('requestedAt'))}
+            requestedAt={requestedAt}
+          />
         )}
         {isMenu && (
           <>

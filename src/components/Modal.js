@@ -9,6 +9,7 @@ import {
   SignUpModal,
   AllergensModal,
   MenuItemModal,
+  RequestedAtModal,
 } from './modals'
 
 const makeModal = (type, windowRef) => {
@@ -21,6 +22,8 @@ const makeModal = (type, windowRef) => {
       return <AllergensModal />
     case 'item':
       return <MenuItemModal />
+    case 'requestedAt':
+      return <RequestedAtModal />
     default:
       return null
   }

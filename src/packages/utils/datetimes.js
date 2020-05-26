@@ -1,12 +1,13 @@
-// import { parseISO, add, sub, differenceInDays } from 'date-fns'
+import { parseISO, add, sub } from 'date-fns'
 // import { format, toDate, utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
-import { format, toDate } from 'date-fns-tz'
+import { format, toDate, zonedTimeToUtc } from 'date-fns-tz'
 
 /* CONSTANTS */
 
 const DATE = 'yyyy-MM-dd'
 const HUMAN_DATE = 'MMM d, yyyy'
-// const DATETIME = 'yyyy-MM-dd h:mm a'
+const DATETIME = 'yyyy-MM-dd h:mma'
+const TIME = 'h:mma'
 
 export const timezoneMap = {
   'US/Eastern': 'America/New_York',
@@ -43,7 +44,13 @@ export const weekdayOptions = weekdays.map((weekday) => ({
 //   }
 // }
 
-export const todayDate = () => format(new Date(), DATE)
+// returns a date string in a user's local time
+export const makeLocalDateStr = (date, days = 0, fmt = DATE) => {
+  return format(add(date || new Date(), { days: days }), fmt)
+}
+
+export const todayDate = () => makeLocalDateStr(0)
+export const tomorrowDate = () => makeLocalDateStr(1)
 
 export const formatDateString = (str, fmt = HUMAN_DATE) => {
   return format(toDate(str), fmt)
@@ -61,4 +68,26 @@ export const formatTimeString = (str) => {
       ? part1.slice(0, part1.length - 2)
       : part1
   return [newPart1, part2].join('-')
+}
+
+export const dateToIso = (date, tz) => {
+  return zonedTimeToUtc(date, tz).toISOString()
+}
+
+export const isoToDateStr = (iso, fmt = DATETIME) => {
+  return format(parseISO(iso), fmt)
+}
+
+export const makeRequestedAtString = (requestedAt) => {
+  if (requestedAt.toLowerCase() === 'asap') return 'ASAP'
+  const date = parseISO(requestedAt)
+  const timeString = format(date, TIME)
+  const dateString = makeLocalDateStr(date)
+  if (dateString === todayDate()) {
+    return timeString
+  } else if (dateString === tomorrowDate()) {
+    return `Tmrw @ ${timeString}`
+  } else {
+    return `${format(date, 'M/d')} @ ${timeString}`
+  }
 }

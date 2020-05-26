@@ -33,7 +33,7 @@ import useGoogleMapsPlace from './useGoogleMapsPlace'
 import GoogleMap from './GoogleMap'
 import GoogleMapsAutocomplete from './GoogleMapsAutocomplete'
 import GoogleMapsMarker from './GoogleMapsMarker'
-import LocationMarkers from './LocationMarkers'
+import RequestedAtPicker from './RequestedAtPicker'
 import { Label, Error, Input, Textarea, Switch, Checkbox } from './Inputs'
 import { makeAddress } from './utils/maps'
 
@@ -73,8 +73,8 @@ export {
   GoogleMap,
   GoogleMapsAutocomplete,
   GoogleMapsMarker,
-  LocationMarkers,
   makeAddress,
+  RequestedAtPicker,
   Error,
   Input,
   Textarea,
