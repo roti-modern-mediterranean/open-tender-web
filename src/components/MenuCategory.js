@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { slugify } from '../utils/helpers'
+import { slugify } from '../packages/utils/helpers'
 import MenuItem from './MenuItem'
 
 const MenuCategory = ({ category, itemEdit, isChild }) => {

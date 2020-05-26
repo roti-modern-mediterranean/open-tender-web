@@ -86,7 +86,10 @@ const SelectLocation = ({
         }
       } else {
         setError(null)
-        const sorted = sortRevenueCenters(locations)
+        const hasPickup = locations.filter((i) =>
+          i.settings.service_types.includes('PICKUP')
+        )
+        const sorted = sortRevenueCenters(hasPickup)
         setDisplayedLocations(sorted)
         const count = locations.length
         const newTitle = `${count} restaurants near you`

@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { setLocation } from '../slices/orderSlice'
+import { setLocation, selectOrder } from '../slices/orderSlice'
 import { iconMap } from '../packages/icons'
 import { Button } from '../packages'
-import { stripTags } from '../utils/helpers'
+import { stripTags } from '../packages/utils/helpers'
+import { serviceTypeNamesMap } from '../packages/utils/constants'
+import {
+  todayDate,
+  formatDateString,
+  formatTimeString,
+} from '../packages/utils/datetimes'
 
 const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
   return (
@@ -18,6 +24,15 @@ const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
   )
 }
 
+const makeOrderMsg = (firstTime, serviceType) => {
+  const serviceTypeName = serviceTypeNamesMap[serviceType]
+  const readableDate =
+    firstTime.date === todayDate() ? 'today' : formatDateString(firstTime.date)
+  const formattedTime = formatTimeString(firstTime.time)
+  const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate} at ${formattedTime}`
+  return orderMsg
+}
+
 const placeholder2 =
   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg'
 
@@ -26,8 +41,9 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  // const { address } = location
+  const { serviceType } = useSelector(selectOrder)
   const { address, images, hours, settings } = location
+  const { first_times: firstTimes } = settings
   let smallImage = images.find((i) => i.type === 'SMALL_IMAGE')
   smallImage = smallImage ? smallImage.url : null
   const bgStyle = { backgroundImage: `url(${smallImage || placeholder2}` }
@@ -55,12 +71,15 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
     evt.target.blur()
   }
 
-  console.log(location.name)
-  console.log(settings.first_times)
   // const distanceInWords = location.distance
   //   ? ` (${location.distance.toFixed(2)} miles away)`
   //   : ''
   // const streetAddress = `${address.street}${distanceInWords}`
+
+  // console.log(location.name)
+  // console.log(firstTimes)
+  const firstTime = firstTimes[serviceType]
+  const orderMsg = firstTime ? makeOrderMsg(firstTime, serviceType) : null
 
   return (
     <div className={classes}>
@@ -107,6 +126,11 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
           )}
         </div>
         <div className="location__order">
+          {orderMsg && (
+            <div className="location__order__message">
+              <p className="ot-alert-color font-size-small">{orderMsg}</p>
+            </div>
+          )}
           {isOrder ? (
             <Button
               text="Order Here"

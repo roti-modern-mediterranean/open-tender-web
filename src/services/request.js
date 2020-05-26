@@ -1,4 +1,4 @@
-import { serialize } from '../utils/helpers'
+import { serialize } from '../packages/utils/helpers'
 
 const baseUrl = process.env.REACT_APP_API_URL
 const authUrl = process.env.REACT_APP_AUTH_URL
