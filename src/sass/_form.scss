@@ -144,4 +144,10 @@
   &__message {
     margin-bottom: 3rem;
   }
+
+  &__submit {
+    .btn + .btn {
+      margin: 0 0 0 1rem;
+    }
+  }
 }

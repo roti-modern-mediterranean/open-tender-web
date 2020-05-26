@@ -8,8 +8,8 @@ import { stripTags } from '../packages/utils/helpers'
 import { serviceTypeNamesMap } from '../packages/utils/constants'
 import {
   todayDate,
-  formatDateString,
-  formatTimeString,
+  formatDateStr,
+  formatTimeStr,
 } from '../packages/utils/datetimes'
 
 const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
@@ -27,8 +27,8 @@ const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
 const makeOrderMsg = (firstTime, serviceType) => {
   const serviceTypeName = serviceTypeNamesMap[serviceType]
   const readableDate =
-    firstTime.date === todayDate() ? 'today' : formatDateString(firstTime.date)
-  const formattedTime = formatTimeString(firstTime.time)
+    firstTime.date === todayDate() ? 'today' : formatDateStr(firstTime.date)
+  const formattedTime = formatTimeStr(firstTime.time, 'MMM d')
   const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate} at ${formattedTime}`
   return orderMsg
 }

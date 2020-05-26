@@ -3,14 +3,14 @@ import propTypes from 'prop-types'
 import Button from './Button'
 import { makeRequestedAtString } from './utils/datetimes'
 
-const ButtonRequestedAt = ({ requestedAt, action, classes = 'btn' }) => {
+const ButtonRequestedAt = ({ requestedAt, tz, action, classes = 'btn' }) => {
   const handleChange = (evt) => {
     evt.preventDefault()
     action()
     evt.target.blur()
   }
 
-  const requestedAtText = makeRequestedAtString(requestedAt)
+  const requestedAtText = makeRequestedAtString(requestedAt, tz)
 
   return (
     <Button
@@ -25,6 +25,9 @@ const ButtonRequestedAt = ({ requestedAt, action, classes = 'btn' }) => {
 
 ButtonRequestedAt.displayName = 'ButtonRequestedAt'
 ButtonRequestedAt.propTypes = {
+  requestedAt: propTypes.string,
+  tz: propTypes.string,
+  action: propTypes.func,
   classes: propTypes.string,
 }
 

@@ -5,10 +5,11 @@ import { selectOrder, setRequestedAt } from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
 import { RequestedAtPicker } from '../../packages'
+import { makeRequestedAtString } from '../../packages/utils/datetimes'
 
 const RequestedAtModal = () => {
   const dispatch = useDispatch()
-  const { requestedAt, location } = useSelector(selectOrder)
+  const { requestedAt, serviceType, location } = useSelector(selectOrder)
 
   const handleClose = () => {
     dispatch(closeModal())
@@ -19,6 +20,8 @@ const RequestedAtModal = () => {
     dispatch(closeModal())
   }
 
+  const requestedAtText = makeRequestedAtString(requestedAt)
+
   return (
     <>
       <ModalClose onClick={handleClose} />
@@ -28,13 +31,17 @@ const RequestedAtModal = () => {
             Adjust your order time
           </p>
           <p className="modal__subtitle">
-            Your current order time is {requestedAt}
+            Your current order time is{' '}
+            <span className="ot-bold">{requestedAtText}</span>. Choose a date
+            and time below to make a change.
           </p>
         </div>
         <RequestedAtPicker
           requestedAt={requestedAt}
-          setRequestedAt={handleRequestedAt}
+          serviceType={serviceType}
           location={location}
+          setRequestedAt={handleRequestedAt}
+          cancel={handleClose}
         />
       </div>
     </>

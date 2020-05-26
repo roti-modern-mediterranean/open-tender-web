@@ -72,8 +72,8 @@ const Sidebar = () => {
             <div className="sidebar__checkout">
               <Button
                 onClick={handleCheckout}
-                // classes={`btn btn--big ${!isCheckout ? 'btn--checkout' : ''}`}
-                classes="btn btn--big btn--checkout"
+                // classes={`btn btn--big ${!isCheckout ? 'btn--highlight' : ''}`}
+                classes="btn btn--big btn--highlight"
                 disabled={cartCount === 0}
               >
                 {isCheckout ? 'Close Sidebar' : 'Checkout'}

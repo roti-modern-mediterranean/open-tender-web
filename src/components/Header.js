@@ -3,7 +3,7 @@ import React from 'react'
 // import logo from '../assets/logo.png'
 import { NavLink, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectOrder } from '../slices/orderSlice'
+import { selectOrder, selectTimezone } from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
 import {
   ButtonAccount,
@@ -26,6 +26,7 @@ const makeClasses = (pathname) => {
 const Header = () => {
   const dispatch = useDispatch()
   const { location, serviceType, requestedAt } = useSelector(selectOrder)
+  const tz = useSelector(selectTimezone)
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
   if (isCheckout) return null
@@ -63,6 +64,7 @@ const Header = () => {
             classes="btn--header"
             action={() => dispatch(openModal('requestedAt'))}
             requestedAt={requestedAt}
+            tz={tz}
           />
         )}
         {isMenu && (

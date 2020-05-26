@@ -9,6 +9,7 @@ import {
   serviceTypeNamesMap,
   orderTypeNamesMap,
 } from '../packages/utils/constants'
+import { timezoneMap, getUserTimezone } from '../packages/utils/datetimes'
 
 const initialState = {
   orderType: null,
@@ -107,6 +108,11 @@ export const selectLocation = (state) => state.order.location
 // TODO: need to replace this
 export const selectLocationName = (state) =>
   state.order.location ? state.order.location.name : null
+export const selectTimezone = (state) => {
+  return state.order.location
+    ? timezoneMap[state.order.location.timezone]
+    : getUserTimezone()
+}
 
 export const selectAddress = (state) => state.order.address
 
