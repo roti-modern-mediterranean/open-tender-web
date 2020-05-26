@@ -3,22 +3,15 @@ import propTypes from 'prop-types'
 import Button from './Button'
 import { makeRequestedAtString } from './utils/datetimes'
 
-const ButtonRequestedAt = ({ requestedAt, tz, action, classes = 'btn' }) => {
-  const handleChange = (evt) => {
-    evt.preventDefault()
-    action()
-    evt.target.blur()
-  }
-
+const ButtonRequestedAt = ({ requestedAt, tz, onClick, classes = 'btn' }) => {
   const requestedAtText = makeRequestedAtString(requestedAt, tz)
-
   return (
     <Button
       text={requestedAtText}
       ariaLabel={`Change time from ${requestedAtText}`}
       icon="Clock"
       classes={classes}
-      onClick={handleChange}
+      onClick={onClick}
     />
   )
 }
@@ -27,7 +20,7 @@ ButtonRequestedAt.displayName = 'ButtonRequestedAt'
 ButtonRequestedAt.propTypes = {
   requestedAt: propTypes.string,
   tz: propTypes.string,
-  action: propTypes.func,
+  onClick: propTypes.func,
   classes: propTypes.string,
 }
 

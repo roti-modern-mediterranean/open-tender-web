@@ -18,7 +18,6 @@ export const fetchLocations = createAsyncThunk(
       } else {
         revenueCenters = response.data
       }
-      console.log(revenueCenters)
       return revenueCenters
     } catch (err) {
       return thunkAPI.rejectWithValue(err)

@@ -1,34 +1,26 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useSelector, useDispatch } from 'react-redux'
-import { selectServiceType, selectServiceTypeName } from '../slices/orderSlice'
-import { openModal } from '../slices/modalSlice'
 import Button from './Button'
+import { serviceTypeNamesMap } from './utils/constants'
 
-const ServiceTypeButton = ({ classes = 'btn' }) => {
-  const serviceType = useSelector(selectServiceType)
-  const serviceTypeName = useSelector(selectServiceTypeName)
-  const dispatch = useDispatch()
-
-  const handleClick = (evt) => {
-    evt.preventDefault()
-    dispatch(openModal('serviceType'))
-    evt.target.blur()
-  }
+const ButtonServiceType = ({ serviceType, onClick, classes = 'btn' }) => {
+  const serviceTypeName = serviceTypeNamesMap[serviceType]
   return (
     <Button
       text={serviceTypeName}
       ariaLabel={`Change service type from ${serviceTypeName}`}
       icon={serviceType === 'PICKUP' ? 'ShoppingBag' : 'Truck'}
       classes={classes}
-      onClick={handleClick}
+      onClick={onClick}
     />
   )
 }
 
-ServiceTypeButton.displayName = 'ServiceTypeButton'
-ServiceTypeButton.propTypes = {
+ButtonServiceType.displayName = 'ButtonServiceType'
+ButtonServiceType.propTypes = {
+  serviceType: propTypes.string,
+  onClick: propTypes.func,
   classes: propTypes.string,
 }
 
-export default ServiceTypeButton
+export default ButtonServiceType

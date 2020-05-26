@@ -1,7 +1,11 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectOrder, setRequestedAt } from '../../slices/orderSlice'
+import {
+  selectOrder,
+  setRequestedAt,
+  selectTimezone,
+} from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
 import { RequestedAtPicker } from '../../packages'
@@ -10,6 +14,7 @@ import { makeRequestedAtString } from '../../packages/utils/datetimes'
 const RequestedAtModal = () => {
   const dispatch = useDispatch()
   const { requestedAt, serviceType, location } = useSelector(selectOrder)
+  const tz = useSelector(selectTimezone)
 
   const handleClose = () => {
     dispatch(closeModal())
@@ -20,7 +25,7 @@ const RequestedAtModal = () => {
     dispatch(closeModal())
   }
 
-  const requestedAtText = makeRequestedAtString(requestedAt)
+  const requestedAtText = makeRequestedAtString(requestedAt, tz)
 
   return (
     <>

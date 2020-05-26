@@ -1,9 +1,12 @@
 import React from 'react'
-// import propTypes from 'prop-types'
-// import logo from '../assets/logo.png'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectOrder, selectTimezone } from '../slices/orderSlice'
+import { useHistory } from 'react-router-dom'
+import {
+  selectOrder,
+  selectTimezone,
+  resetOrderType,
+} from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
 import {
   ButtonAccount,
@@ -15,25 +18,40 @@ import {
 } from '../packages'
 import HeaderLogo from './HeaderLogo'
 
-const makeNav = (pathname) => {
-  return []
-}
-
 const makeClasses = (pathname) => {
   return ['checkout'].map((i) => (pathname.includes(i) ? 'header__stuck' : ''))
 }
 
 const Header = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { location, serviceType, requestedAt } = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
   if (isCheckout) return null
   const isMenu = pathname.includes('menu')
-  const navLinks = makeNav(pathname)
 
   const classes = makeClasses(pathname)
+
+  const handleServiceType = (evt) => {
+    evt.preventDefault()
+    dispatch(resetOrderType())
+    // history.push(`/`)
+    evt.target.blur()
+  }
+
+  const handleLocation = (evt) => {
+    evt.preventDefault()
+    history.push(`/locations`)
+    evt.target.blur()
+  }
+
+  const handleRequestedAt = (evt) => {
+    evt.preventDefault()
+    dispatch(openModal('requestedAt'))
+    evt.target.blur()
+  }
 
   return (
     <header className={`header container flex ${classes}`}>
@@ -41,30 +59,29 @@ const Header = () => {
         <div className="header__logo">
           <HeaderLogo />
         </div>
-        {navLinks.length ? (
-          <nav className="header__nav">
-            <ul>
-              {navLinks.map((link) => (
-                <li>
-                  <NavLink to={link.pathname}>{link.text}</NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        ) : null}
       </div>
       <div className="header__actions">
         <ButtonAccount classes="btn--header" />
-        {location && !isCheckout && <ButtonLocation classes="btn--header" />}
+        {location && !isCheckout && (
+          <ButtonLocation
+            location={location}
+            onClick={handleLocation}
+            classes="btn--header"
+          />
+        )}
         {serviceType && !isCheckout && (
-          <ButtonServiceType classes="btn--header" />
+          <ButtonServiceType
+            serviceType={serviceType}
+            onClick={handleServiceType}
+            classes="btn--header"
+          />
         )}
         {location && !isCheckout && (
           <ButtonRequestedAt
-            classes="btn--header"
-            action={() => dispatch(openModal('requestedAt'))}
             requestedAt={requestedAt}
             tz={tz}
+            onClick={handleRequestedAt}
+            classes="btn--header"
           />
         )}
         {isMenu && (

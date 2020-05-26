@@ -18,7 +18,7 @@ const RequestedAtPicker = ({
   serviceType,
   setRequestedAt,
   cancel,
-  updateText = 'Update Order Time',
+  updateText = 'Update',
   cancelText = 'Cancel',
 }) => {
   const { timezone, settings } = location
@@ -28,29 +28,46 @@ const RequestedAtPicker = ({
   const [date, setDate] = useState(requestedAtDate)
   const [error, setError] = useState(null)
 
-  const submitDate = () => {
-    const reqestedAtIso = dateToIso(date, tz)
-    setRequestedAt(reqestedAtIso)
+  const changetoASAP = (evt) => {
+    evt.preventDefault()
+    setRequestedAt('asap')
+    evt.target.blur()
   }
 
+  const submitDate = (evt) => {
+    evt.preventDefault()
+    const reqestedAtIso = date ? dateToIso(date, tz) : 'asap'
+    setRequestedAt(reqestedAtIso)
+    evt.target.blur()
+  }
+
+  let args = {}
   if (isEmpty(settings.first_times)) {
     setError(errMessages.locationClosed)
   } else if (!settings.first_times[serviceType]) {
     setError(errMessages.serviceTypeNotAvailable)
+  } else {
+    const validTimes = settings.valid_times[serviceType]
+    const daysAhead = settings.days_ahead[serviceType]
+    const firstMinute = settings.first_times[serviceType].minutes
+    const interval = settings.first_times[serviceType].interval
+    const holidays = settings.holidays[serviceType].map((i) => makeLocalDate(i))
+    const weekdayTimes = makeWeekdaysExcluded(validTimes)
+    const excludedTimes = settings.excluded_times[serviceType]
+    args = makeDatepickerArgs(
+      date,
+      weekdayTimes,
+      excludedTimes,
+      firstMinute,
+      interval,
+      daysAhead
+    )
+
+    if (args.updatedDate) setDate(args.updatedDate)
+    args.holidays = holidays
+    args.interval = interval
   }
-  const validTimes = settings.valid_times[serviceType]
-  const firstMinute = settings.first_times[serviceType].minutes
-  const interval = settings.first_times[serviceType].interval
-  const holidays = settings.holidays[serviceType].map((i) => makeLocalDate(i))
-  const weekdayTimes = makeWeekdaysExcluded(validTimes)
-  const excludedTimes = settings.excluded_times[serviceType]
-  const { excludeTimes, isClosed } = makeDatepickerArgs(
-    requestedAtDate,
-    weekdayTimes,
-    excludedTimes,
-    firstMinute,
-    interval
-  )
+  const { excludeTimes, isClosed, maxDate, holidays, interval } = args
 
   return (
     <div className="datepicker-inline">
@@ -64,6 +81,7 @@ const RequestedAtPicker = ({
           timeFormat="h:mm aa"
           dateFormat="yyyy-MM-dd h:mm aa"
           minDate={new Date()}
+          maxDate={maxDate}
           timeIntervals={interval}
           excludeDates={holidays}
           excludeTimes={excludeTimes}
@@ -78,6 +96,11 @@ const RequestedAtPicker = ({
         {!error && (
           <button className="btn btn--highlight" onClick={submitDate}>
             {updateText}
+          </button>
+        )}
+        {requestedAt !== 'asap' && (
+          <button className="btn" onClick={changetoASAP}>
+            Change to ASAP
           </button>
         )}
         <button className="btn" onClick={cancel}>

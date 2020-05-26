@@ -107,9 +107,9 @@ function* range(start, end, step) {
   }
 }
 
-export const makeExcludedTimes = (orderableTimes, interval) => {
-  return [...range(0, 1440 - interval, interval)].filter(
-    (i) => !orderableTimes.includes(i)
+export const makeOppositeTimes = (times, interval, min = 0, max = 1440) => {
+  return [...range(min, max - interval, interval)].filter(
+    (i) => !times.includes(i)
   )
 }
 
@@ -127,7 +127,7 @@ export const makeWeekdaysExcluded = (validTimes) => {
         daypart.times.filter((i) => i.is_orderable).map((i) => i.minutes)
       )
     }, [])
-    obj[weekday.toUpperCase()] = makeExcludedTimes(orderableTimes, interval)
+    obj[weekday.toUpperCase()] = makeOppositeTimes(orderableTimes, interval)
     return obj
   }, {})
 }
@@ -138,41 +138,72 @@ export const makeClosedWeekdays = (weekdayTimes) => {
     .map(([weekday]) => weekdaysUpper.indexOf(weekday))
 }
 
-export const makeDatepickerArgs = (
-  requestedAtDate,
-  weekdayTimes,
-  excludedTimes,
-  firstMinute,
-  interval = 15
-) => {
-  const currentDate = requestedAtDate || new Date()
-  const weekday = format(currentDate, 'EEEE').toUpperCase()
-  const dateStr = format(currentDate, 'yyyy-MM-dd')
-  const isToday = dateStr === todayDate()
-  // if today, excluded all times before the first minute
-  const todayExcludeded = isToday
-    ? [...range(0, firstMinute - interval, interval)]
-    : []
-  // weekdayExcluded = times excluded based on regular hours + blocked hours
-  const weekdayExcluded = weekdayTimes[weekday] || []
-  // otherExcluded = times excluded due to holiday hours + throttled times
-  const otherExcluded = excludedTimes[dateStr] || []
-  const allExcluded = [
-    ...new Set([...todayExcludeded, ...weekdayExcluded, ...otherExcluded]),
-  ].sort()
-  // convert excluded minutes to excluded dates
-  const excludeTimes = allExcluded.map((minutes) => {
-    const hours = Math.floor(minutes / 60)
-    const mins = minutes % 60
+export const minutesToDates = (minutes) => {
+  return minutes.map((minute) => {
+    const hours = Math.floor(minute / 60)
+    const mins = minute % 60
     const d = new Date()
     d.setHours(hours)
     d.setMinutes(mins)
     return d
   })
-  // filter out days of the week that are always closed
+}
+
+export const getMinutesfromDate = (date) => {
+  return date.getHours() * 60 + date.getMinutes()
+}
+
+export const makeDatepickerArgs = (
+  requestedAtDate,
+  weekdayTimes,
+  excludedTimes,
+  firstMinute,
+  interval = 15,
+  daysAhead
+) => {
+  const maxDate =
+    daysAhead != null ? add(new Date(), { days: daysAhead }) : null
+  const currentDate = requestedAtDate || new Date()
+  const weekday = format(currentDate, 'EEEE').toUpperCase()
+  const dateStr = format(currentDate, 'yyyy-MM-dd')
+  const minutes = requestedAtDate ? getMinutesfromDate(requestedAtDate) : null
+  const isToday = dateStr === todayDate()
+  /* if today, excluded all times before the first minute */
+  const todayExcludeded = isToday
+    ? [...range(0, firstMinute - interval, interval)]
+    : []
+  /* weekdayExcluded = times excluded based on regular hours + blocked hours */
+  const weekdayExcluded = weekdayTimes[weekday] || []
+  /* otherExcluded = times excluded due to holiday hours + throttled times */
+  const otherExcluded = excludedTimes[dateStr] || []
+  const allExcluded = [
+    ...new Set([...todayExcludeded, ...weekdayExcluded, ...otherExcluded]),
+  ].sort()
+  let updatedDate = null
+  if (minutes && allExcluded.includes(minutes)) {
+    const orderableTimes = makeOppositeTimes(allExcluded, interval)
+    const minOrderableTime = Math.min(...orderableTimes)
+    updatedDate = new Date(requestedAtDate.getTime())
+    updatedDate.setHours(Math.floor(minOrderableTime / 60))
+    updatedDate.setMinutes(minOrderableTime % 60)
+  }
+  /* TODO: figure out how to use this to hide times before open & after close */
+  // const minOrderableTime = Math.min(...orderableTimes)
+  // const maxOrderableTime = Math.max(...orderableTimes)
+  // const adjustedExcluded = makeOppositeTimes(
+  //   orderableTimes,
+  //   interval,
+  //   minOrderableTime,
+  //   maxOrderableTime
+  // )
+  // const injectTimes = minutesToDates(orderableTimes)
+  // const excludeTimes = minutesToDates(adjustedExcluded)
+  /* convert excluded minutes to excluded dates */
+  const excludeTimes = minutesToDates(allExcluded)
+  /* filter out days of the week that are always closed */
   const closedWeekdays = makeClosedWeekdays(weekdayTimes)
   const isClosed = (date) => {
     return !closedWeekdays.includes(date.getDay())
   }
-  return { excludeTimes, isClosed }
+  return { excludeTimes, isClosed, updatedDate, maxDate }
 }

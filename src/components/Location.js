@@ -80,6 +80,10 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
   // console.log(firstTimes)
   const firstTime = firstTimes[serviceType]
   const orderMsg = firstTime ? makeOrderMsg(firstTime, serviceType) : null
+  const distance =
+    location.distance !== null && location.distance !== undefined
+      ? location.distance
+      : null
 
   return (
     <div className={classes}>
@@ -94,9 +98,9 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
       <div className="location__content">
         <div className="location__header">
           <h2 className="ot-font-size-h5">{location.name}</h2>
-          {location.distance && (
+          {distance !== null && (
             <p className="font-size-small secondary-color">
-              {location.distance.toFixed(2)} miles away
+              {distance.toFixed(2)} miles away
             </p>
           )}
         </div>
