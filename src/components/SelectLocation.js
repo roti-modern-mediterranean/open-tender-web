@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
-import BarLoader from 'react-spinners/BarLoader'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { GoogleMapsAutocomplete } from '../packages'
 import { MAX_DISTANCE, LOCATIONS_MESSAGES } from '../packages/utils/constants'
 import { selectConfig } from '../slices/configSlice'
-import { setAddress, selectOrder } from '../slices/orderSlice'
+import { setAddress, selectOrder, setLocation } from '../slices/orderSlice'
 import { fetchLocations, selectLocations } from '../slices/locationsSlice'
 import { selectGeoLatLng } from '../slices/geolocationSlice'
 import { Location } from './Location'
 import { sortRevenueCenters } from '../packages/utils/maps'
+import BarLoader from 'react-spinners/BarLoader'
 
 const calcMinDistance = (locations, maxDistance = MAX_DISTANCE) => {
   const withDistance = locations
@@ -97,6 +98,7 @@ const SelectLocation = ({
   autocomplete,
 }) => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { locations: locConfig } = useSelector(selectConfig)
   const geoLatLng = useSelector(selectGeoLatLng)
   const { serviceType, orderType, address } = useSelector(selectOrder)
@@ -108,6 +110,7 @@ const SelectLocation = ({
   const [error, setError] = useState(null)
   const [displayedLocations, setDisplayedLocations] = useState([])
   const isLoading = loading === 'pending'
+  const autoSelect = locConfig.autoSelect[orderType][serviceType]
 
   useEffect(() => {
     if (orderType) {
@@ -117,32 +120,57 @@ const SelectLocation = ({
     }
   }, [orderType, coords, dispatch])
 
+  const autoRouteCallack = useCallback(
+    (location) => {
+      dispatch(setLocation(location))
+      const rcType = location.revenue_center_type.toLowerCase()
+      return history.push(`/menu/${location.slug}-${rcType}`)
+    },
+    [dispatch, history]
+  )
+
   useEffect(() => {
     if (serviceType === 'PICKUP') {
       const pickupLocations = makePickupLocations(locations)
-      setDisplayedLocations(makePickupLocations(locations))
       const minDistance = calcMinDistance(pickupLocations)
       const count = pickupLocations.length
-      const { title, msg } = makePickupMesssaging(
-        address,
-        geoLatLng,
-        count,
-        minDistance,
-        locConfig.maxDistance
-      )
-      setTitle(title)
-      setMsg(msg)
-      setError(null)
+      if (count && autoSelect) {
+        autoRouteCallack(pickupLocations[0])
+      } else {
+        const { title, msg } = makePickupMesssaging(
+          address,
+          geoLatLng,
+          count,
+          minDistance,
+          locConfig.maxDistance
+        )
+        setTitle(title)
+        setMsg(msg)
+        setError(null)
+        setDisplayedLocations(makePickupLocations(locations))
+      }
     } else {
       const deliveryLocations = makeDeliveryLocations(locations)
-      setDisplayedLocations(deliveryLocations)
       const count = deliveryLocations.length
       const { title, msg, error } = makeDeliveryMesssaging(address, count)
-      setTitle(title)
-      setMsg(msg)
-      setError(error)
+      if (count && autoSelect && !error) {
+        autoRouteCallack(deliveryLocations[0])
+      } else {
+        setTitle(title)
+        setMsg(msg)
+        setError(error)
+        setDisplayedLocations(deliveryLocations)
+      }
     }
-  }, [serviceType, address, geoLatLng, locations, locConfig.maxDistance])
+  }, [
+    serviceType,
+    address,
+    geoLatLng,
+    locations,
+    locConfig.maxDistance,
+    autoSelect,
+    autoRouteCallack,
+  ])
 
   return (
     <div className="card map__card overlay border-radius slide-up ot-box-shadow">

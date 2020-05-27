@@ -159,7 +159,7 @@ const GoogleMapsAutocomplete = ({
   )
 }
 
-GoogleMapsAutocomplete.displayName = 'MapCard'
+GoogleMapsAutocomplete.displayName = 'GoogleMapsAutocomplete'
 GoogleMapsAutocomplete.propTypes = {
   maps: propTypes.object,
   map: propTypes.object,

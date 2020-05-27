@@ -64,7 +64,7 @@ export const defaultConfig = {
     autoSelect: {
       OLO: {
         PICKUP: false,
-        DELIVERY: true,
+        DELIVERY: false,
       },
       CATERING: {
         PICKUP: false,
