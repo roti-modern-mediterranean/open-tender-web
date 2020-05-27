@@ -27,7 +27,7 @@ const useGoogleMapsAutocomplete = (sessionToken, autocomplete, input) => {
     debouncedGetPlacePredictions(input)
   }, [input])
 
-  return predictions
+  return [predictions, setPredictions]
 }
 
 export default useGoogleMapsAutocomplete

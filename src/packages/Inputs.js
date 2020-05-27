@@ -32,44 +32,50 @@ Error.propTypes = {
   error: propTypes.string,
 }
 
-export const Input = ({
-  label,
-  name,
-  type,
-  value,
-  onChange,
-  error,
-  showLabel = true,
-  disabled = false,
-  readOnly = false,
-  required = false,
-  placeholder = '',
-  classes = '',
-  inputClasses = '',
-  children,
-}) => {
-  return (
-    <label htmlFor={name} className={`form__input ${classes}`}>
-      {showLabel && <Label text={label} required={required} />}
-      <input
-        aria-label={label}
-        id={name}
-        name={name}
-        type={type}
-        autoComplete={type === 'password' ? `current-${name}` : null}
-        value={value || ''}
-        placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
-        required={required}
-        className={inputClasses}
-        onChange={onChange}
-      />
-      {children}
-      {error ? <Error error={error} /> : null}
-    </label>
-  )
-}
+export const Input = React.forwardRef(
+  (
+    {
+      label,
+      name,
+      type,
+      value,
+      onChange,
+      error,
+      showLabel = true,
+      disabled = false,
+      readOnly = false,
+      required = false,
+      placeholder = '',
+      classes = '',
+      inputClasses = '',
+      children,
+    },
+    ref
+  ) => {
+    return (
+      <label htmlFor={name} className={`form__input ${classes}`}>
+        {showLabel && <Label text={label} required={required} />}
+        <input
+          aria-label={label}
+          id={name}
+          name={name}
+          type={type}
+          autoComplete={type === 'password' ? `current-${name}` : null}
+          value={value || ''}
+          placeholder={placeholder}
+          disabled={disabled}
+          readOnly={readOnly}
+          required={required}
+          className={inputClasses}
+          onChange={onChange}
+          ref={ref}
+        />
+        {children}
+        {error ? <Error error={error} /> : null}
+      </label>
+    )
+  }
+)
 
 Input.displayName = 'Input'
 Input.propTypes = {

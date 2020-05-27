@@ -1,23 +1,24 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { selectConfig } from '../../slices/configSlice'
 import { selectOrder } from '../../slices/orderSlice'
-import { selectLocations, fetchLocations } from '../../slices/locationsSlice'
+import { selectGeoLatLng } from '../../slices/geolocationSlice'
+import { selectLocations } from '../../slices/locationsSlice'
 import { GoogleMap, GoogleMapsMarker } from '../../packages'
 import SelectLocation from '../SelectLocation'
 
 const MapPage = () => {
   const history = useHistory()
-  const dispatch = useDispatch()
   const [activeMarker, setActiveMarker] = useState(null)
   const { orderType, serviceType, address } = useSelector(selectOrder)
   const { googleMaps: mapConfig } = useSelector(selectConfig)
   const { apiKey, defaultCenter, zoom, styles, icons, marker_size } = mapConfig
+  // const geoLatLng = useSelector(selectGeoLatLng)
+  const geoLatLng = null
   const initialCenter = address
     ? { lat: address.lat, lng: address.lng }
-    : defaultCenter
+    : geoLatLng || defaultCenter
   const [center, setCenter] = useState(initialCenter)
   const { locations } = useSelector(selectLocations)
   const hasTypes = orderType && serviceType
@@ -29,17 +30,6 @@ const MapPage = () => {
   useEffect(() => {
     if (!hasTypes) history.push('/')
   }, [hasTypes, history])
-
-  useEffect(() => {
-    if (orderType && !address) {
-      const params = {
-        revenue_center_type: orderType,
-        lat: center.lat,
-        lng: center.lng,
-      }
-      dispatch(fetchLocations(params))
-    }
-  }, [orderType, dispatch])
 
   return (
     <div className="content">
@@ -58,7 +48,10 @@ const MapPage = () => {
             <GoogleMapsMarker
               key={i.location_id}
               title={i.name}
-              position={{ lat: i.address.lat, lng: i.address.lng }}
+              position={{
+                lat: i.address.lat,
+                lng: i.address.lng,
+              }}
               icon={icon}
               size={marker_size}
               events={{
@@ -70,7 +63,10 @@ const MapPage = () => {
         {address && (
           <GoogleMapsMarker
             title="Your Location"
-            position={{ lat: center.lat, lng: center.lng }}
+            position={{
+              lat: center.lat,
+              lng: center.lng,
+            }}
             icon={icons.user}
             size={marker_size}
           />

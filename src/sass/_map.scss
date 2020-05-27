@@ -63,6 +63,11 @@
   &__input {
     margin-bottom: 0;
 
+    input {
+      padding-left: 3.2rem;
+      padding-right: 3.2rem;
+    }
+
     input:focus,
     input:active {
       border-bottom-left-radius: 0;
@@ -72,5 +77,23 @@
         display: block;
       }
     }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    left: 1.1rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: -0.6rem;
+  }
+
+  &__clear {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: -0.7rem;
   }
 }

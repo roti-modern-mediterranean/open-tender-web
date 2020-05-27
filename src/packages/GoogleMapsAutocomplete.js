@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 import propTypes from 'prop-types'
 import {
   Input,
@@ -7,6 +7,7 @@ import {
   useGoogleMapsPlace,
   makeAddress,
 } from './index'
+import { iconMap } from './icons'
 
 const keys = {
   enter: 13,
@@ -27,12 +28,13 @@ const GoogleMapsAutocomplete = ({
   const [input, setInput] = useState(formattedAddress || '')
   const [activeIndex, setActiveIndex] = useState(0)
   const [placeId, setPlaceId] = useState(null)
-  const predictions = useGoogleMapsAutocomplete(
+  const [predictions, setPredictions] = useGoogleMapsAutocomplete(
     sessionToken,
     autocomplete,
     input
   )
   const place = useGoogleMapsPlace(maps, map, placeId)
+  const inputRef = useRef()
   // console.log(predictions.length)
   // console.log(place)
 
@@ -42,6 +44,14 @@ const GoogleMapsAutocomplete = ({
     setInput(description)
     setActiveIndex(0)
     evt.target.blur()
+  }
+
+  const clearInput = (evt) => {
+    evt.preventDefault()
+    setInput('')
+    setPredictions([])
+    evt.target.blur()
+    inputRef.current.focus()
   }
 
   const handleKeyPress = useCallback(
@@ -106,11 +116,12 @@ const GoogleMapsAutocomplete = ({
         name="address"
         type="text"
         value={input}
-        placeholder="enter your address"
+        placeholder="enter an address or zip code"
         onChange={(evt) => setInput(evt.target.value)}
         showLabel={false}
         classes="autocomplete__input"
         error={error}
+        ref={inputRef}
       >
         <div className="autocomplete__predictions bg-color border-radius border-color">
           {predictions ? (
@@ -135,6 +146,14 @@ const GoogleMapsAutocomplete = ({
             </ul>
           ) : null}
         </div>
+        <div className="autocomplete__icon ot-placeholder">
+          {iconMap['Navigation']}
+        </div>
+        {input.length ? (
+          <button className="autocomplete__clear btn-link" onClick={clearInput}>
+            {iconMap['XCircle']}
+          </button>
+        ) : null}
       </Input>
     </div>
   )
