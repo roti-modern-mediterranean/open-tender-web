@@ -18,14 +18,30 @@ export const defaultConfig = {
       //  backgroundColor: '#f4f2ff',
       backgroundColor: '#f6f5ff',
     },
-    marker_size: { width: 30, height: 40 },
     icons: {
-      user:
-        'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271579_map-marker_red-dark-red_120x160.png',
-      active:
-        'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271604_map-marker_black_120x160.png',
-      inactive:
-        'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271631_map-marker_purple_120x160.png',
+      user: {
+        url:
+          'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271579_map-marker_red-dark-red_120x160.png',
+        size: { width: 30, height: 40 },
+        anchor: null,
+        // url:
+        //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590605559_marker-round_purple-white_120x120.png',
+        // size: { width: 30, height: 30 },
+        // anchor: { x: 0, y: -15 },
+      },
+      active: {
+        url:
+          'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271604_map-marker_black_120x160.png',
+        size: { width: 30, height: 40 },
+        anchor: null,
+      },
+
+      inactive: {
+        url:
+          'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271631_map-marker_purple_120x160.png',
+        size: { width: 30, height: 40 },
+        anchor: null,
+      },
     },
   },
   home: {
@@ -41,18 +57,9 @@ export const defaultConfig = {
     },
   },
   locations: {
-    background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588218676_restaurant-front_1800x1200.jpg',
-    title: 'restaurants near you',
-    content: 'Please choose a location',
-  },
-  map: {
     title: "Let's find the nearest location",
     subtitle: "We'll make this quick",
-    content: {
-      pickup: 'Please enter your zip code & choose an option.',
-      delivery: 'Please start typing below and then select your address.',
-    },
+    content: 'Please enter a zip code or address below.',
   },
   menu: {
     // background:

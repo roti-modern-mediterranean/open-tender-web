@@ -12,10 +12,9 @@ const MapPage = () => {
   const history = useHistory()
   const [activeMarker, setActiveMarker] = useState(null)
   const { orderType, serviceType, address } = useSelector(selectOrder)
-  const { googleMaps: mapConfig } = useSelector(selectConfig)
-  const { apiKey, defaultCenter, zoom, styles, icons, marker_size } = mapConfig
+  const { googleMaps: mapsConfig } = useSelector(selectConfig)
+  const { apiKey, defaultCenter, zoom, styles, icons } = mapsConfig
   const geoLatLng = useSelector(selectGeoLatLng)
-  // const geoLatLng = null
   const initialCenter = address
     ? { lat: address.lat, lng: address.lng }
     : geoLatLng || defaultCenter
@@ -52,8 +51,9 @@ const MapPage = () => {
                 lat: i.address.lat,
                 lng: i.address.lng,
               }}
-              icon={icon}
-              size={marker_size}
+              icon={icon.url}
+              size={icon.size}
+              anchor={icon.anchor}
               events={{
                 onClick: () => setActiveMarker(i.location_id),
               }}
@@ -67,8 +67,9 @@ const MapPage = () => {
               lat: center.lat,
               lng: center.lng,
             }}
-            icon={icons.user}
-            size={marker_size}
+            icon={icons.user.url}
+            size={icons.user.size}
+            anchor={icons.user.anchor}
           />
         )}
       </GoogleMap>

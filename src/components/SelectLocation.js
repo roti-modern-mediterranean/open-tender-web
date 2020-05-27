@@ -8,10 +8,7 @@ import { setAddress, selectOrder } from '../slices/orderSlice'
 import { fetchLocations, selectLocations } from '../slices/locationsSlice'
 import { selectGeoLatLng } from '../slices/geolocationSlice'
 import { Location } from './Location'
-import { Link } from 'react-router-dom'
 import { sortRevenueCenters } from '../packages/utils/maps'
-
-const fallbackMsg = 'Please enter your street address & choose an option.'
 
 const MIN_DISTANCE = 100
 
@@ -38,6 +35,30 @@ const MESSAGES = {
     default: {
       title: 'Please choose a location',
       msg: 'Or enter a zip code to find the location nearest you.',
+    },
+  },
+  delivery: {
+    default: {
+      title: "Let's find the nearest location",
+      msg: 'Please enter your address below.',
+      error: null,
+    },
+    noStreet: {
+      title: 'Please enter a street address',
+      msg: '',
+      error:
+        'A full address with street number is required for delivery orders.',
+    },
+    hasDelivery: {
+      title: 'Delivery is availabe!',
+      msg: 'Please choose a location below.',
+      error: null,
+    },
+    noDelivery: {
+      title: 'Delivery not available in your area',
+      msg:
+        "We're really sorry about that. Please enter a different address or head back and start a pickup order.",
+      error: null,
     },
   },
 }
@@ -86,6 +107,34 @@ const makePickupMesssaging = (
   }
 }
 
+const makeDeliveryLocations = (locations) => {
+  const hasDelivery = locations.filter((i) =>
+    i.settings.service_types.includes('DELIVERY')
+  )
+  const sorted = sortRevenueCenters(hasDelivery, true)
+  return sorted.filter((i) => i.inZone)
+}
+
+const makeDeliveryMesssaging = (address, count, messages = MESSAGES) => {
+  if (!address) {
+    return messages.delivery.default
+  } else if (!address.street) {
+    return messages.delivery.noStreet
+  } else {
+    if (count) {
+      const restaurantMsg =
+        count > 1 ? 'restaurants deliver' : 'restaurant delivers'
+      return {
+        title: messages.delivery.hasDelivery.title,
+        msg: `${count} ${restaurantMsg} to your address. Please choose one below.`,
+        error: null,
+      }
+    } else {
+      return messages.delivery.noDelivery
+    }
+  }
+}
+
 const SelectLocation = ({
   setCenter,
   center,
@@ -95,25 +144,17 @@ const SelectLocation = ({
   autocomplete,
 }) => {
   const dispatch = useDispatch()
-  const { map: mapConfig, locations: locConfig } = useSelector(selectConfig)
-  const { content } = mapConfig
+  const { locations: locationsConfig } = useSelector(selectConfig)
   const geoLatLng = useSelector(selectGeoLatLng)
-  // const geoLatLng = null
   const { serviceType, orderType, address } = useSelector(selectOrder)
   const coords = address || geoLatLng
-  const serviceTypeLower = serviceType ? serviceType.toLowerCase() : 'pickup'
   const formattedAddress = address ? address.formatted_address : ''
   const { locations, loading } = useSelector(selectLocations)
-  const [title, setTitle] = useState(mapConfig.title)
-  const defaultMsg = content[serviceTypeLower] || fallbackMsg
-  const [msg, setMsg] = useState(defaultMsg)
+  const [title, setTitle] = useState(locationsConfig.title)
+  const [msg, setMsg] = useState(locationsConfig.content)
   const [error, setError] = useState(null)
   const [displayedLocations, setDisplayedLocations] = useState([])
   const isLoading = loading === 'pending'
-
-  useEffect(() => {
-    setMsg(content[serviceTypeLower])
-  }, [serviceTypeLower, content])
 
   useEffect(() => {
     if (orderType) {
@@ -124,13 +165,7 @@ const SelectLocation = ({
   }, [orderType, coords, dispatch])
 
   useEffect(() => {
-    // if (!showLocations) {
-    //   setDisplayedLocations([])
-    //   setTitle(mapConfig.title)
-    //   setMsg(<p className="secondary-color">{defaultMsg}</p>)
-    // }
     if (serviceType === 'PICKUP') {
-      setError(null)
       const pickupLocations = makePickupLocations(locations)
       setDisplayedLocations(makePickupLocations(locations))
       const minDistance = calcMinDistance(pickupLocations)
@@ -143,53 +178,17 @@ const SelectLocation = ({
       )
       setTitle(title)
       setMsg(msg)
+      setError(null)
     } else {
-      if (!address || !address.street) {
-        setError('Please enter a street address for delivery orders.')
-        setDisplayedLocations([])
-        setTitle(mapConfig.title)
-      } else {
-        setError(null)
-        const hasDelivery = locations.filter((i) =>
-          i.settings.service_types.includes('DELIVERY')
-        )
-        const sorted = sortRevenueCenters(hasDelivery, true)
-        const inZone = sorted.filter((i) => i.inZone)
-        setDisplayedLocations(inZone)
-        const count = inZone.length
-        const newTitle = count
-          ? 'Delivery is available!'
-          : 'Delivery not available in your area'
-        setTitle(newTitle)
-        const restaurantMsg =
-          count > 1 ? 'restaurants deliver' : 'restaurant delivers'
-        const newMsg = count ? (
-          `${count} ${restaurantMsg} to your address. Please choose one below.`
-        ) : !isLoading ? (
-          <span>
-            We're sorry about that.
-            <br />
-            <Link to="/">
-              Click here to head back and place a pickup order.
-            </Link>
-          </span>
-        ) : (
-          defaultMsg
-        )
-        setMsg(newMsg)
-      }
+      const deliveryLocations = makeDeliveryLocations(locations)
+      setDisplayedLocations(deliveryLocations)
+      const count = deliveryLocations.length
+      const { title, msg, error } = makeDeliveryMesssaging(address, count)
+      setTitle(title)
+      setMsg(msg)
+      setError(error)
     }
-  }, [
-    // MESSAGES,
-    serviceType,
-    address,
-    geoLatLng,
-    locations,
-    locConfig.title,
-    mapConfig.title,
-    defaultMsg,
-    isLoading,
-  ])
+  }, [serviceType, address, geoLatLng, locations])
 
   return (
     <div className="card map__card overlay border-radius slide-up ot-box-shadow">

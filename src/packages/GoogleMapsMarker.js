@@ -14,6 +14,7 @@ const GoogleMapsMarker = ({
   position,
   icon,
   size = { width: 30, height: 40 },
+  anchor = null,
   events,
 }) => {
   const [marker, setMarker] = useState(null)
@@ -44,6 +45,7 @@ const GoogleMapsMarker = ({
       icon: {
         url: icon,
         scaledSize: new maps.Size(size.width, size.height),
+        anchor: anchor,
       },
     })
     if (events) {
