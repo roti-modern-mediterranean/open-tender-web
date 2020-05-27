@@ -2,8 +2,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import {
   HomePage,
-  // LocationsPage,
-  MapPage,
+  LocationsPage,
   MenuPage,
   CheckoutPage,
   AccountPage,
@@ -17,12 +16,8 @@ const Routes = () => {
         <HomePage />
       </Route>
       <Route exact path="/locations">
-        {/* <LocationsPage /> */}
-        <MapPage />
+        <LocationsPage />
       </Route>
-      {/* <Route exact path="/map">
-        <MapPage />
-      </Route> */}
       <Route path="/menu/:slug">
         <MenuPage />
       </Route>

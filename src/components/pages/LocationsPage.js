@@ -1,32 +1,78 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
 import { selectConfig } from '../../slices/configSlice'
-import { fetchLocations, selectLocations } from '../../slices/locationsSlice'
 import { selectOrder } from '../../slices/orderSlice'
-import Background from '../Background'
-import { Locations } from '../Locations'
+import { selectGeoLatLng } from '../../slices/geolocationSlice'
+import { selectLocations } from '../../slices/locationsSlice'
+import { GoogleMap, GoogleMapsMarker } from '../../packages'
+import SelectLocation from '../SelectLocation'
 
 const LocationsPage = () => {
   const history = useHistory()
-  const dispatch = useDispatch()
-  const { locations: locationsConfig } = useSelector(selectConfig)
-  const locations = useSelector(selectLocations)
-  const { orderType, serviceType } = useSelector(selectOrder)
+  const [activeMarker, setActiveMarker] = useState(null)
+  const { orderType, serviceType, address } = useSelector(selectOrder)
+  const { googleMaps: mapsConfig } = useSelector(selectConfig)
+  const { apiKey, defaultCenter, zoom, styles, icons } = mapsConfig
+  const geoLatLng = useSelector(selectGeoLatLng)
+  const initialCenter = address
+    ? { lat: address.lat, lng: address.lng }
+    : geoLatLng || defaultCenter
+  const [center, setCenter] = useState(initialCenter)
+  const { locations } = useSelector(selectLocations)
   const hasTypes = orderType && serviceType
+
+  useEffect(() => {
+    window.scroll(0, 0)
+  }, [])
 
   useEffect(() => {
     if (!hasTypes) history.push('/')
   }, [hasTypes, history])
 
-  useEffect(() => {
-    if (orderType) dispatch(fetchLocations({ revenue_center_type: orderType }))
-  }, [orderType, dispatch])
-
   return (
     <div className="content">
-      <Background imageUrl={locationsConfig.background} />
-      {locations.length ? <Locations locations={locations} /> : null}
+      <GoogleMap
+        apiKey={apiKey}
+        zoom={zoom}
+        styles={styles}
+        center={center}
+        // events={null}
+      >
+        <SelectLocation setCenter={setCenter} center={center} />
+        {locations.map((i) => {
+          const isActive = i.location_id === activeMarker
+          const icon = isActive ? icons.active : icons.inactive
+          return (
+            <GoogleMapsMarker
+              key={i.location_id}
+              title={i.name}
+              position={{
+                lat: i.address.lat,
+                lng: i.address.lng,
+              }}
+              icon={icon.url}
+              size={icon.size}
+              anchor={icon.anchor}
+              events={{
+                onClick: () => setActiveMarker(i.location_id),
+              }}
+            />
+          )
+        })}
+        {address && (
+          <GoogleMapsMarker
+            title="Your Location"
+            position={{
+              lat: center.lat,
+              lng: center.lng,
+            }}
+            icon={icons.user.url}
+            size={icons.user.size}
+            anchor={icons.user.anchor}
+          />
+        )}
+      </GoogleMap>
     </div>
   )
 }

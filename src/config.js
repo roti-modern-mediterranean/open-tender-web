@@ -60,6 +60,20 @@ export const defaultConfig = {
     title: "Let's find the nearest location",
     subtitle: "We'll make this quick",
     content: 'Please enter a zip code or address below.',
+    autoSelect: {
+      OLO: {
+        PICKUP: false,
+        DELIVERY: true,
+      },
+      CATERING: {
+        PICKUP: false,
+        DELIVERY: true,
+      },
+      MERCH: {
+        PICKUP: true,
+        DELIVERY: true,
+      },
+    },
   },
   menu: {
     // background:
