@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { slugify } from '../packages/utils/helpers'
 import MenuItem from './MenuItem'
 
-const MenuCategory = ({ category, itemEdit, isChild }) => {
+const MenuCategory = ({ category, isChild }) => {
   const child = isChild ? '-child' : ''
   return (
     <div
@@ -21,7 +21,7 @@ const MenuCategory = ({ category, itemEdit, isChild }) => {
       </div>
       <div className="menu__items">
         {category.items.map((item) => (
-          <MenuItem key={item.id} item={item} handler={itemEdit} />
+          <MenuItem key={item.id} item={item} />
         ))}
       </div>
     </div>
@@ -31,7 +31,6 @@ const MenuCategory = ({ category, itemEdit, isChild }) => {
 MenuCategory.displayName = 'MenuCategory'
 MenuCategory.propTypes = {
   category: propTypes.object,
-  itemEdit: propTypes.func,
   isChild: propTypes.bool,
   isPreview: propTypes.bool,
 }

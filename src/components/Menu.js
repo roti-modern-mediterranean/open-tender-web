@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import StickyNav from './StickyNav'
 import MenuCategory from './MenuCategory'
 
-const Menu = ({ categories, itemEdit }) => {
+const Menu = ({ categories }) => {
   const navItems = categories ? categories.map((i) => i.name) : []
   return (
     <>
@@ -11,12 +11,11 @@ const Menu = ({ categories, itemEdit }) => {
       <div className="menu container">
         {categories.map((category) => (
           <div key={category.id}>
-            <MenuCategory category={category} itemEdit={itemEdit} />
+            <MenuCategory category={category} />
             {category.children.map((category) => (
               <MenuCategory
                 key={category.id}
                 category={category}
-                itemEdit={itemEdit}
                 isChild={true}
               />
             ))}

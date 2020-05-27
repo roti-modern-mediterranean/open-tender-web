@@ -54,8 +54,16 @@ $padding-x: 3rem;
     }
   }
 
+  &__image {
+    position: relative;
+    width: 100%;
+    padding: 30%;
+    margin-bottom: 1.4rem;
+  }
+
   &__count {
     position: absolute;
+    z-index: 2;
     top: -1.2rem;
     right: -1rem;
     display: flex;
@@ -67,11 +75,17 @@ $padding-x: 3rem;
     padding-bottom: 0.1rem;
   }
 
-  &__image {
-    position: relative;
-    width: 100%;
-    padding: 30%;
-    margin-bottom: 1.4rem;
+  &__sold-out {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 
   &__name {
@@ -85,5 +99,23 @@ $padding-x: 3rem;
 
   &__price {
     margin: 0.5rem 0 0;
+  }
+
+  &.-sold-out {
+    button {
+      cursor: default;
+
+      &:hover,
+      &:active,
+      &:focus {
+        opacity: 1;
+      }
+    }
+
+    .menu__item__name,
+    .menu__item__desc,
+    .menu__item__price {
+      opacity: 0.5;
+    }
   }
 }
