@@ -1,23 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOrderServiceType } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
-import { setGeoLatLng, setGeoError } from '../slices/geolocationSlice'
-import useGeolocation from '../packages/useGeolocation'
 
-const OrderType = () => {
-  const { geoLatLng, geoError } = useGeolocation()
+const SelectOrderType = () => {
   const { home: homeConfig } = useSelector(selectConfig)
   const { title, subtitle, content, buttons } = homeConfig
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    if (geoLatLng) {
-      dispatch(setGeoLatLng(geoLatLng))
-    } else if (geoError) {
-      dispatch(setGeoError(geoError))
-    }
-  }, [geoLatLng, geoError, dispatch])
 
   return (
     <div className="card overlay border-radius slide-up">
@@ -55,5 +44,5 @@ const OrderType = () => {
   )
 }
 
-OrderType.displayName = 'OrderType'
-export default OrderType
+SelectOrderType.displayName = 'SelectOrderType'
+export default SelectOrderType

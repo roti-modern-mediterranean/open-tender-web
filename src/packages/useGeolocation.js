@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react'
 
+const geoOptions = {
+  maximumAge: 60 * 60 * 1000,
+  timeout: 5 * 1000,
+}
+
 const useGeolocation = () => {
   const [position, setPosition] = useState(null)
   const [error, setError] = useState(null)
 
-  const onSuccess = ({ coords }) => {
-    const position = { lat: coords.latitude, lng: coords.longitude }
-    setPosition(position)
-    // setGeoLatLng(position)
+  const onSuccess = (position) => {
+    const { coords } = position
+    const latLng = { lat: coords.latitude, lng: coords.longitude }
+    setPosition(latLng)
   }
 
   const onError = (error) => {
     setError(error.message)
-    // setGeoError(error.message)
   }
 
   useEffect(() => {
@@ -21,7 +25,7 @@ const useGeolocation = () => {
       setError('Geolocation is not supported')
       return
     }
-    geo.getCurrentPosition(onSuccess, onError)
+    geo.getCurrentPosition(onSuccess, onError, geoOptions)
   }, [])
 
   return { geoLatLng: position, geoError: error }
