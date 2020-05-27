@@ -14,8 +14,8 @@ const MapPage = () => {
   const { orderType, serviceType, address } = useSelector(selectOrder)
   const { googleMaps: mapConfig } = useSelector(selectConfig)
   const { apiKey, defaultCenter, zoom, styles, icons, marker_size } = mapConfig
-  // const geoLatLng = useSelector(selectGeoLatLng)
-  const geoLatLng = null
+  const geoLatLng = useSelector(selectGeoLatLng)
+  // const geoLatLng = null
   const initialCenter = address
     ? { lat: address.lat, lng: address.lng }
     : geoLatLng || defaultCenter

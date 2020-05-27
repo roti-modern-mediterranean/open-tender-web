@@ -13,11 +13,77 @@ import { sortRevenueCenters } from '../packages/utils/maps'
 
 const fallbackMsg = 'Please enter your street address & choose an option.'
 
+const MIN_DISTANCE = 100
+
+const MESSAGES = {
+  pickup: {
+    address: {
+      title: 'restaurants near you',
+      msg: 'Please choose a location below.',
+    },
+    addressFar: {
+      title: "Looks like we don't have any restaurants in your area",
+      msg:
+        'Sorry about that. Please enter a different address or head back and choose a different order type.',
+    },
+    geo: {
+      title: 'restaurants in your area',
+      msg: 'Please enter a zip code or address for a more accurate result.',
+    },
+    geoFar: {
+      title: "Looks like we don't have any restaurants in your area",
+      msg:
+        'Please enter a zip code or address if you live in a different area.',
+    },
+    default: {
+      title: 'Please choose a location',
+      msg: 'Or enter a zip code to find the location nearest you.',
+    },
+  },
+}
+
+const calcMinDistance = (locations) => {
+  const withDistance = locations
+    .filter((i) => i.distance !== null)
+    .map((i) => i.distance)
+  return withDistance ? Math.min(...withDistance) : MIN_DISTANCE
+}
+
 const makePickupLocations = (locations) => {
   const hasPickup = locations.filter((i) =>
     i.settings.service_types.includes('PICKUP')
   )
   return sortRevenueCenters(hasPickup)
+}
+
+const makePickupMesssaging = (
+  address,
+  geoLatLng,
+  count,
+  minDistance,
+  messages = MESSAGES
+) => {
+  if (address) {
+    if (minDistance > MIN_DISTANCE) {
+      return messages.pickup.addressFar
+    } else {
+      return {
+        title: `${count} ${MESSAGES.pickup.address.title}`,
+        msg: messages.pickup.address.msg,
+      }
+    }
+  } else if (geoLatLng) {
+    if (minDistance > MIN_DISTANCE) {
+      return messages.pickup.geoFar
+    } else {
+      return {
+        title: `${count} ${MESSAGES.pickup.geo.title}`,
+        msg: messages.pickup.geo.msg,
+      }
+    }
+  } else {
+    return messages.pickup.default
+  }
 }
 
 const SelectLocation = ({
@@ -31,8 +97,8 @@ const SelectLocation = ({
   const dispatch = useDispatch()
   const { map: mapConfig, locations: locConfig } = useSelector(selectConfig)
   const { content } = mapConfig
-  // const geoLatLng = useSelector(selectGeoLatLng)
-  const geoLatLng = null
+  const geoLatLng = useSelector(selectGeoLatLng)
+  // const geoLatLng = null
   const { serviceType, orderType, address } = useSelector(selectOrder)
   const coords = address || geoLatLng
   const serviceTypeLower = serviceType ? serviceType.toLowerCase() : 'pickup'
@@ -44,8 +110,6 @@ const SelectLocation = ({
   const [error, setError] = useState(null)
   const [displayedLocations, setDisplayedLocations] = useState([])
   const isLoading = loading === 'pending'
-  const showLocations =
-    serviceType === 'PICKUP' || !!(serviceType === 'DELIVERY' && address)
 
   useEffect(() => {
     setMsg(content[serviceTypeLower])
@@ -60,28 +124,25 @@ const SelectLocation = ({
   }, [orderType, coords, dispatch])
 
   useEffect(() => {
-    if (!showLocations) {
-      setDisplayedLocations([])
-      setTitle(mapConfig.title)
-      setMsg(<p className="secondary-color">{defaultMsg}</p>)
-    } else if (serviceType === 'PICKUP') {
+    // if (!showLocations) {
+    //   setDisplayedLocations([])
+    //   setTitle(mapConfig.title)
+    //   setMsg(<p className="secondary-color">{defaultMsg}</p>)
+    // }
+    if (serviceType === 'PICKUP') {
       setError(null)
       const pickupLocations = makePickupLocations(locations)
-      setDisplayedLocations(pickupLocations)
-      if (address) {
-        const count = locations.length
-        setTitle(`${count} restaurants near you`)
-        setMsg(
-          <p className="secondary-color">Please choose a location below.</p>
-        )
-      } else {
-        setTitle(`Choose a location`)
-        setMsg(
-          <p className="secondary-color">
-            Or enter a zip code to find the location nearest you.
-          </p>
-        )
-      }
+      setDisplayedLocations(makePickupLocations(locations))
+      const minDistance = calcMinDistance(pickupLocations)
+      const count = pickupLocations.length
+      const { title, msg } = makePickupMesssaging(
+        address,
+        geoLatLng,
+        count,
+        minDistance
+      )
+      setTitle(title)
+      setMsg(msg)
     } else {
       if (!address || !address.street) {
         setError('Please enter a street address for delivery orders.')
@@ -119,9 +180,10 @@ const SelectLocation = ({
       }
     }
   }, [
-    showLocations,
+    // MESSAGES,
     serviceType,
     address,
+    geoLatLng,
     locations,
     locConfig.title,
     mapConfig.title,
@@ -134,7 +196,11 @@ const SelectLocation = ({
       <div className="card__header">
         {/* <p className="preface secondary-color">{subtitle}</p> */}
         <h1 className="ot-font-size-h3">{title}</h1>
-        {error ? <p className="ot-error-color">{error}</p> : msg}
+        {error ? (
+          <p className="ot-error-color">{error}</p>
+        ) : (
+          <p className="secondary-color">{msg}</p>
+        )}
       </div>
       <div className="card__content">
         <GoogleMapsAutocomplete
@@ -153,7 +219,7 @@ const SelectLocation = ({
             </div>
             <p>Retrieving nearest locations</p>
           </div>
-        ) : !error && showLocations && displayedLocations.length ? (
+        ) : !error && displayedLocations.length > 0 ? (
           <div className="locations">
             <ul>
               {displayedLocations.map((location) => (
