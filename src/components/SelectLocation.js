@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import BarLoader from 'react-spinners/BarLoader'
 import { useSelector, useDispatch } from 'react-redux'
 import { GoogleMapsAutocomplete } from '../packages'
+import { MAX_DISTANCE, LOCATIONS_MESSAGES } from '../packages/utils/constants'
 import { selectConfig } from '../slices/configSlice'
 import { setAddress, selectOrder } from '../slices/orderSlice'
 import { fetchLocations, selectLocations } from '../slices/locationsSlice'
@@ -10,64 +11,11 @@ import { selectGeoLatLng } from '../slices/geolocationSlice'
 import { Location } from './Location'
 import { sortRevenueCenters } from '../packages/utils/maps'
 
-const MIN_DISTANCE = 100
-
-const MESSAGES = {
-  pickup: {
-    address: {
-      title: 'restaurants near you',
-      msg: 'Please choose a location below.',
-    },
-    addressFar: {
-      title: "Looks like we don't have any restaurants in your area",
-      msg:
-        'Sorry about that. Please enter a different address or head back and choose a different order type.',
-    },
-    geo: {
-      title: 'restaurants in your area',
-      msg: 'Please enter a zip code or address for a more accurate result.',
-    },
-    geoFar: {
-      title: "Looks like we don't have any restaurants in your area",
-      msg:
-        'Please enter a zip code or address if you live in a different area.',
-    },
-    default: {
-      title: 'Please choose a location',
-      msg: 'Or enter a zip code to find the location nearest you.',
-    },
-  },
-  delivery: {
-    default: {
-      title: "Let's find the nearest location",
-      msg: 'Please enter your address below.',
-      error: null,
-    },
-    noStreet: {
-      title: 'Please enter a street address',
-      msg: '',
-      error:
-        'A full address with street number is required for delivery orders.',
-    },
-    hasDelivery: {
-      title: 'Delivery is availabe!',
-      msg: 'Please choose a location below.',
-      error: null,
-    },
-    noDelivery: {
-      title: 'Delivery not available in your area',
-      msg:
-        "We're really sorry about that. Please enter a different address or head back and start a pickup order.",
-      error: null,
-    },
-  },
-}
-
-const calcMinDistance = (locations) => {
+const calcMinDistance = (locations, maxDistance = MAX_DISTANCE) => {
   const withDistance = locations
     .filter((i) => i.distance !== null)
     .map((i) => i.distance)
-  return withDistance ? Math.min(...withDistance) : MIN_DISTANCE
+  return withDistance ? Math.min(...withDistance) : maxDistance
 }
 
 const makePickupLocations = (locations) => {
@@ -82,28 +30,29 @@ const makePickupMesssaging = (
   geoLatLng,
   count,
   minDistance,
-  messages = MESSAGES
+  maxDistance = MAX_DISTANCE,
+  messages = LOCATIONS_MESSAGES
 ) => {
   if (address) {
-    if (minDistance > MIN_DISTANCE) {
-      return messages.pickup.addressFar
+    if (minDistance >= maxDistance) {
+      return messages.PICKUP.addressFar
     } else {
       return {
-        title: `${count} ${MESSAGES.pickup.address.title}`,
-        msg: messages.pickup.address.msg,
+        title: `${count} ${messages.PICKUP.address.title}`,
+        msg: messages.PICKUP.address.msg,
       }
     }
   } else if (geoLatLng) {
-    if (minDistance > MIN_DISTANCE) {
-      return messages.pickup.geoFar
+    if (minDistance >= maxDistance) {
+      return messages.PICKUP.geoFar
     } else {
       return {
-        title: `${count} ${MESSAGES.pickup.geo.title}`,
-        msg: messages.pickup.geo.msg,
+        title: `${count} ${messages.PICKUP.geo.title}`,
+        msg: messages.PICKUP.geo.msg,
       }
     }
   } else {
-    return messages.pickup.default
+    return messages.PICKUP.default
   }
 }
 
@@ -115,22 +64,26 @@ const makeDeliveryLocations = (locations) => {
   return sorted.filter((i) => i.inZone)
 }
 
-const makeDeliveryMesssaging = (address, count, messages = MESSAGES) => {
+const makeDeliveryMesssaging = (
+  address,
+  count,
+  messages = LOCATIONS_MESSAGES
+) => {
   if (!address) {
-    return messages.delivery.default
+    return messages.DELIVERY.default
   } else if (!address.street) {
-    return messages.delivery.noStreet
+    return messages.DELIVERY.noStreet
   } else {
     if (count) {
       const restaurantMsg =
         count > 1 ? 'restaurants deliver' : 'restaurant delivers'
       return {
-        title: messages.delivery.hasDelivery.title,
+        title: messages.DELIVERY.hasDelivery.title,
         msg: `${count} ${restaurantMsg} to your address. Please choose one below.`,
         error: null,
       }
     } else {
-      return messages.delivery.noDelivery
+      return messages.DELIVERY.noDelivery
     }
   }
 }
@@ -144,14 +97,14 @@ const SelectLocation = ({
   autocomplete,
 }) => {
   const dispatch = useDispatch()
-  const { locations: locationsConfig } = useSelector(selectConfig)
+  const { locations: locConfig } = useSelector(selectConfig)
   const geoLatLng = useSelector(selectGeoLatLng)
   const { serviceType, orderType, address } = useSelector(selectOrder)
   const coords = address || geoLatLng
   const formattedAddress = address ? address.formatted_address : ''
   const { locations, loading } = useSelector(selectLocations)
-  const [title, setTitle] = useState(locationsConfig.title)
-  const [msg, setMsg] = useState(locationsConfig.content)
+  const [title, setTitle] = useState(locConfig.title)
+  const [msg, setMsg] = useState(locConfig.content)
   const [error, setError] = useState(null)
   const [displayedLocations, setDisplayedLocations] = useState([])
   const isLoading = loading === 'pending'
@@ -174,7 +127,8 @@ const SelectLocation = ({
         address,
         geoLatLng,
         count,
-        minDistance
+        minDistance,
+        locConfig.maxDistance
       )
       setTitle(title)
       setMsg(msg)
@@ -188,7 +142,7 @@ const SelectLocation = ({
       setMsg(msg)
       setError(error)
     }
-  }, [serviceType, address, geoLatLng, locations])
+  }, [serviceType, address, geoLatLng, locations, locConfig.maxDistance])
 
   return (
     <div className="card map__card overlay border-radius slide-up ot-box-shadow">

@@ -60,6 +60,7 @@ export const defaultConfig = {
     title: "Let's find the nearest location",
     subtitle: "We'll make this quick",
     content: 'Please enter a zip code or address below.',
+    maxDistance: 100,
     autoSelect: {
       OLO: {
         PICKUP: false,
