@@ -4,6 +4,7 @@ import {
   removeItem,
   incrementItem,
   decrementItem,
+  calcCartCounts,
 } from '../packages/utils/cart'
 import {
   serviceTypeNamesMap,
@@ -81,10 +82,10 @@ const orderSlice = createSlice({
       state.cart = cart
       state.cartCounts = cartCounts
     },
-    // validateCart: (state, action) => {
-    //   const { categories, soldOut } = action.payload
-    //   state.invalidItems = validateCart(state.cart, categories, soldOut)
-    // }
+    setCart: (state, action) => {
+      state.cart = action.payload
+      state.cartCounts = calcCartCounts(action.payload)
+    },
   },
 })
 
@@ -102,6 +103,7 @@ export const {
   removeItemFromCart,
   incrementItemInCart,
   decrementItemInCart,
+  setCart,
 } = orderSlice.actions
 
 export const selectOrder = (state) => state.order

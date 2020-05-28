@@ -19,7 +19,7 @@ LineItem.propTypes = {
   unit: propTypes.string,
 }
 
-const BuilderNutrition = ({ nutritionalInfo, show = true }) => {
+const BuilderNutrition = ({ nutritionalInfo = {}, show = true }) => {
   const {
     calories,
     cholesterol,

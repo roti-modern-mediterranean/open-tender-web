@@ -8,11 +8,13 @@ import {
   selectLocation,
   selectMenuVars,
   selectCart,
+  setCart,
 } from '../../slices/orderSlice'
-import { fetchMenu, selectMenu } from '../../slices/menuSlice'
+import { fetchMenu, selectMenu, setCartErrors } from '../../slices/menuSlice'
 import Hero from '../Hero'
 import { Location } from '../Location'
 import Menu from '../Menu'
+import { openModal } from '../../slices/modalSlice'
 
 export const MenuContext = createContext(null)
 
@@ -31,17 +33,10 @@ const MenuPage = () => {
   }, [])
 
   useEffect(() => {
-    const requestedIso =
-      requestedAt === 'asap' ? new Date().toISOString() : requestedAt
     locationId
-      ? dispatch(fetchMenu([locationId, serviceType, requestedIso]))
+      ? dispatch(fetchMenu([locationId, serviceType, requestedAt]))
       : history.push('/locations')
   }, [locationId, serviceType, requestedAt, dispatch, history])
-
-  // useEffect(() => {
-  //   const {newCart, errors} = validateCart(cart, categories, soldOut)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [categories, soldOut])
 
   useEffect(() => {
     console.log('old cart =>')
@@ -51,7 +46,14 @@ const MenuPage = () => {
     console.log('new cart =>')
     printCart(newCart)
     console.log('cart errors', errors)
-  })
+    if (errors) {
+      dispatch(setCartErrors({ newCart, errors }))
+      dispatch(openModal('cartErrors'))
+    } else {
+      dispatch(setCart(newCart))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categories, soldOut])
 
   return (
     <MenuContext.Provider value={{ soldOut, menuConfig }}>
