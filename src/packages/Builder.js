@@ -37,10 +37,11 @@ const useBuilder = (menuItem) => {
   const toggleOption = (groupId, optionId) => {
     const groups = item.groups.map((group) => {
       if (group.id === groupId) {
-        group.options.map((option) => {
-          option.quantity = option.id === optionId ? 1 : 0
-          return option
+        const options = group.options.map((option) => {
+          const newQuantity = option.id === optionId ? 1 : 0
+          return { ...option, quantity: newQuantity }
         })
+        return { ...group, options }
       }
       return group
     })

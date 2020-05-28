@@ -202,12 +202,24 @@ const makeItemLookup = (categories, itemIds) => {
 
 const makeGroupsLookup = (item) => {
   return item.groups.reduce((grpObj, i) => {
-    grpObj[i.id] = i.options.reduce((optObj, o) => {
+    const options = i.options.reduce((optObj, o) => {
       optObj[o.id] = o
       return optObj
     }, {})
+    grpObj[i.id] = { ...i, options }
     return grpObj
   }, {})
+}
+
+export const printOptionCheck = (option) => {
+  console.log(
+    option.name,
+    option.quantity,
+    option.min,
+    option.max,
+    option.quantity > option.max,
+    option.quantity < option.min
+  )
 }
 
 export const validateCart = (cart, categories, soldOut) => {
@@ -223,60 +235,68 @@ export const validateCart = (cart, categories, soldOut) => {
       missingItems.push(oldItem)
       return null
     }
-    let invalidGroups = [],
-      requiredGroups = [],
+    let missingGroups = [],
+      invalidGroups = [],
       missingOptions = [],
       invalidOptions = []
-    const oldGroupsLookup = makeGroupsLookup(oldItem)
-    newItem.groups.map((group) => {
-      const oldOptions = oldGroupsLookup[group.id]
-      if (!oldOptions) {
-        // if the existing item doesn't have any options in this option group but the
-        // group is required (due to having a non-zero minumum), this item is invalid
-        if (group.min > 0) requiredGroups.push(group)
+    const newGroups = makeGroupsLookup(newItem)
+    // check if any required groups for the new item are missing from the old item
+    const newRequiredGroups = Object.entries(newGroups).filter((i) => i.min > 0)
+    const oldGroupIds = oldItem.groups.map((i) => i.id)
+    missingGroups = newRequiredGroups.map((i) => !oldGroupIds.includes(i.id))
+    const updatedGroups = oldItem.groups.map((group) => {
+      const newGroup = newGroups[group.id]
+      // check if option group is still part of the item
+      if (!newGroup) {
+        invalidGroups.push(group)
+        return group
       } else {
-        group.options.map((option) => {
-          const oldOption = oldOptions[option.id]
-          option.quantity = oldOption ? oldOption.quantity : 0
-          // check to see if option quantity is valid relative to option min & max
-          // ignore the option increment setting for the time being
-          if (
-            (option.max && option.quantity > option.max) ||
-            (option.min && option.quantity < option.min)
-          ) {
-            console.log(
-              option.name,
-              option.quantity,
-              option.min,
-              option.max,
-              option.quantity > option.max,
-              option.quantity < option.mi
-            )
-            invalidOptions.push(option)
+        const updatedOptions = group.options.map((option) => {
+          const newOption = newGroup.options[option.id]
+          // check to see if any OLD options aren't avaiilable on the current menu
+          // or if any of the options are currently sold out
+          if (!newOption || soldOut.includes(option.id)) {
+            missingOptions.push(option)
+            return option
+          } else {
+            // check to see if option quantity is valid relative to option min & max
+            // ignore the option increment setting for the time being
+            if (
+              (newOption.max && option.quantity > newOption.max) ||
+              (newOption.min && option.quantity < newOption.min)
+            ) {
+              // printOptionCheck(option)
+              invalidOptions.push(option)
+              return option
+            } else {
+              // update the old option price to the new option price
+              const updatedOption = { ...option, price: newOption.price }
+              return updatedOption
+            }
           }
-          return option
         })
         const optionCount = group.options.reduce((t, i) => (t += i.quantity), 0)
-        // check to see if the option group has a max and the option count exceeds this
-        if (group.max > 0 && optionCount > group.max) invalidGroups.push(group)
-        const newOptionIds = group.options.map((i) => i.id.toString())
-        // check to see if any OLD options aren't avaiilable on the current menu
-        // or if any of the options are currently sold out
-        missingOptions = Object.keys(oldOptions).filter(
-          (id) => !newOptionIds.includes(id) || soldOut.includes(id)
-        )
+        // check to see if the option count is greater than the max (if one exists)
+        // or less than the min (if one exists)
+        if (
+          (newGroup.max && optionCount > newGroup.max) ||
+          (newGroup.min && optionCount < newGroup.min)
+        ) {
+          invalidGroups.push(group)
+        }
+        const updatedGroup = { ...group, options: updatedOptions }
+        return updatedGroup
       }
-      return group
     })
     if (
-      requiredGroups.length ||
+      missingGroups.length ||
       invalidGroups.length ||
       missingOptions.length ||
       invalidOptions.length
     ) {
       const invalidItem = {
         ...oldItem,
-        requiredGroups,
+        missingGroups,
         invalidGroups,
         missingOptions,
         invalidOptions,
@@ -284,19 +304,19 @@ export const validateCart = (cart, categories, soldOut) => {
       invalidItems.push(invalidItem)
       return null
     } else {
-      newItem.quantity = oldItem.quantity
       // check to see if this item's quantity is below the min or
       // above the max from the current menu
       if (
-        (newItem.max && newItem.quantity > newItem.max) ||
-        (newItem.min && newItem.quantity < newItem.min)
+        (newItem.max && oldItem.quantity > newItem.max) ||
+        (newItem.min && oldItem.quantity < newItem.min)
       ) {
-        invalidItems.append(newItem)
+        invalidItems.append(oldItem)
         return null
       }
-      const pricedItem = calcPrices(newItem)
-      pricedItem.notes = oldItem.notes
-      pricedItem.madeFor = oldItem.made_for
+      const updatedItem = { ...oldItem, groups: updatedGroups }
+      // update the old item price to the new item price
+      updatedItem.price = newItem.price
+      const pricedItem = calcPrices(updatedItem)
       return pricedItem
     }
   })
