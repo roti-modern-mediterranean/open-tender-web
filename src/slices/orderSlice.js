@@ -81,6 +81,10 @@ const orderSlice = createSlice({
       state.cart = cart
       state.cartCounts = cartCounts
     },
+    // validateCart: (state, action) => {
+    //   const { categories, soldOut } = action.payload
+    //   state.invalidItems = validateCart(state.cart, categories, soldOut)
+    // }
   },
 })
 

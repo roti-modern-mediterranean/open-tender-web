@@ -177,6 +177,121 @@ const makeSimpleCart = (cart) => {
   return simpleCart
 }
 
+/* cart validation */
+
+// convert menu items to order items for validation but only include
+// items that are already in the cart to save wasted effort
+const makeItemLookup = (categories, itemIds) => {
+  let itemLookup = {}
+  categories.map((category) => {
+    category.items.map((item) => {
+      if (itemIds.includes(item.id)) {
+        itemLookup[item.id] = makeOrderItem(item, true)
+      }
+    })
+    category.children.map((child) => {
+      child.items.map((item) => {
+        if (itemIds.includes(item.id)) {
+          itemLookup[item.id] = makeOrderItem(item, true)
+        }
+      })
+    })
+  })
+  return itemLookup
+  // return categories.reduce((lookup, category) => {
+  //   category.items.map((item) => {
+  //       itemLookup[item.id] = makeOrderItem(item, true)
+  //   })
+  //   category.children.map((child) => {
+  //     child.items.map((item) => {
+  //       if (itemIds.includes(item.id)) {
+  //         itemLookup[item.id] = makeOrderItem(item, true)
+  //       }
+  //     })
+  //   })
+  // })
+  // return itemLookup
+}
+
+const makeGroupsLookup = (item) => {
+  return item.groups.reduce((grpObj, i) => {
+    grpObj[i.id] = i.options.reduce((optObj, o) => {
+      optObj[o.id] = o
+      return optObj
+    }, {})
+    return grpObj
+  }, {})
+}
+
+export const validateCart = (cart, categories, soldOut) => {
+  const itemIds = cart.map((item) => item.id)
+  const itemLookup = makeItemLookup(categories, itemIds)
+  console.log('itemLookup', itemLookup)
+  let errors = null,
+    missingItems = [],
+    invalidItems = []
+  let newCart = cart.map((oldItem) => {
+    const newItem = makeOrderItem(itemLookup[oldItem.id], true)
+    if (!newItem || soldOut.includes(oldItem.id)) {
+      missingItems.push(oldItem)
+      return null
+    }
+    let invalidGroups = [],
+      requiredGroups = [],
+      missingOptions = []
+    const oldGroupsLookup = makeGroupsLookup(oldItem)
+    newItem.groups.map((group) => {
+      console.log('group before', group)
+      const oldOptions = oldGroupsLookup[group.id]
+      if (!oldOptions) {
+        if (group.min > 0) requiredGroups.push(group)
+      } else {
+        group.options.map((option) => {
+          const oldOption = oldOptions[option.id]
+          option.quantity = oldOption ? oldOption.quantity : 0
+          return option
+        })
+        const optionCount = group.options.reduce((t, i) => (t += i.quantity), 0)
+        if (optionCount > group.max) invalidGroups.push(group)
+        const newOptionIds = group.options.map((i) => i.id)
+        missingOptions = oldOptions.filter(
+          (i) => !newOptionIds.includes(i.id) || soldOut.includes(i.id)
+        )
+      }
+      console.log('group after', group)
+      return group
+    })
+    if (
+      requiredGroups.length ||
+      invalidGroups.length ||
+      missingOptions.length
+    ) {
+      const invalidItem = {
+        ...oldItem,
+        requiredGroups,
+        invalidGroups,
+        missingOptions,
+      }
+      invalidItems.push(invalidItem)
+      return null
+    } else {
+      newItem.quantity = oldItem.quantity
+      const pricedItem = calcPrices(newItem)
+      pricedItem.notes = oldItem.notes
+      pricedItem.madeFor = oldItem.made_for
+      console.log('priced item', pricedItem)
+      return pricedItem
+    }
+  })
+  newCart.filter((i) => i !== null)
+  if (missingItems.length || invalidItems.length) {
+    errors = { missingItems, invalidItems }
+  }
+  return { newCart, errors }
+}
+
+/* order submission */
+
 export const prepareOrder = (data) => {
   data = data || {}
   const requestedIso =

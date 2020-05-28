@@ -2,8 +2,13 @@ import React, { useEffect, createContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import BarLoader from 'react-spinners/BarLoader'
+import { validateCart } from '../../packages/utils/cart'
 import { selectConfig } from '../../slices/configSlice'
-import { selectLocation, selectMenuVars } from '../../slices/orderSlice'
+import {
+  selectLocation,
+  selectMenuVars,
+  selectCart,
+} from '../../slices/orderSlice'
 import { fetchMenu, selectMenu } from '../../slices/menuSlice'
 import Hero from '../Hero'
 import { Location } from '../Location'
@@ -18,6 +23,7 @@ const MenuPage = () => {
   const location = useSelector(selectLocation)
   const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
   const { categories, soldOut, error, loading } = useSelector(selectMenu)
+  const cart = useSelector(selectCart)
   const isLoading = loading === 'pending'
 
   useEffect(() => {
@@ -31,6 +37,17 @@ const MenuPage = () => {
       ? dispatch(fetchMenu([locationId, serviceType, requestedIso]))
       : history.push('/locations')
   }, [locationId, serviceType, requestedAt, dispatch, history])
+
+  // useEffect(() => {
+  //   const {newCart, errors} = validateCart(cart, categories, soldOut)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [categories, soldOut])
+
+  useEffect(() => {
+    const { newCart, errors } = validateCart(cart, categories, soldOut)
+    console.log(JSON.stringify(newCart, null, 2))
+    console.log(errors)
+  })
 
   return (
     <MenuContext.Provider value={{ soldOut, menuConfig }}>
