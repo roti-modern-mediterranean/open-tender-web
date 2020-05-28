@@ -231,7 +231,7 @@ export const validateCart = (cart, categories, soldOut) => {
     missingItems = [],
     invalidItems = []
   let newCart = cart.map((oldItem) => {
-    const newItem = makeOrderItem(itemLookup[oldItem.id], true)
+    const newItem = itemLookup[oldItem.id]
     if (!newItem || soldOut.includes(oldItem.id)) {
       missingItems.push(oldItem)
       return null
@@ -249,13 +249,16 @@ export const validateCart = (cart, categories, soldOut) => {
         group.options.map((option) => {
           const oldOption = oldOptions[option.id]
           option.quantity = oldOption ? oldOption.quantity : 0
+          // TODO: check option min and max
           return option
         })
         const optionCount = group.options.reduce((t, i) => (t += i.quantity), 0)
         if (optionCount > group.max) invalidGroups.push(group)
-        const newOptionIds = group.options.map((i) => i.id)
-        missingOptions = oldOptions.filter(
-          (i) => !newOptionIds.includes(i.id) || soldOut.includes(i.id)
+        const newOptionIds = group.options.map((i) => i.id.toString())
+        console.log('newOptionIds', newOptionIds)
+        console.log('oldOptions ids', Object.keys(oldOptions))
+        missingOptions = Object.keys(oldOptions).filter(
+          (id) => !newOptionIds.includes(id) || soldOut.includes(id)
         )
       }
       console.log('group after', group)
@@ -276,6 +279,7 @@ export const validateCart = (cart, categories, soldOut) => {
       return null
     } else {
       newItem.quantity = oldItem.quantity
+      // TODO: check item min and max
       const pricedItem = calcPrices(newItem)
       pricedItem.notes = oldItem.notes
       pricedItem.madeFor = oldItem.made_for
