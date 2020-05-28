@@ -183,14 +183,14 @@ const makeSimpleCart = (cart) => {
 // items that are already in the cart to save wasted effort
 const makeItemLookup = (categories, itemIds) => {
   let itemLookup = {}
-  categories.map((category) => {
-    category.items.map((item) => {
+  categories.forEach((category) => {
+    category.items.forEach((item) => {
       if (itemIds.includes(item.id)) {
         itemLookup[item.id] = makeOrderItem(item, true)
       }
     })
-    category.children.map((child) => {
-      child.items.map((item) => {
+    category.children.forEach((child) => {
+      child.items.forEach((item) => {
         if (itemIds.includes(item.id)) {
           itemLookup[item.id] = makeOrderItem(item, true)
         }
@@ -198,19 +198,6 @@ const makeItemLookup = (categories, itemIds) => {
     })
   })
   return itemLookup
-  // return categories.reduce((lookup, category) => {
-  //   category.items.map((item) => {
-  //       itemLookup[item.id] = makeOrderItem(item, true)
-  //   })
-  //   category.children.map((child) => {
-  //     child.items.map((item) => {
-  //       if (itemIds.includes(item.id)) {
-  //         itemLookup[item.id] = makeOrderItem(item, true)
-  //       }
-  //     })
-  //   })
-  // })
-  // return itemLookup
 }
 
 const makeGroupsLookup = (item) => {
@@ -226,7 +213,7 @@ const makeGroupsLookup = (item) => {
 export const validateCart = (cart, categories, soldOut) => {
   const itemIds = cart.map((item) => item.id)
   const itemLookup = makeItemLookup(categories, itemIds)
-  console.log('itemLookup', itemLookup)
+  // console.log('itemLookup', itemLookup)
   let errors = null,
     missingItems = [],
     invalidItems = []
@@ -238,60 +225,106 @@ export const validateCart = (cart, categories, soldOut) => {
     }
     let invalidGroups = [],
       requiredGroups = [],
-      missingOptions = []
+      missingOptions = [],
+      invalidOptions = []
     const oldGroupsLookup = makeGroupsLookup(oldItem)
     newItem.groups.map((group) => {
-      console.log('group before', group)
       const oldOptions = oldGroupsLookup[group.id]
       if (!oldOptions) {
+        // if the existing item doesn't have any options in this option group but the
+        // group is required (due to having a non-zero minumum), this item is invalid
         if (group.min > 0) requiredGroups.push(group)
       } else {
         group.options.map((option) => {
           const oldOption = oldOptions[option.id]
           option.quantity = oldOption ? oldOption.quantity : 0
-          // TODO: check option min and max
+          // check to see if option quantity is valid relative to option min & max
+          // ignore the option increment setting for the time being
+          if (
+            (option.max && option.quantity > option.max) ||
+            (option.min && option.quantity < option.min)
+          ) {
+            console.log(
+              option.name,
+              option.quantity,
+              option.min,
+              option.max,
+              option.quantity > option.max,
+              option.quantity < option.mi
+            )
+            invalidOptions.push(option)
+          }
           return option
         })
         const optionCount = group.options.reduce((t, i) => (t += i.quantity), 0)
-        if (optionCount > group.max) invalidGroups.push(group)
+        // check to see if the option group has a max and the option count exceeds this
+        if (group.max > 0 && optionCount > group.max) invalidGroups.push(group)
         const newOptionIds = group.options.map((i) => i.id.toString())
-        console.log('newOptionIds', newOptionIds)
-        console.log('oldOptions ids', Object.keys(oldOptions))
+        // check to see if any OLD options aren't avaiilable on the current menu
+        // or if any of the options are currently sold out
         missingOptions = Object.keys(oldOptions).filter(
           (id) => !newOptionIds.includes(id) || soldOut.includes(id)
         )
       }
-      console.log('group after', group)
       return group
     })
     if (
       requiredGroups.length ||
       invalidGroups.length ||
-      missingOptions.length
+      missingOptions.length ||
+      invalidOptions.length
     ) {
       const invalidItem = {
         ...oldItem,
         requiredGroups,
         invalidGroups,
         missingOptions,
+        invalidOptions,
       }
       invalidItems.push(invalidItem)
       return null
     } else {
       newItem.quantity = oldItem.quantity
-      // TODO: check item min and max
+      // check to see if this item's quantity is below the min or
+      // above the max from the current menu
+      if (
+        (newItem.max && newItem.quantity > newItem.max) ||
+        (newItem.min && newItem.quantity < newItem.min)
+      ) {
+        invalidItems.append(newItem)
+        return null
+      }
       const pricedItem = calcPrices(newItem)
       pricedItem.notes = oldItem.notes
       pricedItem.madeFor = oldItem.made_for
-      console.log('priced item', pricedItem)
       return pricedItem
     }
   })
-  newCart.filter((i) => i !== null)
+  newCart = newCart.filter((i) => i !== null)
   if (missingItems.length || invalidItems.length) {
     errors = { missingItems, invalidItems }
   }
   return { newCart, errors }
+}
+
+export const printCart = (cart) => {
+  cart.forEach((item) => {
+    console.log(item.name, item.price, item.quantity, item.totalPrice)
+    item.groups.forEach((group) => {
+      console.log('  ', group.name)
+      group.options.forEach((option) => {
+        if (option.quantity > 0) {
+          console.log(
+            '    ',
+            option.name,
+            option.price,
+            option.quantity,
+            option.totalPrice
+          )
+        }
+      })
+    })
+  })
 }
 
 /* order submission */

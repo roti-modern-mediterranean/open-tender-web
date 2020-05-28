@@ -2,7 +2,7 @@ import React, { useEffect, createContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import BarLoader from 'react-spinners/BarLoader'
-import { validateCart } from '../../packages/utils/cart'
+import { validateCart, printCart } from '../../packages/utils/cart'
 import { selectConfig } from '../../slices/configSlice'
 import {
   selectLocation,
@@ -44,9 +44,13 @@ const MenuPage = () => {
   // }, [categories, soldOut])
 
   useEffect(() => {
+    console.log('old cart =>')
+    printCart(cart)
     const { newCart, errors } = validateCart(cart, categories, soldOut)
-    console.log(JSON.stringify(newCart, null, 2))
-    console.log(errors)
+    // console.log(JSON.stringify(newCart, null, 2))
+    console.log('new cart =>')
+    printCart(newCart)
+    console.log('cart errors', errors)
   })
 
   return (
