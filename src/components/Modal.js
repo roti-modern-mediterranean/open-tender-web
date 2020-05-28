@@ -11,6 +11,7 @@ import {
   MenuItemModal,
   RequestedAtModal,
 } from './modals'
+import CartErrorsModal from './modals/CartErrorsModal'
 
 const makeModal = (type, windowRef) => {
   switch (type) {
@@ -24,6 +25,8 @@ const makeModal = (type, windowRef) => {
       return <MenuItemModal />
     case 'requestedAt':
       return <RequestedAtModal />
+    case 'cartErrors':
+      return <CartErrorsModal />
     default:
       return null
   }
@@ -32,6 +35,7 @@ const makeModal = (type, windowRef) => {
 const classesMap = {
   item: 'modal--item',
   allergens: '',
+  cartErrors: 'modal--big modal--cart-errors',
 }
 
 const Modal = () => {

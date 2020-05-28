@@ -87,6 +87,20 @@ export const defaultConfig = {
       image: null,
       message: 'Sold Out For The Day',
     },
+    validate: {
+      title: 'Invalid Items in Cart',
+      subtitle: 'Uh oh. Certain items in your cart are no longer valid.',
+      proceed: {
+        message: 'Please click the button below to proceed.',
+        buttonProceed: 'Got it. Proceed to New Menu.',
+      },
+      revert: {
+        message:
+          'Please either proceed to this new menu or switch back to your previous menu.',
+        buttonProceed: 'Proceed to New Menu',
+        buttonRevert: 'Back to Previous Menu',
+      },
+    },
   },
   checkout: {
     title: "Let's get you checked out",

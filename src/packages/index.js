@@ -16,6 +16,7 @@ import ButtonMenu from './ButtonMenu'
 import ButtonRequestedAt from './ButtonRequestedAt'
 import ButtonServiceType from './ButtonServiceType'
 import ButtonSignUp from './ButtonSignUp'
+import CartErrors from './CartErrors'
 import Check from './Check'
 import CheckoutAccount from './CheckoutAccount'
 import CheckoutAddress from './CheckoutAddress'
@@ -56,6 +57,7 @@ export {
   ButtonRequestedAt,
   ButtonServiceType,
   ButtonSignUp,
+  CartErrors,
   Check,
   CheckoutAccount,
   CheckoutAddress,

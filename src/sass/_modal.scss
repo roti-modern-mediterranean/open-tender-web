@@ -57,7 +57,16 @@
     margin-top: 3rem;
 
     &__buttons {
-      text-align: right;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      button {
+        display: block;
+        & + button {
+          margin-left: 1rem;
+        }
+      }
     }
   }
 
@@ -101,5 +110,12 @@
       height: 100%;
       overflow: hidden;
     }
+  }
+}
+
+.modal--cart-errors {
+  .modal {
+    width: 90%;
+    max-width: 60rem;
   }
 }

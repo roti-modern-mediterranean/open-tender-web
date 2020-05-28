@@ -1,0 +1,12 @@
+.validate {
+  margin: 3rem 0;
+
+  &__missing,
+  &__invalid {
+    margin: 0 0 2rem;
+
+    ul li {
+      margin: 1rem 0;
+    }
+  }
+}
