@@ -62,7 +62,7 @@ export const dateToIso = (date, tz) => {
 }
 
 export const isoToDate = (iso, tz) => {
-  return utcToZonedTime(parseISO(iso), tz)
+  return tz ? utcToZonedTime(parseISO(iso), tz) : parseISO(iso)
 }
 
 export const isoToDateStr = (iso, tz, fmt = DATETIME) => {

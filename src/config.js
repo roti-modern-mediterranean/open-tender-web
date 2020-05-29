@@ -92,7 +92,7 @@ export const defaultConfig = {
       subtitle: 'Uh oh. Certain items in your cart are no longer valid.',
       proceed: {
         message: 'Please click the button below to proceed.',
-        buttonProceed: 'Got it. Proceed to New Menu.',
+        buttonProceed: 'Proceed to New Menu',
       },
       revert: {
         message:

@@ -19,7 +19,7 @@ ButtonIcon.propTypes = {
 const Button = ({
   text,
   icon,
-  classes,
+  classes = '',
   ariaLabel,
   onClick,
   disabled,

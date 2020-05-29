@@ -1,12 +1,48 @@
 .validate {
-  margin: 3rem 0;
+  margin: 3rem 0 0;
 
   &__missing,
   &__invalid {
-    margin: 0 0 2rem;
+    margin: 0 0 3rem;
 
     ul li {
       margin: 1rem 0;
+    }
+  }
+
+  &__buttons {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    button {
+      display: block;
+      & + button {
+        margin-left: 1rem;
+      }
+    }
+
+    .btn--back {
+      padding: 0.5em 1.8em 0.6em 1.2em;
+
+      .btn-icon {
+        top: 0rem;
+        margin-right: 0.5rem;
+        width: 2.1rem;
+        height: 2.1rem;
+      }
+    }
+
+    .btn--proceed {
+      padding: 0.5em 1.2em 0.6em 1.8em;
+
+      .btn-icon {
+        top: 0rem;
+        margin-left: 0.5rem;
+        width: 2.1rem;
+        height: 2.1rem;
+      }
     }
   }
 }

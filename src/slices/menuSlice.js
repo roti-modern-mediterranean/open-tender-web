@@ -1,11 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getMenu } from '../services/requests'
 
+const makeRequestedIso = (requestedAt) => {
+  return requestedAt === 'asap' ? new Date().toISOString() : requestedAt
+}
+
 export const fetchMenu = createAsyncThunk('menu/getMenu', async (menuVars) => {
   const [locationId, serviceType, requestedAt] = menuVars
   try {
-    const requestedIso =
-      requestedAt === 'asap' ? new Date().toISOString() : requestedAt
+    const requestedIso = makeRequestedIso(requestedAt)
     const menu = await getMenu(locationId, serviceType, requestedIso)
     return { ...menu, menuVars: { locationId, serviceType, requestedAt } }
   } catch (err) {

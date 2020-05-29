@@ -2,7 +2,7 @@ import React, { useEffect, createContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import BarLoader from 'react-spinners/BarLoader'
-import { validateCart, printCart } from '../../packages/utils/cart'
+import { validateCart } from '../../packages/utils/cart'
 import { selectConfig } from '../../slices/configSlice'
 import {
   selectLocation,
@@ -39,13 +39,12 @@ const MenuPage = () => {
   }, [locationId, serviceType, requestedAt, dispatch, history])
 
   useEffect(() => {
-    console.log('old cart =>')
-    printCart(cart)
+    // console.log('old cart =>')
+    // printCart(cart)
     const { newCart, errors } = validateCart(cart, categories, soldOut)
-    // console.log(JSON.stringify(newCart, null, 2))
-    console.log('new cart =>')
-    printCart(newCart)
-    console.log('cart errors', errors)
+    // console.log('new cart =>')
+    // printCart(newCart)
+    // console.log('cart errors', errors)
     if (errors) {
       dispatch(setCartErrors({ newCart, errors }))
       dispatch(openModal('cartErrors'))
