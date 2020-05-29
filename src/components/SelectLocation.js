@@ -8,8 +8,8 @@ import { selectConfig } from '../slices/configSlice'
 import { setAddress, selectOrder, setLocation } from '../slices/orderSlice'
 import { fetchLocations, selectLocations } from '../slices/locationsSlice'
 import { selectGeoLatLng } from '../slices/geolocationSlice'
-import { Location } from './Location'
 import { sortRevenueCenters } from '../packages/utils/maps'
+import Location from './Location'
 import BarLoader from 'react-spinners/BarLoader'
 
 const calcMinDistance = (locations, maxDistance = MAX_DISTANCE) => {

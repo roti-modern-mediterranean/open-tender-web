@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetOrder } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
-import { Location } from './Location'
+import Location from './Location'
 
 export const Locations = ({ locations }) => {
   const { locations: locationsConfig } = useSelector(selectConfig)

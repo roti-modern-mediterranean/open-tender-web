@@ -62,6 +62,12 @@ export const defaultConfig = {
     title: "Let's find the nearest location",
     subtitle: "We'll make this quick",
     content: 'Please enter a zip code or address below.',
+    statusMessages: {
+      CLOSED_TEMPORARILY:
+        'This location is temporarily closd due to technical or operational difficulties. Please try back later today or tomorrow.',
+      COMING_SOON:
+        "This location isn't accepting orders yet, but it will be soon!",
+    },
     maxDistance: 100,
     autoSelect: {
       OLO: {

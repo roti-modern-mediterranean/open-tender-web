@@ -1,16 +1,11 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import { setLocation, selectOrder } from '../slices/orderSlice'
+import propTypes from 'prop-types'
 import { iconMap } from '../packages/icons'
-import { Button } from '../packages'
 import { stripTags } from '../packages/utils/helpers'
-import { serviceTypeNamesMap } from '../packages/utils/constants'
-import {
-  todayDate,
-  formatDateStr,
-  formatTimeStr,
-} from '../packages/utils/datetimes'
+import LocationOrder from './LocationOrder'
+
+const placeholder2 =
+  'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg'
 
 const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
   return (
@@ -24,26 +19,10 @@ const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
   )
 }
 
-const makeOrderMsg = (firstTime, serviceType) => {
-  const serviceTypeName = serviceTypeNamesMap[serviceType]
-  const readableDate =
-    firstTime.date === todayDate() ? 'today' : formatDateStr(firstTime.date)
-  const formattedTime = formatTimeStr(firstTime.time, 'MMM d')
-  const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate} at ${formattedTime}`
-  return orderMsg
-}
-
-const placeholder2 =
-  'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg'
-
-export const Location = ({ location, classes = '', showImage, isOrder }) => {
+const Location = ({ location, classes = '', showImage, isOrder }) => {
   const [showHours, setShowHours] = useState(false)
-  const dispatch = useDispatch()
-  const history = useHistory()
 
-  const { serviceType } = useSelector(selectOrder)
-  const { address, images, hours, settings } = location
-  const { first_times: firstTimes } = settings
+  const { address, images, hours } = location
   let smallImage = images.find((i) => i.type === 'SMALL_IMAGE')
   smallImage = smallImage ? smallImage.url : null
   const bgStyle = { backgroundImage: `url(${smallImage || placeholder2}` }
@@ -57,29 +36,6 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
     evt.target.blur()
   }
 
-  const handleOrder = (evt) => {
-    evt.preventDefault()
-    dispatch(setLocation(location))
-    const rcType = location.revenue_center_type.toLowerCase()
-    history.push(`/menu/${location.slug}-${rcType}`)
-    evt.target.blur()
-  }
-
-  const handleChange = (evt) => {
-    evt.preventDefault()
-    history.push(`/locations`)
-    evt.target.blur()
-  }
-
-  // const distanceInWords = location.distance
-  //   ? ` (${location.distance.toFixed(2)} miles away)`
-  //   : ''
-  // const streetAddress = `${address.street}${distanceInWords}`
-
-  // console.log(location.name)
-  // console.log(firstTimes)
-  const firstTime = firstTimes[serviceType]
-  const orderMsg = firstTime ? makeOrderMsg(firstTime, serviceType) : null
   const distance =
     location.distance !== null && location.distance !== undefined
       ? location.distance
@@ -129,28 +85,18 @@ export const Location = ({ location, classes = '', showImage, isOrder }) => {
             </button>
           )}
         </div>
-        <div className="location__order">
-          {orderMsg && (
-            <div className="location__order__message">
-              <p className="ot-alert-color font-size-small">{orderMsg}</p>
-            </div>
-          )}
-          {isOrder ? (
-            <Button
-              text="Order Here"
-              ariaLabel={`Order from ${location.name}`}
-              icon="ShoppingBag"
-              onClick={handleOrder}
-            />
-          ) : (
-            <Button
-              text="Change Location"
-              icon="RefreshCw"
-              onClick={handleChange}
-            />
-          )}
-        </div>
+        <LocationOrder location={location} isOrder={isOrder} />
       </div>
     </div>
   )
 }
+
+Location.displayName = 'Location'
+Location.propTypes = {
+  location: propTypes.object,
+  classes: propTypes.string,
+  showImage: propTypes.bool,
+  isOrder: propTypes.bool,
+}
+
+export default Location

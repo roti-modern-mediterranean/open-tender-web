@@ -13,7 +13,7 @@ import {
 } from '../../slices/orderSlice'
 import { fetchMenu, selectMenu, setCartErrors } from '../../slices/menuSlice'
 import Hero from '../Hero'
-import { Location } from '../Location'
+import Location from '../Location'
 import Menu from '../Menu'
 import { openModal } from '../../slices/modalSlice'
 

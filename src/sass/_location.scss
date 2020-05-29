@@ -64,7 +64,12 @@
     margin-top: 2rem;
 
     &__message {
-      margin: -0.25rem 0 1.75rem;
+      line-height: 1.4;
+      margin: -0.25rem 0 0;
+    }
+
+    &__message + button {
+      margin-top: 1.75rem;
     }
   }
 }
