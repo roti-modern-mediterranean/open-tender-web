@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { getLocation } from '../services/requests'
 import {
   addItem,
   removeItem,
@@ -21,7 +22,20 @@ const initialState = {
   currentItem: null,
   cart: [],
   cartCounts: {},
+  error: null,
+  loading: 'idle',
 }
+
+export const fetchLocation = createAsyncThunk(
+  'order/getLocation',
+  async (locationId, thunkAPI) => {
+    try {
+      return await getLocation(locationId)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
 
 const orderSlice = createSlice({
   name: 'order',
@@ -85,6 +99,19 @@ const orderSlice = createSlice({
     setCart: (state, action) => {
       state.cart = action.payload
       state.cartCounts = calcCartCounts(action.payload)
+    },
+  },
+  extraReducers: {
+    [fetchLocation.fulfilled]: (state, action) => {
+      state.location = action.payload
+      state.loading = 'idle'
+    },
+    [fetchLocation.pending]: (state, action) => {
+      state.loading = 'pending'
+    },
+    [fetchLocation.rejected]: (state, action) => {
+      state.error = action.error.detail
+      state.loading = 'idle'
     },
   },
 })

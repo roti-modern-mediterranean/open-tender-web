@@ -54,8 +54,8 @@ export const makeLocalDateStr = (date, days = 0, fmt = DATE) => {
   return format(add(date || new Date(), { days: days }), fmt)
 }
 
-export const todayDate = () => makeLocalDateStr(0)
-export const tomorrowDate = () => makeLocalDateStr(1)
+export const todayDate = () => makeLocalDateStr()
+export const tomorrowDate = () => makeLocalDateStr(null, 1)
 
 export const dateToIso = (date, tz) => {
   return zonedTimeToUtc(date, tz).toISOString()
@@ -87,17 +87,19 @@ export const formatTimeStr = (str) => {
   return [newPart1, part2].join('-')
 }
 
-export const makeRequestedAtString = (requestedAt, tz) => {
+export const makeRequestedAtString = (requestedAt, tz, verbose = false) => {
   if (requestedAt.toLowerCase() === 'asap') return 'ASAP'
   const date = utcToZonedTime(parseISO(requestedAt), tz)
   const timeString = format(date, TIME).toLowerCase()
   const dateString = makeLocalDateStr(date)
   if (dateString === todayDate()) {
-    return timeString
+    return verbose ? `Today @ ${timeString}` : timeString
   } else if (dateString === tomorrowDate()) {
-    return `Tmrw @ ${timeString}`
+    return `${verbose ? 'Tomorrow' : 'Tmrw'} @ ${timeString}`
   } else {
-    return `${format(date, 'M/d')} @ ${timeString}`
+    return `${
+      verbose ? format(date, 'EEEE, MMMM d') : format(date, 'M/d')
+    } @ ${timeString}`
   }
 }
 

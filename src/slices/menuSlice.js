@@ -16,17 +16,19 @@ export const fetchMenu = createAsyncThunk('menu/getMenu', async (menuVars) => {
   }
 })
 
+const initialState = {
+  menuVars: null,
+  previousMenuVars: null,
+  categories: [],
+  soldOut: [],
+  cartErrors: null,
+  error: null,
+  loading: 'idle',
+}
+
 const menuSlice = createSlice({
   name: 'menu',
-  initialState: {
-    menuVars: null,
-    previousMenuVars: null,
-    categories: [],
-    soldOut: [],
-    cartErrors: null,
-    error: null,
-    loading: 'idle',
-  },
+  initialState: initialState,
   reducers: {
     setCartErrors: (state, action) => {
       state.cartErrors = action.payload

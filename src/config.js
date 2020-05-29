@@ -20,14 +20,16 @@ export const defaultConfig = {
     },
     icons: {
       user: {
-        url:
-          'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271579_map-marker_red-dark-red_120x160.png',
-        size: { width: 30, height: 40 },
-        anchor: null,
         // url:
-        //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590605559_marker-round_purple-white_120x120.png',
-        // size: { width: 30, height: 30 },
-        // anchor: { x: 0, y: -15 },
+        //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271579_map-marker_red-dark-red_120x160.png',
+        //  size: { width: 30, height: 40 },
+        //  anchor: null,
+        // url:
+        //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590781979_marker-blinking-static_purple_120x120.png',
+        url:
+          'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590782366_marker-blinking-static_purple-25_120x120.png',
+        size: { width: 70, height: 70 },
+        anchor: { x: 35, y: 35 },
       },
       active: {
         url:

@@ -25,20 +25,23 @@ const RequestedAtModal = () => {
     dispatch(closeModal())
   }
 
-  const requestedAtText = makeRequestedAtString(requestedAt, tz)
+  const requestedAtText = makeRequestedAtString(requestedAt, tz, true)
 
   return (
     <>
       <ModalClose onClick={handleClose} />
       <div className="modal__content">
         <div className="modal__header">
+          <p>Your current order time is</p>
           <p className="modal__title heading ot-font-size-h3">
-            Adjust your order time
+            {/* Adjust your order time */}
+            {requestedAtText}
           </p>
           <p className="modal__subtitle">
-            Your current order time is{' '}
-            <span className="ot-bold">{requestedAtText}</span>. Choose a date
-            and time below to make a change.
+            {/* <span className="ot-bold">
+              Your current order time is {requestedAtText}.
+            </span> */}
+            Choose a date and time below to make a change.
           </p>
         </div>
         <RequestedAtPicker

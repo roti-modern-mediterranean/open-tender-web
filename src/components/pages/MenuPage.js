@@ -9,6 +9,7 @@ import {
   selectMenuVars,
   selectCart,
   setCart,
+  fetchLocation,
 } from '../../slices/orderSlice'
 import { fetchMenu, selectMenu, setCartErrors } from '../../slices/menuSlice'
 import Hero from '../Hero'
@@ -33,9 +34,12 @@ const MenuPage = () => {
   }, [])
 
   useEffect(() => {
-    locationId
-      ? dispatch(fetchMenu([locationId, serviceType, requestedAt]))
-      : history.push('/locations')
+    if (!locationId) {
+      return history.push('/locations')
+    } else {
+      dispatch(fetchLocation(locationId))
+      dispatch(fetchMenu([locationId, serviceType, requestedAt]))
+    }
   }, [locationId, serviceType, requestedAt, dispatch, history])
 
   useEffect(() => {

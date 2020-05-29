@@ -63,7 +63,7 @@ export const LOCATIONS_MESSAGES = {
       error: null,
     },
     noDelivery: {
-      title: 'Delivery not available in your area',
+      title: "Delivery isn't available in your area",
       msg:
         "We're really sorry about that. Please enter a different address or head back and start a pickup order.",
       error: null,

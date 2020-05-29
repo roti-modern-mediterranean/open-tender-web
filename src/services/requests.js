@@ -10,6 +10,10 @@ export const getLocations = (revenue_center_type, lat, lng) => {
   return request(`/revenue-centers?${params}`)
 }
 
+export const getLocation = (revenue_center_type_id) => {
+  return request(`/revenue-centers/${revenue_center_type_id}`)
+}
+
 export const getMenu = (locationId, serviceType, requestedAt) => {
   const params = `revenue_center_id=${locationId}&service_type=${serviceType}&requested_at=${requestedAt}`
   return request(`/menus?${params}`)

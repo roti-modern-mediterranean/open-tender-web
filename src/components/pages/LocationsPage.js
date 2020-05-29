@@ -70,6 +70,7 @@ const LocationsPage = () => {
             icon={icons.user.url}
             size={icons.user.size}
             anchor={icons.user.anchor}
+            drop={null}
           />
         )}
       </GoogleMap>
