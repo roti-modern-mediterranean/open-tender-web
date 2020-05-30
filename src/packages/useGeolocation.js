@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
 
+// https://itnext.io/creating-react-useposition-hook-for-getting-browsers-geolocation-2f27fc1d96de
+// https://developers.google.com/web/fundamentals/native-hardware/user-location
+
 const geoOptions = {
   maximumAge: 60 * 60 * 1000,
   timeout: 5 * 1000,

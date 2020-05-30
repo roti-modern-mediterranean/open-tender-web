@@ -6,6 +6,7 @@ import { selectConfig } from '../../slices/configSlice'
 import Hero from '../Hero'
 import { selectAccount } from '../../slices/customerSlice'
 import { Button } from '../../packages'
+import StickyNav from '../StickyNav'
 
 const AccountGreeting = ({ title, subtitle }) => {
   const history = useHistory()
@@ -34,6 +35,17 @@ const AccountGreeting = ({ title, subtitle }) => {
   )
 }
 
+const navItems = [
+  'Loyalty & Discounts',
+  'Past Orders',
+  'Favorites',
+  'Account Details',
+  'Allergens',
+  'Addresses',
+  'Gift Cards',
+  'Payment Methods',
+]
+
 const AccountPage = () => {
   const history = useHistory()
   const { account: accountConfig } = useSelector(selectConfig)
@@ -52,6 +64,7 @@ const AccountPage = () => {
           subtitle={accountConfig.subtitle}
         />
       </Hero>
+      <StickyNav items={navItems} offset={0} />
       <h1 className="sr-only">Account</h1>
     </>
   )

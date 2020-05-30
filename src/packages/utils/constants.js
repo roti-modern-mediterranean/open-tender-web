@@ -58,7 +58,7 @@ export const LOCATIONS_MESSAGES = {
         'A full address with street number is required for delivery orders.',
     },
     hasDelivery: {
-      title: 'Delivery is availabe!',
+      title: 'Delivery is available!',
       msg: 'Please choose a location below.',
       error: null,
     },
