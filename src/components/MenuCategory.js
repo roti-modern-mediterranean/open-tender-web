@@ -4,7 +4,7 @@ import { slugify } from '../packages/utils/helpers'
 import MenuItem from './MenuItem'
 
 const MenuCategory = ({ category, isChild }) => {
-  const child = isChild ? '-child' : ''
+  const child = isChild ? '-child' : 'ot-section'
   return (
     <div
       key={category.id}

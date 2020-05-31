@@ -155,7 +155,7 @@ const CheckoutPage = () => {
 
   return (
     <div className="checkout">
-      <div className="checkout__header bg-color">
+      <div className="checkout__header ot-nav-height bg-color">
         <div className="checkout__header__wrapper">
           <div className="checkout__header__container">
             <div className="checkout__logo__container">

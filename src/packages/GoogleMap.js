@@ -39,7 +39,7 @@ const GoogleMap = ({ apiKey, center, zoom, styles, events, children }) => {
             })
           )
         })}
-      <div className="map">
+      <div className="map ot-top">
         <div ref={mapRef} className="map-ref" />
       </div>
     </>

@@ -87,7 +87,9 @@ const Header = () => {
   }
 
   return (
-    <header className={`header container flex ${classes}`}>
+    <header
+      className={`header container flex ot-header ot-nav-height ${classes}`}
+    >
       <div className="header__nav">
         <div className="header__logo">
           <HeaderLogo />

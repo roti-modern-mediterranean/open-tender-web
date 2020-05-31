@@ -16,11 +16,10 @@ const App = () => {
       <Router>
         <Header />
         {/* <SystemNotifications /> */}
-        <main className="main container">
+        <main className="main ot-main">
           <Routes />
           <CartButton />
         </main>
-        {/* <Drawer /> */}
         <Sidebar />
         <Footer />
       </Router>

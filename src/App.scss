@@ -62,12 +62,8 @@ body.has-modal {
 }
 
 .main {
-  padding: 0;
+  // padding: 0;
   min-height: 100vh;
-}
-
-.header + .main {
-  padding-top: $header-height;
 }
 
 .loading {
