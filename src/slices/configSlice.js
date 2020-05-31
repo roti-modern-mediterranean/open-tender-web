@@ -23,5 +23,6 @@ const configSlice = createSlice({
 
 export const selectConfig = (state) => state.config
 export const selectGoogleMapsConfig = (state) => state.config.googleMaps
+export const selectAccountConfig = (state) => state.config.account
 
 export default configSlice.reducer

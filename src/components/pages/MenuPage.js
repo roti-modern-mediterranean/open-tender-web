@@ -69,7 +69,7 @@ const MenuPage = () => {
       {isLoading ? (
         <div className="loading">
           <div className="loading__loader">
-            <BarLoader size={100} laoding={isLoading} />
+            <BarLoader size={100} loading={isLoading} />
           </div>
         </div>
       ) : error ? (

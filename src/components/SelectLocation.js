@@ -175,7 +175,6 @@ const SelectLocation = ({
   return (
     <div className="card map__card overlay border-radius slide-up ot-box-shadow">
       <div className="card__header">
-        {/* <p className="preface secondary-color">{subtitle}</p> */}
         <h1 className="ot-font-size-h3">{title}</h1>
         {error ? (
           <p className="ot-error-color">{error}</p>
@@ -196,7 +195,7 @@ const SelectLocation = ({
         {isLoading && address ? (
           <div className="loading">
             <div className="loading__loader">
-              <BarLoader size={100} laoding={isLoading} />
+              <BarLoader size={100} loading={isLoading} />
             </div>
             <p>Retrieving nearest locations</p>
           </div>

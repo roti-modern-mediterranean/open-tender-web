@@ -2,16 +2,17 @@ import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 // import BarLoader from 'react-spinners/BarLoader'
-import { selectConfig } from '../../slices/configSlice'
-import { selectCustomer } from '../../slices/customerSlice'
+import { selectConfig } from '../slices/configSlice'
+import { selectCustomer } from '../slices/customerSlice'
 import {
   selectAccount,
   fetchUpcomingOrders,
   fetchPastOrders,
-} from '../../slices/accountSlice'
-import Hero from '../Hero'
-import StickyNav from '../StickyNav'
-import AccountGreeting from '../AccountGreeting'
+} from '../slices/accountSlice'
+import Hero from './Hero'
+import StickyNav from './StickyNav'
+import AccountGreeting from './AccountGreeting'
+import AccountPastOrders from './AccountPastOrders'
 
 const navItems = [
   'Loyalty & Discounts',
@@ -30,9 +31,8 @@ const AccountPage = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const { auth, account } = useSelector(selectCustomer)
   const { access_token: token } = auth || {}
-  const { upcomingOrders, pastOrders } = useSelector(selectAccount)
-  console.log(upcomingOrders)
-  console.log(pastOrders)
+  const { upcomingOrders } = useSelector(selectAccount)
+  // console.log(upcomingOrders)
 
   useEffect(() => {
     if (!account) history.push('/')
@@ -41,7 +41,6 @@ const AccountPage = () => {
 
   useEffect(() => {
     dispatch(fetchUpcomingOrders({ token }))
-    dispatch(fetchPastOrders({ token, limit: 10 }))
   }, [dispatch, token])
 
   return (
@@ -54,6 +53,9 @@ const AccountPage = () => {
       </Hero>
       <StickyNav items={navItems} offset={0} />
       <h1 className="sr-only">Account</h1>
+      <div className="sections bg-secondary-color">
+        <AccountPastOrders />
+      </div>
     </>
   )
 }

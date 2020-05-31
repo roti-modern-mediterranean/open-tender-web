@@ -81,5 +81,6 @@ const accountSlice = createSlice({
 // export const {  } = accountSlice.actions
 
 export const selectAccount = (state) => state.account
+export const selectPastOrders = (state) => state.account.pastOrders
 
 export default accountSlice.reducer

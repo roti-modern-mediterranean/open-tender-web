@@ -23,6 +23,8 @@
 @import './src/sass/_check';
 @import './src/sass/_cards';
 @import './src/sass/_content';
+@import './src/sass/_sections';
+@import './src/sass/_order';
 
 body {
   // margin: 0;
@@ -112,7 +114,6 @@ body.has-modal {
 }
 
 .preface {
-  font-size: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }

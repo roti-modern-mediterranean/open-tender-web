@@ -5,9 +5,9 @@ import {
   LocationsPage,
   MenuPage,
   CheckoutPage,
-  AccountPage,
   ConfirmationPage,
 } from './pages'
+import AccountPage from './AccountPage'
 
 const Routes = () => {
   return (

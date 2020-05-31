@@ -1,0 +1,50 @@
+$image-size: 4.5rem;
+
+.order {
+  padding: 2rem 2rem;
+  // border-width: 0.1rem;
+  // border-style: solid;
+
+  &__title {
+    margin: 0.4rem 0 0;
+  }
+
+  &__content {
+    margin: 1rem 0 1.5rem;
+  }
+
+  &__details {
+    line-height: 1.5;
+  }
+
+  &__items {
+    margin: 1.5rem 0 0;
+  }
+
+  &__images {
+    display: flex;
+    justify-content: flex-start;
+    align-items: top;
+    margin: 0 0 1rem;
+  }
+
+  &__image {
+    width: $image-size;
+    height: $image-size;
+    margin-right: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    img {
+      height: $image-size;
+      width: auto;
+      max-width: none;
+    }
+  }
+
+  // &__footer {
+  //   margin: 1.5rem 0 0;
+  // }
+}

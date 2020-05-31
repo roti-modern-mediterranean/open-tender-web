@@ -60,5 +60,7 @@ const customerSlice = createSlice({
 
 export const selectCustomer = (state) => state.customer
 export const selectCustomerAccount = (state) => state.customer.account
+export const selectToken = (state) =>
+  state.customer.auth ? state.customer.auth.access_token : null
 
 export default customerSlice.reducer

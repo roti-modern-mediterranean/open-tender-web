@@ -153,5 +153,10 @@ export const defaultConfig = {
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590860635_633edb149568073f51aa.jpg',
     title: 'Welcome Back',
     subtitle: 'How can we help you today?',
+    pastOrders: {
+      title: 'Your Recent Orders',
+      subtitle: 'Reorder a past order, view details, and add ratings',
+      empty: "Looks like you don't currently have any past orders",
+    },
   },
 }
