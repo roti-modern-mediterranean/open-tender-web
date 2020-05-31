@@ -15,6 +15,7 @@ import menuReducer from '../slices/menuSlice'
 import checkoutReducer from '../slices/checkoutSlice'
 import confirmationReducer from '../slices/confirmationSlice'
 import geolocationReducer from '../slices/geolocationSlice'
+import accountReducer from '../slices/accountSlice'
 
 const rootReducer = combineReducers({
   config: configReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   checkout: checkoutReducer,
   confirmation: confirmationReducer,
   geolocation: geolocationReducer,
+  account: accountReducer,
 })
 
 const persistedState = loadState()

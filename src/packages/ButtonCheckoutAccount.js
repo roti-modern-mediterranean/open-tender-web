@@ -2,11 +2,11 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectAccount } from '../slices/customerSlice'
+import { selectCustomerAccount } from '../slices/customerSlice'
 import Button from './Button'
 
 const ButtonCheckoutAccount = ({ classes = 'btn' }) => {
-  const customer = useSelector(selectAccount)
+  const customer = useSelector(selectCustomerAccount)
   const history = useHistory()
 
   const handleClick = (evt) => {

@@ -1,39 +1,17 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 // import BarLoader from 'react-spinners/BarLoader'
 import { selectConfig } from '../../slices/configSlice'
+import { selectCustomer } from '../../slices/customerSlice'
+import {
+  selectAccount,
+  fetchUpcomingOrders,
+  fetchPastOrders,
+} from '../../slices/accountSlice'
 import Hero from '../Hero'
-import { selectAccount } from '../../slices/customerSlice'
-import { Button } from '../../packages'
 import StickyNav from '../StickyNav'
-
-const AccountGreeting = ({ title, subtitle }) => {
-  const history = useHistory()
-
-  const startOrder = (evt) => {
-    evt.preventDefault()
-    history.push('/')
-    evt.target.blur()
-  }
-
-  return (
-    <div className="location location--hero bg-color border-radius slide-up">
-      <div className="location__content">
-        <div className="location__header">
-          <h2 className="ot-font-size-h5">{title}</h2>
-          <p>{subtitle}</p>
-        </div>
-        <Button
-          text="Start Order"
-          ariaLabel="Start a new order"
-          icon="ShoppingBag"
-          onClick={startOrder}
-        />
-      </div>
-    </div>
-  )
-}
+import AccountGreeting from '../AccountGreeting'
 
 const navItems = [
   'Loyalty & Discounts',
@@ -48,13 +26,23 @@ const navItems = [
 
 const AccountPage = () => {
   const history = useHistory()
+  const dispatch = useDispatch()
   const { account: accountConfig } = useSelector(selectConfig)
-  const account = useSelector(selectAccount)
+  const { auth, account } = useSelector(selectCustomer)
+  const { access_token: token } = auth || {}
+  const { upcomingOrders, pastOrders } = useSelector(selectAccount)
+  console.log(upcomingOrders)
+  console.log(pastOrders)
 
   useEffect(() => {
     if (!account) history.push('/')
     window.scroll(0, 0)
   }, [account, history])
+
+  useEffect(() => {
+    dispatch(fetchUpcomingOrders({ token }))
+    dispatch(fetchPastOrders({ token, limit: 10 }))
+  }, [dispatch, token])
 
   return (
     <>

@@ -49,3 +49,11 @@ export const postLogin = (email, password) => {
 export const postLogout = (token) => {
   return authRequest('/revoke', { token })
 }
+
+export const getCustomerOrders = (token, timing, limit) => {
+  let params = []
+  if (limit) params.push(`limit=${limit}`)
+  if (timing) params.push(`requested_type=${timing}`)
+  params = params.length ? `?${params.join('&')}` : ''
+  return request(`/customer/orders${params}`, 'GET', null, null, token)
+}

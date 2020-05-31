@@ -134,6 +134,7 @@ const GoogleMapsAutocomplete = ({
                 return (
                   <li key={i.place_id} className={classes}>
                     <button
+                      className="font-size-small"
                       onClick={(evt) =>
                         choosePlace(evt, i.place_id, i.description)
                       }

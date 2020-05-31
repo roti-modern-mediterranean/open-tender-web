@@ -59,6 +59,6 @@ const customerSlice = createSlice({
 })
 
 export const selectCustomer = (state) => state.customer
-export const selectAccount = (state) => state.customer.account
+export const selectCustomerAccount = (state) => state.customer.account
 
 export default customerSlice.reducer
