@@ -8,7 +8,7 @@ import { iconMap } from '../packages/icons'
 
 const OrderImage = ({ imageUrl, title }) => {
   return (
-    <div className="order__image border-radius-small ot-box-shadow">
+    <div className="order-card__image border-radius-small ot-box-shadow">
       <img src={imageUrl} title={title} alt={title} />
     </div>
   )
@@ -53,13 +53,20 @@ const OrderCard = ({ order }) => {
     i.images
       .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
       .map((image) => {
-        return <OrderImage imageUrl={image.url} title={i.name} />
+        return (
+          <OrderImage key={image.url} imageUrl={image.url} title={i.name} />
+        )
       })
   )
   const itemNames = items.map((i) => i.name).join(', ')
   const orderType = order_type === 'CATERING' ? order_type : service_type
-  const { street, unit } = address || {}
-  const streetAddress = `${street}${unit ? `, ${unit}` : ''}`
+  const { street, unit, city, state, postal_code } = address || {}
+  console.log(address)
+  const streetAddress = street
+    ? `${street}${unit ? `, ${unit}` : ''}`
+    : postal_code
+    ? `${postal_code} ${city}, ${state}`
+    : 'No address provided'
   const trackingUrl = isOpen && delivery && delivery.tracking_url
 
   const handleReorder = (evt) => {
@@ -74,17 +81,17 @@ const OrderCard = ({ order }) => {
   }
 
   return (
-    <div className="order bg-color border-color border-radius ot-box-shadow">
-      <div className="order__header">
-        <p className="order__number preface font-size-x-small secondary-color">
+    <div className="order-card bg-color border border-radius">
+      <div className="order-card__header">
+        <p className="order-card__number preface font-size-x-small secondary-color">
           Order #{order_id}
         </p>
-        <p className="order__title">
+        <p className="order-card__title">
           {capitalize(orderType)} from {revenue_center.name}
         </p>
       </div>
-      <div className="order__content">
-        <div className="order__details font-size-small secondary-color">
+      <div className="order-card__content">
+        <div className="order-card__details font-size-small secondary-color">
           <p>
             {requestedAt} &nbsp;|&nbsp; ${order.total}
           </p>
@@ -93,12 +100,12 @@ const OrderCard = ({ order }) => {
             trackingUrl={trackingUrl}
           />
         </div>
-        <div className="order__items">
-          <div className="order__images">{images}</div>
-          <p className="font-size-small secondary-color">{itemNames}</p>
+        <div className="order-card__items">
+          <div className="order-card__images">{images}</div>
+          <p className="font-size-x-small secondary-color">{itemNames}</p>
         </div>
       </div>
-      <div className="order__footer">
+      <div className="order-card__footer">
         <Button
           text="Reorder"
           icon="RefreshCw"
@@ -118,7 +125,7 @@ const OrderCard = ({ order }) => {
 
 OrderCard.displayName = 'OrderCard'
 OrderCard.propTypes = {
-  order: propTypes.string,
+  order: propTypes.object,
 }
 
 export default OrderCard

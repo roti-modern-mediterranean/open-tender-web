@@ -29,6 +29,15 @@ export const makeModifierNames = (item) => {
     .join(', ')
 }
 
+export const convertStringToArray = (str) => {
+  return str
+    ? str
+        .split(',')
+        .map((i) => i.trim())
+        .filter((i) => i.length)
+    : []
+}
+
 const makeOrderItemGroups = (optionGroups, isEdit) => {
   if (!optionGroups) return []
   const groups = optionGroups.map((g) => {
@@ -39,10 +48,12 @@ const makeOrderItemGroups = (optionGroups, isEdit) => {
         name: o.name,
         description: o.description,
         imageUrl: o.small_image_url,
-        allergens: o.allergens,
-        tags: o.tags,
+        allergens: convertStringToArray(o.allergens),
+        tags: convertStringToArray(o.tags),
         nutritionalInfo: o.nutritional_info,
-        cals: o.nutritional_info ? o.nutritional_info.calories || null : null,
+        cals: o.nutritional_info
+          ? parseInt(o.nutritional_info.calories) || null
+          : null,
         price: parseFloat(o.price),
         quantity: quantity,
         isDefault: o.opt_is_default,
@@ -93,10 +104,12 @@ export const makeOrderItem = (item, isEdit) => {
     name: item.name,
     description: item.description,
     imageUrl: item.large_image_url,
-    allergens: item.allergens,
-    tags: item.tags,
+    allergens: convertStringToArray(item.allergens),
+    tags: convertStringToArray(item.tags),
     nutritionalInfo: item.nutritional_info,
-    cals: item.nutritional_info ? item.nutritional_info.calories || null : null,
+    cals: item.nutritional_info
+      ? parseInt(item.nutritional_info.calories) || null
+      : null,
     groups: groups,
     quantity: item.min_quantity || 1 * item.increment,
     price: parseFloat(item.price),
@@ -106,6 +119,36 @@ export const makeOrderItem = (item, isEdit) => {
   }
   const pricedItem = calcPrices(orderItem)
   return pricedItem
+}
+
+export const makeItemImageUrl = (images) => {
+  const imageMap = images
+    .filter((i) => i.url)
+    .reduce((obj, i) => ({ ...obj, [i.type]: i.url }), {})
+  return (
+    imageMap.SMALL_IMAGE || imageMap.LARGE_IMAGE || imageMap.APP_IMAGE || null
+  )
+}
+
+export const makeDisplayItem = (item) => {
+  const displayItem = {
+    id: item.id,
+    name: item.name,
+    shortDescription: item.short_description,
+    description: item.description,
+    imageUrl: makeItemImageUrl(item.images),
+    allergens: item.allergens,
+    tags: item.tags,
+    nutritionalInfo: item.nutritional_info,
+    cals: item.nutritional_info
+      ? parseInt(item.nutritional_info.calories) || null
+      : null,
+    groups: item.groups,
+    quantity: item.quantity,
+    price: parseFloat(item.price),
+    totalPrice: parseFloat(item.price_total),
+  }
+  return displayItem
 }
 
 export const calcCartCounts = (cart) => {

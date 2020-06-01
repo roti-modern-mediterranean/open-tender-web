@@ -1,19 +1,19 @@
 import propTypes from 'prop-types'
 import React from 'react'
-import BuilderOptionWrapper from './BuilderOptionWrapper'
+import CartItem from './CartItem'
 import BuilderRadio from './BuilderRadio'
 
 const BuilderRadioGroup = ({ group, handler }) => {
   return (
     <fieldset>
       {group.options.map((option) => (
-        <BuilderOptionWrapper key={`${group.id}-${option.id}`} option={option}>
+        <CartItem key={`${group.id}-${option.id}`} item={option}>
           <BuilderRadio
             key={option.id}
             option={option}
             handler={() => handler(group.id, option.id)}
           />
-        </BuilderOptionWrapper>
+        </CartItem>
       ))}
     </fieldset>
   )

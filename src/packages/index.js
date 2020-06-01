@@ -3,7 +3,6 @@ import BuilderGroupHeader from './BuilderGroupHeader'
 import BuilderGroupWarning from './BuilderGroupWarning'
 import BuilderHeader from './BuilderHeader'
 import BuilderOption from './BuilderOption'
-import BuilderOptionWrapper from './BuilderOptionWrapper'
 import BuilderQuantity from './BuilderQuantity'
 import BuilderRadioGroup from './BuilderRadioGroup'
 import BuilderRadio from './BuilderRadio'
@@ -16,6 +15,7 @@ import ButtonMenu from './ButtonMenu'
 import ButtonRequestedAt from './ButtonRequestedAt'
 import ButtonServiceType from './ButtonServiceType'
 import ButtonSignUp from './ButtonSignUp'
+import CartItem from './CartItem'
 import CartErrors from './CartErrors'
 import Check from './Check'
 import CheckoutAccount from './CheckoutAccount'
@@ -44,7 +44,6 @@ export {
   BuilderGroupWarning,
   BuilderHeader,
   BuilderOption,
-  BuilderOptionWrapper,
   BuilderQuantity,
   BuilderRadioGroup,
   BuilderRadio,
@@ -57,6 +56,7 @@ export {
   ButtonRequestedAt,
   ButtonServiceType,
   ButtonSignUp,
+  CartItem,
   CartErrors,
   Check,
   CheckoutAccount,

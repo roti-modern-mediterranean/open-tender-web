@@ -1,60 +1,64 @@
-$image-size: 4.5rem;
+$quantity-size: 2.8rem;
 
 .order {
-  position: relative;
-  height: 100%;
-  padding: 2rem 2rem;
-  border: 0.1rem solid #f3f3f3;
-  // border-width: 0.1rem;
-  // border-style: solid;
+  max-width: 64rem;
+  margin: 0 auto;
 
-  &__title {
-    margin: 0.4rem 0 0;
+  &__header {
+    text-align: center;
+    margin-bottom: 4rem;
   }
 
-  &__content {
-    margin: 1rem 0 1.5rem;
-  }
+  &__section {
+    margin-bottom: 4rem;
 
-  &__details {
-    line-height: 1.7;
-  }
-
-  &__items {
-    margin: 1.5rem 0 0;
-  }
-
-  &__images {
-    display: flex;
-    justify-content: flex-start;
-    align-items: top;
-    margin: 0 0 1rem;
-  }
-
-  &__image {
-    width: $image-size;
-    height: $image-size;
-    margin-right: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-
-    img {
-      height: $image-size;
-      width: auto;
-      max-width: none;
+    &__title {
+      margin-bottom: 2rem;
     }
   }
 
-  &__footer {
-    // position: absolute;
-    // bottom: 2rem;
-    // left: 2rem;
-    // right: 2rem;
+  .builder__option {
+    padding: 1.5rem 0;
+    border-bottom-width: 0.1rem;
+    border-bottom-style: solid;
+  }
 
-    button + button {
-      margin: 0 0 0 0.5rem;
+  .cart li:last-child .builder__option {
+    border-bottom: 0;
+  }
+
+  &__quantity {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 10rem;
+    text-align: center;
+
+    &__count {
+      display: inline-block;
+      width: $quantity-size;
+      height: $quantity-size;
+      line-height: $quantity-size;
+      border-radius: $quantity-size / 2;
+      padding: 0;
+      text-align: center;
+    }
+
+    &__favorite {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: $quantity-size;
+      height: $quantity-size;
+      border-radius: $quantity-size / 2;
+      padding: 0;
+      margin: 0 0 0 1.25rem;
+    }
+
+    &__favorite__icon {
+      display: block;
+      width: 1.6rem;
+      height: 1.6rem;
     }
   }
 }

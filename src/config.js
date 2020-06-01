@@ -7,16 +7,21 @@ export const defaultConfig = {
     apiKey: 'AIzaSyCkllc7M-cYNzSRXO7KE-ZZKTPW59RroDk',
     defaultCenter: { lat: 40.7572285, lng: -73.9729147 },
     zoom: 14,
+    // styles: {
+    //   labelColor: '#5a5aff',
+    //   roadColor: '#edeaff',
+    //   featureColor: '#edeaff',
+    //   waterColor: '#cbe9fd',
+    //   backgroundColor: '#f6f5ff',
+    // },
     styles: {
-      labelColor: '#5a5aff',
-      roadColor: '#edeaff',
-      featureColor: '#edeaff',
-      // waterColor: '#e8f4fd',
-      // waterColor: '#97d2fb',
-      waterColor: '#cbe9fd',
-      //  backgroundColor: '#ffffff',
-      //  backgroundColor: '#f4f2ff',
-      backgroundColor: '#f6f5ff',
+      labelColor: '#666666',
+      // roadColor: '#e4e9f2',
+      // featureColor: '#e4e9f2'
+      roadColor: '#eaeef4',
+      featureColor: '#eaeef4',
+      waterColor: '#dee5ef',
+      backgroundColor: '#f5f7fa',
     },
     icons: {
       user: {
@@ -153,8 +158,13 @@ export const defaultConfig = {
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590860635_633edb149568073f51aa.jpg',
     title: 'Welcome Back',
     subtitle: 'How can we help you today?',
+    upcomingOrders: {
+      title: 'Upcoming Orders',
+      subtitle: 'Review & update orders that have yet to be fulfilled',
+      empty: "Looks like you don't currently have any upcoming orders",
+    },
     pastOrders: {
-      title: 'Your Recent Orders',
+      title: 'Recent Orders',
       subtitle: 'Reorder a past order, view details, and add ratings',
       empty: "Looks like you don't currently have any past orders",
     },

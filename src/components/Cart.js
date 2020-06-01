@@ -9,7 +9,7 @@ import {
 } from '../slices/orderSlice'
 import {} from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
-import { BuilderOptionWrapper, BuilderQuantity } from '../packages'
+import { CartItem, BuilderQuantity } from '../packages'
 
 const Cart = () => {
   const dispatch = useDispatch()
@@ -33,8 +33,9 @@ const Cart = () => {
       {cart.map((item, index) => {
         return (
           <li key={`${item.id}-${index}`}>
-            <BuilderOptionWrapper
-              option={item}
+            <CartItem
+              item={item}
+              showModifiers={true}
               editItem={(evt) => editItem(evt, item)}
               removeItem={(evt) => removeItem(evt, item)}
             >
@@ -47,7 +48,7 @@ const Cart = () => {
                 decrementDisabled={false}
                 classes={null}
               />
-            </BuilderOptionWrapper>
+            </CartItem>
           </li>
         )
       })}

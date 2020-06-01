@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { selectAccountConfig } from '../slices/configSlice'
 import { selectToken } from '../slices/customerSlice'
-import { selectPastOrders, fetchPastOrders } from '../slices/accountSlice'
+import {
+  selectUpcomingOrders,
+  fetchUpcomingOrders,
+} from '../slices/accountSlice'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -11,19 +14,21 @@ import SectionItem from './SectionItem'
 import SectionEmpty from './SectionEmpty'
 import OrderCard from './OrderCard'
 
-const AccountPastOrders = () => {
+const AccountUpcomingOrders = () => {
   const dispatch = useDispatch()
-  const { pastOrders: pastOrdersConfig } = useSelector(selectAccountConfig)
-  const { title, subtitle, empty } = pastOrdersConfig
+  const { upcomingOrders: upcomingOrdersConfig } = useSelector(
+    selectAccountConfig
+  )
+  const { title, subtitle, empty } = upcomingOrdersConfig
   const token = useSelector(selectToken)
-  const pastOrders = useSelector(selectPastOrders)
-  const { entities, loading, error } = pastOrders
+  const upcomingOrders = useSelector(selectUpcomingOrders)
+  const { entities, loading, error } = upcomingOrders
   const isLoading = loading === 'pending'
   const showEntities = !isLoading && !error
-  // console.log(pastOrders)
+  console.log(upcomingOrders)
 
   useEffect(() => {
-    dispatch(fetchPastOrders({ token, limit: 10 }))
+    dispatch(fetchUpcomingOrders({ token }))
   }, [dispatch, token])
 
   return (
@@ -51,5 +56,5 @@ const AccountPastOrders = () => {
   )
 }
 
-AccountPastOrders.displayName = 'AccountPastOrders'
-export default AccountPastOrders
+AccountUpcomingOrders.displayName = 'AccountUpcomingOrders'
+export default AccountUpcomingOrders

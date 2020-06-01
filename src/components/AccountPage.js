@@ -1,18 +1,13 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-// import BarLoader from 'react-spinners/BarLoader'
+import { useSelector } from 'react-redux'
 import { selectConfig } from '../slices/configSlice'
 import { selectCustomer } from '../slices/customerSlice'
-import {
-  selectAccount,
-  fetchUpcomingOrders,
-  fetchPastOrders,
-} from '../slices/accountSlice'
 import Hero from './Hero'
 import StickyNav from './StickyNav'
 import AccountGreeting from './AccountGreeting'
 import AccountPastOrders from './AccountPastOrders'
+import AccountUpcomingOrders from './AccountUpcomingOrders'
 
 const navItems = [
   'Loyalty & Discounts',
@@ -27,21 +22,13 @@ const navItems = [
 
 const AccountPage = () => {
   const history = useHistory()
-  const dispatch = useDispatch()
   const { account: accountConfig } = useSelector(selectConfig)
-  const { auth, account } = useSelector(selectCustomer)
-  const { access_token: token } = auth || {}
-  const { upcomingOrders } = useSelector(selectAccount)
-  // console.log(upcomingOrders)
+  const { account } = useSelector(selectCustomer)
 
   useEffect(() => {
     if (!account) history.push('/')
     window.scroll(0, 0)
   }, [account, history])
-
-  useEffect(() => {
-    dispatch(fetchUpcomingOrders({ token }))
-  }, [dispatch, token])
 
   return (
     <>
@@ -54,6 +41,7 @@ const AccountPage = () => {
       <StickyNav items={navItems} offset={0} />
       <h1 className="sr-only">Account</h1>
       <div className="sections">
+        <AccountUpcomingOrders />
         <AccountPastOrders />
       </div>
     </>

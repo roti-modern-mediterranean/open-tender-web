@@ -39,14 +39,14 @@ const BuilderHeader = ({ item, showImage }) => {
               {item.cals} cal
             </span>
           )}
-          {item.allergens && (
-            <span className="builder__details__cals ot-alert-color">
-              {item.allergens}
+          {item.allergens.length > 0 && (
+            <span className="builder__details__cals ot-alert-color font-size-small">
+              {item.allergens.join(', ')}
             </span>
           )}
-          {item.tags && (
-            <span className="builder__details__cals secondary-color">
-              {item.tags}
+          {item.tags.length > 0 && (
+            <span className="builder__details__cals secondary-color font-size-small">
+              {item.tags.join(', ')}
             </span>
           )}
         </div>

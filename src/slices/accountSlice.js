@@ -29,8 +29,7 @@ export const fetchOrder = createAsyncThunk(
   'account/getOrder',
   async ({ token, orderId }, thunkAPI) => {
     try {
-      const response = await getCustomerOrder(token, orderId)
-      return response.data
+      return await getCustomerOrder(token, orderId)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -38,7 +37,7 @@ export const fetchOrder = createAsyncThunk(
 )
 
 const initialState = {
-  currentOrder: { entity: {}, loading: false, error: null },
+  currentOrder: { order: {}, loading: false, error: null },
   upcomingOrders: { entities: [], loading: false, error: null },
   pastOrders: { entities: [], loading: false, error: null },
   favorites: { entities: [], loading: false, error: null },
@@ -88,8 +87,9 @@ const accountSlice = createSlice({
       }
     },
     [fetchOrder.fulfilled]: (state, action) => {
+      console.log(action.payload)
       state.currentOrder = {
-        entity: action.payload,
+        order: action.payload,
         loading: 'idle',
         error: null,
       }
@@ -99,7 +99,7 @@ const accountSlice = createSlice({
     },
     [fetchOrder.rejected]: (state, action) => {
       state.currentOrder = {
-        entity: {},
+        order: {},
         loading: 'idle',
         error: action.payload.detail,
       }
@@ -110,6 +110,7 @@ const accountSlice = createSlice({
 // export const {  } = accountSlice.actions
 
 export const selectAccount = (state) => state.account
+export const selectUpcomingOrders = (state) => state.account.upcomingOrders
 export const selectPastOrders = (state) => state.account.pastOrders
 export const selectAccountOrder = (state) => state.account.currentOrder
 

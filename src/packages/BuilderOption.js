@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import BuilderOptionWrapper from './BuilderOptionWrapper'
+import CartItem from './CartItem'
 import BuilderQuantity from './BuilderQuantity'
 
 const BuilderOption = ({
@@ -20,7 +20,7 @@ const BuilderOption = ({
   const decrementDisabled = option.quantity === 0
   return (
     <li>
-      <BuilderOptionWrapper option={option}>
+      <CartItem item={option}>
         <BuilderQuantity
           item={option}
           adjust={adjust}
@@ -30,7 +30,7 @@ const BuilderOption = ({
           decrementDisabled={decrementDisabled}
           classes={classes}
         />
-      </BuilderOptionWrapper>
+      </CartItem>
     </li>
   )
 }
