@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 import { isoToDateStr, timezoneMap } from '../packages/utils/datetimes'
 import { Button } from '../packages'
 import { capitalize } from '../packages/utils/helpers'
@@ -32,6 +33,7 @@ const DeliveryLink = ({ streetAddress, trackingUrl }) => {
 }
 
 const OrderCard = ({ order }) => {
+  const history = useHistory()
   const {
     order_id,
     status,
@@ -46,7 +48,6 @@ const OrderCard = ({ order }) => {
   } = order
   const tz = timezoneMap[timezone]
   const requestedAt = isoToDateStr(requested_at, tz, 'MMMM d @ h:mma')
-  console.log(status)
   const isOpen = status === 'OPEN'
   const images = items.map((i) =>
     i.images
@@ -68,6 +69,7 @@ const OrderCard = ({ order }) => {
 
   const handleDetails = (evt) => {
     evt.preventDefault()
+    history.push(`/orders/${order_id}`)
     evt.target.blur()
   }
 

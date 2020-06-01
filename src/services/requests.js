@@ -57,3 +57,7 @@ export const getCustomerOrders = (token, timing, limit) => {
   params = params.length ? `?${params.join('&')}` : ''
   return request(`/customer/orders${params}`, 'GET', null, null, token)
 }
+
+export const getCustomerOrder = (token, orderId) => {
+  return request(`/customer/orders/${orderId}`, 'GET', null, null, token)
+}
