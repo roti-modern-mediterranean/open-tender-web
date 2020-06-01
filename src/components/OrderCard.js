@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import { isoToDateStr, timezoneMap } from '../packages/utils/datetimes'
 import { Button } from '../packages'
 import { capitalize } from '../packages/utils/helpers'
+import { iconMap } from '../packages/icons'
 
 const OrderImage = ({ imageUrl, title }) => {
   return (
@@ -12,9 +13,28 @@ const OrderImage = ({ imageUrl, title }) => {
   )
 }
 
-const AccountPastOrder = ({ order }) => {
+const DeliveryLink = ({ streetAddress, trackingUrl }) => {
+  return trackingUrl ? (
+    <p>
+      <a
+        href={trackingUrl}
+        rel="noopener noreferrer"
+        target="_blank"
+        title="Check delivery status"
+      >
+        {streetAddress}
+        <span className="link-icon">{iconMap['ExternalLink']}</span>
+      </a>
+    </p>
+  ) : (
+    <p>{streetAddress}</p> || null
+  )
+}
+
+const OrderCard = ({ order }) => {
   const {
     order_id,
+    status,
     service_type,
     order_type,
     revenue_center,
@@ -26,6 +46,8 @@ const AccountPastOrder = ({ order }) => {
   } = order
   const tz = timezoneMap[timezone]
   const requestedAt = isoToDateStr(requested_at, tz, 'MMMM d @ h:mma')
+  console.log(status)
+  const isOpen = status === 'OPEN'
   const images = items.map((i) =>
     i.images
       .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
@@ -34,10 +56,17 @@ const AccountPastOrder = ({ order }) => {
       })
   )
   const itemNames = items.map((i) => i.name).join(', ')
-
   const orderType = order_type === 'CATERING' ? order_type : service_type
+  const { street, unit } = address || {}
+  const streetAddress = `${street}${unit ? `, ${unit}` : ''}`
+  const trackingUrl = isOpen && delivery && delivery.tracking_url
 
   const handleReorder = (evt) => {
+    evt.preventDefault()
+    evt.target.blur()
+  }
+
+  const handleDetails = (evt) => {
     evt.preventDefault()
     evt.target.blur()
   }
@@ -49,8 +78,6 @@ const AccountPastOrder = ({ order }) => {
           Order #{order_id}
         </p>
         <p className="order__title">
-          {/* <span className="preface">{orderType}</span> from
-          <span className="preface">{revenue_center.name}</span> */}
           {capitalize(orderType)} from {revenue_center.name}
         </p>
       </div>
@@ -59,23 +86,10 @@ const AccountPastOrder = ({ order }) => {
           <p>
             {requestedAt} &nbsp;|&nbsp; ${order.total}
           </p>
-          {address && (
-            <p>
-              {address.street}
-              {address.unit ? `, ${address.unit}` : ''}
-            </p>
-          )}
-          {delivery && delivery.tracking_url && (
-            <p>
-              <a
-                href={delivery.tracking_url}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Check Delivery Status
-              </a>
-            </p>
-          )}
+          <DeliveryLink
+            streetAddress={streetAddress}
+            trackingUrl={trackingUrl}
+          />
         </div>
         <div className="order__items">
           <div className="order__images">{images}</div>
@@ -83,15 +97,26 @@ const AccountPastOrder = ({ order }) => {
         </div>
       </div>
       <div className="order__footer">
-        <Button text="Reorder" icon="RefreshCw" onClick={handleReorder} />
+        <Button
+          text="Reorder"
+          icon="RefreshCw"
+          onClick={handleReorder}
+          classes="btn--small font-size-small"
+        />
+        <Button
+          text="Details / Rate"
+          icon="FileText"
+          onClick={handleDetails}
+          classes="btn--small btn--secondary font-size-small"
+        />
       </div>
     </div>
   )
 }
 
-AccountPastOrder.displayName = 'AccountPastOrder'
-AccountPastOrder.propTypes = {
+OrderCard.displayName = 'OrderCard'
+OrderCard.propTypes = {
   order: propTypes.string,
 }
 
-export default AccountPastOrder
+export default OrderCard

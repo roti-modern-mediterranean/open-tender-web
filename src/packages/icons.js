@@ -29,6 +29,8 @@ import {
   Home,
   Grid,
   Navigation,
+  FileText,
+  ExternalLink,
 } from 'react-feather'
 
 export const iconMap = {
@@ -61,4 +63,6 @@ export const iconMap = {
   PlusCircle: <PlusCircle size={null} />,
   CheckCircle: <CheckCircle size={null} />,
   Navigation: <Navigation size={null} />,
+  FileText: <FileText size={null} />,
+  ExternalLink: <ExternalLink size={null} />,
 }

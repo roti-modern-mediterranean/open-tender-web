@@ -53,7 +53,7 @@ const AccountPage = () => {
       </Hero>
       <StickyNav items={navItems} offset={0} />
       <h1 className="sr-only">Account</h1>
-      <div className="sections bg-secondary-color">
+      <div className="sections">
         <AccountPastOrders />
       </div>
     </>

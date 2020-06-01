@@ -27,7 +27,7 @@ const Button = ({
   children,
 }) => {
   const btnIcon = typeof icon === 'string' ? iconMap[icon] : icon
-  const klass = `${btnIcon ? 'btn' : ''} ${classes} ${
+  const klass = `${btnIcon ? 'btn btn--icon' : ''} ${classes} ${
     iconEnd ? '-icon-end' : ''
   }`
   return (

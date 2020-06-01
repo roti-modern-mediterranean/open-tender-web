@@ -1,7 +1,10 @@
 $image-size: 4.5rem;
 
 .order {
+  position: relative;
+  height: 100%;
   padding: 2rem 2rem;
+  border: 0.1rem solid #f3f3f3;
   // border-width: 0.1rem;
   // border-style: solid;
 
@@ -14,7 +17,7 @@ $image-size: 4.5rem;
   }
 
   &__details {
-    line-height: 1.5;
+    line-height: 1.7;
   }
 
   &__items {
@@ -44,7 +47,14 @@ $image-size: 4.5rem;
     }
   }
 
-  // &__footer {
-  //   margin: 1.5rem 0 0;
-  // }
+  &__footer {
+    // position: absolute;
+    // bottom: 2rem;
+    // left: 2rem;
+    // right: 2rem;
+
+    button + button {
+      margin: 0 0 0 0.5rem;
+    }
+  }
 }

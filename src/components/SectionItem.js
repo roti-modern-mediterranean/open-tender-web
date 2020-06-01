@@ -3,7 +3,8 @@ import propTypes from 'prop-types'
 
 const SectionItem = ({ children }) => (
   <div className="section__item">
-    <div className="section__item__content">{children}</div>
+    {children}
+    {/* <div className="section__item__content">{children}</div> */}
   </div>
 )
 

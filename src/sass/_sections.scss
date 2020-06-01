@@ -31,14 +31,15 @@
 
   &__items {
     display: flex;
-    justify-content: space-between;
-    align-items: top;
+    // justify-content: space-between;
     flex-wrap: wrap;
+    margin: 0 -1rem;
   }
 
   &__item {
-    width: 19%;
+    width: 20%;
     flex-shrink: 0;
+    padding: 0 1rem;
     margin: 0 0 1.25%;
   }
 }

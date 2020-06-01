@@ -9,7 +9,7 @@ import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionItem from './SectionItem'
 import SectionEmpty from './SectionEmpty'
-import AccountPastOrder from './AccountPastOrder'
+import OrderCard from './OrderCard'
 
 const AccountPastOrders = () => {
   const dispatch = useDispatch()
@@ -34,11 +34,11 @@ const AccountPastOrders = () => {
         <SectionError error={error} />
         {showEntities &&
           (entities.length ? (
-            <div className="section__items flex">
+            <div className="section__items">
               {entities.map((i) => {
                 return (
                   <SectionItem>
-                    <AccountPastOrder order={i} />
+                    <OrderCard order={i} />
                   </SectionItem>
                 )
               })}
