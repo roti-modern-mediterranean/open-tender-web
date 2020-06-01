@@ -59,9 +59,8 @@ const OrderCard = ({ order }) => {
       })
   )
   const itemNames = items.map((i) => i.name).join(', ')
-  const orderType = order_type === 'CATERING' ? order_type : service_type
+  const orderType = order_type === 'MAIN_MENU' ? service_type : order_type
   const { street, unit, city, state, postal_code } = address || {}
-  console.log(address)
   const streetAddress = street
     ? `${street}${unit ? `, ${unit}` : ''}`
     : postal_code
