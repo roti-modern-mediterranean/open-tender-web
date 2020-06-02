@@ -31,6 +31,10 @@ export const getCustomer = (token) => {
   return request(`/customer`, 'GET', null, null, token)
 }
 
+export const putCustomer = (token, data) => {
+  return request(`/customer`, 'PUT', data, null, token)
+}
+
 export const postLogin = (email, password) => {
   let auth
   const data = {

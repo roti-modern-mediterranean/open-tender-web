@@ -4,10 +4,12 @@
 
 .sticky__inner {
   width: 100%;
+  text-align: center;
 
   .container {
     position: relative;
     display: flex;
+    justify-content: center;
     align-items: center;
   }
 
@@ -29,7 +31,7 @@
 
     li {
       display: inline-block;
-      padding-right: 3rem;
+      padding: 0 1.5rem;
 
       a {
         cursor: pointer;

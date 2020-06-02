@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { postLogin, postLogout } from '../services/requests'
+import { postLogin, postLogout, putCustomer } from '../services/requests'
 
 const initialState = {
   auth: null,
@@ -30,6 +30,17 @@ export const logoutCustomer = createAsyncThunk(
   }
 )
 
+export const updateCustomer = createAsyncThunk(
+  'customer/updateCustomer',
+  async ({ token, data }, thunkAPI) => {
+    try {
+      return await putCustomer(token, data)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
 const customerSlice = createSlice({
   name: 'customer',
   initialState,
@@ -43,7 +54,7 @@ const customerSlice = createSlice({
       state.error = null
       state.loading = 'idle'
     },
-    [loginCustomer.pending]: (state, action) => {
+    [loginCustomer.pending]: (state) => {
       state.loading = 'pending'
     },
     [loginCustomer.rejected]: (state, action) => {
@@ -51,10 +62,22 @@ const customerSlice = createSlice({
       state.loading = 'idle'
     },
     [logoutCustomer.fulfilled]: () => initialState,
-    [logoutCustomer.pending]: (state, action) => {
+    [logoutCustomer.pending]: (state) => {
       state.loading = 'pending'
     },
     [logoutCustomer.rejected]: () => initialState,
+    [updateCustomer.fulfilled]: (state, action) => {
+      state.account = action.payload
+      state.error = null
+      state.loading = 'idle'
+    },
+    [updateCustomer.pending]: (state) => {
+      state.loading = 'pending'
+    },
+    [updateCustomer.rejected]: (state, action) => {
+      state.error = action.payload
+      state.loading = 'idle'
+    },
   },
 })
 

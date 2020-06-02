@@ -23,29 +23,31 @@ const AccountOrders = () => {
   const showEntities = !isLoading && !error
 
   useEffect(() => {
-    dispatch(fetchOrders({ token, limit: 10 }))
+    dispatch(fetchOrders({ token, limit: 6 }))
   }, [dispatch, token])
 
   return (
     <div id={slugify(title)} className="section container ot-section">
-      <SectionHeader title={title} subtitle={subtitle} />
-      <div className="section__content">
+      <div className="section__container -wide">
+        <SectionHeader title={title} subtitle={subtitle} />
         <SectionLoading loading={isLoading} />
         <SectionError error={error} />
-        {showEntities &&
-          (entities.length ? (
-            <div className="section__items">
-              {entities.map((order) => {
-                return (
-                  <SectionItem key={order.order_id}>
-                    <OrderCard order={order} />
-                  </SectionItem>
-                )
-              })}
-            </div>
-          ) : (
-            <SectionEmpty message={empty} />
-          ))}
+        <div className="section__content">
+          {showEntities &&
+            (entities.length ? (
+              <div className="section__items">
+                {entities.map((order) => {
+                  return (
+                    <SectionItem key={order.order_id}>
+                      <OrderCard order={order} />
+                    </SectionItem>
+                  )
+                })}
+              </div>
+            ) : (
+              <SectionEmpty message={empty} />
+            ))}
+        </div>
       </div>
     </div>
   )

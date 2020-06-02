@@ -7,6 +7,7 @@ import Hero from './Hero'
 import StickyNav from './StickyNav'
 import AccountGreeting from './AccountGreeting'
 import AccountOrders from './AccountOrders'
+import AccountDetails from './AccountDetails'
 
 // const navItems = [
 //   'Loyalty & Discounts',
@@ -24,26 +25,28 @@ const AccountPage = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const { background, title, subtitle, sections } = accountConfig
   const { account } = useSelector(selectCustomer)
+  console.log(account)
 
   useEffect(() => {
-    if (!account) history.push('/')
+    if (!account) return history.push('/')
     window.scroll(0, 0)
   }, [account, history])
 
   const navItems = Object.values(sections).map((section) => section.title)
 
-  return (
+  return account ? (
     <>
-      <Hero imageUrl={background} classes="hero--right">
+      {/* <Hero imageUrl={background} classes="hero--right">
         <AccountGreeting title={title} subtitle={subtitle} />
-      </Hero>
+      </Hero> */}
       <StickyNav items={navItems} offset={0} />
       <h1 className="sr-only">Account</h1>
-      <div className="sections">
+      <div className="sections bg-secondary-color">
+        <AccountDetails />
         <AccountOrders />
       </div>
     </>
-  )
+  ) : null
 }
 
 AccountPage.displayName = 'AccountPage'

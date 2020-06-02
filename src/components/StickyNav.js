@@ -9,7 +9,7 @@ const StickyNav = ({ items, offset = -100, duration = 500 }) => {
 
   const handleScroll = () => {
     if (stickyRef.current) {
-      setSticky(stickyRef.current.getBoundingClientRect().top <= 60)
+      setSticky(stickyRef.current.getBoundingClientRect().top < 60)
     }
   }
 
