@@ -158,15 +158,23 @@ export const defaultConfig = {
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590860635_633edb149568073f51aa.jpg',
     title: 'Welcome Back',
     subtitle: 'How can we help you today?',
-    upcomingOrders: {
-      title: 'Upcoming Orders',
-      subtitle: 'Review & update orders that have yet to be fulfilled',
-      empty: "Looks like you don't currently have any upcoming orders",
-    },
-    pastOrders: {
-      title: 'Recent Orders',
-      subtitle: 'Reorder a past order, view details, and add ratings',
-      empty: "Looks like you don't currently have any past orders",
+    sections: {
+      recentOrders: {
+        title: 'Recent Orders',
+        subtitle:
+          'Make changes to upcoming orders, reorder past orders, and add order ratings & comments',
+        empty: "Looks like you don't have any recent orders",
+      },
+      // upcomingOrders: {
+      //   title: 'Upcoming Orders',
+      //   subtitle: 'Review & update orders that have yet to be fulfilled',
+      //   empty: "Looks like you don't currently have any upcoming orders",
+      // },
+      // pastOrders: {
+      //   title: 'Recent Orders',
+      //   subtitle: 'Reorder a past order, view details, and add ratings',
+      //   empty: "Looks like you don't currently have any past orders",
+      // },
     },
   },
 }

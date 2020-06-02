@@ -24,6 +24,7 @@ import {
   Delete,
   XCircle,
   PlusCircle,
+  Check,
   CheckCircle,
   CreditCard,
   Home,
@@ -32,6 +33,7 @@ import {
   FileText,
   ExternalLink,
   Star,
+  Edit,
 } from 'react-feather'
 
 export const iconMap = {
@@ -62,9 +64,11 @@ export const iconMap = {
   Delete: <Delete size={null} />,
   XCircle: <XCircle size={null} />,
   PlusCircle: <PlusCircle size={null} />,
+  Check: <Check size={null} />,
   CheckCircle: <CheckCircle size={null} />,
   Navigation: <Navigation size={null} />,
   FileText: <FileText size={null} />,
   ExternalLink: <ExternalLink size={null} />,
   Star: <Star size={null} />,
+  Edit: <Edit size={null} />,
 }

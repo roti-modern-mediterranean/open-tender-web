@@ -10,7 +10,11 @@ import {
 import { makeDisplayItem } from '../packages/utils/cart'
 import { capitalize, isEmpty } from '../packages/utils/helpers'
 import ClipLoader from 'react-spinners/ClipLoader'
-import { timezoneMap, makeRequestedAtString } from '../packages/utils/datetimes'
+import {
+  timezoneMap,
+  makeRequestedAtString,
+  isoToDate,
+} from '../packages/utils/datetimes'
 import { iconMap } from '../packages/icons'
 
 const OrderLoading = ({ loading }) => {
@@ -194,6 +198,7 @@ const Order = ({
   error,
   goToAccount,
   reorder,
+  edit,
   updateRating,
 }) => {
   const {
@@ -217,6 +222,7 @@ const Order = ({
   const showOrder = !isLoading && !error && !isEmpty(order)
   const displayedItems = items ? items.map((i) => makeDisplayItem(i)) : []
   const orderType = order_type === 'MAIN_MENU' ? service_type : order_type
+  const isUpcoming = isoToDate(requested_at) > new Date()
 
   return (
     <div className="order">
@@ -230,12 +236,22 @@ const Order = ({
               {capitalize(orderType)} from {revenue_center.name}
             </h1>
             <div className="order__buttons">
+              {isUpcoming && (
+                <Button
+                  text="Edit"
+                  icon="Edit"
+                  onClick={reorder}
+                  disabled={!order.is_editable}
+                />
+              )}
               <Button text="Reorder" icon="RefreshCw" onClick={reorder} />
-              <Button
-                text={rating ? 'Update Rating' : 'Add Rating'}
-                icon="Star"
-                onClick={updateRating}
-              />
+              {!isUpcoming && (
+                <Button
+                  text={rating ? 'Update Rating' : 'Add Rating'}
+                  icon="Star"
+                  onClick={updateRating}
+                />
+              )}
             </div>
             <p className="font-size-small">
               <button type="button" className="btn-link" onClick={goToAccount}>

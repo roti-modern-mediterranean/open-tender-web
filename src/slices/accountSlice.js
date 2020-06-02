@@ -1,6 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getCustomerOrders, getCustomerOrder } from '../services/requests'
 
+export const fetchOrders = createAsyncThunk(
+  'account/getOrders',
+  async ({ token, limit }, thunkAPI) => {
+    try {
+      const response = await getCustomerOrders(token, null, limit)
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
 export const fetchUpcomingOrders = createAsyncThunk(
   'account/getUpcomingOrders',
   async ({ token, limit }, thunkAPI) => {
@@ -38,6 +50,7 @@ export const fetchOrder = createAsyncThunk(
 
 const initialState = {
   currentOrder: { order: {}, loading: false, error: null },
+  orders: { entities: [], loading: false, error: null },
   upcomingOrders: { entities: [], loading: false, error: null },
   pastOrders: { entities: [], loading: false, error: null },
   favorites: { entities: [], loading: false, error: null },
@@ -56,6 +69,23 @@ const accountSlice = createSlice({
     },
   },
   extraReducers: {
+    [fetchOrders.fulfilled]: (state, action) => {
+      state.orders = {
+        entities: action.payload,
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [fetchOrders.pending]: (state) => {
+      state.orders.loading = 'pending'
+    },
+    [fetchOrders.rejected]: (state, action) => {
+      state.orders = {
+        entities: [],
+        loading: 'idle',
+        error: action.payload.detail,
+      }
+    },
     [fetchUpcomingOrders.fulfilled]: (state, action) => {
       state.upcomingOrders = {
         entities: action.payload,
@@ -115,6 +145,7 @@ export const { resetAccountOrder } = accountSlice.actions
 export const selectAccount = (state) => state.account
 export const selectUpcomingOrders = (state) => state.account.upcomingOrders
 export const selectPastOrders = (state) => state.account.pastOrders
+export const selectAccountOrders = (state) => state.account.orders
 export const selectAccountOrder = (state) => state.account.currentOrder
 
 export default accountSlice.reducer
