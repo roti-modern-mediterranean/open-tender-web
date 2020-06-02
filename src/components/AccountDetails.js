@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectAccountConfigSections } from '../slices/configSlice'
 import { selectCustomer, updateCustomer } from '../slices/customerSlice'
 import SectionHeader from './SectionHeader'
-import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import { slugify } from '../packages/utils/helpers'
 import { Input } from '../packages'
@@ -36,8 +35,6 @@ const AccountDetails = () => {
   const submitButton = useRef()
   const [data, setData] = useState(account)
   const [submitting, setSubmitting] = useState(false)
-  // const isLoading = loading === 'pending'
-  // const showDetails = !isLoading && !error
   const formErrors = error && error.params ? handleFormErrors(error.params) : {}
   const errMsg = error && !error.params ? error.detail || error.message : null
 
@@ -57,7 +54,6 @@ const AccountDetails = () => {
       (obj, i) => ({ ...obj, [i.name]: data[i.name] }),
       {}
     )
-    console.log(update)
     dispatch(updateCustomer({ token, data: update }))
     submitButton.current.blur()
   }
@@ -66,7 +62,6 @@ const AccountDetails = () => {
     <div id={slugify(title)} className="section container ot-section">
       <div className="section__container">
         <SectionHeader title={title} subtitle={subtitle} />
-        {/* <SectionLoading loading={isLoading} /> */}
         <SectionError error={errMsg} />
         <div className="section__content bg-color border-radius">
           <form
