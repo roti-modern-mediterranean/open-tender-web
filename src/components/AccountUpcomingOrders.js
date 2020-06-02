@@ -25,7 +25,6 @@ const AccountUpcomingOrders = () => {
   const { entities, loading, error } = upcomingOrders
   const isLoading = loading === 'pending'
   const showEntities = !isLoading && !error
-  console.log(upcomingOrders)
 
   useEffect(() => {
     dispatch(fetchUpcomingOrders({ token }))

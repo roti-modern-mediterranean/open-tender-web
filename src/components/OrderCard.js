@@ -14,6 +14,12 @@ const OrderImage = ({ imageUrl, title }) => {
   )
 }
 
+OrderImage.displayName = 'OrderImage'
+OrderImage.propTypes = {
+  imageUrl: propTypes.string,
+  title: propTypes.string,
+}
+
 const OrderCard = ({ order }) => {
   const history = useHistory()
   const {

@@ -20,7 +20,6 @@ const AccountPastOrders = () => {
   const { entities, loading, error } = pastOrders
   const isLoading = loading === 'pending'
   const showEntities = !isLoading && !error
-  // console.log(pastOrders)
 
   useEffect(() => {
     dispatch(fetchPastOrders({ token, limit: 10 }))

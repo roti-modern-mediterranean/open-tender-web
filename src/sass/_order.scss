@@ -9,6 +9,14 @@ $quantity-size: 2.8rem;
     margin-bottom: 4rem;
   }
 
+  &__buttons {
+    margin: 2rem 0 2rem;
+
+    button + button {
+      margin-left: 1rem;
+    }
+  }
+
   &__loading,
   &__error {
     margin-top: 1.5rem;
@@ -58,6 +66,17 @@ $quantity-size: 2.8rem;
       flex: 1;
       padding: 0 1.75rem;
       line-height: 1.6;
+    }
+  }
+
+  &__stars {
+    display: flex;
+    margin: 0.25rem 0 0.5rem;
+    span {
+      display: block;
+      margin: 0 0.5rem 0 0;
+      width: 2rem;
+      height: 2rem;
     }
   }
 

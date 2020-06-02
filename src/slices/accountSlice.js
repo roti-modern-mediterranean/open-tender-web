@@ -91,7 +91,6 @@ const accountSlice = createSlice({
       }
     },
     [fetchOrder.fulfilled]: (state, action) => {
-      console.log(action.payload)
       state.currentOrder = {
         order: action.payload,
         loading: 'idle',
@@ -102,7 +101,6 @@ const accountSlice = createSlice({
       state.currentOrder.loading = 'pending'
     },
     [fetchOrder.rejected]: (state, action) => {
-      console.log(action.payload)
       state.currentOrder = {
         order: {},
         loading: 'idle',

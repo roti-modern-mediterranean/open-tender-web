@@ -47,12 +47,14 @@ const Check = ({ title, totals, tenders, updating = false }) => {
   const amountRemaiing = checkAmountRemaining(total, tenders)
 
   return (
-    <div className="check border-radius bg-color ot-box-shadow">
+    <div className="check">
       <div className="check__container">
         {updating && <CheckUpdating />}
-        <p className="check__title font-size-big ot-bold border-bottom">
-          {title}
-        </p>
+        {title ? (
+          <p className="check__title font-size-big ot-bold border-bottom">
+            {title}
+          </p>
+        ) : null}
         <ul className="check__items">
           <CheckItem label="Cart Total" value={subtotal} />
           {surcharges.length ? (

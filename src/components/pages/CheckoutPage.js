@@ -210,16 +210,16 @@ const CheckoutPage = () => {
       <div className="checkout__sidebar bg-secondary-color">
         <div className="checkout__sidebar__wrapper">
           <div className="checkout__sidebar__container">
-            <div className="checkout__totals">
-              {totals && (
+            {totals && (
+              <div className="checkout__totals border-radius bg-color ot-box-shadow">
                 <Check
                   title={checkoutConfig.check.title}
                   totals={totals}
                   tenders={tenders}
                   updating={pending}
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

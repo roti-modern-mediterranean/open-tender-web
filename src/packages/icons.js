@@ -31,6 +31,7 @@ import {
   Navigation,
   FileText,
   ExternalLink,
+  Star,
 } from 'react-feather'
 
 export const iconMap = {
@@ -65,4 +66,5 @@ export const iconMap = {
   Navigation: <Navigation size={null} />,
   FileText: <FileText size={null} />,
   ExternalLink: <ExternalLink size={null} />,
+  Star: <Star size={null} />,
 }

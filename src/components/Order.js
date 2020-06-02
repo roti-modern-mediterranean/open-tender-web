@@ -1,10 +1,17 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { CartItem, OrderQuantity, DeliveryLink } from '../packages'
+import {
+  Button,
+  CartItem,
+  OrderQuantity,
+  DeliveryLink,
+  Check,
+} from '../packages'
 import { makeDisplayItem } from '../packages/utils/cart'
 import { capitalize, isEmpty } from '../packages/utils/helpers'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { timezoneMap, makeRequestedAtString } from '../packages/utils/datetimes'
+import { iconMap } from '../packages/icons'
 
 const OrderLoading = ({ loading }) => {
   return loading ? (
@@ -162,8 +169,33 @@ OrderAddress.propTypes = {
   status: propTypes.string,
 }
 
-const Order = ({ order, loading, error, goToAccount }) => {
-  console.log(order)
+const OrderRating = ({ rating, comments }) => {
+  const stars = []
+  for (let i = 0; i < rating; i++) {
+    stars.push(i)
+  }
+  return (
+    <>
+      <div className="order__stars">
+        {stars.map((star) => (
+          <span key={star}>{iconMap['Star']}</span>
+        ))}
+      </div>
+      {comments.length ? (
+        <p className="font-size-small secondary-color">{comments}</p>
+      ) : null}
+    </>
+  )
+}
+
+const Order = ({
+  order,
+  loading,
+  error,
+  goToAccount,
+  reorder,
+  updateRating,
+}) => {
   const {
     order_id,
     status,
@@ -173,9 +205,12 @@ const Order = ({ order, loading, error, goToAccount }) => {
     is_asap,
     requested_at,
     timezone,
-    items,
     delivery,
     address,
+    notes,
+    items,
+    totals,
+    rating,
   } = order || {}
 
   const isLoading = loading === 'pending'
@@ -194,6 +229,19 @@ const Order = ({ order, loading, error, goToAccount }) => {
             <h1>
               {capitalize(orderType)} from {revenue_center.name}
             </h1>
+            <div className="order__buttons">
+              <Button text="Reorder" icon="RefreshCw" onClick={reorder} />
+              <Button
+                text={rating ? 'Update Rating' : 'Add Rating'}
+                icon="Star"
+                onClick={updateRating}
+              />
+            </div>
+            <p className="font-size-small">
+              <button type="button" className="btn-link" onClick={goToAccount}>
+                Head back to your account page
+              </button>
+            </p>
           </div>
           <div className="order__section">
             {/* <div className="order__section__title">
@@ -221,6 +269,16 @@ const Order = ({ order, loading, error, goToAccount }) => {
                     />
                   </OrderSectionItem>
                 )}
+                {notes && notes.length ? (
+                  <OrderSectionItem title="Notes">
+                    <p className="font-size-small secondary-color">{notes}</p>
+                  </OrderSectionItem>
+                ) : null}
+                {rating ? (
+                  <OrderSectionItem title="Rating">
+                    <OrderRating {...rating} />
+                  </OrderSectionItem>
+                ) : null}
               </div>
             </div>
           </div>
@@ -240,6 +298,27 @@ const Order = ({ order, loading, error, goToAccount }) => {
                   )
                 })}
               </ul>
+            </div>
+          </div>
+          <div className="order__section">
+            <div className="order__section__title">
+              <h2 className="ot-font-size-h3">Your Receipt</h2>
+            </div>
+            <div className="order__section__content bg-color border-radius">
+              <Check totals={totals} tenders={totals.tenders} />
+            </div>
+          </div>
+          <div className="order__section">
+            <div className="order__section__title">
+              <p className="">
+                <button
+                  type="button"
+                  className="btn-link"
+                  onClick={goToAccount}
+                >
+                  Head back to your account page
+                </button>
+              </p>
             </div>
           </div>
         </>
