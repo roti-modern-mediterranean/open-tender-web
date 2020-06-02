@@ -9,10 +9,22 @@ $quantity-size: 2.8rem;
     margin-bottom: 4rem;
   }
 
+  &__loading,
+  &__error {
+    margin-top: 1.5rem;
+  }
+
+  &__error__message {
+    p {
+      margin: 1.5rem 0;
+    }
+  }
+
   &__section {
     margin-bottom: 4rem;
 
     &__title {
+      text-align: center;
       margin-bottom: 2rem;
     }
   }
@@ -45,7 +57,7 @@ $quantity-size: 2.8rem;
     &__content {
       flex: 1;
       padding: 0 1.75rem;
-      line-height: 1.4;
+      line-height: 1.6;
     }
   }
 

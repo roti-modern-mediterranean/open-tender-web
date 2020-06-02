@@ -1,21 +1,19 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { CartItem } from '../packages'
+import { CartItem, OrderQuantity, DeliveryLink } from '../packages'
 import { makeDisplayItem } from '../packages/utils/cart'
-import OrderQuantity from '../packages/OrderQuantity'
-import { capitalize } from '../packages/utils/helpers'
+import { capitalize, isEmpty } from '../packages/utils/helpers'
 import ClipLoader from 'react-spinners/ClipLoader'
-import {
-  isoToDateStr,
-  timezoneMap,
-  makeRequestedAtString,
-} from '../packages/utils/datetimes'
+import { timezoneMap, makeRequestedAtString } from '../packages/utils/datetimes'
 
 const OrderLoading = ({ loading }) => {
   return loading ? (
-    <div className="order__loading">
-      <div className="order__loading__loader">
-        <ClipLoader size={30} loading={loading} />
+    <div className="order__header">
+      <p className="preface">Retrieving your order...</p>
+      <div className="order__loading">
+        <div className="order__loading__loader">
+          <ClipLoader size={24} loading={loading} />
+        </div>
       </div>
     </div>
   ) : null
@@ -26,14 +24,33 @@ OrderLoading.propTypes = {
   loading: propTypes.bool,
 }
 
-const OrderError = ({ error }) => {
-  return error ? (
-    <div className="order__error">
-      <div className="order__error__message">
-        <p className="ot-error-color">{error}</p>
+const handleOrderError = (error) => {
+  switch (error.status) {
+    case 404:
+      return "We couldn't find this order. Please double check your order ID and give it another try."
+    default:
+      return error.detail || error.message
+  }
+}
+
+const OrderError = ({ error, handler }) => {
+  if (!error) return null
+  const errMsg = handleOrderError(error)
+  return (
+    <div className="order__header">
+      <p className="preface ot-error-color">Uh oh. Something went wrong.</p>
+      <div className="order__error">
+        <div className="order__error__message">
+          <p className="ot-error-color ot-bold font-size-big">{errMsg}</p>
+          <p className="font-size-small">
+            <button type="button" className="btn-error" onClick={handler}>
+              Click here to head back to your account page.
+            </button>
+          </p>
+        </div>
       </div>
     </div>
-  ) : null
+  )
 }
 
 OrderError.displayName = 'OrderError'
@@ -61,7 +78,91 @@ OrderSectionItem.propTypes = {
   ]),
 }
 
-const Order = ({ order, loading, error }) => {
+const OrderRevenueCenter = ({ revenue_center }) => {
+  const { address: rcAddr } = revenue_center || {}
+  return (
+    <>
+      <p>{revenue_center.name}</p>
+      <p className="font-size-small secondary-color">
+        {rcAddr.street}, {rcAddr.city}, {rcAddr.state} {rcAddr.postal_code}
+      </p>
+      <p className="font-size-small secondary-color">{rcAddr.phone}</p>
+    </>
+  )
+}
+
+OrderRevenueCenter.displayName = 'OrderRevenueCenter'
+OrderRevenueCenter.propTypes = {
+  revenue_center: propTypes.object,
+}
+
+const OrderRequestedAt = ({ requested_at, timezone, is_asap, status }) => {
+  const tz = timezone && timezoneMap[timezone]
+  const requestedAt =
+    requested_at && makeRequestedAtString(requested_at, tz, true)
+  return is_asap && status === 'OPEN' ? (
+    <>
+      <p>ASAP</p>
+      <p className="font-size-small secondary-color">
+        {requestedAt} (give or take a few minutes)
+      </p>
+    </>
+  ) : (
+    <p>{requestedAt}</p>
+  )
+}
+
+OrderRequestedAt.displayName = 'OrderRequestedAt'
+OrderRequestedAt.propTypes = {
+  requested_at: propTypes.string,
+  timezone: propTypes.string,
+  is_asap: propTypes.bool,
+  status: propTypes.string,
+}
+
+const OrderAddress = ({ address, delivery, status }) => {
+  const { street, unit, city, state, postal_code, company, contact, phone } =
+    address || {}
+  const streetAddress = street ? `${street}${unit ? `, ${unit}` : ''}` : null
+  const contactPhone =
+    contact || phone ? [contact, phone].filter((i) => i).join(' @ ') : null
+  const trackingUrl = status === 'OPEN' && delivery && delivery.tracking_url
+  return (
+    <>
+      {company ? (
+        <>
+          <p>{company}</p>
+          <p className="font-size-small secondary-color">{streetAddress}</p>
+        </>
+      ) : (
+        <p>{streetAddress}</p>
+      )}
+      <p className="font-size-small secondary-color">
+        {city}, {state} {postal_code}
+      </p>
+      {contactPhone && (
+        <p className="font-size-small secondary-color">{contactPhone}</p>
+      )}
+      {trackingUrl && (
+        <p className="font-size-small">
+          <DeliveryLink
+            text="Check delivery status"
+            trackingUrl={trackingUrl}
+          />
+        </p>
+      )}
+    </>
+  )
+}
+
+OrderAddress.displayName = 'OrderAddress'
+OrderAddress.propTypes = {
+  address: propTypes.object,
+  delivery: propTypes.object,
+  status: propTypes.string,
+}
+
+const Order = ({ order, loading, error, goToAccount }) => {
   console.log(order)
   const {
     order_id,
@@ -78,19 +179,14 @@ const Order = ({ order, loading, error }) => {
   } = order || {}
 
   const isLoading = loading === 'pending'
-  const showOrder = !isLoading && !error
+  const showOrder = !isLoading && !error && !isEmpty(order)
   const displayedItems = items ? items.map((i) => makeDisplayItem(i)) : []
   const orderType = order_type === 'MAIN_MENU' ? service_type : order_type
-  const { address: rcAddr } = revenue_center || {}
-  const tz = timezone && timezoneMap[timezone]
-  const requestedAt =
-    requested_at && makeRequestedAtString(requested_at, tz, true)
-  console.log(displayedItems)
 
   return (
     <div className="order">
       <OrderLoading loading={isLoading} />
-      <OrderError error={error} />
+      <OrderError error={error} handler={goToAccount} />
       {showOrder && (
         <>
           <div className="order__header">
@@ -106,33 +202,31 @@ const Order = ({ order, loading, error }) => {
             <div className="order__section__content bg-color border-radius">
               <div className="order__section__items">
                 <OrderSectionItem title="Location">
-                  <p>{revenue_center.name}</p>
-                  <p className="font-size-small secondary-color">
-                    {rcAddr.street}, {rcAddr.city}, {rcAddr.state}{' '}
-                    {rcAddr.postal_code}
-                  </p>
-                  <p className="font-size-small secondary-color">
-                    {rcAddr.phone}
-                  </p>
+                  <OrderRevenueCenter revenue_center={revenue_center} />
                 </OrderSectionItem>
                 <OrderSectionItem title="Requested Time">
-                  {true ? (
-                    <>
-                      <p>ASAP</p>
-                      <p className="font-size-small secondary-color">
-                        {requestedAt}
-                      </p>
-                    </>
-                  ) : (
-                    <p>{requestedAt}</p>
-                  )}
+                  <OrderRequestedAt
+                    requested_at={requested_at}
+                    timezone={timezone}
+                    is_asap={is_asap}
+                    status={status}
+                  />
                 </OrderSectionItem>
+                {service_type === 'DELIVERY' && address && (
+                  <OrderSectionItem title="Delivery Address">
+                    <OrderAddress
+                      address={address}
+                      delivery={delivery}
+                      status={status}
+                    />
+                  </OrderSectionItem>
+                )}
               </div>
             </div>
           </div>
           <div className="order__section">
             <div className="order__section__title">
-              <h2 className="ot-font-size-h3">Items</h2>
+              <h2 className="ot-font-size-h3">Items in Your Order</h2>
             </div>
             <div className="order__section__content bg-color border-radius">
               <ul className="cart">
@@ -157,7 +251,9 @@ const Order = ({ order, loading, error }) => {
 Order.displayName = 'Order'
 Order.propTypes = {
   order: propTypes.object,
-  loading: propTypes.bool,
+  loading: propTypes.string,
   error: propTypes.string,
+  goToAccount: propTypes.func,
 }
+
 export default Order

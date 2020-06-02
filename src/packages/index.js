@@ -28,12 +28,14 @@ import CheckoutLineItem from './CheckoutLineItem'
 import CheckoutSignUp from './CheckoutSignUp'
 import CheckoutTender from './CheckoutTender'
 import CheckoutTip from './CheckoutTip'
+import DeliveryLink from './DeliveryLink'
 import useGoogleMap from './useGoogleMap'
 import useGoogleMapsAutocomplete from './useGoogleMapsAutocomplete'
 import useGoogleMapsPlace from './useGoogleMapsPlace'
 import GoogleMap from './GoogleMap'
 import GoogleMapsAutocomplete from './GoogleMapsAutocomplete'
 import GoogleMapsMarker from './GoogleMapsMarker'
+import OrderQuantity from './OrderQuantity'
 import RequestedAtPicker from './RequestedAtPicker'
 import { Label, Error, Input, Textarea, Switch, Checkbox } from './Inputs'
 import { makeAddress } from './utils/maps'
@@ -69,6 +71,7 @@ export {
   CheckoutSignUp,
   CheckoutTender,
   CheckoutTip,
+  DeliveryLink,
   useGoogleMap,
   useGoogleMapsAutocomplete,
   useGoogleMapsPlace,
@@ -76,6 +79,7 @@ export {
   GoogleMapsAutocomplete,
   GoogleMapsMarker,
   makeAddress,
+  OrderQuantity,
   RequestedAtPicker,
   Error,
   Input,

@@ -4,31 +4,13 @@ import { useHistory } from 'react-router-dom'
 import { isoToDateStr, timezoneMap } from '../packages/utils/datetimes'
 import { Button } from '../packages'
 import { capitalize } from '../packages/utils/helpers'
-import { iconMap } from '../packages/icons'
+import { DeliveryLink } from '../packages'
 
 const OrderImage = ({ imageUrl, title }) => {
   return (
     <div className="order-card__image border-radius-small ot-box-shadow">
       <img src={imageUrl} title={title} alt={title} />
     </div>
-  )
-}
-
-const DeliveryLink = ({ streetAddress, trackingUrl }) => {
-  return trackingUrl ? (
-    <p>
-      <a
-        href={trackingUrl}
-        rel="noopener noreferrer"
-        target="_blank"
-        title="Check delivery status"
-      >
-        {streetAddress}
-        <span className="link-icon">{iconMap['ExternalLink']}</span>
-      </a>
-    </p>
-  ) : (
-    <p>{streetAddress}</p> || null
   )
 }
 
@@ -94,10 +76,13 @@ const OrderCard = ({ order }) => {
           <p>
             {requestedAt} &nbsp;|&nbsp; ${order.total}
           </p>
-          <DeliveryLink
-            streetAddress={streetAddress}
-            trackingUrl={trackingUrl}
-          />
+          {trackingUrl ? (
+            <p>
+              <DeliveryLink text={streetAddress} trackingUrl={trackingUrl} />
+            </p>
+          ) : (
+            <p>{streetAddress}</p>
+          )}
         </div>
         <div className="order-card__items">
           <div className="order-card__images">{images}</div>

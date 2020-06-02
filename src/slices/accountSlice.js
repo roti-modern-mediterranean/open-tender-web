@@ -50,7 +50,11 @@ const initialState = {
 const accountSlice = createSlice({
   name: 'account',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    resetAccountOrder: (state) => {
+      state.currentOrder = initialState.currentOrder
+    },
+  },
   extraReducers: {
     [fetchUpcomingOrders.fulfilled]: (state, action) => {
       state.upcomingOrders = {
@@ -98,16 +102,17 @@ const accountSlice = createSlice({
       state.currentOrder.loading = 'pending'
     },
     [fetchOrder.rejected]: (state, action) => {
+      console.log(action.payload)
       state.currentOrder = {
         order: {},
         loading: 'idle',
-        error: action.payload.detail,
+        error: action.payload,
       }
     },
   },
 })
 
-// export const {  } = accountSlice.actions
+export const { resetAccountOrder } = accountSlice.actions
 
 export const selectAccount = (state) => state.account
 export const selectUpcomingOrders = (state) => state.account.upcomingOrders
