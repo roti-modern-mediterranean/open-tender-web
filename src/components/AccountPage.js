@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectConfig } from '../slices/configSlice'
 import { selectCustomer } from '../slices/customerSlice'
-import Hero from './Hero'
 import StickyNav from './StickyNav'
+import Hero from './Hero'
 import AccountGreeting from './AccountGreeting'
 import AccountOrders from './AccountOrders'
 import AccountDetails from './AccountDetails'
@@ -17,8 +17,11 @@ const AccountPage = () => {
   const { account } = useSelector(selectCustomer)
 
   useEffect(() => {
-    if (!account) return history.push('/')
     window.scroll(0, 0)
+  }, [])
+
+  useEffect(() => {
+    if (!account) return history.push('/')
   }, [account, history])
 
   const navItems = Object.values(sections).map((section) => section.title)

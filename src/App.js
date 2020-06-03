@@ -7,6 +7,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import CartButton from './components/CartButton'
 import Sidebar from './components/Sidebar'
+import Notification from './components/Notifications'
 import './App.scss'
 
 const App = () => {
@@ -15,8 +16,8 @@ const App = () => {
       <Modal />
       <Router>
         <Header />
-        {/* <SystemNotifications /> */}
         <main className="main ot-main">
+          <Notification />
           <Routes />
           <CartButton />
         </main>

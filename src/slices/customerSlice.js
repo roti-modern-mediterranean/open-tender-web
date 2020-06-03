@@ -6,6 +6,7 @@ import {
   getCustomerAllergens,
   putCustomerAllergens,
 } from '../services/requests'
+import { showNotification, hideNotification } from './notificationSlice'
 
 const initialState = {
   auth: null,
@@ -45,7 +46,9 @@ export const updateCustomer = createAsyncThunk(
   'customer/updateCustomer',
   async ({ token, data }, thunkAPI) => {
     try {
-      return await putCustomer(token, data)
+      const response = await putCustomer(token, data)
+      thunkAPI.dispatch(showNotification('Account updated!'))
+      return response
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -67,7 +70,9 @@ export const updateCustomerAllergens = createAsyncThunk(
   'customer/updateCustomerAllergens',
   async ({ token, data }, thunkAPI) => {
     try {
-      return await putCustomerAllergens(token, data)
+      const response = await putCustomerAllergens(token, data)
+      thunkAPI.dispatch(showNotification('Allergens updated!'))
+      return response
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
