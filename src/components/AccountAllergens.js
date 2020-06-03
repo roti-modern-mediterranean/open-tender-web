@@ -3,19 +3,22 @@ import { useSelector, useDispatch } from 'react-redux'
 import { slugify } from '../packages/utils/helpers'
 import { Switch } from '../packages'
 import { selectAccountConfigSections } from '../slices/configSlice'
-import { selectToken } from '../slices/customerSlice'
 import { selectAllergens, fetchAllergens } from '../slices/menuSlice'
+import {
+  selectToken,
+  fetchCustomerAllergens,
+  selectCustomerAllergens,
+  updateCustomerAllergens,
+} from '../slices/customerSlice'
+
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionRow from './SectionRow'
-import {
-  fetchCustomerAllergens,
-  selectCustomerAllergens,
-  updateCustomerAllergens,
-} from '../slices/accountSlice'
 
 const AccountAllergens = () => {
+  const [data, setData] = useState([])
+  const [submitting, setSubmitting] = useState(false)
   const submitButton = useRef()
   const dispatch = useDispatch()
   const {
@@ -26,8 +29,6 @@ const AccountAllergens = () => {
   const customerAllergens = useSelector(selectCustomerAllergens)
   // console.log(allergens)
   // console.log(customerAllergens)
-  const [data, setData] = useState(customerAllergens.entities)
-  const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     dispatch(fetchAllergens())
@@ -37,6 +38,10 @@ const AccountAllergens = () => {
   useEffect(() => {
     if (customerAllergens.loading === 'idle') setSubmitting(false)
   }, [customerAllergens.loading])
+
+  useEffect(() => {
+    setData(customerAllergens.entities)
+  }, [customerAllergens.entities, allergens.entities])
 
   const handleChange = (evt) => {
     const { id, checked } = evt.target
@@ -78,7 +83,7 @@ const AccountAllergens = () => {
               </div>
               <div className="section__rows section__rows--allergens">
                 {allergens.entities.map((allergen) => (
-                  <SectionRow title={allergen.name}>
+                  <SectionRow key={allergen.allergen_id} title={allergen.name}>
                     <Switch
                       label={allergen.name}
                       id={`${allergen.allergen_id}`}

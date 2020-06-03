@@ -25,7 +25,8 @@ const AccountDetails = () => {
   const { auth, account, loading, error } = useSelector(selectCustomer)
   const token = auth.access_token
   const submitButton = useRef()
-  const [data, setData] = useState(account)
+  const [data, setData] = useState({})
+  // const [updated, setUpdated] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const formErrors = error && error.params ? handleFormErrors(error.params) : {}
   const errMsg = error && !error.params ? error.detail || error.message : null
@@ -33,6 +34,10 @@ const AccountDetails = () => {
   useEffect(() => {
     if (loading === 'idle') setSubmitting(false)
   }, [loading])
+
+  useEffect(() => {
+    setData(account)
+  }, [account])
 
   const handleChange = (evt) => {
     const { id, value } = evt.target
@@ -65,6 +70,7 @@ const AccountDetails = () => {
             <div className="section__rows">
               {fields.map((field) => (
                 <SectionRow
+                  key={field.label}
                   title={
                     <span>
                       {field.label}

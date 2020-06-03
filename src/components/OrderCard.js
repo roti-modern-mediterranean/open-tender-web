@@ -67,7 +67,7 @@ const OrderCard = ({ order }) => {
     totals,
   } = order
   const tz = timezoneMap[timezone]
-  const requestedAt = isoToDateStr(requested_at, tz, 'MMMM d @ h:mma')
+  const requestedAt = isoToDateStr(requested_at, tz, 'MMMM d, yyyy @ h:mma')
   const isOpen = status === 'OPEN'
   const images = items.map((i) =>
     i.images

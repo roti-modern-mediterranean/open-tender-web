@@ -1,10 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import {
-  getCustomerOrders,
-  getCustomerOrder,
-  getCustomerAllergens,
-  postCustomerAllergens,
-} from '../services/requests'
+import { getCustomerOrders, getCustomerOrder } from '../services/requests'
 
 export const fetchOrders = createAsyncThunk(
   'account/fetchOrders',
@@ -53,44 +48,18 @@ export const fetchOrder = createAsyncThunk(
   }
 )
 
-export const fetchCustomerAllergens = createAsyncThunk(
-  'account/fetchCustomerAllergens',
-  async (token, thunkAPI) => {
-    try {
-      return await getCustomerAllergens(token)
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err)
-    }
-  }
-)
-
-export const updateCustomerAllergens = createAsyncThunk(
-  'account/updateCustomerAllergens',
-  async ({ token, data }, thunkAPI) => {
-    try {
-      return await postCustomerAllergens(token, data)
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err)
-    }
-  }
-)
-
 const initialState = {
   currentOrder: { order: {}, loading: false, error: null },
   orders: { entities: [], loading: false, error: null },
   upcomingOrders: { entities: [], loading: false, error: null },
   pastOrders: { entities: [], loading: false, error: null },
-  favorites: { entities: [], loading: false, error: null },
-  addresses: { entities: [], loading: false, error: null },
-  allergens: { entities: [], loading: false, error: null },
-  cards: { entities: [], loading: false, error: null },
-  giftCards: { entities: [], loading: false, error: null },
 }
 
 const accountSlice = createSlice({
   name: 'account',
-  initialState: initialState,
+  initialState,
   reducers: {
+    resetAccount: () => initialState,
     resetAccountOrder: (state) => {
       state.currentOrder = initialState.currentOrder
     },
@@ -164,50 +133,15 @@ const accountSlice = createSlice({
         error: action.payload,
       }
     },
-    [fetchCustomerAllergens.fulfilled]: (state, action) => {
-      state.allergens = {
-        entities: action.payload,
-        loading: 'idle',
-        error: null,
-      }
-    },
-    [fetchCustomerAllergens.pending]: (state) => {
-      state.allergens.loading = 'pending'
-    },
-    [fetchCustomerAllergens.rejected]: (state, action) => {
-      state.allergens = {
-        entities: [],
-        loading: 'idle',
-        error: action.payload.detail,
-      }
-    },
-    [updateCustomerAllergens.fulfilled]: (state, action) => {
-      state.allergens = {
-        entities: action.payload,
-        loading: 'idle',
-        error: null,
-      }
-    },
-    [updateCustomerAllergens.pending]: (state) => {
-      state.allergens.loading = 'pending'
-    },
-    [updateCustomerAllergens.rejected]: (state, action) => {
-      state.allergens = {
-        entities: [],
-        loading: 'idle',
-        error: action.payload.detail,
-      }
-    },
   },
 })
 
-export const { resetAccountOrder } = accountSlice.actions
+export const { resetAccount, resetAccountOrder } = accountSlice.actions
 
 export const selectAccount = (state) => state.account
 export const selectUpcomingOrders = (state) => state.account.upcomingOrders
 export const selectPastOrders = (state) => state.account.pastOrders
 export const selectAccountOrders = (state) => state.account.orders
 export const selectAccountOrder = (state) => state.account.currentOrder
-export const selectCustomerAllergens = (state) => state.account.allergens
 
 export default accountSlice.reducer

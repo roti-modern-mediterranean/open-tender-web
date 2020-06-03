@@ -74,6 +74,12 @@ export const getCustomerAllergens = (token) => {
   return request(`/customer/allergens`, 'GET', null, null, token)
 }
 
+// replace all existing allergens with a new list of allergens
+export const putCustomerAllergens = (token, data) => {
+  return request(`/customer/allergens`, 'PUT', data, null, token)
+}
+
+// add new allergens incrementally without affecting existing allergens
 export const postCustomerAllergens = (token, data) => {
   return request(`/customer/allergens`, 'POST', data, null, token)
 }
