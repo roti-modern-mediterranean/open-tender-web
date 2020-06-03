@@ -47,12 +47,16 @@ const LoginModal = () => {
         </div>
         <div className="modal__body">
           <form
-            id="checkout-form"
+            id="login-form"
             className="form"
             onSubmit={handleSubmit}
             noValidate
           >
-            {error && <div className="form__error form-error">{error}</div>}
+            {error && (
+              <div className="form__error form__error--top form-error">
+                {error}
+              </div>
+            )}
             <div className="form__inputs">
               <Input
                 label="Email"

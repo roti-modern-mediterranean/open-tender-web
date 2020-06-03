@@ -28,11 +28,11 @@ const AccountOrders = () => {
 
   return (
     <div id={slugify(title)} className="section container ot-section">
-      <div className="section__container -wide">
+      <div className="section__container">
         <SectionHeader title={title} subtitle={subtitle} />
         <SectionLoading loading={isLoading} />
         <SectionError error={error} />
-        <div className="section__content">
+        <div className="section__content -wide">
           {showEntities &&
             (entities.length ? (
               <div className="section__items">

@@ -4,18 +4,10 @@ import { selectAccountConfigSections } from '../slices/configSlice'
 import { selectCustomer, updateCustomer } from '../slices/customerSlice'
 import SectionHeader from './SectionHeader'
 import SectionError from './SectionError'
+import SectionRow from './SectionRow'
 import { slugify } from '../packages/utils/helpers'
 import { Input } from '../packages'
 import { handleFormErrors } from '../utils/errors'
-
-const SectionRow = ({ title, children }) => (
-  <div className="section__row border-color">
-    <div className="section__row__label">
-      <p className="preface font-size-x-small secondary-color">{title}</p>
-    </div>
-    <div className="section__row__content">{children}</div>
-  </div>
-)
 
 const fields = [
   { label: 'First Name', name: 'first_name', type: 'text', required: true },

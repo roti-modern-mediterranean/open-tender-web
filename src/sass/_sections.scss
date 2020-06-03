@@ -3,15 +3,6 @@
 }
 
 .section {
-  &__container {
-    max-width: 64rem;
-    margin: 0 auto;
-
-    &.-wide {
-      max-width: 96rem;
-    }
-  }
-
   &__header {
     margin: 0 0 4rem;
     text-align: center;
@@ -40,6 +31,19 @@
     padding: 3rem 0;
   }
 
+  &__content {
+    max-width: 64rem;
+    margin: 0 auto;
+
+    &.-wide {
+      max-width: 96rem;
+    }
+
+    &.-narrow {
+      max-width: 32rem;
+    }
+  }
+
   &__items {
     display: flex;
     // justify-content: space-between;
@@ -52,6 +56,11 @@
     flex-shrink: 0;
     padding: 0 1rem;
     margin: 0 0 2rem;
+  }
+
+  &__intro {
+    text-align: center;
+    padding: 2.5rem 0 0rem;
   }
 
   &__rows {
@@ -78,6 +87,15 @@
       flex: 1;
       // padding: 0 1.75rem;
       // line-height: 1.6;
+    }
+  }
+
+  &__rows--allergens {
+    .section__row__content {
+      text-align: right;
+      label {
+        display: inline-block;
+      }
     }
   }
 

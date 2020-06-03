@@ -1,20 +1,35 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getMenu } from '../services/requests'
+import { getMenu, getAllergens } from '../services/requests'
 
 const makeRequestedIso = (requestedAt) => {
   return requestedAt === 'asap' ? new Date().toISOString() : requestedAt
 }
 
-export const fetchMenu = createAsyncThunk('menu/getMenu', async (menuVars) => {
-  const [locationId, serviceType, requestedAt] = menuVars
-  try {
-    const requestedIso = makeRequestedIso(requestedAt)
-    const menu = await getMenu(locationId, serviceType, requestedIso)
-    return { ...menu, menuVars: { locationId, serviceType, requestedAt } }
-  } catch (err) {
-    throw new Error(err.detail || err.message)
+export const fetchMenu = createAsyncThunk(
+  'menu/getMenu',
+  async (menuVars, thunkAPI) => {
+    const [locationId, serviceType, requestedAt] = menuVars
+    try {
+      const requestedIso = makeRequestedIso(requestedAt)
+      const menu = await getMenu(locationId, serviceType, requestedIso)
+      return { ...menu, menuVars: { locationId, serviceType, requestedAt } }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
   }
-})
+)
+
+export const fetchAllergens = createAsyncThunk(
+  'account/fetchAllergens',
+  async (_, thunkAPI) => {
+    try {
+      const response = await getAllergens()
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
 
 const initialState = {
   menuVars: null,
@@ -24,6 +39,7 @@ const initialState = {
   cartErrors: null,
   error: null,
   loading: 'idle',
+  allergens: { entities: [], loading: false, error: null },
 }
 
 const menuSlice = createSlice({
@@ -50,8 +66,25 @@ const menuSlice = createSlice({
       state.loading = 'pending'
     },
     [fetchMenu.rejected]: (state, action) => {
-      state.error = action.error.message
+      state.error = action.error.detail
       state.loading = 'idle'
+    },
+    [fetchAllergens.fulfilled]: (state, action) => {
+      state.allergens = {
+        entities: action.payload,
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [fetchAllergens.pending]: (state) => {
+      state.allergens.loading = 'pending'
+    },
+    [fetchAllergens.rejected]: (state, action) => {
+      state.allergens = {
+        entities: [],
+        loading: 'idle',
+        error: action.payload.detail,
+      }
     },
   },
 })
@@ -62,5 +95,6 @@ export const selectMenu = (state) => state.menu
 export const selectMenuLoading = (state) => state.menu.loading === 'pending'
 export const selectMenuError = (state) => state.menu.error
 export const selectCartErrors = (state) => state.menu.cartErrors
+export const selectAllergens = (state) => state.menu.allergens
 
 export default menuSlice.reducer

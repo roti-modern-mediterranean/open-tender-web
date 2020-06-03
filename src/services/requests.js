@@ -14,6 +14,10 @@ export const getLocation = (revenue_center_type_id) => {
   return request(`/revenue-centers/${revenue_center_type_id}`)
 }
 
+export const getAllergens = () => {
+  return request(`/allergens`)
+}
+
 export const getMenu = (locationId, serviceType, requestedAt) => {
   const params = `revenue_center_id=${locationId}&service_type=${serviceType}&requested_at=${requestedAt}`
   return request(`/menus?${params}`)
@@ -28,7 +32,7 @@ export const postOrder = (order) => {
 }
 
 export const getCustomer = (token) => {
-  return request(`/customer`, 'GET', null, null, token)
+  return request(`/customer?with_related=true`, 'GET', null, null, token)
 }
 
 export const putCustomer = (token, data) => {
@@ -64,4 +68,12 @@ export const getCustomerOrders = (token, timing, limit) => {
 
 export const getCustomerOrder = (token, orderId) => {
   return request(`/customer/orders/${orderId}`, 'GET', null, null, token)
+}
+
+export const getCustomerAllergens = (token) => {
+  return request(`/customer/allergens`, 'GET', null, null, token)
+}
+
+export const postCustomerAllergens = (token, data) => {
+  return request(`/customer/allergens`, 'POST', data, null, token)
 }

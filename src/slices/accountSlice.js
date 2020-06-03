@@ -1,8 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getCustomerOrders, getCustomerOrder } from '../services/requests'
+import {
+  getCustomerOrders,
+  getCustomerOrder,
+  getCustomerAllergens,
+  postCustomerAllergens,
+} from '../services/requests'
 
 export const fetchOrders = createAsyncThunk(
-  'account/getOrders',
+  'account/fetchOrders',
   async ({ token, limit }, thunkAPI) => {
     try {
       const response = await getCustomerOrders(token, null, limit)
@@ -14,7 +19,7 @@ export const fetchOrders = createAsyncThunk(
 )
 
 export const fetchUpcomingOrders = createAsyncThunk(
-  'account/getUpcomingOrders',
+  'account/fetchUpcomingOrders',
   async ({ token, limit }, thunkAPI) => {
     try {
       const response = await getCustomerOrders(token, 'FUTURE', limit)
@@ -26,7 +31,7 @@ export const fetchUpcomingOrders = createAsyncThunk(
 )
 
 export const fetchPastOrders = createAsyncThunk(
-  'account/getPastOrders',
+  'account/fetchPastOrders',
   async ({ token, limit }, thunkAPI) => {
     try {
       const response = await getCustomerOrders(token, 'PAST', limit)
@@ -38,10 +43,32 @@ export const fetchPastOrders = createAsyncThunk(
 )
 
 export const fetchOrder = createAsyncThunk(
-  'account/getOrder',
+  'account/fetchOrder',
   async ({ token, orderId }, thunkAPI) => {
     try {
       return await getCustomerOrder(token, orderId)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const fetchCustomerAllergens = createAsyncThunk(
+  'account/fetchCustomerAllergens',
+  async (token, thunkAPI) => {
+    try {
+      return await getCustomerAllergens(token)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const updateCustomerAllergens = createAsyncThunk(
+  'account/updateCustomerAllergens',
+  async ({ token, data }, thunkAPI) => {
+    try {
+      return await postCustomerAllergens(token, data)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -137,6 +164,40 @@ const accountSlice = createSlice({
         error: action.payload,
       }
     },
+    [fetchCustomerAllergens.fulfilled]: (state, action) => {
+      state.allergens = {
+        entities: action.payload,
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [fetchCustomerAllergens.pending]: (state) => {
+      state.allergens.loading = 'pending'
+    },
+    [fetchCustomerAllergens.rejected]: (state, action) => {
+      state.allergens = {
+        entities: [],
+        loading: 'idle',
+        error: action.payload.detail,
+      }
+    },
+    [updateCustomerAllergens.fulfilled]: (state, action) => {
+      state.allergens = {
+        entities: action.payload,
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [updateCustomerAllergens.pending]: (state) => {
+      state.allergens.loading = 'pending'
+    },
+    [updateCustomerAllergens.rejected]: (state, action) => {
+      state.allergens = {
+        entities: [],
+        loading: 'idle',
+        error: action.payload.detail,
+      }
+    },
   },
 })
 
@@ -147,5 +208,6 @@ export const selectUpcomingOrders = (state) => state.account.upcomingOrders
 export const selectPastOrders = (state) => state.account.pastOrders
 export const selectAccountOrders = (state) => state.account.orders
 export const selectAccountOrder = (state) => state.account.currentOrder
+export const selectCustomerAllergens = (state) => state.account.allergens
 
 export default accountSlice.reducer

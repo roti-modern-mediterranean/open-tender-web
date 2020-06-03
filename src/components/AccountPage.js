@@ -8,24 +8,13 @@ import StickyNav from './StickyNav'
 import AccountGreeting from './AccountGreeting'
 import AccountOrders from './AccountOrders'
 import AccountDetails from './AccountDetails'
-
-// const navItems = [
-//   'Loyalty & Discounts',
-//   'Past Orders',
-//   'Favorites',
-//   'Account Details',
-//   'Allergens',
-//   'Addresses',
-//   'Gift Cards',
-//   'Payment Methods',
-// ]
+import AccountAllergens from './AccountAllergens'
 
 const AccountPage = () => {
   const history = useHistory()
   const { account: accountConfig } = useSelector(selectConfig)
   const { background, title, subtitle, sections } = accountConfig
   const { account } = useSelector(selectCustomer)
-  console.log(account)
 
   useEffect(() => {
     if (!account) return history.push('/')
@@ -43,6 +32,7 @@ const AccountPage = () => {
       <h1 className="sr-only">Account</h1>
       <div className="sections bg-secondary-color">
         <AccountDetails />
+        <AccountAllergens />
         <AccountOrders />
       </div>
     </>
