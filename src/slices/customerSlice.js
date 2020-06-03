@@ -6,7 +6,7 @@ import {
   getCustomerAllergens,
   putCustomerAllergens,
 } from '../services/requests'
-import { showNotification, hideNotification } from './notificationSlice'
+import { showNotification } from './notificationSlice'
 
 const initialState = {
   auth: null,

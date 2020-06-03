@@ -52,3 +52,6 @@ export const cleanPhone = (phone) => {
     p.length === 10 ? `${p.slice(0, 3)}-${p.slice(3, 6)}-${p.slice(6, 10)}` : p
   return p
 }
+
+export const makeRandomNumberString = () =>
+  Math.floor(Math.random() * 1000000000).toString()

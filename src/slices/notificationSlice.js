@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { makeRandomNumberString } from '../packages/utils/helpers'
 
 const initialState = {
-  message: null,
+  messages: [],
 }
 
 const notificationSlice = createSlice({
@@ -9,16 +10,20 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     showNotification: (state, action) => {
-      state.message = action.payload
+      const message = {
+        message: action.payload,
+        id: makeRandomNumberString(),
+      }
+      state.messages.unshift(message)
     },
-    hideNotification: (state) => {
-      state.message = null
+    hideNotification: (state, action) => {
+      state.messages = state.messages.filter((i) => i.id !== action.payload)
     },
   },
 })
 
 export const { showNotification, hideNotification } = notificationSlice.actions
 
-export const selectNotification = (state) => state.notification.message
+export const selectNotifications = (state) => state.notification.messages
 
 export default notificationSlice.reducer

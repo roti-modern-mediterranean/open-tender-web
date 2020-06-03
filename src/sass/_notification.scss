@@ -1,8 +1,14 @@
-.notification {
+.notifications {
   position: fixed;
   z-index: 15;
   right: 4rem;
-  margin: 1.5rem 0;
+}
+
+.notification {
+  display: block;
+  float: right;
+  clear: right;
+  margin: 1.5rem 0 0;
   line-height: 1.2;
   padding: 0.8rem 1.6rem;
   transition: all 500ms ease;
