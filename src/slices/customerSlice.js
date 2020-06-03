@@ -5,6 +5,8 @@ import {
   putCustomer,
   getCustomerAllergens,
   putCustomerAllergens,
+  getCustomerAddresses,
+  putCustomerAddress,
 } from '../services/requests'
 import { showNotification } from './notificationSlice'
 
@@ -79,6 +81,31 @@ export const updateCustomerAllergens = createAsyncThunk(
   }
 )
 
+export const fetchCustomerAddresses = createAsyncThunk(
+  'customer/fetchCustomerAddresses',
+  async ({ token, limit }, thunkAPI) => {
+    try {
+      const response = await getCustomerAddresses(token, limit)
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const updateCustomerAddress = createAsyncThunk(
+  'customer/updateCustomerAddress',
+  async ({ token, addressId, data }, thunkAPI) => {
+    try {
+      const response = await putCustomerAddress(token, addressId, data)
+      thunkAPI.dispatch(showNotification('Address updated!'))
+      return response
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
 const customerSlice = createSlice({
   name: 'customer',
   initialState,
@@ -114,6 +141,7 @@ const customerSlice = createSlice({
       state.error = action.payload
       state.loading = 'idle'
     },
+    // allergens
     [fetchCustomerAllergens.fulfilled]: (state, action) => {
       state.allergens = {
         entities: action.payload,
@@ -148,6 +176,50 @@ const customerSlice = createSlice({
         error: action.payload.detail,
       }
     },
+    // addresses
+    [fetchCustomerAddresses.fulfilled]: (state, action) => {
+      state.addresses = {
+        entities: action.payload,
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [fetchCustomerAddresses.pending]: (state) => {
+      state.addresses.loading = 'pending'
+    },
+    [fetchCustomerAddresses.rejected]: (state, action) => {
+      state.addresses = {
+        entities: [],
+        loading: 'idle',
+        error: action.payload.detail,
+      }
+    },
+    [updateCustomerAddress.fulfilled]: (state, action) => {
+      const updated = action.payload
+      const updatedAddresses = state.addresses.entities.map((address) => {
+        return address.customer_address_id === updated.customer_address_id
+          ? updated
+          : address
+      })
+      // const index = state.addresses.findIndex(i => i.customer_address_id === newAddress.customer_address_id)
+      // state.addresses[index] = newAddress
+      state.addresses = {
+        entities: updatedAddresses,
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [updateCustomerAddress.pending]: (state) => {
+      state.addresses.loading = 'pending'
+    },
+    [updateCustomerAddress.rejected]: (state, action) => {
+      console.log(action.payload)
+      state.addresses = {
+        entities: state.addresses.entities,
+        loading: 'idle',
+        error: action.payload.detail,
+      }
+    },
   },
 })
 
@@ -156,5 +228,6 @@ export const selectCustomerAccount = (state) => state.customer.account
 export const selectToken = (state) =>
   state.customer.auth ? state.customer.auth.access_token : null
 export const selectCustomerAllergens = (state) => state.customer.allergens
+export const selectCustomerAddresses = (state) => state.customer.addresses
 
 export default customerSlice.reducer

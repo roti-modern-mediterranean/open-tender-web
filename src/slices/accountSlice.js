@@ -49,6 +49,7 @@ export const fetchOrder = createAsyncThunk(
 )
 
 const initialState = {
+  currentAddress: null,
   currentOrder: { order: {}, loading: false, error: null },
   orders: { entities: [], loading: false, error: null },
   upcomingOrders: { entities: [], loading: false, error: null },
@@ -62,6 +63,12 @@ const accountSlice = createSlice({
     resetAccount: () => initialState,
     resetAccountOrder: (state) => {
       state.currentOrder = initialState.currentOrder
+    },
+    setCurrentAddress: (state, action) => {
+      state.currentAddress = action.payload
+    },
+    resetCurrentAddress: (state) => {
+      state.currentAddress = null
     },
   },
   extraReducers: {
@@ -136,7 +143,12 @@ const accountSlice = createSlice({
   },
 })
 
-export const { resetAccount, resetAccountOrder } = accountSlice.actions
+export const {
+  resetAccount,
+  resetAccountOrder,
+  setCurrentAddress,
+  resetCurrentAddress,
+} = accountSlice.actions
 
 export const selectAccount = (state) => state.account
 export const selectUpcomingOrders = (state) => state.account.upcomingOrders

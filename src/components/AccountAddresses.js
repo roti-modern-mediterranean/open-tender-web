@@ -1,108 +1,90 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { slugify } from '../packages/utils/helpers'
-import { Switch } from '../packages'
 import { selectAccountConfigSections } from '../slices/configSlice'
-import { selectAllergens, fetchAllergens } from '../slices/menuSlice'
 import {
   selectToken,
-  fetchCustomerAllergens,
-  selectCustomerAllergens,
-  updateCustomerAllergens,
+  fetchCustomerAddresses,
+  selectCustomerAddresses,
+  updateCustomerAddress,
 } from '../slices/customerSlice'
-
+import { openModal } from '../slices/modalSlice'
+import { setCurrentAddress } from '../slices/accountSlice'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionRow from './SectionRow'
+import OrderAddress from './OrderAddress'
+import { Button } from '../packages'
 
-const AccountAllergens = () => {
-  const [data, setData] = useState([])
-  const [submitting, setSubmitting] = useState(false)
-  const submitButton = useRef()
+const AccountAddresses = () => {
   const dispatch = useDispatch()
   const {
-    allergens: { title, subtitle },
+    addresses: { title, subtitle },
   } = useSelector(selectAccountConfigSections)
   const token = useSelector(selectToken)
-  const allergens = useSelector(selectAllergens)
-  const customerAllergens = useSelector(selectCustomerAllergens)
-  // console.log(allergens)
-  // console.log(customerAllergens)
+  const addresses = useSelector(selectCustomerAddresses)
+  console.log(addresses)
 
   useEffect(() => {
-    dispatch(fetchAllergens())
-    dispatch(fetchCustomerAllergens(token))
+    dispatch(fetchCustomerAddresses({ token, limit: 5 }))
   }, [dispatch, token])
 
-  useEffect(() => {
-    if (customerAllergens.loading === 'idle') setSubmitting(false)
-  }, [customerAllergens.loading])
-
-  useEffect(() => {
-    setData(customerAllergens.entities)
-  }, [customerAllergens.entities, allergens.entities])
-
-  const handleChange = (evt) => {
-    const { id, checked } = evt.target
-    const newData = checked
-      ? [...data, { allergen_id: parseInt(id) }]
-      : data.filter((i) => i.allergen_id !== parseInt(id))
-    setData(newData)
-  }
-
-  const handleSubmit = (evt) => {
+  const handleDefault = (evt, address) => {
     evt.preventDefault()
-    setSubmitting(true)
-    dispatch(updateCustomerAllergens({ token, data }))
-    submitButton.current.blur()
+    const data = { ...address, is_default: true }
+    const addressId = address.customer_address_id
+    delete data.customer_address_id
+    delete data.created_at
+    delete data.last_used_at
+    dispatch(updateCustomerAddress({ token, addressId, data }))
+    evt.target.blur()
   }
 
-  const isLoading =
-    allergens.loading === 'pending' || customerAllergens.loading === 'pending'
-  const error = customerAllergens.error || allergens.error
-  const showAllergens = submitting || (!isLoading && !error)
-  const customerAllergenIds = data.map((i) => i.allergen_id)
+  const handleEdit = (evt, address) => {
+    evt.preventDefault()
+    dispatch(setCurrentAddress(address))
+    dispatch(openModal('address'))
+    evt.target.blur()
+  }
+
+  const isLoading = addresses.loading === 'pending'
+  const error = addresses.error
+  const showAddresses = addresses.entities.length
 
   return (
     <div id={slugify(title)} className="section container ot-section">
       <div className="section__container">
         <SectionHeader title={title} subtitle={subtitle} />
-        <SectionLoading loading={isLoading && !submitting} />
+        <SectionLoading loading={isLoading} />
         <SectionError error={error} />
-        {showAllergens && (
-          <div className="section__content -narrow bg-color border-radius">
-            <form
-              id="allergen-form"
-              className="form"
-              onSubmit={handleSubmit}
-              noValidate
-            >
-              <div className="section__intro">
-                <p className="font-size-small">I'm allergic to...</p>
-              </div>
-              <div className="section__rows section__rows--allergens">
-                {allergens.entities.map((allergen) => (
-                  <SectionRow key={allergen.allergen_id} title={allergen.name}>
-                    <Switch
-                      label={allergen.name}
-                      id={`${allergen.allergen_id}`}
-                      on={customerAllergenIds.includes(allergen.allergen_id)}
-                      onChange={handleChange}
-                    />
-                  </SectionRow>
-                ))}
-              </div>
-              <div className="section__submit">
-                <input
-                  className="btn"
-                  type="submit"
-                  value="Update Allergens"
-                  disabled={submitting}
-                  ref={submitButton}
-                />
-              </div>
-            </form>
+        {showAddresses && (
+          <div className="section__content bg-color border-radius">
+            <div className="section__rows">
+              {addresses.entities.map((address) => (
+                <SectionRow
+                  key={address.customer_address_id}
+                  title={address.description || 'Address'}
+                >
+                  <OrderAddress address={address}>
+                    <p className="font-size-small secondary-color">
+                      <Button
+                        text="edit"
+                        classes="btn-link"
+                        onClick={(evt) => handleEdit(evt, address)}
+                      />{' '}
+                      |{' '}
+                      <Button
+                        text="make default"
+                        classes="btn-link"
+                        onClick={(evt) => handleDefault(evt, address)}
+                        disabled={address.is_default}
+                      />
+                    </p>
+                  </OrderAddress>
+                </SectionRow>
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -110,5 +92,5 @@ const AccountAllergens = () => {
   )
 }
 
-AccountAllergens.displayName = 'AccountAllergens'
-export default AccountAllergens
+AccountAddresses.displayName = 'AccountAddresses'
+export default AccountAddresses

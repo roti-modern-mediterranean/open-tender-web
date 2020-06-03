@@ -1,12 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import {
-  Button,
-  CartItem,
-  OrderQuantity,
-  DeliveryLink,
-  Check,
-} from '../packages'
+import { Button, CartItem, OrderQuantity, Check } from '../packages'
 import { makeDisplayItem } from '../packages/utils/cart'
 import { capitalize, isEmpty } from '../packages/utils/helpers'
 import ClipLoader from 'react-spinners/ClipLoader'
@@ -18,6 +12,7 @@ import {
 import { iconMap } from '../packages/icons'
 import SectionHeader from './SectionHeader'
 import SectionRow from './SectionRow'
+import OrderAddress from './OrderAddress'
 
 const OrderLoading = ({ loading }) => {
   return loading ? (
@@ -113,48 +108,6 @@ OrderRequestedAt.propTypes = {
   status: propTypes.string,
 }
 
-const OrderAddress = ({ address, delivery, status }) => {
-  const { street, unit, city, state, postal_code, company, contact, phone } =
-    address || {}
-  const streetAddress = street ? `${street}${unit ? `, ${unit}` : ''}` : null
-  const contactPhone =
-    contact || phone ? [contact, phone].filter((i) => i).join(' @ ') : null
-  const trackingUrl = status === 'OPEN' && delivery && delivery.tracking_url
-  return (
-    <>
-      {company ? (
-        <>
-          <p>{company}</p>
-          <p className="font-size-small secondary-color">{streetAddress}</p>
-        </>
-      ) : (
-        <p>{streetAddress}</p>
-      )}
-      <p className="font-size-small secondary-color">
-        {city}, {state} {postal_code}
-      </p>
-      {contactPhone && (
-        <p className="font-size-small secondary-color">{contactPhone}</p>
-      )}
-      {trackingUrl && (
-        <p className="font-size-small">
-          <DeliveryLink
-            text="Check delivery status"
-            trackingUrl={trackingUrl}
-          />
-        </p>
-      )}
-    </>
-  )
-}
-
-OrderAddress.displayName = 'OrderAddress'
-OrderAddress.propTypes = {
-  address: propTypes.object,
-  delivery: propTypes.object,
-  status: propTypes.string,
-}
-
 const OrderRating = ({ rating, comments }) => {
   const stars = []
   for (let i = 0; i < rating; i++) {
@@ -172,6 +125,12 @@ const OrderRating = ({ rating, comments }) => {
       ) : null}
     </>
   )
+}
+
+OrderRating.displayName = 'OrderRating'
+OrderRating.propTypes = {
+  rating: propTypes.number,
+  comments: propTypes.string,
 }
 
 const Order = ({

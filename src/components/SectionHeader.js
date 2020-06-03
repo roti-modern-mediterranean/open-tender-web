@@ -13,6 +13,10 @@ SectionHeader.displayName = 'SectionHeader'
 SectionHeader.propTypes = {
   title: propTypes.string,
   subtitle: propTypes.string,
+  children: propTypes.oneOfType([
+    propTypes.arrayOf(propTypes.node),
+    propTypes.node,
+  ]),
 }
 
 export default SectionHeader

@@ -83,3 +83,12 @@ export const putCustomerAllergens = (token, data) => {
 export const postCustomerAllergens = (token, data) => {
   return request(`/customer/allergens`, 'POST', data, null, token)
 }
+
+export const getCustomerAddresses = (token, limit = 10) => {
+  const params = limit ? `?limit=${limit}` : ''
+  return request(`/customer/addresses${params}`, 'GET', null, null, token)
+}
+
+export const putCustomerAddress = (token, addressId, data) => {
+  return request(`/customer/addresses/${addressId}`, 'PUT', data, null, token)
+}

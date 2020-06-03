@@ -9,6 +9,7 @@ import AccountGreeting from './AccountGreeting'
 import AccountOrders from './AccountOrders'
 import AccountDetails from './AccountDetails'
 import AccountAllergens from './AccountAllergens'
+import AccountAddresses from './AccountAddresses'
 
 const AccountPage = () => {
   const history = useHistory()
@@ -34,6 +35,7 @@ const AccountPage = () => {
       <StickyNav items={navItems} offset={0} />
       <h1 className="sr-only">Account</h1>
       <div className="sections bg-secondary-color">
+        <AccountAddresses />
         <AccountDetails />
         <AccountAllergens />
         <AccountOrders />
