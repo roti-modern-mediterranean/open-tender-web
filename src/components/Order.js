@@ -16,6 +16,8 @@ import {
   isoToDate,
 } from '../packages/utils/datetimes'
 import { iconMap } from '../packages/icons'
+import SectionHeader from './SectionHeader'
+import SectionRow from './SectionRow'
 
 const OrderLoading = ({ loading }) => {
   return loading ? (
@@ -67,26 +69,6 @@ const OrderError = ({ error, handler }) => {
 OrderError.displayName = 'OrderError'
 OrderError.propTypes = {
   error: propTypes.string,
-}
-
-const OrderSectionItem = ({ title, children }) => (
-  <div className="order__section__item border-color">
-    <div className="order__section__item__label">
-      <p className="order-card__number preface font-size-x-small secondary-color">
-        {title}
-      </p>
-    </div>
-    <div className="order__section__item__content">{children}</div>
-  </div>
-)
-
-OrderSectionItem.displayName = 'OrderSectionItem'
-OrderSectionItem.propTypes = {
-  title: propTypes.string,
-  children: propTypes.oneOfType([
-    propTypes.arrayOf(propTypes.node),
-    propTypes.node,
-  ]),
 }
 
 const OrderRevenueCenter = ({ revenue_center }) => {
@@ -259,82 +241,84 @@ const Order = ({
               </button>
             </p>
           </div>
-          <div className="order__section">
-            {/* <div className="order__section__title">
-          <h2 className="ot-font-size-h3">Items</h2>
-        </div> */}
-            <div className="order__section__content bg-color border-radius">
-              <div className="order__section__items">
-                <OrderSectionItem title="Location">
-                  <OrderRevenueCenter revenue_center={revenue_center} />
-                </OrderSectionItem>
-                <OrderSectionItem title="Requested Time">
-                  <OrderRequestedAt
-                    requested_at={requested_at}
-                    timezone={timezone}
-                    is_asap={is_asap}
-                    status={status}
-                  />
-                </OrderSectionItem>
-                {service_type === 'DELIVERY' && address && (
-                  <OrderSectionItem title="Delivery Address">
-                    <OrderAddress
-                      address={address}
-                      delivery={delivery}
+          <div className="section container">
+            <div className="section__container">
+              {/* <SectionHeader title={title} subtitle={subtitle} /> */}
+              <div className="section__content bg-color border-radius">
+                <div className="section__rows">
+                  <SectionRow title="Location">
+                    <OrderRevenueCenter revenue_center={revenue_center} />
+                  </SectionRow>
+                  <SectionRow title="Requested Time">
+                    <OrderRequestedAt
+                      requested_at={requested_at}
+                      timezone={timezone}
+                      is_asap={is_asap}
                       status={status}
                     />
-                  </OrderSectionItem>
-                )}
-                {notes && notes.length ? (
-                  <OrderSectionItem title="Notes">
-                    <p className="font-size-small secondary-color">{notes}</p>
-                  </OrderSectionItem>
-                ) : null}
-                {rating ? (
-                  <OrderSectionItem title="Rating">
-                    <OrderRating {...rating} />
-                  </OrderSectionItem>
-                ) : null}
+                  </SectionRow>
+                  {service_type === 'DELIVERY' && address && (
+                    <SectionRow title="Delivery Address">
+                      <OrderAddress
+                        address={address}
+                        delivery={delivery}
+                        status={status}
+                      />
+                    </SectionRow>
+                  )}
+                  {notes && notes.length ? (
+                    <SectionRow title="Notes">
+                      <p className="font-size-small secondary-color">{notes}</p>
+                    </SectionRow>
+                  ) : null}
+                  {rating ? (
+                    <SectionRow title="Rating">
+                      <OrderRating {...rating} />
+                    </SectionRow>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>
-          <div className="order__section">
-            <div className="order__section__title">
-              <h2 className="ot-font-size-h3">Items in Your Order</h2>
-            </div>
-            <div className="order__section__content bg-color border-radius">
-              <ul className="cart">
-                {displayedItems.map((item, index) => {
-                  return (
-                    <li key={`${item.id}-${index}`}>
-                      <CartItem item={item} showModifiers={true}>
-                        <OrderQuantity item={item} />
-                      </CartItem>
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          </div>
-          <div className="order__section">
-            <div className="order__section__title">
-              <h2 className="ot-font-size-h3">Your Receipt</h2>
-            </div>
-            <div className="order__section__content bg-color border-radius">
-              <Check totals={totals} tenders={totals.tenders} />
+          <div className="section container">
+            <div className="section__container">
+              <SectionHeader title="Items in Your Order" />
+              <div className="section__content bg-color border-radius">
+                <ul className="cart">
+                  {displayedItems.map((item, index) => {
+                    return (
+                      <li key={`${item.id}-${index}`}>
+                        <CartItem item={item} showModifiers={true}>
+                          <OrderQuantity item={item} />
+                        </CartItem>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
             </div>
           </div>
-          <div className="order__section">
-            <div className="order__section__title">
-              <p className="">
-                <button
-                  type="button"
-                  className="btn-link"
-                  onClick={goToAccount}
-                >
-                  Head back to your account page
-                </button>
-              </p>
+          <div className="section container">
+            <div className="section__container">
+              <SectionHeader title="Your Receipt" />
+              <div className="section__content bg-color border-radius">
+                <Check totals={totals} tenders={totals.tenders} />
+              </div>
+            </div>
+          </div>
+          <div className="section container">
+            <div className="section__container">
+              <SectionHeader>
+                <p>
+                  <button
+                    type="button"
+                    className="btn-link"
+                    onClick={goToAccount}
+                  >
+                    Head back to your account page
+                  </button>
+                </p>
+              </SectionHeader>
             </div>
           </div>
         </>

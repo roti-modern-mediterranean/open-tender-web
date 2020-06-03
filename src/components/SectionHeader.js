@@ -1,10 +1,11 @@
 import React from 'react'
 import propTypes from 'prop-types'
 
-const SectionHeader = ({ title, subtitle }) => (
+const SectionHeader = ({ title, subtitle, children }) => (
   <div className="section__header">
-    <h2 className="section__title">{title}</h2>
-    <p className="section__subtitle">{subtitle}</p>
+    {title && <h2 className="section__title">{title}</h2>}
+    {subtitle && <p className="section__subtitle">{subtitle}</p>}
+    {children}
   </div>
 )
 

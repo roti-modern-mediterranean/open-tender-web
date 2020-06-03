@@ -9,7 +9,11 @@
   }
 
   &__title {
-    margin: 0 0 0.5rem -0.1rem;
+    margin: 0 0 0 -0.1rem;
+  }
+
+  &__subtitle {
+    margin: 0.5rem 0 0;
   }
 
   &__loading {
@@ -86,11 +90,15 @@
     &__content {
       flex: 1;
       // padding: 0 1.75rem;
-      // line-height: 1.6;
+      line-height: 1.6;
     }
   }
 
   &__rows--allergens {
+    .section__row {
+      padding: 1.25rem 0 0.75rem;
+    }
+
     .section__row__content {
       text-align: right;
       label {
