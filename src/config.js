@@ -211,4 +211,9 @@ export const defaultConfig = {
       // },
     },
   },
+  addresses: {
+    title: 'Your Addresses',
+    subtitle:
+      "Below are all of the addresses from which you've ordered in the past. To add a new address, start a new order and enter a new address.",
+  },
 }

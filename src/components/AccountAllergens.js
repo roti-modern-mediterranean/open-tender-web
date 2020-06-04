@@ -14,7 +14,6 @@ import {
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
-import SectionRow from './SectionRow'
 
 const AccountAllergens = () => {
   const [data, setData] = useState([])

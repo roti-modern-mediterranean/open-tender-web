@@ -8,6 +8,7 @@ import {
   ConfirmationPage,
 } from './pages'
 import AccountPage from './AccountPage'
+import AccountAddressesPage from './AccountAddressesPage'
 import OrderPage from './OrderPage'
 
 const Routes = () => {
@@ -27,6 +28,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/account">
         <AccountPage />
+      </Route>
+      <Route exact path="/addresses">
+        <AccountAddressesPage />
       </Route>
       <Route exact path="/orders/:id">
         <OrderPage />
