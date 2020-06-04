@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import useGoogleMap from './useGoogleMap'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 // https://codesandbox.io/s/lx947qjv0z?file=/src/Consumer.jsx
 
@@ -40,6 +41,11 @@ const GoogleMap = ({ apiKey, center, zoom, styles, events, children }) => {
           )
         })}
       <div className="map ot-top">
+        {loading && (
+          <div className="map__loading">
+            <ClipLoader size={30} loading={loading} />
+          </div>
+        )}
         <div ref={mapRef} className="map-ref" />
       </div>
     </>

@@ -77,13 +77,15 @@ const LoginModal = () => {
                 classes="form__input"
               />
             </div>
-            <input
-              className="btn"
-              type="submit"
-              value="Submit"
-              disabled={loading === 'pending'}
-              ref={submitButton}
-            />
+            <div className="form__submit">
+              <input
+                className="btn"
+                type="submit"
+                value="Submit"
+                disabled={loading === 'pending'}
+                ref={submitButton}
+              />
+            </div>
           </form>
         </div>
       </div>

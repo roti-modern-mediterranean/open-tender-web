@@ -172,7 +172,7 @@ export const defaultConfig = {
       addresses: {
         title: 'Addresses',
         subtitle:
-          'Below are the addresses you have on file. To add a new one, start a new order.',
+          "Below are the last 5 addressed from which you've ordered. To add a new address, start a new order and enter a new address.",
       },
       giftCards: {
         title: 'Gift Cards',

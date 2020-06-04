@@ -9,11 +9,11 @@ import { updateCustomerAddress, selectToken } from '../../slices/customerSlice'
 import { handleFormErrors } from '../../utils/errors'
 
 const fields = [
-  { label: 'Street', name: 'street', type: 'text', required: true },
-  { label: 'Unit', name: 'unit', type: 'text' },
-  { label: 'City', name: 'city', type: 'text', required: true },
-  { label: 'State', name: 'state', type: 'text', required: true },
-  { label: 'Zip Code', name: 'postal_code', type: 'text', required: true },
+  // { label: 'Street', name: 'street', type: 'text', required: true },
+  // { label: 'Unit', name: 'unit', type: 'text' },
+  // { label: 'City', name: 'city', type: 'text', required: true },
+  // { label: 'State', name: 'state', type: 'text', required: true },
+  // { label: 'Zip Code', name: 'postal_code', type: 'text', required: true },
   { label: 'Company', name: 'company', type: 'text' },
   { label: 'Contact Person', name: 'contact', type: 'text' },
   { label: 'Contact Phone', name: 'phone', type: 'tel' },
@@ -143,13 +143,15 @@ const AddressModal = () => {
                 }
               })}
             </div>
-            <input
-              className="btn"
-              type="submit"
-              value="Submit Updates"
-              disabled={submitting}
-              ref={submitButton}
-            />
+            <div className="form__submit">
+              <input
+                className="btn"
+                type="submit"
+                value="Submit Updates"
+                disabled={submitting}
+                ref={submitButton}
+              />
+            </div>
           </form>
         </div>
       </div>

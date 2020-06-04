@@ -4,10 +4,10 @@ import { selectAccountConfigSections } from '../slices/configSlice'
 import { selectCustomer, updateCustomer } from '../slices/customerSlice'
 import SectionHeader from './SectionHeader'
 import SectionError from './SectionError'
-import SectionRow from './SectionRow'
 import { slugify } from '../packages/utils/helpers'
 import { Input } from '../packages'
 import { handleFormErrors } from '../utils/errors'
+import SectionLoading from './SectionLoading'
 
 const fields = [
   { label: 'First Name', name: 'first_name', type: 'text', required: true },
@@ -55,10 +55,13 @@ const AccountDetails = () => {
     submitButton.current.blur()
   }
 
+  const isLoading = loading === 'pending'
+
   return (
     <div id={slugify(title)} className="section container ot-section">
       <div className="section__container">
         <SectionHeader title={title} subtitle={subtitle} />
+        <SectionLoading loading={isLoading} />
         <SectionError error={errMsg} />
         <div className="section__content bg-color border-radius">
           <form
