@@ -80,7 +80,7 @@ const makeDeliveryMesssaging = (
         count > 1 ? 'restaurants deliver' : 'restaurant delivers'
       return {
         title: messages.DELIVERY.hasDelivery.title,
-        msg: `${count} ${restaurantMsg} to your address. Please choose one below.`,
+        msg: `${count} ${restaurantMsg} to your address.`,
         error: null,
       }
     } else {

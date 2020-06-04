@@ -15,10 +15,10 @@ const initialState = {
   account: null,
   error: null,
   loading: 'idle',
-  favorites: { entities: [], loading: 'idle', error: null },
   addresses: { entities: [], loading: 'idle', error: null },
   allergens: { entities: [], loading: 'idle', error: null },
   cards: { entities: [], loading: 'idle', error: null },
+  favorites: { entities: [], loading: 'idle', error: null },
   giftCards: { entities: [], loading: 'idle', error: null },
 }
 
@@ -109,14 +109,40 @@ export const updateCustomerAddress = createAsyncThunk(
   }
 )
 
+const accountFields = [
+  'customer_id',
+  'first_name',
+  'last_name',
+  'email',
+  'phone',
+  'company',
+]
+
+const makeCustomerAccount = (customer) => {
+  return accountFields.reduce(
+    (obj, field) => ({ ...obj, [field]: customer[field] }),
+    {}
+  )
+}
+
 const customerSlice = createSlice({
   name: 'customer',
   initialState,
   reducers: {},
   extraReducers: {
     [loginCustomer.fulfilled]: (state, action) => {
+      const {
+        allergens,
+        credit_cards,
+        favorites,
+        gift_cards,
+      } = action.payload.customer
       state.auth = action.payload.auth
-      state.account = action.payload.customer
+      state.account = makeCustomerAccount(action.payload.customer)
+      state.allergens.entities = allergens || []
+      state.cards.entities = credit_cards || []
+      state.favorites.entities = favorites || []
+      state.giftCards.entities = gift_cards || []
       state.error = null
       state.loading = 'idle'
     },
@@ -144,7 +170,9 @@ const customerSlice = createSlice({
       state.error = action.payload
       state.loading = 'idle'
     },
+
     // allergens
+
     [fetchCustomerAllergens.fulfilled]: (state, action) => {
       state.allergens = {
         entities: action.payload,
@@ -179,7 +207,9 @@ const customerSlice = createSlice({
         error: action.payload.detail,
       }
     },
+
     // addresses
+
     [fetchCustomerAddresses.fulfilled]: (state, action) => {
       state.addresses = {
         entities: action.payload,
@@ -198,14 +228,6 @@ const customerSlice = createSlice({
       }
     },
     [updateCustomerAddress.fulfilled]: (state, action) => {
-      // const updated = action.payload
-      // const updatedAddresses = state.addresses.entities.map((address) => {
-      //   return address.customer_address_id === updated.customer_address_id
-      //     ? updated
-      //     : address
-      // })
-      // const index = state.addresses.findIndex(i => i.customer_address_id === newAddress.customer_address_id)
-      // state.addresses[index] = newAddress
       state.addresses = {
         entities: action.payload,
         loading: 'idle',
@@ -232,5 +254,6 @@ export const selectToken = (state) =>
   state.customer.auth ? state.customer.auth.access_token : null
 export const selectCustomerAllergens = (state) => state.customer.allergens
 export const selectCustomerAddresses = (state) => state.customer.addresses
+export const selectCustomerGiftCards = (state) => state.customer.giftCards
 
 export default customerSlice.reducer
