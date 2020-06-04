@@ -83,14 +83,13 @@ const AccountAllergens = () => {
               </div>
               <div className="section__rows section__rows--allergens">
                 {allergens.entities.map((allergen) => (
-                  <SectionRow key={allergen.allergen_id} title={allergen.name}>
-                    <Switch
-                      label={allergen.name}
-                      id={`${allergen.allergen_id}`}
-                      on={customerAllergenIds.includes(allergen.allergen_id)}
-                      onChange={handleChange}
-                    />
-                  </SectionRow>
+                  <Switch
+                    key={allergen.allergen_id}
+                    label={allergen.name}
+                    id={`${allergen.allergen_id}`}
+                    on={customerAllergenIds.includes(allergen.allergen_id)}
+                    onChange={handleChange}
+                  />
                 ))}
               </div>
               <div className="section__submit">

@@ -69,28 +69,16 @@ const AccountDetails = () => {
           >
             <div className="section__rows">
               {fields.map((field) => (
-                <SectionRow
-                  key={field.label}
-                  title={
-                    <span>
-                      {field.label}
-                      {field.required && <span className="required">*</span>}
-                    </span>
-                  }
-                >
-                  <Input
-                    label={field.label}
-                    name={field.name}
-                    type={field.type}
-                    value={data[field.name]}
-                    onChange={handleChange}
-                    error={formErrors[field.name]}
-                    required={field.required}
-                    classes="form__input--small"
-                    inputClasses=""
-                    showLabel={false}
-                  />
-                </SectionRow>
+                <Input
+                  key={field.name}
+                  label={field.label}
+                  name={field.name}
+                  type={field.type}
+                  value={data[field.name]}
+                  onChange={handleChange}
+                  error={formErrors[field.name]}
+                  required={field.required}
+                />
               ))}
             </div>
             <div className="section__submit">

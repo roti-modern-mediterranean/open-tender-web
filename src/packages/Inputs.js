@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 export const Label = ({ text, required }) => (
-  <span className="label ot-bold">
+  <span className="label preface font-size-x-small secondary-color">
     {text}
     {required ? <span className="required">*</span> : null}
   </span>
@@ -53,24 +53,28 @@ export const Input = React.forwardRef(
     ref
   ) => {
     return (
-      <label htmlFor={name} className={`form__input ${classes}`}>
-        {showLabel && <Label text={label} required={required} />}
-        <input
-          aria-label={label}
-          id={name}
-          name={name}
-          type={type}
-          autoComplete={type === 'password' ? `current-${name}` : null}
-          value={value || ''}
-          placeholder={placeholder}
-          disabled={disabled}
-          readOnly={readOnly}
-          required={required}
-          className={inputClasses}
-          onChange={onChange}
-          ref={ref}
-        />
-        {children}
+      <label htmlFor={name} className={`form__input border-color ${classes}`}>
+        <span className="form__input__wrapper border-color">
+          {showLabel && <Label text={label} required={required} />}
+          <span className="input">
+            <input
+              aria-label={label}
+              id={name}
+              name={name}
+              type={type}
+              autoComplete={type === 'password' ? `current-${name}` : null}
+              value={value || ''}
+              placeholder={placeholder}
+              disabled={disabled}
+              readOnly={readOnly}
+              required={required}
+              className={inputClasses}
+              onChange={onChange}
+              ref={ref}
+            />
+            {children}
+          </span>
+        </span>
         {error ? <Error error={error} /> : null}
       </label>
     )
@@ -109,20 +113,24 @@ export const Textarea = ({
   inputClasses = '',
 }) => {
   return (
-    <label htmlFor={name} className={`form__input ${classes}`}>
-      {showLabel && <Label text={label} required={required} />}
-      <textarea
-        aria-label={label}
-        id={name}
-        name={name}
-        value={value || ''}
-        placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
-        required={required}
-        className={inputClasses}
-        onChange={onChange}
-      />
+    <label htmlFor={name} className={`form__input border-color ${classes}`}>
+      <span className="form__input__wrapper border-color">
+        {showLabel && <Label text={label} required={required} />}
+        <span className="input">
+          <textarea
+            aria-label={label}
+            id={name}
+            name={name}
+            value={value || ''}
+            placeholder={placeholder}
+            disabled={disabled}
+            readOnly={readOnly}
+            required={required}
+            className={inputClasses}
+            onChange={onChange}
+          />
+        </span>
+      </span>
       {error ? <Error error={error} /> : null}
     </label>
   )
@@ -144,19 +152,35 @@ Textarea.propTypes = {
   inputClasses: propTypes.string,
 }
 
-export const Switch = ({ label, id, on, onChange, disabled, classes = '' }) => {
+export const Switch = ({
+  label,
+  id,
+  on,
+  onChange,
+  disabled,
+  classes = '',
+  showLabel = true,
+}) => {
   return (
-    <label htmlFor={id} className={`label switch ${classes}`}>
-      <input
-        aria-label={label}
-        id={id}
-        type="checkbox"
-        className="switch__input"
-        checked={on}
-        disabled={disabled}
-        onChange={onChange}
-      />
-      <span className="switch__toggle" />
+    <label
+      htmlFor={id}
+      className={`form__input border-color switch ${classes}`}
+    >
+      <span className="form__input__wrapper border-color">
+        {showLabel && <Label text={label} />}
+        <span className="input">
+          <input
+            aria-label={label}
+            id={id}
+            type="checkbox"
+            className="switch__input"
+            checked={on}
+            disabled={disabled}
+            onChange={onChange}
+          />
+          <span className="switch__toggle" />
+        </span>
+      </span>
     </label>
   )
 }
@@ -178,20 +202,31 @@ export const Checkbox = ({
   onChange,
   disabled,
   classes = '',
+  showLabel = false,
 }) => {
   return (
-    <label htmlFor={id} className={`label checkbox ${classes || ''}`}>
-      <input
-        aria-label={label}
-        id={id}
-        type="checkbox"
-        className="checkbox__input"
-        checked={on}
-        disabled={disabled}
-        onChange={onChange}
-      />
-      <span className="checkbox__custom" />
-      {label ? <span className="checkbox__desc">{label}</span> : null}
+    <label
+      htmlFor={id}
+      className={`form__input border-color checkbox ${classes || ''}`}
+    >
+      <span className="form__input__wrapper border-color">
+        {showLabel && <Label text={label} />}
+        <span className="input">
+          <input
+            aria-label={label}
+            id={id}
+            type="checkbox"
+            className="checkbox__input"
+            checked={on}
+            disabled={disabled}
+            onChange={onChange}
+          />
+          <span className="checkbox__custom" />
+          {label && !showLabel ? (
+            <span className="checkbox__desc">{label}</span>
+          ) : null}
+        </span>
+      </span>
     </label>
   )
 }

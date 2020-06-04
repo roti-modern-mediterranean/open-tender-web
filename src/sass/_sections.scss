@@ -94,13 +94,24 @@
   }
 
   &__rows--allergens {
-    .section__row {
+    // .section__row {
+    //   padding: 1.25rem 0 0.75rem;
+    // }
+
+    // .section__row__content {
+    //   text-align: right;
+    //   label {
+    //     display: inline-block;
+    //   }
+    // }
+
+    .form__input {
       padding: 1.25rem 0 0.75rem;
     }
 
-    .section__row__content {
+    .input {
       text-align: right;
-      label {
+      .switch__toggle {
         display: inline-block;
       }
     }

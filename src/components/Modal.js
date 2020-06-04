@@ -7,6 +7,7 @@ import ModalLoading from './ModalLoading'
 import {
   LoginModal,
   SignUpModal,
+  AddressModal,
   AllergensModal,
   MenuItemModal,
   RequestedAtModal,
@@ -19,6 +20,8 @@ const makeModal = (type, windowRef) => {
       return <LoginModal />
     case 'signUp':
       return <SignUpModal />
+    case 'address':
+      return <AddressModal />
     case 'allergens':
       return <AllergensModal />
     case 'item':
@@ -34,6 +37,7 @@ const makeModal = (type, windowRef) => {
 
 const classesMap = {
   item: 'modal--item',
+  address: 'modal--big',
   allergens: '',
   cartErrors: 'modal--big modal--cart-errors',
 }

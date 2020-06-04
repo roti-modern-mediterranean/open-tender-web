@@ -15,11 +15,11 @@ const initialState = {
   account: null,
   error: null,
   loading: 'idle',
-  favorites: { entities: [], loading: false, error: null },
-  addresses: { entities: [], loading: false, error: null },
-  allergens: { entities: [], loading: false, error: null },
-  cards: { entities: [], loading: false, error: null },
-  giftCards: { entities: [], loading: false, error: null },
+  favorites: { entities: [], loading: 'idle', error: null },
+  addresses: { entities: [], loading: 'idle', error: null },
+  allergens: { entities: [], loading: 'idle', error: null },
+  cards: { entities: [], loading: 'idle', error: null },
+  giftCards: { entities: [], loading: 'idle', error: null },
 }
 
 export const loginCustomer = createAsyncThunk(
@@ -95,11 +95,14 @@ export const fetchCustomerAddresses = createAsyncThunk(
 
 export const updateCustomerAddress = createAsyncThunk(
   'customer/updateCustomerAddress',
-  async ({ token, addressId, data }, thunkAPI) => {
+  async ({ token, addressId, data, callback }, thunkAPI) => {
     try {
-      const response = await putCustomerAddress(token, addressId, data)
+      const limit = thunkAPI.getState().customer.addresses.entities.length
+      await putCustomerAddress(token, addressId, data)
+      const response = await getCustomerAddresses(token, limit)
+      if (callback) callback()
       thunkAPI.dispatch(showNotification('Address updated!'))
-      return response
+      return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -195,16 +198,16 @@ const customerSlice = createSlice({
       }
     },
     [updateCustomerAddress.fulfilled]: (state, action) => {
-      const updated = action.payload
-      const updatedAddresses = state.addresses.entities.map((address) => {
-        return address.customer_address_id === updated.customer_address_id
-          ? updated
-          : address
-      })
+      // const updated = action.payload
+      // const updatedAddresses = state.addresses.entities.map((address) => {
+      //   return address.customer_address_id === updated.customer_address_id
+      //     ? updated
+      //     : address
+      // })
       // const index = state.addresses.findIndex(i => i.customer_address_id === newAddress.customer_address_id)
       // state.addresses[index] = newAddress
       state.addresses = {
-        entities: updatedAddresses,
+        entities: action.payload,
         loading: 'idle',
         error: null,
       }
