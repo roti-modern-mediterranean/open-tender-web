@@ -1,0 +1,74 @@
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { slugify } from '../packages/utils/helpers'
+import { selectAccountConfigSections } from '../slices/configSlice'
+import {
+  selectToken,
+  fetchCustomerCreditCards,
+  selectCustomerCreditCards,
+} from '../slices/customerSlice'
+import SectionHeader from './SectionHeader'
+import SectionLoading from './SectionLoading'
+import SectionError from './SectionError'
+// import CreditCards from './CreditCards'
+import { Button } from '../packages'
+import CreditCards from './CreditCards'
+import { openModal } from '../slices/modalSlice'
+
+const AccountCreditCards = () => {
+  const dispatch = useDispatch()
+  const {
+    creditCards: { title, subtitle, empty },
+  } = useSelector(selectAccountConfigSections)
+  const token = useSelector(selectToken)
+  const creditCards = useSelector(selectCustomerCreditCards) || {}
+
+  useEffect(() => {
+    dispatch(fetchCustomerCreditCards({ token }))
+  }, [dispatch, token])
+
+  const handleAddNew = (evt) => {
+    evt.preventDefault()
+    dispatch(openModal('creditCard'))
+    evt.target.blur()
+  }
+
+  const isLoading = creditCards.loading === 'pending'
+  const error = creditCards.error
+  const showCreditCards = creditCards.entities.length
+
+  return (
+    <div id={slugify(title)} className="section container ot-section">
+      <div className="section__container">
+        <SectionHeader title={title} subtitle={subtitle} />
+        <SectionLoading loading={isLoading} />
+        <SectionError error={error} />
+        {showCreditCards ? (
+          <CreditCards
+            creditCards={creditCards.entities}
+            token={token}
+            isLoading={isLoading}
+          />
+        ) : (
+          <div className="section__content">
+            <div className="section__content__empty">
+              <p className="font-size-small">{empty}</p>
+            </div>
+          </div>
+        )}
+        <div className="section__footer">
+          <p className="font-size-small">
+            <Button
+              text="Add a new card to your account"
+              onClick={handleAddNew}
+              classes="btn-link"
+            />
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+AccountCreditCards.displayName = 'AccountCreditCards'
+export default AccountCreditCards

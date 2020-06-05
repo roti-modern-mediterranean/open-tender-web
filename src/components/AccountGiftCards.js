@@ -76,7 +76,7 @@ const AccountGiftCards = () => {
         <div className="section__footer">
           <p className="font-size-small">
             <Button
-              text="Click here to purchase a new gift card"
+              text="Purchase a new gift card"
               onClick={handlePurchase}
               classes="btn-link"
             />

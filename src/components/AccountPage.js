@@ -11,6 +11,7 @@ import AccountDetails from './AccountDetails'
 import AccountAllergens from './AccountAllergens'
 import AccountAddresses from './AccountAddresses'
 import AccountGiftCards from './AccountGiftCards'
+import AccountCreditCards from './AccountCreditCards'
 
 const AccountPage = () => {
   const history = useHistory()
@@ -36,6 +37,7 @@ const AccountPage = () => {
       <StickyNav items={navItems} offset={0} />
       <h1 className="sr-only">Account</h1>
       <div className="sections bg-secondary-color">
+        <AccountCreditCards />
         <AccountGiftCards />
         <AccountAddresses />
         <AccountDetails />

@@ -8,3 +8,13 @@ export const handleFormErrors = (params) => {
     return { ...obj, [field.replace('$.', '')]: msg }
   }, {})
 }
+
+export const makeFormErrors = (error) => {
+  let errors = {}
+  if (error.params) {
+    errors = handleFormErrors(error.params)
+    errors.form = error.detail
+  } else {
+    errors.form = error.detail || error.message
+  }
+}

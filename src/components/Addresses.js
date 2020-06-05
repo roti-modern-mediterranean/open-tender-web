@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import {
-  fetchCustomerAddresses,
-  updateCustomerAddress,
-} from '../slices/customerSlice'
+import { updateCustomerAddress } from '../slices/customerSlice'
 import { openModal } from '../slices/modalSlice'
 import { setCurrentAddress } from '../slices/accountSlice'
 import SectionRow from './SectionRow'
@@ -16,10 +13,6 @@ import { setAddress } from '../slices/orderSlice'
 const Addresses = ({ addresses, token, isLoading }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-
-  useEffect(() => {
-    dispatch(fetchCustomerAddresses({ token, limit: 5 }))
-  }, [dispatch, token])
 
   const handleEdit = (evt, address) => {
     evt.preventDefault()
@@ -84,7 +77,7 @@ const Addresses = ({ addresses, token, isLoading }) => {
                     />
                     <span className="btn-link-separator">|</span>
                     <Button
-                      text="delete"
+                      text="remove"
                       classes="btn-link"
                       onClick={(evt) => handleDelete(evt, address)}
                       disabled={!address.is_active || isLoading}

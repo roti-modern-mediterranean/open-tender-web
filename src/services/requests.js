@@ -92,3 +92,25 @@ export const getCustomerAddresses = (token, limit = 10) => {
 export const putCustomerAddress = (token, addressId, data) => {
   return request(`/customer/addresses/${addressId}`, 'PUT', data, null, token)
 }
+
+export const getCustomerCreditCards = (token) => {
+  return request(`/customer/credit-cards`, 'GET', null, null, token)
+}
+
+export const postCustomerCreditCard = (token, data) => {
+  return request(`/customer/credit-cards`, 'POST', data, null, token)
+}
+
+export const putCustomerCreditCard = (token, cardId, data) => {
+  return request(`/customer/credit-cards/${cardId}`, 'PUT', data, null, token)
+}
+
+export const deleteCustomerCreditCard = (token, cardId) => {
+  return request(
+    `/customer/credit-cards/${cardId}`,
+    'DELETE',
+    null,
+    null,
+    token
+  )
+}

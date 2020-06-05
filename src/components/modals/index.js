@@ -4,6 +4,8 @@ import AddressModal from './AddressModal'
 import AllergensModal from './AllergensModal'
 import MenuItemModal from './MenuItemModal'
 import RequestedAtModal from './RequestedAtModal'
+import CartErrorsModal from './CartErrorsModal'
+import CreditCardModal from './CreditCardModal'
 
 export {
   LoginModal,
@@ -12,4 +14,6 @@ export {
   AllergensModal,
   MenuItemModal,
   RequestedAtModal,
+  CartErrorsModal,
+  CreditCardModal,
 }

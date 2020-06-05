@@ -177,11 +177,14 @@ export const defaultConfig = {
       giftCards: {
         title: 'Gift Cards',
         subtitle: 'A list of your active gift cards.',
+        empty: "Looks like you hanen't purchased any gift cards yet.",
       },
       creditCards: {
-        title: 'Saved Credit Cards',
+        title: 'Credit Cards',
         subtitle:
           'A list of the credit cards you have on file with us. Change your default, delete a card, or add a new one.',
+        empty:
+          "Looks like you haven't saved any cards to your account yet. Use the link below to add a new card.",
       },
       loyalty: {
         title: 'Loyalty',

@@ -11,8 +11,9 @@ import {
   AllergensModal,
   MenuItemModal,
   RequestedAtModal,
+  CartErrorsModal,
+  CreditCardModal,
 } from './modals'
-import CartErrorsModal from './modals/CartErrorsModal'
 
 const makeModal = (type, windowRef) => {
   switch (type) {
@@ -22,6 +23,8 @@ const makeModal = (type, windowRef) => {
       return <SignUpModal />
     case 'address':
       return <AddressModal />
+    case 'creditCard':
+      return <CreditCardModal />
     case 'allergens':
       return <AllergensModal />
     case 'item':
@@ -38,6 +41,7 @@ const makeModal = (type, windowRef) => {
 const classesMap = {
   item: 'modal--item',
   address: 'modal--big',
+  creditCard: 'modal--big',
   allergens: '',
   cartErrors: 'modal--big modal--cart-errors',
 }
