@@ -21,19 +21,23 @@ const StickyNav = ({ items, offset = -100, duration = 500 }) => {
   }, [])
 
   const stickyClass = `sticky ot-nav-height ${isSticky ? 'ot-stuck' : ''}`
+  const stickyInnerClass = `sticky__inner ot-sticky-inner ${
+    isSticky ? 'bg-color ot-box-shadow' : ''
+  }`
 
   return (
     <div className={stickyClass} ref={stickyRef}>
-      <div className="sticky__inner ot-sticky-inner bg-color">
+      <div className={stickyInnerClass}>
         <div className="container ot-nav-height">
           <div className="sticky__items">
             <ul>
               {items.map((item) => {
                 const sectionId = slugify(item)
                 return (
-                  <li key={sectionId}>
+                  <li key={sectionId} className="preface font-size-small">
                     <Link
                       activeClass="active"
+                      className="link-dark"
                       to={sectionId}
                       spy={true}
                       smooth={true}

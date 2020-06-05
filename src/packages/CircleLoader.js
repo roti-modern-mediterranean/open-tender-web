@@ -4,9 +4,9 @@ import propTypes from 'prop-types'
 const CircleLoader = ({ complete }) => {
   const classes = `circle-loader ${complete ? 'load-complete' : ''}`
   return (
-    <div className={classes}>
-      <div className="checkmark draw"></div>
-    </div>
+    <span className={classes}>
+      <span className="checkmark draw"></span>
+    </span>
   )
 }
 

@@ -31,18 +31,20 @@ const AccountPage = () => {
 
   return account ? (
     <>
-      {/* <Hero imageUrl={background} classes="hero--right">
+      <Hero imageUrl={background} classes="">
         <AccountGreeting title={title} subtitle={subtitle} />
-      </Hero> */}
-      <StickyNav items={navItems} offset={0} />
-      <h1 className="sr-only">Account</h1>
-      <div className="sections bg-secondary-color">
-        <AccountOrders />
-        <AccountGiftCards />
-        <AccountAllergens />
-        <AccountDetails />
-        <AccountAddresses />
-        <AccountCreditCards />
+      </Hero>
+      <div className="bg-secondary-color">
+        <StickyNav items={navItems} offset={-90} />
+        <h1 className="sr-only">Account</h1>
+        <div className="sections">
+          <AccountOrders />
+          <AccountAllergens />
+          <AccountDetails />
+          <AccountAddresses />
+          <AccountGiftCards />
+          <AccountCreditCards />
+        </div>
       </div>
     </>
   ) : null

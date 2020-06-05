@@ -64,7 +64,7 @@ const Addresses = ({ addresses, token, isLoading }) => {
                     Default
                   </p>
                 )}
-                <OrderAddress address={address}>
+                <OrderAddress address={address} isDefault={address.is_default}>
                   <p className="font-size-small secondary-color">
                     <Button
                       text="edit"

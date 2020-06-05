@@ -154,20 +154,33 @@ export const defaultConfig = {
     },
   },
   account: {
+    // background:
+    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590860635_633edb149568073f51aa.jpg',
     background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590860635_633edb149568073f51aa.jpg',
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',
     title: 'Welcome Back',
     subtitle: 'How can we help you today?',
     sections: {
-      accountDetails: {
-        title: 'Account Details',
+      recentOrders: {
+        title: 'Recent Orders',
         subtitle:
-          'Below is the info we have on file for you. Make updates at any time.',
+          'Make changes to upcoming orders, reorder past orders, and add order ratings & comments',
+        empty: "Looks like you don't have any recent orders",
+      },
+      favorites: {
+        title: 'Favorites',
+        subtitle:
+          "Below are the items you've favorited. You can add more favorites by reviewing your past order details.",
       },
       allergens: {
         title: 'Allergens',
         subtitle:
           "Select any allergens that you'd like for us to highlight on the menu when you're placing an order.",
+      },
+      accountDetails: {
+        title: 'Account Details',
+        subtitle:
+          'Below is the info we have on file for you. Make updates at any time.',
       },
       addresses: {
         title: 'Addresses',
@@ -186,22 +199,11 @@ export const defaultConfig = {
         empty:
           "Looks like you haven't saved any cards to your account yet. Use the link below to add a new card.",
       },
-      loyalty: {
-        title: 'Loyalty',
-        subtitle:
-          'A summary of your active loyalty programs and any available discounts.',
-      },
-      favorites: {
-        title: 'Favorites',
-        subtitle:
-          "Below are the items you've favorited. You can add more favorites by reviewing your past order details.",
-      },
-      recentOrders: {
-        title: 'Recent Orders',
-        subtitle:
-          'Make changes to upcoming orders, reorder past orders, and add order ratings & comments',
-        empty: "Looks like you don't have any recent orders",
-      },
+      // loyalty: {
+      //   title: 'Loyalty',
+      //   subtitle:
+      //     'A summary of your active loyalty programs and any available discounts.',
+      // },
       // upcomingOrders: {
       //   title: 'Upcoming Orders',
       //   subtitle: 'Review & update orders that have yet to be fulfilled',

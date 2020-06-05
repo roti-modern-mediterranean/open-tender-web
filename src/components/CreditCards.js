@@ -8,6 +8,7 @@ import {
 import SectionRow from './SectionRow'
 import { Button } from '../packages'
 import { cardIcons } from '../packages/utils/cards'
+import CircleLoader from '../packages/CircleLoader'
 
 const CreditCards = ({ creditCards, token, isLoading }) => {
   const dispatch = useDispatch()
@@ -34,12 +35,12 @@ const CreditCards = ({ creditCards, token, isLoading }) => {
           <SectionRow
             key={creditCard.customer_card_id}
             title={
-              <div className="cards__card__image">
+              <span className="cards__card__image">
                 <img
                   src={cardIcons[creditCard.card_type]}
                   alt={creditCard.card_type_name}
                 />
-              </div>
+              </span>
             }
           >
             <div className="section__row__container">
@@ -49,17 +50,14 @@ const CreditCards = ({ creditCards, token, isLoading }) => {
                     Default
                   </p>
                 )}
-                <p>
+                <p className="section__row__relative">
                   {creditCard.card_type_name} ending in {creditCard.last4}
-                </p>
-                {/* <p>
-                  <span className="tag-sibling">
-                    {creditCard.card_type_name} ending in {creditCard.last4}
-                  </span>
                   {creditCard.is_default && (
-                    <Tag text="Default" icon="CheckCircle" />
+                    <span className="section__row__default">
+                      <CircleLoader complete={true} />
+                    </span>
                   )}
-                </p> */}
+                </p>
                 <p className="font-size-small secondary-color">
                   {creditCard.masked}
                 </p>

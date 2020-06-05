@@ -2,9 +2,12 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { Button } from '../packages'
+import { useSelector } from 'react-redux'
+import { selectCustomerAccount } from '../slices/customerSlice'
 
 const AccountGreeting = ({ title, subtitle }) => {
   const history = useHistory()
+  const customer = useSelector(selectCustomerAccount)
 
   const startOrder = (evt) => {
     evt.preventDefault()
@@ -13,12 +16,14 @@ const AccountGreeting = ({ title, subtitle }) => {
   }
 
   return (
-    <div className="location location--hero bg-color border-radius slide-up">
-      <div className="location__content">
-        <div className="location__header">
-          <h2 className="ot-font-size-h5">{title}</h2>
-          <p>{subtitle}</p>
-        </div>
+    <div className="greeting bg-color border-radius slide-up">
+      <div className="greeting__header">
+        <h2 className="ot-font-size-h3">
+          {title}, {customer.first_name}!
+        </h2>
+        <p>{subtitle}</p>
+      </div>
+      <div className="greeting__content">
         <Button
           text="Start Order"
           ariaLabel="Start a new order"
