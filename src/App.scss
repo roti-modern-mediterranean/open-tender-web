@@ -115,11 +115,40 @@ body.has-modal {
   justify-content: flex-end;
 }
 
+.align-right {
+  text-align: right;
+}
+
 .preface {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-.align-right {
-  text-align: right;
+.tag {
+  display: inline-block;
+  @extend .preface;
+  padding: 0.5rem 1rem 0.6rem;
+  border-radius: 1.5rem;
+  line-height: 1;
+
+  .tag-sibling + & {
+    margin-left: 1rem;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    span {
+      display: inline-block;
+      padding: 0.1rem 0 0;
+
+      &.tag__icon {
+        width: 1.2rem;
+        height: 1.2rem;
+        padding: 0;
+        margin-right: 0.5rem;
+      }
+    }
+  }
 }

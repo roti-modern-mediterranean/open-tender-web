@@ -9,7 +9,7 @@ import {
 import { Button } from '../packages'
 import { capitalize } from '../packages/utils/helpers'
 import { DeliveryLink } from '../packages'
-import { iconMap } from '../packages/icons'
+import Tag from './Tag'
 
 const OrderImage = ({ imageUrl, title }) => {
   return (
@@ -28,26 +28,30 @@ OrderImage.propTypes = {
 const OrderTag = ({ isUpcoming, status }) => {
   const tag = isUpcoming
     ? {
-        class: '-upcoming bg-alert-color',
+        bgClass: '-upcoming bg-alert-color',
+        textClass: 'ot-light-color',
         text: 'Coming up',
         icon: 'AlertCircle',
       }
     : status === 'REFUNDED'
-    ? { class: '-refunded bg-body-color', text: 'Refunded' }
+    ? {
+        bgClass: '-refunded bg-body-color',
+        textClass: 'ot-light-color',
+        text: 'Refunded',
+      }
     : {
-        class: '-completed bg-success-color',
+        bgClass: '-completed bg-success-color',
+        textClass: 'ot-light-color',
         text: 'Completed',
         icon: 'CheckCircle',
       }
   return (
-    <div
-      className={`order-card__tag preface ot-light-color font-size-x-small ${tag.class}`}
-    >
-      {tag.icon && (
-        <span className="order-card__tag__icon">{iconMap[tag.icon]}</span>
-      )}
-      <span>{tag.text}</span>
-    </div>
+    <Tag
+      text={tag.text}
+      icon={tag.icon}
+      bgClass={`order-card__tag ${tag.bgClass}`}
+      textClass={tag.textClass}
+    />
   )
 }
 

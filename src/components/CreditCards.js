@@ -44,10 +44,22 @@ const CreditCards = ({ creditCards, token, isLoading }) => {
           >
             <div className="section__row__container">
               <div className="section__row__container__content">
+                {creditCard.is_default && (
+                  <p className="preface font-size-x-small secondary-color">
+                    Default
+                  </p>
+                )}
                 <p>
                   {creditCard.card_type_name} ending in {creditCard.last4}
-                  {creditCard.is_default ? ' (default)' : ''}
                 </p>
+                {/* <p>
+                  <span className="tag-sibling">
+                    {creditCard.card_type_name} ending in {creditCard.last4}
+                  </span>
+                  {creditCard.is_default && (
+                    <Tag text="Default" icon="CheckCircle" />
+                  )}
+                </p> */}
                 <p className="font-size-small secondary-color">
                   {creditCard.masked}
                 </p>

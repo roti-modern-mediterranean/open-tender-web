@@ -7,6 +7,7 @@ import {
   putCustomerAllergens,
   getCustomerAddresses,
   putCustomerAddress,
+  deleteCustomerAddress,
   getCustomerCreditCards,
   postCustomerCreditCard,
   putCustomerCreditCard,
@@ -113,6 +114,22 @@ export const updateCustomerAddress = createAsyncThunk(
   }
 )
 
+export const removeCustomerAddress = createAsyncThunk(
+  'customer/removeCustomerAddress',
+  async ({ token, addressId, callback }, thunkAPI) => {
+    try {
+      const limit = thunkAPI.getState().customer.addresses.entities.length
+      await deleteCustomerAddress(token, addressId)
+      const response = await getCustomerAddresses(token, limit)
+      if (callback) callback()
+      thunkAPI.dispatch(showNotification('Address removed!'))
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
 export const fetchCustomerCreditCards = createAsyncThunk(
   'customer/fetchCustomerCreditCards',
   async ({ token }, thunkAPI) => {
@@ -141,7 +158,7 @@ export const updateCustomerCreditCard = createAsyncThunk(
 )
 
 export const removeCustomerCreditCard = createAsyncThunk(
-  'customer/deleteCustomerCreditCard',
+  'customer/removeCustomerCreditCard',
   async ({ token, cardId, callback }, thunkAPI) => {
     try {
       await deleteCustomerCreditCard(token, cardId)
@@ -156,7 +173,7 @@ export const removeCustomerCreditCard = createAsyncThunk(
 )
 
 export const addCustomerCreditCard = createAsyncThunk(
-  'customer/postCustomerCreditCard',
+  'customer/addCustomerCreditCard',
   async ({ token, data, callback }, thunkAPI) => {
     try {
       await postCustomerCreditCard(token, data)
@@ -304,6 +321,24 @@ const customerSlice = createSlice({
         entities: state.addresses.entities,
         loading: 'idle',
         error: action.payload,
+      }
+    },
+
+    [removeCustomerAddress.fulfilled]: (state, action) => {
+      state.addresses = {
+        entities: action.payload,
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [removeCustomerAddress.pending]: (state) => {
+      state.addresses.loading = 'pending'
+    },
+    [removeCustomerAddress.rejected]: (state, action) => {
+      state.addresses = {
+        entities: state.addresses.entities,
+        loading: 'idle',
+        error: action.payload.detail,
       }
     },
 

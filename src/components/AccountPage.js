@@ -37,12 +37,12 @@ const AccountPage = () => {
       <StickyNav items={navItems} offset={0} />
       <h1 className="sr-only">Account</h1>
       <div className="sections bg-secondary-color">
-        <AccountCreditCards />
-        <AccountGiftCards />
-        <AccountAddresses />
-        <AccountDetails />
-        <AccountAllergens />
         <AccountOrders />
+        <AccountGiftCards />
+        <AccountAllergens />
+        <AccountDetails />
+        <AccountAddresses />
+        <AccountCreditCards />
       </div>
     </>
   ) : null

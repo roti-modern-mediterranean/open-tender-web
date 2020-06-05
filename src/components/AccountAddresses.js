@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { slugify } from '../packages/utils/helpers'
@@ -14,6 +14,7 @@ import SectionError from './SectionError'
 import Addresses from './Addresses'
 
 const AccountAddresses = () => {
+  const sectionRef = useRef()
   const dispatch = useDispatch()
   const {
     addresses: { title, subtitle },
@@ -21,16 +22,24 @@ const AccountAddresses = () => {
   const token = useSelector(selectToken)
   const addresses = useSelector(selectCustomerAddresses)
 
-  useEffect(() => {
-    dispatch(fetchCustomerAddresses({ token, limit: 5 }))
-  }, [dispatch, token])
-
   const isLoading = addresses.loading === 'pending'
   const error = addresses.error
   const showAddresses = addresses.entities.length
 
+  useEffect(() => {
+    dispatch(fetchCustomerAddresses({ token, limit: 5 }))
+  }, [dispatch, token])
+
+  useEffect(() => {
+    if (error) window.scrollTo(0, sectionRef.current.offsetTop)
+  }, [error])
+
   return (
-    <div id={slugify(title)} className="section container ot-section">
+    <div
+      id={slugify(title)}
+      ref={sectionRef}
+      className="section container ot-section"
+    >
       <div className="section__container">
         <SectionHeader title={title} subtitle={subtitle} />
         <SectionLoading loading={isLoading} />

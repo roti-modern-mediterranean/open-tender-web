@@ -2,7 +2,10 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { updateCustomerAddress } from '../slices/customerSlice'
+import {
+  updateCustomerAddress,
+  removeCustomerAddress,
+} from '../slices/customerSlice'
 import { openModal } from '../slices/modalSlice'
 import { setCurrentAddress } from '../slices/accountSlice'
 import SectionRow from './SectionRow'
@@ -34,12 +37,8 @@ const Addresses = ({ addresses, token, isLoading }) => {
 
   const handleDelete = (evt, address) => {
     evt.preventDefault()
-    const data = { ...address, is_active: false }
     const addressId = address.customer_address_id
-    delete data.customer_address_id
-    delete data.created_at
-    delete data.last_used_at
-    dispatch(updateCustomerAddress({ token, addressId, data }))
+    dispatch(removeCustomerAddress({ token, addressId }))
     evt.target.blur()
   }
 
@@ -60,6 +59,11 @@ const Addresses = ({ addresses, token, isLoading }) => {
           >
             <div className="section__row__container">
               <div className="section__row__container__content">
+                {address.is_default && (
+                  <p className="preface font-size-x-small secondary-color">
+                    Default
+                  </p>
+                )}
                 <OrderAddress address={address}>
                   <p className="font-size-small secondary-color">
                     <Button

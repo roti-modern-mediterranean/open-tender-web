@@ -93,6 +93,16 @@ export const putCustomerAddress = (token, addressId, data) => {
   return request(`/customer/addresses/${addressId}`, 'PUT', data, null, token)
 }
 
+export const deleteCustomerAddress = (token, addressId) => {
+  return request(
+    `/customer/addresses/${addressId}`,
+    'DELETE',
+    null,
+    null,
+    token
+  )
+}
+
 export const getCustomerCreditCards = (token) => {
   return request(`/customer/credit-cards`, 'GET', null, null, token)
 }

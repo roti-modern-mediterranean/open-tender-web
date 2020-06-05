@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -14,6 +14,7 @@ import Addresses from './Addresses'
 import { selectConfig } from '../slices/configSlice'
 
 const AccountAddressesPage = () => {
+  const sectionRef = useRef()
   const history = useHistory()
   const dispatch = useDispatch()
   const {
@@ -22,10 +23,17 @@ const AccountAddressesPage = () => {
   const token = useSelector(selectToken)
   const { account } = useSelector(selectCustomer)
   const addresses = useSelector(selectCustomerAddresses)
+  const isLoading = addresses.loading === 'pending'
+  const error = addresses.error
+  const showAddresses = addresses.entities.length
 
   useEffect(() => {
     window.scroll(0, 0)
   }, [])
+
+  useEffect(() => {
+    if (error) window.scrollTo(0, sectionRef.current.offsetTop)
+  }, [error])
 
   useEffect(() => {
     if (!account) return history.push('/')
@@ -35,15 +43,11 @@ const AccountAddressesPage = () => {
     dispatch(fetchCustomerAddresses({ token, limit: 50 }))
   }, [dispatch, token])
 
-  const isLoading = addresses.loading === 'pending'
-  const error = addresses.error
-  const showAddresses = addresses.entities.length
-
   return account ? (
     <>
       <h1 className="sr-only">{title}</h1>
       <div className="sections bg-secondary-color">
-        <div className="section container ot-section">
+        <div ref={sectionRef} className="section container ot-section">
           <div className="section__container">
             <SectionHeader title={title} subtitle={subtitle}>
               <div className="section__header__back">

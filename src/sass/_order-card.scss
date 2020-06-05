@@ -12,23 +12,6 @@ $image-size: 4.5rem;
     position: absolute;
     top: -1.1rem;
     right: 1.5rem;
-    padding: 0.5rem 1rem 0.6rem;
-    border-radius: 1.5rem;
-    display: flex;
-    align-items: center;
-    line-height: 1;
-
-    span {
-      display: inline-block;
-      padding: 0.1rem 0 0;
-
-      &.order-card__tag__icon {
-        width: 1.2rem;
-        height: 1.2rem;
-        padding: 0;
-        margin-right: 0.5rem;
-      }
-    }
   }
 
   &__container {
