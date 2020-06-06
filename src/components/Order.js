@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useSelector, useDispatch } from 'react-redux'
 import { Button, CartItem, OrderQuantity, Check } from '../packages'
 import { makeDisplayItem } from '../packages/utils/cart'
 import { capitalize, isEmpty } from '../packages/utils/helpers'
@@ -13,6 +14,7 @@ import { iconMap } from '../packages/icons'
 import SectionHeader from './SectionHeader'
 import SectionRow from './SectionRow'
 import OrderAddress from './OrderAddress'
+import { selectToken, addCustomerFavorite } from '../slices/customerSlice'
 
 const OrderLoading = ({ loading }) => {
   return loading ? (
@@ -158,12 +160,17 @@ const Order = ({
     totals,
     rating,
   } = order || {}
-
+  const dispatch = useDispatch()
   const isLoading = loading === 'pending'
   const showOrder = !isLoading && !error && !isEmpty(order)
-  const displayedItems = items ? items.map((i) => makeDisplayItem(i)) : []
   const orderType = order_type === 'MAIN_MENU' ? service_type : order_type
   const isUpcoming = isoToDate(requested_at) > new Date()
+  const displayedItems = items ? items.map((i) => makeDisplayItem(i)) : []
+  const token = useSelector(selectToken)
+
+  const addFavorite = (cart) => {
+    dispatch(addCustomerFavorite({ token, data: { cart } }))
+  }
 
   return (
     <div className="order">
@@ -248,7 +255,10 @@ const Order = ({
                     return (
                       <li key={`${item.id}-${index}`}>
                         <CartItem item={item} showModifiers={true}>
-                          <OrderQuantity item={item} />
+                          <OrderQuantity
+                            item={item}
+                            addFavorite={addFavorite}
+                          />
                         </CartItem>
                       </li>
                     )

@@ -10,7 +10,6 @@ import {
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
-// import CreditCards from './CreditCards'
 import { Button } from '../packages'
 import CreditCards from './CreditCards'
 import { openModal } from '../slices/modalSlice'
@@ -35,7 +34,9 @@ const AccountCreditCards = () => {
 
   const isLoading = creditCards.loading === 'pending'
   const error = creditCards.error
-  const showCreditCards = creditCards.entities.length
+  const showCreditCards = creditCards.entities
+    ? creditCards.entities.length
+    : false
 
   return (
     <div id={slugify(title)} className="section container ot-section">

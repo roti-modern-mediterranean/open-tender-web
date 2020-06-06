@@ -12,6 +12,7 @@ import {
   postCustomerCreditCard,
   putCustomerCreditCard,
   deleteCustomerCreditCard,
+  postCustomerFavorite,
 } from '../services/requests'
 import { showNotification } from './notificationSlice'
 
@@ -183,6 +184,22 @@ export const addCustomerCreditCard = createAsyncThunk(
       return response
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const addCustomerFavorite = createAsyncThunk(
+  'customer/addCustomerCreditCard',
+  async ({ token, data, callback }, thunkAPI) => {
+    try {
+      data.is_orderable = true
+      if (!data.name) data.name = ''
+      await postCustomerFavorite(token, [data])
+      if (callback) callback()
+      thunkAPI.dispatch(showNotification('Favorite added!'))
+    } catch (err) {
+      const errMsg = err.detail || err.message || 'Something went wrong'
+      thunkAPI.dispatch(showNotification(errMsg))
     }
   }
 )

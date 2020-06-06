@@ -124,3 +124,7 @@ export const deleteCustomerCreditCard = (token, cardId) => {
     token
   )
 }
+
+export const postCustomerFavorite = (token, data) => {
+  return request(`/customer/favorites`, 'POST', data, null, token)
+}

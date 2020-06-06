@@ -147,6 +147,9 @@ export const makeDisplayItem = (item) => {
     quantity: item.quantity,
     price: parseFloat(item.price),
     totalPrice: parseFloat(item.price_total),
+    madeFor: item.made_for,
+    notes: item.notes,
+    favoriteId: item.favorite_id,
   }
   return displayItem
 }
@@ -201,7 +204,7 @@ export const decrementItem = (cart, index) => {
   return { cart, cartCounts }
 }
 
-const makeSimpleCart = (cart) => {
+export const makeSimpleCart = (cart) => {
   const simpleCart = cart.map((i) => {
     const groups = i.groups.map((g) => {
       const options = g.options
