@@ -6,7 +6,6 @@ import { selectAccountOrders, fetchOrders } from '../slices/accountSlice'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
-import SectionItem from './SectionItem'
 import SectionEmpty from './SectionEmpty'
 import OrderCard from './OrderCard'
 import { slugify } from '../packages/utils/helpers'
@@ -20,10 +19,11 @@ const AccountOrders = () => {
   const orders = useSelector(selectAccountOrders)
   const { entities, loading, error } = orders
   const isLoading = loading === 'pending'
-  const showEntities = !isLoading && !error
+  const showOrders = !isLoading && !error
+  const recentOrders = entities.length ? entities.slice(0, 6) : []
 
   useEffect(() => {
-    dispatch(fetchOrders({ token, limit: 6 }))
+    dispatch(fetchOrders({ token, limit: 10 }))
   }, [dispatch, token])
 
   return (
@@ -33,14 +33,14 @@ const AccountOrders = () => {
         <SectionLoading loading={isLoading} />
         <SectionError error={error} />
         <div className="section__content -wide">
-          {showEntities &&
-            (entities.length ? (
-              <div className="section__items">
-                {entities.map((order) => {
+          {showOrders &&
+            (recentOrders.length ? (
+              <div className="section__orders">
+                {recentOrders.map((order) => {
                   return (
-                    <SectionItem key={order.order_id}>
+                    <div key={order.order_id} className="section__order">
                       <OrderCard order={order} />
-                    </SectionItem>
+                    </div>
                   )
                 })}
               </div>

@@ -130,28 +130,83 @@ export const makeItemImageUrl = (images) => {
   )
 }
 
-export const makeDisplayItem = (item) => {
-  const displayItem = {
+export const makeItemSignature = (item) => {
+  const optionIds = item.groups
+    .reduce((arr, group) => {
+      const ids = group.options.map((o) => o.id)
+      return [...arr, ...ids]
+    }, [])
+    .sort((a, b) => a - b)
+  return [item.id, ...optionIds].join('.')
+}
+
+export const makeDisplayItemGroups = (optionGroups) => {
+  if (!optionGroups || !optionGroups.length) return []
+  return optionGroups.map((g) => {
+    const options = g.options.map((o) => makeDisplayItem(o))
+    return { ...g, options }
+  })
+}
+
+export const makeDisplayItem = (item, isOption = false) => {
+  let displayItem = {
     id: item.id,
     name: item.name,
     shortDescription: item.short_description,
     description: item.description,
     imageUrl: makeItemImageUrl(item.images),
-    allergens: item.allergens,
-    tags: item.tags,
-    nutritionalInfo: item.nutritional_info,
+    allergens: item.allergens || [],
+    tags: item.tags || [],
+    nutritionalInfo: item.nutritional_info || null,
     cals: item.nutritional_info
       ? parseInt(item.nutritional_info.calories) || null
       : null,
-    groups: item.groups,
-    quantity: item.quantity,
-    price: parseFloat(item.price),
-    totalPrice: parseFloat(item.price_total),
-    madeFor: item.made_for,
-    notes: item.notes,
-    favoriteId: item.favorite_id,
+    groups: makeDisplayItemGroups(item.groups),
+    quantity: item.quantity || 1,
+    price: item.price ? parseFloat(item.price) : null,
+    totalPrice: item.price_total ? parseFloat(item.price_total) : null,
+  }
+  // if (item.price) {
+  //   displayItem.price = parseFloat(item.price)
+  // }
+  // if (item.price_total) {
+  //   displayItem.totalPrice = parseFloat(item.price_total)
+  // }
+  if (!isOption) {
+    const itemDetails = {
+      madeFor: item.made_for,
+      notes: item.notes,
+      favoriteId: item.favorite_id,
+      signature: makeItemSignature(item),
+    }
+    displayItem = { ...displayItem, ...itemDetails }
   }
   return displayItem
+}
+
+export const makeDisplayItems = (orders) => {
+  const items = orders.reduce((items, order) => [...items, ...order.items], [])
+  return items.map((i) => makeDisplayItem(i))
+}
+
+export const makeUniqueDisplayItems = (orders) => {
+  const items = makeDisplayItems(orders)
+  let unique = [],
+    signatures = []
+  items.forEach((item) => {
+    if (signatures.includes(item.signature)) return
+    signatures.push(item.signature)
+    unique.push(item)
+  })
+  return unique
+}
+
+export const makeFavoritesLookup = (favorites) => {
+  if (!favorites) return {}
+  return favorites.reduce(
+    (obj, i) => ({ ...obj, [makeItemSignature(i.cart)]: i.favorite_id }),
+    {}
+  )
 }
 
 export const calcCartCounts = (cart) => {

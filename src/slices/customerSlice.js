@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   postLogin,
   postLogout,
+  getCustomer,
   putCustomer,
   getCustomerAllergens,
   putCustomerAllergens,
@@ -12,9 +13,12 @@ import {
   postCustomerCreditCard,
   putCustomerCreditCard,
   deleteCustomerCreditCard,
+  getCustomerFavorites,
   postCustomerFavorite,
+  deleteCustomerFavorite,
 } from '../services/requests'
 import { showNotification } from './notificationSlice'
+import { makeFavoritesLookup } from '../packages/utils/cart'
 
 const initialState = {
   auth: null,
@@ -24,7 +28,7 @@ const initialState = {
   addresses: { entities: [], loading: 'idle', error: null },
   allergens: { entities: [], loading: 'idle', error: null },
   creditCards: { entities: [], loading: 'idle', error: null },
-  favorites: { entities: [], loading: 'idle', error: null },
+  favorites: { entities: [], signatures: [], loading: 'idle', error: null },
   giftCards: { entities: [], loading: 'idle', error: null },
 }
 
@@ -44,6 +48,17 @@ export const logoutCustomer = createAsyncThunk(
   async (token, thunkAPI) => {
     try {
       return await postLogout(token)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const fetchCustomer = createAsyncThunk(
+  'customer/fetchCustomer',
+  async ({ token }, thunkAPI) => {
+    try {
+      return await getCustomer(token)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -103,8 +118,8 @@ export const updateCustomerAddress = createAsyncThunk(
   'customer/updateCustomerAddress',
   async ({ token, addressId, data, callback }, thunkAPI) => {
     try {
-      const limit = thunkAPI.getState().customer.addresses.entities.length
       await putCustomerAddress(token, addressId, data)
+      const limit = thunkAPI.getState().customer.addresses.entities.length
       const response = await getCustomerAddresses(token, limit)
       if (callback) callback()
       thunkAPI.dispatch(showNotification('Address updated!'))
@@ -119,8 +134,8 @@ export const removeCustomerAddress = createAsyncThunk(
   'customer/removeCustomerAddress',
   async ({ token, addressId, callback }, thunkAPI) => {
     try {
-      const limit = thunkAPI.getState().customer.addresses.entities.length
       await deleteCustomerAddress(token, addressId)
+      const limit = thunkAPI.getState().customer.addresses.entities.length
       const response = await getCustomerAddresses(token, limit)
       if (callback) callback()
       thunkAPI.dispatch(showNotification('Address removed!'))
@@ -188,15 +203,44 @@ export const addCustomerCreditCard = createAsyncThunk(
   }
 )
 
+export const fetchCustomerFavorites = createAsyncThunk(
+  'customer/fetchCustomerFavorites',
+  async ({ token, limit }, thunkAPI) => {
+    try {
+      const response = await getCustomerFavorites(token, limit)
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
 export const addCustomerFavorite = createAsyncThunk(
-  'customer/addCustomerCreditCard',
+  'customer/addCustomerFavorite',
   async ({ token, data, callback }, thunkAPI) => {
     try {
-      data.is_orderable = true
       if (!data.name) data.name = ''
-      await postCustomerFavorite(token, [data])
+      await postCustomerFavorite(token, data)
+      const response = await getCustomerFavorites(token)
       if (callback) callback()
       thunkAPI.dispatch(showNotification('Favorite added!'))
+      return response.data
+    } catch (err) {
+      const errMsg = err.detail || err.message || 'Something went wrong'
+      thunkAPI.dispatch(showNotification(errMsg))
+    }
+  }
+)
+
+export const removeCustomerFavorite = createAsyncThunk(
+  'customer/removeCustomerFavorite',
+  async ({ token, favoriteId, callback }, thunkAPI) => {
+    try {
+      await deleteCustomerFavorite(token, favoriteId)
+      const response = await getCustomerFavorites(token)
+      if (callback) callback()
+      thunkAPI.dispatch(showNotification('Favorite removed!'))
+      return response.data
     } catch (err) {
       const errMsg = err.detail || err.message || 'Something went wrong'
       thunkAPI.dispatch(showNotification(errMsg))
@@ -225,19 +269,16 @@ const customerSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // login
+
     [loginCustomer.fulfilled]: (state, action) => {
-      const {
-        allergens,
-        // credit_cards,
-        favorites,
-        gift_cards,
-      } = action.payload.customer
+      const { allergens = [], gift_cards = [] } = action.payload.customer
       state.auth = action.payload.auth
       state.account = makeCustomerAccount(action.payload.customer)
-      state.allergens.entities = allergens || []
-      // state.cards.entities = credit_cards || []
-      state.favorites.entities = favorites || []
-      state.giftCards.entities = gift_cards || []
+      state.allergens.entities = allergens
+      state.giftCards.entities = gift_cards
+      // state.favorites.entities = favorites
+      // state.favorites.lookup = makeFavoritesLookup(favorites)
       state.error = null
       state.loading = 'idle'
     },
@@ -248,11 +289,33 @@ const customerSlice = createSlice({
       state.error = action.payload
       state.loading = 'idle'
     },
+
     [logoutCustomer.fulfilled]: () => initialState,
     [logoutCustomer.pending]: (state) => {
       state.loading = 'pending'
     },
     [logoutCustomer.rejected]: () => initialState,
+
+    // customer
+
+    [fetchCustomer.fulfilled]: (state, action) => {
+      const { allergens = [], gift_cards = [] } = action.payload
+      state.account = makeCustomerAccount(action.payload)
+      state.allergens.entities = allergens
+      state.giftCards.entities = gift_cards
+      // state.favorites.entities = favorites
+      // state.favorites.lookup = makeFavoritesLookup(favorites)
+      state.error = null
+      state.loading = 'idle'
+    },
+    [fetchCustomer.pending]: (state) => {
+      state.loading = 'pending'
+    },
+    [fetchCustomer.rejected]: (state, action) => {
+      state.error = action.payload
+      state.loading = 'idle'
+    },
+
     [updateCustomer.fulfilled]: (state, action) => {
       state.account = action.payload
       state.error = null
@@ -432,6 +495,66 @@ const customerSlice = createSlice({
         error: action.payload,
       }
     },
+
+    // favorties
+
+    [fetchCustomerFavorites.fulfilled]: (state, action) => {
+      // console.log('favorites', action.payload)
+      state.favorites = {
+        entities: action.payload,
+        lookup: makeFavoritesLookup(action.payload),
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [fetchCustomerFavorites.pending]: (state) => {
+      state.favorites.loading = 'pending'
+    },
+    [fetchCustomerFavorites.rejected]: (state, action) => {
+      state.favorites = {
+        ...state.favorites,
+        loading: 'idle',
+        error: action.payload.detail,
+      }
+    },
+
+    [addCustomerFavorite.fulfilled]: (state, action) => {
+      state.favorites = {
+        entities: action.payload,
+        lookup: makeFavoritesLookup(action.payload),
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [addCustomerFavorite.pending]: (state) => {
+      state.favorites.loading = 'pending'
+    },
+    [addCustomerFavorite.rejected]: (state, action) => {
+      state.favorites = {
+        ...state.favorites,
+        loading: 'idle',
+        error: action.payload.detail,
+      }
+    },
+
+    [removeCustomerFavorite.fulfilled]: (state, action) => {
+      state.favorites = {
+        entities: action.payload,
+        lookup: makeFavoritesLookup(action.payload),
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [removeCustomerFavorite.pending]: (state) => {
+      state.favorites.loading = 'pending'
+    },
+    [removeCustomerFavorite.rejected]: (state, action) => {
+      state.favorites = {
+        ...state.favorites,
+        loading: 'idle',
+        error: action.payload.detail,
+      }
+    },
   },
 })
 
@@ -443,5 +566,6 @@ export const selectCustomerAllergens = (state) => state.customer.allergens
 export const selectCustomerAddresses = (state) => state.customer.addresses
 export const selectCustomerGiftCards = (state) => state.customer.giftCards
 export const selectCustomerCreditCards = (state) => state.customer.creditCards
+export const selectCustomerFavorites = (state) => state.customer.favorites
 
 export default customerSlice.reducer

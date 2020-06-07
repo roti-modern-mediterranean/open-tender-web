@@ -34,6 +34,7 @@ import {
   ExternalLink,
   Star,
   Edit,
+  Heart,
 } from 'react-feather'
 
 export const iconMap = {
@@ -71,4 +72,5 @@ export const iconMap = {
   ExternalLink: <ExternalLink size={null} />,
   Star: <Star size={null} />,
   Edit: <Edit size={null} />,
+  Heart: <Heart size={null} />,
 }

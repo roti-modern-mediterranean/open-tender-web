@@ -13,6 +13,7 @@ import SectionError from './SectionError'
 import { Button } from '../packages'
 import CreditCards from './CreditCards'
 import { openModal } from '../slices/modalSlice'
+import SectionEmpty from './SectionEmpty'
 
 const AccountCreditCards = () => {
   const dispatch = useDispatch()
@@ -51,11 +52,7 @@ const AccountCreditCards = () => {
             isLoading={isLoading}
           />
         ) : (
-          <div className="section__content">
-            <div className="section__content__empty">
-              <p className="font-size-small">{empty}</p>
-            </div>
-          </div>
+          <SectionEmpty message={empty} />
         )}
         <div className="section__footer">
           <p className="font-size-small">

@@ -167,10 +167,17 @@ export const defaultConfig = {
           'Make changes to upcoming orders, reorder past orders, and add order ratings & comments',
         empty: "Looks like you don't have any recent orders",
       },
+      recentItems: {
+        title: 'Order It Again',
+        subtitle:
+          "Below is a list of the items you've ordered recently. Click to reorder or add to your favorites.",
+        empty: "Looks like you haven't ordered any items yet",
+      },
       favorites: {
         title: 'Favorites',
         subtitle:
           "Below are the items you've favorited. You can add more favorites by reviewing your past order details.",
+        empty: "Looks like you haven't added any favorites yet",
       },
       allergens: {
         title: 'Allergens',

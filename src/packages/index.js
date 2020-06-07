@@ -9,6 +9,7 @@ import BuilderRadio from './BuilderRadio'
 import Button from './Button'
 import ButtonAccount from './ButtonAccount'
 import ButtonAllergens from './ButtonAllergens'
+import ButtonFavorite from './ButtonFavorite'
 import ButtonGroupOrder from './ButtonGroupOrder'
 import ButtonLocation from './ButtonLocation'
 import ButtonMenu from './ButtonMenu'
@@ -49,9 +50,10 @@ export {
   BuilderQuantity,
   BuilderRadioGroup,
   BuilderRadio,
+  Button,
   ButtonAccount,
   ButtonAllergens,
-  Button,
+  ButtonFavorite,
   ButtonGroupOrder,
   ButtonLocation,
   ButtonMenu,

@@ -2,58 +2,14 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import {
-  isoToDateStr,
   timezoneMap,
+  isoToDateStr,
   isoToDate,
 } from '../packages/utils/datetimes'
-import { Button } from '../packages'
 import { capitalize } from '../packages/utils/helpers'
-import { DeliveryLink } from '../packages'
-import Tag from './Tag'
-
-const OrderImage = ({ imageUrl, title }) => {
-  return (
-    <div className="order-card__image border-radius-small ot-box-shadow">
-      <img src={imageUrl} title={title} alt={title} />
-    </div>
-  )
-}
-
-OrderImage.displayName = 'OrderImage'
-OrderImage.propTypes = {
-  imageUrl: propTypes.string,
-  title: propTypes.string,
-}
-
-const OrderTag = ({ isUpcoming, status }) => {
-  const tag = isUpcoming
-    ? {
-        bgClass: '-upcoming bg-alert-color',
-        textClass: 'ot-light-color',
-        text: 'Coming up',
-        icon: 'AlertCircle',
-      }
-    : status === 'REFUNDED'
-    ? {
-        bgClass: '-refunded bg-body-color',
-        textClass: 'ot-light-color',
-        text: 'Refunded',
-      }
-    : {
-        bgClass: '-completed bg-success-color',
-        textClass: 'ot-light-color',
-        text: 'Completed',
-        icon: 'CheckCircle',
-      }
-  return (
-    <Tag
-      text={tag.text}
-      icon={tag.icon}
-      bgClass={`order-card__tag ${tag.bgClass}`}
-      textClass={tag.textClass}
-    />
-  )
-}
+import { Button, DeliveryLink } from '../packages'
+import OrderImage from './OrderImage'
+import OrderTag from './OrderTag'
 
 const OrderCard = ({ order }) => {
   const history = useHistory()
@@ -140,28 +96,30 @@ const OrderCard = ({ order }) => {
           </div>
         </div>
         <div className="order-card__footer">
-          {isUpcoming ? (
+          <div className="order-card__footer__buttons">
+            {isUpcoming ? (
+              <Button
+                text="Edit"
+                icon="Edit"
+                onClick={handleEdit}
+                classes="btn--small font-size-small"
+                disabled={!order.is_editable}
+              />
+            ) : (
+              <Button
+                text="Reorder"
+                icon="RefreshCw"
+                onClick={handleReorder}
+                classes="btn--small font-size-small"
+              />
+            )}
             <Button
-              text="Edit"
-              icon="Edit"
-              onClick={handleEdit}
-              classes="btn--small font-size-small"
-              disabled={!order.is_editable}
+              text={`Details ${!isUpcoming ? '/ Rate' : ''}`}
+              icon="FileText"
+              onClick={handleDetails}
+              classes="btn--small btn--secondary font-size-small"
             />
-          ) : (
-            <Button
-              text="Reorder"
-              icon="RefreshCw"
-              onClick={handleReorder}
-              classes="btn--small font-size-small"
-            />
-          )}
-          <Button
-            text={`Details ${!isUpcoming ? '/ Rate' : ''}`}
-            icon="FileText"
-            onClick={handleDetails}
-            classes="btn--small btn--secondary font-size-small"
-          />
+          </div>
         </div>
       </div>
     </div>

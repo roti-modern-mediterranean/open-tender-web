@@ -31,14 +31,6 @@ export const postOrder = (order) => {
   return request(`/orders`, 'POST', order)
 }
 
-export const getCustomer = (token) => {
-  return request(`/customer?with_related=true`, 'GET', null, null, token)
-}
-
-export const putCustomer = (token, data) => {
-  return request(`/customer`, 'PUT', data, null, token)
-}
-
 export const postLogin = (email, password) => {
   let auth
   const data = {
@@ -56,6 +48,14 @@ export const postLogin = (email, password) => {
 
 export const postLogout = (token) => {
   return authRequest('/revoke', { token })
+}
+
+export const getCustomer = (token) => {
+  return request(`/customer?with_related=true`, 'GET', null, null, token)
+}
+
+export const putCustomer = (token, data) => {
+  return request(`/customer`, 'PUT', data, null, token)
 }
 
 export const getCustomerOrders = (token, timing, limit) => {
@@ -125,6 +125,21 @@ export const deleteCustomerCreditCard = (token, cardId) => {
   )
 }
 
+export const getCustomerFavorites = (token, limit) => {
+  const params = limit ? `?limit=${limit}` : ''
+  return request(`/customer/favorites${params}`, 'GET', null, null, token)
+}
+
 export const postCustomerFavorite = (token, data) => {
   return request(`/customer/favorites`, 'POST', data, null, token)
+}
+
+export const deleteCustomerFavorite = (token, favoriteId) => {
+  return request(
+    `/customer/favorites/${favoriteId}`,
+    'DELETE',
+    null,
+    null,
+    token
+  )
 }

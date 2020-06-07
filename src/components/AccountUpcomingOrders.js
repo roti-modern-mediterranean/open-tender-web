@@ -10,7 +10,6 @@ import {
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
-import SectionItem from './SectionItem'
 import SectionEmpty from './SectionEmpty'
 import OrderCard from './OrderCard'
 
@@ -38,12 +37,12 @@ const AccountUpcomingOrders = () => {
         <SectionError error={error} />
         {showEntities &&
           (entities.length ? (
-            <div className="section__items">
+            <div className="section__orders">
               {entities.map((order) => {
                 return (
-                  <SectionItem key={order.order_id}>
+                  <div key={order.order_id} className="section__order">
                     <OrderCard order={order} />
-                  </SectionItem>
+                  </div>
                 )
               })}
             </div>

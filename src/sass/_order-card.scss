@@ -63,6 +63,12 @@ $image-size: 4.5rem;
     }
   }
 
+  &__item-image {
+    width: 100%;
+    padding: 33.33333%;
+    margin: 0 0 1rem;
+  }
+
   &__footer {
     flex-grow: 0;
     margin: 1.9rem 0 0;
@@ -71,10 +77,15 @@ $image-size: 4.5rem;
     // left: 2rem;
     // right: 2rem;
 
-    button {
-      margin: 0 1rem 1rem 0;
-      &:last-child {
-        margin-right: 0;
+    &__buttons {
+      display: flex;
+      align-items: flex-start;
+
+      button {
+        margin: 0 1rem 1rem 0;
+        &:last-child {
+          margin-right: 0;
+        }
       }
     }
   }

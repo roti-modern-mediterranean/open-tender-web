@@ -14,7 +14,12 @@ import { iconMap } from '../packages/icons'
 import SectionHeader from './SectionHeader'
 import SectionRow from './SectionRow'
 import OrderAddress from './OrderAddress'
-import { selectToken, addCustomerFavorite } from '../slices/customerSlice'
+import {
+  selectToken,
+  addCustomerFavorite,
+  removeCustomerFavorite,
+  selectCustomerFavorites,
+} from '../slices/customerSlice'
 
 const OrderLoading = ({ loading }) => {
   return loading ? (
@@ -167,9 +172,15 @@ const Order = ({
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = items ? items.map((i) => makeDisplayItem(i)) : []
   const token = useSelector(selectToken)
+  const { lookup } = useSelector(selectCustomerFavorites)
 
   const addFavorite = (cart) => {
-    dispatch(addCustomerFavorite({ token, data: { cart } }))
+    const data = { cart }
+    dispatch(addCustomerFavorite({ token, data }))
+  }
+
+  const removeFavorite = (favoriteId) => {
+    dispatch(removeCustomerFavorite({ token, favoriteId }))
   }
 
   return (
@@ -252,12 +263,15 @@ const Order = ({
               <div className="section__content bg-color border-radius">
                 <ul className="cart">
                   {displayedItems.map((item, index) => {
+                    const favoriteId = lookup[item.signature] || null
                     return (
                       <li key={`${item.id}-${index}`}>
                         <CartItem item={item} showModifiers={true}>
                           <OrderQuantity
                             item={item}
+                            favoriteId={favoriteId}
                             addFavorite={addFavorite}
+                            removeFavorite={removeFavorite}
                           />
                         </CartItem>
                       </li>

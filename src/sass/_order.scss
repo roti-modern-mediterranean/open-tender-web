@@ -64,23 +64,10 @@ $quantity-size: 2.8rem;
       border-radius: $quantity-size / 2;
       padding: 0;
       text-align: center;
-    }
 
-    &__favorite {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: $quantity-size;
-      height: $quantity-size;
-      border-radius: $quantity-size / 2;
-      padding: 0;
-      margin: 0 0 0 1.25rem;
-    }
-
-    &__favorite__icon {
-      display: block;
-      width: 1.6rem;
-      height: 1.6rem;
+      & + .btn-favorite {
+        margin: 0 0 0 1.25rem;
+      }
     }
   }
 }

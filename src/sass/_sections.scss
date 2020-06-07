@@ -59,24 +59,36 @@
     &.-narrow {
       max-width: 32rem;
     }
-
-    &__empty {
-      text-align: center;
-    }
   }
 
-  &__items {
+  &__empty {
+    text-align: center;
+  }
+
+  &__orders {
     display: flex;
-    // justify-content: space-between;
     flex-wrap: wrap;
     margin: 0 -1rem;
   }
 
-  &__item {
+  &__order {
     width: 33.33333%;
     flex-shrink: 0;
     padding: 0 1rem;
     margin: 0 0 2rem;
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.5rem;
+  }
+
+  &__item {
+    width: 25%;
+    flex-shrink: 0;
+    padding: 0 0.5rem;
+    margin: 0 0 1rem;
   }
 
   &__intro {

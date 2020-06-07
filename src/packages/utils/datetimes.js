@@ -57,10 +57,6 @@ export const makeLocalDateStr = (date, days = 0, fmt = DATE) => {
 export const todayDate = () => makeLocalDateStr()
 export const tomorrowDate = () => makeLocalDateStr(null, 1)
 
-export const dateToIso = (date, tz) => {
-  return zonedTimeToUtc(date, tz).toISOString()
-}
-
 export const isoToDate = (iso, tz) => {
   return tz ? utcToZonedTime(parseISO(iso), tz) : parseISO(iso)
 }
@@ -68,6 +64,12 @@ export const isoToDate = (iso, tz) => {
 export const isoToDateStr = (iso, tz, fmt = DATETIME) => {
   return format(isoToDate(iso, tz), fmt)
 }
+
+export const dateToIso = (date, tz) => {
+  return zonedTimeToUtc(date, tz).toISOString()
+}
+
+export const dateStrToDate = (str) => toDate(str)
 
 export const formatDateStr = (str, fmt = HUMAN_DATE) => {
   return format(toDate(str), fmt)
