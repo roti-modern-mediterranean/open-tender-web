@@ -2,18 +2,22 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, ButtonFavorite } from '../packages'
-import { displayPrice } from '../packages/utils/cart'
+import { displayPrice, rehydrateOrderItem } from '../packages/utils/cart'
 import {
   selectToken,
   addCustomerFavorite,
   removeCustomerFavorite,
   selectCustomerFavorites,
 } from '../slices/customerSlice'
+import { selectMenuItems } from '../slices/menuSlice'
+import { showNotification } from '../slices/notificationSlice'
+import { addItemToCart } from '../slices/orderSlice'
 
 const OrderItemCard = ({ item }) => {
   const dispatch = useDispatch()
   const token = useSelector(selectToken)
   const { lookup } = useSelector(selectCustomerFavorites)
+  const { entities: menuItems } = useSelector(selectMenuItems)
   const { name, groups, quantity, totalPrice, imageUrl, signature } = item
   const favoriteId = lookup[signature] || null
   const optionNames = groups
@@ -24,8 +28,17 @@ const OrderItemCard = ({ item }) => {
     .join(', ')
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
 
-  const handleReorder = (evt) => {
+  const addToCart = (evt, item) => {
     evt.preventDefault()
+    const menuItem = menuItems.find((i) => i.id === item.id)
+    if (!menuItem) {
+      dispatch(showNotification('Item not currently available'))
+    } else {
+      const orderItem = rehydrateOrderItem(menuItem, item)
+      console.log(orderItem)
+      dispatch(addItemToCart(orderItem))
+      dispatch(showNotification('Item added to cart!'))
+    }
     evt.target.blur()
   }
 
@@ -37,6 +50,7 @@ const OrderItemCard = ({ item }) => {
   const removeFavorite = (favoriteId) => {
     dispatch(removeCustomerFavorite({ token, favoriteId }))
   }
+
   return (
     <div className="order-card bg-color border border-radius ot-box-shadow">
       <div className="order-card__container">
@@ -64,7 +78,7 @@ const OrderItemCard = ({ item }) => {
             <Button
               text="Add To Cart"
               icon="PlusCircle"
-              onClick={handleReorder}
+              onClick={(evt) => addToCart(evt, item)}
               classes="btn--small font-size-small"
             />
             <ButtonFavorite

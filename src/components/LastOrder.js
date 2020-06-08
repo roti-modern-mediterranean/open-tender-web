@@ -1,17 +1,20 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { Link } from 'react-scroll'
 import {
   timezoneMap,
   isoToDateStr,
   isoToDate,
 } from '../packages/utils/datetimes'
-import { capitalize } from '../packages/utils/helpers'
+import { capitalize, slugify } from '../packages/utils/helpers'
 import { Button, DeliveryLink } from '../packages'
 import OrderImage from './OrderImage'
 import OrderTag from './OrderTag'
+import { selectAccountConfigSections } from '../slices/configSlice'
 
-const OrderCard = ({ order }) => {
+const LastOrder = ({ order }) => {
   const history = useHistory()
   const {
     order_id,
@@ -26,6 +29,7 @@ const OrderCard = ({ order }) => {
     address,
     totals,
   } = order
+  const { addresses: addressConfig } = useSelector(selectAccountConfigSections)
   const tz = timezoneMap[timezone]
   const requestedAt = isoToDateStr(requested_at, tz, 'MMMM d, yyyy @ h:mma')
   const isOpen = status === 'OPEN'
@@ -71,24 +75,36 @@ const OrderCard = ({ order }) => {
       <div className="order-card__container">
         <div className="order-card__header">
           <p className="order-card__number preface font-size-x-small secondary-color">
-            Order #{order_id}
+            Your Last Order
           </p>
           <p className="order-card__title">
             {capitalize(orderType)} from {revenue_center.name}
           </p>
+          {isOpen && trackingUrl && (
+            <p className="font-size-small secondary-color">
+              <DeliveryLink
+                text="Track your delivery"
+                trackingUrl={trackingUrl}
+              />
+            </p>
+          )}
         </div>
         <div className="order-card__content">
           <div className="order-card__details font-size-small secondary-color">
+            <p>Your last address:</p>
+            <p>{streetAddress}</p>
             <p>
-              {requestedAt} &nbsp;|&nbsp; ${totals.total}
+              <Link
+                activeClass="active"
+                className="link-dark"
+                to={slugify(addressConfig)}
+                spy={true}
+                smooth={true}
+                offset={-90}
+              >
+                Choose a different address
+              </Link>
             </p>
-            {trackingUrl ? (
-              <p>
-                <DeliveryLink text={streetAddress} trackingUrl={trackingUrl} />
-              </p>
-            ) : (
-              <p>{streetAddress}</p>
-            )}
           </div>
           <div className="order-card__items">
             <div className="order-card__images">{images}</div>
@@ -126,9 +142,9 @@ const OrderCard = ({ order }) => {
   )
 }
 
-OrderCard.displayName = 'OrderCard'
-OrderCard.propTypes = {
+LastOrder.displayName = 'LastOrder'
+LastOrder.propTypes = {
   order: propTypes.object,
 }
 
-export default OrderCard
+export default LastOrder

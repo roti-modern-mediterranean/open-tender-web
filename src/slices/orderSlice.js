@@ -27,7 +27,7 @@ const initialState = {
 }
 
 export const fetchLocation = createAsyncThunk(
-  'order/getLocation',
+  'order/fetchLocation',
   async (locationId, thunkAPI) => {
     try {
       return await getLocation(locationId)

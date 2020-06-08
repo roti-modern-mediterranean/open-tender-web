@@ -3,6 +3,13 @@ import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectConfig } from '../slices/configSlice'
 import { selectCustomer, fetchCustomer } from '../slices/customerSlice'
+import { selectAccountOrders } from '../slices/accountSlice'
+import { fetchMenuItems } from '../slices/menuSlice'
+import {
+  fetchLocation,
+  setOrderServiceType,
+  setAddress,
+} from '../slices/orderSlice'
 import StickyNav from './StickyNav'
 import Hero from './Hero'
 import AccountGreeting from './AccountGreeting'
@@ -20,8 +27,10 @@ const AccountPage = () => {
   const dispatch = useDispatch()
   const { account: accountConfig } = useSelector(selectConfig)
   const { background, title, subtitle, sections } = accountConfig
+  const navItems = Object.values(sections).map((section) => section.title)
   const { auth, account } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
+  const { entities: orders } = useSelector(selectAccountOrders)
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -32,16 +41,27 @@ const AccountPage = () => {
     dispatch(fetchCustomer({ token }))
   }, [token, dispatch, history])
 
-  const navItems = Object.values(sections).map((section) => section.title)
+  useEffect(() => {
+    const lastOrder = orders.length ? orders[0] : null
+    if (lastOrder) {
+      console.log(lastOrder)
+      const { revenue_center, service_type, order_type, address } = lastOrder
+      const { location_id: locationId } = revenue_center
+      dispatch(fetchMenuItems({ locationId, serviceType: service_type }))
+      dispatch(fetchLocation(locationId))
+      dispatch(setOrderServiceType([order_type, service_type]))
+      dispatch(setAddress(address || null))
+    }
+  }, [orders, dispatch])
 
   return account ? (
     <>
-      <Hero imageUrl={background} classes="">
+      <h1 className="sr-only">Account</h1>
+      <Hero imageUrl={background} classes="hero--auto">
         <AccountGreeting title={title} subtitle={subtitle} />
       </Hero>
       <div className="bg-secondary-color">
         <StickyNav items={navItems} offset={-90} />
-        <h1 className="sr-only">Account</h1>
         <div className="sections">
           <AccountFavorites />
           <AccountOrders />

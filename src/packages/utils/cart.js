@@ -121,6 +121,27 @@ export const makeOrderItem = (item, isEdit) => {
   return pricedItem
 }
 
+export const rehydrateOrderItem = (menuItem, simpleCartItem) => {
+  const orderItem = makeOrderItem(menuItem, true)
+  orderItem.quantity = simpleCartItem.quantity || 1
+  if (simpleCartItem.groups && simpleCartItem.groups.length) {
+    const groupsLookup = makeGroupsLookup(simpleCartItem)
+    orderItem.groups.forEach((group) => {
+      const simpleGroup = groupsLookup[group.id]
+      if (simpleGroup) {
+        group.options.forEach((option) => {
+          const simpleOption = simpleGroup.options[option.id]
+          option.quantity = simpleOption ? simpleOption.quantity : 0
+        })
+      }
+    })
+  }
+  const pricedItem = calcPrices(orderItem)
+  return pricedItem
+}
+
+// display items from past orders
+
 export const makeItemImageUrl = (images) => {
   const imageMap = images
     .filter((i) => i.url)

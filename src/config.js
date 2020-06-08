@@ -158,7 +158,7 @@ export const defaultConfig = {
     //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590860635_633edb149568073f51aa.jpg',
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',
-    title: 'Welcome Back',
+    title: 'Welcome back',
     subtitle: 'How can we help you today?',
     sections: {
       favorites: {

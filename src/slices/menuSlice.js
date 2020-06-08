@@ -23,8 +23,6 @@ export const fetchMenuItems = createAsyncThunk(
   'menu/fetchMenuItems',
   async ({ locationId, serviceType }, thunkAPI) => {
     try {
-      console.log('fetch')
-      console.log(locationId, serviceType)
       return await getMenuItems(locationId, serviceType)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
@@ -134,5 +132,6 @@ export const selectMenuLoading = (state) => state.menu.loading === 'pending'
 export const selectMenuError = (state) => state.menu.error
 export const selectCartErrors = (state) => state.menu.cartErrors
 export const selectAllergens = (state) => state.menu.allergens
+export const selectMenuItems = (state) => state.menu.menuItems
 
 export default menuSlice.reducer

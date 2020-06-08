@@ -52,6 +52,7 @@ InvalidItems.propTypes = {
 }
 
 const isCartRevertable = (previous, current, locations) => {
+  if (!previous) return null
   const previousLocation = locations.find(
     (i) => i.location_id === previous.locationId
   )
