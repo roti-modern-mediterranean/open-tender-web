@@ -12,6 +12,7 @@ import OrderCard from './OrderCard'
 import { slugify } from '../packages/utils/helpers'
 import { Button } from '../packages'
 import SectionFooter from './SectionFooter'
+import { fetchMenuItems } from '../slices/menuSlice'
 
 const AccountOrders = () => {
   const dispatch = useDispatch()
@@ -35,6 +36,18 @@ const AccountOrders = () => {
     const recent = entities.length ? entities.slice(0, count) : []
     setRecentOrders(recent)
   }, [entities, count])
+
+  useEffect(() => {
+    const lastOrder = entities.length ? entities[0] : null
+    if (lastOrder) {
+      console.log(lastOrder)
+      const { revenue_center, service_type: serviceType } = lastOrder
+      const { location_id: locationId } = revenue_center
+      console.log('AccountOrders')
+      console.log(locationId, serviceType)
+      dispatch(fetchMenuItems({ locationId, serviceType }))
+    }
+  }, [entities, dispatch])
 
   return (
     <div id={slugify(title)} className="section container ot-section">

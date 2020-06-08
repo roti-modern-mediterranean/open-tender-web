@@ -23,6 +23,11 @@ export const getMenu = (locationId, serviceType, requestedAt) => {
   return request(`/menus?${params}`)
 }
 
+export const getMenuItems = (locationId, serviceType) => {
+  const params = `revenue_center_id=${locationId}&service_type=${serviceType}`
+  return request(`/menu-items?${params}`)
+}
+
 export const postOrderValidate = (order) => {
   return request(`/orders/validate`, 'POST', order)
 }

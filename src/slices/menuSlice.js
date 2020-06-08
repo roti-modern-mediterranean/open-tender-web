@@ -1,18 +1,31 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getMenu, getAllergens } from '../services/requests'
+import { getMenu, getMenuItems, getAllergens } from '../services/requests'
 
 const makeRequestedIso = (requestedAt) => {
   return requestedAt === 'asap' ? new Date().toISOString() : requestedAt
 }
 
 export const fetchMenu = createAsyncThunk(
-  'menu/getMenu',
+  'menu/fetchMenu',
   async (menuVars, thunkAPI) => {
     const [locationId, serviceType, requestedAt] = menuVars
     try {
       const requestedIso = makeRequestedIso(requestedAt)
       const menu = await getMenu(locationId, serviceType, requestedIso)
       return { ...menu, menuVars: { locationId, serviceType, requestedAt } }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const fetchMenuItems = createAsyncThunk(
+  'menu/fetchMenuItems',
+  async ({ locationId, serviceType }, thunkAPI) => {
+    try {
+      console.log('fetch')
+      console.log(locationId, serviceType)
+      return await getMenuItems(locationId, serviceType)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -39,6 +52,7 @@ const initialState = {
   cartErrors: null,
   error: null,
   loading: 'idle',
+  menuItems: { entities: [], loading: false, error: null },
   allergens: { entities: [], loading: false, error: null },
 }
 
@@ -54,6 +68,8 @@ const menuSlice = createSlice({
     },
   },
   extraReducers: {
+    //menus
+
     [fetchMenu.fulfilled]: (state, action) => {
       state.categories = action.payload.menu
       state.soldOut = action.payload.sold_out_items
@@ -69,6 +85,28 @@ const menuSlice = createSlice({
       state.error = action.error.detail
       state.loading = 'idle'
     },
+
+    // menu items
+
+    [fetchMenuItems.fulfilled]: (state, action) => {
+      state.menuItems = {
+        entities: action.payload,
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [fetchMenuItems.pending]: (state) => {
+      state.menuItems.loading = 'pending'
+    },
+    [fetchMenuItems.rejected]: (state, action) => {
+      const error = action.payload
+        ? action.payload.detail
+        : 'Something went wrong'
+      state.menuItems = { entities: [], loading: 'idle', error }
+    },
+
+    // allergens
+
     [fetchAllergens.fulfilled]: (state, action) => {
       state.allergens = {
         entities: action.payload,
