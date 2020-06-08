@@ -8,6 +8,9 @@ export const fetchOrders = createAsyncThunk(
       const response = await getCustomerOrders(token, null, limit)
       return response.data
     } catch (err) {
+      if (err.message) {
+        return thunkAPI.rejectWithValue({ detail: err.message })
+      }
       return thunkAPI.rejectWithValue(err)
     }
   }

@@ -7,7 +7,8 @@ const CartItem = ({ item, showModifiers, editItem, removeItem, children }) => {
     ? { backgroundImage: `url(${item.imageUrl}` }
     : null
   const desc = showModifiers ? makeModifierNames(item) : item.description
-  const price = editItem ? item.totalPrice / item.quantity : item.price
+  const price =
+    editItem || showModifiers ? item.totalPrice / item.quantity : item.price
 
   return (
     <span className="builder__option border-color">

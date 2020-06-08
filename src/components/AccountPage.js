@@ -44,10 +44,10 @@ const AccountPage = () => {
         <h1 className="sr-only">Account</h1>
         <div className="sections">
           <AccountFavorites />
-          <AccountItems />
           <AccountOrders />
-          <AccountAllergens />
+          <AccountItems />
           <AccountDetails />
+          <AccountAllergens />
           <AccountAddresses />
           <AccountGiftCards />
           <AccountCreditCards />

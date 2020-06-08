@@ -161,6 +161,12 @@ export const defaultConfig = {
     title: 'Welcome Back',
     subtitle: 'How can we help you today?',
     sections: {
+      favorites: {
+        title: 'Favorites',
+        subtitle:
+          "Below are the items you've favorited. You can add more favorites by reviewing your past order details.",
+        empty: "Looks like you haven't added any favorites yet",
+      },
       recentOrders: {
         title: 'Recent Orders',
         subtitle:
@@ -168,26 +174,20 @@ export const defaultConfig = {
         empty: "Looks like you don't have any recent orders",
       },
       recentItems: {
-        title: 'Order It Again',
+        title: 'Recent Items',
         subtitle:
           "Below is a list of the items you've ordered recently. Click to reorder or add to your favorites.",
         empty: "Looks like you haven't ordered any items yet",
       },
-      favorites: {
-        title: 'Favorites',
+      accountDetails: {
+        title: 'Account',
         subtitle:
-          "Below are the items you've favorited. You can add more favorites by reviewing your past order details.",
-        empty: "Looks like you haven't added any favorites yet",
+          'Below is the info we have on file for you. Make updates at any time.',
       },
       allergens: {
         title: 'Allergens',
         subtitle:
           "Select any allergens that you'd like for us to highlight on the menu when you're placing an order.",
-      },
-      accountDetails: {
-        title: 'Account Details',
-        subtitle:
-          'Below is the info we have on file for you. Make updates at any time.',
       },
       addresses: {
         title: 'Addresses',

@@ -14,17 +14,20 @@ import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionEmpty from './SectionEmpty'
 import OrderItemCard from './OrderItemCard'
+import { Button } from '../packages'
+import SectionFooter from './SectionFooter'
 
 const AccountFavorites = () => {
   const dispatch = useDispatch()
   const [favorites, setFavorites] = useState([])
+  const [count, setCount] = useState(4)
+  const limit = 12
   const {
     favorites: { title, subtitle, empty },
   } = useSelector(selectAccountConfigSections)
   const { entities, loading, error } = useSelector(selectCustomerFavorites)
   const isLoading = loading === 'pending'
   const token = useSelector(selectToken)
-  const limit = 8
 
   useEffect(() => {
     dispatch(fetchCustomerFavorites({ token }))
@@ -33,9 +36,9 @@ const AccountFavorites = () => {
   useEffect(() => {
     const items = entities
       .map((i) => ({ ...i, item: makeDisplayItem(i.item) }))
-      .slice(0, 8)
+      .slice(0, count)
     setFavorites(items)
-  }, [entities])
+  }, [entities, count])
 
   return (
     <div id={slugify(title)} className="section container ot-section">
@@ -58,14 +61,16 @@ const AccountFavorites = () => {
             <SectionEmpty message={empty} />
           )}
         </div>
-        {entities.length > limit ? (
-          <div className="section__footer">
-            <p className="font-size-small">
-              <Link to="/favorites" className="">
-                See all favorites
-              </Link>
-            </p>
-          </div>
+        {entities.length > count ? (
+          <SectionFooter>
+            {count === limit ? (
+              <Link to="/favorites">See all favorites</Link>
+            ) : (
+              <Button classes="btn-link" onClick={() => setCount(limit)}>
+                Load more favorites
+              </Button>
+            )}
+          </SectionFooter>
         ) : null}
       </div>
     </div>

@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { selectAccountConfigSections } from '../slices/configSlice'
 import { selectToken } from '../slices/customerSlice'
 import { selectAccountOrders, fetchOrders } from '../slices/accountSlice'
@@ -9,9 +10,14 @@ import SectionError from './SectionError'
 import SectionEmpty from './SectionEmpty'
 import OrderCard from './OrderCard'
 import { slugify } from '../packages/utils/helpers'
+import { Button } from '../packages'
+import SectionFooter from './SectionFooter'
 
 const AccountOrders = () => {
   const dispatch = useDispatch()
+  const [recentOrders, setRecentOrders] = useState([])
+  const [count, setCount] = useState(3)
+  const limit = 12
   const {
     recentOrders: { title, subtitle, empty },
   } = useSelector(selectAccountConfigSections)
@@ -20,11 +26,15 @@ const AccountOrders = () => {
   const { entities, loading, error } = orders
   const isLoading = loading === 'pending'
   const showOrders = !isLoading && !error
-  const recentOrders = entities.length ? entities.slice(0, 6) : []
 
   useEffect(() => {
-    dispatch(fetchOrders({ token, limit: 10 }))
+    dispatch(fetchOrders({ token, limit: limit + 1 }))
   }, [dispatch, token])
+
+  useEffect(() => {
+    const recent = entities.length ? entities.slice(0, count) : []
+    setRecentOrders(recent)
+  }, [entities, count])
 
   return (
     <div id={slugify(title)} className="section container ot-section">
@@ -48,6 +58,17 @@ const AccountOrders = () => {
               <SectionEmpty message={empty} />
             ))}
         </div>
+        {entities.length > count ? (
+          <SectionFooter>
+            {count === limit ? (
+              <Link to="/orders">See all recent orders</Link>
+            ) : (
+              <Button classes="btn-link" onClick={() => setCount(limit)}>
+                Load more recent orders
+              </Button>
+            )}
+          </SectionFooter>
+        ) : null}
       </div>
     </div>
   )

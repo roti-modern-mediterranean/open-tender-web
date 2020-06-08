@@ -163,15 +163,10 @@ export const makeDisplayItem = (item, isOption = false) => {
       : null,
     groups: makeDisplayItemGroups(item.groups),
     quantity: item.quantity || 1,
-    price: item.price ? parseFloat(item.price) : null,
-    totalPrice: item.price_total ? parseFloat(item.price_total) : null,
+    price: item.price !== undefined ? parseFloat(item.price) : null,
+    totalPrice:
+      item.price_total !== undefined ? parseFloat(item.price_total) : null,
   }
-  // if (item.price) {
-  //   displayItem.price = parseFloat(item.price)
-  // }
-  // if (item.price_total) {
-  //   displayItem.totalPrice = parseFloat(item.price_total)
-  // }
   if (!isOption) {
     const itemDetails = {
       madeFor: item.made_for,

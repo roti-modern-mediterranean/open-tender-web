@@ -66,7 +66,7 @@ const OrderCard = ({ order }) => {
   }
 
   return (
-    <div className="order-card bg-color border border-radius ot-box-shadow">
+    <div className="order-card bg-color border border-radius ot-box-shadow slide-up">
       <OrderTag isUpcoming={isUpcoming} status={status} />
       <div className="order-card__container">
         <div className="order-card__header">

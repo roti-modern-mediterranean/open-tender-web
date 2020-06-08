@@ -171,6 +171,7 @@ const Order = ({
   const orderType = order_type === 'MAIN_MENU' ? service_type : order_type
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = items ? items.map((i) => makeDisplayItem(i)) : []
+  console.log(displayedItems)
   const token = useSelector(selectToken)
   const { lookup } = useSelector(selectCustomerFavorites)
 

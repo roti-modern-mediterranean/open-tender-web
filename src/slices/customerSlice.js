@@ -93,10 +93,12 @@ export const updateCustomerAllergens = createAsyncThunk(
   'customer/updateCustomerAllergens',
   async ({ token, data }, thunkAPI) => {
     try {
+      console.log(data)
       const response = await putCustomerAllergens(token, data)
       thunkAPI.dispatch(showNotification('Allergens updated!'))
       return response
     } catch (err) {
+      console.log(err)
       return thunkAPI.rejectWithValue(err)
     }
   }
