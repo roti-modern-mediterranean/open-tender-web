@@ -43,17 +43,19 @@ const MenuPage = () => {
   }, [locationId, serviceType, requestedAt, dispatch, history])
 
   useEffect(() => {
-    // console.log('old cart =>')
-    // printCart(cart)
-    const { newCart, errors } = validateCart(cart, categories, soldOut)
-    // console.log('new cart =>')
-    // printCart(newCart)
-    // console.log('cart errors', errors)
-    if (errors) {
-      dispatch(setCartErrors({ newCart, errors }))
-      dispatch(openModal('cartErrors'))
-    } else {
-      dispatch(setCart(newCart))
+    if (categories.length) {
+      // console.log('old cart =>')
+      // printCart(cart)
+      const { newCart, errors } = validateCart(cart, categories, soldOut)
+      // console.log('new cart =>')
+      // printCart(newCart)
+      // console.log('cart errors', errors)
+      if (errors) {
+        dispatch(setCartErrors({ newCart, errors }))
+        dispatch(openModal({ type: 'cartErrors' }))
+      } else {
+        dispatch(setCart(newCart))
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories, soldOut])

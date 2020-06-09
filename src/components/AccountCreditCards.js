@@ -29,7 +29,7 @@ const AccountCreditCards = () => {
 
   const handleAddNew = (evt) => {
     evt.preventDefault()
-    dispatch(openModal('creditCard'))
+    dispatch(openModal({ type: 'creditCard' }))
     evt.target.blur()
   }
 

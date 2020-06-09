@@ -44,11 +44,14 @@ export const reorderPastOrder = createAsyncThunk(
   'order/reorderPastOrder',
   async ({ locationId, serviceType, items }, thunkAPI) => {
     try {
+      thunkAPI.dispatch(
+        openModal({ type: 'working', args: { text: 'Building your order...' } })
+      )
       const location = await getLocation(locationId)
       const menuItems = await getMenuItems(locationId, serviceType)
       const { cart, cartCounts } = rehydrateCart(menuItems, items)
       thunkAPI.dispatch(setMenuItems(menuItems))
-      thunkAPI.dispatch(openModal('requestedAt'))
+      thunkAPI.dispatch(openModal({ type: 'requestedAt' }))
       return { location, cart, cartCounts }
     } catch (err) {
       return thunkAPI.rejectWithValue(err)

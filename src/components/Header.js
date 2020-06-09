@@ -40,7 +40,7 @@ const Header = () => {
 
   const handleLogin = (evt) => {
     evt.preventDefault()
-    dispatch(openModal('login'))
+    dispatch(openModal({ type: 'login' }))
     evt.target.blur()
   }
 
@@ -70,19 +70,19 @@ const Header = () => {
 
   const handleRequestedAt = (evt) => {
     evt.preventDefault()
-    dispatch(openModal('requestedAt'))
+    dispatch(openModal({ type: 'requestedAt' }))
     evt.target.blur()
   }
 
   const handleAllergens = (evt) => {
     evt.preventDefault()
-    dispatch(openModal('allergens'))
+    dispatch(openModal({ type: 'allergens' }))
     evt.target.blur()
   }
 
   const handleGroupOrder = (evt) => {
     evt.preventDefault()
-    dispatch(openModal('groupOrder'))
+    dispatch(openModal({ type: 'groupOrder' }))
     evt.target.blur()
   }
 

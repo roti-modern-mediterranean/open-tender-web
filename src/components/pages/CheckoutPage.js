@@ -118,7 +118,7 @@ const CheckoutPage = () => {
 
   const handleLogin = (evt) => {
     evt.preventDefault()
-    dispatch(openModal('login'))
+    dispatch(openModal({ type: 'login' }))
     evt.target.blur()
   }
 
@@ -147,7 +147,7 @@ const CheckoutPage = () => {
 
   const handleRequestedAt = (evt) => {
     evt.preventDefault()
-    dispatch(openModal('requestedAt'))
+    dispatch(openModal({ type: 'requestedAt' }))
     evt.target.blur()
   }
 
@@ -195,7 +195,7 @@ const CheckoutPage = () => {
                 errors={errors}
                 updateForm={(form) => dispatch(updateForm(form))}
                 submitOrder={() => dispatch(submitOrder(preparedOrder))}
-                login={() => dispatch(openModal('login'))}
+                login={() => dispatch(openModal({ type: 'login' }))}
                 logout={() => dispatch(logoutCustomer(access_token))}
                 updateRequestedAt={handleRequestedAt}
                 updateLocation={handleLocation}

@@ -18,7 +18,7 @@ const Cart = () => {
   const editItem = (evt, item) => {
     evt.preventDefault()
     dispatch(setCurrentItem(item))
-    dispatch(openModal('item'))
+    dispatch(openModal({ type: 'item' }))
     evt.target.blur()
   }
 

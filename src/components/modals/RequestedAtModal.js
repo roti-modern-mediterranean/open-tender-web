@@ -9,7 +9,10 @@ import {
 import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
 import { RequestedAtPicker } from '../../packages'
-import { makeRequestedAtString } from '../../packages/utils/datetimes'
+import {
+  makeRequestedAtString,
+  makeEstimatedTime,
+} from '../../packages/utils/datetimes'
 
 const RequestedAtModal = () => {
   const dispatch = useDispatch()
@@ -25,6 +28,7 @@ const RequestedAtModal = () => {
     dispatch(closeModal())
   }
 
+  const estimatedTime = makeEstimatedTime(requestedAt, location, serviceType)
   const requestedAtText = makeRequestedAtString(requestedAt, tz, true)
 
   return (
@@ -36,7 +40,8 @@ const RequestedAtModal = () => {
             Choose an order date & time
           </p>
           <p className="modal__subtitle ot-bold">
-            Your current order time is {requestedAtText}.
+            Your current order time is {requestedAtText}
+            {estimatedTime ? ` (${estimatedTime})` : ''}.
           </p>
           <p className="modal__subtitle font-size-small">
             Use the calendar below to choose a different day & time.

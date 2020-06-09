@@ -20,7 +20,7 @@ const Addresses = ({ addresses, token, isLoading }) => {
   const handleEdit = (evt, address) => {
     evt.preventDefault()
     dispatch(setCurrentAddress(address))
-    dispatch(openModal('address'))
+    dispatch(openModal({ type: 'address' }))
     evt.target.blur()
   }
 

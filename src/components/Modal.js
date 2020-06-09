@@ -14,8 +14,9 @@ import {
   CartErrorsModal,
   CreditCardModal,
 } from './modals'
+import WorkingModal from './modals/WorkingModal'
 
-const makeModal = (type, windowRef) => {
+const makeModal = (type, args) => {
   switch (type) {
     case 'login':
       return <LoginModal />
@@ -33,6 +34,8 @@ const makeModal = (type, windowRef) => {
       return <RequestedAtModal />
     case 'cartErrors':
       return <CartErrorsModal />
+    case 'working':
+      return <WorkingModal {...args} />
     default:
       return null
   }
@@ -42,16 +45,18 @@ const classesMap = {
   item: 'modal--item',
   address: 'modal--big',
   creditCard: 'modal--big',
+  requestedAt: 'modal--big',
   allergens: '',
   cartErrors: 'modal--big modal--cart-errors',
+  working: 'modal--working',
 }
 
 const Modal = () => {
   const windowRef = useRef()
   const dispatch = useDispatch()
-  const { loading, type } = useSelector(selectModal)
+  const { loading, type, args } = useSelector(selectModal)
   const showModal = type ? true : false
-  const modal = type ? makeModal(type) : null
+  const modal = type ? makeModal(type, args) : null
   const classes = `modal-container ${classesMap[type] || ''}`
 
   const handleClose = (evt) => {

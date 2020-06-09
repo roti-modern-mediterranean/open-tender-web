@@ -119,3 +119,25 @@
     max-width: 60rem;
   }
 }
+
+.modal--working {
+  .modal {
+    width: auto;
+    min-width: 24rem;
+    padding: 0;
+  }
+
+  .modal__content {
+    padding: 2.5rem;
+  }
+
+  .modal__working {
+    text-align: center;
+    &__content {
+      margin-bottom: 1.5rem;
+    }
+    &__loader {
+      display: inline-block;
+    }
+  }
+}

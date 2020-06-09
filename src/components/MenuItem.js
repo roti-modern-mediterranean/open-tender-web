@@ -20,7 +20,7 @@ const MenuItem = ({ item }) => {
     evt.preventDefault()
     if (!isSoldOut) {
       dispatch(setCurrentItem(item))
-      dispatch(openModal('item'))
+      dispatch(openModal({ type: 'item' }))
     }
     evt.target.blur()
   }

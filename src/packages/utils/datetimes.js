@@ -105,6 +105,29 @@ export const makeRequestedAtString = (requestedAt, tz, verbose = false) => {
   }
 }
 
+export const makeEstimatedTime = (
+  requestedAt,
+  location,
+  serviceType,
+  verbose = false
+) => {
+  if (requestedAt !== 'asap' || !serviceType || !location || !location.settings)
+    return null
+  const { first_times } = location.settings
+  const firstTime = first_times[serviceType]
+  if (firstTime.date === todayDate()) {
+    return `around ${firstTime.time}`
+  } else if (firstTime.date === tomorrowDate()) {
+    return `tomorrow @ ${firstTime.time}`
+  } else {
+    const tz = timezoneMap[location.timezone]
+    const date = toDate(firstTime.date, { timezone: tz })
+    return `${verbose ? format(date, 'EEEE, MMMM d') : format(date, 'M/d')} @ ${
+      firstTime.time
+    }`
+  }
+}
+
 function* range(start, end, step) {
   for (let i = start; i <= end; i += step) {
     yield i

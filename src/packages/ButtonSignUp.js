@@ -9,7 +9,7 @@ const ButtonSignUp = ({ classes = 'btn' }) => {
 
   const handleClick = (evt) => {
     evt.preventDefault()
-    dispatch(openModal('signUp'))
+    dispatch(openModal({ type: 'signUp' }))
     evt.target.blur()
   }
 
