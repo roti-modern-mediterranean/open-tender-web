@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom'
 import { selectAccountConfigSections } from '../slices/configSlice'
 import { selectToken } from '../slices/customerSlice'
 import { selectAccountOrders, fetchOrders } from '../slices/accountSlice'
+import {
+  fetchLocation,
+  setOrderServiceType,
+  setAddress,
+} from '../slices/orderSlice'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -12,6 +17,7 @@ import OrderCard from './OrderCard'
 import { slugify } from '../packages/utils/helpers'
 import { Button } from '../packages'
 import SectionFooter from './SectionFooter'
+import { fetchMenuItems } from '../slices/menuSlice'
 
 const AccountOrders = () => {
   const dispatch = useDispatch()
@@ -35,6 +41,19 @@ const AccountOrders = () => {
     const recent = entities.length ? entities.slice(0, count) : []
     setRecentOrders(recent)
   }, [entities, count])
+
+  useEffect(() => {
+    const lastOrder = entities.length ? entities[0] : null
+    if (lastOrder) {
+      console.log(lastOrder)
+      const { revenue_center, service_type, order_type, address } = lastOrder
+      const { location_id: locationId } = revenue_center
+      dispatch(fetchMenuItems({ locationId, serviceType: service_type }))
+      dispatch(fetchLocation(locationId))
+      dispatch(setOrderServiceType([order_type, service_type]))
+      dispatch(setAddress(address || null))
+    }
+  }, [entities, dispatch])
 
   return (
     <div id={slugify(title)} className="section container ot-section">

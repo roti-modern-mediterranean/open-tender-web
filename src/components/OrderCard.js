@@ -8,10 +8,11 @@ import {
 } from '../packages/utils/datetimes'
 import { capitalize } from '../packages/utils/helpers'
 import { Button, DeliveryLink } from '../packages'
-import OrderImage from './OrderImage'
+import OrderImages from './OrderImages'
 import OrderTag from './OrderTag'
+import { makeOrderAddress } from '../packages/utils/cart'
 
-const OrderCard = ({ order }) => {
+const OrderCard = ({ order, isLast }) => {
   const history = useHistory()
   const {
     order_id,
@@ -26,28 +27,14 @@ const OrderCard = ({ order }) => {
     address,
     totals,
   } = order
+  const isOpen = status === 'OPEN'
+  const orderType = order_type === 'OLO' ? service_type : order_type
   const tz = timezoneMap[timezone]
   const requestedAt = isoToDateStr(requested_at, tz, 'MMMM d, yyyy @ h:mma')
-  const isOpen = status === 'OPEN'
-  const images = items.map((i) =>
-    i.images
-      .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
-      .map((image) => {
-        return (
-          <OrderImage key={image.url} imageUrl={image.url} title={i.name} />
-        )
-      })
-  )
-  const itemNames = items.map((i) => i.name).join(', ')
-  const orderType = order_type === 'OLO' ? service_type : order_type
-  const { street, unit, city, state, postal_code } = address || {}
-  const streetAddress = street
-    ? `${street}${unit ? `, ${unit}` : ''}`
-    : postal_code
-    ? `${postal_code} ${city}, ${state}`
-    : 'No address provided'
-  const trackingUrl = isOpen && delivery && delivery.tracking_url
   const isUpcoming = isoToDate(requested_at) > new Date()
+  const streetAddress = makeOrderAddress(address)
+  const trackingUrl = isOpen && delivery && delivery.tracking_url
+  const itemNames = items.map((i) => i.name).join(', ')
 
   const handleEdit = (evt) => {
     evt.preventDefault()
@@ -71,27 +58,31 @@ const OrderCard = ({ order }) => {
       <div className="order-card__container">
         <div className="order-card__header">
           <p className="order-card__number preface font-size-x-small secondary-color">
-            Order #{order_id}
+            {isLast ? 'Your Last Order' : `Order #${order_id}`}
           </p>
           <p className="order-card__title">
             {capitalize(orderType)} from {revenue_center.name}
           </p>
+          {isUpcoming && trackingUrl && (
+            <p className="font-size-small secondary-color">
+              <DeliveryLink
+                text="Track your delivery"
+                trackingUrl={trackingUrl}
+              />
+            </p>
+          )}
         </div>
         <div className="order-card__content">
           <div className="order-card__details font-size-small secondary-color">
             <p>
               {requestedAt} &nbsp;|&nbsp; ${totals.total}
             </p>
-            {trackingUrl ? (
-              <p>
-                <DeliveryLink text={streetAddress} trackingUrl={trackingUrl} />
-              </p>
-            ) : (
-              <p>{streetAddress}</p>
-            )}
+            <p>{streetAddress}</p>
           </div>
           <div className="order-card__items">
-            <div className="order-card__images">{images}</div>
+            <div className="order-card__images">
+              <OrderImages items={items} />
+            </div>
             <p className="font-size-x-small secondary-color">{itemNames}</p>
           </div>
         </div>
@@ -129,6 +120,7 @@ const OrderCard = ({ order }) => {
 OrderCard.displayName = 'OrderCard'
 OrderCard.propTypes = {
   order: propTypes.object,
+  isLast: propTypes.bool,
 }
 
 export default OrderCard

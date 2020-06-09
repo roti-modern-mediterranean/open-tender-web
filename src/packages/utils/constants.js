@@ -9,6 +9,12 @@ export const orderTypeNamesMap = {
   MERCH: 'Merch',
 }
 
+export const otherOrderTypesMap = {
+  PICKUP: ['Delivery', 'Catering'],
+  DELIVERY: ['Pickup', 'Catering'],
+  CATERING: ['Pickup', 'Delivery'],
+}
+
 export const tenderTypeNamesMap = {
   CASH: 'Cash',
   CREDIT: 'Credit',

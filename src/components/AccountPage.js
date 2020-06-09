@@ -3,13 +3,6 @@ import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectConfig } from '../slices/configSlice'
 import { selectCustomer, fetchCustomer } from '../slices/customerSlice'
-import { selectAccountOrders } from '../slices/accountSlice'
-import { fetchMenuItems } from '../slices/menuSlice'
-import {
-  fetchLocation,
-  setOrderServiceType,
-  setAddress,
-} from '../slices/orderSlice'
 import StickyNav from './StickyNav'
 import Hero from './Hero'
 import AccountGreeting from './AccountGreeting'
@@ -30,7 +23,6 @@ const AccountPage = () => {
   const navItems = Object.values(sections).map((section) => section.title)
   const { auth, account } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
-  const { entities: orders } = useSelector(selectAccountOrders)
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -40,19 +32,6 @@ const AccountPage = () => {
     if (!token) return history.push('/')
     dispatch(fetchCustomer({ token }))
   }, [token, dispatch, history])
-
-  useEffect(() => {
-    const lastOrder = orders.length ? orders[0] : null
-    if (lastOrder) {
-      console.log(lastOrder)
-      const { revenue_center, service_type, order_type, address } = lastOrder
-      const { location_id: locationId } = revenue_center
-      dispatch(fetchMenuItems({ locationId, serviceType: service_type }))
-      dispatch(fetchLocation(locationId))
-      dispatch(setOrderServiceType([order_type, service_type]))
-      dispatch(setAddress(address || null))
-    }
-  }, [orders, dispatch])
 
   return account ? (
     <>

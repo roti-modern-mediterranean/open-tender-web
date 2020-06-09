@@ -1,44 +1,107 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Button } from '../packages'
-import { useSelector } from 'react-redux'
+import { Link } from 'react-scroll'
 import { selectCustomerAccount } from '../slices/customerSlice'
-import { selectOrder } from '../slices/orderSlice'
+import { selectOrder, resetOrderType } from '../slices/orderSlice'
+import { selectAccountOrders } from '../slices/accountSlice'
+import { selectAccountConfigSections } from '../slices/configSlice'
+import { slugify, capitalize } from '../packages/utils/helpers'
+import { otherOrderTypesMap } from '../packages/utils/constants'
+import { Button } from '../packages'
+import LastOrder from './LastOrder'
+import OrderCard from './OrderCard'
 
 const AccountGreeting = ({ title, subtitle }) => {
   const history = useHistory()
+  const dispatch = useDispatch()
+  const {
+    addresses: addressConfig,
+    recentOrders: recentOrdersConfig,
+  } = useSelector(selectAccountConfigSections)
   const customer = useSelector(selectCustomerAccount)
-  const { address, location, serviceType } = useSelector(selectOrder)
+  const { address, location, serviceType, cart } = useSelector(selectOrder)
+  const { entities: orders } = useSelector(selectAccountOrders)
+  const lastOrder = orders.length ? orders[0] : null
+  let orderType = null,
+    otherOrderTypes = null
+  if (lastOrder) {
+    const { order_type, service_type } = lastOrder
+    orderType = order_type === 'OLO' ? service_type : order_type
+    otherOrderTypes = otherOrderTypesMap[orderType]
+  }
 
-  const startOrder = (evt) => {
+  const startNewOrder = (evt) => {
     evt.preventDefault()
     history.push('/')
     evt.target.blur()
   }
 
+  const reorderLastType = (evt) => {
+    evt.preventDefault()
+    const rcType = location.revenue_center_type.toLowerCase()
+    history.push(`/menu/${location.slug}-${rcType}`)
+    evt.target.blur()
+  }
+
+  const switchOrderType = (evt) => {
+    evt.preventDefault()
+    dispatch(resetOrderType())
+    history.push(`/`)
+    evt.target.blur()
+  }
+
   return (
-    <div className="greeting bg-color border-radius slide-up">
-      <div className="greeting__header">
-        <h2>
-          {title}, {customer.first_name}!
-        </h2>
-        {/* <p>{subtitle}</p> */}
-      </div>
+    <div className="greeting bg-color border-radius ot-box-shadow slide-up">
       <div className="greeting__content">
         <div className="greeting__summary">
-          <h3>Your account at a glance</h3>
+          <div className="greeting__header">
+            <h2>
+              {title}, {customer.first_name}!
+            </h2>
+            <p>{subtitle}</p>
+          </div>
+          {!lastOrder ? (
+            <Button
+              text="Start a New Order"
+              icon="ShoppingBag"
+              onClick={startNewOrder}
+            />
+          ) : (
+            <div className="greeting__header__order">
+              <Button
+                text={`Order ${capitalize(orderType)} Again`}
+                icon="ShoppingBag"
+                onClick={reorderLastType}
+              />
+              <p className="font-size-small">
+                <Button
+                  text={`Or switch to ${otherOrderTypes.join(' or ')} instead`}
+                  classes="btn-link"
+                  onClick={switchOrderType}
+                />
+              </p>
+            </div>
+          )}
         </div>
-        <div className="greeting__last-order">
-          {/* <h3>Your last order</h3> */}
-          {/* <LastOrder order={} /> */}
+        <div className="greeting__order">
+          <OrderCard order={lastOrder} isLast={true} />
+          <div className="greeting__order__footer">
+            <p className="font-size-small">
+              <Link
+                activeClass="active"
+                className="link"
+                to={slugify(recentOrdersConfig.title)}
+                spy={true}
+                smooth={true}
+                offset={-90}
+              >
+                Browse more recent orders...
+              </Link>
+            </p>
+          </div>
         </div>
-        {/* <Button
-          text="Start Order"
-          ariaLabel="Start a new order"
-          icon="ShoppingBag"
-          onClick={startOrder}
-        /> */}
       </div>
     </div>
   )

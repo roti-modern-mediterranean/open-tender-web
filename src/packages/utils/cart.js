@@ -225,6 +225,15 @@ export const makeFavoritesLookup = (favorites) => {
   )
 }
 
+export const makeOrderAddress = (address) => {
+  const { street, unit, city, state, postal_code } = address || {}
+  return street
+    ? `${street}${unit ? `, ${unit}` : ''}`
+    : postal_code
+    ? `${postal_code} ${city}, ${state}`
+    : 'No address provided'
+}
+
 export const calcCartCounts = (cart) => {
   return cart.reduce((obj, item) => {
     const newCount = (obj[item.id] || 0) + item.quantity

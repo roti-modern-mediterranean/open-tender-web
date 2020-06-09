@@ -168,7 +168,7 @@ const Order = ({
   const dispatch = useDispatch()
   const isLoading = loading === 'pending'
   const showOrder = !isLoading && !error && !isEmpty(order)
-  const orderType = order_type === 'MAIN_MENU' ? service_type : order_type
+  const orderType = order_type === 'OLO' ? service_type : order_type
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = items ? items.map((i) => makeDisplayItem(i)) : []
   console.log(displayedItems)
