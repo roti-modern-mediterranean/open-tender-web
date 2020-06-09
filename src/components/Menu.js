@@ -7,7 +7,7 @@ const Menu = ({ categories }) => {
   const navItems = categories ? categories.map((i) => i.name) : []
   return (
     <>
-      <StickyNav items={navItems} offset={0} />
+      <StickyNav items={navItems} offset={-90} />
       <div className="menu container">
         {categories.map((category) => (
           <div key={category.id}>
