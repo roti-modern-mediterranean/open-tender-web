@@ -1,17 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getLocation } from '../services/requests'
+import { getLocation, getMenuItems } from '../services/requests'
 import {
   addItem,
   removeItem,
   incrementItem,
   decrementItem,
   calcCartCounts,
+  rehydrateCart,
 } from '../packages/utils/cart'
 import {
   serviceTypeNamesMap,
   orderTypeNamesMap,
 } from '../packages/utils/constants'
 import { timezoneMap, getUserTimezone } from '../packages/utils/datetimes'
+import { setMenuItems } from './menuSlice'
+import { openModal } from './modalSlice'
 
 const initialState = {
   orderType: null,
@@ -31,6 +34,22 @@ export const fetchLocation = createAsyncThunk(
   async (locationId, thunkAPI) => {
     try {
       return await getLocation(locationId)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const reorderPastOrder = createAsyncThunk(
+  'order/reorderPastOrder',
+  async ({ locationId, serviceType, items }, thunkAPI) => {
+    try {
+      const location = await getLocation(locationId)
+      const menuItems = await getMenuItems(locationId, serviceType)
+      const { cart, cartCounts } = rehydrateCart(menuItems, items)
+      thunkAPI.dispatch(setMenuItems(menuItems))
+      thunkAPI.dispatch(openModal('requestedAt'))
+      return { location, cart, cartCounts }
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -102,6 +121,8 @@ const orderSlice = createSlice({
     },
   },
   extraReducers: {
+    // fetchLocation
+
     [fetchLocation.fulfilled]: (state, action) => {
       state.location = action.payload
       state.loading = 'idle'
@@ -110,6 +131,22 @@ const orderSlice = createSlice({
       state.loading = 'pending'
     },
     [fetchLocation.rejected]: (state, action) => {
+      state.error = action.error.detail
+      state.loading = 'idle'
+    },
+
+    // reorderPastOrder
+
+    [reorderPastOrder.fulfilled]: (state, action) => {
+      state.location = action.payload.location
+      state.cart = action.payload.cart
+      state.cartCounts = action.payload.cartCounts
+      state.loading = 'idle'
+    },
+    [reorderPastOrder.pending]: (state, action) => {
+      state.loading = 'pending'
+    },
+    [reorderPastOrder.rejected]: (state, action) => {
       state.error = action.error.detail
       state.loading = 'idle'
     },

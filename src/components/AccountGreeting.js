@@ -12,6 +12,7 @@ import { otherOrderTypesMap } from '../packages/utils/constants'
 import { Button } from '../packages'
 import LastOrder from './LastOrder'
 import OrderCard from './OrderCard'
+import SectionLoading from './SectionLoading'
 
 const AccountGreeting = ({ title, subtitle }) => {
   const history = useHistory()
@@ -22,7 +23,8 @@ const AccountGreeting = ({ title, subtitle }) => {
   } = useSelector(selectAccountConfigSections)
   const customer = useSelector(selectCustomerAccount)
   const { address, location, serviceType, cart } = useSelector(selectOrder)
-  const { entities: orders } = useSelector(selectAccountOrders)
+  const { entities: orders, loading } = useSelector(selectAccountOrders)
+  const isLoading = loading === 'pending'
   const lastOrder = orders.length ? orders[0] : null
   let orderType = null,
     otherOrderTypes = null
@@ -63,11 +65,15 @@ const AccountGreeting = ({ title, subtitle }) => {
             <p>{subtitle}</p>
           </div>
           {!lastOrder ? (
-            <Button
-              text="Start a New Order"
-              icon="ShoppingBag"
-              onClick={startNewOrder}
-            />
+            isLoading ? (
+              <SectionLoading loading={isLoading} />
+            ) : (
+              <Button
+                text="Start a New Order"
+                icon="ShoppingBag"
+                onClick={startNewOrder}
+              />
+            )
           ) : (
             <div className="greeting__header__order">
               <Button
@@ -86,21 +92,25 @@ const AccountGreeting = ({ title, subtitle }) => {
           )}
         </div>
         <div className="greeting__order">
-          <OrderCard order={lastOrder} isLast={true} />
-          <div className="greeting__order__footer">
-            <p className="font-size-small">
-              <Link
-                activeClass="active"
-                className="link"
-                to={slugify(recentOrdersConfig.title)}
-                spy={true}
-                smooth={true}
-                offset={-90}
-              >
-                Browse more recent orders...
-              </Link>
-            </p>
-          </div>
+          {lastOrder ? (
+            <>
+              <OrderCard order={lastOrder} isLast={true} />
+              <div className="greeting__order__footer">
+                <p className="font-size-small">
+                  <Link
+                    activeClass="active"
+                    className="link"
+                    to={slugify(recentOrdersConfig.title)}
+                    spy={true}
+                    smooth={true}
+                    offset={-90}
+                  >
+                    Browse more recent orders...
+                  </Link>
+                </p>
+              </div>
+            </>
+          ) : null}
         </div>
       </div>
     </div>

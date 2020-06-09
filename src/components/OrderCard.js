@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import {
   timezoneMap,
@@ -7,13 +8,19 @@ import {
   isoToDate,
 } from '../packages/utils/datetimes'
 import { capitalize } from '../packages/utils/helpers'
+import { makeOrderAddress } from '../packages/utils/cart'
 import { Button, DeliveryLink } from '../packages'
+import {
+  setOrderServiceType,
+  setAddress,
+  reorderPastOrder,
+} from '../slices/orderSlice'
 import OrderImages from './OrderImages'
 import OrderTag from './OrderTag'
-import { makeOrderAddress } from '../packages/utils/cart'
 
 const OrderCard = ({ order, isLast }) => {
   const history = useHistory()
+  const dispatch = useDispatch()
   const {
     order_id,
     status,
@@ -44,6 +51,11 @@ const OrderCard = ({ order, isLast }) => {
   const handleReorder = (evt) => {
     evt.preventDefault()
     evt.target.blur()
+    const { location_id: locationId } = revenue_center
+    const serviceType = service_type
+    dispatch(setOrderServiceType([order_type, service_type]))
+    dispatch(setAddress(address || null))
+    dispatch(reorderPastOrder({ locationId, serviceType, items }))
   }
 
   const handleDetails = (evt) => {

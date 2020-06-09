@@ -19,7 +19,7 @@ const RequestedAtPicker = ({
   setRequestedAt,
   cancel,
   updateText = 'Update',
-  cancelText = 'Cancel',
+  cancelText = 'No Change',
 }) => {
   const { timezone, settings } = location
   const tz = timezoneMap[timezone]
@@ -104,7 +104,7 @@ const RequestedAtPicker = ({
           </button>
         )}
         <button className="btn" onClick={cancel}>
-          {cancelText}
+          {requestedAt === 'asap' ? 'Keep ASAP' : cancelText}
         </button>
       </div>
     </div>

@@ -13,7 +13,6 @@ const useGeolocation = () => {
   const [error, setError] = useState(null)
 
   const onSuccess = (position) => {
-    // console.log('location found!', position)
     const { coords } = position
     const latLng = { lat: coords.latitude, lng: coords.longitude }
     setPosition(latLng)
@@ -29,7 +28,6 @@ const useGeolocation = () => {
       setError('Geolocation is not supported')
       return
     }
-    // console.log('looking up location...')
     geo.getCurrentPosition(onSuccess, onError, geoOptions)
   }, [])
 

@@ -140,6 +140,20 @@ export const rehydrateOrderItem = (menuItem, simpleCartItem) => {
   return pricedItem
 }
 
+export const rehydrateCart = (menuItems, simpleCartItems) => {
+  let orderItems = []
+  simpleCartItems.forEach((item) => {
+    const menuItem = menuItems.find((i) => i.id === item.id)
+    if (menuItem) {
+      const orderItem = rehydrateOrderItem(menuItem, item)
+      orderItems.push(orderItem)
+    }
+  })
+  const cart = orderItems.map((i, index) => ({ ...i, index }))
+  const cartCounts = calcCartCounts(cart)
+  return { cart, cartCounts }
+}
+
 // display items from past orders
 
 export const makeItemImageUrl = (images) => {
@@ -351,7 +365,6 @@ export const printOptionCheck = (option) => {
 export const validateCart = (cart, categories, soldOut) => {
   const itemIds = cart.map((item) => item.id)
   const itemLookup = makeItemLookup(categories, itemIds)
-  // console.log('itemLookup', itemLookup)
   let errors = null,
     missingItems = [],
     invalidItems = []

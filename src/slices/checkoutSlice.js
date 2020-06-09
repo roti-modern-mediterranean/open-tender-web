@@ -70,7 +70,6 @@ const checkoutSlice = createSlice({
   },
   extraReducers: {
     [validateOrder.fulfilled]: (state, action) => {
-      // console.log('validateOrder.fulfilled', action.payload)
       state.check = action.payload
       state.errors = action.payload.errors
         ? handleOrderErrors(action.payload.errors)
@@ -86,7 +85,6 @@ const checkoutSlice = createSlice({
       state.loading = 'idle'
     },
     [submitOrder.fulfilled]: (state, action) => {
-      // console.log('submitOrder.fulfilled', action.payload)
       state.completedOrder = action.payload
       state.check = null
       state.form = initialState.form

@@ -35,7 +35,6 @@ const OrderItemCard = ({ item }) => {
       dispatch(showNotification('Item not currently available'))
     } else {
       const orderItem = rehydrateOrderItem(menuItem, item)
-      console.log(orderItem)
       dispatch(addItemToCart(orderItem))
       dispatch(showNotification('Item added to cart!'))
     }

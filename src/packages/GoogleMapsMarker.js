@@ -22,14 +22,12 @@ const GoogleMapsMarker = ({
 
   useEffect(() => {
     if (marker) {
-      // console.log('position updated', title, marker)
       marker.setPosition(position)
     }
   }, [position.lat, position.lng])
 
   useEffect(() => {
     if (marker) {
-      // console.log('icon updated', title, marker)
       marker.setIcon({
         url: icon,
         scaledSize: new maps.Size(size.width, size.height),
@@ -54,10 +52,8 @@ const GoogleMapsMarker = ({
         newMarker.addListener(eventMapping[eventName], events[eventName])
       )
     }
-    // console.log('new marker created', title, newMarker)
     setMarker(newMarker)
     return () => {
-      // console.log('marker removed', title, marker)
       marker && marker.setMap(null)
       setMarker(null)
     }

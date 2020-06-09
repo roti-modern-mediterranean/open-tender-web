@@ -499,7 +499,6 @@ const customerSlice = createSlice({
     // favorties
 
     [fetchCustomerFavorites.fulfilled]: (state, action) => {
-      // console.log('favorites', action.payload)
       state.favorites = {
         entities: action.payload,
         lookup: makeFavoritesLookup(action.payload),

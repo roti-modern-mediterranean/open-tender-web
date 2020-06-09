@@ -8,7 +8,9 @@ import {
   fetchLocation,
   setOrderServiceType,
   setAddress,
+  selectCartQuantity,
 } from '../slices/orderSlice'
+import { fetchMenuItems } from '../slices/menuSlice'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -17,7 +19,6 @@ import OrderCard from './OrderCard'
 import { slugify } from '../packages/utils/helpers'
 import { Button } from '../packages'
 import SectionFooter from './SectionFooter'
-import { fetchMenuItems } from '../slices/menuSlice'
 
 const AccountOrders = () => {
   const dispatch = useDispatch()
@@ -29,6 +30,7 @@ const AccountOrders = () => {
   } = useSelector(selectAccountConfigSections)
   const token = useSelector(selectToken)
   const orders = useSelector(selectAccountOrders)
+  const cartQuantity = useSelector(selectCartQuantity)
   const { entities, loading, error } = orders
   const isLoading = loading === 'pending'
   const showOrders = !isLoading && !error
@@ -45,15 +47,16 @@ const AccountOrders = () => {
   useEffect(() => {
     const lastOrder = entities.length ? entities[0] : null
     if (lastOrder) {
-      console.log(lastOrder)
       const { revenue_center, service_type, order_type, address } = lastOrder
       const { location_id: locationId } = revenue_center
       dispatch(fetchMenuItems({ locationId, serviceType: service_type }))
-      dispatch(fetchLocation(locationId))
-      dispatch(setOrderServiceType([order_type, service_type]))
-      dispatch(setAddress(address || null))
+      if (!cartQuantity) {
+        dispatch(fetchLocation(locationId))
+        dispatch(setOrderServiceType([order_type, service_type]))
+        dispatch(setAddress(address || null))
+      }
     }
-  }, [entities, dispatch])
+  }, [entities, cartQuantity, dispatch])
 
   return (
     <div id={slugify(title)} className="section container ot-section">

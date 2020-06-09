@@ -13,7 +13,6 @@ const makeComponents = (components) => {
 export const makeAddress = (place) => {
   const { address_components, formatted_address, geometry } = place
   const components = makeComponents(address_components)
-  // console.log(components)
   const {
     street_number,
     route,

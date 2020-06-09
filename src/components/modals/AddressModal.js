@@ -42,7 +42,6 @@ const AddressModal = () => {
   const { address, loading, error } = useSelector(selectAccountAddress)
 
   useEffect(() => {
-    console.log('address is updating')
     setData(address)
   }, [address])
 

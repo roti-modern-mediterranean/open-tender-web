@@ -64,6 +64,9 @@ const menuSlice = createSlice({
     resetCartErrors: (state, action) => {
       state.cartErrors = null
     },
+    setMenuItems: (state, action) => {
+      state.menuItems.entities = action.payload
+    },
   },
   extraReducers: {
     //menus
@@ -125,7 +128,11 @@ const menuSlice = createSlice({
   },
 })
 
-export const { setCartErrors, resetCartErrors } = menuSlice.actions
+export const {
+  setCartErrors,
+  resetCartErrors,
+  setMenuItems,
+} = menuSlice.actions
 
 export const selectMenu = (state) => state.menu
 export const selectMenuLoading = (state) => state.menu.loading === 'pending'

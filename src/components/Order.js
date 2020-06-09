@@ -20,6 +20,11 @@ import {
   removeCustomerFavorite,
   selectCustomerFavorites,
 } from '../slices/customerSlice'
+import {
+  setOrderServiceType,
+  setAddress,
+  reorderPastOrder,
+} from '../slices/orderSlice'
 
 const OrderLoading = ({ loading }) => {
   return loading ? (
@@ -140,15 +145,7 @@ OrderRating.propTypes = {
   comments: propTypes.string,
 }
 
-const Order = ({
-  order,
-  loading,
-  error,
-  goToAccount,
-  reorder,
-  edit,
-  updateRating,
-}) => {
+const Order = ({ order, loading, error, goToAccount }) => {
   const {
     order_id,
     status,
@@ -171,7 +168,6 @@ const Order = ({
   const orderType = order_type === 'OLO' ? service_type : order_type
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = items ? items.map((i) => makeDisplayItem(i)) : []
-  console.log(displayedItems)
   const token = useSelector(selectToken)
   const { lookup } = useSelector(selectCustomerFavorites)
 
@@ -182,6 +178,26 @@ const Order = ({
 
   const removeFavorite = (favoriteId) => {
     dispatch(removeCustomerFavorite({ token, favoriteId }))
+  }
+
+  const editOrder = (evt) => {
+    evt.preventDefault()
+    evt.target.blur()
+  }
+
+  const updateRating = (evt) => {
+    evt.preventDefault()
+    evt.target.blur()
+  }
+
+  const reorder = (evt) => {
+    evt.preventDefault()
+    evt.target.blur()
+    const { location_id: locationId } = revenue_center
+    const serviceType = service_type
+    dispatch(setOrderServiceType([order_type, service_type]))
+    dispatch(setAddress(address || null))
+    dispatch(reorderPastOrder({ locationId, serviceType, items }))
   }
 
   return (
@@ -200,7 +216,7 @@ const Order = ({
                 <Button
                   text="Edit"
                   icon="Edit"
-                  onClick={reorder}
+                  onClick={editOrder}
                   disabled={!order.is_editable}
                 />
               )}
