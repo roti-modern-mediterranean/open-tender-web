@@ -26,8 +26,6 @@ const AccountAllergens = () => {
   const token = useSelector(selectToken)
   const allergens = useSelector(selectAllergens)
   const customerAllergens = useSelector(selectCustomerAllergens)
-  // console.log(allergens)
-  // console.log(customerAllergens)
 
   useEffect(() => {
     dispatch(fetchAllergens())

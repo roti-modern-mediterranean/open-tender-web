@@ -35,8 +35,6 @@ const GoogleMapsAutocomplete = ({
   )
   const place = useGoogleMapsPlace(maps, map, placeId)
   const inputRef = useRef()
-  // console.log(predictions.length)
-  // console.log(place)
 
   const choosePlace = (evt, placeId, description) => {
     evt.preventDefault()
@@ -96,8 +94,6 @@ const GoogleMapsAutocomplete = ({
   }, [handleKeyPress])
 
   useEffect(() => {
-    // console.log(place)
-    // console.log(JSON.stringify(place, null, 2))
     if (place) {
       const lat = place.geometry.location.lat()
       const lng = place.geometry.location.lng()

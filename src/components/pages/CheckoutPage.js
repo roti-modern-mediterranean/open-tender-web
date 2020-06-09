@@ -79,7 +79,6 @@ const CheckoutPage = () => {
       tip,
     }
     const order = prepareOrder(data)
-    // console.log('/orders/validate', order)
     dispatch(validateOrder(order))
   }, [
     locationId,
@@ -110,7 +109,6 @@ const CheckoutPage = () => {
     tenders,
   }
   const preparedOrder = prepareOrder(data)
-  // console.log('/orders', preparedOrder)
 
   const handleBackToMenu = (evt) => {
     evt.preventDefault()
