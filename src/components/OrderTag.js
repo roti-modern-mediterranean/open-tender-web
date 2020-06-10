@@ -7,7 +7,7 @@ const OrderTag = ({ isUpcoming, status }) => {
     ? {
         bgClass: '-upcoming bg-alert-color',
         textClass: 'ot-light-color',
-        text: 'Coming up',
+        text: status === 'IN_PROGRESS' ? 'In Progress' : 'Coming up',
         icon: 'AlertCircle',
       }
     : status === 'REFUNDED'

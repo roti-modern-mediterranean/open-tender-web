@@ -13,8 +13,16 @@
   }
 
   &--auto {
+    min-height: 45rem;
     height: auto;
     padding: 6rem 0;
+  }
+
+  &__loading {
+    text-align: center;
+    &__content {
+      margin: 0 0 1.5rem;
+    }
   }
 }
 
@@ -25,6 +33,10 @@
 
   &__header {
     margin: 0 0 2.5rem;
+
+    h2 {
+      margin-left: -0.2rem;
+    }
 
     p {
       margin: 0.75rem 0 0;

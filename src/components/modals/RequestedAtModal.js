@@ -48,13 +48,15 @@ const RequestedAtModal = () => {
           </p>
         </div>
         <div className="modal__body">
-          <RequestedAtPicker
-            requestedAt={requestedAt}
-            serviceType={serviceType}
-            location={location}
-            setRequestedAt={handleRequestedAt}
-            cancel={handleClose}
-          />
+          {location && (
+            <RequestedAtPicker
+              requestedAt={requestedAt}
+              serviceType={serviceType}
+              location={location}
+              setRequestedAt={handleRequestedAt}
+              cancel={handleClose}
+            />
+          )}
         </div>
       </div>
     </>

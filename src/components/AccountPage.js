@@ -36,7 +36,7 @@ const AccountPage = () => {
   return account ? (
     <>
       <h1 className="sr-only">Account</h1>
-      <Hero imageUrl={background} classes="hero--auto">
+      <Hero imageUrl={background} classes="hero--auto transition">
         <AccountGreeting title={title} subtitle={subtitle} />
       </Hero>
       <div className="bg-secondary-color">

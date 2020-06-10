@@ -8,7 +8,12 @@ const OrderImages = ({ items }) => {
       .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
       .map((image) => {
         return (
-          <OrderImage key={image.url} imageUrl={image.url} title={i.name} />
+          <OrderImage
+            key={image.url}
+            imageUrl={image.url}
+            alt={i.name}
+            title={i.name}
+          />
         )
       })
   )

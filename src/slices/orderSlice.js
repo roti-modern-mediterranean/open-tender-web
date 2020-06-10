@@ -69,6 +69,9 @@ const orderSlice = createSlice({
       state.serviceType = null
       state.location = null
     },
+    resetLocation: (state) => {
+      state.location = null
+    },
     setOrderType: (state, action) => {
       state.orderType = action.payload
     },
@@ -158,6 +161,7 @@ const orderSlice = createSlice({
 
 export const {
   resetOrder,
+  resetLocation,
   resetOrderType,
   setOrderType,
   setServiceType,

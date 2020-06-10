@@ -3,16 +3,21 @@ import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-scroll'
+import ClipLoader from 'react-spinners/ClipLoader'
 import { selectCustomerAccount } from '../slices/customerSlice'
-import { selectOrder, resetOrderType } from '../slices/orderSlice'
+import {
+  selectOrder,
+  resetOrderType,
+  resetOrder,
+  resetLocation,
+} from '../slices/orderSlice'
 import { selectAccountOrders } from '../slices/accountSlice'
 import { selectAccountConfigSections } from '../slices/configSlice'
 import { slugify, capitalize } from '../packages/utils/helpers'
 import { otherOrderTypesMap } from '../packages/utils/constants'
 import { Button } from '../packages'
-import LastOrder from './LastOrder'
+import CurrentOrder from './CurrentOrder'
 import OrderCard from './OrderCard'
-import SectionLoading from './SectionLoading'
 
 const AccountGreeting = ({ title, subtitle }) => {
   const history = useHistory()
@@ -22,9 +27,11 @@ const AccountGreeting = ({ title, subtitle }) => {
     recentOrders: recentOrdersConfig,
   } = useSelector(selectAccountConfigSections)
   const customer = useSelector(selectCustomerAccount)
-  const { address, location, serviceType, cart } = useSelector(selectOrder)
+  const currentOrder = useSelector(selectOrder)
+  const { address, location, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectAccountOrders)
   const isLoading = loading === 'pending'
+  // const isLoading = true
   const lastOrder = orders.length ? orders[0] : null
   let orderType = null,
     otherOrderTypes = null
@@ -33,17 +40,27 @@ const AccountGreeting = ({ title, subtitle }) => {
     orderType = order_type === 'OLO' ? service_type : order_type
     otherOrderTypes = otherOrderTypesMap[orderType]
   }
+  const isCurrentOrder = location && serviceType && cart.length
+  const accountLoading = isLoading && !isCurrentOrder && !lastOrder
 
   const startNewOrder = (evt) => {
     evt.preventDefault()
+    dispatch(resetOrder())
     history.push('/')
     evt.target.blur()
   }
 
-  const reorderLastType = (evt) => {
+  const continueCurrent = (evt) => {
     evt.preventDefault()
     const rcType = location.revenue_center_type.toLowerCase()
     history.push(`/menu/${location.slug}-${rcType}`)
+    evt.target.blur()
+  }
+
+  const changeLocation = (evt) => {
+    evt.preventDefault()
+    dispatch(resetLocation())
+    history.push(`/locations`)
     evt.target.blur()
   }
 
@@ -54,7 +71,16 @@ const AccountGreeting = ({ title, subtitle }) => {
     evt.target.blur()
   }
 
-  return (
+  return accountLoading ? (
+    <div className="hero__loading">
+      <div className="hero__loading__content ot-bold ot-light-color">
+        <p>Loading your account...</p>
+      </div>
+      <div className="hero__loading__loader">
+        <ClipLoader size={36} color={'#ffffff'} />
+      </div>
+    </div>
+  ) : (
     <div className="greeting bg-color border-radius ot-box-shadow slide-up">
       <div className="greeting__content">
         <div className="greeting__summary">
@@ -64,22 +90,27 @@ const AccountGreeting = ({ title, subtitle }) => {
             </h2>
             <p>{subtitle}</p>
           </div>
-          {!lastOrder ? (
-            isLoading ? (
-              <SectionLoading loading={isLoading} />
-            ) : (
+          {isCurrentOrder ? (
+            <div className="greeting__header__order">
               <Button
-                text="Start a New Order"
+                text="Continue Current Order"
                 icon="ShoppingBag"
-                onClick={startNewOrder}
+                onClick={continueCurrent}
               />
-            )
-          ) : (
+              <p className="font-size-small">
+                <Button
+                  text="Or start a new order from scratch"
+                  classes="btn-link"
+                  onClick={startNewOrder}
+                />
+              </p>
+            </div>
+          ) : lastOrder ? (
             <div className="greeting__header__order">
               <Button
                 text={`Order ${capitalize(orderType)} Again`}
                 icon="ShoppingBag"
-                onClick={reorderLastType}
+                onClick={continueCurrent}
               />
               <p className="font-size-small">
                 <Button
@@ -89,10 +120,35 @@ const AccountGreeting = ({ title, subtitle }) => {
                 />
               </p>
             </div>
+          ) : (
+            <Button
+              text="Start a New Order"
+              icon="ShoppingBag"
+              onClick={startNewOrder}
+            />
           )}
         </div>
         <div className="greeting__order">
-          {lastOrder ? (
+          {isCurrentOrder ? (
+            <>
+              <CurrentOrder order={currentOrder} />
+              <div className="greeting__order__footer">
+                <p className="font-size-small">
+                  <Button
+                    text="Change location"
+                    classes="btn-link"
+                    onClick={changeLocation}
+                  />{' '}
+                  or{' '}
+                  <Button
+                    text="switch order type"
+                    classes="btn-link"
+                    onClick={switchOrderType}
+                  />
+                </p>
+              </div>
+            </>
+          ) : lastOrder ? (
             <>
               <OrderCard order={lastOrder} isLast={true} />
               <div className="greeting__order__footer">
@@ -105,7 +161,7 @@ const AccountGreeting = ({ title, subtitle }) => {
                     smooth={true}
                     offset={-90}
                   >
-                    Browse more recent orders...
+                    See other recent orders...
                   </Link>
                 </p>
               </div>

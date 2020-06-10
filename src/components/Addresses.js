@@ -45,7 +45,7 @@ const Addresses = ({ addresses, token, isLoading }) => {
   const handleReorder = (evt, address) => {
     evt.preventDefault()
     dispatch(setAddress(address))
-    history.push('/')
+    history.push('/locations')
     evt.target.blur()
   }
 
@@ -91,7 +91,7 @@ const Addresses = ({ addresses, token, isLoading }) => {
               </div>
               <div className="section__row__container__buttons">
                 <Button
-                  text="Reorder from here"
+                  text="Order from here"
                   icon="RefreshCw"
                   onClick={(evt) => handleReorder(evt, address)}
                   classes="btn--small font-size-small"
