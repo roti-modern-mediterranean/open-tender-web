@@ -20,8 +20,9 @@ const Tag = ({
 
 Tag.displayName = 'Tag'
 Tag.prototypes = {
-  addresses: propTypes.array,
-  token: propTypes.string,
-  isLoading: propTypes.boolean,
+  text: propTypes.string,
+  icon: propTypes.string,
+  bgClass: propTypes.string,
+  textClass: propTypes.string,
 }
 export default Tag

@@ -86,7 +86,7 @@ const RequestedAtPicker = ({
       )}
       <div className="form__submit">
         {!error && (
-          <button className="btn btn--highlight" onClick={submitDate}>
+          <button className="btn" onClick={submitDate}>
             {updateText}
           </button>
         )}

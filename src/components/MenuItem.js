@@ -5,6 +5,7 @@ import { setCurrentItem, selectCartCounts } from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
 import { MenuContext } from './pages/MenuPage'
 import { convertStringToArray } from '../packages/utils/cart'
+import Tag from './Tag'
 
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
@@ -49,8 +50,8 @@ const MenuItem = ({ item }) => {
             </div>
           )}
           {isSoldOut && soldOutMsg ? (
-            <div className="menu__item__sold-out overlay-dark border-radius">
-              <div className="menu__item__sold-out__container">
+            <div className="menu__item__overlay overlay-dark border-radius">
+              <div className="menu__item__overlay__container">
                 <p className="ot-light-color ot-bold ot-upper font-size-x-big">
                   {soldOutMsg}
                 </p>
@@ -58,11 +59,17 @@ const MenuItem = ({ item }) => {
             </div>
           ) : (
             allergenAlert.length > 0 && (
-              <div className="menu__item__sold-out overlay-dark border-radius">
-                <div className="menu__item__sold-out__container">
-                  <p className="ot-light-color ot-bold ot-upper font-size-x-big">
+              <div className="menu__item__overlay border-radius">
+                <div className="menu__item__overlay__container">
+                  {/* <p className="ot-light-color ot-bold ot-upper font-size-x-big">
                     Contains {allergenAlert.join(', ')}
-                  </p>
+                  </p> */}
+                  <Tag
+                    icon="AlertCircle"
+                    text={`Contains ${allergenAlert.join(', ')}`}
+                    bgClass="bg-alert-color"
+                    textClass="ot-light-color"
+                  />
                 </div>
               </div>
             )

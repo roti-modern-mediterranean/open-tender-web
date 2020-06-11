@@ -44,7 +44,7 @@ const RequestedAtModal = () => {
             {estimatedTime ? ` (${estimatedTime})` : ''}.
           </p>
           <div className="modal__header__buttons">
-            <button className="btn" onClick={handleClose}>
+            <button className="btn btn--highlight" onClick={handleClose}>
               Keep This Time
             </button>
             {requestedAt !== 'asap' && (
