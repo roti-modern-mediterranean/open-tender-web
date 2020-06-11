@@ -11,7 +11,13 @@ import {
   setCart,
   fetchLocation,
 } from '../../slices/orderSlice'
-import { fetchMenu, selectMenu, setCartErrors } from '../../slices/menuSlice'
+import {
+  fetchMenu,
+  selectMenu,
+  setCartErrors,
+  selectedAllergenNames,
+  fetchAllergens,
+} from '../../slices/menuSlice'
 import Hero from '../Hero'
 import Location from '../Location'
 import Menu from '../Menu'
@@ -26,6 +32,9 @@ const MenuPage = () => {
   const location = useSelector(selectLocation)
   const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
   const { categories, soldOut, error, loading } = useSelector(selectMenu)
+  const allergenAlerts = useSelector(selectedAllergenNames)
+  console.log(allergenAlerts)
+
   const cart = useSelector(selectCart)
   const isLoading = loading === 'pending'
 
@@ -39,17 +48,13 @@ const MenuPage = () => {
     } else {
       dispatch(fetchLocation(locationId))
       dispatch(fetchMenu([locationId, serviceType, requestedAt]))
+      dispatch(fetchAllergens())
     }
   }, [locationId, serviceType, requestedAt, dispatch, history])
 
   useEffect(() => {
     if (categories.length) {
-      // console.log('old cart =>')
-      // printCart(cart)
       const { newCart, errors } = validateCart(cart, categories, soldOut)
-      // console.log('new cart =>')
-      // printCart(newCart)
-      // console.log('cart errors', errors)
       if (errors) {
         dispatch(setCartErrors({ newCart, errors }))
         dispatch(openModal({ type: 'cartErrors' }))
@@ -61,7 +66,7 @@ const MenuPage = () => {
   }, [categories, soldOut])
 
   return (
-    <MenuContext.Provider value={{ soldOut, menuConfig }}>
+    <MenuContext.Provider value={{ soldOut, menuConfig, allergenAlerts }}>
       <Hero imageUrl={menuConfig.background} classes="hero--right">
         {location && (
           <Location location={location} classes="location--hero slide-up" />

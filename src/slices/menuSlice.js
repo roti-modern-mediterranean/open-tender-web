@@ -50,6 +50,7 @@ const initialState = {
   cartErrors: null,
   error: null,
   loading: 'idle',
+  selectedAllergens: null,
   menuItems: { entities: [], loading: false, error: null },
   allergens: { entities: [], loading: false, error: null },
 }
@@ -66,6 +67,9 @@ const menuSlice = createSlice({
     },
     setMenuItems: (state, action) => {
       state.menuItems.entities = action.payload
+    },
+    setSelectedAllergens: (state, action) => {
+      state.selectedAllergens = action.payload
     },
   },
   extraReducers: {
@@ -132,13 +136,30 @@ export const {
   setCartErrors,
   resetCartErrors,
   setMenuItems,
+  setSelectedAllergens,
 } = menuSlice.actions
 
 export const selectMenu = (state) => state.menu
 export const selectMenuLoading = (state) => state.menu.loading === 'pending'
 export const selectMenuError = (state) => state.menu.error
 export const selectCartErrors = (state) => state.menu.cartErrors
-export const selectAllergens = (state) => state.menu.allergens
 export const selectMenuItems = (state) => state.menu.menuItems
+export const selectAllergens = (state) => state.menu.allergens
+export const selectedAllergenNames = (state) => {
+  const { allergens, selectedAllergens } = state.menu
+  if (
+    !allergens.entities.length ||
+    !selectedAllergens ||
+    !selectedAllergens.length
+  ) {
+    return []
+  }
+  return selectedAllergens.map((i) => {
+    const allergen = allergens.entities.find(
+      (a) => a.allergen_id === i.allergen_id
+    )
+    return allergen.name
+  })
+}
 
 export default menuSlice.reducer

@@ -90,12 +90,11 @@ export const defaultConfig = {
     },
   },
   menu: {
-    // background:
-    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg',
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',
-    // background:
-    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588457434_66172f8cf5eeae2433bd.jpg',
+    displayCalories: true,
+    displayAllergens: true,
+    displayTags: true,
     soldOut: {
       image: null,
       message: 'Sold Out For The Day',

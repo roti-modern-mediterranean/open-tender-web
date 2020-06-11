@@ -84,8 +84,17 @@ $padding-x: 3rem;
     line-height: 1.5;
   }
 
-  &__price {
+  &__details {
     margin: 0.5rem 0 0;
+    line-height: 1.5;
+
+    span {
+      display: inline-block;
+      margin: 0 1.5rem 0 0;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 
   &.-sold-out {

@@ -1,15 +1,53 @@
-import React from 'react'
-import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
+import { selectCustomerAllergens } from '../../slices/customerSlice'
+import { selectMenu, setSelectedAllergens } from '../../slices/menuSlice'
+import { Switch } from '../../packages'
 
 const AllergensModal = () => {
+  const submitButton = useRef()
   const dispatch = useDispatch()
+  const [allergens, setAllergens] = useState(null)
+  // const [submitting, setSubmitting] = useState(false)
+  const { entities: customerAllergens } = useSelector(selectCustomerAllergens)
+  const {
+    allergens: { entities: brandAllergens },
+    selectedAllergens,
+  } = useSelector(selectMenu)
+
+  useEffect(() => {
+    if (!allergens) {
+      if (selectedAllergens) {
+        setAllergens(selectedAllergens)
+      } else if (customerAllergens.length) {
+        setAllergens(customerAllergens)
+      }
+    }
+  }, [allergens, customerAllergens, selectedAllergens])
 
   const handleClose = () => {
     dispatch(closeModal())
   }
+
+  const handleChange = (evt) => {
+    const { id, checked } = evt.target
+    const newAllergens = checked
+      ? [...(allergens || []), { allergen_id: parseInt(id) }]
+      : allergens.filter((i) => i.allergen_id !== parseInt(id))
+    setAllergens(newAllergens)
+  }
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault()
+    submitButton.current.blur()
+    // setSubmitting(true)
+    dispatch(setSelectedAllergens(allergens))
+    dispatch(closeModal())
+  }
+
+  const allergenIds = allergens ? allergens.map((i) => i.allergen_id) : []
 
   return (
     <>
@@ -17,14 +55,40 @@ const AllergensModal = () => {
       <div className="modal__content">
         <div className="modal__header">
           <p className="modal__title heading ot-font-size-h3">
-            Highlight Allergens
+            Allergen Alerts
           </p>
           <p className="modal__subtitle">
-            Click on the allergens below to highlight them on the menu
+            Selected allergens will be highlighted on the menu
           </p>
         </div>
         <div className="modal__body">
-          <p>This is where the content will go</p>
+          <form
+            id="allergen-form"
+            className="form"
+            onSubmit={handleSubmit}
+            noValidate
+          >
+            <div className="form__inputs">
+              {brandAllergens.map((allergen) => (
+                <Switch
+                  key={allergen.allergen_id}
+                  label={allergen.name}
+                  id={`${allergen.allergen_id}`}
+                  on={allergenIds.includes(allergen.allergen_id)}
+                  onChange={handleChange}
+                />
+              ))}
+            </div>
+            <div className="form__submit">
+              <input
+                className="btn"
+                type="submit"
+                value="Update Selected Allergens"
+                // disabled={submitting}
+                ref={submitButton}
+              />
+            </div>
+          </form>
         </div>
       </div>
     </>
@@ -32,8 +96,5 @@ const AllergensModal = () => {
 }
 
 AllergensModal.displayName = 'AllergensModal'
-AllergensModal.propTypes = {
-  close: propTypes.func,
-}
 
 export default AllergensModal

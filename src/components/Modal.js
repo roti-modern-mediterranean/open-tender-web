@@ -46,7 +46,7 @@ const classesMap = {
   address: 'modal--big',
   creditCard: 'modal--big',
   requestedAt: 'modal--big modal--datepicker',
-  allergens: '',
+  allergens: 'modal--big modal--allergens',
   cartErrors: 'modal--big modal--cart-errors',
   working: 'modal--working',
 }

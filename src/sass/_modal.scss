@@ -160,3 +160,23 @@
     }
   }
 }
+
+.modal--allergens {
+  .modal {
+    width: 90%;
+    max-width: 40rem;
+  }
+
+  .modal__body {
+    .form__input {
+      padding: 1rem 0 0.4rem;
+    }
+
+    .input {
+      text-align: right;
+      .switch__toggle {
+        display: inline-block;
+      }
+    }
+  }
+}

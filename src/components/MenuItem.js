@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentItem, selectCartCounts } from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
 import { MenuContext } from './pages/MenuPage'
+import { convertStringToArray } from '../packages/utils/cart'
 
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
-  const { soldOut, menuConfig } = useContext(MenuContext)
+  const { soldOut, menuConfig, allergenAlerts } = useContext(MenuContext)
+  const { displayCalories, displayAllergens, displayTags } = menuConfig
   const { image: soldOutImage, message: soldOutMsg } = menuConfig.soldOut
   const cartCounts = useSelector(selectCartCounts)
   const isSoldOut = soldOut.includes(item.id)
@@ -15,6 +17,15 @@ const MenuItem = ({ item }) => {
   const smallImg = item.small_image_url
   const bgImage = isSoldOut && soldOutImage ? soldOutImage : smallImg
   const bgStyle = bgImage ? { backgroundImage: `url(${bgImage}` } : null
+  const cals =
+    displayCalories && item.nutritional_info
+      ? parseInt(item.nutritional_info.calories) || null
+      : null
+  const allergens = displayAllergens ? convertStringToArray(item.allergens) : []
+  const tags = displayTags ? convertStringToArray(item.tags) : []
+  const allergenAlert = allergens.length
+    ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
+    : []
 
   const handleClick = (evt) => {
     evt.preventDefault()
@@ -37,7 +48,7 @@ const MenuItem = ({ item }) => {
               {cartCount}
             </div>
           )}
-          {isSoldOut && soldOutMsg && (
+          {isSoldOut && soldOutMsg ? (
             <div className="menu__item__sold-out overlay-dark border-radius">
               <div className="menu__item__sold-out__container">
                 <p className="ot-light-color ot-bold ot-upper font-size-x-big">
@@ -45,16 +56,46 @@ const MenuItem = ({ item }) => {
                 </p>
               </div>
             </div>
+          ) : (
+            allergenAlert.length > 0 && (
+              <div className="menu__item__sold-out overlay-dark border-radius">
+                <div className="menu__item__sold-out__container">
+                  <p className="ot-light-color ot-bold ot-upper font-size-x-big">
+                    Contains {allergenAlert.join(', ')}
+                  </p>
+                </div>
+              </div>
+            )
           )}
         </div>
         <div className="menu__item__content">
-          <p className="menu__item__name ot-bold">{item.name}</p>
+          {/* <p className="menu__item__name ot-bold font-size-big">{item.name}</p> */}
+          <p className="menu__item__name heading ot-font-size-h5">
+            {item.name}
+          </p>
           {item.description && (
             <p className="menu__item__desc font-size-small">
               {item.description}
             </p>
           )}
-          <p className="menu__item__price">${item.price}</p>
+          <p className="menu__item__details">
+            <span className="menu__item__price ot-bold">${item.price}</span>
+            {cals && (
+              <span className="menu__item__cals ot-bold secondary-color">
+                {cals} cals
+              </span>
+            )}
+            {allergens.length > 0 && (
+              <span className="menu_item__allergens ot-alert-color font-size-small">
+                {allergens.join(', ')}
+              </span>
+            )}
+            {tags.length > 0 && (
+              <span className="menu_item__tags secondary-color font-size-small">
+                {tags.join(', ')}
+              </span>
+            )}
+          </p>
         </div>
       </button>
     </div>
