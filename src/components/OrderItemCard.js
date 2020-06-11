@@ -51,7 +51,7 @@ const OrderItemCard = ({ item }) => {
   }
 
   return (
-    <div className="order-card bg-color border border-radius ot-box-shadow">
+    <div className="order-card bg-color border border-radius ot-box-shadow slide-up">
       <div className="order-card__container">
         <div className="order-card__header">
           {totalPrice && (
