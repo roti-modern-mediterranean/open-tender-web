@@ -16,6 +16,7 @@ import {
   getCustomerFavorites,
   postCustomerFavorite,
   deleteCustomerFavorite,
+  getCustomerLoyalty,
 } from '../services/requests'
 import { showNotification } from './notificationSlice'
 import { makeFavoritesLookup } from '../packages/utils/cart'
@@ -30,6 +31,7 @@ const initialState = {
   creditCards: { entities: [], loading: 'idle', error: null },
   favorites: { entities: [], signatures: [], loading: 'idle', error: null },
   giftCards: { entities: [], loading: 'idle', error: null },
+  loyalty: { entities: [], loading: 'idle', error: null },
 }
 
 export const loginCustomer = createAsyncThunk(
@@ -244,6 +246,17 @@ export const removeCustomerFavorite = createAsyncThunk(
     } catch (err) {
       const errMsg = err.detail || err.message || 'Something went wrong'
       thunkAPI.dispatch(showNotification(errMsg))
+    }
+  }
+)
+
+export const fetchCustomerLoyalty = createAsyncThunk(
+  'customer/fetchCustomerLoyalty',
+  async (token, thunkAPI) => {
+    try {
+      return await getCustomerLoyalty(token)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
     }
   }
 )
@@ -554,6 +567,24 @@ const customerSlice = createSlice({
         error: action.payload.detail,
       }
     },
+
+    [fetchCustomerLoyalty.fulfilled]: (state, action) => {
+      state.loyalty = {
+        entities: action.payload,
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [fetchCustomerLoyalty.pending]: (state) => {
+      state.loyalty.loading = 'pending'
+    },
+    [fetchCustomerLoyalty.rejected]: (state, action) => {
+      state.loyalty = {
+        ...state.loyalty,
+        loading: 'idle',
+        error: action.payload.detail,
+      }
+    },
   },
 })
 
@@ -566,5 +597,6 @@ export const selectCustomerAddresses = (state) => state.customer.addresses
 export const selectCustomerGiftCards = (state) => state.customer.giftCards
 export const selectCustomerCreditCards = (state) => state.customer.creditCards
 export const selectCustomerFavorites = (state) => state.customer.favorites
+export const selectCustomerLoyalty = (state) => state.customer.loyalty
 
 export default customerSlice.reducer

@@ -18,17 +18,36 @@ import { otherOrderTypesMap } from '../packages/utils/constants'
 import { Button } from '../packages'
 import CurrentOrder from './CurrentOrder'
 import OrderCard from './OrderCard'
+import AccountLoyalty from './AccountLoyalty'
+
+const GreetingLink = ({ sectionTitle, text }) => (
+  <Link
+    activeClass="active"
+    className="link"
+    to={slugify(sectionTitle)}
+    spy={true}
+    smooth={true}
+    offset={-90}
+  >
+    {text}
+  </Link>
+)
 
 const AccountGreeting = ({ title, subtitle }) => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const {
-    addresses: addressConfig,
-    recentOrders: recentOrdersConfig,
-  } = useSelector(selectAccountConfigSections)
+  // const {
+  //   recentOrders: {title: recentOrdersTitle},
+  //   favorites: {title: favoritesTitle},
+  //   recentItems: {title: recentItemsTitle},
+  //   accountDetails: { title: accountTitle },
+  //   allergens: { title: allergensTitle },
+  //   addresses: { title: addressesTitle },
+  // } = useSelector(selectAccountConfigSections)
+  const config = useSelector(selectAccountConfigSections)
   const customer = useSelector(selectCustomerAccount)
   const currentOrder = useSelector(selectOrder)
-  const { address, location, serviceType, cart } = currentOrder
+  const { location, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectAccountOrders)
   const isLoading = loading === 'pending'
   // const isLoading = true
@@ -84,49 +103,111 @@ const AccountGreeting = ({ title, subtitle }) => {
     <div className="greeting bg-color border-radius ot-box-shadow slide-up">
       <div className="greeting__content">
         <div className="greeting__summary">
-          <div className="greeting__header">
+          <div className="greeting__summary__header">
             <h2>
               {title}, {customer.first_name}!
             </h2>
             <p>{subtitle}</p>
           </div>
-          {isCurrentOrder ? (
-            <div className="greeting__header__order">
-              <Button
-                text="Continue Current Order"
-                icon="ShoppingBag"
-                onClick={continueCurrent}
-              />
-              <p className="font-size-small">
+          <div className="greeting__summary__order">
+            {isCurrentOrder ? (
+              <>
                 <Button
-                  text="Or start a new order from scratch"
-                  classes="btn-link"
-                  onClick={startNewOrder}
+                  text="Continue Current Order"
+                  icon="ShoppingBag"
+                  onClick={continueCurrent}
                 />
-              </p>
-            </div>
-          ) : lastOrder ? (
-            <div className="greeting__header__order">
-              <Button
-                text={`Order ${capitalize(orderType)} Again`}
-                icon="ShoppingBag"
-                onClick={continueCurrent}
-              />
-              <p className="font-size-small">
+                <p className="font-size-small">
+                  <Button
+                    text="Or start a new order from scratch"
+                    classes="btn-link"
+                    onClick={startNewOrder}
+                  />
+                </p>
+              </>
+            ) : lastOrder ? (
+              <>
                 <Button
-                  text={`Or switch to ${otherOrderTypes.join(' or ')} instead`}
-                  classes="btn-link"
-                  onClick={switchOrderType}
+                  text={`Order ${capitalize(orderType)} Again`}
+                  icon="ShoppingBag"
+                  onClick={continueCurrent}
                 />
-              </p>
-            </div>
-          ) : (
-            <Button
-              text="Start a New Order"
-              icon="ShoppingBag"
-              onClick={startNewOrder}
-            />
-          )}
+                <p className="font-size-small">
+                  <Button
+                    text={`Or switch to ${otherOrderTypes.join(
+                      ' or '
+                    )} instead`}
+                    classes="btn-link"
+                    onClick={switchOrderType}
+                  />
+                </p>
+              </>
+            ) : (
+              <Button
+                text="Start a New Order"
+                icon="ShoppingBag"
+                onClick={startNewOrder}
+              />
+            )}
+          </div>
+          <AccountLoyalty />
+          <div className="greeting__summary__options">
+            <p className="font-size-small ot-bold">
+              Other things you can do from here...
+            </p>
+            {/* <p className="heading ot-font-size-h5">
+              Other things you can do from here...
+            </p> */}
+            <ul className="font-size-small">
+              <li>
+                <span>
+                  Reorder from your{' '}
+                  <GreetingLink
+                    sectionTitle={config.favorites.title}
+                    text="favorites"
+                  />{' '}
+                  or{' '}
+                  <GreetingLink
+                    sectionTitle={config.recentItems.title}
+                    text="recently ordered items"
+                  />
+                </span>
+              </li>
+              <li>
+                <span>
+                  Update your{' '}
+                  <GreetingLink
+                    sectionTitle={config.accountDetails.title}
+                    text="profile"
+                  />
+                  ,{' '}
+                  <GreetingLink
+                    sectionTitle={config.allergens.title}
+                    text="allergens"
+                  />{' '}
+                  or{' '}
+                  <GreetingLink
+                    sectionTitle={config.creditCards.title}
+                    text="cards on file"
+                  />
+                </span>
+              </li>
+              <li>
+                <span>
+                  Manage your{' '}
+                  <GreetingLink
+                    sectionTitle={config.addresses.title}
+                    text="addresses"
+                  />{' '}
+                  and{' '}
+                  <GreetingLink
+                    sectionTitle={config.giftCards.title}
+                    text="gift cards"
+                  />
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="greeting__order">
           {isCurrentOrder ? (
@@ -153,16 +234,10 @@ const AccountGreeting = ({ title, subtitle }) => {
               <OrderCard order={lastOrder} isLast={true} />
               <div className="greeting__order__footer">
                 <p className="font-size-small">
-                  <Link
-                    activeClass="active"
-                    className="link"
-                    to={slugify(recentOrdersConfig.title)}
-                    spy={true}
-                    smooth={true}
-                    offset={-90}
-                  >
-                    See other recent orders...
-                  </Link>
+                  <GreetingLink
+                    sectionTitle={config.recentOrders.title}
+                    text="See other recent orders..."
+                  />
                 </p>
               </div>
             </>

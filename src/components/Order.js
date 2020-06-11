@@ -212,13 +212,8 @@ const Order = ({ order, loading, error, goToAccount }) => {
               {capitalize(orderType)} from {revenue_center.name}
             </h1>
             <div className="order__buttons">
-              {isUpcoming && (
-                <Button
-                  text="Edit"
-                  icon="Edit"
-                  onClick={editOrder}
-                  disabled={!order.is_editable}
-                />
+              {order.is_editable && (
+                <Button text="Edit" icon="Edit" onClick={editOrder} />
               )}
               <Button text="Reorder" icon="RefreshCw" onClick={reorder} />
               {!isUpcoming && (

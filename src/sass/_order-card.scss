@@ -43,7 +43,7 @@ $image-size: 4.5rem;
     justify-content: flex-start;
     align-items: top;
     margin: 0 0 1rem;
-    overflow-x: scroll;
+    overflow: hidden;
   }
 
   &__image {

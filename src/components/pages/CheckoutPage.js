@@ -60,10 +60,14 @@ const CheckoutPage = () => {
   useEffect(() => {
     if (!locationId || !serviceType) return history.push('/')
     if (completedOrder) {
-      dispatch(setCompletedOrder(completedOrder))
+      console.log(completedOrder)
       dispatch(clearCompletedOrder())
       dispatch(resetOrder())
-      return history.push('/confirmation')
+      return history.push(`/orders/${completedOrder.order_id}`)
+      // dispatch(setCompletedOrder(completedOrder))
+      // dispatch(clearCompletedOrder())
+      // dispatch(resetOrder())
+      // return history.push('/confirmation')
     }
     const customerValidate = account
       ? { customer_id: account.customer_id }

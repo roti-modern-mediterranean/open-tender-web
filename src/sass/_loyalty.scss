@@ -1,0 +1,11 @@
+.loyalty {
+  margin: 3rem 0 0;
+  &__program {
+    &__header {
+      margin: 0 0 1.5rem;
+      p + p {
+        margin: 0.75rem 0 0;
+      }
+    }
+  }
+}

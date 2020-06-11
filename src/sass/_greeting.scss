@@ -1,0 +1,72 @@
+.greeting {
+  width: 90%;
+  max-width: 76rem;
+  padding: 2.5rem 3rem 3rem;
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__summary {
+    width: 100%;
+    padding: 0 5rem 0 0;
+
+    &__header {
+      margin: 0 0 2.5rem;
+
+      h2 {
+        margin-left: -0.2rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0;
+      }
+    }
+
+    &__order {
+      button + p {
+        margin: 1.25rem 0 0;
+      }
+    }
+
+    &__options {
+      margin: 3rem 0 0;
+
+      ul {
+        list-style: disc inside;
+        // padding: 0 0 0 1.5rem;
+
+        li {
+          margin: 0.7rem 0 0;
+
+          span {
+            position: relative;
+            left: -0.5rem;
+          }
+        }
+      }
+    }
+  }
+
+  &__order {
+    width: 28rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding: 2.5rem 0 1rem;
+
+    .order-card {
+      height: auto;
+
+      &__items {
+        height: 10rem;
+        overflow: hidden;
+      }
+    }
+
+    &__footer {
+      margin: 1.5rem 0 0;
+      text-align: center;
+    }
+  }
+}

@@ -84,7 +84,7 @@ const Addresses = ({ addresses, token, isLoading }) => {
                       text="remove"
                       classes="btn-link"
                       onClick={(evt) => handleDelete(evt, address)}
-                      disabled={!address.is_active || isLoading}
+                      disabled={isLoading}
                     />
                   </p>
                 </OrderAddress>

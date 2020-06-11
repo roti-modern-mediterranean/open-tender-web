@@ -148,3 +148,7 @@ export const deleteCustomerFavorite = (token, favoriteId) => {
     token
   )
 }
+
+export const getCustomerLoyalty = (token) => {
+  return request(`/customer/loyalty`, 'GET', null, null, token)
+}

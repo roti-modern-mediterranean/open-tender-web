@@ -24,6 +24,11 @@ export const tenderTypeNamesMap = {
   COMP: 'Comp',
 }
 
+export const loyaltyType = {
+  CREDIT: 'CREDIT',
+  PROMO_CODE: 'PROMO_CODE',
+}
+
 export const MAX_DISTANCE = 100
 
 export const LOCATIONS_MESSAGES = {
