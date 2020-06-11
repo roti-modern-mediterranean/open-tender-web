@@ -17,9 +17,7 @@ const RequestedAtPicker = ({
   location,
   serviceType,
   setRequestedAt,
-  cancel,
-  updateText = 'Update',
-  cancelText = 'No Change',
+  updateText = 'Update Order Time',
 }) => {
   const { timezone, settings } = location
   const tz = timezoneMap[timezone]
@@ -27,12 +25,6 @@ const RequestedAtPicker = ({
     requestedAt === 'asap' ? null : isoToDate(requestedAt, tz)
   const [date, setDate] = useState(requestedAtDate)
   const [error, setError] = useState(null)
-
-  const changetoASAP = (evt) => {
-    evt.preventDefault()
-    setRequestedAt('asap')
-    evt.target.blur()
-  }
 
   const submitDate = (evt) => {
     evt.preventDefault()
@@ -98,14 +90,6 @@ const RequestedAtPicker = ({
             {updateText}
           </button>
         )}
-        {requestedAt !== 'asap' && (
-          <button className="btn" onClick={changetoASAP}>
-            Change to ASAP
-          </button>
-        )}
-        <button className="btn" onClick={cancel}>
-          {requestedAt === 'asap' ? 'Keep ASAP' : cancelText}
-        </button>
       </div>
     </div>
   )

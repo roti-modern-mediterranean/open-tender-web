@@ -39,22 +39,31 @@ const RequestedAtModal = () => {
           <p className="modal__title heading ot-font-size-h3">
             Choose an order date & time
           </p>
-          <p className="modal__subtitle ot-bold">
+          <p className="modal__subtitle ot-bold ot-alert-color font-size-big">
             Your current order time is {requestedAtText}
             {estimatedTime ? ` (${estimatedTime})` : ''}.
           </p>
-          <p className="modal__subtitle font-size-small">
-            Use the calendar below to choose a different day & time.
-          </p>
+          <div className="modal__header__buttons">
+            <button className="btn" onClick={handleClose}>
+              Keep This Time
+            </button>
+            {requestedAt !== 'asap' && (
+              <button className="btn" onClick={() => handleRequestedAt('asap')}>
+                Change to ASAP
+              </button>
+            )}
+          </div>
         </div>
         <div className="modal__body">
+          <p className="font-size-small">
+            Or use the calendar below to choose a different day & time.
+          </p>
           {location && (
             <RequestedAtPicker
               requestedAt={requestedAt}
               serviceType={serviceType}
               location={location}
               setRequestedAt={handleRequestedAt}
-              cancel={handleClose}
             />
           )}
         </div>

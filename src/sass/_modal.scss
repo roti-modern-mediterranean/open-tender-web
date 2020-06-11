@@ -113,6 +113,25 @@
   }
 }
 
+.modal--datepicker {
+  .modal {
+    .modal__header__buttons {
+      margin: 1.5rem 0 0;
+      button + button {
+        margin-left: 1rem;
+      }
+    }
+    // .modal__header {
+    //   margin-bottom: 2rem;
+    // }
+    .modal__body {
+      .datepicker-inline {
+        margin-top: 1.5rem;
+      }
+    }
+  }
+}
+
 .modal--cart-errors {
   .modal {
     width: 90%;

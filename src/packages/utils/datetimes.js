@@ -165,14 +165,19 @@ export const makeClosedWeekdays = (weekdayTimes) => {
     .map(([weekday]) => weekdaysUpper.indexOf(weekday))
 }
 
+export const minutesToDate = (minutes) => {
+  const hours = Math.floor(minutes / 60)
+  const mins = minutes % 60
+  const d = new Date()
+  d.setHours(hours)
+  d.setMinutes(mins)
+  d.setSeconds(0)
+  return d
+}
+
 export const minutesToDates = (minutes) => {
   return minutes.map((minute) => {
-    const hours = Math.floor(minute / 60)
-    const mins = minute % 60
-    const d = new Date()
-    d.setHours(hours)
-    d.setMinutes(mins)
-    return d
+    return minutesToDate(minute)
   })
 }
 
@@ -206,10 +211,15 @@ export const makeDatepickerArgs = (
   const allExcluded = [
     ...new Set([...todayExcludeded, ...weekdayExcluded, ...otherExcluded]),
   ].sort()
+  const orderableTimes = makeOppositeTimes(allExcluded, interval)
+  const minOrderableTime = Math.min(...orderableTimes)
+  // minTime and maxTime aren't necessary because they're already
+  // blocked out by the exluded times
+  // const minTime = minutesToDate(minOrderableTime)
+  // const maxOrderableTime = Math.max(...orderableTimes)
+  // const maxTime = minutesToDate(maxOrderableTime)
   let updatedDate = null
   if (minutes && allExcluded.includes(minutes)) {
-    const orderableTimes = makeOppositeTimes(allExcluded, interval)
-    const minOrderableTime = Math.min(...orderableTimes)
     updatedDate = new Date(requestedAtDate.getTime())
     updatedDate.setHours(Math.floor(minOrderableTime / 60))
     updatedDate.setMinutes(minOrderableTime % 60)
