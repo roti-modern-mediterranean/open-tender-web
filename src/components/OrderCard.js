@@ -29,10 +29,10 @@ const OrderCard = ({ order, isLast }) => {
     revenue_center,
     requested_at,
     timezone,
-    items,
-    delivery,
+    cart,
     address,
     totals,
+    delivery,
   } = order
   const isOpen = status === 'OPEN'
   const orderType = order_type === 'OLO' ? service_type : order_type
@@ -41,7 +41,7 @@ const OrderCard = ({ order, isLast }) => {
   const isUpcoming = isoToDate(requested_at) > new Date()
   const streetAddress = makeOrderAddress(address)
   const trackingUrl = isOpen && delivery && delivery.tracking_url
-  const itemNames = items.map((i) => i.name).join(', ')
+  const itemNames = cart.map((i) => i.name).join(', ')
 
   const handleEdit = (evt) => {
     evt.preventDefault()
@@ -55,7 +55,7 @@ const OrderCard = ({ order, isLast }) => {
     const serviceType = service_type
     dispatch(setOrderServiceType([order_type, service_type]))
     dispatch(setAddress(address || null))
-    dispatch(reorderPastOrder({ locationId, serviceType, items }))
+    dispatch(reorderPastOrder({ locationId, serviceType, cart }))
   }
 
   const handleDetails = (evt) => {
@@ -93,7 +93,7 @@ const OrderCard = ({ order, isLast }) => {
           </div>
           <div className="order-card__items">
             <div className="order-card__images">
-              <OrderImages items={items} />
+              <OrderImages items={cart} />
             </div>
             <p className="font-size-x-small secondary-color">{itemNames}</p>
           </div>

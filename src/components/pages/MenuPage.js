@@ -33,7 +33,6 @@ const MenuPage = () => {
   const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
   const { categories, soldOut, error, loading } = useSelector(selectMenu)
   const allergenAlerts = useSelector(selectedAllergenNames)
-  console.log(allergenAlerts)
 
   const cart = useSelector(selectCart)
   const isLoading = loading === 'pending'

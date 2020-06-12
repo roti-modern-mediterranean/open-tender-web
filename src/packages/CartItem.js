@@ -39,7 +39,10 @@ const CartItem = ({ item, showModifiers, editItem, removeItem, children }) => {
                   </button>
                 </span>
                 <span className="builder__option__details__remove">
-                  <button className="btn-link ot-error" onClick={removeItem}>
+                  <button
+                    className="btn-link ot-error-color"
+                    onClick={removeItem}
+                  >
                     remove
                   </button>
                 </span>

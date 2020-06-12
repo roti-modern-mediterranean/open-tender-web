@@ -59,7 +59,6 @@ const CheckoutPage = () => {
   useEffect(() => {
     if (!locationId || !serviceType) return history.push('/')
     if (completedOrder) {
-      console.log(completedOrder)
       dispatch(clearCompletedOrder())
       dispatch(resetOrder())
       return history.push(`/orders/${completedOrder.order_id}`)

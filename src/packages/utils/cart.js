@@ -215,7 +215,7 @@ export const makeDisplayItem = (item, isOption = false) => {
 }
 
 export const makeDisplayItems = (orders) => {
-  const items = orders.reduce((items, order) => [...items, ...order.items], [])
+  const items = orders.reduce((items, order) => [...items, ...order.cart], [])
   return items.map((i) => makeDisplayItem(i))
 }
 

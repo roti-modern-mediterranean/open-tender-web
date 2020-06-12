@@ -158,8 +158,13 @@ const Order = ({ order, loading, error, goToAccount }) => {
     delivery,
     address,
     notes,
-    items,
+    cart,
+    surcharges,
+    discounts,
+    taxes,
     totals,
+    details,
+    tenders,
     rating,
   } = order || {}
   const dispatch = useDispatch()
@@ -167,9 +172,10 @@ const Order = ({ order, loading, error, goToAccount }) => {
   const showOrder = !isLoading && !error && !isEmpty(order)
   const orderType = order_type === 'OLO' ? service_type : order_type
   const isUpcoming = isoToDate(requested_at) > new Date()
-  const displayedItems = items ? items.map((i) => makeDisplayItem(i)) : []
+  const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
   const token = useSelector(selectToken)
   const { lookup } = useSelector(selectCustomerFavorites)
+  const check = { surcharges, discounts, taxes, totals, details }
 
   const addFavorite = (cart) => {
     const data = { cart }
@@ -197,7 +203,7 @@ const Order = ({ order, loading, error, goToAccount }) => {
     const serviceType = service_type
     dispatch(setOrderServiceType([order_type, service_type]))
     dispatch(setAddress(address || null))
-    dispatch(reorderPastOrder({ locationId, serviceType, items }))
+    dispatch(reorderPastOrder({ locationId, serviceType, cart }))
   }
 
   return (
@@ -297,7 +303,7 @@ const Order = ({ order, loading, error, goToAccount }) => {
             <div className="section__container">
               <SectionHeader title="Your Receipt" />
               <div className="section__content bg-color border-radius">
-                <Check totals={totals} tenders={totals.tenders} />
+                <Check check={check} tenders={tenders} />
               </div>
             </div>
           </div>
