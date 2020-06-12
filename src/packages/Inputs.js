@@ -160,6 +160,7 @@ export const Switch = ({
   disabled,
   classes = '',
   showLabel = true,
+  inputClasses = '',
 }) => {
   return (
     <label
@@ -168,7 +169,7 @@ export const Switch = ({
     >
       <span className="form__input__wrapper border-color">
         {showLabel && <Label text={label} />}
-        <span className="input">
+        <span className={`input ${inputClasses}`}>
           <input
             aria-label={label}
             id={id}

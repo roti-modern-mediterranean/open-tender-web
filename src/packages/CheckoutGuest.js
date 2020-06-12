@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useContext } from 'react'
 import debounce from 'lodash/debounce'
 import { Input } from './Inputs'
-import CheckoutLineItem from './CheckoutLineItem'
 import { FormContext } from './CheckoutForm'
 
 const initialState = {
@@ -62,33 +61,25 @@ const CheckoutGuest = () => {
   const contactConfig = makeContactConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">
-      <legend className="form__legend heading ot-font-size-h4">
+      <legend className="form__legend heading ot-font-size-h3">
         {config.guest.title}
       </legend>
       <div className="form__inputs">
         {fields.map((field) => {
+          const input = contactConfig[field.name]
           return (
-            contactConfig[field.name] &&
-            contactConfig[field.name].included && (
-              <CheckoutLineItem
+            input &&
+            input.included && (
+              <Input
                 key={field.name}
-                label={contactConfig[field.name].label}
-                required={contactConfig[field.name].required}
-                classes="form__line__input"
-              >
-                <Input
-                  label={contactConfig[field.name].label}
-                  name={`customer-${field.name}`}
-                  type={field.type}
-                  value={customer[field.name]}
-                  onChange={handleChange}
-                  error={errors[field.name]}
-                  required={contactConfig[field.name].required}
-                  classes="form__input--small"
-                  inputClasses=""
-                  showLabel={false}
-                />
-              </CheckoutLineItem>
+                label={input.label}
+                name={`customer-${field.name}`}
+                type={field.type}
+                value={customer[field.name]}
+                onChange={handleChange}
+                error={errors[field.name]}
+                required={input.required}
+              />
             )
           )
         })}

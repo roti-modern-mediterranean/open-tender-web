@@ -69,28 +69,20 @@ const CheckoutAccount = () => {
           <ButtonCheckoutAccount classes="btn--header" />
         </CheckoutLineItem>
         {fields.map((field) => {
+          const input = accountConfig[field.name]
           return (
-            accountConfig[field.name] &&
-            accountConfig[field.name].included && (
-              <CheckoutLineItem
+            input &&
+            input.included && (
+              <Input
                 key={field.name}
-                label={accountConfig[field.name].label}
-                required={accountConfig[field.name].required}
-                classes="form__line__input"
-              >
-                <Input
-                  label={accountConfig[field.name].label}
-                  name={`customer-${field.name}`}
-                  type={field.type}
-                  value={customer[field.name]}
-                  onChange={handleChange}
-                  error={errors[field.name]}
-                  required={accountConfig[field.name].required}
-                  classes="form__input--small"
-                  inputClasses=""
-                  showLabel={false}
-                />
-              </CheckoutLineItem>
+                label={input.label}
+                name={`customer-${field.name}`}
+                type={field.type}
+                value={customer[field.name]}
+                onChange={handleChange}
+                error={errors[field.name]}
+                required={input.required}
+              />
             )
           )
         })}

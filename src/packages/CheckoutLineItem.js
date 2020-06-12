@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import { Label } from './Inputs'
 
 export const Error = ({ error }) => {
   return (
@@ -33,13 +34,14 @@ const CheckoutLineItem = ({
   children,
 }) => {
   return (
-    <div className={`form__line border-color ${classes}`}>
-      <div className="form__line__container">
-        <div className="form__line__label">
-          {label}
-          {required ? <span className="required">*</span> : null}
-        </div>
-        <div className="form__line__value">{children}</div>
+    <div className={`form__input border-color ${classes}`}>
+      <div className="form__input__wrapper">
+        {typeof label === 'string' ? (
+          <Label text={label} required={required} />
+        ) : (
+          label
+        )}
+        <div className="input input--button">{children}</div>
       </div>
       <Error error={error} />
     </div>

@@ -21,8 +21,10 @@ export const validateOrder = createAsyncThunk(
   'checkout/validateOrder',
   async (order, thunkAPI) => {
     try {
+      console.log(JSON.stringify(order, null, 2))
       return await postOrderValidate(order)
     } catch (err) {
+      console.log(err)
       return thunkAPI.rejectWithValue(err)
     }
   }
@@ -71,6 +73,7 @@ const checkoutSlice = createSlice({
   extraReducers: {
     [validateOrder.fulfilled]: (state, action) => {
       state.check = action.payload
+      // state.form.discounts = action.payload.discounts
       state.errors = action.payload.errors
         ? handleOrderErrors(action.payload.errors)
         : {}

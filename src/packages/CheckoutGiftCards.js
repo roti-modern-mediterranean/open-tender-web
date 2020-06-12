@@ -7,13 +7,15 @@ import { checkAmountRemaining } from './utils/cart'
 
 const CheckoutGiftCardLabel = ({ giftCard, amount }) => {
   return (
-    <>
-      <span className="font-size">Gift Card {giftCard.card_number}</span>
-      <span className="font-size-small">
-        Balance of ${giftCard.balance}
-        {amount && <span> (${amount} applied to check)</span>}
+    <span className="form__input__discount">
+      <span className="font-size ot-bold">
+        Gift Card {giftCard.card_number}
       </span>
-    </>
+      <span className="font-size-small ot-success-color">
+        Balance of ${giftCard.balance}{' '}
+        {amount && `($${amount} applied to check)`}
+      </span>
+    </span>
   )
 }
 
@@ -85,10 +87,10 @@ const CheckoutGiftCards = () => {
               key={i.card_number}
               label={<CheckoutGiftCardLabel giftCard={i} amount={amount} />}
             >
-              <div className="form__line__wrapper">
+              <div className="input__wrapper">
                 {amount ? (
                   <>
-                    <span className="form__line__success">
+                    <span className="input__success">
                       <CircleLoader complete={true} />
                     </span>
                     <Button

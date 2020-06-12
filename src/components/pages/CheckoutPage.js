@@ -42,7 +42,6 @@ const CheckoutPage = () => {
   const { access_token } = auth || {}
   const { check, form, loading, errors } = useSelector(selectCheckout)
   const { customer, details, discounts, promoCodes, tenders, tip } = form
-  const { totals } = check || {}
   const completedOrder = useSelector(selectCompletedOrder)
 
   useEffect(() => {
@@ -184,9 +183,7 @@ const CheckoutPage = () => {
           <div className="checkout__content__container">
             <div className="checkout__form">
               <div className="checkout__form__header">
-                <h1 className="checkout__title ot-font-size-h2">
-                  {checkoutConfig.title}
-                </h1>
+                <h1 className="checkout__title">{checkoutConfig.title}</h1>
                 <p className="checkout__subtitle">{checkoutConfig.subtitle}</p>
               </div>
               <CheckoutForm
@@ -212,11 +209,11 @@ const CheckoutPage = () => {
       <div className="checkout__sidebar bg-secondary-color">
         <div className="checkout__sidebar__wrapper">
           <div className="checkout__sidebar__container">
-            {totals && (
+            {check.totals && (
               <div className="checkout__totals border-radius bg-color ot-box-shadow">
                 <Check
                   title={checkoutConfig.check.title}
-                  totals={totals}
+                  check={check}
                   tenders={tenders}
                   updating={pending}
                 />

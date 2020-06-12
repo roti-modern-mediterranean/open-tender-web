@@ -109,82 +109,54 @@ const CheckoutDetails = () => {
         )}
 
         {eatingUtensilsRequired && (
-          <CheckoutLineItem label="Eating Utensils">
-            <Switch
-              label="Eating Utensils"
-              id="details-eating_utensils"
-              on={details.eating_utensils}
-              onChange={handleChange}
-            />
-          </CheckoutLineItem>
+          <Switch
+            label="Eating Utensils"
+            id="details-eating_utensils"
+            on={details.eating_utensils}
+            onChange={handleChange}
+            inputClasses="input--button"
+          />
         )}
         {servingUtensilsRequired && (
-          <CheckoutLineItem label="Serving Utensils">
-            <Switch
-              label="Serving Utensils"
-              id="details-serving_utensils"
-              on={details.serving_utensils}
-              handleChange={handleChange}
-            />
-          </CheckoutLineItem>
+          <Switch
+            label="Serving Utensils"
+            id="details-serving_utensils"
+            on={details.serving_utensils}
+            handleChange={handleChange}
+            inputClasses="input--button"
+          />
         )}
         {allowTaxExempt && (
-          <CheckoutLineItem
+          <Input
             label="Tax Exempt ID"
-            classes="form__line__input -narrow"
-          >
-            <Input
-              label="Tax Exempt ID"
-              name="details-tax_exempt_id"
-              type="text"
-              value={details.tax_exempt_id}
-              onChange={handleChange}
-              error={errors.tax_exempt_id}
-              required={false}
-              classes="form__input--small"
-              inputClasses=""
-              showLabel={false}
-            />
-          </CheckoutLineItem>
+            name="details-tax_exempt_id"
+            type="text"
+            value={details.tax_exempt_id}
+            onChange={handleChange}
+            error={errors.tax_exempt_id}
+            required={false}
+          />
         )}
         {personCountRequired && (
-          <CheckoutLineItem
-            label="No. of People"
-            classes="form__line__input -narrow"
+          <Input
+            label="Person Count"
+            name="details-person_count"
+            type="text"
+            value={details.person_count}
+            onChange={handleChange}
+            error={errors.person_count}
             required={personCountRequired}
-          >
-            <Input
-              label="Person Count"
-              name="details-person_count"
-              type="text"
-              value={details.person_count}
-              onChange={handleChange}
-              error={errors.person_count}
-              required={true}
-              classes="form__input--small"
-              inputClasses=""
-              showLabel={false}
-            />
-          </CheckoutLineItem>
+          />
         )}
         {notesRequired && (
-          <CheckoutLineItem
+          <Textarea
             label="Notes"
-            classes="form__line__textarea"
+            name="details-notes"
+            value={details.notes}
+            onChange={handleChange}
+            error={errors.notes}
             required={notesRequired}
-          >
-            <Textarea
-              label="Notes"
-              name="details-notes"
-              value={details.notes}
-              onChange={handleChange}
-              error={errors.notes}
-              required={true}
-              classes="form__input--small"
-              inputClasses=""
-              showLabel={false}
-            />
-          </CheckoutLineItem>
+          />
         )}
       </div>
     </div>

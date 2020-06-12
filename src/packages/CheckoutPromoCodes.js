@@ -11,7 +11,7 @@ const CheckoutPromoCodes = () => {
   const [pendingPromoCode, setPendingPromoCode] = useState(null)
   const formContext = useContext(FormContext)
   const { config, check, form, loading, errors, updateForm } = formContext
-  const { promo_codes: checkPromoCodes } = check
+  const checkPromoCodes = check.discounts.filter((i) => i.is_promo_code)
   const { email } = form.customer || {}
   const promoCodeErrors = errors ? errors.promo_codes || null : null
   const promoCodeError = promoCodeErrors ? promoCodeErrors.promo_code : null

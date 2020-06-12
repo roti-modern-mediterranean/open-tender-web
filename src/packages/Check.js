@@ -27,14 +27,12 @@ const CheckUpdating = () => (
   </div>
 )
 
-const Check = ({ title, totals, tenders, updating = false }) => {
+const Check = ({ title, check, tenders, updating = false }) => {
+  const { surcharges, discounts, taxes, totals } = check
   const {
     subtotal,
-    surcharges,
     surcharge,
-    discounts,
     discount,
-    taxes,
     // tax,
     tip,
     shipping,
@@ -62,7 +60,7 @@ const Check = ({ title, totals, tenders, updating = false }) => {
               <ul className="check__items__section font-size-small">
                 {surcharges.map((surcharge) => (
                   <CheckItem
-                    key={surcharge.surcharge_id}
+                    key={surcharge.id}
                     label={`${surcharge.name}`}
                     value={surcharge.amount}
                   />
@@ -76,7 +74,7 @@ const Check = ({ title, totals, tenders, updating = false }) => {
               <ul className="check__items__section font-size-small">
                 {discounts.map((discount) => (
                   <CheckItem
-                    key={discount.discount_id}
+                    key={discount.id}
                     label={`${discount.name}`}
                     value={discount.amount}
                   />
@@ -96,7 +94,7 @@ const Check = ({ title, totals, tenders, updating = false }) => {
             <ul className="check__items__section font-size-small">
               {taxes.map((tax) => (
                 <CheckItem
-                  key={tax.tax_id}
+                  key={tax.id}
                   label={`${tax.name}`}
                   value={tax.amount}
                 />
@@ -143,7 +141,9 @@ const Check = ({ title, totals, tenders, updating = false }) => {
 Check.displayName = 'Check'
 Check.propTypes = {
   title: propTypes.string,
-  totals: propTypes.object,
+  check: propTypes.object,
+  tenders: propTypes.array,
+  updating: propTypes.bool,
 }
 
 export default Check
