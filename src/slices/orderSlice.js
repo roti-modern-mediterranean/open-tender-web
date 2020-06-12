@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getLocation, getMenuItems } from '../services/requests'
+import { getRevenueCenter, getMenuItems } from '../services/requests'
 import {
   addItem,
   removeItem,
@@ -19,7 +19,7 @@ import { openModal } from './modalSlice'
 const initialState = {
   orderType: null,
   serviceType: null,
-  location: null,
+  revenueCenter: null,
   requestedAt: 'asap',
   address: null,
   currentItem: null,
@@ -29,11 +29,11 @@ const initialState = {
   loading: 'idle',
 }
 
-export const fetchLocation = createAsyncThunk(
-  'order/fetchLocation',
-  async (locationId, thunkAPI) => {
+export const fetchRevenueCenter = createAsyncThunk(
+  'order/fetchRevenueCenter',
+  async (revenueCenterId, thunkAPI) => {
     try {
-      return await getLocation(locationId)
+      return await getRevenueCenter(revenueCenterId)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -42,17 +42,17 @@ export const fetchLocation = createAsyncThunk(
 
 export const reorderPastOrder = createAsyncThunk(
   'order/reorderPastOrder',
-  async ({ locationId, serviceType, items }, thunkAPI) => {
+  async ({ revenueCenterId, serviceType, items }, thunkAPI) => {
     try {
       thunkAPI.dispatch(
         openModal({ type: 'working', args: { text: 'Building your order...' } })
       )
-      const location = await getLocation(locationId)
-      const menuItems = await getMenuItems(locationId, serviceType)
+      const revenueCenter = await getRevenueCenter(revenueCenterId)
+      const menuItems = await getMenuItems(revenueCenterId, serviceType)
       const { cart, cartCounts } = rehydrateCart(menuItems, items)
       thunkAPI.dispatch(setMenuItems(menuItems))
       thunkAPI.dispatch(openModal({ type: 'requestedAt' }))
-      return { location, cart, cartCounts }
+      return { revenueCenter, cart, cartCounts }
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -67,10 +67,10 @@ const orderSlice = createSlice({
     resetOrderType: (state) => {
       state.orderType = null
       state.serviceType = null
-      state.location = null
+      state.revenueCenter = null
     },
-    resetLocation: (state) => {
-      state.location = null
+    resetRevenueCenter: (state) => {
+      state.revenueCenter = null
     },
     setOrderType: (state, action) => {
       state.orderType = action.payload
@@ -83,8 +83,8 @@ const orderSlice = createSlice({
       state.orderType = orderType
       state.serviceType = serviceType
     },
-    setLocation: (state, action) => {
-      state.location = action.payload
+    setRevenueCenter: (state, action) => {
+      state.revenueCenter = action.payload
     },
     setAddress: (state, action) => {
       state.address = action.payload
@@ -127,16 +127,16 @@ const orderSlice = createSlice({
     },
   },
   extraReducers: {
-    // fetchLocation
+    // fetchRevenueCenter
 
-    [fetchLocation.fulfilled]: (state, action) => {
-      state.location = action.payload
+    [fetchRevenueCenter.fulfilled]: (state, action) => {
+      state.revenueCenter = action.payload
       state.loading = 'idle'
     },
-    [fetchLocation.pending]: (state, action) => {
+    [fetchRevenueCenter.pending]: (state, action) => {
       state.loading = 'pending'
     },
-    [fetchLocation.rejected]: (state, action) => {
+    [fetchRevenueCenter.rejected]: (state, action) => {
       state.error = action.error.detail
       state.loading = 'idle'
     },
@@ -144,7 +144,7 @@ const orderSlice = createSlice({
     // reorderPastOrder
 
     [reorderPastOrder.fulfilled]: (state, action) => {
-      state.location = action.payload.location
+      state.revenueCenter = action.payload.revenueCenter
       state.cart = action.payload.cart
       state.cartCounts = action.payload.cartCounts
       state.loading = 'idle'
@@ -161,13 +161,13 @@ const orderSlice = createSlice({
 
 export const {
   resetOrder,
-  resetLocation,
+  resetRevenueCenter,
   resetOrderType,
   setOrderType,
   setServiceType,
   setOrderServiceType,
   setRequestedAt,
-  setLocation,
+  setRevenueCenter,
   setAddress,
   setCurrentItem,
   addItemToCart,
@@ -187,29 +187,29 @@ export const selectServiceTypeName = (state) =>
 export const selectRequestedAt = (state) =>
   state.order.requestedAt === 'asap' ? 'ASAP' : state.order.requestedAt
 
-export const selectLocation = (state) => state.order.location
+export const selectRevenueCenter = (state) => state.order.revenueCenter
 // TODO: need to replace this
-export const selectLocationName = (state) =>
-  state.order.location ? state.order.location.name : null
+export const selectRevenueCenterName = (state) =>
+  state.order.revenueCenter ? state.order.revenueCenter.name : null
 export const selectTimezone = (state) => {
-  return state.order.location
-    ? timezoneMap[state.order.location.timezone]
+  return state.order.revenueCenter
+    ? timezoneMap[state.order.revenueCenter.timezone]
     : getUserTimezone()
 }
 
 export const selectAddress = (state) => state.order.address
 
-const makeMenuSlug = (location) => {
-  if (!location) return '/'
-  const { slug, revenue_center_type } = location
+const makeMenuSlug = (revenueCenter) => {
+  if (!revenueCenter) return '/'
+  const { slug, revenue_center_type } = revenueCenter
   return `/menu/${slug}-${revenue_center_type.toLowerCase()}`
 }
-export const selectMenuSlug = (state) => makeMenuSlug(state.order.location)
+export const selectMenuSlug = (state) => makeMenuSlug(state.order.revenueCenter)
 
 export const selectMenuVars = (state) => {
-  if (!state.order.location) return {}
+  if (!state.order.revenueCenter) return {}
   return {
-    locationId: state.order.location.location_id,
+    revenueCenterId: state.order.revenueCenter.revenue_center_id,
     serviceType: state.order.serviceType,
     requestedAt: state.order.requestedAt,
   }
@@ -223,6 +223,8 @@ export const selectCartTotal = (state) =>
 export const selectCartCounts = (state) => state.order.cartCounts
 
 export const selectCanCheckout = (state) =>
-  state.order.location && state.order.serviceType && state.order.requestedAt
+  state.order.revenueCenter &&
+  state.order.serviceType &&
+  state.order.requestedAt
 
 export default orderSlice.reducer

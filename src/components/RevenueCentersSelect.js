@@ -5,22 +5,25 @@ import { useHistory } from 'react-router-dom'
 import { GoogleMapsAutocomplete } from '../packages'
 import { MAX_DISTANCE, LOCATIONS_MESSAGES } from '../packages/utils/constants'
 import { selectConfig } from '../slices/configSlice'
-import { setAddress, selectOrder, setLocation } from '../slices/orderSlice'
-import { fetchLocations, selectLocations } from '../slices/locationsSlice'
+import { setAddress, selectOrder, setRevenueCenter } from '../slices/orderSlice'
+import {
+  fetchRevenueCenters,
+  selectRevenueCenters,
+} from '../slices/revenueCentersSlice'
 import { selectGeoLatLng } from '../slices/geolocationSlice'
 import { sortRevenueCenters } from '../packages/utils/maps'
-import Location from './Location'
+import RevenueCenter from './RevenueCenter'
 import BarLoader from 'react-spinners/BarLoader'
 
-const calcMinDistance = (locations, maxDistance = MAX_DISTANCE) => {
-  const withDistance = locations
+const calcMinDistance = (revenueCenters, maxDistance = MAX_DISTANCE) => {
+  const withDistance = revenueCenters
     .filter((i) => i.distance !== null)
     .map((i) => i.distance)
   return withDistance ? Math.min(...withDistance) : maxDistance
 }
 
-const makePickupLocations = (locations) => {
-  const hasPickup = locations.filter((i) =>
+const makePickupRevenueCenters = (revenueCenters) => {
+  const hasPickup = revenueCenters.filter((i) =>
     i.settings.service_types.includes('PICKUP')
   )
   return sortRevenueCenters(hasPickup)
@@ -57,8 +60,8 @@ const makePickupMesssaging = (
   }
 }
 
-const makeDeliveryLocations = (locations) => {
-  const hasDelivery = locations.filter((i) =>
+const makeDeliveryRevenueCenters = (revenueCenters) => {
+  const hasDelivery = revenueCenters.filter((i) =>
     i.settings.service_types.includes('DELIVERY')
   )
   const sorted = sortRevenueCenters(hasDelivery, true)
@@ -89,7 +92,7 @@ const makeDeliveryMesssaging = (
   }
 }
 
-const SelectLocation = ({
+const RevenueCentersSelect = ({
   setCenter,
   center,
   maps,
@@ -99,75 +102,75 @@ const SelectLocation = ({
 }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { locations: locConfig } = useSelector(selectConfig)
+  const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const geoLatLng = useSelector(selectGeoLatLng)
   const { serviceType, orderType, address } = useSelector(selectOrder)
   const coords = address || geoLatLng
   const formattedAddress = address ? address.formatted_address : ''
-  const { locations, loading } = useSelector(selectLocations)
-  const [title, setTitle] = useState(locConfig.title)
-  const [msg, setMsg] = useState(locConfig.content)
+  const { revenueCenters, loading } = useSelector(selectRevenueCenters)
+  const [title, setTitle] = useState(rcConfig.title)
+  const [msg, setMsg] = useState(rcConfig.content)
   const [error, setError] = useState(null)
-  const [displayedLocations, setDisplayedLocations] = useState([])
+  const [displayedRevenueCenters, setDisplayedRevenueCenters] = useState([])
   const isLoading = loading === 'pending'
-  const autoSelect = locConfig.autoSelect[orderType][serviceType]
+  const autoSelect = rcConfig.autoSelect[orderType][serviceType]
 
   useEffect(() => {
     if (orderType) {
       let params = { revenue_center_type: orderType }
       if (coords) params = { ...params, lat: coords.lat, lng: coords.lng }
-      dispatch(fetchLocations(params))
+      dispatch(fetchRevenueCenters(params))
     }
   }, [orderType, coords, dispatch])
 
   const autoRouteCallack = useCallback(
-    (location) => {
-      dispatch(setLocation(location))
-      const rcType = location.revenue_center_type.toLowerCase()
-      return history.push(`/menu/${location.slug}-${rcType}`)
+    (revenueCenter) => {
+      dispatch(setRevenueCenter(revenueCenter))
+      const rcType = revenueCenter.revenue_center_type.toLowerCase()
+      return history.push(`/menu/${revenueCenter.slug}-${rcType}`)
     },
     [dispatch, history]
   )
 
   useEffect(() => {
     if (serviceType === 'PICKUP') {
-      const pickupLocations = makePickupLocations(locations)
-      const minDistance = calcMinDistance(pickupLocations)
-      const count = pickupLocations.length
+      const pickupRevenueCenters = makePickupRevenueCenters(revenueCenters)
+      const minDistance = calcMinDistance(pickupRevenueCenters)
+      const count = pickupRevenueCenters.length
       if (count && autoSelect) {
-        autoRouteCallack(pickupLocations[0])
+        autoRouteCallack(pickupRevenueCenters[0])
       } else {
         const { title, msg } = makePickupMesssaging(
           address,
           geoLatLng,
           count,
           minDistance,
-          locConfig.maxDistance
+          rcConfig.maxDistance
         )
         setTitle(title)
         setMsg(msg)
         setError(null)
-        setDisplayedLocations(makePickupLocations(locations))
+        setDisplayedRevenueCenters(makePickupRevenueCenters(revenueCenters))
       }
     } else {
-      const deliveryLocations = makeDeliveryLocations(locations)
-      const count = deliveryLocations.length
+      const deliveryRevenueCenters = makeDeliveryRevenueCenters(revenueCenters)
+      const count = deliveryRevenueCenters.length
       const { title, msg, error } = makeDeliveryMesssaging(address, count)
       if (count && autoSelect && !error) {
-        autoRouteCallack(deliveryLocations[0])
+        autoRouteCallack(deliveryRevenueCenters[0])
       } else {
         setTitle(title)
         setMsg(msg)
         setError(error)
-        setDisplayedLocations(deliveryLocations)
+        setDisplayedRevenueCenters(deliveryRevenueCenters)
       }
     }
   }, [
     serviceType,
     address,
     geoLatLng,
-    locations,
-    locConfig.maxDistance,
+    revenueCenters,
+    rcConfig.maxDistance,
     autoSelect,
     autoRouteCallack,
   ])
@@ -199,16 +202,16 @@ const SelectLocation = ({
             </div>
             <p>Retrieving nearest locations</p>
           </div>
-        ) : !error && displayedLocations.length > 0 ? (
-          <div className="locations">
+        ) : !error && displayedRevenueCenters.length > 0 ? (
+          <div className="revenueCenters">
             <ul>
-              {displayedLocations.map((location) => (
-                <li key={location.location_id}>
-                  <Location
-                    location={location}
+              {displayedRevenueCenters.map((revenueCenter) => (
+                <li key={revenueCenter.revenue_center_id}>
+                  <RevenueCenter
+                    revenueCenter={revenueCenter}
                     showImage={true}
                     isOrder={true}
-                    classes="location--card"
+                    classes="rc--card"
                   />
                 </li>
               ))}
@@ -220,13 +223,13 @@ const SelectLocation = ({
   )
 }
 
-SelectLocation.displayName = 'SelectLocation'
-SelectLocation.propTypes = {
-  locationns: propTypes.array,
+RevenueCentersSelect.displayName = 'RevenueCentersSelect'
+RevenueCentersSelect.propTypes = {
+  revenueCenters: propTypes.array,
   setCenter: propTypes.func,
   maps: propTypes.object,
   map: propTypes.object,
   sessionToken: propTypes.object,
   autocomplete: propTypes.object,
 }
-export default SelectLocation
+export default RevenueCentersSelect

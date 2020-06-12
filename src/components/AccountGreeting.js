@@ -9,7 +9,7 @@ import {
   selectOrder,
   resetOrderType,
   resetOrder,
-  resetLocation,
+  resetRevenueCenter,
 } from '../slices/orderSlice'
 import { selectAccountOrders } from '../slices/accountSlice'
 import { selectAccountConfigSections } from '../slices/configSlice'
@@ -47,7 +47,7 @@ const AccountGreeting = ({ title, subtitle }) => {
   const config = useSelector(selectAccountConfigSections)
   const customer = useSelector(selectCustomerAccount)
   const currentOrder = useSelector(selectOrder)
-  const { location, serviceType, cart } = currentOrder
+  const { revenueCenter, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectAccountOrders)
   const isLoading = loading === 'pending'
   // const isLoading = true
@@ -59,7 +59,7 @@ const AccountGreeting = ({ title, subtitle }) => {
     orderType = order_type === 'OLO' ? service_type : order_type
     otherOrderTypes = otherOrderTypesMap[orderType]
   }
-  const isCurrentOrder = location && serviceType && cart.length
+  const isCurrentOrder = revenueCenter && serviceType && cart.length
   const accountLoading = isLoading && !isCurrentOrder && !lastOrder
 
   const startNewOrder = (evt) => {
@@ -71,14 +71,14 @@ const AccountGreeting = ({ title, subtitle }) => {
 
   const continueCurrent = (evt) => {
     evt.preventDefault()
-    const rcType = location.revenue_center_type.toLowerCase()
-    history.push(`/menu/${location.slug}-${rcType}`)
+    const rcType = revenueCenter.revenue_center_type.toLowerCase()
+    history.push(`/menu/${revenueCenter.slug}-${rcType}`)
     evt.target.blur()
   }
 
-  const changeLocation = (evt) => {
+  const changeRevenueCenter = (evt) => {
     evt.preventDefault()
-    dispatch(resetLocation())
+    dispatch(resetRevenueCenter())
     history.push(`/locations`)
     evt.target.blur()
   }
@@ -218,7 +218,7 @@ const AccountGreeting = ({ title, subtitle }) => {
                   <Button
                     text="Change location"
                     classes="btn-link"
-                    onClick={changeLocation}
+                    onClick={changeRevenueCenter}
                   />{' '}
                   or{' '}
                   <Button

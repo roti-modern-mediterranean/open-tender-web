@@ -14,12 +14,12 @@ import { errMessages } from './utils/errors'
 
 const RequestedAtPicker = ({
   requestedAt,
-  location,
+  revenueCenter,
   serviceType,
   setRequestedAt,
   updateText = 'Update Order Time',
 }) => {
-  const { timezone, settings } = location
+  const { timezone, settings } = revenueCenter
   const tz = timezoneMap[timezone]
   const requestedAtDate =
     requestedAt === 'asap' ? null : isoToDate(requestedAt, tz)
@@ -35,7 +35,7 @@ const RequestedAtPicker = ({
 
   let args = {}
   if (isEmpty(settings.first_times)) {
-    setError(errMessages.locationClosed)
+    setError(errMessages.revenueCenterClosed)
   } else if (!settings.first_times[serviceType]) {
     setError(errMessages.serviceTypeNotAvailable)
   } else {
@@ -99,7 +99,7 @@ RequestedAtPicker.displayName = 'RequestedAtPicker'
 RequestedAtPicker.propTypes = {
   requestedAt: propTypes.string,
   setRequestedAt: propTypes.func,
-  location: propTypes.object,
+  revenueCenter: propTypes.object,
 }
 
 export default RequestedAtPicker

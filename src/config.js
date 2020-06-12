@@ -63,7 +63,7 @@ export const defaultConfig = {
       catering: 'Order Catering',
     },
   },
-  locations: {
+  revenueCenters: {
     title: "Let's find the nearest location",
     subtitle: "We'll make this quick",
     content: 'Please enter a zip code or address below.',

@@ -2,33 +2,33 @@ import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import { iconMap } from '../packages/icons'
 import { stripTags } from '../packages/utils/helpers'
-import LocationOrder from './LocationOrder'
+import RevenueCenterOrder from './RevenueCenterOrder'
 
 const placeholder2 =
   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg'
 
-const LocationAction = ({ icon, text, arrow = 'ArrowRight' }) => {
+const RevenueCenterAction = ({ icon, text, arrow = 'ArrowRight' }) => {
   return (
-    <div className="location__action">
-      <div className="location__icon secondary-color">{iconMap[icon]}</div>
-      <div className="location__text">
+    <div className="rc__action">
+      <div className="rc__icon secondary-color">{iconMap[icon]}</div>
+      <div className="rc__text">
         <p className="secondary-color font-size-small">{text}</p>
       </div>
-      <div className="location__arrow secondary-color">{iconMap[arrow]}</div>
+      <div className="rc__arrow secondary-color">{iconMap[arrow]}</div>
     </div>
   )
 }
 
-const Location = ({ location, classes = '', showImage, isOrder }) => {
+const RevenueCenter = ({ revenueCenter, classes = '', showImage, isOrder }) => {
   const [showHours, setShowHours] = useState(false)
 
-  const { address, images, hours } = location
+  const { address, images, hours } = revenueCenter
   let smallImage = images.find((i) => i.type === 'SMALL_IMAGE')
   smallImage = smallImage ? smallImage.url : null
   const bgStyle = { backgroundImage: `url(${smallImage || placeholder2}` }
   const phoneUrl = address.phone ? `tel:${address.phone}` : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
-  classes = `location bg-color border-radius ${classes}`
+  classes = `rc bg-color border-radius ${classes}`
 
   const toggleHours = (evt) => {
     evt.preventDefault()
@@ -37,37 +37,34 @@ const Location = ({ location, classes = '', showImage, isOrder }) => {
   }
 
   const distance =
-    location.distance !== null && location.distance !== undefined
-      ? location.distance
+    revenueCenter.distance !== null && revenueCenter.distance !== undefined
+      ? revenueCenter.distance
       : null
 
   return (
     <div className={classes}>
       {showImage && (
-        <div
-          className="location__image bg-image bg-secondary-color"
-          style={bgStyle}
-        >
+        <div className="rc__image bg-image bg-secondary-color" style={bgStyle}>
           &nbsp;
         </div>
       )}
-      <div className="location__content">
-        <div className="location__header">
-          <h2 className="ot-font-size-h5">{location.name}</h2>
+      <div className="rc__content">
+        <div className="rc__header">
+          <h2 className="ot-font-size-h5">{revenueCenter.name}</h2>
           {distance !== null && (
             <p className="font-size-small secondary-color">
               {distance.toFixed(2)} miles away
             </p>
           )}
         </div>
-        <div className="location__actions">
+        <div className="rc__actions">
           <a
             className="no-link"
-            href={location.directions_url}
+            href={revenueCenter.directions_url}
             rel="noopener noreferrer"
             target="_blank"
           >
-            <LocationAction icon="MapPin" text={address.street} />
+            <RevenueCenterAction icon="MapPin" text={address.street} />
           </a>
           {phoneUrl && (
             <a
@@ -76,27 +73,27 @@ const Location = ({ location, classes = '', showImage, isOrder }) => {
               rel="noopener noreferrer"
               target="_blank"
             >
-              <LocationAction icon="Phone" text={address.phone} />
+              <RevenueCenterAction icon="Phone" text={address.phone} />
             </a>
           )}
           {hoursDesc && (
             <button onClick={toggleHours}>
-              <LocationAction icon="Clock" text={hoursDesc} />
+              <RevenueCenterAction icon="Clock" text={hoursDesc} />
             </button>
           )}
         </div>
-        <LocationOrder location={location} isOrder={isOrder} />
+        <RevenueCenterOrder revenueCenter={revenueCenter} isOrder={isOrder} />
       </div>
     </div>
   )
 }
 
-Location.displayName = 'Location'
-Location.propTypes = {
-  location: propTypes.object,
+RevenueCenter.displayName = 'RevenueCenter'
+RevenueCenter.propTypes = {
+  revenueCenter: propTypes.object,
   classes: propTypes.string,
   showImage: propTypes.bool,
   isOrder: propTypes.bool,
 }
 
-export default Location
+export default RevenueCenter

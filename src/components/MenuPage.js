@@ -2,26 +2,26 @@ import React, { useEffect, createContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import BarLoader from 'react-spinners/BarLoader'
-import { validateCart } from '../../packages/utils/cart'
-import { selectConfig } from '../../slices/configSlice'
+import { validateCart } from '../packages/utils/cart'
+import { selectConfig } from '../slices/configSlice'
 import {
-  selectLocation,
+  selectRevenueCenter,
   selectMenuVars,
   selectCart,
   setCart,
-  fetchLocation,
-} from '../../slices/orderSlice'
+  fetchRevenueCenter,
+} from '../slices/orderSlice'
 import {
   fetchMenu,
   selectMenu,
   setCartErrors,
   selectedAllergenNames,
   fetchAllergens,
-} from '../../slices/menuSlice'
-import Hero from '../Hero'
-import Location from '../Location'
-import Menu from '../Menu'
-import { openModal } from '../../slices/modalSlice'
+} from '../slices/menuSlice'
+import { openModal } from '../slices/modalSlice'
+import Hero from './Hero'
+import Menu from './Menu'
+import RevenueCenter from './RevenueCenter'
 
 export const MenuContext = createContext(null)
 
@@ -29,8 +29,10 @@ const MenuPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { menu: menuConfig } = useSelector(selectConfig)
-  const location = useSelector(selectLocation)
-  const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
+  const revenueCenter = useSelector(selectRevenueCenter)
+  const { revenueCenterId, serviceType, requestedAt } = useSelector(
+    selectMenuVars
+  )
   const { categories, soldOut, error, loading } = useSelector(selectMenu)
   const allergenAlerts = useSelector(selectedAllergenNames)
 
@@ -42,14 +44,14 @@ const MenuPage = () => {
   }, [])
 
   useEffect(() => {
-    if (!locationId) {
+    if (!revenueCenterId) {
       return history.push('/locations')
     } else {
-      dispatch(fetchLocation(locationId))
-      dispatch(fetchMenu([locationId, serviceType, requestedAt]))
+      dispatch(fetchRevenueCenter(revenueCenterId))
+      dispatch(fetchMenu([revenueCenterId, serviceType, requestedAt]))
       dispatch(fetchAllergens())
     }
-  }, [locationId, serviceType, requestedAt, dispatch, history])
+  }, [revenueCenterId, serviceType, requestedAt, dispatch, history])
 
   useEffect(() => {
     if (categories.length) {
@@ -67,8 +69,11 @@ const MenuPage = () => {
   return (
     <MenuContext.Provider value={{ soldOut, menuConfig, allergenAlerts }}>
       <Hero imageUrl={menuConfig.background} classes="hero--right">
-        {location && (
-          <Location location={location} classes="location--hero slide-up" />
+        {revenueCenter && (
+          <RevenueCenter
+            revenueCenter={revenueCenter}
+            classes="rc--hero slide-up"
+          />
         )}
       </Hero>
       <h1 className="sr-only">Menu</h1>

@@ -199,11 +199,11 @@ const Order = ({ order, loading, error, goToAccount }) => {
   const reorder = (evt) => {
     evt.preventDefault()
     evt.target.blur()
-    const { location_id: locationId } = revenue_center
+    const { revenue_center_id: revenueCenterId } = revenue_center
     const serviceType = service_type
     dispatch(setOrderServiceType([order_type, service_type]))
     dispatch(setAddress(address || null))
-    dispatch(reorderPastOrder({ locationId, serviceType, cart }))
+    dispatch(reorderPastOrder({ revenueCenterId, serviceType, items: cart }))
   }
 
   return (

@@ -8,11 +8,14 @@ const makeRequestedIso = (requestedAt) => {
 export const fetchMenu = createAsyncThunk(
   'menu/fetchMenu',
   async (menuVars, thunkAPI) => {
-    const [locationId, serviceType, requestedAt] = menuVars
+    const [revenueCenterId, serviceType, requestedAt] = menuVars
     try {
       const requestedIso = makeRequestedIso(requestedAt)
-      const menu = await getMenu(locationId, serviceType, requestedIso)
-      return { ...menu, menuVars: { locationId, serviceType, requestedAt } }
+      const menu = await getMenu(revenueCenterId, serviceType, requestedIso)
+      return {
+        ...menu,
+        menuVars: { revenueCenterId, serviceType, requestedAt },
+      }
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -21,9 +24,9 @@ export const fetchMenu = createAsyncThunk(
 
 export const fetchMenuItems = createAsyncThunk(
   'menu/fetchMenuItems',
-  async ({ locationId, serviceType }, thunkAPI) => {
+  async ({ revenueCenterId, serviceType }, thunkAPI) => {
     try {
-      return await getMenuItems(locationId, serviceType)
+      return await getMenuItems(revenueCenterId, serviceType)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }

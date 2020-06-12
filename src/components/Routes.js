@@ -1,15 +1,13 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import {
-  HomePage,
-  LocationsPage,
-  MenuPage,
-  CheckoutPage,
-  ConfirmationPage,
-} from './pages'
+import HomePage from './HomePage'
+import MenuPage from './MenuPage'
+import CheckoutPage from './CheckoutPage'
+import ConfirmationPage from './ConfirmationPage'
+import OrderPage from './OrderPage'
+import RevenueCentersPage from './RevenueCentersPage'
 import AccountPage from './AccountPage'
 import AccountAddressesPage from './AccountAddressesPage'
-import OrderPage from './OrderPage'
 import AccountFavoritesPage from './AccountFavoritesPage'
 import AccountOrdersPage from './AccountOrdersPage'
 import AccountItemsPage from './AccountItemsPage'
@@ -21,7 +19,7 @@ const Routes = () => {
         <HomePage />
       </Route>
       <Route exact path="/locations">
-        <LocationsPage />
+        <RevenueCentersPage />
       </Route>
       <Route path="/menu/:slug">
         <MenuPage />

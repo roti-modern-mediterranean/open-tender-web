@@ -13,7 +13,7 @@ import {
   ButtonAccount,
   ButtonAllergens,
   ButtonGroupOrder,
-  ButtonLocation,
+  ButtonRevenueCenter,
   ButtonRequestedAt,
   ButtonServiceType,
 } from '../packages'
@@ -26,7 +26,7 @@ const makeClasses = (pathname) => {
 const Header = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { location, serviceType, requestedAt } = useSelector(selectOrder)
+  const { revenueCenter, serviceType, requestedAt } = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
   const customer = useSelector(selectCustomer)
   const { account, auth } = customer
@@ -104,9 +104,9 @@ const Header = () => {
           goToAccount={handleAccount}
           classes="btn--header"
         />
-        {location && !isCheckout && (
-          <ButtonLocation
-            location={location}
+        {revenueCenter && !isCheckout && (
+          <ButtonRevenueCenter
+            revenueCenter={revenueCenter}
             onClick={handleLocation}
             classes="btn--header"
           />
@@ -118,7 +118,7 @@ const Header = () => {
             classes="btn--header"
           />
         )}
-        {location && !isCheckout && (
+        {revenueCenter && !isCheckout && (
           <ButtonRequestedAt
             requestedAt={requestedAt}
             tz={tz}

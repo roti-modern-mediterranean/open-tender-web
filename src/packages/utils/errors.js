@@ -25,7 +25,7 @@ export const errMessages = {
   notExist: 'The requested entity does not exist.',
   serverError: 'Unknown error. Please contact Open Tender support.',
   invalidHours: 'One or more invalid times submitted. Please see below.',
-  locationClosed:
+  revenueCenterClosed:
     'This location is closed or otherwise not able to accept orders at the selected time. Please try changing your order time.',
   serviceTypeNotAvailable:
     'This location does not offer the selected service type at this time. Please switch to another service type.',

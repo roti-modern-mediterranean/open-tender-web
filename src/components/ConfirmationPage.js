@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectConfig } from '../../slices/configSlice'
-import { selectCompletedOrder } from '../../slices/confirmationSlice'
-import Hero from '../Hero'
+import { selectConfig } from '../slices/configSlice'
+import { selectCompletedOrder } from '../slices/confirmationSlice'
+import Hero from './Hero'
 
 const ConfirmationPage = () => {
   const history = useHistory()

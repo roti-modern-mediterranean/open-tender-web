@@ -2,7 +2,7 @@ import React, { useState, useCallback, useContext } from 'react'
 import debounce from 'lodash/debounce'
 import {
   Button,
-  ButtonLocation,
+  ButtonRevenueCenter,
   ButtonServiceType,
   ButtonRequestedAt,
   CheckoutLineItem,
@@ -72,8 +72,8 @@ const CheckoutDetails = () => {
       </div>
       <div className="form__inputs">
         <CheckoutLineItem label="Location">
-          <ButtonLocation
-            location={order.location}
+          <ButtonRevenueCenter
+            revenueCenter={order.revenueCenter}
             onClick={updateLocation}
             classes="btn--header"
           />

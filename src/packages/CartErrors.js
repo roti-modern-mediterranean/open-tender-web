@@ -51,10 +51,10 @@ InvalidItems.propTypes = {
   invalidItems: propTypes.array,
 }
 
-const isCartRevertable = (previous, current, locations) => {
+const isCartRevertable = (previous, current, revenueCenters) => {
   if (!previous) return null
-  const previousLocation = locations.find(
-    (i) => i.location_id === previous.locationId
+  const previousLocation = revenueCenters.find(
+    (i) => i.revenue_center_id === previous.revenueCenterId
   )
   if (!previousLocation) return null
   const now = new Date()
@@ -62,7 +62,7 @@ const isCartRevertable = (previous, current, locations) => {
     current.requestedAt === 'asap' ? now : isoToDate(current.requestedAt)
   if (requestedDate < now) return null
   if (
-    previous.locationId === current.locationId &&
+    previous.revenueCenterId === current.revenueCenterId &&
     previous.serviceType === current.serviceType
   ) {
     return null
@@ -76,11 +76,15 @@ const CartErrors = ({
   config,
   revert,
   proceed,
-  locations,
+  revenueCenters,
   previousMenuVars,
   menuVars,
 }) => {
-  const isRevertable = isCartRevertable(previousMenuVars, menuVars, locations)
+  const isRevertable = isCartRevertable(
+    previousMenuVars,
+    menuVars,
+    revenueCenters
+  )
   const content = isRevertable ? config.revert : config.proceed
 
   const handleRevert = (evt) => {

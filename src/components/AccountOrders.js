@@ -5,7 +5,7 @@ import { selectAccountConfigSections } from '../slices/configSlice'
 import { selectToken } from '../slices/customerSlice'
 import { selectAccountOrders, fetchOrders } from '../slices/accountSlice'
 import {
-  fetchLocation,
+  fetchRevenueCenter,
   setOrderServiceType,
   setAddress,
   selectCartQuantity,
@@ -48,10 +48,10 @@ const AccountOrders = () => {
     const lastOrder = entities.length ? entities[0] : null
     if (lastOrder) {
       const { revenue_center, service_type, order_type, address } = lastOrder
-      const { location_id: locationId } = revenue_center
-      dispatch(fetchMenuItems({ locationId, serviceType: service_type }))
+      const { revenue_center_id: revenueCenterId } = revenue_center
+      dispatch(fetchMenuItems({ revenueCenterId, serviceType: service_type }))
       if (!cartQuantity) {
-        dispatch(fetchLocation(locationId))
+        dispatch(fetchRevenueCenter(revenueCenterId))
         dispatch(setOrderServiceType([order_type, service_type]))
         dispatch(setAddress(address || null))
       }

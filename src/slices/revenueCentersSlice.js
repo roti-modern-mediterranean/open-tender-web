@@ -1,16 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getLocations } from '../services/requests'
+import { getRevenueCenters } from '../services/requests'
 import { addDistance } from '../packages/utils/maps'
 
-const initialState = { locations: [], loading: 'idle', error: null }
+const initialState = { revenueCenters: [], loading: 'idle', error: null }
 
-export const fetchLocations = createAsyncThunk(
-  'locations/getLocations',
+export const fetchRevenueCenters = createAsyncThunk(
+  'revenueCenters/getRevenueCenters',
   async ({ revenue_center_type, lat, lng }, thunkAPI) => {
     try {
       if (lat) lat = parseFloat(lat).toFixed(7)
       if (lng) lng = parseFloat(lng).toFixed(7)
-      const response = await getLocations(revenue_center_type, lat, lng)
+      const response = await getRevenueCenters(revenue_center_type, lat, lng)
       let revenueCenters = []
       if (lat && lng) {
         const address = { lat: lat, lng: lng }
@@ -25,21 +25,21 @@ export const fetchLocations = createAsyncThunk(
   }
 )
 
-const locationsSlice = createSlice({
-  name: 'locations',
+const revenueCentersSlice = createSlice({
+  name: 'revenueCenters',
   initialState,
   reducers: {
-    resetLocations: () => initialState,
+    resetRevenueCenters: () => initialState,
   },
   extraReducers: {
-    [fetchLocations.fulfilled]: (state, action) => {
-      state.locations = action.payload
+    [fetchRevenueCenters.fulfilled]: (state, action) => {
+      state.revenueCenters = action.payload
       state.loading = 'idle'
     },
-    [fetchLocations.pending]: (state) => {
+    [fetchRevenueCenters.pending]: (state) => {
       state.loading = 'pending'
     },
-    [fetchLocations.rejected]: (state, action) => {
+    [fetchRevenueCenters.rejected]: (state, action) => {
       // TODO: this might not be right
       state.errors = action.payload.params
       state.loading = 'idle'
@@ -47,8 +47,8 @@ const locationsSlice = createSlice({
   },
 })
 
-export const { resetLocations } = locationsSlice.actions
+export const { resetRevenueCenters } = revenueCentersSlice.actions
 
-export const selectLocations = (state) => state.locations
+export const selectRevenueCenters = (state) => state.revenueCenters
 
-export default locationsSlice.reducer
+export default revenueCentersSlice.reducer

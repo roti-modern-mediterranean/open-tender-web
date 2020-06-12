@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setOrderServiceType } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
 
-const SelectOrderType = () => {
+const HomeOrderType = () => {
   const { home: homeConfig } = useSelector(selectConfig)
   const { title, subtitle, content, buttons } = homeConfig
   const dispatch = useDispatch()
@@ -44,5 +44,5 @@ const SelectOrderType = () => {
   )
 }
 
-SelectOrderType.displayName = 'SelectOrderType'
-export default SelectOrderType
+HomeOrderType.displayName = 'HomeOrderType'
+export default HomeOrderType

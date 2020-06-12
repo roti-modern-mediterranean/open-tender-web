@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { closeModal } from '../../slices/modalSlice'
 import { selectMenu, fetchMenu } from '../../slices/menuSlice'
 import { selectConfig } from '../../slices/configSlice'
-import { selectLocations } from '../../slices/locationsSlice'
+import { selectRevenueCenters } from '../../slices/revenueCentersSlice'
 import ModalClose from '../ModalClose'
 import { CartErrors } from '../../packages'
-import { setCart, setLocation } from '../../slices/orderSlice'
+import { setCart, setRevenueCenter } from '../../slices/orderSlice'
 
 const CartErrorsModal = () => {
   const dispatch = useDispatch()
@@ -14,11 +14,11 @@ const CartErrorsModal = () => {
   const { newCart, errors } = cartErrors
   const { menu: menuConfig } = useSelector(selectConfig)
   const { validate: config } = menuConfig
-  const { locations } = useSelector(selectLocations)
+  const { revenueCenters } = useSelector(selectRevenueCenters)
 
-  const handleRevert = (evt, location, menuVars) => {
+  const handleRevert = (evt, revenueCenter, menuVars) => {
     evt.preventDefault()
-    dispatch(setLocation(location))
+    dispatch(setRevenueCenter(revenueCenter))
     dispatch(fetchMenu(menuVars))
     dispatch(closeModal())
     evt.target.blur()
@@ -46,7 +46,7 @@ const CartErrorsModal = () => {
             config={config}
             revert={handleRevert}
             proceed={handleProceed}
-            locations={locations}
+            revenueCenters={revenueCenters}
             previousMenuVars={previousMenuVars}
             menuVars={menuVars}
           />

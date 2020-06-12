@@ -45,7 +45,6 @@ const Sidebar = () => {
       <div className={classes}>
         <div className="sidebar__container">
           <div className="sidebar__header bg-color">
-            {/* <h2 className="ot-font-size-h5">Your Order from {locationName}</h2> */}
             <h2 className="sidebar__title ot-font-size-h3">Your Order</h2>
             {cartCount === 0 ? (
               <p className="font-size-small ot-alert-color">

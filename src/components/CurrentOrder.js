@@ -14,10 +14,17 @@ import { selectCartTotal } from '../slices/orderSlice'
 
 const CurrentOrder = ({ order }) => {
   const history = useHistory()
-  const { orderType, serviceType, location, requestedAt, address, cart } = order
+  const {
+    orderType,
+    serviceType,
+    revenueCenter,
+    requestedAt,
+    address,
+    cart,
+  } = order
   const { addresses: addressConfig } = useSelector(selectAccountConfigSections)
   const cartTotal = useSelector(selectCartTotal)
-  const tz = timezoneMap[location.timezone]
+  const tz = timezoneMap[revenueCenter.timezone]
   const requestedAtStr =
     requestedAt === 'asap'
       ? 'ASAP'
@@ -34,8 +41,8 @@ const CurrentOrder = ({ order }) => {
 
   const backToMenu = (evt) => {
     evt.preventDefault()
-    const rcType = location.revenue_center_type.toLowerCase()
-    history.push(`/menu/${location.slug}-${rcType}`)
+    const rcType = revenueCenter.revenue_center_type.toLowerCase()
+    history.push(`/menu/${revenueCenter.slug}-${rcType}`)
     evt.target.blur()
   }
 
@@ -48,7 +55,7 @@ const CurrentOrder = ({ order }) => {
             Your Current Order
           </p>
           <p className="order-card__title">
-            {capitalize(orderTypeStr)} from {location.name}
+            {capitalize(orderTypeStr)} from {revenueCenter.name}
           </p>
         </div>
         <div className="order-card__content">

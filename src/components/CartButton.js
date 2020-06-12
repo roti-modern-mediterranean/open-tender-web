@@ -1,5 +1,4 @@
 import React from 'react'
-// import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCartQuantity } from '../slices/orderSlice'
 import { toggleSidebar } from '../slices/sidebarSlice'

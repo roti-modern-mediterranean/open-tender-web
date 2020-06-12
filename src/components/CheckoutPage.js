@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectConfig } from '../../slices/configSlice'
-import { openModal } from '../../slices/modalSlice'
-import { logoutCustomer, selectCustomer } from '../../slices/customerSlice'
+import { selectConfig } from '../slices/configSlice'
+import { openModal } from '../slices/modalSlice'
+import { logoutCustomer, selectCustomer } from '../slices/customerSlice'
 import {
   selectCart,
   selectCartQuantity,
@@ -13,7 +13,7 @@ import {
   resetOrder,
   resetOrderType,
   selectTimezone,
-} from '../../slices/orderSlice'
+} from '../slices/orderSlice'
 import {
   updateForm,
   updateCustomer,
@@ -22,11 +22,11 @@ import {
   selectCheckout,
   selectCompletedOrder,
   clearCompletedOrder,
-} from '../../slices/checkoutSlice'
-// import { setCompletedOrder } from '../../slices/confirmationSlice'
-import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../../packages'
-import { prepareOrder } from '../../packages/utils/cart'
-import HeaderLogo from '../HeaderLogo'
+} from '../slices/checkoutSlice'
+// import { setCompletedOrder } from '../slices/confirmationSlice'
+import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../packages'
+import { prepareOrder } from '../packages/utils/cart'
+import HeaderLogo from './HeaderLogo'
 
 const CheckoutPage = () => {
   const history = useHistory()
@@ -35,7 +35,9 @@ const CheckoutPage = () => {
   const cart = useSelector(selectCart)
   const cartCount = useSelector(selectCartQuantity)
   const menuSlug = useSelector(selectMenuSlug)
-  const { locationId, serviceType, requestedAt } = useSelector(selectMenuVars)
+  const { revenueCenterId, serviceType, requestedAt } = useSelector(
+    selectMenuVars
+  )
   const order = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
   const { account, auth } = useSelector(selectCustomer)
@@ -57,7 +59,7 @@ const CheckoutPage = () => {
   }, [dispatch, account])
 
   useEffect(() => {
-    if (!locationId || !serviceType) return history.push('/')
+    if (!revenueCenterId || !serviceType) return history.push('/')
     if (completedOrder) {
       dispatch(clearCompletedOrder())
       dispatch(resetOrder())
@@ -71,7 +73,7 @@ const CheckoutPage = () => {
       ? { customer_id: account.customer_id }
       : null
     const data = {
-      locationId,
+      revenueCenterId,
       serviceType,
       requestedAt,
       cart,
@@ -83,7 +85,7 @@ const CheckoutPage = () => {
     const order = prepareOrder(data)
     dispatch(validateOrder(order))
   }, [
-    locationId,
+    revenueCenterId,
     serviceType,
     requestedAt,
     cart,
@@ -99,7 +101,7 @@ const CheckoutPage = () => {
   const pending = loading === 'pending'
 
   const data = {
-    locationId,
+    revenueCenterId,
     serviceType,
     requestedAt,
     cart,
@@ -142,7 +144,7 @@ const CheckoutPage = () => {
     return history.push(`/`)
   }
 
-  const handleLocation = (evt) => {
+  const handleRevenueCenter = (evt) => {
     evt.preventDefault()
     return history.push(`/locations`)
   }
@@ -198,7 +200,7 @@ const CheckoutPage = () => {
                 login={() => dispatch(openModal({ type: 'login' }))}
                 logout={() => dispatch(logoutCustomer(access_token))}
                 updateRequestedAt={handleRequestedAt}
-                updateLocation={handleLocation}
+                updateRevenueCenter={handleRevenueCenter}
                 updateServiceType={handleServiceType}
               />
             </div>

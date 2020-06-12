@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { setLocation, selectOrder } from '../slices/orderSlice'
+import { setRevenueCenter, selectOrder } from '../slices/orderSlice'
 import { Button } from '../packages'
 import { serviceTypeNamesMap } from '../packages/utils/constants'
 import {
@@ -21,23 +21,23 @@ const makeOrderMsg = (firstTime, serviceType) => {
   return orderMsg
 }
 
-export const LocationOrder = ({ location, isOrder }) => {
+export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { first_times: firstTimes } = location.settings
-  const { locations: locConfig } = useSelector(selectConfig)
-  const { statusMessages } = locConfig || {}
+  const { first_times: firstTimes } = revenueCenter.settings
+  const { revenueCenters: rcConfig } = useSelector(selectConfig)
+  const { statusMessages } = rcConfig || {}
   const { serviceType } = useSelector(selectOrder)
   const firstTime = firstTimes[serviceType]
-  const statusMessage = statusMessages[location.status]
+  const statusMessage = statusMessages[revenueCenter.status]
   const orderMsg =
     !statusMessage && firstTime ? makeOrderMsg(firstTime, serviceType) : null
 
   const handleOrder = (evt) => {
     evt.preventDefault()
-    dispatch(setLocation(location))
-    const rcType = location.revenue_center_type.toLowerCase()
-    history.push(`/menu/${location.slug}-${rcType}`)
+    dispatch(setRevenueCenter(revenueCenter))
+    const rcType = revenueCenter.revenue_center_type.toLowerCase()
+    history.push(`/menu/${revenueCenter.slug}-${rcType}`)
     evt.target.blur()
   }
 
@@ -48,29 +48,29 @@ export const LocationOrder = ({ location, isOrder }) => {
   }
 
   return (
-    <div className="location__order">
+    <div className="rc__order">
       {orderMsg ? (
         <>
-          <div className="location__order__message">
+          <div className="rc__order__message">
             <p className="ot-success-color font-size-small">{orderMsg}</p>
           </div>
           {isOrder ? (
             <Button
               text="Order Here"
-              ariaLabel={`Order from ${location.name}`}
+              ariaLabel={`Order from ${revenueCenter.name}`}
               icon="ShoppingBag"
               onClick={handleOrder}
             />
           ) : (
             <Button
-              text="Change Location"
+              text="Change RevenueCenter"
               icon="RefreshCw"
               onClick={handleChange}
             />
           )}
         </>
       ) : (
-        <div className="location__order__message">
+        <div className="rc__order__message">
           <p className="ot-error-color font-size-small">{statusMessage}</p>
         </div>
       )}
@@ -78,10 +78,10 @@ export const LocationOrder = ({ location, isOrder }) => {
   )
 }
 
-LocationOrder.displayName = 'LocationOrder'
-LocationOrder.propTypes = {
-  location: propTypes.object,
+RevenueCenterOrder.displayName = 'RevenueCenterOrder'
+RevenueCenterOrder.propTypes = {
+  revenueCenter: propTypes.object,
   isOrder: propTypes.bool,
 }
 
-export default LocationOrder
+export default RevenueCenterOrder

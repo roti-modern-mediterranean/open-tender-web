@@ -3,17 +3,17 @@ import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetOrder } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
-import Location from './Location'
+import RevenueCenter from './RevenueCenter'
 
-export const Locations = ({ locations }) => {
-  const { locations: locationsConfig } = useSelector(selectConfig)
-  const { title, content } = locationsConfig
+export const RevenueCenters = ({ revenueCenters }) => {
+  const { revenueCenters: rcConfig } = useSelector(selectConfig)
+  const { title, content } = rcConfig
   const dispatch = useDispatch()
   return (
-    <div className="card card--location overlay border-radius slide-up">
+    <div className="card card--rc overlay border-radius slide-up">
       <div className="card__header">
         <h1 className="ot-font-size-h3">
-          {locations.length} {title}
+          {revenueCenters.length} {title}
         </h1>
         <p>
           {content} or{' '}
@@ -29,13 +29,13 @@ export const Locations = ({ locations }) => {
       </div>
       <div className="card__content">
         <ul>
-          {locations.map((location) => (
-            <li key={location.location_id}>
-              <Location
-                location={location}
+          {revenueCenters.map((revenueCenter) => (
+            <li key={revenueCenter.revenue_center_id}>
+              <RevenueCenter
+                revenueCenter={revenueCenter}
                 showImage={true}
                 isOrder={true}
-                classes="location--card"
+                classes="rc--card"
               />
             </li>
           ))}
@@ -45,9 +45,9 @@ export const Locations = ({ locations }) => {
   )
 }
 
-Locations.displayName = 'Locations'
-Locations.propTypes = {
-  locations: propTypes.array,
+RevenueCenters.displayName = 'RevenueCenters'
+RevenueCenters.propTypes = {
+  revenueCenters: propTypes.array,
 }
 
-export default Locations
+export default RevenueCenters

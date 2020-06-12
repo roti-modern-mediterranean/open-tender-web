@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { selectConfig } from '../../slices/configSlice'
-import { selectOrder } from '../../slices/orderSlice'
-import SelectOrderType from '../SelectOrderType'
-import Background from '../Background'
-import { resetLocations } from '../../slices/locationsSlice'
+import { selectConfig } from '../slices/configSlice'
+import { selectOrder } from '../slices/orderSlice'
+import { resetRevenueCenters } from '../slices/revenueCentersSlice'
 import {
   setGeoLatLng,
   setGeoError,
   setGeoLoading,
-} from '../../slices/geolocationSlice'
-import useGeolocation from '../../packages/useGeolocation'
+} from '../slices/geolocationSlice'
+import useGeolocation from '../packages/useGeolocation'
+import Background from './Background'
+import HomeOrderType from './HomeOrderType'
 
 const HomePage = () => {
   const history = useHistory()
@@ -28,7 +28,7 @@ const HomePage = () => {
   }, [dispatch])
 
   useEffect(() => {
-    hasTypes ? history.push('/locations') : dispatch(resetLocations())
+    hasTypes ? history.push('/locations') : dispatch(resetRevenueCenters())
   }, [hasTypes, history, dispatch])
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const HomePage = () => {
   return (
     <div className="content">
       <Background imageUrl={homeConfig.background} />
-      <SelectOrderType />
+      <HomeOrderType />
     </div>
   )
 }

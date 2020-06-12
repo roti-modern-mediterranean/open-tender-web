@@ -4,13 +4,13 @@ export const getConfig = () => {
   return request(`/config`)
 }
 
-export const getLocations = (revenue_center_type, lat, lng) => {
+export const getRevenueCenters = (revenue_center_type, lat, lng) => {
   let params = `revenue_center_type=${revenue_center_type}`
   if (lat && lng) params += `&lat=${lat}&lng=${lng}`
   return request(`/revenue-centers?${params}`)
 }
 
-export const getLocation = (revenue_center_type_id) => {
+export const getRevenueCenter = (revenue_center_type_id) => {
   return request(`/revenue-centers/${revenue_center_type_id}`)
 }
 
@@ -18,13 +18,13 @@ export const getAllergens = () => {
   return request(`/allergens`)
 }
 
-export const getMenu = (locationId, serviceType, requestedAt) => {
-  const params = `revenue_center_id=${locationId}&service_type=${serviceType}&requested_at=${requestedAt}`
+export const getMenu = (revenueCenterId, serviceType, requestedAt) => {
+  const params = `revenue_center_id=${revenueCenterId}&service_type=${serviceType}&requested_at=${requestedAt}`
   return request(`/menus?${params}`)
 }
 
-export const getMenuItems = (locationId, serviceType) => {
-  const params = `revenue_center_id=${locationId}&service_type=${serviceType}`
+export const getMenuItems = (revenueCenterId, serviceType) => {
+  const params = `revenue_center_id=${revenueCenterId}&service_type=${serviceType}`
   return request(`/menu-items?${params}`)
 }
 

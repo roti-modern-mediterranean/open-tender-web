@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { selectConfig } from '../../slices/configSlice'
-import { selectOrder } from '../../slices/orderSlice'
-import { selectGeoLatLng } from '../../slices/geolocationSlice'
-import { selectLocations } from '../../slices/locationsSlice'
-import { GoogleMap, GoogleMapsMarker } from '../../packages'
-import SelectLocation from '../SelectLocation'
+import { selectConfig } from '../slices/configSlice'
+import { selectOrder } from '../slices/orderSlice'
+import { selectGeoLatLng } from '../slices/geolocationSlice'
+import { selectRevenueCenters } from '../slices/revenueCentersSlice'
+import { GoogleMap, GoogleMapsMarker } from '../packages'
+import RevenueCentersSelect from './RevenueCentersSelect'
 
-const LocationsPage = () => {
+const RevenueCentersPage = () => {
   const history = useHistory()
   const [activeMarker, setActiveMarker] = useState(null)
   const { orderType, serviceType, address } = useSelector(selectOrder)
@@ -19,7 +19,7 @@ const LocationsPage = () => {
     ? { lat: address.lat, lng: address.lng }
     : geoLatLng || defaultCenter
   const [center, setCenter] = useState(initialCenter)
-  const { locations } = useSelector(selectLocations)
+  const { revenueCenters } = useSelector(selectRevenueCenters)
   const hasTypes = orderType && serviceType
 
   useEffect(() => {
@@ -39,13 +39,13 @@ const LocationsPage = () => {
         center={center}
         // events={null}
       >
-        <SelectLocation setCenter={setCenter} center={center} />
-        {locations.map((i) => {
-          const isActive = i.location_id === activeMarker
+        <RevenueCentersSelect setCenter={setCenter} center={center} />
+        {revenueCenters.map((i) => {
+          const isActive = i.revenue_center_id === activeMarker
           const icon = isActive ? icons.active : icons.inactive
           return (
             <GoogleMapsMarker
-              key={i.location_id}
+              key={i.revenue_center_id}
               title={i.name}
               position={{
                 lat: i.address.lat,
@@ -55,7 +55,7 @@ const LocationsPage = () => {
               size={icon.size}
               anchor={icon.anchor}
               events={{
-                onClick: () => setActiveMarker(i.location_id),
+                onClick: () => setActiveMarker(i.revenue_center_id),
               }}
             />
           )
@@ -78,5 +78,5 @@ const LocationsPage = () => {
   )
 }
 
-LocationsPage.displayName = 'LocationsPage'
-export default LocationsPage
+RevenueCentersPage.displayName = 'RevenueCentersPage'
+export default RevenueCentersPage

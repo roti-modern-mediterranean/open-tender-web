@@ -16,7 +16,7 @@ import {
 
 const RequestedAtModal = () => {
   const dispatch = useDispatch()
-  const { requestedAt, serviceType, location } = useSelector(selectOrder)
+  const { requestedAt, serviceType, revenueCenter } = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
 
   const handleClose = () => {
@@ -28,7 +28,11 @@ const RequestedAtModal = () => {
     dispatch(closeModal())
   }
 
-  const estimatedTime = makeEstimatedTime(requestedAt, location, serviceType)
+  const estimatedTime = makeEstimatedTime(
+    requestedAt,
+    revenueCenter,
+    serviceType
+  )
   const requestedAtText = makeRequestedAtString(requestedAt, tz, true)
 
   return (
@@ -58,11 +62,11 @@ const RequestedAtModal = () => {
           <p className="font-size-small">
             Or use the calendar below to choose a different day & time.
           </p>
-          {location && (
+          {revenueCenter && (
             <RequestedAtPicker
               requestedAt={requestedAt}
               serviceType={serviceType}
-              location={location}
+              revenueCenter={revenueCenter}
               setRequestedAt={handleRequestedAt}
             />
           )}
