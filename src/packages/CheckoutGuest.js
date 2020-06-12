@@ -37,6 +37,9 @@ const CheckoutGuest = () => {
   const formContext = useContext(FormContext)
   const { config, check, form, errors, updateForm } = formContext
   const [customer, setCustomer] = useState(form.customer || initialState)
+  const requiredFields = check.config.required.customer
+  const contactConfig = makeContactConfig(requiredFields)
+  const customerErrors = errors.customer || {}
 
   // useEffect(() => {
   //   setCustomer(checkoutCustomer || initialState)
@@ -57,8 +60,6 @@ const CheckoutGuest = () => {
     debouncedUpdate(newCustomer)
   }
 
-  const requiredFields = check.config.required.customer
-  const contactConfig = makeContactConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">
       <legend className="form__legend heading ot-font-size-h3">
@@ -77,7 +78,7 @@ const CheckoutGuest = () => {
                 type={field.type}
                 value={customer[field.name]}
                 onChange={handleChange}
-                error={errors[field.name]}
+                error={customerErrors[field.name]}
                 required={input.required}
               />
             )

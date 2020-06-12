@@ -24,7 +24,7 @@ export const validateOrder = createAsyncThunk(
       console.log(JSON.stringify(order, null, 2))
       return await postOrderValidate(order)
     } catch (err) {
-      console.log(err)
+      console.log(JSON.stringify(err, null, 2))
       return thunkAPI.rejectWithValue(err)
     }
   }
@@ -34,8 +34,10 @@ export const submitOrder = createAsyncThunk(
   'checkout/submitOrder',
   async (order, thunkAPI) => {
     try {
+      console.log(JSON.stringify(order, null, 2))
       return await postOrder(order)
     } catch (err) {
+      console.log(JSON.stringify(err, null, 2))
       return thunkAPI.rejectWithValue(err)
     }
   }
@@ -71,6 +73,8 @@ const checkoutSlice = createSlice({
     },
   },
   extraReducers: {
+    // validateOrder
+
     [validateOrder.fulfilled]: (state, action) => {
       state.check = action.payload
       // state.form.discounts = action.payload.discounts
@@ -87,6 +91,9 @@ const checkoutSlice = createSlice({
       state.errors = action.payload.params
       state.loading = 'idle'
     },
+
+    // submitOrder
+
     [submitOrder.fulfilled]: (state, action) => {
       state.completedOrder = action.payload
       state.check = null

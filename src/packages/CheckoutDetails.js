@@ -15,22 +15,31 @@ import { serviceTypeNamesMap } from './utils/constants'
 import { FormContext } from './CheckoutForm'
 
 const CheckoutDetails = () => {
-  const formContext = useContext(FormContext)
   const {
     config,
     order,
     tz,
     check,
     form,
+    errors,
     updateForm,
     updateRequestedAt,
     updateLocation,
     updateServiceType,
-  } = formContext
+  } = useContext(FormContext)
   const checkDetails = form.details || check.details
   const [details, setDetails] = useState(checkDetails)
   const [showTip, setShowTip] = useState(false)
   // const [pendingTip, setPendingTip] = useState(null)
+  const serviceTypeName = serviceTypeNamesMap[order.serviceType]
+  const allowTaxExempt = check.config.allow_tax_exempt
+  const requiredFields = check.config.required.details
+  const tipSettings = check.config.gratuity
+  const eatingUtensilsRequired = requiredFields.includes('eating_utensils')
+  const servingUtensilsRequired = requiredFields.includes('serving_utensils')
+  const personCountRequired = requiredFields.includes('person_count')
+  const notesRequired = requiredFields.includes('notes')
+  const detailsErrors = errors.details || {}
 
   // useEffect(() => {
   //   setDetails(checkDetails)
@@ -56,15 +65,6 @@ const CheckoutDetails = () => {
     evt.target.blur()
   }
 
-  const errors = {}
-  const serviceTypeName = serviceTypeNamesMap[order.serviceType]
-  const allowTaxExempt = check.config.allow_tax_exempt
-  const requiredFields = check.config.required.details
-  const tipSettings = check.config.gratuity
-  const eatingUtensilsRequired = requiredFields.includes('eating_utensils')
-  const servingUtensilsRequired = requiredFields.includes('serving_utensils')
-  const personCountRequired = requiredFields.includes('person_count')
-  const notesRequired = requiredFields.includes('notes')
   return (
     <div className="form__fieldset">
       <div className="form__legend heading ot-font-size-h4">
@@ -133,7 +133,7 @@ const CheckoutDetails = () => {
             type="text"
             value={details.tax_exempt_id}
             onChange={handleChange}
-            error={errors.tax_exempt_id}
+            error={detailsErrors.tax_exempt_id}
             required={false}
           />
         )}
@@ -144,7 +144,7 @@ const CheckoutDetails = () => {
             type="text"
             value={details.person_count}
             onChange={handleChange}
-            error={errors.person_count}
+            error={detailsErrors.person_count}
             required={personCountRequired}
           />
         )}
@@ -154,7 +154,7 @@ const CheckoutDetails = () => {
             name="details-notes"
             value={details.notes}
             onChange={handleChange}
-            error={errors.notes}
+            error={detailsErrors.notes}
             required={notesRequired}
           />
         )}

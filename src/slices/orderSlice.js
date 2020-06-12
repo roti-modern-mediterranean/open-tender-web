@@ -133,7 +133,7 @@ const orderSlice = createSlice({
       state.revenueCenter = action.payload
       state.loading = 'idle'
     },
-    [fetchRevenueCenter.pending]: (state, action) => {
+    [fetchRevenueCenter.pending]: (state) => {
       state.loading = 'pending'
     },
     [fetchRevenueCenter.rejected]: (state, action) => {
@@ -149,7 +149,7 @@ const orderSlice = createSlice({
       state.cartCounts = action.payload.cartCounts
       state.loading = 'idle'
     },
-    [reorderPastOrder.pending]: (state, action) => {
+    [reorderPastOrder.pending]: (state) => {
       state.loading = 'pending'
     },
     [reorderPastOrder.rejected]: (state, action) => {

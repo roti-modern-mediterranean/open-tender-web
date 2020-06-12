@@ -523,8 +523,8 @@ export const handleOrderErrors = (errors, isValidate = true) => {
     let [, entity, field] = key.split('.')
     field = field || entity
     const newErrors = obj[entity]
-      ? { ...obj[entity], [field]: value.detail }
-      : { [field]: value.detail }
+      ? { ...obj[entity], [field]: value }
+      : { [field]: value }
     return { ...obj, [entity]: newErrors }
   }, {})
 }

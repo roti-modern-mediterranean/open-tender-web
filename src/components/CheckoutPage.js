@@ -42,7 +42,7 @@ const CheckoutPage = () => {
   const tz = useSelector(selectTimezone)
   const { account, auth } = useSelector(selectCustomer)
   const { access_token } = auth || {}
-  const { check, form, loading, errors } = useSelector(selectCheckout)
+  const { check, form, loading, errors = {} } = useSelector(selectCheckout)
   const { customer, details, discounts, promoCodes, tenders, tip } = form
   const completedOrder = useSelector(selectCompletedOrder)
 
@@ -154,6 +154,8 @@ const CheckoutPage = () => {
     dispatch(openModal({ type: 'requestedAt' }))
     evt.target.blur()
   }
+
+  console.log(errors)
 
   return (
     <div className="checkout">
