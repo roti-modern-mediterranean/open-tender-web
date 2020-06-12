@@ -28,7 +28,7 @@ const CheckUpdating = () => (
 )
 
 const Check = ({ title, check, tenders, updating = false }) => {
-  const { surcharges, discounts, taxes, totals } = check
+  const { surcharges, discounts, taxes, totals, details } = check
   const {
     subtotal,
     surcharge,
@@ -100,9 +100,9 @@ const Check = ({ title, check, tenders, updating = false }) => {
                 />
               ))}
             </ul>
-          ) : (
-            <CheckItem label="Tax (tax exempt)" value={0} />
-          )}
+          ) : details.is_tax_exempt ? (
+            <CheckItem label="Tax (tax exempt)" value={'0.00'} />
+          ) : null}
           {/* <CheckItem label="Tax" value={tax} /> */}
           <CheckItem label="Tip" value={tip} />
           {shipping !== '0.00' && (

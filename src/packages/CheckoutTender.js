@@ -26,10 +26,10 @@ const CheckoutTender = ({
   return (
     <>
       <CheckoutLineItem key={tenderType} label={label}>
-        <div className="form__line__wrapper">
+        <div className="input__wrapper">
           {isApplied ? (
             <>
-              <span className="form__line__success">
+              <span className="input__success">
                 <CircleLoader complete={true} />
               </span>
               <Button

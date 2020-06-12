@@ -57,7 +57,7 @@ const CheckoutGuest = () => {
     debouncedUpdate(newCustomer)
   }
 
-  const requiredFields = check.config.required_fields.customer
+  const requiredFields = check.config.required.customer
   const contactConfig = makeContactConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">

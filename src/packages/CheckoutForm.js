@@ -128,15 +128,18 @@ const CheckoutForm = ({
         <div className="form__footer">
           <div className="form__message">
             {!isPaid ? (
-              <p className="ot-alert-color">
-                There is a balance of ${amountRemaining.toFixed(2)} remaining on
-                your order. Please add a payment above.
-              </p>
-            ) : (
-              <p className="ot-success-color">
-                Your order can now be submitted. Go for it!
-              </p>
-            )}
+              <div className="form__message__content border-radius-small ot-alert font-size-small">
+                <p>
+                  There is a balance of ${amountRemaining.toFixed(2)} remaining
+                  on your order. Please add a payment above.
+                </p>
+              </div>
+            ) : null}
+            {/* {(
+              <div className="form__message__content border-radius-small ot-success font-size-small">
+                <p>Your order can now be submitted. Go for it!</p>
+              </div>
+            )} */}
           </div>
           <input
             className="btn btn--big"

@@ -8,7 +8,7 @@ import { Input } from './Inputs'
 const CheckoutTip = ({ setShowTip }) => {
   const formContext = useContext(FormContext)
   const { check, form, updateForm } = formContext
-  const tipSettings = check.config.tip_settings
+  const tipSettings = check.config.gratuity
   const tipOptions = tipSettings.options
   const initialTip =
     form.tip && !tipOptions.find((i) => i.amount === form.tip) ? form.tip : ''

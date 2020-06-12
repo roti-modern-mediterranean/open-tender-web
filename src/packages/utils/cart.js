@@ -495,7 +495,7 @@ export const prepareOrder = (data) => {
       ? new Date().toISOString()
       : data.requestedAt
   const order = {
-    location_id: data.locationId || null,
+    revenue_center_id: data.locationId || null,
     service_type: data.serviceType || 'PICKUP',
     requested_at: requestedIso,
     cart: data.cart ? makeSimpleCart(data.cart) : [],

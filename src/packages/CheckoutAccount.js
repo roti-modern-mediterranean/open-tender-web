@@ -44,7 +44,7 @@ const CheckoutAccount = () => {
   }
 
   const errors = {}
-  const requiredFields = check.config.required_fields.customer
+  const requiredFields = check.config.required.customer
   const accountConfig = makeAccountConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">

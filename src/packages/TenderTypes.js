@@ -1,45 +1,31 @@
 import React from 'react'
+import propTypes from 'prop-types'
 import { iconMap } from './icons'
 import { tenderTypeNamesMap } from './utils/constants'
 
-export const Cash = () => (
-  <div className="form__line__wrapper">
-    <div className="form__line__icon">{iconMap['DollarSign']}</div>
-    <div>Cash</div>
-  </div>
+export const CheckoutTenderLabel = ({ icon, text }) => (
+  <span className="form__input__tender">
+    <span className="form__input__icon">{iconMap[icon]}</span>
+    <span>{text}</span>
+  </span>
 )
 
-export const CreditCard = () => (
-  <div className="form__line__wrapper">
-    <div className="form__line__icon">{iconMap['CreditCard']}</div>
-    <div>Credit Card</div>
-  </div>
-)
-
-export const LevelUp = () => (
-  <div className="form__line__wrapper">
-    <div className="form__line__icon">{iconMap['Grid']}</div>
-    <div>LevelUp</div>
-  </div>
-)
-
-export const HouseAccount = () => (
-  <div className="form__line__wrapper">
-    <div className="form__line__icon">{iconMap['Home']}</div>
-    <div>House Account</div>
-  </div>
-)
+CheckoutTenderLabel.displayName = 'CheckoutTenderLabel'
+CheckoutTenderLabel.prototypes = {
+  icon: propTypes.string,
+  text: propTypes.string,
+}
 
 export const makeTenderTypeLabel = (tenderType) => {
   switch (tenderType) {
     case 'CASH':
-      return <Cash />
+      return <CheckoutTenderLabel text="Cash" icon="DollarSign" />
     case 'CREDIT':
-      return <CreditCard />
+      return <CheckoutTenderLabel text="Credit" icon="CreditCard" />
     case 'LEVELUP':
-      return <LevelUp />
+      return <CheckoutTenderLabel text="LevelUp" icon="Grid" />
     case 'HOUSE_ACCOUNT':
-      return <HouseAccount />
+      return <CheckoutTenderLabel text="House Account" icon="Home" />
     default:
       return null
   }

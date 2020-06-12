@@ -62,7 +62,7 @@ const CheckoutAddress = () => {
   }
 
   const errors = {}
-  const requiredFields = check.config.required_fields.address
+  const requiredFields = check.config.required.address
   const addressConfig = makeAddressConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">

@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react'
-import CheckoutLineItem from './CheckoutLineItem'
 import Button from './Button'
 import { FormContext } from './CheckoutForm'
 import CircleLoader from './CircleLoader'
@@ -11,7 +10,9 @@ const CheckoutPromoCodes = () => {
   const [pendingPromoCode, setPendingPromoCode] = useState(null)
   const formContext = useContext(FormContext)
   const { config, check, form, loading, errors, updateForm } = formContext
-  const checkPromoCodes = check.discounts.filter((i) => i.is_promo_code)
+  const checkPromoCodes = check.discounts
+    .filter((i) => i.is_promo_code)
+    .map((i) => i.name)
   const { email } = form.customer || {}
   const promoCodeErrors = errors ? errors.promo_codes || null : null
   const promoCodeError = promoCodeErrors ? promoCodeErrors.promo_code : null
@@ -51,10 +52,6 @@ const CheckoutPromoCodes = () => {
     evt.target.blur()
   }
 
-  const newLabel = checkPromoCodes.length
-    ? 'Add another promo code'
-    : 'Enter a promo code'
-
   return (
     <fieldset className="form__fieldset">
       <div className="form__legend">
@@ -76,91 +73,59 @@ const CheckoutPromoCodes = () => {
       <div className="form__inputs">
         {checkPromoCodes.map((checkPromoCode) => {
           return (
-            <CheckoutLineItem key={checkPromoCode} label={checkPromoCode}>
-              <div className="form__line__wrapper">
-                <span className="form__line__success">
-                  <CircleLoader complete={true} />
-                </span>
-                <Button
-                  text="Remove Promo Code"
-                  ariaLabel={`Remove promo code ${checkPromoCode}`}
-                  icon="XCircle"
-                  classes="btn--header"
-                  onClick={(evt) => removePromoCode(evt, checkPromoCode)}
-                />
-              </div>
-            </CheckoutLineItem>
+            <div class="form__input-with-button border-color">
+              <Input
+                label={checkPromoCode}
+                name={`promo_code_${checkPromoCode}`}
+                type="text"
+                placeholder="enter a promo code"
+                value={checkPromoCode}
+                onChange={handleChange}
+                error={null}
+                required={false}
+                disabled={true}
+              />
+              <span className="input__success">
+                <CircleLoader complete={true} />
+              </span>
+              <Button
+                text="Remove Promo Code"
+                ariaLabel={`Remove promo code ${checkPromoCode}`}
+                icon="XCircle"
+                classes="btn--header"
+                onClick={(evt) => removePromoCode(evt, checkPromoCode)}
+              />
+            </div>
           )
         })}
         {email && (
-          <CheckoutLineItem
-            label={
-              <Input
-                label={`${newLabel}`}
-                name="promo_code"
-                type="text"
-                placeholder="enter a promo code"
-                value={promoCode}
-                onChange={handleChange}
-                // error={promoCodeErrors.promo_code}
-                error={null}
-                required={false}
-                classes="form__input--small"
-                inputClasses=""
-                showLabel={false}
-              >
-                {' '}
-                {promoCode.length ? (
-                  <ButtonClear
-                    ariaLabel={`Remove promo code ${promoCode}`}
-                    onClick={(evt) => removePendingPromoCode(evt)}
-                  />
-                ) : null}
-              </Input>
-            }
-            classes="form__line__promo"
-            error={promoCodeError}
-          >
-            <div className="form__line__wrapper">
-              {pendingPromoCode === promoCode && (
-                <span className="form__line__success">
-                  <CircleLoader complete={false} />
-                </span>
-              )}
-              <Button
-                text="Apply Promo Code"
-                ariaLabel="Apply Promo Code"
-                icon="PlusCircle"
-                classes="btn--header"
-                onClick={applyPromoCode}
-                disabled={!promoCode || pendingPromoCode === promoCode}
-              />
-              {/* <Input
-                label={`${newLabel}`}
-                name="promo_code"
-                type="text"
-                value={promoCode}
-                onChange={handleChange}
-                // error={promoCodeErrors.promo_code}
-                error={null}
-                required={false}
-                classes="form__input--small"
-                inputClasses=""
-                showLabel={false}
-              >
-                {' '}
-                {promoCode.length ? (
-                  <Button
-                    text=""
-                    ariaLabel={`Remove promo code ${promoCode}`}
-                    icon="XCircle"
-                    classes="btn-link"
-                    onClick={(evt) => removePendingPromoCode(evt)}
-                  />
-                ) : null}
-              </Input> */}
-            </div>
-          </CheckoutLineItem>
+          <div class="form__input-with-button border-color">
+            <Input
+              label="New Promo Code"
+              name="promo_code"
+              type="text"
+              placeholder="enter a promo code"
+              value={promoCode}
+              onChange={handleChange}
+              error={promoCodeError}
+              required={false}
+            >
+              {promoCode.length ? (
+                <ButtonClear
+                  ariaLabel={`Remove promo code ${promoCode}`}
+                  onClick={(evt) => removePendingPromoCode(evt)}
+                />
+              ) : null}
+            </Input>
+            <Button
+              text="Apply Promo Code"
+              ariaLabel="Apply Promo Code"
+              icon="PlusCircle"
+              classes="btn--header btn--input"
+              onClick={applyPromoCode}
+              disabled={!promoCode || pendingPromoCode === promoCode}
+            />
+          </div>
         )}
       </div>
     </fieldset>

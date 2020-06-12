@@ -59,8 +59,8 @@ const CheckoutDetails = () => {
   const errors = {}
   const serviceTypeName = serviceTypeNamesMap[order.serviceType]
   const allowTaxExempt = check.config.allow_tax_exempt
-  const requiredFields = check.config.required_fields.details
-  const tipSettings = check.config.tip_settings
+  const requiredFields = check.config.required.details
+  const tipSettings = check.config.gratuity
   const eatingUtensilsRequired = requiredFields.includes('eating_utensils')
   const servingUtensilsRequired = requiredFields.includes('serving_utensils')
   const personCountRequired = requiredFields.includes('person_count')

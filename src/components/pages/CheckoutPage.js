@@ -209,7 +209,7 @@ const CheckoutPage = () => {
       <div className="checkout__sidebar bg-secondary-color">
         <div className="checkout__sidebar__wrapper">
           <div className="checkout__sidebar__container">
-            {check.totals && (
+            {check && check.totals && (
               <div className="checkout__totals border-radius bg-color ot-box-shadow">
                 <Check
                   title={checkoutConfig.check.title}
