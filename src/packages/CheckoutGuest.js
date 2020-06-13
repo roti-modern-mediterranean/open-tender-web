@@ -34,8 +34,7 @@ const fields = [
 ]
 
 const CheckoutGuest = () => {
-  const formContext = useContext(FormContext)
-  const { config, check, form, errors, updateForm } = formContext
+  const { config, check, form, errors, updateForm } = useContext(FormContext)
   const [customer, setCustomer] = useState(form.customer || initialState)
   const requiredFields = check.config.required.customer
   const contactConfig = makeContactConfig(requiredFields)

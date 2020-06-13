@@ -1,3 +1,19 @@
+export const handleCheckoutErrors = (errors) => {
+  const errObj = Object.entries(errors).reduce(
+    (obj, error) => {
+      const [key, value] = error
+      let [, entity, field] = key.split('.')
+      field = field || entity
+      const newErrors = obj[entity]
+        ? { ...obj[entity], [field]: value.message }
+        : { [field]: value.message }
+      return { ...obj, [entity]: newErrors }
+    },
+    { form: 'There are one or more errors below' }
+  )
+  return errObj
+}
+
 export const errMessages = {
   unknown: 'Unknown error. Please contact Open Tender support.',
   forbidden:

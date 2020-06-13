@@ -154,9 +154,9 @@ export const defaultConfig = {
   },
   account: {
     // background:
-    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590860635_633edb149568073f51aa.jpg',
+    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',
     background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303382_1dc3f02769734bc95870.jpg',
     title: 'Welcome back',
     subtitle: 'How can we help you today?',
     sections: {

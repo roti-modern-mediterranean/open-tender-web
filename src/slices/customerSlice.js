@@ -285,13 +285,17 @@ const customerSlice = createSlice({
     // login
 
     [loginCustomer.fulfilled]: (state, action) => {
-      const { allergens = [], gift_cards = [] } = action.payload.customer
+      const {
+        allergens = [],
+        favorites = [],
+        gift_cards = [],
+      } = action.payload.customer
       state.auth = action.payload.auth
       state.account = makeCustomerAccount(action.payload.customer)
       state.allergens.entities = allergens
       state.giftCards.entities = gift_cards
-      // state.favorites.entities = favorites
-      // state.favorites.lookup = makeFavoritesLookup(favorites)
+      state.favorites.entities = favorites
+      state.favorites.lookup = makeFavoritesLookup(favorites)
       state.error = null
       state.loading = 'idle'
     },
@@ -312,12 +316,12 @@ const customerSlice = createSlice({
     // customer
 
     [fetchCustomer.fulfilled]: (state, action) => {
-      const { allergens = [], gift_cards = [] } = action.payload
+      const { allergens = [], favorites = [], gift_cards = [] } = action.payload
       state.account = makeCustomerAccount(action.payload)
       state.allergens.entities = allergens
       state.giftCards.entities = gift_cards
-      // state.favorites.entities = favorites
-      // state.favorites.lookup = makeFavoritesLookup(favorites)
+      state.favorites.entities = favorites
+      state.favorites.lookup = makeFavoritesLookup(favorites)
       state.error = null
       state.loading = 'idle'
     },

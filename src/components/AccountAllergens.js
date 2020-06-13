@@ -6,7 +6,7 @@ import { selectAccountConfigSections } from '../slices/configSlice'
 import { selectAllergens, fetchAllergens } from '../slices/menuSlice'
 import {
   selectToken,
-  fetchCustomerAllergens,
+  // fetchCustomerAllergens,
   selectCustomerAllergens,
   updateCustomerAllergens,
 } from '../slices/customerSlice'
@@ -29,7 +29,7 @@ const AccountAllergens = () => {
 
   useEffect(() => {
     dispatch(fetchAllergens())
-    dispatch(fetchCustomerAllergens(token))
+    // dispatch(fetchCustomerAllergens(token))
   }, [dispatch, token])
 
   useEffect(() => {

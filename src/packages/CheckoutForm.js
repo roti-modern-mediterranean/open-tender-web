@@ -9,6 +9,7 @@ import CheckoutGiftCards from './CheckoutGiftCards'
 import CheckoutTenders from './CheckoutTenders'
 import { checkAmountRemaining } from './utils/cart'
 import { isEmpty } from './utils/helpers'
+import { Error } from './Inputs'
 
 export const FormContext = createContext(null)
 
@@ -118,6 +119,11 @@ const CheckoutForm = ({
         onSubmit={handleSubmit}
         noValidate
       >
+        {errors.form && (
+          <div className="form__error--top">
+            <Error error={errors.form} />
+          </div>
+        )}
         <CheckoutCustomer />
         <CheckoutDetails />
         {isDelivery && <CheckoutAddress />}
@@ -128,7 +134,7 @@ const CheckoutForm = ({
         <div className="form__footer">
           <div className="form__message">
             {!isPaid ? (
-              <div className="form__message__content border-radius-small ot-alert font-size-small">
+              <div className="form__message__content border-radius-small ot-error font-size-small">
                 <p>
                   There is a balance of ${amountRemaining.toFixed(2)} remaining
                   on your order. Please add a payment above.

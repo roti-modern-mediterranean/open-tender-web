@@ -8,13 +8,13 @@ import {
   selectCart,
   selectCartQuantity,
   selectMenuSlug,
-  selectMenuVars,
   selectOrder,
   resetOrder,
   resetOrderType,
   selectTimezone,
 } from '../slices/orderSlice'
 import {
+  clearErrors,
   updateForm,
   updateCustomer,
   validateOrder,
@@ -35,20 +35,21 @@ const CheckoutPage = () => {
   const cart = useSelector(selectCart)
   const cartCount = useSelector(selectCartQuantity)
   const menuSlug = useSelector(selectMenuSlug)
-  const { revenueCenterId, serviceType, requestedAt } = useSelector(
-    selectMenuVars
-  )
   const order = useSelector(selectOrder)
+  const { revenueCenter, serviceType, requestedAt } = order
+  const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const tz = useSelector(selectTimezone)
   const { account, auth } = useSelector(selectCustomer)
   const { access_token } = auth || {}
   const { check, form, loading, errors = {} } = useSelector(selectCheckout)
   const { customer, details, discounts, promoCodes, tenders, tip } = form
   const completedOrder = useSelector(selectCompletedOrder)
+  console.log(errors)
 
   useEffect(() => {
     window.scroll(0, 0)
-  }, [])
+    dispatch(clearErrors())
+  }, [dispatch])
 
   useEffect(() => {
     if (cartCount === 0) return history.push(menuSlug)
@@ -154,8 +155,6 @@ const CheckoutPage = () => {
     dispatch(openModal({ type: 'requestedAt' }))
     evt.target.blur()
   }
-
-  console.log(errors)
 
   return (
     <div className="checkout">

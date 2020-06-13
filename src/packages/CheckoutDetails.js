@@ -141,7 +141,7 @@ const CheckoutDetails = () => {
           <Input
             label="Person Count"
             name="details-person_count"
-            type="text"
+            type="number"
             value={details.person_count}
             onChange={handleChange}
             error={detailsErrors.person_count}

@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { postOrderValidate, postOrder } from '../services/requests'
-import { handleOrderErrors } from '../packages/utils/cart'
+import { handleCheckoutErrors } from '../packages/utils/errors'
+import { openModal, closeModal } from './modalSlice'
+import { getDefaultTip } from '../packages/utils/cart'
 
 const initialState = {
   check: null,
@@ -12,6 +14,7 @@ const initialState = {
     tenders: [],
     tip: null,
   },
+  isSubmitting: false,
   completedOrder: null,
   errors: {},
   loading: 'idle',
@@ -21,10 +24,10 @@ export const validateOrder = createAsyncThunk(
   'checkout/validateOrder',
   async (order, thunkAPI) => {
     try {
-      console.log(JSON.stringify(order, null, 2))
+      // console.log(JSON.stringify(order, null, 2))
       return await postOrderValidate(order)
     } catch (err) {
-      console.log(JSON.stringify(err, null, 2))
+      // console.log(JSON.stringify(err, null, 2))
       return thunkAPI.rejectWithValue(err)
     }
   }
@@ -33,12 +36,18 @@ export const validateOrder = createAsyncThunk(
 export const submitOrder = createAsyncThunk(
   'checkout/submitOrder',
   async (order, thunkAPI) => {
+    const args = { text: 'Submitting your order...' }
+    thunkAPI.dispatch(openModal({ type: 'working', args }))
     try {
-      console.log(JSON.stringify(order, null, 2))
-      return await postOrder(order)
+      // console.log(JSON.stringify(order, null, 2))
+      const response = await postOrder(order)
+      thunkAPI.dispatch(closeModal())
+      return response
     } catch (err) {
-      console.log(JSON.stringify(err, null, 2))
-      return thunkAPI.rejectWithValue(err)
+      // console.log(JSON.stringify(err, null, 2))
+      const response = thunkAPI.rejectWithValue(err)
+      thunkAPI.dispatch(closeModal())
+      return response
     }
   }
 )
@@ -47,6 +56,12 @@ const checkoutSlice = createSlice({
   name: 'checkout',
   initialState: initialState,
   reducers: {
+    clearErrors: (state) => {
+      state.errors = {}
+    },
+    clearCompletedOrder: (state) => {
+      state.completedOrder = null
+    },
     updateForm: (state, action) => {
       state.form = { ...state.form, ...action.payload }
     },
@@ -56,6 +71,7 @@ const checkoutSlice = createSlice({
       const customerId = customer ? customer.customer_id : null
       if (!account) {
         state.form.discounts = []
+        state.form.tenders = []
         if (customerId) {
           state.form.customer = {}
           state.form.promoCodes = []
@@ -63,13 +79,15 @@ const checkoutSlice = createSlice({
       } else if (customerId && account.customer_id !== customerId) {
         state.form.customer = customer
         state.form.discounts = []
+        state.form.tenders = []
       } else if (account && !customerId) {
         state.form.customer = account
         state.form.discounts = []
+        state.form.tenders = []
       }
     },
-    clearCompletedOrder: (state) => {
-      state.completedOrder = null
+    toggleSubmitting: (state) => {
+      state.isSubmitting = !state.isSubmitting
     },
   },
   extraReducers: {
@@ -77,10 +95,13 @@ const checkoutSlice = createSlice({
 
     [validateOrder.fulfilled]: (state, action) => {
       state.check = action.payload
+      if (!state.form.tip) {
+        state.form.tip = getDefaultTip(action.payload.config)
+      }
       // state.form.discounts = action.payload.discounts
-      state.errors = action.payload.errors
-        ? handleOrderErrors(action.payload.errors)
-        : {}
+      // state.errors = action.payload.errors
+      //   ? handleCheckoutErrors(action.payload.errors)
+      //   : {}
       state.loading = 'idle'
     },
     [validateOrder.pending]: (state) => {
@@ -105,16 +126,21 @@ const checkoutSlice = createSlice({
       state.loading = 'pending'
     },
     [submitOrder.rejected]: (state, action) => {
-      state.errors = handleOrderErrors(action.payload)
+      const { detail, params, message } = action.payload
+      state.errors = params
+        ? handleCheckoutErrors(params)
+        : { form: detail || message }
       state.loading = 'idle'
+      window.scroll(0, 0)
     },
   },
 })
 
 export const {
+  clearErrors,
+  clearCompletedOrder,
   updateForm,
   updateCustomer,
-  clearCompletedOrder,
 } = checkoutSlice.actions
 
 export const selectCheckout = (state) => state.checkout

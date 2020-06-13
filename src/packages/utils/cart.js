@@ -488,12 +488,19 @@ export const printCart = (cart) => {
 
 /* order submission */
 
+export const getDefaultTip = (config) => {
+  if (!config || !config.gratuity) return null
+  return config.gratuity.default ? config.gratuity.default.amount : null
+}
+
 export const prepareOrder = (data) => {
+  // console.log('prepareOrder', data)
   data = data || {}
-  const requestedIso =
-    !data.requestedAt || data.requestedAt === 'asap'
-      ? new Date().toISOString()
-      : data.requestedAt
+  // const requestedIso =
+  //   !data.requestedAt || data.requestedAt === 'asap'
+  //     ? new Date().toISOString()
+  //     : data.requestedAt
+  const requestedIso = !data.requestedAt ? 'asap' : data.requestedAt
   const order = {
     revenue_center_id: data.revenueCenterId || null,
     service_type: data.serviceType || 'PICKUP',
@@ -506,7 +513,7 @@ export const prepareOrder = (data) => {
     const details = { ...data.details }
     // person_count must be submitted as integer
     if (details.person_count)
-      details.person_count = parseInt(details.person_count)
+      details.person_count = parseInt(details.person_count) || null
     order.details = { ...details }
   }
   if (data.discounts) order.discounts = data.discounts
@@ -515,18 +522,6 @@ export const prepareOrder = (data) => {
   if (data.tenders) order.tenders = data.tenders
   if (data.address) order.address = data.address
   return order
-}
-
-export const handleOrderErrors = (errors, isValidate = true) => {
-  return Object.entries(errors).reduce((obj, error) => {
-    const [key, value] = error
-    let [, entity, field] = key.split('.')
-    field = field || entity
-    const newErrors = obj[entity]
-      ? { ...obj[entity], [field]: value }
-      : { [field]: value }
-    return { ...obj, [entity]: newErrors }
-  }, {})
 }
 
 export const checkAmountRemaining = (total, tenders) => {

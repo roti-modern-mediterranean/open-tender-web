@@ -75,7 +75,7 @@ export const request = (
       })
       .catch((err) => {
         if (didTimeOut) return
-        reject(err)
+        err.code ? reject(err) : reject(fiveHundredError)
       })
       .finally(() => {
         if (timeout) clearTimeout(timer)

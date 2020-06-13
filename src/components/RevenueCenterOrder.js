@@ -63,7 +63,7 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
             />
           ) : (
             <Button
-              text="Change RevenueCenter"
+              text="Change Location"
               icon="RefreshCw"
               onClick={handleChange}
             />
