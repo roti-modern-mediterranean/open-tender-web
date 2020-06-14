@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useState, useEffect, useCallback, useContext } from 'react'
 import debounce from 'lodash/debounce'
 import {
   Button,
@@ -13,6 +13,7 @@ import {
 } from './index'
 import { serviceTypeNamesMap } from './utils/constants'
 import { FormContext } from './CheckoutForm'
+import { isEmpty } from './utils/helpers'
 
 const CheckoutDetails = () => {
   const {
@@ -27,10 +28,8 @@ const CheckoutDetails = () => {
     updateLocation,
     updateServiceType,
   } = useContext(FormContext)
-  const checkDetails = form.details || check.details
-  const [details, setDetails] = useState(checkDetails)
+  const [details, setDetails] = useState(form.details)
   const [showTip, setShowTip] = useState(false)
-  // const [pendingTip, setPendingTip] = useState(null)
   const serviceTypeName = serviceTypeNamesMap[order.serviceType]
   const allowTaxExempt = check.config.allow_tax_exempt
   const requiredFields = check.config.required.details
@@ -41,9 +40,12 @@ const CheckoutDetails = () => {
   const notesRequired = requiredFields.includes('notes')
   const detailsErrors = errors.details || {}
 
-  // useEffect(() => {
-  //   setDetails(checkDetails)
-  // }, [checkDetails])
+  useEffect(() => {
+    if (isEmpty(form.details) && check.details) {
+      setDetails(check.details)
+      updateForm({ details: check.details })
+    }
+  }, [form.details, check.details, updateForm])
 
   const debouncedUpdate = useCallback(
     debounce((newDetails) => updateForm({ details: newDetails }), 500),

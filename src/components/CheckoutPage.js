@@ -6,7 +6,6 @@ import { selectConfig } from '../slices/configSlice'
 import { openModal } from '../slices/modalSlice'
 import { logoutCustomer, selectCustomer } from '../slices/customerSlice'
 import {
-  selectCart,
   selectCartTotal,
   selectMenuSlug,
   selectOrder,
@@ -22,12 +21,11 @@ import {
   validateOrder,
   submitOrder,
   selectCheckout,
-  selectCompletedOrder,
   clearCompletedOrder,
 } from '../slices/checkoutSlice'
 // import { setCompletedOrder } from '../slices/confirmationSlice'
 import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../packages'
-import { prepareOrder, getDefaultTip } from '../packages/utils/cart'
+import { prepareOrder } from '../packages/utils/cart'
 import BarLoader from 'react-spinners/BarLoader'
 import HeaderLogo from './HeaderLogo'
 
@@ -43,30 +41,20 @@ const CheckoutPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { checkout: checkoutConfig } = useSelector(selectConfig)
-  const cart = useSelector(selectCart)
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
   const { account, auth } = useSelector(selectCustomer)
-  const { check, form, loading, errors = {} } = useSelector(selectCheckout)
-  const completedOrder = useSelector(selectCompletedOrder)
-  const { revenueCenter, serviceType, requestedAt } = order
+  const { check, form, loading, errors = {}, completedOrder } = useSelector(
+    selectCheckout
+  )
+  const isComplete = completedOrder ? true : false
+  const { revenueCenter, serviceType, requestedAt, cart } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const { access_token } = auth || {}
-  const {
-    customer,
-    address,
-    details,
-    discounts,
-    promoCodes,
-    tenders,
-    tip,
-  } = form
+  const { discounts, promoCodes, tenders, tip } = form
   const pending = loading === 'pending'
-  const defaultTip = getDefaultTip(check.config)
-  // console.log('tip', tip)
-  // console.log(errors)
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -77,94 +65,64 @@ const CheckoutPage = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if (!revenueCenterId || !serviceType) return history.push('/')
-    if (cartTotal === 0) return history.push(menuSlug)
-  }, [history, dispatch, cartTotal, menuSlug, revenueCenterId, serviceType])
+    if (!revenueCenterId || !serviceType) {
+      return history.push('/')
+    } else if (cartTotal === 0) {
+      return history.push(menuSlug)
+    } else if (completedOrder) {
+      dispatch(clearCompletedOrder())
+      dispatch(resetOrder())
+      return history.push(`/orders/${completedOrder.order_id}`)
+    }
+  }, [
+    history,
+    dispatch,
+    cartTotal,
+    menuSlug,
+    revenueCenterId,
+    serviceType,
+    completedOrder,
+  ])
 
   useEffect(() => {
+    dispatch(clearErrors())
     dispatch(updateCustomer(account))
   }, [dispatch, account])
 
-  // const orderValidate = useMemo(() => [1, 2, 3], [])
-  const customerValidate = account ? { customer_id: account.customer_id } : null
-  const dataValidate = {
+  const orderValidate = useMemo(() => {
+    const customerValidate = account
+      ? { customer_id: account.customer_id }
+      : null
+    const dataValidate = {
+      revenueCenterId,
+      serviceType,
+      requestedAt,
+      cart,
+      customer: customerValidate,
+      address: order.address,
+      discounts,
+      promoCodes,
+      tip,
+    }
+    return prepareOrder(dataValidate)
+  }, [
+    account,
     revenueCenterId,
     serviceType,
     requestedAt,
     cart,
-    customer: customerValidate,
-    address: order.address,
+    order.address,
     discounts,
     promoCodes,
     tip,
-  }
-  const orderValidate = prepareOrder(dataValidate)
+  ])
   const prevOrderValidate = usePrevious(orderValidate)
 
   useEffect(() => {
-    console.log('validate running')
-    if (!isEqual(orderValidate, prevOrderValidate)) {
-      console.log('validate different')
+    if (!isComplete && !isEqual(orderValidate, prevOrderValidate)) {
       dispatch(validateOrder(orderValidate))
     }
-  }, [dispatch, orderValidate, prevOrderValidate])
-
-  // useEffect(() => {
-  //   if (completedOrder) {
-  //     dispatch(clearCompletedOrder())
-  //     dispatch(resetOrder())
-  //     return history.push(`/orders/${completedOrder.order_id}`)
-  //     // dispatch(setCompletedOrder(completedOrder))
-  //     // dispatch(clearCompletedOrder())
-  //     // dispatch(resetOrder())
-  //     // return history.push('/confirmation')
-  //   }
-  //   const customerValidate = account
-  //     ? { customer_id: account.customer_id }
-  //     : null
-  //   const data = {
-  //     revenueCenterId,
-  //     serviceType,
-  //     requestedAt,
-  //     cart,
-  //     customer: customerValidate,
-  //     address: order.address,
-  //     discounts,
-  //     promoCodes,
-  //     tip,
-  //   }
-  //   const preparedOrder = prepareOrder(data)
-  //   // console.log('preparedOrder', preparedOrder)
-  //   dispatch(validateOrder(preparedOrder))
-  // }, [
-  //   revenueCenterId,
-  //   serviceType,
-  //   requestedAt,
-  //   cart,
-  //   account,
-  //   order.address,
-  //   discounts,
-  //   promoCodes,
-  //   tip,
-  //   completedOrder,
-  //   dispatch,
-  //   history,
-  // ])
-
-  const data = {
-    revenueCenterId,
-    serviceType,
-    requestedAt,
-    cart,
-    customer,
-    address: { ...order.address, ...address },
-    details,
-    discounts,
-    promoCodes,
-    tip: tip === null ? defaultTip : tip,
-    tenders,
-  }
-  const preparedOrder = prepareOrder(data)
+  }, [dispatch, orderValidate, prevOrderValidate, isComplete])
 
   const handleBackToMenu = (evt) => {
     evt.preventDefault()
@@ -256,7 +214,7 @@ const CheckoutPage = () => {
                   loading={loading}
                   errors={errors}
                   updateForm={(form) => dispatch(updateForm(form))}
-                  submitOrder={() => dispatch(submitOrder(preparedOrder))}
+                  submitOrder={() => dispatch(submitOrder())}
                   login={() => dispatch(openModal({ type: 'login' }))}
                   logout={() => dispatch(logoutCustomer(access_token))}
                   updateRequestedAt={handleRequestedAt}

@@ -206,7 +206,7 @@ const RevenueCentersSelect = ({
             <p>Retrieving nearest locations</p>
           </div>
         ) : !error && displayedRevenueCenters.length > 0 ? (
-          <div className="revenueCenters">
+          <div className="rcs">
             <ul>
               {displayedRevenueCenters.map((revenueCenter) => (
                 <li key={revenueCenter.revenue_center_id}>

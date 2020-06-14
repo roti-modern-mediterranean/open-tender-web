@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { postOrderValidate, postOrder } from '../services/requests'
 import { handleCheckoutErrors } from '../packages/utils/errors'
 import { openModal, closeModal } from './modalSlice'
+import { getDefaultTip, prepareOrder } from '../packages/utils/cart'
+import { isEmpty } from '../packages/utils/helpers'
 // import { getDefaultTip } from '../packages/utils/cart'
 
 const initialState = {
@@ -36,12 +38,43 @@ export const validateOrder = createAsyncThunk(
 
 export const submitOrder = createAsyncThunk(
   'checkout/submitOrder',
-  async (order, thunkAPI) => {
+  async (_, thunkAPI) => {
     const args = { text: 'Submitting your order...' }
     thunkAPI.dispatch(openModal({ type: 'working', args }))
+    // start order assembly
+    const { order, checkout } = thunkAPI.getState()
+    const { revenueCenter, serviceType, requestedAt, cart } = order
+    const { revenue_center_id: revenueCenterId } = revenueCenter || {}
+    const { check, form } = checkout
+    const {
+      customer,
+      address,
+      details,
+      discounts,
+      promoCodes,
+      tenders,
+      tip,
+    } = form
+    const defaultTip = check ? getDefaultTip(check.config) : null
+    const fullAddress = { ...order.address, ...address }
+    const data = {
+      revenueCenterId,
+      serviceType,
+      requestedAt,
+      cart,
+      customer,
+      address: isEmpty(fullAddress) ? null : fullAddress,
+      details,
+      discounts,
+      promoCodes,
+      tip: tip === null ? defaultTip : tip,
+      tenders,
+    }
+    const preparedOrder = prepareOrder(data)
+    // end of order assembly
     try {
       // console.log(JSON.stringify(order, null, 2))
-      const response = await postOrder(order)
+      const response = await postOrder(preparedOrder)
       thunkAPI.dispatch(closeModal())
       return response
     } catch (err) {

@@ -1,9 +1,10 @@
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useState, useEffect, useCallback, useContext } from 'react'
 import debounce from 'lodash/debounce'
 import { Input } from './Inputs'
 import CheckoutLineItem from './CheckoutLineItem'
 import { FormContext } from './CheckoutForm'
 import ButtonAddress from './ButtonAddress'
+import { isEmpty } from './utils/helpers'
 
 const initialState = {
   unit: '',
@@ -59,6 +60,13 @@ const CheckoutAddress = () => {
   const requiredFields = check.config.required.address
   const addressConfig = makeAddressConfig(requiredFields)
   const addressErrors = errors.address || {}
+
+  // useEffect(() => {
+  //   if (isEmpty(form.address) && check.address) {
+  //     setAddress(check.address)
+  //     updateForm({ details: check.address })
+  //   }
+  // }, [form.address, check.address, updateForm])
 
   const debouncedUpdate = useCallback(
     debounce((newAddress) => updateForm({ address: newAddress }), 500),

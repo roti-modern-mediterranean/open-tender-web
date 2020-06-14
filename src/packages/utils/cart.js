@@ -524,6 +524,12 @@ export const prepareOrder = (data) => {
   if (data.promoCodes) order.promo_codes = data.promoCodes
   if (data.tip) order.tip = data.tip
   if (data.tenders) order.tenders = data.tenders
+  // if (data.address) {
+  //   const address = { ...data.address }
+  //   if (address.lat) address.lat = parseFloat(address.lat.toFixed(7))
+  //   if (address.lng) address.lng = parseFloat(address.lng.toFixed(7))
+  //   order.address = { ...address }
+  // }
   if (data.address) order.address = data.address
   return order
 }

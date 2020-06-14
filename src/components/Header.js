@@ -59,6 +59,7 @@ const Header = () => {
   const handleServiceType = (evt) => {
     evt.preventDefault()
     dispatch(resetOrderType())
+    history.push(`/`)
     evt.target.blur()
   }
 

@@ -75,6 +75,7 @@ const CheckoutPromoCodes = () => {
           return (
             <div class="form__input-with-button border-color">
               <Input
+                key={checkPromoCode}
                 label={checkPromoCode}
                 name={`promo_code_${checkPromoCode}`}
                 type="text"
@@ -99,7 +100,7 @@ const CheckoutPromoCodes = () => {
           )
         })}
         {email && (
-          <div class="form__input-with-button border-color">
+          <div className="form__input-with-button border-color">
             <Input
               label="New Promo Code"
               name="promo_code"
