@@ -35,7 +35,6 @@ const MenuPage = () => {
   )
   const { categories, soldOut, error, loading } = useSelector(selectMenu)
   const allergenAlerts = useSelector(selectedAllergenNames)
-
   const cart = useSelector(selectCart)
   const isLoading = loading === 'pending'
 
@@ -82,6 +81,9 @@ const MenuPage = () => {
           <div className="loading__loader">
             <BarLoader size={100} loading={isLoading} />
           </div>
+          <p className="font-size-small">
+            {menuConfig.loading || 'Retrieving the menu. Please hang tight.'}
+          </p>
         </div>
       ) : error ? (
         <div className="loading">

@@ -3,6 +3,7 @@ import debounce from 'lodash/debounce'
 import { Input } from './Inputs'
 import CheckoutLineItem from './CheckoutLineItem'
 import { FormContext } from './CheckoutForm'
+import ButtonAddress from './ButtonAddress'
 
 const initialState = {
   unit: '',
@@ -45,8 +46,19 @@ const fields = [
 
 const CheckoutAddress = () => {
   const formContext = useContext(FormContext)
-  const { config, check, form, updateForm } = formContext
+  const {
+    config,
+    order,
+    check,
+    form,
+    errors,
+    updateForm,
+    updateLocation,
+  } = formContext
   const [address, setAddress] = useState(form.address || initialState)
+  const requiredFields = check.config.required.address
+  const addressConfig = makeAddressConfig(requiredFields)
+  const addressErrors = errors.address || {}
 
   const debouncedUpdate = useCallback(
     debounce((newAddress) => updateForm({ address: newAddress }), 500),
@@ -61,38 +73,36 @@ const CheckoutAddress = () => {
     debouncedUpdate(newAddress)
   }
 
-  const errors = {}
-  const requiredFields = check.config.required.address
-  const addressConfig = makeAddressConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">
-      <legend className="form__legend heading ot-font-size-h5">
-        {config.address.title}
+      <legend className="form__legend">
+        <p className="form__legend__title heading ot-font-size-h3">
+          {config.address.title}
+        </p>
       </legend>
       <div className="form__inputs">
+        <CheckoutLineItem label="Location">
+          <ButtonAddress
+            address={order.address}
+            onClick={updateLocation}
+            classes="btn--header"
+          />
+        </CheckoutLineItem>
         {fields.map((field) => {
+          const input = addressConfig[field.name]
           return (
-            addressConfig[field.name] &&
-            addressConfig[field.name].included && (
-              <CheckoutLineItem
+            input &&
+            input.included && (
+              <Input
                 key={field.name}
-                label={addressConfig[field.name].label}
-                required={addressConfig[field.name].required}
-                classes="form__line__input"
-              >
-                <Input
-                  label={addressConfig[field.name].label}
-                  name={`address-${field.name}`}
-                  type={field.type}
-                  value={address[field.name]}
-                  onChange={handleChange}
-                  error={errors[field.name]}
-                  required={addressConfig[field.name].required}
-                  classes="form__input--small"
-                  inputClasses=""
-                  showLabel={false}
-                />
-              </CheckoutLineItem>
+                label={input.label}
+                name={`address-${field.name}`}
+                type={field.type}
+                value={address[field.name]}
+                onChange={handleChange}
+                error={addressErrors[field.name]}
+                required={input.required}
+              />
             )
           )
         })}

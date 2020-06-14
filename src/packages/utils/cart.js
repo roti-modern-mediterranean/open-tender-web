@@ -248,6 +248,11 @@ export const makeOrderAddress = (address) => {
     : 'No address provided'
 }
 
+export const makeFullAddress = (address) => {
+  const { street, city, state, postal_code } = address || {}
+  return `${street ? `${street}, ` : ''}${city}, ${state} ${postal_code}`
+}
+
 export const calcCartCounts = (cart) => {
   return cart.reduce((obj, item) => {
     const newCount = (obj[item.id] || 0) + item.quantity
@@ -494,7 +499,6 @@ export const getDefaultTip = (config) => {
 }
 
 export const prepareOrder = (data) => {
-  // console.log('prepareOrder', data)
   data = data || {}
   // const requestedIso =
   //   !data.requestedAt || data.requestedAt === 'asap'

@@ -113,7 +113,10 @@ const RevenueCentersSelect = ({
   const [error, setError] = useState(null)
   const [displayedRevenueCenters, setDisplayedRevenueCenters] = useState([])
   const isLoading = loading === 'pending'
-  const autoSelect = rcConfig.autoSelect[orderType][serviceType]
+  const autoSelect =
+    orderType && serviceType
+      ? rcConfig.autoSelect[orderType][serviceType]
+      : false
 
   useEffect(() => {
     if (orderType) {

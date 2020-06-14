@@ -67,8 +67,10 @@ const CheckoutDetails = () => {
 
   return (
     <div className="form__fieldset">
-      <div className="form__legend heading ot-font-size-h4">
-        {config.details.title}
+      <div className="form__legend">
+        <p className="form__legend__title heading ot-font-size-h3">
+          {config.details.title}
+        </p>
       </div>
       <div className="form__inputs">
         <CheckoutLineItem label="Location">

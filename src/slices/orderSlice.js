@@ -219,7 +219,7 @@ export const selectCart = (state) => state.order.cart
 export const selectCartQuantity = (state) =>
   state.order.cart.reduce((t, i) => (t += i.quantity), 0)
 export const selectCartTotal = (state) =>
-  state.order.cart.reduce((t, i) => (t += i.totalPrice), 0)
+  state.order.cart.reduce((t, i) => (t += i.totalPrice), 0.0)
 export const selectCartCounts = (state) => state.order.cartCounts
 
 export const selectCanCheckout = (state) =>

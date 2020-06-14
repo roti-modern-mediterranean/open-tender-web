@@ -6,7 +6,7 @@ import { openModal } from '../slices/modalSlice'
 import { logoutCustomer, selectCustomer } from '../slices/customerSlice'
 import {
   selectCart,
-  selectCartQuantity,
+  selectCartTotal,
   selectMenuSlug,
   selectOrder,
   resetOrder,
@@ -15,6 +15,7 @@ import {
 } from '../slices/orderSlice'
 import {
   clearErrors,
+  resetTip,
   updateForm,
   updateCustomer,
   validateOrder,
@@ -25,7 +26,8 @@ import {
 } from '../slices/checkoutSlice'
 // import { setCompletedOrder } from '../slices/confirmationSlice'
 import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../packages'
-import { prepareOrder } from '../packages/utils/cart'
+import { prepareOrder, getDefaultTip } from '../packages/utils/cart'
+import BarLoader from 'react-spinners/BarLoader'
 import HeaderLogo from './HeaderLogo'
 
 const CheckoutPage = () => {
@@ -33,27 +35,41 @@ const CheckoutPage = () => {
   const dispatch = useDispatch()
   const { checkout: checkoutConfig } = useSelector(selectConfig)
   const cart = useSelector(selectCart)
-  const cartCount = useSelector(selectCartQuantity)
+  const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
-  const { revenueCenter, serviceType, requestedAt } = order
-  const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const tz = useSelector(selectTimezone)
   const { account, auth } = useSelector(selectCustomer)
-  const { access_token } = auth || {}
   const { check, form, loading, errors = {} } = useSelector(selectCheckout)
-  const { customer, details, discounts, promoCodes, tenders, tip } = form
   const completedOrder = useSelector(selectCompletedOrder)
-  console.log(errors)
+  const { revenueCenter, serviceType, requestedAt } = order
+  const { revenue_center_id: revenueCenterId } = revenueCenter || {}
+  const { access_token } = auth || {}
+  const {
+    customer,
+    address,
+    details,
+    discounts,
+    promoCodes,
+    tenders,
+    tip,
+  } = form
+  const pending = loading === 'pending'
+  const defaultTip = getDefaultTip(check.config)
+  // console.log('tip', tip)
+  // console.log(errors)
 
   useEffect(() => {
     window.scroll(0, 0)
-    dispatch(clearErrors())
+    return () => {
+      dispatch(clearErrors())
+      dispatch(resetTip())
+    }
   }, [dispatch])
 
   useEffect(() => {
-    if (cartCount === 0) return history.push(menuSlug)
-  }, [cartCount, menuSlug, history])
+    if (cartTotal === 0) return history.push(menuSlug)
+  }, [cartTotal, menuSlug, history, dispatch])
 
   useEffect(() => {
     dispatch(updateCustomer(account))
@@ -79,18 +95,21 @@ const CheckoutPage = () => {
       requestedAt,
       cart,
       customer: customerValidate,
+      address: order.address,
       discounts,
       promoCodes,
       tip,
     }
-    const order = prepareOrder(data)
-    dispatch(validateOrder(order))
+    const preparedOrder = prepareOrder(data)
+    // console.log('preparedOrder', preparedOrder)
+    dispatch(validateOrder(preparedOrder))
   }, [
     revenueCenterId,
     serviceType,
     requestedAt,
     cart,
     account,
+    order.address,
     discounts,
     promoCodes,
     tip,
@@ -99,18 +118,17 @@ const CheckoutPage = () => {
     history,
   ])
 
-  const pending = loading === 'pending'
-
   const data = {
     revenueCenterId,
     serviceType,
     requestedAt,
     cart,
     customer,
+    address: { ...order.address, ...address },
     details,
     discounts,
     promoCodes,
-    tip,
+    tip: tip === null ? defaultTip : tip,
     tenders,
   }
   const preparedOrder = prepareOrder(data)
@@ -188,22 +206,31 @@ const CheckoutPage = () => {
                 <h1 className="checkout__title">{checkoutConfig.title}</h1>
                 <p className="checkout__subtitle">{checkoutConfig.subtitle}</p>
               </div>
-              <CheckoutForm
-                config={checkoutConfig}
-                order={order}
-                tz={tz}
-                check={check}
-                form={form}
-                loading={loading}
-                errors={errors}
-                updateForm={(form) => dispatch(updateForm(form))}
-                submitOrder={() => dispatch(submitOrder(preparedOrder))}
-                login={() => dispatch(openModal({ type: 'login' }))}
-                logout={() => dispatch(logoutCustomer(access_token))}
-                updateRequestedAt={handleRequestedAt}
-                updateRevenueCenter={handleRevenueCenter}
-                updateServiceType={handleServiceType}
-              />
+              {!check && pending ? (
+                <div className="checkout__loading">
+                  <div className="checkout__loading__loader">
+                    <BarLoader size={36} color={'#000'} />
+                    {/* <span>Updating...</span> */}
+                  </div>
+                </div>
+              ) : (
+                <CheckoutForm
+                  config={checkoutConfig}
+                  order={order}
+                  tz={tz}
+                  check={check}
+                  form={form}
+                  loading={loading}
+                  errors={errors}
+                  updateForm={(form) => dispatch(updateForm(form))}
+                  submitOrder={() => dispatch(submitOrder(preparedOrder))}
+                  login={() => dispatch(openModal({ type: 'login' }))}
+                  logout={() => dispatch(logoutCustomer(access_token))}
+                  updateRequestedAt={handleRequestedAt}
+                  updateRevenueCenter={handleRevenueCenter}
+                  updateServiceType={handleServiceType}
+                />
+              )}
             </div>
           </div>
         </div>

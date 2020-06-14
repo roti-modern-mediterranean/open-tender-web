@@ -92,6 +92,7 @@ export const defaultConfig = {
   menu: {
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',
+    loading: 'Retrieving the menu. Please hang tight.',
     displayCalories: true,
     displayAllergens: true,
     displayTags: true,

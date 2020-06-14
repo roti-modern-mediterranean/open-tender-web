@@ -2,13 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { postOrderValidate, postOrder } from '../services/requests'
 import { handleCheckoutErrors } from '../packages/utils/errors'
 import { openModal, closeModal } from './modalSlice'
-import { getDefaultTip } from '../packages/utils/cart'
+// import { getDefaultTip } from '../packages/utils/cart'
 
 const initialState = {
   check: null,
   form: {
     details: {},
     customer: {},
+    address: {},
     discounts: [],
     promoCodes: [],
     tenders: [],
@@ -62,6 +63,9 @@ const checkoutSlice = createSlice({
     clearCompletedOrder: (state) => {
       state.completedOrder = null
     },
+    resetTip: (state) => {
+      state.form.tip = null
+    },
     updateForm: (state, action) => {
       state.form = { ...state.form, ...action.payload }
     },
@@ -95,9 +99,9 @@ const checkoutSlice = createSlice({
 
     [validateOrder.fulfilled]: (state, action) => {
       state.check = action.payload
-      if (!state.form.tip) {
-        state.form.tip = getDefaultTip(action.payload.config)
-      }
+      // if (!state.form.tip) {
+      //   state.form.tip = getDefaultTip(action.payload.config)
+      // }
       // state.form.discounts = action.payload.discounts
       // state.errors = action.payload.errors
       //   ? handleCheckoutErrors(action.payload.errors)
@@ -139,6 +143,7 @@ const checkoutSlice = createSlice({
 export const {
   clearErrors,
   clearCompletedOrder,
+  resetTip,
   updateForm,
   updateCustomer,
 } = checkoutSlice.actions

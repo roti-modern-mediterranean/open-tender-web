@@ -78,13 +78,13 @@ body.has-modal {
   width: 100%;
   padding: 3rem;
   text-align: center;
-}
 
-.loading__loader {
-  display: inline-block;
+  &__loader {
+    display: inline-block;
 
-  & + * {
-    margin-top: 1rem;
+    & + * {
+      margin-top: 1rem;
+    }
   }
 }
 
