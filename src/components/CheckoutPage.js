@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useMemo } from 'react'
+import isEqual from 'lodash/isEqual'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectConfig } from '../slices/configSlice'
@@ -29,6 +30,14 @@ import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../packages'
 import { prepareOrder, getDefaultTip } from '../packages/utils/cart'
 import BarLoader from 'react-spinners/BarLoader'
 import HeaderLogo from './HeaderLogo'
+
+const usePrevious = (value) => {
+  const ref = useRef()
+  useEffect(() => {
+    ref.current = value
+  })
+  return ref.current
+}
 
 const CheckoutPage = () => {
   const history = useHistory()
@@ -68,55 +77,79 @@ const CheckoutPage = () => {
   }, [dispatch])
 
   useEffect(() => {
+    if (!revenueCenterId || !serviceType) return history.push('/')
     if (cartTotal === 0) return history.push(menuSlug)
-  }, [cartTotal, menuSlug, history, dispatch])
+  }, [history, dispatch, cartTotal, menuSlug, revenueCenterId, serviceType])
 
   useEffect(() => {
     dispatch(updateCustomer(account))
   }, [dispatch, account])
 
-  useEffect(() => {
-    if (!revenueCenterId || !serviceType) return history.push('/')
-    if (completedOrder) {
-      dispatch(clearCompletedOrder())
-      dispatch(resetOrder())
-      return history.push(`/orders/${completedOrder.order_id}`)
-      // dispatch(setCompletedOrder(completedOrder))
-      // dispatch(clearCompletedOrder())
-      // dispatch(resetOrder())
-      // return history.push('/confirmation')
-    }
-    const customerValidate = account
-      ? { customer_id: account.customer_id }
-      : null
-    const data = {
-      revenueCenterId,
-      serviceType,
-      requestedAt,
-      cart,
-      customer: customerValidate,
-      address: order.address,
-      discounts,
-      promoCodes,
-      tip,
-    }
-    const preparedOrder = prepareOrder(data)
-    // console.log('preparedOrder', preparedOrder)
-    dispatch(validateOrder(preparedOrder))
-  }, [
+  // const orderValidate = useMemo(() => [1, 2, 3], [])
+  const customerValidate = account ? { customer_id: account.customer_id } : null
+  const dataValidate = {
     revenueCenterId,
     serviceType,
     requestedAt,
     cart,
-    account,
-    order.address,
+    customer: customerValidate,
+    address: order.address,
     discounts,
     promoCodes,
     tip,
-    completedOrder,
-    dispatch,
-    history,
-  ])
+  }
+  const orderValidate = prepareOrder(dataValidate)
+  const prevOrderValidate = usePrevious(orderValidate)
+
+  useEffect(() => {
+    console.log('validate running')
+    if (!isEqual(orderValidate, prevOrderValidate)) {
+      console.log('validate different')
+      dispatch(validateOrder(orderValidate))
+    }
+  }, [dispatch, orderValidate, prevOrderValidate])
+
+  // useEffect(() => {
+  //   if (completedOrder) {
+  //     dispatch(clearCompletedOrder())
+  //     dispatch(resetOrder())
+  //     return history.push(`/orders/${completedOrder.order_id}`)
+  //     // dispatch(setCompletedOrder(completedOrder))
+  //     // dispatch(clearCompletedOrder())
+  //     // dispatch(resetOrder())
+  //     // return history.push('/confirmation')
+  //   }
+  //   const customerValidate = account
+  //     ? { customer_id: account.customer_id }
+  //     : null
+  //   const data = {
+  //     revenueCenterId,
+  //     serviceType,
+  //     requestedAt,
+  //     cart,
+  //     customer: customerValidate,
+  //     address: order.address,
+  //     discounts,
+  //     promoCodes,
+  //     tip,
+  //   }
+  //   const preparedOrder = prepareOrder(data)
+  //   // console.log('preparedOrder', preparedOrder)
+  //   dispatch(validateOrder(preparedOrder))
+  // }, [
+  //   revenueCenterId,
+  //   serviceType,
+  //   requestedAt,
+  //   cart,
+  //   account,
+  //   order.address,
+  //   discounts,
+  //   promoCodes,
+  //   tip,
+  //   completedOrder,
+  //   dispatch,
+  //   history,
+  // ])
 
   const data = {
     revenueCenterId,
