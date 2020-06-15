@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, CartItem, OrderQuantity, Check } from '../packages'
 import { makeDisplayItem } from '../packages/utils/cart'
@@ -15,7 +16,7 @@ import SectionHeader from './SectionHeader'
 import SectionRow from './SectionRow'
 import OrderAddress from './OrderAddress'
 import {
-  selectToken,
+  selectCustomer,
   addCustomerFavorite,
   removeCustomerFavorite,
   selectCustomerFavorites,
@@ -25,6 +26,7 @@ import {
   setAddress,
   reorderPastOrder,
 } from '../slices/orderSlice'
+import { resetAccountOrder } from '../slices/accountSlice'
 
 const OrderLoading = ({ loading }) => {
   return loading ? (
@@ -53,7 +55,7 @@ const handleOrderError = (error) => {
   }
 }
 
-const OrderError = ({ error, handler }) => {
+const OrderError = ({ error, backLink, backText }) => {
   if (!error) return null
   const errMsg = handleOrderError(error)
   return (
@@ -63,8 +65,8 @@ const OrderError = ({ error, handler }) => {
         <div className="order__error__message">
           <p className="ot-error-color ot-bold font-size-big">{errMsg}</p>
           <p className="font-size-small">
-            <button type="button" className="btn-error" onClick={handler}>
-              Click here to head back to your account page.
+            <button type="button" className="btn-error" onClick={backLink}>
+              {backText}
             </button>
           </p>
         </div>
@@ -76,6 +78,8 @@ const OrderError = ({ error, handler }) => {
 OrderError.displayName = 'OrderError'
 OrderError.propTypes = {
   error: propTypes.string,
+  backLink: propTypes.func,
+  backText: propTypes.string,
 }
 
 const OrderRevenueCenter = ({ revenue_center }) => {
@@ -145,7 +149,7 @@ OrderRating.propTypes = {
   comments: propTypes.string,
 }
 
-const Order = ({ order, loading, error, goToAccount }) => {
+const Order = ({ order, loading, error }) => {
   const {
     order_id,
     status,
@@ -168,14 +172,19 @@ const Order = ({ order, loading, error, goToAccount }) => {
     rating,
   } = order || {}
   const dispatch = useDispatch()
+  const history = useHistory()
   const isLoading = loading === 'pending'
   const showOrder = !isLoading && !error && !isEmpty(order)
   const orderType = order_type === 'OLO' ? service_type : order_type
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
-  const token = useSelector(selectToken)
+  const { auth, account } = useSelector(selectCustomer)
+  const token = auth ? auth.access_token : null
   const { lookup } = useSelector(selectCustomerFavorites)
   const check = { surcharges, discounts, taxes, totals, details }
+  const backText = account
+    ? 'Head back to your account page'
+    : 'Start a new order'
 
   const addFavorite = (cart) => {
     const data = { cart }
@@ -206,10 +215,21 @@ const Order = ({ order, loading, error, goToAccount }) => {
     dispatch(reorderPastOrder({ revenueCenterId, serviceType, items: cart }))
   }
 
+  const backLink = (evt) => {
+    evt.preventDefault()
+    if (account) {
+      dispatch(resetAccountOrder())
+      history.push('/account')
+    } else {
+      history.push('/')
+    }
+    evt.target.blur()
+  }
+
   return (
     <div className="order">
       <OrderLoading loading={isLoading} />
-      <OrderError error={error} handler={goToAccount} />
+      <OrderError error={error} backLink={backLink} backText={backText} />
       {showOrder && (
         <>
           <div className="order__header">
@@ -231,8 +251,8 @@ const Order = ({ order, loading, error, goToAccount }) => {
               )}
             </div>
             <p className="font-size-small">
-              <button type="button" className="btn-link" onClick={goToAccount}>
-                Head back to your account page
+              <button type="button" className="btn-link" onClick={backLink}>
+                {backText}
               </button>
             </p>
           </div>
@@ -311,12 +331,8 @@ const Order = ({ order, loading, error, goToAccount }) => {
             <div className="section__container">
               <SectionHeader>
                 <p>
-                  <button
-                    type="button"
-                    className="btn-link"
-                    onClick={goToAccount}
-                  >
-                    Head back to your account page
+                  <button type="button" className="btn-link" onClick={backLink}>
+                    {backText}
                   </button>
                 </p>
               </SectionHeader>

@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useMemo } from 'react'
 import isEqual from 'lodash/isEqual'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { prepareOrder } from '../packages/utils/cart'
+import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../packages'
 import { selectConfig } from '../slices/configSlice'
 import { openModal } from '../slices/modalSlice'
 import { logoutCustomer, selectCustomer } from '../slices/customerSlice'
@@ -23,9 +25,7 @@ import {
   validateOrder,
   submitOrder,
 } from '../slices/checkoutSlice'
-// import { setCompletedOrder } from '../slices/confirmationSlice'
-import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../packages'
-import { prepareOrder } from '../packages/utils/cart'
+import { setConfirmationOrder } from '../slices/confirmationSlice'
 import HeaderLogo from './HeaderLogo'
 
 const usePrevious = (value) => {
@@ -69,9 +69,11 @@ const CheckoutPage = () => {
     } else if (cartTotal === 0) {
       return history.push(menuSlug)
     } else if (completedOrder) {
+      dispatch(setConfirmationOrder(completedOrder))
       dispatch(resetCompletedOrder())
       dispatch(resetOrder())
-      return history.push(`/orders/${completedOrder.order_id}`)
+      return history.push('/confirmation')
+      // return history.push(`/orders/${completedOrder.order_id}`)
     }
   }, [
     history,

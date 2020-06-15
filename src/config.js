@@ -153,6 +153,12 @@ export const defaultConfig = {
       subtitle: 'Please add one or more payments below',
     },
   },
+  confirmation: {
+    title: 'Thanks for your order!',
+    subtitle:
+      "Below are the details of your order, and we'll be sending a confirmation email shortly, which will serve as your receipt.",
+    spam: "Please be sure to check your spam folder if you don't receive it.",
+  },
   account: {
     // background:
     //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',

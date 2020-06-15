@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  completedOrder: null,
+  order: null,
 }
 
 const confirmationSlice = createSlice({
@@ -9,17 +9,17 @@ const confirmationSlice = createSlice({
   initialState: initialState,
   reducers: {
     resetConfirmation: () => initialState,
-    setCompletedOrder: (state, action) => {
-      state.completedOrder = action.payload
+    setConfirmationOrder: (state, action) => {
+      state.order = action.payload
     },
   },
 })
 
 export const {
   resetConfirmation,
-  setCompletedOrder,
+  setConfirmationOrder,
 } = confirmationSlice.actions
 
-export const selectCompletedOrder = (state) => state.confirmation.completedOrder
+export const selectConfirmationOrder = (state) => state.confirmation.order
 
 export default confirmationSlice.reducer
