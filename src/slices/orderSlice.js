@@ -18,7 +18,8 @@ import {
   makeFirstRequestedAt,
 } from '../packages/utils/datetimes'
 import { setMenuItems } from './menuSlice'
-import { openModal } from './modalSlice'
+import { openModal, closeModal } from './modalSlice'
+import { showNotification } from './notificationSlice'
 
 const initialState = {
   orderType: null,
@@ -44,19 +45,50 @@ export const fetchRevenueCenter = createAsyncThunk(
   }
 )
 
+const refreshingModal = {
+  type: 'working',
+  args: { text: 'Updating location...' },
+}
+const refreshModal = { type: 'requestedAt', args: { isRefresh: true } }
+
+export const refreshRevenueCenter = createAsyncThunk(
+  'order/refreshRevenueCenter',
+  async ({ revenueCenterId, serviceType }, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(openModal(refreshingModal))
+      const revenueCenter = await getRevenueCenter(revenueCenterId)
+      const requestedAt = makeFirstRequestedAt(revenueCenter, serviceType)
+      if (!requestedAt) {
+        thunkAPI.dispatch(closeModal())
+        thunkAPI.dispatch(resetRevenueCenter())
+      } else {
+        thunkAPI.dispatch(openModal(refreshModal))
+        return { revenueCenter, requestedAt }
+      }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+const buildModal = { type: 'working', args: { text: 'Building your order...' } }
+
 export const reorderPastOrder = createAsyncThunk(
   'order/reorderPastOrder',
   async ({ revenueCenterId, serviceType, items }, thunkAPI) => {
     try {
-      thunkAPI.dispatch(
-        openModal({ type: 'working', args: { text: 'Building your order...' } })
-      )
+      thunkAPI.dispatch(openModal(buildModal))
       const revenueCenter = await getRevenueCenter(revenueCenterId)
-      const menuItems = await getMenuItems(revenueCenterId, serviceType)
-      const { cart, cartCounts } = rehydrateCart(menuItems, items)
-      thunkAPI.dispatch(setMenuItems(menuItems))
-      thunkAPI.dispatch(openModal({ type: 'requestedAt' }))
-      return { revenueCenter, cart, cartCounts }
+      const requestedAt = makeFirstRequestedAt(revenueCenter, serviceType)
+      if (!requestedAt) {
+        return thunkAPI.dispatch(showNotification('Location currently closed'))
+      } else {
+        const menuItems = await getMenuItems(revenueCenterId, serviceType)
+        const { cart, cartCounts } = rehydrateCart(menuItems, items)
+        thunkAPI.dispatch(setMenuItems(menuItems))
+        thunkAPI.dispatch(openModal({ type: 'requestedAt' }))
+        return { revenueCenter, requestedAt, cart, cartCounts }
+      }
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -150,11 +182,26 @@ const orderSlice = createSlice({
       state.loading = 'idle'
     },
 
+    // refreshRevenueCenter
+
+    [refreshRevenueCenter.fulfilled]: (state, action) => {
+      const { revenueCenter, requestedAt } = action.payload
+      state.revenueCenter = revenueCenter
+      state.requestedAt = requestedAt
+      state.loading = 'idle'
+    },
+    [refreshRevenueCenter.pending]: (state) => {
+      state.loading = 'pending'
+    },
+    [refreshRevenueCenter.rejected]: (state, action) => {
+      state.error = action.error.detail
+      state.loading = 'idle'
+    },
+
     // reorderPastOrder
 
     [reorderPastOrder.fulfilled]: (state, action) => {
-      const { revenueCenter, cart, cartCounts } = action.payload
-      const requestedAt = makeFirstRequestedAt(revenueCenter, state.serviceType)
+      const { revenueCenter, requestedAt, cart, cartCounts } = action.payload
       state.revenueCenter = revenueCenter
       state.requestedAt = requestedAt
       state.cart = cart

@@ -1,5 +1,7 @@
 export const handleCheckoutErrors = (errors) => {
-  const errObj = Object.entries(errors).reduce(
+  const { detail, params, message } = errors
+  if (!params) return { form: detail || message }
+  const errObj = Object.entries(params).reduce(
     (obj, error) => {
       const [key, value] = error
       let [, entity, field] = key.split('.')

@@ -4,6 +4,7 @@ import { handleCheckoutErrors } from '../packages/utils/errors'
 import { openModal, closeModal } from './modalSlice'
 import { getDefaultTip, prepareOrder } from '../packages/utils/cart'
 import { isEmpty } from '../packages/utils/helpers'
+import { refreshRevenueCenter } from './orderSlice'
 // import { getDefaultTip } from '../packages/utils/cart'
 
 const initialState = {
@@ -27,7 +28,18 @@ export const validateOrder = createAsyncThunk(
   async (order, thunkAPI) => {
     try {
       // console.log(JSON.stringify(order, null, 2))
-      return await postOrderValidate(order)
+      const response = await postOrderValidate(order)
+      const errors = handleCheckoutErrors({ params: response.errors })
+      const keys = Object.keys(errors)
+      if (keys.includes('revenue_center_id')) {
+        const args = {
+          revenueCenterId: order.revenue_center_id,
+          serviceType: order.service_type,
+        }
+        thunkAPI.dispatch(refreshRevenueCenter(args))
+      } else {
+        return response
+      }
     } catch (err) {
       // console.log(JSON.stringify(err, null, 2))
       return thunkAPI.rejectWithValue(err)
@@ -135,10 +147,7 @@ const checkoutSlice = createSlice({
       state.loading = 'pending'
     },
     [validateOrder.rejected]: (state, action) => {
-      const { detail, params, message } = action.payload
-      state.errors = params
-        ? handleCheckoutErrors(params)
-        : { form: detail || message }
+      state.errors = handleCheckoutErrors(action.payload)
       state.loading = 'idle'
       window.scroll(0, 0)
     },
@@ -156,10 +165,7 @@ const checkoutSlice = createSlice({
       state.loading = 'pending'
     },
     [submitOrder.rejected]: (state, action) => {
-      const { detail, params, message } = action.payload
-      state.errors = params
-        ? handleCheckoutErrors(params)
-        : { form: detail || message }
+      state.errors = handleCheckoutErrors(action.payload)
       state.loading = 'idle'
       window.scroll(0, 0)
     },
