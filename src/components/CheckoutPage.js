@@ -26,7 +26,6 @@ import {
 // import { setCompletedOrder } from '../slices/confirmationSlice'
 import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../packages'
 import { prepareOrder } from '../packages/utils/cart'
-import BarLoader from 'react-spinners/BarLoader'
 import HeaderLogo from './HeaderLogo'
 
 const usePrevious = (value) => {
@@ -197,31 +196,22 @@ const CheckoutPage = () => {
                 <h1 className="checkout__title">{checkoutConfig.title}</h1>
                 <p className="checkout__subtitle">{checkoutConfig.subtitle}</p>
               </div>
-              {!check && pending ? (
-                <div className="checkout__loading">
-                  <div className="checkout__loading__loader">
-                    <BarLoader size={36} color={'#000'} />
-                    {/* <span>Updating...</span> */}
-                  </div>
-                </div>
-              ) : (
-                <CheckoutForm
-                  config={checkoutConfig}
-                  order={order}
-                  tz={tz}
-                  check={check}
-                  form={form}
-                  loading={loading}
-                  errors={errors}
-                  updateForm={(form) => dispatch(updateForm(form))}
-                  submitOrder={() => dispatch(submitOrder())}
-                  login={() => dispatch(openModal({ type: 'login' }))}
-                  logout={() => dispatch(logoutCustomer(access_token))}
-                  updateRequestedAt={handleRequestedAt}
-                  updateRevenueCenter={handleRevenueCenter}
-                  updateServiceType={handleServiceType}
-                />
-              )}
+              <CheckoutForm
+                config={checkoutConfig}
+                order={order}
+                tz={tz}
+                check={check}
+                form={form}
+                loading={loading}
+                errors={errors}
+                updateForm={(form) => dispatch(updateForm(form))}
+                submitOrder={() => dispatch(submitOrder())}
+                login={() => dispatch(openModal({ type: 'login' }))}
+                logout={() => dispatch(logoutCustomer(access_token))}
+                updateRequestedAt={handleRequestedAt}
+                updateRevenueCenter={handleRevenueCenter}
+                updateServiceType={handleServiceType}
+              />
             </div>
           </div>
         </div>
