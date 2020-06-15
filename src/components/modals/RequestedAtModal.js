@@ -47,20 +47,13 @@ const RequestedAtModal = () => {
             Your current order time is {requestedAtText}
             {estimatedTime ? ` (${estimatedTime})` : ''}.
           </p>
-          <div className="modal__header__buttons">
-            <button className="btn btn--highlight" onClick={handleClose}>
-              Keep This Time
-            </button>
-            {requestedAt !== 'asap' && (
-              <button className="btn" onClick={() => handleRequestedAt('asap')}>
-                Change to ASAP
-              </button>
-            )}
-          </div>
         </div>
         <div className="modal__body">
           <p className="font-size-small">
-            Or use the calendar below to choose a different day & time.
+            <button className="btn-link" onClick={handleClose}>
+              Keep this time
+            </button>{' '}
+            or use the calendar below to choose a different day & time.
           </p>
           {revenueCenter && (
             <RequestedAtPicker

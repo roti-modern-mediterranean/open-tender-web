@@ -123,7 +123,7 @@ export const makeEstimatedTime = (
   if (firstTime.date === todayDate()) {
     return `around ${firstTime.time}`
   } else if (firstTime.date === tomorrowDate()) {
-    return `tomorrow @ ${firstTime.time}`
+    return `tomorrow @ ${formatTimeStr(firstTime.time)}`
   } else {
     const tz = timezoneMap[revenueCenter.timezone]
     const date = toDate(firstTime.date, { timezone: tz })
@@ -194,10 +194,11 @@ export const makeDatepickerArgs = (
   requestedAtDate,
   weekdayTimes,
   excludedTimes,
-  firstMinute,
+  firstTimes,
   interval = 15,
   daysAhead
 ) => {
+  const minDate = dateStrToDate(firstTimes.date)
   const maxDate =
     daysAhead != null ? add(new Date(), { days: daysAhead }) : null
   const currentDate = requestedAtDate || new Date()
@@ -207,7 +208,7 @@ export const makeDatepickerArgs = (
   const isToday = dateStr === todayDate()
   /* if today, excluded all times before the first minute */
   const todayExcludeded = isToday
-    ? [...range(0, firstMinute - interval, interval)]
+    ? [...range(0, firstTimes.minutes - interval, interval)]
     : []
   /* weekdayExcluded = times excluded based on regular hours + blocked hours */
   const weekdayExcluded = weekdayTimes[weekday] || []
@@ -247,5 +248,5 @@ export const makeDatepickerArgs = (
   const isClosed = (date) => {
     return !closedWeekdays.includes(date.getDay())
   }
-  return { excludeTimes, isClosed, updatedDate, maxDate }
+  return { excludeTimes, isClosed, updatedDate, minDate, maxDate }
 }

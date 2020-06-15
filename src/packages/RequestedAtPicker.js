@@ -41,7 +41,7 @@ const RequestedAtPicker = ({
   } else {
     const validTimes = settings.valid_times[serviceType]
     const daysAhead = settings.days_ahead[serviceType]
-    const firstMinute = settings.first_times[serviceType].minutes
+    const firstTimes = settings.first_times[serviceType]
     const interval = settings.first_times[serviceType].interval
     const holidays = settings.holidays[serviceType].map((i) => makeLocalDate(i))
     const weekdayTimes = makeWeekdaysExcluded(validTimes)
@@ -50,16 +50,20 @@ const RequestedAtPicker = ({
       date,
       weekdayTimes,
       excludedTimes,
-      firstMinute,
+      firstTimes,
       interval,
       daysAhead
     )
 
-    if (args.updatedDate) setDate(args.updatedDate)
+    if (args.updatedDate) {
+      setDate(args.updatedDate)
+    } else if (!error && date === null) {
+      setDate(isoToDate(firstTimes.utc, tz))
+    }
     args.holidays = holidays
     args.interval = interval
   }
-  const { excludeTimes, isClosed, maxDate, holidays, interval } = args
+  const { excludeTimes, isClosed, minDate, maxDate, holidays, interval } = args
 
   return (
     <div className="datepicker-inline">
@@ -72,7 +76,7 @@ const RequestedAtPicker = ({
           timeCaption="Time"
           timeFormat="h:mm aa"
           dateFormat="yyyy-MM-dd h:mm aa"
-          minDate={new Date()}
+          minDate={minDate}
           maxDate={maxDate}
           timeIntervals={interval}
           excludeDates={holidays}
@@ -86,9 +90,14 @@ const RequestedAtPicker = ({
       )}
       <div className="form__submit">
         {!error && (
-          <button className="btn" onClick={submitDate}>
-            {updateText}
-          </button>
+          <>
+            <button className="btn" onClick={submitDate}>
+              {updateText}
+            </button>
+            <button className="btn" onClick={() => setRequestedAt('asap')}>
+              {requestedAt === 'asap' ? 'Keep ASAP' : 'Change to ASAP'}
+            </button>
+          </>
         )}
       </div>
     </div>

@@ -156,8 +156,9 @@ export const defaultConfig = {
   confirmation: {
     title: 'Thanks for your order!',
     subtitle:
-      "Below are the details of your order, and we'll be sending a confirmation email shortly, which will serve as your receipt.",
-    spam: "Please be sure to check your spam folder if you don't receive it.",
+      "Below are the details, and we'll be sending a confirmation email shortly, which will serve as your receipt.",
+    spam:
+      "Please be sure to check your spam folder if you don't receive the confirmation email.",
   },
   account: {
     // background:
