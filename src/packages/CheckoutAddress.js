@@ -61,12 +61,18 @@ const CheckoutAddress = () => {
   const addressConfig = makeAddressConfig(requiredFields)
   const addressErrors = errors.address || {}
 
-  // useEffect(() => {
-  //   if (isEmpty(form.address) && check.address) {
-  //     setAddress(check.address)
-  //     updateForm({ details: check.address })
-  //   }
-  // }, [form.address, check.address, updateForm])
+  useEffect(() => {
+    if (isEmpty(form.address) && check.address) {
+      const checkAddress = {
+        unit: check.address.unit || '',
+        company: check.address.company || '',
+        contact: check.address.contact || '',
+        phone: check.address.phone || '',
+      }
+      setAddress(checkAddress)
+      updateForm({ address: checkAddress })
+    }
+  }, [form.address, check.address, updateForm])
 
   const debouncedUpdate = useCallback(
     debounce((newAddress) => updateForm({ address: newAddress }), 500),
@@ -89,7 +95,7 @@ const CheckoutAddress = () => {
         </p>
       </legend>
       <div className="form__inputs">
-        <CheckoutLineItem label="Location">
+        <CheckoutLineItem label="Address">
           <ButtonAddress
             address={order.address}
             onClick={updateLocation}

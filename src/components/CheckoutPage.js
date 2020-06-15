@@ -14,14 +14,14 @@ import {
   selectTimezone,
 } from '../slices/orderSlice'
 import {
-  clearErrors,
+  selectCheckout,
+  resetErrors,
   resetTip,
+  resetCompletedOrder,
   updateForm,
   updateCustomer,
   validateOrder,
   submitOrder,
-  selectCheckout,
-  clearCompletedOrder,
 } from '../slices/checkoutSlice'
 // import { setCompletedOrder } from '../slices/confirmationSlice'
 import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../packages'
@@ -59,7 +59,7 @@ const CheckoutPage = () => {
   useEffect(() => {
     window.scroll(0, 0)
     return () => {
-      dispatch(clearErrors())
+      dispatch(resetErrors())
       dispatch(resetTip())
     }
   }, [dispatch])
@@ -70,7 +70,7 @@ const CheckoutPage = () => {
     } else if (cartTotal === 0) {
       return history.push(menuSlug)
     } else if (completedOrder) {
-      dispatch(clearCompletedOrder())
+      dispatch(resetCompletedOrder())
       dispatch(resetOrder())
       return history.push(`/orders/${completedOrder.order_id}`)
     }
@@ -85,7 +85,7 @@ const CheckoutPage = () => {
   ])
 
   useEffect(() => {
-    dispatch(clearErrors())
+    dispatch(resetErrors())
     dispatch(updateCustomer(account))
   }, [dispatch, account])
 

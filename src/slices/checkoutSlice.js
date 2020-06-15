@@ -17,7 +17,6 @@ const initialState = {
     tenders: [],
     tip: null,
   },
-  isSubmitting: false,
   completedOrder: null,
   errors: {},
   loading: 'idle',
@@ -71,7 +70,7 @@ export const submitOrder = createAsyncThunk(
       tenders,
     }
     const preparedOrder = prepareOrder(data)
-    // end of order assembly
+    // end order assembly
     try {
       // console.log(JSON.stringify(order, null, 2))
       const response = await postOrder(preparedOrder)
@@ -90,14 +89,15 @@ const checkoutSlice = createSlice({
   name: 'checkout',
   initialState: initialState,
   reducers: {
-    clearErrors: (state) => {
-      state.errors = {}
-    },
-    clearCompletedOrder: (state) => {
-      state.completedOrder = null
-    },
+    resetCheckout: () => initialState,
     resetTip: (state) => {
       state.form.tip = null
+    },
+    resetErrors: (state) => {
+      state.errors = {}
+    },
+    resetCompletedOrder: (state) => {
+      state.completedOrder = null
     },
     updateForm: (state, action) => {
       state.form = { ...state.form, ...action.payload }
@@ -123,31 +123,24 @@ const checkoutSlice = createSlice({
         state.form.tenders = []
       }
     },
-    toggleSubmitting: (state) => {
-      state.isSubmitting = !state.isSubmitting
-    },
   },
   extraReducers: {
     // validateOrder
 
     [validateOrder.fulfilled]: (state, action) => {
       state.check = action.payload
-      // if (!state.form.tip) {
-      //   state.form.tip = getDefaultTip(action.payload.config)
-      // }
-      // state.form.discounts = action.payload.discounts
-      // state.errors = action.payload.errors
-      //   ? handleCheckoutErrors(action.payload.errors)
-      //   : {}
       state.loading = 'idle'
     },
     [validateOrder.pending]: (state) => {
       state.loading = 'pending'
     },
     [validateOrder.rejected]: (state, action) => {
-      // TODO: this might not be right
-      state.errors = action.payload.params
+      const { detail, params, message } = action.payload
+      state.errors = params
+        ? handleCheckoutErrors(params)
+        : { form: detail || message }
       state.loading = 'idle'
+      window.scroll(0, 0)
     },
 
     // submitOrder
@@ -174,8 +167,9 @@ const checkoutSlice = createSlice({
 })
 
 export const {
-  clearErrors,
-  clearCompletedOrder,
+  resetCheckout,
+  resetErrors,
+  resetCompletedOrder,
   resetTip,
   updateForm,
   updateCustomer,
