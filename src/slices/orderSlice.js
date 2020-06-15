@@ -12,7 +12,11 @@ import {
   serviceTypeNamesMap,
   orderTypeNamesMap,
 } from '../packages/utils/constants'
-import { timezoneMap, getUserTimezone } from '../packages/utils/datetimes'
+import {
+  timezoneMap,
+  getUserTimezone,
+  makeFirstRequestedAt,
+} from '../packages/utils/datetimes'
 import { setMenuItems } from './menuSlice'
 import { openModal } from './modalSlice'
 
@@ -85,6 +89,11 @@ const orderSlice = createSlice({
     },
     setRevenueCenter: (state, action) => {
       state.revenueCenter = action.payload
+      const requestedAt = makeFirstRequestedAt(
+        action.payload,
+        state.serviceType
+      )
+      state.requestedAt = requestedAt
     },
     setAddress: (state, action) => {
       state.address = action.payload
@@ -144,9 +153,12 @@ const orderSlice = createSlice({
     // reorderPastOrder
 
     [reorderPastOrder.fulfilled]: (state, action) => {
-      state.revenueCenter = action.payload.revenueCenter
-      state.cart = action.payload.cart
-      state.cartCounts = action.payload.cartCounts
+      const { revenueCenter, cart, cartCounts } = action.payload
+      const requestedAt = makeFirstRequestedAt(revenueCenter, state.serviceType)
+      state.revenueCenter = revenueCenter
+      state.requestedAt = requestedAt
+      state.cart = cart
+      state.cartCounts = cartCounts
       state.loading = 'idle'
     },
     [reorderPastOrder.pending]: (state) => {

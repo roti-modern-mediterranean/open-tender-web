@@ -9,6 +9,7 @@ import {
   makeWeekdaysExcluded,
   makeDatepickerArgs,
   timezoneMap,
+  todayDate,
 } from './utils/datetimes'
 import { errMessages } from './utils/errors'
 
@@ -17,9 +18,8 @@ const RequestedAtPicker = ({
   revenueCenter,
   serviceType,
   setRequestedAt,
-  updateText = 'Update Order Time',
 }) => {
-  const { timezone, settings } = revenueCenter
+  const { timezone, settings, revenue_center_type } = revenueCenter
   const tz = timezoneMap[timezone]
   const requestedAtDate =
     requestedAt === 'asap' ? null : isoToDate(requestedAt, tz)
@@ -54,7 +54,6 @@ const RequestedAtPicker = ({
       interval,
       daysAhead
     )
-
     if (args.updatedDate) {
       setDate(args.updatedDate)
     } else if (!error && date === null) {
@@ -62,8 +61,18 @@ const RequestedAtPicker = ({
     }
     args.holidays = holidays
     args.interval = interval
+    args.hasAsap =
+      revenue_center_type === 'OLO' && firstTimes.date === todayDate()
   }
-  const { excludeTimes, isClosed, minDate, maxDate, holidays, interval } = args
+  const {
+    excludeTimes,
+    isClosed,
+    minDate,
+    maxDate,
+    holidays,
+    interval,
+    hasAsap,
+  } = args
 
   return (
     <div className="datepicker-inline">
@@ -92,11 +101,13 @@ const RequestedAtPicker = ({
         {!error && (
           <>
             <button className="btn" onClick={submitDate}>
-              {updateText}
+              {hasAsap ? 'Update Order Time' : 'Choose Order Time'}
             </button>
-            <button className="btn" onClick={() => setRequestedAt('asap')}>
-              {requestedAt === 'asap' ? 'Keep ASAP' : 'Change to ASAP'}
-            </button>
+            {hasAsap && (
+              <button className="btn" onClick={() => setRequestedAt('asap')}>
+                {requestedAt === 'asap' ? 'Keep ASAP' : 'Change to ASAP'}
+              </button>
+            )}
           </>
         )}
       </div>

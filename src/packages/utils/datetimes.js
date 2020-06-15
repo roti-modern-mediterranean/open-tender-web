@@ -1,5 +1,6 @@
 import { parseISO, add } from 'date-fns'
 import { format, toDate, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz'
+import { isEmpty } from './helpers'
 
 /* CONSTANTS */
 
@@ -249,4 +250,19 @@ export const makeDatepickerArgs = (
     return !closedWeekdays.includes(date.getDay())
   }
   return { excludeTimes, isClosed, updatedDate, minDate, maxDate }
+}
+
+export const makeFirstRequestedAt = (revenueCenter, serviceType) => {
+  const { timezone, settings, revenue_center_type } = revenueCenter
+  const tz = timezoneMap[timezone]
+  if (isEmpty(settings.first_times)) {
+    return null
+  } else if (!settings.first_times[serviceType]) {
+    return null
+  }
+  const firstTimes = settings.first_times[serviceType]
+  if (firstTimes.date === todayDate() && revenue_center_type === 'OLO') {
+    return 'asap'
+  }
+  return dateToIso(isoToDate(firstTimes.utc, tz), tz)
 }

@@ -19,6 +19,7 @@ import { Button } from '../packages'
 import CurrentOrder from './CurrentOrder'
 import OrderCard from './OrderCard'
 import AccountLoyalty from './AccountLoyalty'
+import { parseISO } from 'date-fns'
 
 const GreetingLink = ({ sectionTitle, text }) => (
   <Link
@@ -33,17 +34,18 @@ const GreetingLink = ({ sectionTitle, text }) => (
   </Link>
 )
 
+const getLastOrder = (orders) => {
+  if (!orders || !orders.length) return null
+  const withCreated = orders
+    .map((i) => ({ ...i, createdAt: parseISO(i.created_at) }))
+    .sort((a, b) => a.createdAt - b.createdAt)
+    .reverse()
+  return withCreated[0]
+}
+
 const AccountGreeting = ({ title, subtitle }) => {
   const history = useHistory()
   const dispatch = useDispatch()
-  // const {
-  //   recentOrders: {title: recentOrdersTitle},
-  //   favorites: {title: favoritesTitle},
-  //   recentItems: {title: recentItemsTitle},
-  //   accountDetails: { title: accountTitle },
-  //   allergens: { title: allergensTitle },
-  //   addresses: { title: addressesTitle },
-  // } = useSelector(selectAccountConfigSections)
   const config = useSelector(selectAccountConfigSections)
   const customer = useSelector(selectCustomerAccount)
   const currentOrder = useSelector(selectOrder)
@@ -51,7 +53,9 @@ const AccountGreeting = ({ title, subtitle }) => {
   const { entities: orders, loading } = useSelector(selectAccountOrders)
   const isLoading = loading === 'pending'
   // const isLoading = true
-  const lastOrder = orders.length ? orders[0] : null
+  // console.log(newLastOrder)
+  // const lastOrder = orders.length ? orders[0] : null
+  const lastOrder = getLastOrder(orders)
   let orderType = null,
     otherOrderTypes = null
   if (lastOrder) {

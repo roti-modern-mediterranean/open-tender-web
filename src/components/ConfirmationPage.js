@@ -24,8 +24,6 @@ const ConfirmationPage = () => {
     }
   }, [order, account, dispatch, history])
 
-  console.log(order)
-
   return (
     <div className="content bg-secondary-color">
       {/* <h1 className="sr-only">Confirmation Page</h1> */}
