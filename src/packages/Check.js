@@ -21,8 +21,8 @@ CheckItem.propTypes = {
 const CheckUpdating = () => (
   <div className="check__disabled overlay">
     <div className="check__disabled__working">
-      <BarLoader size={36} color={'#000'} />
-      <span>Updating...</span>
+      <BarLoader />
+      <span className="font-size-small">Updating...</span>
     </div>
   </div>
 )

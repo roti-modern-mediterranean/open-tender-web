@@ -43,7 +43,7 @@ const RequestedAtModal = () => {
           <p className="modal__title heading ot-font-size-h3">
             Choose an order date & time
           </p>
-          <p className="modal__subtitle ot-bold ot-alert-color font-size-big">
+          <p className="modal__subtitle ot-bold ot-alert-color">
             Your current order time is {requestedAtText}
             {estimatedTime ? ` (${estimatedTime})` : ''}.
           </p>

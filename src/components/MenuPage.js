@@ -1,7 +1,6 @@
 import React, { useEffect, createContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import BarLoader from 'react-spinners/BarLoader'
 import { validateCart } from '../packages/utils/cart'
 import { selectConfig } from '../slices/configSlice'
 import {
@@ -22,6 +21,7 @@ import { openModal } from '../slices/modalSlice'
 import Hero from './Hero'
 import Menu from './Menu'
 import RevenueCenter from './RevenueCenter'
+import Loader from './Loader'
 
 export const MenuContext = createContext(null)
 
@@ -77,14 +77,7 @@ const MenuPage = () => {
       </Hero>
       <h1 className="sr-only">Menu</h1>
       {isLoading ? (
-        <div className="loading">
-          <div className="loading__loader">
-            <BarLoader size={100} loading={isLoading} />
-          </div>
-          <p className="font-size-small">
-            {menuConfig.loading || 'Retrieving the menu. Please hang tight.'}
-          </p>
-        </div>
+        <Loader text={menuConfig.loading} />
       ) : error ? (
         <div className="loading">
           <p className="ot-error-color">{error}</p>

@@ -3,6 +3,11 @@
   justify-content: space-between;
   min-height: 100vh;
 
+  .loading {
+    padding: 8rem 0;
+    // text-align: left;
+  }
+
   &__header {
     position: fixed;
     z-index: 10;
