@@ -1,22 +1,27 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getMenu, getMenuItems, getAllergens } from '../services/requests'
-import { refreshRevenueCenter } from './orderSlice'
-
-const makeRequestedIso = (requestedAt) => {
-  return !requestedAt || requestedAt === 'asap'
-    ? new Date().toISOString()
-    : requestedAt
-}
+import { refreshRevenueCenter, setCart } from './orderSlice'
+import { makeRequestedIso } from '../packages/utils/datetimes'
+import { validateCart } from '../packages/utils/cart'
+import { openModal } from './modalSlice'
 
 export const fetchMenu = createAsyncThunk(
   'menu/fetchMenu',
   async (menuVars, thunkAPI) => {
-    console.log('menuVars', menuVars)
     const { revenueCenterId, serviceType, requestedAt } = menuVars
     try {
       const requestedIso = makeRequestedIso(requestedAt)
       const menu = await getMenu(revenueCenterId, serviceType, requestedIso)
-      return { ...menu, menuVars }
+      const cart = thunkAPI.getState().order.cart
+      const { menu: categories, sold_out_items: soldOut } = menu
+      const { newCart, errors } = validateCart(cart, categories, soldOut)
+      if (errors) {
+        thunkAPI.dispatch(setCartErrors({ newCart, errors }))
+        thunkAPI.dispatch(openModal({ type: 'cartErrors' }))
+      } else {
+        thunkAPI.dispatch(setCart(newCart))
+      }
+      return { categories, soldOut, menuVars }
     } catch (err) {
       const args = { revenueCenterId, serviceType, requestedAt }
       thunkAPI.dispatch(refreshRevenueCenter(args))
@@ -90,6 +95,10 @@ const menuSlice = createSlice({
     resetCartErrors: (state, action) => {
       state.cartErrors = null
     },
+    resetMenuVars: (state, action) => {
+      state.menuVars = null
+      state.previousMenuVars = null
+    },
     setMenuItems: (state, action) => {
       state.menuItems.entities = action.payload
     },
@@ -101,10 +110,10 @@ const menuSlice = createSlice({
     //menus
 
     [fetchMenu.fulfilled]: (state, action) => {
-      state.categories = action.payload.menu
-      state.soldOut = action.payload.sold_out_items
       if (state.menuVars) state.previousMenuVars = state.menuVars
       state.menuVars = action.payload.menuVars
+      state.categories = action.payload.categories
+      state.soldOut = action.payload.soldOut
       state.loading = 'idle'
       state.error = null
     },
@@ -162,6 +171,7 @@ const menuSlice = createSlice({
 export const {
   setCartErrors,
   resetCartErrors,
+  resetMenuVars,
   setMenuItems,
   setSelectedAllergens,
 } = menuSlice.actions

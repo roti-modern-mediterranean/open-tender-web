@@ -108,10 +108,10 @@ const CartErrors = ({
         )}
         <Button
           text={content.buttonProceed}
-          icon="ChevronRight"
+          icon="Trash2"
           onClick={proceed}
-          iconEnd={true}
-          classes="btn--proceed"
+          // iconEnd={true}
+          // classes="btn--proceed"
         />
       </div>
     </div>

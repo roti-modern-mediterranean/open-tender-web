@@ -13,15 +13,19 @@ import {
   timezoneMap,
 } from '../../packages/utils/datetimes'
 import { capitalize } from '../../packages/utils/helpers'
+import { resetMenuVars, fetchMenu } from '../../slices/menuSlice'
 
 const AdjustRequestedAtModal = ({ firstTimes, revenueCenter }) => {
   const dispatch = useDispatch()
   const tz = timezoneMap[revenueCenter.timezone]
+  const revenueCenterId = revenueCenter.revenue_center_id
 
-  const handleUpdate = (evt, { serviceType, firstIso }) => {
+  const handleUpdate = (evt, { serviceType, requestedAt }) => {
     evt.preventDefault()
     dispatch(setServiceType(serviceType))
-    dispatch(setRequestedAt(firstIso))
+    dispatch(setRequestedAt(requestedAt))
+    dispatch(resetMenuVars())
+    dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
     dispatch(closeModal())
     evt.target.blur()
   }
@@ -36,10 +40,10 @@ const AdjustRequestedAtModal = ({ firstTimes, revenueCenter }) => {
   const [current, other] = firstTimes
   const m = makeReadableDateStrFromIso
   const currentStr = current
-    ? `${capitalize(current.serviceType)} ${m(current.firstIso, tz, true)}`
+    ? `${capitalize(current.serviceType)} ${m(current.requestedAt, tz, true)}`
     : ''
   const otherStr = other
-    ? `${capitalize(other.serviceType)} ${m(other.firstIso, tz, true)}`
+    ? `${capitalize(other.serviceType)} ${m(other.requestedAt, tz, true)}`
     : ''
 
   return (
@@ -86,7 +90,7 @@ const AdjustRequestedAtModal = ({ firstTimes, revenueCenter }) => {
 
 AdjustRequestedAtModal.displayName = 'AdjustRequestedAtModal'
 AdjustRequestedAtModal.propTypes = {
-  firstTimes: propTypes.object,
+  firstTimes: propTypes.array,
   revenueCenter: propTypes.object,
 }
 

@@ -14,6 +14,10 @@ export const isEmpty = (obj) => {
 
 export const isNum = (s) => /^\d+$/.test(s)
 
+export const contains = (arr, values) => {
+  return values.filter((i) => arr.includes(i)).length > 0
+}
+
 // https://gist.github.com/mathewbyrne/1280286
 export const slugify = (text) => {
   return text

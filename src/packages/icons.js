@@ -35,6 +35,7 @@ import {
   Star,
   Edit,
   Heart,
+  Trash2,
 } from 'react-feather'
 
 export const iconMap = {
@@ -73,4 +74,5 @@ export const iconMap = {
   Star: <Star size={null} />,
   Edit: <Edit size={null} />,
   Heart: <Heart size={null} />,
+  Trash2: <Trash2 size={null} />,
 }

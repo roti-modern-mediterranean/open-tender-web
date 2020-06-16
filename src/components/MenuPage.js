@@ -1,24 +1,19 @@
 import React, { useEffect, createContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { validateCart } from '../packages/utils/cart'
 import { selectConfig } from '../slices/configSlice'
 import {
   selectRevenueCenter,
   selectMenuVars,
-  selectCart,
-  setCart,
   fetchRevenueCenter,
   resetRevenueCenter,
 } from '../slices/orderSlice'
 import {
   fetchMenu,
   selectMenu,
-  setCartErrors,
   selectedAllergenNames,
   fetchAllergens,
 } from '../slices/menuSlice'
-import { openModal } from '../slices/modalSlice'
 import Hero from './Hero'
 import Menu from './Menu'
 import RevenueCenter from './RevenueCenter'
@@ -38,7 +33,6 @@ const MenuPage = () => {
   )
   const { categories, soldOut, error, loading } = useSelector(selectMenu)
   const allergenAlerts = useSelector(selectedAllergenNames)
-  const cart = useSelector(selectCart)
   const isLoading = loading === 'pending'
 
   useEffect(() => {
@@ -54,19 +48,6 @@ const MenuPage = () => {
       dispatch(fetchAllergens())
     }
   }, [revenueCenterId, serviceType, requestedAt, dispatch, history])
-
-  useEffect(() => {
-    if (categories.length) {
-      const { newCart, errors } = validateCart(cart, categories, soldOut)
-      if (errors) {
-        dispatch(setCartErrors({ newCart, errors }))
-        dispatch(openModal({ type: 'cartErrors' }))
-      } else {
-        dispatch(setCart(newCart))
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categories, soldOut])
 
   const changeLocation = (evt) => {
     evt.preventDefault()

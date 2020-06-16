@@ -104,13 +104,14 @@ export const defaultConfig = {
       title: 'Invalid Items in Cart',
       subtitle: 'Uh oh. Certain items in your cart are no longer valid.',
       proceed: {
-        message: 'Please click the button below to proceed.',
-        buttonProceed: 'Proceed to New Menu',
+        message:
+          'Please click the button below to remove these items and proceed with your order.',
+        buttonProceed: 'Remove Items',
       },
       revert: {
         message:
-          'Please either proceed to this new menu or switch back to your previous menu.',
-        buttonProceed: 'Proceed to New Menu',
+          'Please either remove these itemse or switch back to your previous menu.',
+        buttonProceed: 'Remove Items',
         buttonRevert: 'Back to Previous Menu',
       },
     },

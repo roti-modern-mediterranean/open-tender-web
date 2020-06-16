@@ -3,7 +3,7 @@ import { postOrderValidate, postOrder } from '../services/requests'
 import { handleCheckoutErrors } from '../packages/utils/errors'
 import { openModal, closeModal } from './modalSlice'
 import { getDefaultTip, prepareOrder } from '../packages/utils/cart'
-import { isEmpty } from '../packages/utils/helpers'
+import { isEmpty, contains } from '../packages/utils/helpers'
 import { refreshRevenueCenter } from './orderSlice'
 // import { getDefaultTip } from '../packages/utils/cart'
 
@@ -23,31 +23,26 @@ const initialState = {
   loading: 'idle',
 }
 
+const refreshKeys = ['revenue_center_id', 'service_type', 'requested_at']
+
+const makeRefreshArgs = (order) => ({
+  revenueCenterId: order.revenue_center_id,
+  serviceType: order.service_type,
+  requestedAt: order.requested_at,
+})
+
 export const validateOrder = createAsyncThunk(
   'checkout/validateOrder',
   async (order, thunkAPI) => {
     try {
       // console.log(JSON.stringify(order, null, 2))
       const response = await postOrderValidate(order)
-      const errors = handleCheckoutErrors({ params: response.errors }, false)
-      // console.log(errors)
+      const errors = handleCheckoutErrors({ params: response.errors })
+      console.log(errors)
       const keys = Object.keys(errors)
-      if (keys.includes('revenue_center_id')) {
-        const args = {
-          revenueCenterId: order.revenue_center_id,
-          serviceType: order.service_type,
-          requestedAt: order.requested_at,
-        }
+      if (contains(keys, refreshKeys)) {
+        const args = makeRefreshArgs(order)
         thunkAPI.dispatch(refreshRevenueCenter(args))
-      } else if (keys.includes('service_type')) {
-        const args = {
-          revenueCenterId: order.revenue_center_id,
-          serviceType: order.service_type,
-          requestedAt: order.requested_at,
-        }
-        thunkAPI.dispatch(refreshRevenueCenter(args))
-      } else {
-        thunkAPI.dispatch(closeModal())
       }
       return response
     } catch (err) {

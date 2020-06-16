@@ -106,6 +106,12 @@ export const makeReadableDateStrFromIso = (iso, tz, verbose = false) => {
   }
 }
 
+export const makeRequestedIso = (requestedAt) => {
+  return !requestedAt || requestedAt === 'asap'
+    ? new Date().toISOString()
+    : requestedAt
+}
+
 export const makeRequestedAtStr = (requestedAt, tz, verbose = false) => {
   if (!requestedAt || requestedAt.toLowerCase() === 'asap') return 'ASAP'
   return makeReadableDateStrFromIso(requestedAt, tz, verbose)
@@ -303,8 +309,8 @@ export const makeFirstTimes = (revenueCenter, serviceType, requestedAt) => {
   const other = makeFirstTime(ft, tz, otherServiceType, rcType, requestedAt)
   if (!current && !other) return null
   return [
-    current ? { serviceType: serviceType, firstIso: current } : null,
-    other ? { serviceType: otherServiceType, firstIso: other } : null,
+    current ? { serviceType: serviceType, requestedAt: current } : null,
+    other ? { serviceType: otherServiceType, requestedAt: other } : null,
   ]
   // return { [serviceType]: current, [otherServiceType]: other }
 }
