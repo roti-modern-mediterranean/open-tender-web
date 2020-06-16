@@ -1,5 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getMenu, getMenuItems, getAllergens } from '../services/requests'
+import {
+  getMenu,
+  getMenuItems,
+  getAllergens,
+  getRevenueCenter,
+} from '../services/requests'
+import { modalConfig as mc } from '../components/modals/config'
+import { openModal, closeModal } from './modalSlice'
+import { makeFirstTimes } from '../packages/utils/datetimes'
+import { resetRevenueCenter } from './orderSlice'
 
 const makeRequestedIso = (requestedAt) => {
   return requestedAt === 'asap' ? new Date().toISOString() : requestedAt
@@ -17,7 +26,27 @@ export const fetchMenu = createAsyncThunk(
         menuVars: { revenueCenterId, serviceType, requestedAt },
       }
     } catch (err) {
+      thunkAPI.dispatch(refreshMenu({ revenueCenterId, serviceType }))
       return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const refreshMenu = createAsyncThunk(
+  'order/refreshMenu',
+  async ({ revenueCenterId, serviceType }, thunkAPI) => {
+    try {
+      // thunkAPI.dispatch(openModal(mc.updatingRevenueCenter))
+      const revenueCenter = await getRevenueCenter(revenueCenterId)
+      const firstTimes = makeFirstTimes(revenueCenter, serviceType)
+      if (!firstTimes) {
+        thunkAPI.dispatch(openModal(mc.closed))
+      } else {
+        const args = { type: 'adjustRequestedAt', args: { firstTimes } }
+        thunkAPI.dispatch(openModal(args))
+      }
+    } catch (err) {
+      return thunkAPI.dispatch(resetRevenueCenter)
     }
   }
 )
@@ -90,7 +119,7 @@ const menuSlice = createSlice({
       state.loading = 'pending'
     },
     [fetchMenu.rejected]: (state, action) => {
-      state.error = action.error.detail
+      state.error = action.payload.detail
       state.loading = 'idle'
     },
 

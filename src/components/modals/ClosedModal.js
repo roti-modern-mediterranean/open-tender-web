@@ -1,11 +1,9 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-// import { closeModal } from '../../slices/modalSlice'
 import { Button } from '../../packages'
 import { resetRevenueCenter, resetOrderType } from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
-// import ModalClose from '../ModalClose'
 
 const defaultText = {
   title: 'Location currently closed',
@@ -14,10 +12,6 @@ const defaultText = {
 
 const ClosedModal = ({ title = defaultText.title, msg = defaultText.msg }) => {
   const dispatch = useDispatch()
-
-  // const handleClose = () => {
-  //   dispatch(closeModal())
-  // }
 
   const changeLocation = (evt) => {
     evt.preventDefault()
@@ -35,7 +29,6 @@ const ClosedModal = ({ title = defaultText.title, msg = defaultText.msg }) => {
 
   return (
     <>
-      {/* <ModalClose classes="btn-link" onClick={handleClose} /> */}
       <div className="modal__content">
         <div className="modal__header">
           <p className="modal__title heading ot-font-size-h3">{title}</p>
@@ -58,7 +51,8 @@ const ClosedModal = ({ title = defaultText.title, msg = defaultText.msg }) => {
 
 ClosedModal.displayName = 'ClosedModal'
 ClosedModal.propTypes = {
-  close: propTypes.func,
+  title: propTypes.string,
+  msg: propTypes.string,
 }
 
 export default ClosedModal

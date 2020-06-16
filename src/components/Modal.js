@@ -15,6 +15,7 @@ import {
   CreditCardModal,
   WorkingModal,
   ClosedModal,
+  AdjustRequestedAtModal,
 } from './modals'
 
 const makeModal = (type, args = {}) => {
@@ -33,6 +34,8 @@ const makeModal = (type, args = {}) => {
       return <MenuItemModal />
     case 'requestedAt':
       return <RequestedAtModal {...args} />
+    case 'adjustRequestedAt':
+      return <AdjustRequestedAtModal {...args} />
     case 'cartErrors':
       return <CartErrorsModal />
     case 'working':

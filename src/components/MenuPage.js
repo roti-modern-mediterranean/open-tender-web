@@ -9,6 +9,7 @@ import {
   selectCart,
   setCart,
   fetchRevenueCenter,
+  resetRevenueCenter,
 } from '../slices/orderSlice'
 import {
   fetchMenu,
@@ -22,6 +23,8 @@ import Hero from './Hero'
 import Menu from './Menu'
 import RevenueCenter from './RevenueCenter'
 import Loader from './Loader'
+import ErrorMessage from './ErrorMessage'
+import { Button } from '../packages'
 
 export const MenuContext = createContext(null)
 
@@ -65,6 +68,12 @@ const MenuPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories, soldOut])
 
+  const changeLocation = (evt) => {
+    evt.preventDefault()
+    dispatch(resetRevenueCenter())
+    evt.target.blur()
+  }
+
   return (
     <MenuContext.Provider value={{ soldOut, menuConfig, allergenAlerts }}>
       <Hero imageUrl={menuConfig.background} classes="hero--right">
@@ -79,9 +88,14 @@ const MenuPage = () => {
       {isLoading ? (
         <Loader text={menuConfig.loading} />
       ) : error ? (
-        <div className="loading">
-          <p className="ot-error-color">{error}</p>
-        </div>
+        <ErrorMessage title="Menu Not Found" msg={error}>
+          <Button
+            text="Change Location"
+            icon="RefreshCw"
+            classes="btn btn--error"
+            onClick={changeLocation}
+          />
+        </ErrorMessage>
       ) : (
         <Menu categories={categories} soldOut={soldOut} />
       )}

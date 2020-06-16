@@ -19,6 +19,7 @@ import {
 } from '../packages/utils/datetimes'
 import { setMenuItems } from './menuSlice'
 import { openModal, closeModal } from './modalSlice'
+import { modalConfig as mc } from '../components/modals/config'
 import { showNotification } from './notificationSlice'
 
 const initialState = {
@@ -45,33 +46,19 @@ export const fetchRevenueCenter = createAsyncThunk(
   }
 )
 
-const updatingRevenueCenter = {
-  type: 'working',
-  args: { text: 'Updating location...' },
-}
-const updateRequestedAt = { type: 'requestedAt', args: { forcedUpdate: true } }
-const closed = {
-  type: 'closed',
-  args: {
-    title: 'Location currently closed',
-    msg: "We're sorry, but this location is currently closed.",
-    preventClose: true,
-  },
-}
-
 export const refreshRevenueCenter = createAsyncThunk(
   'order/refreshRevenueCenter',
   async ({ revenueCenterId, serviceType }, thunkAPI) => {
     try {
-      thunkAPI.dispatch(openModal(updatingRevenueCenter))
+      thunkAPI.dispatch(openModal(mc.updatingRevenueCenter))
       const revenueCenter = await getRevenueCenter(revenueCenterId)
       const requestedAt = makeFirstRequestedAt(revenueCenter, serviceType)
       if (!requestedAt) {
         thunkAPI.dispatch(closeModal())
-        thunkAPI.dispatch(openModal(closed))
+        thunkAPI.dispatch(openModal(mc.closed))
         return null
       } else {
-        thunkAPI.dispatch(openModal(updateRequestedAt))
+        thunkAPI.dispatch(openModal(mc.updateRequestedAt))
         return { revenueCenter, requestedAt }
       }
     } catch (err) {

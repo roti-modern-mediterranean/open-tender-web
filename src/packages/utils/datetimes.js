@@ -91,6 +91,7 @@ export const formatTimeStr = (str) => {
 }
 
 export const makeReadableDateStrFromIso = (iso, tz, verbose = false) => {
+  if (!iso || iso.toLowerCase() === 'asap') return 'ASAP'
   const date = utcToZonedTime(parseISO(iso), tz)
   const timeString = format(date, TIME).toLowerCase()
   const dateString = makeLocalDateStr(date)
@@ -256,17 +257,46 @@ export const makeDatepickerArgs = (
   return { excludeTimes, isClosed, updatedDate, minDate, maxDate }
 }
 
+export const makeFirstTime = (
+  firstTimes,
+  serviceType,
+  revenueCenterType,
+  tz
+) => {
+  if (!firstTimes || isEmpty(firstTimes)) {
+    return null
+  } else if (!firstTimes[serviceType]) {
+    return null
+  }
+  const firstTime = firstTimes[serviceType]
+  if (firstTime.date === todayDate() && revenueCenterType === 'OLO') {
+    return 'asap'
+  }
+  return dateToIso(isoToDate(firstTime.utc, tz), tz)
+}
+
 export const makeFirstRequestedAt = (revenueCenter, serviceType) => {
   const { timezone, settings, revenue_center_type } = revenueCenter
   const tz = timezoneMap[timezone]
-  if (isEmpty(settings.first_times)) {
-    return null
-  } else if (!settings.first_times[serviceType]) {
-    return null
-  }
-  const firstTimes = settings.first_times[serviceType]
-  if (firstTimes.date === todayDate() && revenue_center_type === 'OLO') {
-    return 'asap'
-  }
-  return dateToIso(isoToDate(firstTimes.utc, tz), tz)
+  return makeFirstTime(
+    settings.first_times,
+    serviceType,
+    revenue_center_type,
+    tz
+  )
+}
+
+export const makeFirstTimes = (revenueCenter, serviceType) => {
+  const { timezone, settings, revenue_center_type: rcType } = revenueCenter
+  const { first_times: ft } = settings
+  const tz = timezoneMap[timezone]
+  const otherServiceType = serviceType === 'PICKUP' ? 'DELIVERY' : 'PICKUP'
+  const current = makeFirstTime(ft, serviceType, rcType, tz)
+  const other = makeFirstTime(ft, otherServiceType, rcType, tz)
+  if (!current && !other) return null
+  return [
+    current ? { serviceType: serviceType, firstIso: current } : null,
+    other ? { serviceType: otherServiceType, firstIso: other } : null,
+  ]
+  // return { [serviceType]: current, [otherServiceType]: other }
 }

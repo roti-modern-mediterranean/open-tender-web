@@ -4,6 +4,7 @@ import AddressModal from './AddressModal'
 import AllergensModal from './AllergensModal'
 import MenuItemModal from './MenuItemModal'
 import RequestedAtModal from './RequestedAtModal'
+import AdjustRequestedAtModal from './AdjustRequestedAtModal'
 import CartErrorsModal from './CartErrorsModal'
 import CreditCardModal from './CreditCardModal'
 import WorkingModal from './WorkingModal'
@@ -16,6 +17,7 @@ export {
   AllergensModal,
   MenuItemModal,
   RequestedAtModal,
+  AdjustRequestedAtModal,
   CartErrorsModal,
   CreditCardModal,
   WorkingModal,

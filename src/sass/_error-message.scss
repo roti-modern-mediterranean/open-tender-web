@@ -1,0 +1,11 @@
+.error-message {
+  // display: block;
+  max-width: 48rem;
+  padding: 3rem;
+  margin: 3rem auto;
+  text-align: center;
+
+  &__content {
+    margin: 1rem 0 2rem;
+  }
+}
