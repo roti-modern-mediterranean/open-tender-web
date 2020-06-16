@@ -29,7 +29,8 @@ export const validateOrder = createAsyncThunk(
     try {
       // console.log(JSON.stringify(order, null, 2))
       const response = await postOrderValidate(order)
-      const errors = handleCheckoutErrors({ params: response.errors })
+      const errors = handleCheckoutErrors({ params: response.errors }, false)
+      console.log(errors)
       const keys = Object.keys(errors)
       if (keys.includes('revenue_center_id')) {
         const args = {
@@ -37,9 +38,14 @@ export const validateOrder = createAsyncThunk(
           serviceType: order.service_type,
         }
         thunkAPI.dispatch(refreshRevenueCenter(args))
-      } else {
-        return response
+      } else if (keys.includes('service_type')) {
+        console.log(errors.service_type.code)
+        // LEFT OFF HERE - NEED TO IMPLEMENT THIS
+        // if (errors.service_type.code === 'service_type.switch_service_type') {
+        //   thunkAPI.dispatch(switchServiceType())
+        // }
       }
+      return response
     } catch (err) {
       // console.log(JSON.stringify(err, null, 2))
       return thunkAPI.rejectWithValue(err)

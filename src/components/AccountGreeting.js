@@ -52,9 +52,6 @@ const AccountGreeting = ({ title, subtitle }) => {
   const { revenueCenter, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectAccountOrders)
   const isLoading = loading === 'pending'
-  // const isLoading = true
-  // console.log(newLastOrder)
-  // const lastOrder = orders.length ? orders[0] : null
   const lastOrder = getLastOrder(orders)
   let orderType = null,
     otherOrderTypes = null

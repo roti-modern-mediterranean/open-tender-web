@@ -13,10 +13,11 @@ import {
   RequestedAtModal,
   CartErrorsModal,
   CreditCardModal,
+  WorkingModal,
+  ClosedModal,
 } from './modals'
-import WorkingModal from './modals/WorkingModal'
 
-const makeModal = (type, args) => {
+const makeModal = (type, args = {}) => {
   switch (type) {
     case 'login':
       return <LoginModal />
@@ -31,11 +32,13 @@ const makeModal = (type, args) => {
     case 'item':
       return <MenuItemModal />
     case 'requestedAt':
-      return <RequestedAtModal />
+      return <RequestedAtModal {...args} />
     case 'cartErrors':
       return <CartErrorsModal />
     case 'working':
       return <WorkingModal {...args} />
+    case 'closed':
+      return <ClosedModal {...args} />
     default:
       return null
   }
@@ -55,12 +58,13 @@ const Modal = () => {
   const windowRef = useRef()
   const dispatch = useDispatch()
   const { loading, type, args } = useSelector(selectModal)
+  const preventClose = args && args.preventClose ? true : false
   const showModal = type ? true : false
   const modal = type ? makeModal(type, args) : null
   const classes = `modal-container ${classesMap[type] || ''}`
 
   const handleClose = (evt) => {
-    if (evt.target.id === 'modal-container') {
+    if (!preventClose && evt.target.id === 'modal-container') {
       dispatch(closeModal())
     }
   }

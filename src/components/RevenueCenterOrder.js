@@ -6,18 +6,15 @@ import { setRevenueCenter, selectOrder } from '../slices/orderSlice'
 import { Button } from '../packages'
 import { serviceTypeNamesMap } from '../packages/utils/constants'
 import {
-  todayDate,
-  formatDateStr,
-  formatTimeStr,
+  makeReadableDateStrFromIso,
+  timezoneMap,
 } from '../packages/utils/datetimes'
 import { selectConfig } from '../slices/configSlice'
 
-const makeOrderMsg = (firstTime, serviceType) => {
+const makeOrderMsg = (firstTime, tz, serviceType) => {
   const serviceTypeName = serviceTypeNamesMap[serviceType]
-  const readableDate =
-    firstTime.date === todayDate() ? 'today' : formatDateStr(firstTime.date)
-  const formattedTime = formatTimeStr(firstTime.time, 'MMM d')
-  const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate} at ${formattedTime}`
+  const readableDate = makeReadableDateStrFromIso(firstTime.utc, tz, true)
+  const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate.toLowerCase()}`
   return orderMsg
 }
 
@@ -25,13 +22,16 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { first_times: firstTimes } = revenueCenter.settings
+  const tz = timezoneMap[revenueCenter.timezone]
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
   const { serviceType } = useSelector(selectOrder)
   const firstTime = firstTimes[serviceType]
   const statusMessage = statusMessages[revenueCenter.status]
   const orderMsg =
-    !statusMessage && firstTime ? makeOrderMsg(firstTime, serviceType) : null
+    !statusMessage && firstTime
+      ? makeOrderMsg(firstTime, tz, serviceType)
+      : null
 
   const handleOrder = (evt) => {
     evt.preventDefault()

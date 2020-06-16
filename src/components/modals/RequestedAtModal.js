@@ -10,11 +10,11 @@ import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
 import { RequestedAtPicker } from '../../packages'
 import {
-  makeRequestedAtString,
+  makeRequestedAtStr,
   makeEstimatedTime,
 } from '../../packages/utils/datetimes'
 
-const RequestedAtModal = () => {
+const RequestedAtModal = ({ forcedUpdate = false }) => {
   const dispatch = useDispatch()
   const { requestedAt, serviceType, revenueCenter } = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
@@ -33,21 +33,35 @@ const RequestedAtModal = () => {
     revenueCenter,
     serviceType
   )
-  const requestedAtText = makeRequestedAtString(requestedAt, tz, true)
+  const requestedAtText = makeRequestedAtStr(requestedAt, tz, true)
+  const requestedTime = `${requestedAtText}${
+    estimatedTime ? ` (${estimatedTime})` : ''
+  }`
 
   return (
     <>
       <ModalClose onClick={handleClose} />
       <div className="modal__content">
-        <div className="modal__header">
-          <p className="modal__title heading ot-font-size-h3">
-            Choose an order date & time
-          </p>
-          <p className="modal__subtitle ot-bold ot-alert-color">
-            Your current order time is {requestedAtText}
-            {estimatedTime ? ` (${estimatedTime})` : ''}.
-          </p>
-        </div>
+        {forcedUpdate ? (
+          <div className="modal__header">
+            <p className="modal__title heading ot-font-size-h3">
+              Order date & time updated
+            </p>
+            <p className="modal__subtitle ot-bold ot-alert-color">
+              Your previous order time is no longer available and has been
+              updated to {requestedTime}.
+            </p>
+          </div>
+        ) : (
+          <div className="modal__header">
+            <p className="modal__title heading ot-font-size-h3">
+              Choose an order date & time
+            </p>
+            <p className="modal__subtitle ot-bold ot-alert-color">
+              Your current order time is {requestedTime}.
+            </p>
+          </div>
+        )}
         <div className="modal__body">
           <p className="font-size-small">
             <button className="btn-link" onClick={handleClose}>

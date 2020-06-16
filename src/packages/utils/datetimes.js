@@ -90,9 +90,8 @@ export const formatTimeStr = (str) => {
   return [newPart1, part2].join('-')
 }
 
-export const makeRequestedAtString = (requestedAt, tz, verbose = false) => {
-  if (requestedAt.toLowerCase() === 'asap') return 'ASAP'
-  const date = utcToZonedTime(parseISO(requestedAt), tz)
+export const makeReadableDateStrFromIso = (iso, tz, verbose = false) => {
+  const date = utcToZonedTime(parseISO(iso), tz)
   const timeString = format(date, TIME).toLowerCase()
   const dateString = makeLocalDateStr(date)
   if (dateString === todayDate()) {
@@ -104,6 +103,11 @@ export const makeRequestedAtString = (requestedAt, tz, verbose = false) => {
       verbose ? format(date, 'EEEE, MMMM d') : format(date, 'M/d')
     } @ ${timeString}`
   }
+}
+
+export const makeRequestedAtStr = (requestedAt, tz, verbose = false) => {
+  if (!requestedAt || requestedAt.toLowerCase() === 'asap') return 'ASAP'
+  return makeReadableDateStrFromIso(requestedAt, tz, verbose)
 }
 
 export const makeEstimatedTime = (

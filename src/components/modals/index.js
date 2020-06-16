@@ -6,6 +6,8 @@ import MenuItemModal from './MenuItemModal'
 import RequestedAtModal from './RequestedAtModal'
 import CartErrorsModal from './CartErrorsModal'
 import CreditCardModal from './CreditCardModal'
+import WorkingModal from './WorkingModal'
+import ClosedModal from './ClosedModal'
 
 export {
   LoginModal,
@@ -16,4 +18,6 @@ export {
   RequestedAtModal,
   CartErrorsModal,
   CreditCardModal,
+  WorkingModal,
+  ClosedModal,
 }

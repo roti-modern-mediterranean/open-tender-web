@@ -1,14 +1,17 @@
-export const handleCheckoutErrors = (errors) => {
+export const handleCheckoutErrors = (errors, asMessages = true) => {
   const { detail, params, message } = errors
   if (!params) return { form: detail || message }
   const errObj = Object.entries(params).reduce(
     (obj, error) => {
       const [key, value] = error
+      const err = asMessages ? value.message : value
       let [, entity, field] = key.split('.')
-      field = field || entity
+      // field = field || entity
       const newErrors = obj[entity]
-        ? { ...obj[entity], [field]: value.message }
-        : { [field]: value.message }
+        ? { ...obj[entity], [field]: err }
+        : field
+        ? { [field]: err }
+        : err
       return { ...obj, [entity]: newErrors }
     },
     { form: 'There are one or more errors below' }

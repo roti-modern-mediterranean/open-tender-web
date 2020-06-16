@@ -8,7 +8,7 @@ import { capitalize, isEmpty } from '../packages/utils/helpers'
 import ClipLoader from 'react-spinners/ClipLoader'
 import {
   timezoneMap,
-  makeRequestedAtString,
+  makeRequestedAtStr,
   isoToDate,
 } from '../packages/utils/datetimes'
 import { iconMap } from '../packages/icons'
@@ -102,8 +102,7 @@ OrderRevenueCenter.propTypes = {
 
 const OrderRequestedAt = ({ requested_at, timezone, is_asap, status }) => {
   const tz = timezone && timezoneMap[timezone]
-  const requestedAt =
-    requested_at && makeRequestedAtString(requested_at, tz, true)
+  const requestedAt = requested_at && makeRequestedAtStr(requested_at, tz, true)
   return is_asap && status === 'OPEN' ? (
     <>
       <p>ASAP</p>

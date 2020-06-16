@@ -54,10 +54,11 @@ const RequestedAtPicker = ({
       interval,
       daysAhead
     )
+    const first = isoToDate(firstTimes.utc, tz)
     if (args.updatedDate) {
       setDate(args.updatedDate)
-    } else if (!error && date === null) {
-      setDate(isoToDate(firstTimes.utc, tz))
+    } else if (!error && (date === null || date < first)) {
+      setDate(first)
     }
     args.holidays = holidays
     args.interval = interval

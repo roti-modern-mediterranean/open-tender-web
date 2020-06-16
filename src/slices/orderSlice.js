@@ -45,24 +45,33 @@ export const fetchRevenueCenter = createAsyncThunk(
   }
 )
 
-const refreshingModal = {
+const updatingRevenueCenter = {
   type: 'working',
   args: { text: 'Updating location...' },
 }
-const refreshModal = { type: 'requestedAt', args: { isRefresh: true } }
+const updateRequestedAt = { type: 'requestedAt', args: { forcedUpdate: true } }
+const closed = {
+  type: 'closed',
+  args: {
+    title: 'Location currently closed',
+    msg: "We're sorry, but this location is currently closed.",
+    preventClose: true,
+  },
+}
 
 export const refreshRevenueCenter = createAsyncThunk(
   'order/refreshRevenueCenter',
   async ({ revenueCenterId, serviceType }, thunkAPI) => {
     try {
-      thunkAPI.dispatch(openModal(refreshingModal))
+      thunkAPI.dispatch(openModal(updatingRevenueCenter))
       const revenueCenter = await getRevenueCenter(revenueCenterId)
       const requestedAt = makeFirstRequestedAt(revenueCenter, serviceType)
       if (!requestedAt) {
         thunkAPI.dispatch(closeModal())
-        thunkAPI.dispatch(resetRevenueCenter())
+        thunkAPI.dispatch(openModal(closed))
+        return null
       } else {
-        thunkAPI.dispatch(openModal(refreshModal))
+        thunkAPI.dispatch(openModal(updateRequestedAt))
         return { revenueCenter, requestedAt }
       }
     } catch (err) {
@@ -185,9 +194,11 @@ const orderSlice = createSlice({
     // refreshRevenueCenter
 
     [refreshRevenueCenter.fulfilled]: (state, action) => {
-      const { revenueCenter, requestedAt } = action.payload
-      state.revenueCenter = revenueCenter
-      state.requestedAt = requestedAt
+      if (action.payload) {
+        const { revenueCenter, requestedAt } = action.payload
+        state.revenueCenter = revenueCenter
+        state.requestedAt = requestedAt
+      }
       state.loading = 'idle'
     },
     [refreshRevenueCenter.pending]: (state) => {
