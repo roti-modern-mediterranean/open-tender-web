@@ -259,9 +259,10 @@ export const makeDatepickerArgs = (
 
 export const makeFirstTime = (
   firstTimes,
+  tz,
   serviceType,
   revenueCenterType,
-  tz
+  requestedAt
 ) => {
   if (!firstTimes || isEmpty(firstTimes)) {
     return null
@@ -269,10 +270,17 @@ export const makeFirstTime = (
     return null
   }
   const firstTime = firstTimes[serviceType]
-  if (firstTime.date === todayDate() && revenueCenterType === 'OLO') {
+  const firstDate = isoToDate(firstTime.utc, tz)
+  const hasAsap = firstTime.date === todayDate() && revenueCenterType === 'OLO'
+  if (requestedAt === 'asap' && hasAsap) {
     return 'asap'
   }
-  return dateToIso(isoToDate(firstTime.utc, tz), tz)
+  const requestedDate = requestedAt ? isoToDate(requestedAt, tz) : null
+  if (requestedDate && requestedDate > firstDate) {
+    return requestedAt
+  }
+  // return hasAsap && firstDate > requestedDate ? 'asap' : firstTime.utc
+  return firstTime.utc
 }
 
 export const makeFirstRequestedAt = (revenueCenter, serviceType) => {
@@ -280,19 +288,19 @@ export const makeFirstRequestedAt = (revenueCenter, serviceType) => {
   const tz = timezoneMap[timezone]
   return makeFirstTime(
     settings.first_times,
+    tz,
     serviceType,
-    revenue_center_type,
-    tz
+    revenue_center_type
   )
 }
 
-export const makeFirstTimes = (revenueCenter, serviceType) => {
+export const makeFirstTimes = (revenueCenter, serviceType, requestedAt) => {
   const { timezone, settings, revenue_center_type: rcType } = revenueCenter
   const { first_times: ft } = settings
   const tz = timezoneMap[timezone]
   const otherServiceType = serviceType === 'PICKUP' ? 'DELIVERY' : 'PICKUP'
-  const current = makeFirstTime(ft, serviceType, rcType, tz)
-  const other = makeFirstTime(ft, otherServiceType, rcType, tz)
+  const current = makeFirstTime(ft, tz, serviceType, rcType, requestedAt)
+  const other = makeFirstTime(ft, tz, otherServiceType, rcType, requestedAt)
   if (!current && !other) return null
   return [
     current ? { serviceType: serviceType, firstIso: current } : null,

@@ -50,7 +50,7 @@ const MenuPage = () => {
       return history.push('/locations')
     } else {
       dispatch(fetchRevenueCenter(revenueCenterId))
-      dispatch(fetchMenu([revenueCenterId, serviceType, requestedAt]))
+      dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
       dispatch(fetchAllergens())
     }
   }, [revenueCenterId, serviceType, requestedAt, dispatch, history])

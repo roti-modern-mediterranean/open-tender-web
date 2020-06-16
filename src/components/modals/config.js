@@ -1,4 +1,5 @@
 export const modalConfig = {
+  buildOrder: { type: 'working', args: { text: 'Building your order...' } },
   updatingRevenueCenter: {
     type: 'working',
     args: { text: 'Updating location...' },

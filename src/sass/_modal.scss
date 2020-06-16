@@ -54,18 +54,24 @@
   }
 
   &__footer {
-    margin-top: 3rem;
+    margin-top: 2rem;
 
     &__buttons {
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      flex-wrap: wrap;
 
       button {
+        flex-shrink: 0;
         display: block;
-        & + button {
-          margin-left: 1rem;
+        margin: 1rem 1rem 0 0;
+        &:last-child {
+          margin-right: 0;
         }
+        // & + button {
+        //   margin-left: 1rem;
+        // }
       }
     }
   }

@@ -16,9 +16,10 @@ import {
   timezoneMap,
   getUserTimezone,
   makeFirstRequestedAt,
+  makeFirstTimes,
 } from '../packages/utils/datetimes'
 import { setMenuItems } from './menuSlice'
-import { openModal, closeModal } from './modalSlice'
+import { openModal } from './modalSlice'
 import { modalConfig as mc } from '../components/modals/config'
 import { showNotification } from './notificationSlice'
 
@@ -46,34 +47,53 @@ export const fetchRevenueCenter = createAsyncThunk(
   }
 )
 
+// export const refreshRevenueCenter = createAsyncThunk(
+//   'order/refreshRevenueCenter',
+//   async ({ revenueCenterId, serviceType }, thunkAPI) => {
+//     try {
+//       thunkAPI.dispatch(openModal(mc.updatingRevenueCenter))
+//       const revenueCenter = await getRevenueCenter(revenueCenterId)
+//       const requestedAt = makeFirstRequestedAt(revenueCenter, serviceType)
+//       if (!requestedAt) {
+//         thunkAPI.dispatch(closeModal())
+//         thunkAPI.dispatch(openModal(mc.closed))
+//         return null
+//       } else {
+//         thunkAPI.dispatch(openModal(mc.updateRequestedAt))
+//         return { revenueCenter, requestedAt }
+//       }
+//     } catch (err) {
+//       return thunkAPI.rejectWithValue(err)
+//     }
+//   }
+// )
+
 export const refreshRevenueCenter = createAsyncThunk(
   'order/refreshRevenueCenter',
-  async ({ revenueCenterId, serviceType }, thunkAPI) => {
+  async ({ revenueCenterId, serviceType, requestedAt }, thunkAPI) => {
     try {
-      thunkAPI.dispatch(openModal(mc.updatingRevenueCenter))
       const revenueCenter = await getRevenueCenter(revenueCenterId)
-      const requestedAt = makeFirstRequestedAt(revenueCenter, serviceType)
-      if (!requestedAt) {
-        thunkAPI.dispatch(closeModal())
+      const firstTimes = makeFirstTimes(revenueCenter, serviceType, requestedAt)
+      if (!firstTimes) {
         thunkAPI.dispatch(openModal(mc.closed))
-        return null
       } else {
-        thunkAPI.dispatch(openModal(mc.updateRequestedAt))
-        return { revenueCenter, requestedAt }
+        const args = {
+          type: 'adjustRequestedAt',
+          args: { firstTimes, revenueCenter, preventClose: true },
+        }
+        thunkAPI.dispatch(openModal(args))
       }
     } catch (err) {
-      return thunkAPI.rejectWithValue(err)
+      return thunkAPI.dispatch(resetRevenueCenter)
     }
   }
 )
-
-const buildModal = { type: 'working', args: { text: 'Building your order...' } }
 
 export const reorderPastOrder = createAsyncThunk(
   'order/reorderPastOrder',
   async ({ revenueCenterId, serviceType, items }, thunkAPI) => {
     try {
-      thunkAPI.dispatch(openModal(buildModal))
+      thunkAPI.dispatch(openModal(mc.buildOrder))
       const revenueCenter = await getRevenueCenter(revenueCenterId)
       const requestedAt = makeFirstRequestedAt(revenueCenter, serviceType)
       if (!requestedAt) {

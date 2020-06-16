@@ -2,13 +2,21 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { Button } from '../../packages'
-import { setServiceType, setRequestedAt } from '../../slices/orderSlice'
+import {
+  setServiceType,
+  setRequestedAt,
+  resetRevenueCenter,
+} from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
-import { makeReadableDateStrFromIso } from '../../packages/utils/datetimes'
+import {
+  makeReadableDateStrFromIso,
+  timezoneMap,
+} from '../../packages/utils/datetimes'
 import { capitalize } from '../../packages/utils/helpers'
 
-const AdjustRequestedAtModal = ({ firstTimes }) => {
+const AdjustRequestedAtModal = ({ firstTimes, revenueCenter }) => {
   const dispatch = useDispatch()
+  const tz = timezoneMap[revenueCenter.timezone]
 
   const handleUpdate = (evt, { serviceType, firstIso }) => {
     evt.preventDefault()
@@ -18,15 +26,20 @@ const AdjustRequestedAtModal = ({ firstTimes }) => {
     evt.target.blur()
   }
 
-  console.log(firstTimes)
+  const changeLocation = (evt) => {
+    evt.preventDefault()
+    dispatch(resetRevenueCenter())
+    dispatch(closeModal())
+    evt.target.blur()
+  }
 
   const [current, other] = firstTimes
   const m = makeReadableDateStrFromIso
   const currentStr = current
-    ? `${capitalize(current.serviceType)} ${m(current.firstIso)}`
+    ? `${capitalize(current.serviceType)} ${m(current.firstIso, tz, true)}`
     : ''
   const otherStr = other
-    ? `${capitalize(other.serviceType)} ${m(other.firstIso)}`
+    ? `${capitalize(other.serviceType)} ${m(other.firstIso, tz, true)}`
     : ''
 
   return (
@@ -34,12 +47,14 @@ const AdjustRequestedAtModal = ({ firstTimes }) => {
       <div className="modal__content">
         <div className="modal__header">
           <p className="modal__title heading ot-font-size-h3">
-            Menu not currently available
+            Order time not currently available
           </p>
         </div>
         <div className="modal__body">
-          This location can't accommodate your currently selected order time and
-          service type. Please choose an option below.
+          <p>
+            This location can't accommodate your currently selected order time
+            and service type. Please choose an option below.
+          </p>
         </div>
         <div className="modal__footer">
           <div className="modal__footer__buttons">
@@ -57,6 +72,11 @@ const AdjustRequestedAtModal = ({ firstTimes }) => {
                 onClick={(evt) => handleUpdate(evt, other)}
               />
             )}
+            <Button
+              text="Change Location"
+              classes="btn"
+              onClick={changeLocation}
+            />
           </div>
         </div>
       </div>
@@ -67,6 +87,7 @@ const AdjustRequestedAtModal = ({ firstTimes }) => {
 AdjustRequestedAtModal.displayName = 'AdjustRequestedAtModal'
 AdjustRequestedAtModal.propTypes = {
   firstTimes: propTypes.object,
+  revenueCenter: propTypes.object,
 }
 
 export default AdjustRequestedAtModal

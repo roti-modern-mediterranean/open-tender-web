@@ -70,9 +70,18 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
           )}
         </>
       ) : (
-        <div className="rc__order__message">
-          <p className="ot-error-color font-size-small">{statusMessage}</p>
-        </div>
+        <>
+          <div className="rc__order__message">
+            <p className="ot-error-color font-size-small">{statusMessage}</p>
+          </div>
+          {!isOrder && (
+            <Button
+              text="Change Location"
+              icon="RefreshCw"
+              onClick={handleChange}
+            />
+          )}
+        </>
       )}
     </div>
   )
