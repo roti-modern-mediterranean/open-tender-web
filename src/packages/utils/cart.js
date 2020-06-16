@@ -38,11 +38,16 @@ export const convertStringToArray = (str) => {
     : []
 }
 
-const makeOrderItemGroups = (optionGroups, isEdit) => {
+const makeOrderItemGroups = (optionGroups, isEdit, soldOut = []) => {
   if (!optionGroups) return []
   const groups = optionGroups.map((g) => {
     const options = g.option_items.map((o) => {
-      const quantity = o.opt_is_default && !isEdit ? o.min_quantity || 1 : 0
+      const isSoldOut = soldOut.includes(o.id)
+      const quantity = isSoldOut
+        ? 0
+        : o.opt_is_default && !isEdit
+        ? o.min_quantity || 1
+        : 0
       const option = {
         id: o.id,
         name: o.name,
@@ -58,8 +63,9 @@ const makeOrderItemGroups = (optionGroups, isEdit) => {
         quantity: quantity,
         isDefault: o.opt_is_default,
         increment: o.increment,
-        max: o.max_quantity,
+        max: isSoldOut ? 0 : o.max_quantity,
         min: o.min_quantity,
+        isSoldOut: isSoldOut,
       }
       return option
     })
@@ -97,8 +103,8 @@ export const calcPrices = (item) => {
   return { ...item, totalPrice: totalPrice, groups: groups }
 }
 
-export const makeOrderItem = (item, isEdit) => {
-  const groups = makeOrderItemGroups(item.option_groups, isEdit)
+export const makeOrderItem = (item, isEdit, soldOut = []) => {
+  const groups = makeOrderItemGroups(item.option_groups, isEdit, soldOut)
   const orderItem = {
     id: item.id,
     name: item.name,
@@ -399,7 +405,10 @@ export const validateCart = (cart, categories, soldOut) => {
           const newOption = newGroup.options[option.id]
           // check to see if any OLD options aren't avaiilable on the current menu
           // or if any of the options are currently sold out
-          if (!newOption || soldOut.includes(option.id)) {
+          if (
+            !newOption ||
+            (option.quantity > 0 && soldOut.includes(option.id))
+          ) {
             missingOptions.push(option)
             return option
           } else {

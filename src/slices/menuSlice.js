@@ -5,6 +5,19 @@ import { makeRequestedIso } from '../packages/utils/datetimes'
 import { validateCart } from '../packages/utils/cart'
 import { openModal } from './modalSlice'
 
+const initialState = {
+  menuVars: null,
+  previousMenuVars: null,
+  categories: [],
+  soldOut: [],
+  cartErrors: null,
+  error: null,
+  loading: 'idle',
+  selectedAllergens: null,
+  menuItems: { entities: [], loading: false, error: null },
+  allergens: { entities: [], loading: false, error: null },
+}
+
 export const fetchMenu = createAsyncThunk(
   'menu/fetchMenu',
   async (menuVars, thunkAPI) => {
@@ -30,25 +43,6 @@ export const fetchMenu = createAsyncThunk(
   }
 )
 
-// export const refreshMenu = createAsyncThunk(
-//   'order/refreshMenu',
-//   async ({ revenueCenterId, serviceType, requestedAt }, thunkAPI) => {
-//     try {
-//       // thunkAPI.dispatch(openModal(mc.updatingRevenueCenter))
-//       const revenueCenter = await getRevenueCenter(revenueCenterId)
-//       const firstTimes = makeFirstTimes(revenueCenter, serviceType, requestedAt)
-//       if (!firstTimes) {
-//         thunkAPI.dispatch(openModal(mc.closed))
-//       } else {
-//         const args = { type: 'adjustRequestedAt', args: { firstTimes } }
-//         thunkAPI.dispatch(openModal(args))
-//       }
-//     } catch (err) {
-//       return thunkAPI.dispatch(resetRevenueCenter)
-//     }
-//   }
-// )
-
 export const fetchMenuItems = createAsyncThunk(
   'menu/fetchMenuItems',
   async ({ revenueCenterId, serviceType }, thunkAPI) => {
@@ -71,19 +65,6 @@ export const fetchAllergens = createAsyncThunk(
     }
   }
 )
-
-const initialState = {
-  menuVars: null,
-  previousMenuVars: null,
-  categories: [],
-  soldOut: [],
-  cartErrors: null,
-  error: null,
-  loading: 'idle',
-  selectedAllergens: null,
-  menuItems: { entities: [], loading: false, error: null },
-  allergens: { entities: [], loading: false, error: null },
-}
 
 const menuSlice = createSlice({
   name: 'menu',
@@ -121,7 +102,6 @@ const menuSlice = createSlice({
       state.loading = 'pending'
     },
     [fetchMenu.rejected]: (state, action) => {
-      console.log(action)
       const { detail, message } = action.payload
       state.error = detail || message
       state.loading = 'idle'
@@ -179,6 +159,7 @@ export const {
 export const selectMenu = (state) => state.menu
 export const selectMenuLoading = (state) => state.menu.loading === 'pending'
 export const selectMenuError = (state) => state.menu.error
+export const selectSoldOut = (state) => state.menu.soldOut
 export const selectCartErrors = (state) => state.menu.cartErrors
 export const selectMenuItems = (state) => state.menu.menuItems
 export const selectAllergens = (state) => state.menu.allergens

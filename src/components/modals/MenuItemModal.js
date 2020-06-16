@@ -7,12 +7,15 @@ import {
   addItemToCart,
 } from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
-import ModalClose from '../ModalClose'
+import { selectSoldOut, selectedAllergenNames } from '../../slices/menuSlice'
 import { Builder, BuilderOption, BuilderHeader } from '../../packages'
+import ModalClose from '../ModalClose'
 
 const MenuItemModal = () => {
   const dispatch = useDispatch()
   const item = useSelector(selectCurrentItem)
+  const soldOut = useSelector(selectSoldOut)
+  const allergens = useSelector(selectedAllergenNames)
 
   const handleClose = () => {
     dispatch(closeModal())
@@ -35,6 +38,8 @@ const MenuItemModal = () => {
       <div className="modal__content">
         <Builder
           menuItem={item}
+          soldOut={soldOut}
+          allergens={allergens}
           addItemToCart={handleAddItem}
           renderHeader={(props) => <BuilderHeader {...props} />}
           renderOption={(props) => <BuilderOption {...props} />}

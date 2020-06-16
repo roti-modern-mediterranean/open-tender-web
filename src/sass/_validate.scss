@@ -5,8 +5,16 @@
   &__invalid {
     margin: 0 0 3rem;
 
-    ul li {
-      margin: 1rem 0;
+    ul {
+      list-style: disc inside;
+      margin: 1.5rem 0 0;
+      li {
+        margin: 1rem 0;
+        span.validate__invalid__item {
+          position: relative;
+          left: -0.5rem;
+        }
+      }
     }
   }
 

@@ -9,6 +9,7 @@ const BuilderOption = ({
   adjust,
   increment,
   decrement,
+  allergens,
   classes = '',
 }) => {
   const groupAtMax = group.max !== 0 && group.quantity === group.max
@@ -20,7 +21,7 @@ const BuilderOption = ({
   const decrementDisabled = option.quantity === 0
   return (
     <li>
-      <CartItem item={option}>
+      <CartItem item={option} allergens={allergens}>
         <BuilderQuantity
           item={option}
           adjust={adjust}

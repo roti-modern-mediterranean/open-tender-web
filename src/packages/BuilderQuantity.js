@@ -34,7 +34,7 @@ const BuilderQuantity = ({
       <button
         className="quantity__increase__zero border-radio"
         onClick={handleIncrement}
-        disabled={incrementDisabled}
+        disabled={incrementDisabled || item.isSoldOut}
       >
         <Plus size={null} />
       </button>

@@ -5,6 +5,7 @@ import { openModal, closeModal } from './modalSlice'
 import { getDefaultTip, prepareOrder } from '../packages/utils/cart'
 import { isEmpty, contains } from '../packages/utils/helpers'
 import { refreshRevenueCenter } from './orderSlice'
+import { fetchMenu } from './menuSlice'
 // import { getDefaultTip } from '../packages/utils/cart'
 
 const initialState = {
@@ -38,11 +39,13 @@ export const validateOrder = createAsyncThunk(
       // console.log(JSON.stringify(order, null, 2))
       const response = await postOrderValidate(order)
       const errors = handleCheckoutErrors({ params: response.errors })
-      console.log(errors)
+      // console.log(errors)
       const keys = Object.keys(errors)
+      const args = makeRefreshArgs(order)
       if (contains(keys, refreshKeys)) {
-        const args = makeRefreshArgs(order)
         thunkAPI.dispatch(refreshRevenueCenter(args))
+      } else if (contains(keys, ['cart'])) {
+        thunkAPI.dispatch(fetchMenu(args))
       }
       return response
     } catch (err) {

@@ -5,9 +5,11 @@ import BuilderGroupHeader from './BuilderGroupHeader'
 import BuilderRadioGroup from './BuilderRadioGroup'
 import BuilderQuantity from './BuilderQuantity'
 
-const useBuilder = (menuItem) => {
+const useBuilder = (menuItem, soldOut) => {
   const orderItem =
-    menuItem.index !== undefined ? menuItem : makeOrderItem(menuItem)
+    menuItem.index !== undefined
+      ? menuItem
+      : makeOrderItem(menuItem, null, soldOut)
   const [item, setItem] = useState(orderItem)
 
   const increment = () => {
@@ -135,6 +137,8 @@ const useBuilder = (menuItem) => {
 
 const Builder = ({
   menuItem,
+  soldOut,
+  allergens,
   addItemToCart,
   showImage,
   renderHeader,
@@ -151,7 +155,7 @@ const Builder = ({
     incrementOption,
     decrementOption,
     setOptionQuantity,
-  } = useBuilder(menuItem)
+  } = useBuilder(menuItem, soldOut)
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
@@ -185,6 +189,7 @@ const Builder = ({
                             setOptionQuantity(group.id, option.id, quantity),
                           increment: () => incrementOption(group.id, option.id),
                           decrement: () => decrementOption(group.id, option.id),
+                          allergens,
                         }
                         return renderOption(optionProps)
                       })}
@@ -261,7 +266,11 @@ const Builder = ({
 Builder.displayName = 'Builder'
 Builder.propTypes = {
   menuItem: propTypes.object,
-  addToCart: propTypes.func,
+  soldOut: propTypes.array,
+  addItemToCart: propTypes.func,
+  showImage: propTypes.bool,
+  renderHeader: propTypes.func,
+  renderOption: propTypes.func,
 }
 
 export default Builder

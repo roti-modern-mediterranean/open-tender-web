@@ -3,40 +3,28 @@ import propTypes from 'prop-types'
 import { Button } from './index'
 import { isoToDate } from './utils/datetimes'
 
-const MissingItems = ({ missingItems }) => {
-  return missingItems.length ? (
-    <div className="validate__missing">
-      <p>The following items are not currently available:</p>
-      <ul>
-        {missingItems.map((item, index) => (
-          <li key={`${item.id}-${index}`} className="font-size-big ot-bold">
-            {item.name}
-          </li>
-        ))}
-      </ul>
-    </div>
-  ) : null
-}
-
-MissingItems.displayName = 'MissingItems'
-MissingItems.propTypes = {
-  missingItems: propTypes.array,
-}
-
 const InvalidItems = ({ invalidItems }) => {
   return invalidItems.length ? (
     <div className="validate__invalid">
-      <p>The following items are no longer valid:</p>
+      <p className="font-size-small">
+        The following items will need to be removed from your cart:
+      </p>
       <ul>
         {invalidItems.map((item, index) => {
-          const missingOptions = item.missingOptions.length
-            ? item.missingOptions.map((option) => option.name).join(', ')
-            : null
+          const missingOptions =
+            item.missingOptions && item.missingOptions.length
+              ? item.missingOptions.map((option) => option.name).join(', ')
+              : null
           return (
-            <li key={`${item.id}-${index}`} className="font-size-big ot-bold">
-              {item.name}
+            <li key={`${item.id}-${index}`}>
+              <span className="validate__invalid__item ot-bold">
+                {item.name}
+              </span>
               {missingOptions ? (
-                <span>(due to missing options: {missingOptions})</span>
+                <span className="font-size-small">
+                  {' '}
+                  (unavailable modifiers: {missingOptions})
+                </span>
               ) : null}
             </li>
           )
@@ -92,10 +80,11 @@ const CartErrors = ({
     revert(evt, newLocation, newMenuVars)
   }
 
+  const unavailable = [...errors.missingItems, ...errors.invalidItems]
+
   return (
     <div className="validate">
-      <MissingItems missingItems={errors.missingItems} />
-      <InvalidItems invalidItems={errors.invalidItems} />
+      <InvalidItems invalidItems={unavailable} />
       <p>{content.message}</p>
       <div className="validate__buttons">
         {isRevertable && (

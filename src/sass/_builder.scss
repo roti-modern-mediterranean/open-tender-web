@@ -154,9 +154,30 @@
   }
 
   &__option__image {
+    position: relative;
     width: 6rem;
     min-width: 6rem;
     height: 6rem;
+  }
+
+  &__option__overlay {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__option__alert {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 1.4rem;
+    padding: 0.4rem 0.4rem 0.6rem;
   }
 
   &__option__info {

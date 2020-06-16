@@ -102,7 +102,7 @@ export const defaultConfig = {
     },
     validate: {
       title: 'Invalid Items in Cart',
-      subtitle: 'Uh oh. Certain items in your cart are no longer valid.',
+      subtitle: 'Uh oh. Certain items in your cart are no longer available.',
       proceed: {
         message:
           'Please click the button below to remove these items and proceed with your order.',
