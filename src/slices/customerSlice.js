@@ -20,6 +20,7 @@ import {
 } from '../services/requests'
 import { showNotification } from './notificationSlice'
 import { makeFavoritesLookup } from '../packages/utils/cart'
+import { setSelectedAllergens } from './menuSlice'
 
 const initialState = {
   auth: null,
@@ -38,7 +39,12 @@ export const loginCustomer = createAsyncThunk(
   'customer/loginCustomer',
   async ({ email, password }, thunkAPI) => {
     try {
-      return await postLogin(email, password)
+      const response = await postLogin(email, password)
+      const { allergens } = response.customer
+      if (allergens.length) {
+        thunkAPI.dispatch(setSelectedAllergens(allergens))
+      }
+      return response
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message)
     }
@@ -49,6 +55,7 @@ export const logoutCustomer = createAsyncThunk(
   'customer/logoutCustomer',
   async (token, thunkAPI) => {
     try {
+      thunkAPI.dispatch(setSelectedAllergens(null))
       return await postLogout(token)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
@@ -60,7 +67,12 @@ export const fetchCustomer = createAsyncThunk(
   'customer/fetchCustomer',
   async ({ token }, thunkAPI) => {
     try {
-      return await getCustomer(token)
+      const response = await getCustomer(token)
+      const { allergens } = response
+      if (allergens.length) {
+        thunkAPI.dispatch(setSelectedAllergens(allergens))
+      }
+      return response
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
