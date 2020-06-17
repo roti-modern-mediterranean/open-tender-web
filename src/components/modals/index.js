@@ -9,6 +9,7 @@ import CartErrorsModal from './CartErrorsModal'
 import CreditCardModal from './CreditCardModal'
 import WorkingModal from './WorkingModal'
 import ClosedModal from './ClosedModal'
+import OrderRatingModal from './OrderRatingModal'
 
 export {
   LoginModal,
@@ -22,4 +23,5 @@ export {
   CreditCardModal,
   WorkingModal,
   ClosedModal,
+  OrderRatingModal,
 }

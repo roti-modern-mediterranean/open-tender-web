@@ -152,3 +152,7 @@ export const deleteCustomerFavorite = (token, favoriteId) => {
 export const getCustomerLoyalty = (token) => {
   return request(`/customer/loyalty`, 'GET', null, null, token)
 }
+
+export const putCustomerOrderRating = (token, orderId, data) => {
+  return request(`/customer/orders/${orderId}/rating`, 'PUT', data, null, token)
+}

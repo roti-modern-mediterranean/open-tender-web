@@ -17,10 +17,12 @@ import {
   postCustomerFavorite,
   deleteCustomerFavorite,
   getCustomerLoyalty,
+  putCustomerOrderRating,
 } from '../services/requests'
 import { showNotification } from './notificationSlice'
 import { makeFavoritesLookup } from '../packages/utils/cart'
 import { setSelectedAllergens } from './menuSlice'
+import { fetchOrder } from './accountSlice'
 
 const initialState = {
   auth: null,
@@ -269,6 +271,19 @@ export const fetchCustomerLoyalty = createAsyncThunk(
       return await getCustomerLoyalty(token)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const updateOrderRating = createAsyncThunk(
+  'customer/updateOrderRating',
+  async ({ token, orderId, data }, thunkAPI) => {
+    try {
+      await putCustomerOrderRating(token, orderId, data)
+      thunkAPI.dispatch(fetchOrder({ token, orderId }))
+      thunkAPI.dispatch(showNotification('Rating updated!'))
+    } catch (err) {
+      thunkAPI.dispatch(showNotification('Rating not updated'))
     }
   }
 )

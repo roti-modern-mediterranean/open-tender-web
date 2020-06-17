@@ -5,13 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Button, CartItem, OrderQuantity, Check } from '../packages'
 import { makeDisplayItem } from '../packages/utils/cart'
 import { capitalize, isEmpty } from '../packages/utils/helpers'
-import ClipLoader from 'react-spinners/ClipLoader'
-import {
-  timezoneMap,
-  makeRequestedAtStr,
-  isoToDate,
-} from '../packages/utils/datetimes'
-import { iconMap } from '../packages/icons'
+import { isoToDate } from '../packages/utils/datetimes'
 import SectionHeader from './SectionHeader'
 import SectionRow from './SectionRow'
 import OrderAddress from './OrderAddress'
@@ -27,126 +21,12 @@ import {
   reorderPastOrder,
 } from '../slices/orderSlice'
 import { resetAccountOrder } from '../slices/accountSlice'
-
-const OrderLoading = ({ loading }) => {
-  return loading ? (
-    <div className="order__header">
-      <p className="preface">Retrieving your order...</p>
-      <div className="order__loading">
-        <div className="order__loading__loader">
-          <ClipLoader size={24} loading={loading} />
-        </div>
-      </div>
-    </div>
-  ) : null
-}
-
-OrderLoading.displayName = 'OrderLoading'
-OrderLoading.propTypes = {
-  loading: propTypes.bool,
-}
-
-const handleOrderError = (error) => {
-  switch (error.status) {
-    case 404:
-      return "We couldn't find this order. Please double check your order ID and give it another try."
-    default:
-      return error.detail || error.message
-  }
-}
-
-const OrderError = ({ error, backLink, backText }) => {
-  if (!error) return null
-  const errMsg = handleOrderError(error)
-  return (
-    <div className="order__header">
-      <p className="preface ot-error-color">Uh oh. Something went wrong.</p>
-      <div className="order__error">
-        <div className="order__error__message">
-          <p className="ot-error-color ot-bold font-size-big">{errMsg}</p>
-          <p className="font-size-small">
-            <button type="button" className="btn-error" onClick={backLink}>
-              {backText}
-            </button>
-          </p>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-OrderError.displayName = 'OrderError'
-OrderError.propTypes = {
-  error: propTypes.string,
-  backLink: propTypes.func,
-  backText: propTypes.string,
-}
-
-const OrderRevenueCenter = ({ revenue_center }) => {
-  const { address: rcAddr } = revenue_center || {}
-  return (
-    <>
-      <p>{revenue_center.name}</p>
-      <p className="font-size-small secondary-color">
-        {rcAddr.street}, {rcAddr.city}, {rcAddr.state} {rcAddr.postal_code}
-      </p>
-      <p className="font-size-small secondary-color">{rcAddr.phone}</p>
-    </>
-  )
-}
-
-OrderRevenueCenter.displayName = 'OrderRevenueCenter'
-OrderRevenueCenter.propTypes = {
-  revenue_center: propTypes.object,
-}
-
-const OrderRequestedAt = ({ requested_at, timezone, is_asap, status }) => {
-  const tz = timezone && timezoneMap[timezone]
-  const requestedAt = requested_at && makeRequestedAtStr(requested_at, tz, true)
-  return is_asap && status === 'OPEN' ? (
-    <>
-      <p>ASAP</p>
-      <p className="font-size-small secondary-color">
-        {requestedAt} (give or take a few minutes)
-      </p>
-    </>
-  ) : (
-    <p>{requestedAt}</p>
-  )
-}
-
-OrderRequestedAt.displayName = 'OrderRequestedAt'
-OrderRequestedAt.propTypes = {
-  requested_at: propTypes.string,
-  timezone: propTypes.string,
-  is_asap: propTypes.bool,
-  status: propTypes.string,
-}
-
-const OrderRating = ({ rating, comments }) => {
-  const stars = []
-  for (let i = 0; i < rating; i++) {
-    stars.push(i)
-  }
-  return (
-    <>
-      <div className="order__stars">
-        {stars.map((star) => (
-          <span key={star}>{iconMap['Star']}</span>
-        ))}
-      </div>
-      {comments.length ? (
-        <p className="font-size-small secondary-color">{comments}</p>
-      ) : null}
-    </>
-  )
-}
-
-OrderRating.displayName = 'OrderRating'
-OrderRating.propTypes = {
-  rating: propTypes.number,
-  comments: propTypes.string,
-}
+import OrderRating from './OrderRating'
+import OrderRequestedAt from './OrderRequestedAt'
+import OrderRevenueCenter from './OrderRevenueCenter'
+import OrderError from './OrderError'
+import OrderLoading from './OrderLoading'
+import { openModal } from '../slices/modalSlice'
 
 const Order = ({ order, loading, error }) => {
   const {
@@ -201,6 +81,8 @@ const Order = ({ order, loading, error }) => {
 
   const updateRating = (evt) => {
     evt.preventDefault()
+    const args = { orderId: order_id, orderRating: rating || {} }
+    dispatch(openModal({ type: 'rating', args }))
     evt.target.blur()
   }
 
@@ -261,7 +143,7 @@ const Order = ({ order, loading, error }) => {
               <div className="section__content bg-color border-radius">
                 <div className="section__rows">
                   <SectionRow title="Location">
-                    <OrderRevenueCenter revenue_center={revenue_center} />
+                    <OrderRevenueCenter revenueCenter={revenue_center} />
                   </SectionRow>
                   <SectionRow title="Requested Time">
                     <OrderRequestedAt

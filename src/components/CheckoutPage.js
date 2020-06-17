@@ -62,8 +62,6 @@ const CheckoutPage = () => {
   const { discounts, promoCodes, tenders, tip } = form
   const pending = loading === 'pending'
   const checkUpdating = submitting ? false : pending
-  console.log('checkUpdating', submitting, pending, checkUpdating)
-  // const pending = true
 
   useEffect(() => {
     window.scroll(0, 0)
