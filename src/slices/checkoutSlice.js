@@ -19,6 +19,7 @@ const initialState = {
     tenders: [],
     tip: null,
   },
+  submitting: false,
   completedOrder: null,
   errors: {},
   loading: 'idle',
@@ -98,9 +99,21 @@ export const submitOrder = createAsyncThunk(
       return response
     } catch (err) {
       // console.log(JSON.stringify(err, null, 2))
-      const response = thunkAPI.rejectWithValue(err)
+      // const response = thunkAPI.rejectWithValue(err)
       thunkAPI.dispatch(closeModal())
-      return response
+      const errors = handleCheckoutErrors(err)
+      // console.log(errors)
+      const keys = Object.keys(errors)
+      const args = makeRefreshArgs(preparedOrder)
+      if (contains(keys, refreshKeys)) {
+        thunkAPI.dispatch(refreshRevenueCenter(args))
+        return thunkAPI.rejectWithValue(null)
+      } else if (contains(keys, ['cart'])) {
+        thunkAPI.dispatch(fetchMenu(args))
+        return thunkAPI.rejectWithValue(null)
+      } else {
+        return thunkAPI.rejectWithValue(errors)
+      }
     }
   }
 )
@@ -143,6 +156,9 @@ const checkoutSlice = createSlice({
         state.form.tenders = []
       }
     },
+    setSubmitting: (state, action) => {
+      state.submitting = action.payload
+    },
   },
   extraReducers: {
     // validateOrder
@@ -168,14 +184,20 @@ const checkoutSlice = createSlice({
       state.form = initialState.form
       state.errors = initialState.errors
       state.loading = 'idle'
+      state.submitting = false
     },
     [submitOrder.pending]: (state) => {
       state.loading = 'pending'
     },
     [submitOrder.rejected]: (state, action) => {
-      state.errors = handleCheckoutErrors(action.payload)
+      if (action.payload) {
+        state.errors = action.payload
+        window.scroll(0, 0)
+      } else {
+        state.errors = {}
+      }
       state.loading = 'idle'
-      window.scroll(0, 0)
+      state.submitting = false
     },
   },
 })
@@ -187,6 +209,7 @@ export const {
   resetTip,
   updateForm,
   updateCustomer,
+  setSubmitting,
 } = checkoutSlice.actions
 
 export const selectCheckout = (state) => state.checkout

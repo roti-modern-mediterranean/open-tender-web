@@ -21,7 +21,6 @@ import {
 import { setMenuItems } from './menuSlice'
 import { openModal } from './modalSlice'
 import { modalConfig as mc } from '../components/modals/config'
-import { showNotification } from './notificationSlice'
 
 const initialState = {
   orderType: null,
@@ -47,35 +46,17 @@ export const fetchRevenueCenter = createAsyncThunk(
   }
 )
 
-// export const refreshRevenueCenter = createAsyncThunk(
-//   'order/refreshRevenueCenter',
-//   async ({ revenueCenterId, serviceType }, thunkAPI) => {
-//     try {
-//       thunkAPI.dispatch(openModal(mc.updatingRevenueCenter))
-//       const revenueCenter = await getRevenueCenter(revenueCenterId)
-//       const requestedAt = makeFirstRequestedAt(revenueCenter, serviceType)
-//       if (!requestedAt) {
-//         thunkAPI.dispatch(closeModal())
-//         thunkAPI.dispatch(openModal(mc.closed))
-//         return null
-//       } else {
-//         thunkAPI.dispatch(openModal(mc.updateRequestedAt))
-//         return { revenueCenter, requestedAt }
-//       }
-//     } catch (err) {
-//       return thunkAPI.rejectWithValue(err)
-//     }
-//   }
-// )
-
 export const refreshRevenueCenter = createAsyncThunk(
   'order/refreshRevenueCenter',
   async ({ revenueCenterId, serviceType, requestedAt }, thunkAPI) => {
     try {
       const revenueCenter = await getRevenueCenter(revenueCenterId)
       const firstTimes = makeFirstTimes(revenueCenter, serviceType, requestedAt)
-      if (!firstTimes) {
-        thunkAPI.dispatch(openModal(mc.closed))
+      const { status } = revenueCenter
+      if (!firstTimes || status !== 'OPEN') {
+        thunkAPI.dispatch(
+          openModal({ type: 'closed', args: { status, preventClose: true } })
+        )
       } else {
         const args = {
           type: 'adjustRequestedAt',
@@ -97,7 +78,11 @@ export const reorderPastOrder = createAsyncThunk(
       const revenueCenter = await getRevenueCenter(revenueCenterId)
       const requestedAt = makeFirstRequestedAt(revenueCenter, serviceType)
       if (!requestedAt) {
-        return thunkAPI.dispatch(showNotification('Location currently closed'))
+        const { status } = revenueCenter
+        thunkAPI.dispatch(
+          openModal({ type: 'closed', args: { status, isCancel: true } })
+        )
+        return null
       } else {
         const menuItems = await getMenuItems(revenueCenterId, serviceType)
         const { cart, cartCounts } = rehydrateCart(menuItems, items)
@@ -219,11 +204,13 @@ const orderSlice = createSlice({
     // reorderPastOrder
 
     [reorderPastOrder.fulfilled]: (state, action) => {
-      const { revenueCenter, requestedAt, cart, cartCounts } = action.payload
-      state.revenueCenter = revenueCenter
-      state.requestedAt = requestedAt
-      state.cart = cart
-      state.cartCounts = cartCounts
+      if (action.payload) {
+        const { revenueCenter, requestedAt, cart, cartCounts } = action.payload
+        state.revenueCenter = revenueCenter
+        state.requestedAt = requestedAt
+        state.cart = cart
+        state.cartCounts = cartCounts
+      }
       state.loading = 'idle'
     },
     [reorderPastOrder.pending]: (state) => {
@@ -293,11 +280,17 @@ export const selectMenuVars = (state) => {
 }
 export const selectCurrentItem = (state) => state.order.currentItem
 export const selectCart = (state) => state.order.cart
-export const selectCartQuantity = (state) =>
-  state.order.cart.reduce((t, i) => (t += i.quantity), 0)
-export const selectCartTotal = (state) =>
-  state.order.cart.reduce((t, i) => (t += i.totalPrice), 0.0)
-export const selectCartCounts = (state) => state.order.cartCounts
+export const selectCartQuantity = (state) => {
+  return state.order.cart
+    ? state.order.cart.reduce((t, i) => (t += i.quantity), 0)
+    : 0
+}
+export const selectCartTotal = (state) => {
+  return state.order.cart
+    ? state.order.cart.reduce((t, i) => (t += i.totalPrice), 0.0)
+    : 0.0
+}
+export const selectCartCounts = (state) => state.order.cartCounts || {}
 
 export const selectCanCheckout = (state) =>
   state.order.revenueCenter &&

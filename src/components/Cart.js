@@ -28,7 +28,7 @@ const Cart = () => {
     evt.target.blur()
   }
 
-  return cart.length ? (
+  return cart && cart.length ? (
     <ul className="cart bg-color border-radius">
       {cart.map((item, index) => {
         return (

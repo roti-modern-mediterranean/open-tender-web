@@ -27,11 +27,9 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
   const { statusMessages } = rcConfig || {}
   const { serviceType } = useSelector(selectOrder)
   const firstTime = firstTimes[serviceType]
-  const statusMessage = statusMessages[revenueCenter.status]
+  const statusMsg = statusMessages[revenueCenter.status]
   const orderMsg =
-    !statusMessage && firstTime
-      ? makeOrderMsg(firstTime, tz, serviceType)
-      : null
+    !statusMsg && firstTime ? makeOrderMsg(firstTime, tz, serviceType) : null
 
   const handleOrder = (evt) => {
     evt.preventDefault()
@@ -72,7 +70,7 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
       ) : (
         <>
           <div className="rc__order__message">
-            <p className="ot-error-color font-size-small">{statusMessage}</p>
+            <p className="ot-error-color font-size-small">{statusMsg.msg}</p>
           </div>
           {!isOrder && (
             <Button

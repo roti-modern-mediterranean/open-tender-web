@@ -1,4 +1,4 @@
-import React, { useState, useRef, createContext, useEffect } from 'react'
+import React, { useRef, createContext, useEffect } from 'react'
 import propTypes from 'prop-types'
 import CheckoutDetails from './CheckoutDetails'
 import CheckoutCustomer from './CheckoutCustomer'
@@ -8,7 +8,6 @@ import CheckoutPromoCodes from './CheckoutPromoCodes'
 import CheckoutGiftCards from './CheckoutGiftCards'
 import CheckoutTenders from './CheckoutTenders'
 import { checkAmountRemaining } from './utils/cart'
-import { isEmpty } from './utils/helpers'
 import { Error } from './Inputs'
 
 export const FormContext = createContext(null)
@@ -60,6 +59,8 @@ const CheckoutForm = ({
   loading,
   errors,
   updateForm,
+  submitting,
+  setSubmitting,
   submitOrder,
   login,
   logout,
@@ -67,29 +68,23 @@ const CheckoutForm = ({
   updateLocation,
   updateServiceType,
 }) => {
-  const [isWorking, setIsWorking] = useState(false)
   const submitButton = useRef()
   const { total } = check ? check.totals : 0.0
   const { tenders } = form
   let amountRemaining = checkAmountRemaining(total, tenders)
   let isPaid = Math.abs(amountRemaining).toFixed(2) === '0.00'
+  const isDelivery = order.serviceType === 'DELIVERY'
+  const hasGiftCardTender = check.config.tender_types.includes('GIFT_CARD')
 
   useEffect(() => {
     adjustTenders(tenders, isPaid, amountRemaining, updateForm)
   }, [tenders, isPaid, amountRemaining, updateForm])
 
-  useEffect(() => {
-    if (!isEmpty(errors)) setIsWorking(false)
-  }, [errors])
-
   if (!check || !check.config) return null
-
-  const isDelivery = order.serviceType === 'DELIVERY'
-  const hasGiftCardTender = check.config.tender_types.includes('GIFT_CARD')
 
   const handleSubmit = (evt) => {
     evt.preventDefault()
-    setIsWorking(true)
+    setSubmitting(true)
     submitOrder()
     submitButton.current.blur()
   }
@@ -151,7 +146,7 @@ const CheckoutForm = ({
             className="btn btn--big"
             type="submit"
             value="Submit Order"
-            disabled={isWorking || !isPaid}
+            disabled={submitting || !isPaid}
             ref={submitButton}
           />
         </div>

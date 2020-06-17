@@ -68,10 +68,19 @@ export const defaultConfig = {
     subtitle: "We'll make this quick",
     content: 'Please enter a zip code or address below.',
     statusMessages: {
-      CLOSED_TEMPORARILY:
-        'This location is temporarily closd due to technical or operational difficulties. Please try back later today or tomorrow.',
-      COMING_SOON:
-        "This location isn't accepting orders yet, but it will be soon!",
+      CLOSED: {
+        title: 'Location currently closed',
+        msg: "We're sorry, but this location is currently closed.",
+      },
+      CLOSED_TEMPORARILY: {
+        title: 'Location closed temporarily',
+        msg:
+          'This location is temporarily closd due to technical or operational difficulties. Please try back later today or tomorrow.',
+      },
+      COMING_SOON: {
+        title: 'Location coming soon',
+        msg: "This location isn't accepting orders yet, but it will be soon!",
+      },
     },
     maxDistance: 100,
     autoSelect: {

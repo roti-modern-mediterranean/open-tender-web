@@ -24,6 +24,7 @@ import {
   updateCustomer,
   validateOrder,
   submitOrder,
+  setSubmitting,
 } from '../slices/checkoutSlice'
 import { setConfirmationOrder } from '../slices/confirmationSlice'
 import HeaderLogo from './HeaderLogo'
@@ -46,15 +47,22 @@ const CheckoutPage = () => {
   const order = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
   const { account, auth } = useSelector(selectCustomer)
-  const { check, form, loading, errors = {}, completedOrder } = useSelector(
-    selectCheckout
-  )
+  const {
+    check,
+    form,
+    loading,
+    errors = {},
+    submitting,
+    completedOrder,
+  } = useSelector(selectCheckout)
   const isComplete = completedOrder ? true : false
   const { revenueCenter, serviceType, requestedAt, cart } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const { access_token } = auth || {}
   const { discounts, promoCodes, tenders, tip } = form
   const pending = loading === 'pending'
+  const checkUpdating = submitting ? false : pending
+  console.log('checkUpdating', submitting, pending, checkUpdating)
   // const pending = true
 
   useEffect(() => {
@@ -209,9 +217,11 @@ const CheckoutPage = () => {
                   tz={tz}
                   check={check}
                   form={form}
+                  submitting={submitting}
                   loading={loading}
                   errors={errors}
                   updateForm={(form) => dispatch(updateForm(form))}
+                  setSubmitting={(bool) => dispatch(setSubmitting(bool))}
                   submitOrder={() => dispatch(submitOrder())}
                   login={() => dispatch(openModal({ type: 'login' }))}
                   logout={() => dispatch(logoutCustomer(access_token))}
@@ -235,7 +245,7 @@ const CheckoutPage = () => {
                   title={checkoutConfig.check.title}
                   check={check}
                   tenders={tenders}
-                  updating={pending}
+                  updating={checkUpdating}
                 />
               </div>
             )}
