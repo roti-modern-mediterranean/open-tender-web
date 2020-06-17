@@ -5,12 +5,11 @@ export const handleCheckoutErrors = (errors, asMessages = true) => {
     (obj, error) => {
       const [key, value] = error
       const err = asMessages ? value.message : value
-      let [, entity, field] = key.split('.')
-      // field = field || entity
+      let [, entity, index, field] = key.split('.')
       const newErrors = obj[entity]
-        ? { ...obj[entity], [field]: err }
+        ? { ...obj[entity], [index]: err }
         : field
-        ? { [field]: err }
+        ? { [index]: err }
         : err
       return { ...obj, [entity]: newErrors }
     },

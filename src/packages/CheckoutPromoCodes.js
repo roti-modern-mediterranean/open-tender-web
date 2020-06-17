@@ -7,6 +7,7 @@ import ButtonClear from './ButtonClear'
 
 const CheckoutPromoCodes = () => {
   const [promoCode, setPromoCode] = useState('')
+  const [error, setError] = useState('')
   const [pendingPromoCode, setPendingPromoCode] = useState(null)
   const formContext = useContext(FormContext)
   const { config, check, form, loading, errors, updateForm } = formContext
@@ -15,15 +16,23 @@ const CheckoutPromoCodes = () => {
     .map((i) => i.name)
   const { email } = form.customer || {}
   const promoCodeErrors = errors ? errors.promo_codes || null : null
-  const promoCodeError = promoCodeErrors ? promoCodeErrors.promo_code : null
+  const index = checkPromoCodes ? checkPromoCodes.length : 0
+  const promoCodeError = promoCodeErrors ? promoCodeErrors[index] : null
 
   useEffect(() => {
     if (loading !== 'pending') setPendingPromoCode(null)
     if (checkPromoCodes.includes(promoCode)) setPromoCode('')
-    // if (promoCodeError) updateForm({ promoCodes: checkPromoCodes })
   }, [loading, checkPromoCodes, promoCode])
 
+  useEffect(() => {
+    if (promoCodeError) {
+      setError(promoCodeError)
+      updateForm({ promoCodes: checkPromoCodes })
+    }
+  }, [promoCodeError, updateForm, checkPromoCodes])
+
   const handleChange = (evt) => {
+    setError('')
     setPromoCode(evt.target.value)
   }
 
@@ -108,7 +117,7 @@ const CheckoutPromoCodes = () => {
               placeholder="enter a promo code"
               value={promoCode}
               onChange={handleChange}
-              error={promoCodeError}
+              error={error}
               required={false}
             >
               {promoCode.length ? (

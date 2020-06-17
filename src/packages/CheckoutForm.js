@@ -1,14 +1,17 @@
 import React, { useRef, createContext, useEffect } from 'react'
 import propTypes from 'prop-types'
-import CheckoutDetails from './CheckoutDetails'
-import CheckoutCustomer from './CheckoutCustomer'
-import CheckoutAddress from './CheckoutAddress'
-import CheckoutDiscounts from './CheckoutDiscounts'
-import CheckoutPromoCodes from './CheckoutPromoCodes'
-import CheckoutGiftCards from './CheckoutGiftCards'
-import CheckoutTenders from './CheckoutTenders'
+import {
+  CheckoutAddress,
+  CheckoutCustomer,
+  CheckoutDetails,
+  CheckoutDiscounts,
+  CheckoutGiftCards,
+  CheckoutPromoCodes,
+  CheckoutTenders,
+} from './index'
 import { checkAmountRemaining } from './utils/cart'
 import { Error } from './Inputs'
+import CheckoutSurcharges from './CheckoutSurcharges'
 
 export const FormContext = createContext(null)
 
@@ -58,6 +61,7 @@ const CheckoutForm = ({
   form,
   loading,
   errors,
+  addNewCard,
   updateForm,
   submitting,
   setSubmitting,
@@ -99,6 +103,7 @@ const CheckoutForm = ({
         form,
         loading,
         errors,
+        addNewCard,
         updateForm,
         submitOrder,
         login,
@@ -122,6 +127,7 @@ const CheckoutForm = ({
         <CheckoutCustomer />
         <CheckoutDetails />
         {isDelivery && <CheckoutAddress />}
+        <CheckoutSurcharges />
         <CheckoutDiscounts />
         <CheckoutPromoCodes />
         {hasGiftCardTender && <CheckoutGiftCards />}

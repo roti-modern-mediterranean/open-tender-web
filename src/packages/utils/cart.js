@@ -529,6 +529,7 @@ export const prepareOrder = (data) => {
       details.person_count = parseInt(details.person_count) || null
     order.details = { ...details }
   }
+  if (data.surcharges) order.surcharges = data.surcharges
   if (data.discounts) order.discounts = data.discounts
   if (data.promoCodes) order.promo_codes = data.promoCodes
   if (data.tip) order.tip = data.tip

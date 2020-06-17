@@ -6,13 +6,15 @@ import { CheckoutTender } from './index'
 
 const CheckoutTenders = () => {
   const formContext = useContext(FormContext)
-  const { config, check, form, updateForm } = formContext
+  const { config, check, form, errors, updateForm } = formContext
   const [showCredit, setShowCredit] = useState(false)
-
   const tenderTypes = check.config.tender_types.filter((i) => i !== 'GIFT_CARD')
   const tenderTypesApplied = form.tenders.map((i) => i.tender_type)
   const amountRemaining = checkAmountRemaining(check.totals.total, form.tenders)
   const isPaid = Math.abs(amountRemaining).toFixed(2) === '0.00'
+  const tenderErrors = errors ? errors.tenders || null : null
+  const index = form.tenders ? form.tenders.length - 1 : 0
+  const tenderError = tenderErrors ? tenderErrors[index] : null
 
   useEffect(() => {
     tenderTypesApplied.includes('CREDIT')
@@ -66,6 +68,7 @@ const CheckoutTenders = () => {
             isPaid={isPaid}
             tenderTypesApplied={tenderTypesApplied}
             showCredit={showCredit}
+            setShowCredit={setShowCredit}
             addTender={addTender}
             addCredit={addCredit}
             removeTender={removeTender}

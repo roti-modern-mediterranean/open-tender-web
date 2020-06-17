@@ -59,9 +59,10 @@ const CheckoutPage = () => {
   const { revenueCenter, serviceType, requestedAt, cart } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const { access_token } = auth || {}
-  const { discounts, promoCodes, tenders, tip } = form
+  const { surcharges, discounts, promoCodes, tenders, tip } = form
   const pending = loading === 'pending'
   const checkUpdating = submitting ? false : pending
+  const newCardModal = { type: 'creditCard', args: { isCheckout: true } }
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -109,6 +110,7 @@ const CheckoutPage = () => {
       cart,
       customer: customerValidate,
       address: order.address,
+      surcharges,
       discounts,
       promoCodes,
       tip,
@@ -121,6 +123,7 @@ const CheckoutPage = () => {
     requestedAt,
     cart,
     order.address,
+    surcharges,
     discounts,
     promoCodes,
     tip,
@@ -218,6 +221,7 @@ const CheckoutPage = () => {
                   submitting={submitting}
                   loading={loading}
                   errors={errors}
+                  addNewCard={() => dispatch(openModal(newCardModal))}
                   updateForm={(form) => dispatch(updateForm(form))}
                   setSubmitting={(bool) => dispatch(setSubmitting(bool))}
                   submitOrder={() => dispatch(submitOrder())}

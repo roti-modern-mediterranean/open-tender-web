@@ -292,11 +292,13 @@ export const makeFirstTime = (
 export const makeFirstRequestedAt = (revenueCenter, serviceType) => {
   const { timezone, settings, revenue_center_type } = revenueCenter
   const tz = timezoneMap[timezone]
+  const requestedAt = revenue_center_type === 'OLO' ? 'asap' : null
   return makeFirstTime(
     settings.first_times,
     tz,
     serviceType,
-    revenue_center_type
+    revenue_center_type,
+    requestedAt
   )
 }
 

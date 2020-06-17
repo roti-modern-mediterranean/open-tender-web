@@ -12,6 +12,7 @@ const CheckoutTender = ({
   isPaid,
   tenderTypesApplied,
   showCredit,
+  setShowCredit,
   addTender,
   addCredit,
   removeTender,
@@ -22,7 +23,10 @@ const CheckoutTender = ({
   const applyTender =
     tenderType === 'CREDIT'
       ? addCredit
-      : (evt) => addTender(evt, { tender_type: tenderType })
+      : (evt) => {
+          addTender(evt, { tender_type: tenderType })
+          setShowCredit(false)
+        }
   return (
     <>
       <CheckoutLineItem key={tenderType} label={label}>
@@ -53,7 +57,10 @@ const CheckoutTender = ({
         </div>
       </CheckoutLineItem>
       {tenderType === 'CREDIT' && showCredit && (
-        <CheckoutCreditCards addTender={addTender} />
+        <CheckoutCreditCards
+          addTender={addTender}
+          setShowCredit={setShowCredit}
+        />
       )}
     </>
   )

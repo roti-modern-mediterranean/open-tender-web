@@ -33,10 +33,17 @@ const fields = [
   { label: 'Zip Code', placeholder: '#####', name: 'zip', type: 'number' },
 ]
 
-const CheckoutNewCardForm = ({ addTender, setShowNewCard }) => {
+const CheckoutNewCardForm = ({
+  addTender,
+  setShowNewCard,
+  setShowCredit,
+  customerId,
+  error,
+}) => {
   const [newCard, setNewCard] = useState(initialState)
   const [cardType, setCardType] = useState('OTHER')
   const [errors, setErrors] = useState({})
+  console.log(error)
 
   const handleChange = (evt) => {
     let { id, checked, value } = evt.target
@@ -56,6 +63,13 @@ const CheckoutNewCardForm = ({ addTender, setShowNewCard }) => {
     setNewCard({ ...newCard, [id]: value })
   }
 
+  const handleCancel = (evt) => {
+    evt.preventDefault()
+    setShowNewCard(false)
+    setShowCredit(false)
+    evt.target.blur()
+  }
+
   const submitTender = (evt) => {
     const { card, errors } = validateCreditCard(newCard, cardType)
     if (errors) {
@@ -69,7 +83,7 @@ const CheckoutNewCardForm = ({ addTender, setShowNewCard }) => {
         last4: newCard.acct.slice(-4),
       }
       addTender(evt, tender)
-      setShowNewCard(false)
+      // setShowNewCard(false)
     }
   }
 
@@ -116,14 +130,16 @@ const CheckoutNewCardForm = ({ addTender, setShowNewCard }) => {
             )
           })}
         </div>
-        <div className="cards__new__save">
-          <Checkbox
-            label="Save card to account"
-            id="save"
-            on={newCard.save}
-            onChange={handleChange}
-          />
-        </div>
+        {customerId && (
+          <div className="cards__new__save">
+            <Checkbox
+              label="Save card to account"
+              id="save"
+              on={newCard.save}
+              onChange={handleChange}
+            />
+          </div>
+        )}
         <div className="cards__new__footer">
           <Button
             text="Add New Card"
@@ -137,7 +153,7 @@ const CheckoutNewCardForm = ({ addTender, setShowNewCard }) => {
             ariaLabel="Cancel Add New Card"
             // icon="XCircle"
             classes="btn"
-            onClick={() => setShowNewCard(false)}
+            onClick={handleCancel}
           />
         </div>
       </div>

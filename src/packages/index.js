@@ -23,13 +23,22 @@ import CheckoutAccount from './CheckoutAccount'
 import CheckoutAddress from './CheckoutAddress'
 import CheckoutCustomer from './CheckoutCustomer'
 import CheckoutDetails from './CheckoutDetails'
+import CheckoutDiscounts from './CheckoutDiscounts'
 import CheckoutForm from './CheckoutForm'
+import CheckoutLabel from './CheckoutLabel'
+import CheckoutGiftCards from './CheckoutGiftCards'
 import CheckoutGuest from './CheckoutGuest'
 import CheckoutLineItem from './CheckoutLineItem'
+import CheckoutPromoCodes from './CheckoutPromoCodes'
+import CheckoutSurcharges from './CheckoutSurcharges'
 import CheckoutSignUp from './CheckoutSignUp'
+import CheckoutTenders from './CheckoutTenders'
 import CheckoutTender from './CheckoutTender'
 import CheckoutTip from './CheckoutTip'
 import DeliveryLink from './DeliveryLink'
+import ExistingCard from './ExistingCard'
+import NewCard from './NewCard'
+import NewCardModal from './NewCardModal'
 import useGoogleMap from './useGoogleMap'
 import useGoogleMapsAutocomplete from './useGoogleMapsAutocomplete'
 import useGoogleMapsPlace from './useGoogleMapsPlace'
@@ -67,13 +76,22 @@ export {
   CheckoutAddress,
   CheckoutCustomer,
   CheckoutDetails,
+  CheckoutDiscounts,
   CheckoutForm,
+  CheckoutGiftCards,
   CheckoutGuest,
+  CheckoutLabel,
   CheckoutLineItem,
+  CheckoutPromoCodes,
   CheckoutSignUp,
+  CheckoutSurcharges,
+  CheckoutTenders,
   CheckoutTender,
   CheckoutTip,
   DeliveryLink,
+  ExistingCard,
+  NewCard,
+  NewCardModal,
   useGoogleMap,
   useGoogleMapsAutocomplete,
   useGoogleMapsPlace,

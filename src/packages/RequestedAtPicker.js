@@ -101,14 +101,14 @@ const RequestedAtPicker = ({
       <div className="form__submit">
         {!error && (
           <>
-            <button className="btn" onClick={submitDate}>
-              {hasAsap ? 'Update Order Time' : 'Choose Order Time'}
-            </button>
             {hasAsap && (
               <button className="btn" onClick={() => setRequestedAt('asap')}>
                 {requestedAt === 'asap' ? 'Keep ASAP' : 'Change to ASAP'}
               </button>
             )}
+            <button className="btn" onClick={submitDate}>
+              {hasAsap ? 'Update Order Time' : 'Choose Order Time'}
+            </button>
           </>
         )}
       </div>

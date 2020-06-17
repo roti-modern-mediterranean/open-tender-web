@@ -146,6 +146,10 @@ export const defaultConfig = {
     account: {
       title: 'Nice to see you again!',
     },
+    surcharges: {
+      title: 'Optional Services',
+      subtitle: 'Choose one or more of these optional services',
+    },
     discounts: {
       title: 'Redeem your loyalty rewards',
       subtitle: 'Apply one or more discounts below.',

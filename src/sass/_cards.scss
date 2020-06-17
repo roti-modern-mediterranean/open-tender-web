@@ -21,6 +21,10 @@
 
       &:last-child {
         margin-bottom: 0;
+
+        .cards__new {
+          padding: 0;
+        }
       }
     }
   }
@@ -98,21 +102,39 @@
       height: auto;
     }
 
-    label {
-      span.label {
-        font-weight: normal;
+    .form__input {
+      border: 0;
+    }
+
+    &__acct {
+      .form__input__wrapper {
+        .label {
+          width: auto;
+          margin: 0 2rem 0 0;
+        }
       }
     }
 
     &__exp,
     &__cvv,
     &__zip {
-      // display: block;
+      display: inline-block;
       // float: left;
       width: 30%;
       margin-right: 5%;
+
       &:last-child {
         margin-right: 0;
+      }
+
+      .form__input__wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .label {
+          width: auto;
+          margin: 0 0 0.5rem;
+        }
       }
     }
 

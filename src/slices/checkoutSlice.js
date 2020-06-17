@@ -14,6 +14,7 @@ const initialState = {
     details: {},
     customer: {},
     address: {},
+    surcharges: [],
     discounts: [],
     promoCodes: [],
     tenders: [],
@@ -38,17 +39,21 @@ export const validateOrder = createAsyncThunk(
   async (order, thunkAPI) => {
     try {
       // console.log(JSON.stringify(order, null, 2))
-      const response = await postOrderValidate(order)
-      const errors = handleCheckoutErrors({ params: response.errors })
-      // console.log(errors)
-      const keys = Object.keys(errors)
+      const check = await postOrderValidate(order)
+      // console.log(JSON.stringify(check, null, 2))
+      const errMessages = handleCheckoutErrors({ params: check.errors })
+      // console.log(errMessages)
+      let errors = {}
+      const keys = Object.keys(errMessages)
       const args = makeRefreshArgs(order)
       if (contains(keys, refreshKeys)) {
         thunkAPI.dispatch(refreshRevenueCenter(args))
       } else if (contains(keys, ['cart'])) {
         thunkAPI.dispatch(fetchMenu(args))
+      } else if (contains(keys, ['promo_codes'])) {
+        errors['promo_codes'] = errMessages.promo_codes
       }
-      return response
+      return { check, errors }
     } catch (err) {
       // console.log(JSON.stringify(err, null, 2))
       return thunkAPI.rejectWithValue(err)
@@ -70,6 +75,7 @@ export const submitOrder = createAsyncThunk(
       customer,
       address,
       details,
+      surcharges,
       discounts,
       promoCodes,
       tenders,
@@ -85,6 +91,7 @@ export const submitOrder = createAsyncThunk(
       customer,
       address: isEmpty(fullAddress) ? null : fullAddress,
       details,
+      surcharges,
       discounts,
       promoCodes,
       tip: tip === null ? defaultTip : tip,
@@ -102,7 +109,7 @@ export const submitOrder = createAsyncThunk(
       // const response = thunkAPI.rejectWithValue(err)
       thunkAPI.dispatch(closeModal())
       const errors = handleCheckoutErrors(err)
-      // console.log(errors)
+      console.log(JSON.stringify(errors, null, 2))
       const keys = Object.keys(errors)
       const args = makeRefreshArgs(preparedOrder)
       if (contains(keys, refreshKeys)) {
@@ -164,7 +171,9 @@ const checkoutSlice = createSlice({
     // validateOrder
 
     [validateOrder.fulfilled]: (state, action) => {
-      state.check = action.payload
+      const { check, errors } = action.payload
+      state.check = check
+      state.errors = errors
       state.loading = 'idle'
     },
     [validateOrder.pending]: (state) => {
