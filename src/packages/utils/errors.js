@@ -6,12 +6,28 @@ export const handleCheckoutErrors = (errors, asMessages = true) => {
       const [key, value] = error
       const err = asMessages ? value.message : value
       let [, entity, index, field] = key.split('.')
-      const newErrors = obj[entity]
-        ? { ...obj[entity], [index]: err }
-        : field
-        ? { [index]: err }
-        : err
-      return { ...obj, [entity]: newErrors }
+      const existingEntity = obj[entity] || {}
+      if (!index) {
+        return { ...obj, [entity]: err }
+      } else if (!field) {
+        const newEntity = { ...existingEntity, [index]: err }
+        return { ...obj, [entity]: newEntity }
+      } else {
+        if (existingEntity) {
+          const existingIndex = existingEntity[index] || {}
+          const newIndex = { ...existingIndex, [field]: err }
+          const newEntity = { ...existingEntity, [index]: newIndex }
+          return { ...obj, [entity]: newEntity }
+        } else {
+          return { ...obj, [entity]: { [index]: { [field]: err } } }
+        }
+      }
+      // const newEntity = obj[entity]
+      //   ? { ...obj[entity], [index]: err }
+      //   : index
+      //   ? { [index]: err }
+      //   : err
+      // return { ...obj, [entity]: newEntity }
     },
     { form: 'There are one or more errors below' }
   )

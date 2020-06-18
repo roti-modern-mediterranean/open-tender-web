@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import propTypes from 'prop-types'
 import Button from './Button'
 import { Input, Checkbox } from './Inputs'
@@ -9,6 +9,7 @@ import {
   makeAcctNumber,
   validateCreditCard,
 } from './utils/cards'
+import { isEmpty } from './utils/helpers'
 
 // https://github.com/muffinresearch/payment-icons
 // https://github.com/jasminmif/react-interactive-paycard
@@ -35,15 +36,23 @@ const fields = [
 
 const CheckoutNewCardForm = ({
   addTender,
+  removeTender,
   setShowNewCard,
   setShowCredit,
   customerId,
   error,
 }) => {
   const [newCard, setNewCard] = useState(initialState)
+  const [isApplied, setIsApplied] = useState(false)
   const [cardType, setCardType] = useState('OTHER')
   const [errors, setErrors] = useState({})
-  console.log(error)
+
+  useEffect(() => {
+    if (error && !isEmpty(error)) {
+      setErrors(error)
+      setIsApplied(false)
+    }
+  }, [error])
 
   const handleChange = (evt) => {
     let { id, checked, value } = evt.target
@@ -70,6 +79,13 @@ const CheckoutNewCardForm = ({
     evt.target.blur()
   }
 
+  const handleRemove = (evt) => {
+    removeTender(evt, 'CREDIT')
+    setNewCard(initialState)
+    // setShowNewCard(false)
+    // setShowCredit(false)
+  }
+
   const submitTender = (evt) => {
     const { card, errors } = validateCreditCard(newCard, cardType)
     if (errors) {
@@ -83,6 +99,8 @@ const CheckoutNewCardForm = ({
         last4: newCard.acct.slice(-4),
       }
       addTender(evt, tender)
+      setIsApplied(true)
+      setErrors({})
       // setShowNewCard(false)
     }
   }
@@ -142,19 +160,25 @@ const CheckoutNewCardForm = ({
         )}
         <div className="cards__new__footer">
           <Button
-            text="Add New Card"
-            // icon="PlusCirlce"
+            text="Apply New Card"
             classes="btn btn--cart"
             onClick={submitTender}
-            disabled={emptyFields}
+            disabled={emptyFields || isApplied}
           />
-          <Button
-            text="Cancel"
-            ariaLabel="Cancel Add New Card"
-            // icon="XCircle"
-            classes="btn"
-            onClick={handleCancel}
-          />
+          {isApplied ? (
+            <Button
+              text="Remove Applied Card"
+              classes="btn"
+              onClick={handleRemove}
+            />
+          ) : (
+            <Button
+              text="Cancel"
+              ariaLabel="Cancel Add New Card"
+              classes="btn"
+              onClick={handleCancel}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useState, useEffect } from 'react'
 import { FormContext } from './CheckoutForm'
 import { checkAmountRemaining } from './utils/cart'
@@ -13,19 +12,37 @@ const CheckoutTenders = () => {
   const amountRemaining = checkAmountRemaining(check.totals.total, form.tenders)
   const isPaid = Math.abs(amountRemaining).toFixed(2) === '0.00'
   const tenderErrors = errors ? errors.tenders || null : null
-  const index = form.tenders ? form.tenders.length - 1 : 0
-  const tenderError = tenderErrors ? tenderErrors[index] : null
+  const tenderIndex = form.tenders.findIndex(
+    (i) => i.tender_type !== 'GIFT_CARD'
+  )
+  const tenderError = tenderErrors ? tenderErrors[tenderIndex] : null
 
   useEffect(() => {
-    tenderTypesApplied.includes('CREDIT')
-      ? setShowCredit(true)
-      : setShowCredit(false)
-  }, [])
+    if (tenderTypesApplied.length) {
+      tenderTypesApplied.includes('CREDIT')
+        ? setShowCredit(true)
+        : setShowCredit(false)
+    }
+  }, [tenderTypesApplied])
+
+  useEffect(() => {
+    if (tenderError) {
+      const appliedTender = form.tenders[tenderIndex]
+      const newTenders = form.tenders.filter(
+        (i, index) => index !== tenderIndex
+      )
+      updateForm({ tenders: [...newTenders] })
+      if (appliedTender.tender_type === 'CREDIT') setShowCredit(true)
+    }
+  }, [form.tenders, tenderError, tenderIndex, updateForm])
 
   const addTender = (evt, tender) => {
     evt.preventDefault()
     const newTender = { ...tender, amount: amountRemaining.toFixed(2) }
-    updateForm({ tenders: [...form.tenders, newTender] })
+    const currentTenders = form.tenders.filter(
+      (i) => i.tender_type !== newTender.tender_type
+    )
+    updateForm({ tenders: [...currentTenders, newTender] })
     evt.target.blur()
   }
 

@@ -281,7 +281,8 @@ export const makeFirstTime = (
   if (requestedAt === 'asap' && hasAsap) {
     return 'asap'
   }
-  const requestedDate = requestedAt ? isoToDate(requestedAt, tz) : null
+  const requestedDate =
+    requestedAt && requestedAt !== 'asap' ? isoToDate(requestedAt, tz) : null
   if (requestedDate && requestedDate > firstDate) {
     return requestedAt
   }

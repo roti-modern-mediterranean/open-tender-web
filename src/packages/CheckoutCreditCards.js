@@ -4,7 +4,7 @@ import { FormContext } from './CheckoutForm'
 import { isEmpty } from './utils/helpers'
 import { ExistingCard, NewCard } from '.'
 
-const CheckoutCreditCards = ({ addTender, setShowCredit }) => {
+const CheckoutCreditCards = ({ addTender, removeTender, setShowCredit }) => {
   const [showNewCard, setShowNewCard] = useState(false)
   const formContext = useContext(FormContext)
   const { check, form, errors } = formContext
@@ -37,10 +37,10 @@ const CheckoutCreditCards = ({ addTender, setShowCredit }) => {
             error={tenderError}
           />
         ))}
-        {/* <NewCardModal addNewCard={addNewCard} /> */}
         <NewCard
           appliedCards={appliedCards}
           addTender={addTender}
+          removeTender={removeTender}
           showNewCard={showNewCard}
           setShowNewCard={setShowNewCard}
           setShowCredit={setShowCredit}

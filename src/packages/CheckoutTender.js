@@ -59,6 +59,7 @@ const CheckoutTender = ({
       {tenderType === 'CREDIT' && showCredit && (
         <CheckoutCreditCards
           addTender={addTender}
+          removeTender={removeTender}
           setShowCredit={setShowCredit}
         />
       )}

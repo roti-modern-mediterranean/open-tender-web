@@ -9,6 +9,7 @@ import CheckoutNewCardForm from './CheckoutNewCardForm'
 const NewCard = ({
   appliedCards,
   addTender,
+  removeTender,
   showNewCard,
   setShowNewCard,
   setShowCredit,
@@ -65,6 +66,7 @@ const NewCard = ({
           >
             <CheckoutNewCardForm
               addTender={addTender}
+              removeTender={removeTender}
               setShowNewCard={setShowNewCard}
               setShowCredit={setShowCredit}
               customerId={customerId}
@@ -84,7 +86,7 @@ NewCard.propTypes = {
   showNewCard: propTypes.func,
   setShowNewCard: propTypes.func,
   customerId: propTypes.number,
-  error: propTypes.string,
+  error: propTypes.object,
 }
 
 export default NewCard

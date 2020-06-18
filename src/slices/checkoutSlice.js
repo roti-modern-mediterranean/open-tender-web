@@ -109,7 +109,7 @@ export const submitOrder = createAsyncThunk(
       // const response = thunkAPI.rejectWithValue(err)
       thunkAPI.dispatch(closeModal())
       const errors = handleCheckoutErrors(err)
-      console.log(JSON.stringify(errors, null, 2))
+      // console.log(JSON.stringify(errors, null, 2))
       const keys = Object.keys(errors)
       const args = makeRefreshArgs(preparedOrder)
       if (contains(keys, refreshKeys)) {
@@ -140,6 +140,11 @@ const checkoutSlice = createSlice({
       state.completedOrder = null
     },
     updateForm: (state, action) => {
+      if (action.payload.tenders) {
+        const currentErrors = { ...state.errors }
+        delete currentErrors.tenders
+        state.errors = currentErrors
+      }
       state.form = { ...state.form, ...action.payload }
     },
     updateCustomer: (state, action) => {

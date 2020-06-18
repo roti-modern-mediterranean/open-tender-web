@@ -8,12 +8,14 @@ const OrderQuantity = ({ item, favoriteId, addFavorite, removeFavorite }) => {
       <div className="order__quantity__count ot-input-quantity ot-bold font-size-small">
         {item.quantity}
       </div>
-      <ButtonFavorite
-        item={item}
-        favoriteId={favoriteId}
-        addFavorite={addFavorite}
-        removeFavorite={removeFavorite}
-      />
+      {favoriteId && (
+        <ButtonFavorite
+          item={item}
+          favoriteId={favoriteId}
+          addFavorite={addFavorite}
+          removeFavorite={removeFavorite}
+        />
+      )}
     </div>
   )
 }

@@ -221,7 +221,6 @@ const CheckoutPage = () => {
                   submitting={submitting}
                   loading={loading}
                   errors={errors}
-                  addNewCard={() => dispatch(openModal(newCardModal))}
                   updateForm={(form) => dispatch(updateForm(form))}
                   setSubmitting={(bool) => dispatch(setSubmitting(bool))}
                   submitOrder={() => dispatch(submitOrder())}

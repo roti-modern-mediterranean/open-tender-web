@@ -182,7 +182,9 @@ const Order = ({ order, loading, error }) => {
               <div className="section__content bg-color border-radius">
                 <ul className="cart">
                   {displayedItems.map((item, index) => {
-                    const favoriteId = lookup[item.signature] || null
+                    const favoriteId = lookup
+                      ? lookup[item.signature] || null
+                      : null
                     return (
                       <li key={`${item.id}-${index}`}>
                         <CartItem item={item} showModifiers={true}>

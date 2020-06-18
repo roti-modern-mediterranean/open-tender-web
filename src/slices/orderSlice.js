@@ -19,7 +19,7 @@ import {
   makeFirstTimes,
 } from '../packages/utils/datetimes'
 import { setMenuItems } from './menuSlice'
-import { openModal } from './modalSlice'
+import { openModal, closeModal } from './modalSlice'
 import { modalConfig as mc } from '../components/modals/config'
 
 const initialState = {
@@ -91,6 +91,7 @@ export const reorderPastOrder = createAsyncThunk(
         return { revenueCenter, requestedAt, cart, cartCounts }
       }
     } catch (err) {
+      thunkAPI.dispatch(closeModal())
       return thunkAPI.rejectWithValue(err)
     }
   }
