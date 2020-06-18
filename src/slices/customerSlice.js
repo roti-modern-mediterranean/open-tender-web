@@ -17,6 +17,7 @@ import {
   postCustomerFavorite,
   deleteCustomerFavorite,
   getCustomerLoyalty,
+  getCustomerHouseAccounts,
   putCustomerOrderRating,
 } from '../services/requests'
 import { showNotification } from './notificationSlice'
@@ -35,6 +36,7 @@ const initialState = {
   favorites: { entities: [], signatures: [], loading: 'idle', error: null },
   giftCards: { entities: [], loading: 'idle', error: null },
   loyalty: { entities: [], loading: 'idle', error: null },
+  houseAccounts: { entities: [], loading: 'idle', error: null },
 }
 
 export const loginCustomer = createAsyncThunk(
@@ -269,6 +271,17 @@ export const fetchCustomerLoyalty = createAsyncThunk(
   async (token, thunkAPI) => {
     try {
       return await getCustomerLoyalty(token)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const fetchCustomerHouseAccounts = createAsyncThunk(
+  'customer/fetchCustomerHouseAccounts',
+  async (token, thunkAPI) => {
+    try {
+      return await getCustomerHouseAccounts(token)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -599,6 +612,8 @@ const customerSlice = createSlice({
       }
     },
 
+    // loyalty
+
     [fetchCustomerLoyalty.fulfilled]: (state, action) => {
       state.loyalty = {
         entities: action.payload,
@@ -616,6 +631,26 @@ const customerSlice = createSlice({
         error: action.payload.detail,
       }
     },
+
+    // house accounts
+
+    [fetchCustomerHouseAccounts.fulfilled]: (state, action) => {
+      state.houseAccounts = {
+        entities: action.payload,
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [fetchCustomerHouseAccounts.pending]: (state) => {
+      state.houseAccounts.loading = 'pending'
+    },
+    [fetchCustomerHouseAccounts.rejected]: (state, action) => {
+      state.houseAccounts = {
+        ...state.houseAccounts,
+        loading: 'idle',
+        error: action.payload.detail,
+      }
+    },
   },
 })
 
@@ -629,5 +664,7 @@ export const selectCustomerGiftCards = (state) => state.customer.giftCards
 export const selectCustomerCreditCards = (state) => state.customer.creditCards
 export const selectCustomerFavorites = (state) => state.customer.favorites
 export const selectCustomerLoyalty = (state) => state.customer.loyalty
+export const selectCustomerHouseAccounts = (state) =>
+  state.customer.houseAccounts
 
 export default customerSlice.reducer

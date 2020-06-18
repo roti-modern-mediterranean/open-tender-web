@@ -14,6 +14,7 @@ import AccountGiftCards from './AccountGiftCards'
 import AccountCreditCards from './AccountCreditCards'
 import AccountItems from './AccountItems'
 import AccountFavorites from './AccountFavorites'
+import AccountHouseAccounts from './AccountHouseAccounts'
 
 const AccountPage = () => {
   const history = useHistory()
@@ -50,6 +51,7 @@ const AccountPage = () => {
           <AccountAddresses />
           <AccountGiftCards />
           <AccountCreditCards />
+          <AccountHouseAccounts />
         </div>
       </div>
     </>

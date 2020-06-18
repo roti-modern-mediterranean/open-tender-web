@@ -4,6 +4,7 @@ import Button from './Button'
 import { FormContext } from './CheckoutForm'
 import { CheckoutLabel } from './index'
 import CircleLoader from './CircleLoader'
+import { displayPrice } from './utils/cart'
 
 const CheckoutSurcharges = () => {
   const formContext = useContext(FormContext)
@@ -47,11 +48,19 @@ const CheckoutSurcharges = () => {
         {surchargesOptional.map((i) => {
           const isApplied = surchargeIds.includes(i.id)
           const isPending = i.id === pendingSurcharge
+          const cost =
+            parseFloat(i.amount) > 0
+              ? `$${displayPrice(i.amount)} fee`
+              : 'No additional charge'
           return (
             <CheckoutLineItem
               key={i.id}
               label={
-                <CheckoutLabel title={i.name} description={i.description} />
+                <CheckoutLabel
+                  title={i.label || i.name}
+                  description={i.description}
+                  alert={<span className="ot-success-color">{cost}</span>}
+                />
               }
             >
               <div className="input__wrapper">

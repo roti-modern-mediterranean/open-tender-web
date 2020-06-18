@@ -227,6 +227,13 @@ export const defaultConfig = {
         empty:
           "Looks like you haven't saved any cards to your account yet. Use the link below to add a new card.",
       },
+      houseAccounts: {
+        title: 'House Accounts',
+        subtitle:
+          'You can checkout using any of the house accounts below subject to any location and service type restrictions listed with each house account.',
+        empty:
+          "Looks like your account isn't assocaited with any house accounts at this time.",
+      },
       // loyalty: {
       //   title: 'Loyalty',
       //   subtitle:
