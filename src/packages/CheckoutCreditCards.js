@@ -1,17 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react'
-import propTypes from 'prop-types'
 import { FormContext } from './CheckoutForm'
-import { isEmpty } from './utils/helpers'
+import { TendersContext } from './CheckoutTenders'
 import { ExistingCard, NewCard } from '.'
 
-const CheckoutCreditCards = ({ addTender, removeTender, setShowCredit }) => {
+const CheckoutCreditCards = () => {
   const [showNewCard, setShowNewCard] = useState(false)
   const formContext = useContext(FormContext)
   const { check, form, errors } = formContext
-  const customerId =
-    check.customer && !isEmpty(check.customer)
-      ? check.customer.customer_id
-      : null
+  const tenderContext = useContext(TendersContext)
+  const { customerId, setShowCredit, addTender, removeTender } = tenderContext
   const cards = customerId ? check.customer.credit_cards || [] : []
   const appliedCards = form.tenders.filter((i) => i.tender_type === 'CREDIT')
   const existingCards = appliedCards.map((i) => i.customer_card_id)
@@ -53,8 +50,5 @@ const CheckoutCreditCards = ({ addTender, removeTender, setShowCredit }) => {
 }
 
 CheckoutCreditCards.displayName = 'CheckoutCreditCards'
-CheckoutCreditCards.prototypes = {
-  addTender: propTypes.func,
-}
 
 export default CheckoutCreditCards

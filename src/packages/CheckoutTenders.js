@@ -1,12 +1,16 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, createContext } from 'react'
 import { FormContext } from './CheckoutForm'
 import { checkAmountRemaining } from './utils/cart'
 import { CheckoutTender } from './index'
+import { isEmpty } from './utils/helpers'
+
+export const TendersContext = createContext(null)
 
 const CheckoutTenders = () => {
+  const [showCredit, setShowCredit] = useState(false)
+  const [showHouseAccount, setShowHouseAccount] = useState(false)
   const formContext = useContext(FormContext)
   const { config, check, form, errors, updateForm } = formContext
-  const [showCredit, setShowCredit] = useState(false)
   const tenderTypes = check.config.tender_types.filter((i) => i !== 'GIFT_CARD')
   const tenderTypesApplied = form.tenders.map((i) => i.tender_type)
   const amountRemaining = checkAmountRemaining(check.totals.total, form.tenders)
@@ -16,6 +20,10 @@ const CheckoutTenders = () => {
     (i) => i.tender_type !== 'GIFT_CARD'
   )
   const tenderError = tenderErrors ? tenderErrors[tenderIndex] : null
+  const customerId =
+    check.customer && !isEmpty(check.customer)
+      ? check.customer.customer_id
+      : null
 
   useEffect(() => {
     if (tenderTypesApplied.length) {
@@ -46,12 +54,6 @@ const CheckoutTenders = () => {
     evt.target.blur()
   }
 
-  const addCredit = (evt) => {
-    evt.preventDefault()
-    setShowCredit(true)
-    evt.target.blur()
-  }
-
   const removeTender = (evt, tenderType) => {
     evt.preventDefault()
     const filtered = form.tenders.filter((i) => i.tender_type !== tenderType)
@@ -70,29 +72,42 @@ const CheckoutTenders = () => {
   }
 
   return (
-    <fieldset className="form__fieldset">
-      <div className="form__legend">
-        <p className="form__legend__title heading ot-font-size-h3">
-          {config.tenders.title}
-        </p>
-        <p className="form__legend__subtitle">{config.tenders.subtitle}</p>
-      </div>
-      <div className="form__inputs">
-        {tenderTypes.map((tenderType) => (
-          <CheckoutTender
-            key={tenderType}
-            tenderType={tenderType}
-            isPaid={isPaid}
-            tenderTypesApplied={tenderTypesApplied}
-            showCredit={showCredit}
-            setShowCredit={setShowCredit}
-            addTender={addTender}
-            addCredit={addCredit}
-            removeTender={removeTender}
-          />
-        ))}
-      </div>
-    </fieldset>
+    <TendersContext.Provider
+      value={{
+        customerId,
+        isPaid,
+        tenderTypesApplied,
+        showCredit,
+        setShowCredit,
+        showHouseAccount,
+        setShowHouseAccount,
+        addTender,
+        removeTender,
+      }}
+    >
+      <fieldset className="form__fieldset">
+        <div className="form__legend">
+          <p className="form__legend__title heading ot-font-size-h3">
+            {config.tenders.title}
+          </p>
+          <p className="form__legend__subtitle">{config.tenders.subtitle}</p>
+        </div>
+        <div className="form__inputs">
+          {tenderTypes.map((tenderType) => (
+            <CheckoutTender
+              key={tenderType}
+              tenderType={tenderType}
+              // isPaid={isPaid}
+              // tenderTypesApplied={tenderTypesApplied}
+              // showCredit={showCredit}
+              // setShowCredit={setShowCredit}
+              // addTender={addTender}
+              // removeTender={removeTender}
+            />
+          ))}
+        </div>
+      </fieldset>
+    </TendersContext.Provider>
   )
 }
 
