@@ -59,7 +59,7 @@ const Order = ({ order, loading, error }) => {
   const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
   const { auth, account } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
-  const { lookup } = useSelector(selectCustomerFavorites)
+  const { lookup = {} } = useSelector(selectCustomerFavorites)
   const check = { surcharges, discounts, taxes, totals, details }
   const backText = account
     ? 'Head back to your account page'

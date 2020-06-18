@@ -62,7 +62,6 @@ const CheckoutPage = () => {
   const { surcharges, discounts, promoCodes, tenders, tip } = form
   const pending = loading === 'pending'
   const checkUpdating = submitting ? false : pending
-  const newCardModal = { type: 'creditCard', args: { isCheckout: true } }
 
   useEffect(() => {
     window.scroll(0, 0)
