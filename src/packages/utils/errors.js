@@ -1,3 +1,34 @@
+export const processError = (msg) => {
+  if (!msg) return errMessages.unknown
+  if (msg.includes('is a required property')) {
+    return errMessages.requiredField
+  } else if (msg.includes("not a 'email'")) {
+    return errMessages.invalidEmail
+  } else if (msg.includes("not a 'phone'")) {
+    return errMessages.invalidPhone
+  }
+  return msg
+}
+
+export const handleFormErrors = (params) => {
+  return Object.entries(params).reduce((obj, error) => {
+    const [field, msg] = error
+    const message = processError(msg)
+    return { ...obj, [field.replace('$.', '')]: message }
+  }, {})
+}
+
+export const makeFormErrors = (error) => {
+  let errors = {}
+  if (error.params) {
+    errors = handleFormErrors(error.params)
+    errors.form = error.detail
+  } else {
+    errors.form = error.detail || error.message
+  }
+  return errors
+}
+
 export const handleCheckoutErrors = (errors, asMessages = true) => {
   const { detail, params, message } = errors
   if (!params) return { form: detail || message }
@@ -46,7 +77,7 @@ export const errMessages = {
   errorsBelow: 'There are one or more errors below.',
   emptyField: 'This field cannot be empty',
   invalidAmount: 'Invalid amount',
-  invalidEmail: 'Invaiid email address',
+  invalidEmail: 'Invalid email address',
   invalidEmails: 'One or more email addresses are invaiid',
   notInteger: 'Must be an integer',
   positiveInteger: 'Must be a positive integer',
@@ -55,6 +86,7 @@ export const errMessages = {
   invalidNumber: 'Enter as a number with or without decimals',
   invalidHex: 'Enter as a hexidecimal color code',
   invalidZip: 'Enter a valid 5 digit zip code',
+  invalidPhone: 'Invalid phone number',
   invalidPassword: 'Invalid password. Please see notes below and try again.',
   requiredField: 'This field is required',
   invalidFilename: 'Invalid filename. Please rename the file and try again.',

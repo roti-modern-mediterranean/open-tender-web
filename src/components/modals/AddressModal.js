@@ -6,7 +6,7 @@ import ModalClose from '../ModalClose'
 import { Input, Textarea, Switch } from '../../packages'
 import { selectAccountAddress } from '../../slices/accountSlice'
 import { updateCustomerAddress, selectToken } from '../../slices/customerSlice'
-import { handleFormErrors } from '../../utils/errors'
+import { makeFormErrors } from '../../packages/utils/errors'
 
 const fields = [
   // { label: 'Street', name: 'street', type: 'text', required: true },
@@ -21,16 +21,6 @@ const fields = [
   { label: 'Notes', name: 'notes', type: 'textarea' },
   { label: 'Is Default', name: 'is_default', type: 'checkbox' },
 ]
-
-const makeFormErrors = (error) => {
-  let errors = {}
-  if (error.params) {
-    errors = handleFormErrors(error.params)
-    errors.form = error.detail
-  } else {
-    errors.form = error.detail || error.message
-  }
-}
 
 const AddressModal = () => {
   const submitButton = useRef()

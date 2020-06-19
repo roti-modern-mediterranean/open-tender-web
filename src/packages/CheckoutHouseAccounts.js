@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import propTypes from 'prop-types'
 import { FormContext } from './CheckoutForm'
 import { TendersContext } from './CheckoutTenders'
 import CircleLoader from './CircleLoader'

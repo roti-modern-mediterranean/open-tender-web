@@ -6,7 +6,7 @@ import SectionHeader from './SectionHeader'
 import SectionError from './SectionError'
 import { slugify } from '../packages/utils/helpers'
 import { Input } from '../packages'
-import { handleFormErrors } from '../utils/errors'
+import { handleFormErrors } from '../packages/utils/errors'
 import SectionLoading from './SectionLoading'
 
 const fields = [

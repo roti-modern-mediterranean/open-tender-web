@@ -51,6 +51,7 @@ const makeModal = (type, args = {}) => {
 }
 
 const classesMap = {
+  signUp: 'modal--big',
   item: 'modal--item',
   address: 'modal--big',
   creditCard: 'modal--big',

@@ -22,6 +22,16 @@ button {
   &:focus {
     border: 0;
   }
+
+  &__loader {
+    position: relative;
+    top: 0.1rem;
+    margin: 0 0.7rem 0 -0.1rem;
+
+    // & + span {
+    //   padding-bottom: 0.5rem;
+    // }
+  }
 }
 
 .btn-link-separator {

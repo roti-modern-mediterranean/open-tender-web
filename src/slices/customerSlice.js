@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
+  postSignUp,
   postLogin,
   postLogout,
   getCustomer,
@@ -24,12 +25,14 @@ import { showNotification } from './notificationSlice'
 import { makeFavoritesLookup } from '../packages/utils/cart'
 import { setSelectedAllergens } from './menuSlice'
 import { fetchOrder } from './accountSlice'
+import { closeModal } from './modalSlice'
 
 const initialState = {
   auth: null,
   account: null,
   error: null,
   loading: 'idle',
+  signUp: { error: null, loading: 'idle' },
   addresses: { entities: [], loading: 'idle', error: null },
   allergens: { entities: [], loading: 'idle', error: null },
   creditCards: { entities: [], loading: 'idle', error: null },
@@ -38,6 +41,21 @@ const initialState = {
   loyalty: { entities: [], loading: 'idle', error: null },
   houseAccounts: { entities: [], loading: 'idle', error: null },
 }
+
+export const signUpCustomer = createAsyncThunk(
+  'customer/signUpCustomer',
+  async (data, thunkAPI) => {
+    try {
+      await postSignUp(data)
+      const { email, password } = data
+      await thunkAPI.dispatch(loginCustomer({ email, password }))
+      thunkAPI.dispatch(closeModal())
+      return null
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
 
 export const loginCustomer = createAsyncThunk(
   'customer/loginCustomer',
@@ -320,8 +338,25 @@ const makeCustomerAccount = (customer) => {
 const customerSlice = createSlice({
   name: 'customer',
   initialState,
-  reducers: {},
+  reducers: {
+    resetSignUp: (state) => {
+      state.signUp = initialState.signUp
+    },
+  },
   extraReducers: {
+    // signUp
+
+    [signUpCustomer.fulfilled]: (state, action) => {
+      state.signUp = initialState.signUp
+    },
+    [signUpCustomer.pending]: (state) => {
+      state.signUp.loading = 'pending'
+    },
+    [signUpCustomer.rejected]: (state, action) => {
+      state.signUp.error = action.payload
+      state.signUp.loading = 'idle'
+    },
+
     // login
 
     [loginCustomer.fulfilled]: (state, action) => {
@@ -654,6 +689,9 @@ const customerSlice = createSlice({
   },
 })
 
+export const { resetSignUp } = customerSlice.actions
+
+export const selectSignUp = (state) => state.customer.signUp
 export const selectCustomer = (state) => state.customer
 export const selectCustomerAccount = (state) => state.customer.account
 export const selectToken = (state) =>

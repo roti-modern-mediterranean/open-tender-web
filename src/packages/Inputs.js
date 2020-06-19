@@ -52,6 +52,9 @@ export const Input = React.forwardRef(
     },
     ref
   ) => {
+    const autoComplete = ['email', 'password'].includes(type)
+      ? `current-${name}`
+      : null
     return (
       <label htmlFor={name} className={`form__input border-color ${classes}`}>
         <span className="form__input__wrapper border-color">
@@ -62,7 +65,7 @@ export const Input = React.forwardRef(
               id={name}
               name={name}
               type={type}
-              autoComplete={type === 'password' ? `current-${name}` : null}
+              autoComplete={autoComplete}
               value={value || ''}
               placeholder={placeholder}
               disabled={disabled}

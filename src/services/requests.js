@@ -36,6 +36,10 @@ export const postOrder = (order) => {
   return request(`/orders`, 'POST', order)
 }
 
+export const postSignUp = (data) => {
+  return request(`/customer`, 'POST', data)
+}
+
 export const postLogin = (email, password) => {
   let auth
   const data = {

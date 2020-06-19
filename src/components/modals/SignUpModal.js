@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
+import SignUpForm from '../SignUpForm'
 
 const SignUpModal = () => {
   const dispatch = useDispatch()
@@ -24,7 +25,7 @@ const SignUpModal = () => {
           </p>
         </div>
         <div className="modal__body">
-          <p>This is where the content will go</p>
+          <SignUpForm />
         </div>
       </div>
     </>

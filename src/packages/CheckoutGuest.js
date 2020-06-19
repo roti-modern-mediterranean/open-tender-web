@@ -26,9 +26,9 @@ const makeContactConfig = (requiredFields) => {
 }
 
 const fields = [
-  { name: 'email', type: 'email' },
   { name: 'first_name', type: 'text' },
   { name: 'last_name', type: 'text' },
+  { name: 'email', type: 'email' },
   { name: 'phone', type: 'tel' },
   { name: 'company', type: 'text' },
 ]
