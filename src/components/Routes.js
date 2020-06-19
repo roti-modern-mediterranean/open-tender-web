@@ -11,12 +11,20 @@ import AccountAddressesPage from './AccountAddressesPage'
 import AccountFavoritesPage from './AccountFavoritesPage'
 import AccountOrdersPage from './AccountOrdersPage'
 import AccountItemsPage from './AccountItemsPage'
+import CateringPage from './CateringPage'
+import SignUpPage from './SignUpPage'
 
 const Routes = () => {
   return (
     <Switch>
       <Route exact path="/">
         <HomePage />
+      </Route>
+      <Route exact path="/signup">
+        <SignUpPage />
+      </Route>
+      <Route exact path="/catering">
+        <CateringPage />
       </Route>
       <Route exact path="/locations">
         <RevenueCentersPage />

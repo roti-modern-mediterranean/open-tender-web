@@ -62,6 +62,9 @@ const AccountGreeting = ({ title, subtitle }) => {
   }
   const isCurrentOrder = revenueCenter && serviceType && cart.length
   const accountLoading = isLoading && !isCurrentOrder && !lastOrder
+  const isOrder = !isLoading && (isCurrentOrder || lastOrder)
+  const orderClass = isOrder ? '' : '-no-order'
+  const greetingClass = `greeting bg-color border-radius ot-box-shadow slide-up ${orderClass}`
 
   const startNewOrder = (evt) => {
     evt.preventDefault()
@@ -101,7 +104,7 @@ const AccountGreeting = ({ title, subtitle }) => {
       </div>
     </div>
   ) : (
-    <div className="greeting bg-color border-radius ot-box-shadow slide-up">
+    <div className={greetingClass}>
       <div className="greeting__content">
         <div className="greeting__summary">
           <div className="greeting__summary__header">
@@ -210,40 +213,42 @@ const AccountGreeting = ({ title, subtitle }) => {
             </ul>
           </div>
         </div>
-        <div className="greeting__order">
-          {isCurrentOrder ? (
-            <>
-              <CurrentOrder order={currentOrder} />
-              <div className="greeting__order__footer">
-                <p className="font-size-small">
-                  <Button
-                    text="Change location"
-                    classes="btn-link"
-                    onClick={changeRevenueCenter}
-                  />{' '}
-                  or{' '}
-                  <Button
-                    text="switch order type"
-                    classes="btn-link"
-                    onClick={switchOrderType}
-                  />
-                </p>
-              </div>
-            </>
-          ) : lastOrder ? (
-            <>
-              <OrderCard order={lastOrder} isLast={true} />
-              <div className="greeting__order__footer">
-                <p className="font-size-small">
-                  <GreetingLink
-                    sectionTitle={config.recentOrders.title}
-                    text="See other recent orders..."
-                  />
-                </p>
-              </div>
-            </>
-          ) : null}
-        </div>
+        {(isCurrentOrder || lastOrder) && (
+          <div className="greeting__order">
+            {isCurrentOrder ? (
+              <>
+                <CurrentOrder order={currentOrder} />
+                <div className="greeting__order__footer">
+                  <p className="font-size-small">
+                    <Button
+                      text="Change location"
+                      classes="btn-link"
+                      onClick={changeRevenueCenter}
+                    />{' '}
+                    or{' '}
+                    <Button
+                      text="switch order type"
+                      classes="btn-link"
+                      onClick={switchOrderType}
+                    />
+                  </p>
+                </div>
+              </>
+            ) : lastOrder ? (
+              <>
+                <OrderCard order={lastOrder} isLast={true} />
+                <div className="greeting__order__footer">
+                  <p className="font-size-small">
+                    <GreetingLink
+                      sectionTitle={config.recentOrders.title}
+                      text="See other recent orders..."
+                    />
+                  </p>
+                </div>
+              </>
+            ) : null}
+          </div>
+        )}
       </div>
     </div>
   )

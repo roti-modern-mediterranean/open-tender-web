@@ -3,6 +3,14 @@
   max-width: 76rem;
   padding: 2.5rem 3rem 3rem;
 
+  &.-no-order {
+    max-width: 44rem;
+
+    .greeting__summary {
+      padding: 0;
+    }
+  }
+
   &__content {
     display: flex;
     justify-content: space-between;

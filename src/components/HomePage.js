@@ -21,6 +21,7 @@ const HomePage = () => {
   // const bgStyle = { backgroundImage: `url(${home.background}` }
   const order = useSelector(selectOrder)
   const hasTypes = order.orderType && order.serviceType
+  const path = order.orderType === 'CATERING' ? '/catering' : '/locations'
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -28,8 +29,8 @@ const HomePage = () => {
   }, [dispatch])
 
   useEffect(() => {
-    hasTypes ? history.push('/locations') : dispatch(resetRevenueCenters())
-  }, [hasTypes, history, dispatch])
+    hasTypes ? history.push(path) : dispatch(resetRevenueCenters())
+  }, [hasTypes, path, history, dispatch])
 
   useEffect(() => {
     if (geoLatLng) {

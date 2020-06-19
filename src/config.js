@@ -3,6 +3,12 @@ export const defaultConfig = {
     logo: 'http://s3.amazonaws.com/betterboh/u/img/local/2/1589984577_logo.png',
     title: 'Open Tender',
   },
+  signUp: {
+    title: 'Create An Account',
+    subtitle:
+      'Order history, saved favorites & allergens, saved credit cards, and much more. Signing up takes two seconds - start reaping the benefits today!',
+    back: 'Head back to starting an order',
+  },
   googleMaps: {
     apiKey: 'AIzaSyCkllc7M-cYNzSRXO7KE-ZZKTPW59RroDk',
     defaultCenter: { lat: 40.7572285, lng: -73.9729147 },
@@ -62,6 +68,17 @@ export const defaultConfig = {
       delivery: 'Order for Delivery',
       catering: 'Order Catering',
     },
+  },
+  catering: {
+    // background:
+    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1592579125_9a97d7b25efb11eb92ba.jpg',
+    // background:
+    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1592579576_351fc15cb1e752f1d838.jpg',
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1592580958_4e2729d4c2db9a96116c.jpg',
+    title: "When's your event?",
+    subtitle: "We'll make this quick",
+    content: 'Please choose a date and time and confirm your service type',
   },
   revenueCenters: {
     title: "Let's find the nearest location",
