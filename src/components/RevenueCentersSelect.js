@@ -5,7 +5,12 @@ import { useHistory } from 'react-router-dom'
 import { GoogleMapsAutocomplete } from '../packages'
 import { MAX_DISTANCE, LOCATIONS_MESSAGES } from '../packages/utils/constants'
 import { selectConfig } from '../slices/configSlice'
-import { setAddress, selectOrder, setRevenueCenter } from '../slices/orderSlice'
+import {
+  setAddress,
+  selectOrder,
+  setRevenueCenter,
+  selectAutoSelect,
+} from '../slices/orderSlice'
 import {
   fetchRevenueCenters,
   selectRevenueCenters,
@@ -104,19 +109,16 @@ const RevenueCentersSelect = ({
   const history = useHistory()
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const geoLatLng = useSelector(selectGeoLatLng)
+  const { revenueCenters, loading } = useSelector(selectRevenueCenters)
   const { serviceType, orderType, address } = useSelector(selectOrder)
   const coords = address || geoLatLng
   const formattedAddress = address ? address.formatted_address : ''
-  const { revenueCenters, loading } = useSelector(selectRevenueCenters)
+  const autoSelect = useSelector(selectAutoSelect)
   const [title, setTitle] = useState(rcConfig.title)
   const [msg, setMsg] = useState(rcConfig.content)
   const [error, setError] = useState(null)
   const [displayedRevenueCenters, setDisplayedRevenueCenters] = useState([])
   const isLoading = loading === 'pending'
-  const autoSelect =
-    orderType && serviceType
-      ? rcConfig.autoSelect[orderType][serviceType]
-      : false
 
   useEffect(() => {
     if (orderType) {

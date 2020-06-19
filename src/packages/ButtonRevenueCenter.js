@@ -2,7 +2,12 @@ import React from 'react'
 import propTypes from 'prop-types'
 import Button from './Button'
 
-const ButtonRevenueCenter = ({ revenueCenter, onClick, classes = 'btn' }) => {
+const ButtonRevenueCenter = ({
+  revenueCenter,
+  onClick,
+  disabled,
+  classes = 'btn',
+}) => {
   return revenueCenter ? (
     <Button
       text={revenueCenter.name}
@@ -10,6 +15,7 @@ const ButtonRevenueCenter = ({ revenueCenter, onClick, classes = 'btn' }) => {
       icon="MapPin"
       classes={classes}
       onClick={onClick}
+      disabled={disabled}
     />
   ) : null
 }
@@ -19,6 +25,7 @@ ButtonRevenueCenter.propTypes = {
   revenueCenter: propTypes.object,
   onClick: propTypes.func,
   classes: propTypes.string,
+  disabled: propTypes.bool,
 }
 
 export default ButtonRevenueCenter

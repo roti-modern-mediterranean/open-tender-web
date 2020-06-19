@@ -6,6 +6,7 @@ import {
   selectOrder,
   selectTimezone,
   resetOrderType,
+  selectAutoSelect,
 } from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
 import { selectCustomer, logoutCustomer } from '../slices/customerSlice'
@@ -18,6 +19,7 @@ import {
   ButtonServiceType,
 } from '../packages'
 import HeaderLogo from './HeaderLogo'
+import { serviceTypeNamesMap } from '../packages/utils/constants'
 
 const makeClasses = (pathname) => {
   return ['checkout'].map((i) => (pathname.includes(i) ? 'header__stuck' : ''))
@@ -26,7 +28,10 @@ const makeClasses = (pathname) => {
 const Header = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { revenueCenter, serviceType, requestedAt } = useSelector(selectOrder)
+  const { orderType, serviceType, revenueCenter, requestedAt } = useSelector(
+    selectOrder
+  )
+  const autoSelect = useSelector(selectAutoSelect)
   const tz = useSelector(selectTimezone)
   const customer = useSelector(selectCustomer)
   const { account, auth } = customer
@@ -35,8 +40,10 @@ const Header = () => {
   if (isCheckout) return null
   const isMenu = pathname.includes('menu')
   const isAccount = pathname.includes('account')
-
   const classes = makeClasses(pathname)
+  const isCatering = orderType === 'CATERING'
+  let serviceTypeName = serviceTypeNamesMap[serviceType]
+  if (isCatering) serviceTypeName = `Catering ${serviceTypeName}`
 
   const handleLogin = (evt) => {
     evt.preventDefault()
@@ -60,6 +67,12 @@ const Header = () => {
     evt.preventDefault()
     dispatch(resetOrderType())
     history.push(`/`)
+    evt.target.blur()
+  }
+
+  const handleCatering = (evt) => {
+    evt.preventDefault()
+    history.push(`/catering`)
     evt.target.blur()
   }
 
@@ -105,7 +118,7 @@ const Header = () => {
           goToAccount={handleAccount}
           classes="btn--header"
         />
-        {revenueCenter && !isCheckout && (
+        {revenueCenter && !isCheckout && !autoSelect && (
           <ButtonRevenueCenter
             revenueCenter={revenueCenter}
             onClick={handleLocation}
@@ -115,7 +128,8 @@ const Header = () => {
         {serviceType && !isCheckout && (
           <ButtonServiceType
             serviceType={serviceType}
-            onClick={handleServiceType}
+            serviceTypeName={serviceTypeName}
+            onClick={isCatering ? handleCatering : handleServiceType}
             classes="btn--header"
           />
         )}

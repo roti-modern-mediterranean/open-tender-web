@@ -62,8 +62,9 @@ const AccountGreeting = ({ title, subtitle }) => {
   }
   const isCurrentOrder = revenueCenter && serviceType && cart.length
   const accountLoading = isLoading && !isCurrentOrder && !lastOrder
-  const isOrder = !isLoading && (isCurrentOrder || lastOrder)
-  const orderClass = isOrder ? '' : '-no-order'
+  // const isOrder = !isLoading && (isCurrentOrder || lastOrder)
+  // const orderClass = isOrder ? '' : '-no-order'
+  const orderClass = ''
   const greetingClass = `greeting bg-color border-radius ot-box-shadow slide-up ${orderClass}`
 
   const startNewOrder = (evt) => {

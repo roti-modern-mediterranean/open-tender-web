@@ -18,6 +18,7 @@ import { isEmpty } from './utils/helpers'
 const CheckoutDetails = () => {
   const {
     config,
+    autoSelect,
     order,
     tz,
     check,
@@ -25,12 +26,17 @@ const CheckoutDetails = () => {
     errors,
     updateForm,
     updateRequestedAt,
-    updateLocation,
+    updateRevenueCenter,
     updateServiceType,
   } = useContext(FormContext)
   const [details, setDetails] = useState(form.details)
   const [showTip, setShowTip] = useState(false)
-  const serviceTypeName = serviceTypeNamesMap[order.serviceType]
+  const { orderType, serviceType } = order
+  const serviceTypeName = serviceTypeNamesMap[serviceType]
+  const isCatering = orderType === 'CATERING'
+  const serviceTypeBtnName = `${
+    isCatering ? 'Catering ' : ''
+  } ${serviceTypeName}`
   const allowTaxExempt = check.config.allow_tax_exempt
   const requiredFields = check.config.required.details
   const tipSettings = check.config.gratuity
@@ -78,12 +84,14 @@ const CheckoutDetails = () => {
         <CheckoutLineItem label="Location">
           <ButtonRevenueCenter
             revenueCenter={order.revenueCenter}
-            onClick={updateLocation}
+            onClick={updateRevenueCenter}
             classes="btn--header"
+            disabled={autoSelect}
           />
         </CheckoutLineItem>
         <CheckoutLineItem label="Service Type">
           <ButtonServiceType
+            serviceTypeName={serviceTypeBtnName}
             serviceType={order.serviceType}
             onClick={updateServiceType}
             classes="btn--header"
@@ -126,7 +134,7 @@ const CheckoutDetails = () => {
             label="Serving Utensils"
             id="details-serving_utensils"
             on={details.serving_utensils}
-            handleChange={handleChange}
+            onChange={handleChange}
             inputClasses="input--button"
           />
         )}

@@ -54,7 +54,7 @@ const CheckoutAddress = () => {
     form,
     errors,
     updateForm,
-    updateLocation,
+    updateRevenueCenter,
   } = formContext
   const [address, setAddress] = useState(form.address || initialState)
   const requiredFields = check.config.required.address
@@ -98,7 +98,7 @@ const CheckoutAddress = () => {
         <CheckoutLineItem label="Address">
           <ButtonAddress
             address={order.address}
-            onClick={updateLocation}
+            onClick={updateRevenueCenter}
             classes="btn--header"
           />
         </CheckoutLineItem>

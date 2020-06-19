@@ -125,7 +125,8 @@ const orderSlice = createSlice({
       state.revenueCenter = action.payload
       const requestedAt = makeFirstRequestedAt(
         action.payload,
-        state.serviceType
+        state.serviceType,
+        state.requestedAt
       )
       state.requestedAt = requestedAt
     },
@@ -246,9 +247,19 @@ export const selectOrder = (state) => state.order
 export const selectOrderType = (state) => state.order.orderType
 export const selectOrderTypeName = (state) =>
   orderTypeNamesMap[state.order.orderType]
+
 export const selectServiceType = (state) => state.order.serviceType
 export const selectServiceTypeName = (state) =>
   serviceTypeNamesMap[state.order.serviceType]
+
+export const selectAutoSelect = (state) => {
+  const rcConfig = state.config.revenueCenters
+  const { orderType, serviceType } = state.order
+  return orderType && serviceType
+    ? rcConfig.autoSelect[orderType][serviceType]
+    : false
+}
+
 export const selectRequestedAt = (state) =>
   state.order.requestedAt === 'asap' ? 'ASAP' : state.order.requestedAt
 

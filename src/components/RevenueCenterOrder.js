@@ -2,7 +2,11 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { setRevenueCenter, selectOrder } from '../slices/orderSlice'
+import {
+  setRevenueCenter,
+  selectOrder,
+  selectAutoSelect,
+} from '../slices/orderSlice'
 import { Button } from '../packages'
 import { serviceTypeNamesMap } from '../packages/utils/constants'
 import {
@@ -30,6 +34,9 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
   const statusMsg = statusMessages[revenueCenter.status]
   const orderMsg =
     !statusMsg && firstTime ? makeOrderMsg(firstTime, tz, serviceType) : null
+  const msg = orderMsg || statusMsg
+  const msgClass = orderMsg ? 'ot-success-color' : 'ot-alert-color'
+  const autoSelect = useSelector(selectAutoSelect)
 
   const handleOrder = (evt) => {
     evt.preventDefault()
@@ -47,40 +54,23 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
 
   return (
     <div className="rc__order">
-      {orderMsg ? (
-        <>
-          <div className="rc__order__message">
-            <p className="ot-success-color font-size-small">{orderMsg}</p>
-          </div>
-          {isOrder ? (
-            <Button
-              text="Order Here"
-              ariaLabel={`Order from ${revenueCenter.name}`}
-              icon="ShoppingBag"
-              onClick={handleOrder}
-            />
-          ) : (
-            <Button
-              text="Change Location"
-              icon="RefreshCw"
-              onClick={handleChange}
-            />
-          )}
-        </>
-      ) : (
-        <>
-          <div className="rc__order__message">
-            <p className="ot-error-color font-size-small">{statusMsg.msg}</p>
-          </div>
-          {!isOrder && (
-            <Button
-              text="Change Location"
-              icon="RefreshCw"
-              onClick={handleChange}
-            />
-          )}
-        </>
-      )}
+      <div className="rc__order__message">
+        <p className={`font-size-small ${msgClass}`}>{msg}</p>
+      </div>
+      {isOrder ? (
+        <Button
+          text="Order Here"
+          ariaLabel={`Order from ${revenueCenter.name}`}
+          icon="ShoppingBag"
+          onClick={handleOrder}
+        />
+      ) : !autoSelect ? (
+        <Button
+          text="Change Location"
+          icon="RefreshCw"
+          onClick={handleChange}
+        />
+      ) : null}
     </div>
   )
 }

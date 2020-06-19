@@ -8,6 +8,24 @@ const HomeOrderType = () => {
   const { title, subtitle, content, buttons } = homeConfig
   const dispatch = useDispatch()
 
+  const handlePickup = (evt) => {
+    evt.preventDefault()
+    dispatch(setOrderServiceType(['OLO', 'PICKUP']))
+    evt.target.blur()
+  }
+
+  const handleDelivery = (evt) => {
+    evt.preventDefault()
+    dispatch(setOrderServiceType(['OLO', 'DELIVERY']))
+    evt.target.blur()
+  }
+
+  const handleCatering = (evt) => {
+    evt.preventDefault()
+    dispatch(setOrderServiceType(['CATERING', 'DELIVERY']))
+    evt.target.blur()
+  }
+
   return (
     <div className="card overlay border-radius slide-up">
       <div className="card__header">
@@ -19,23 +37,21 @@ const HomeOrderType = () => {
         <button
           className="card__button heading bg-color bg-hover-light ot-box-shadow"
           aria-label="Order for Pickup"
-          onClick={() => dispatch(setOrderServiceType(['OLO', 'PICKUP']))}
+          onClick={handlePickup}
         >
           {buttons.pickup || 'Order Pickup'}
         </button>
         <button
           className="card__button heading bg-color bg-hover-light ot-box-shadow"
           aria-label="Order for Delivery"
-          onClick={() => dispatch(setOrderServiceType(['OLO', 'DELIVERY']))}
+          onClick={handleDelivery}
         >
           {buttons.delivery || 'Order Delivery'}
         </button>
         <button
           className="card__button heading bg-color bg-hover-light ot-box-shadow"
           aria-label="Order Catering"
-          onClick={() =>
-            dispatch(setOrderServiceType(['CATERING', 'DELIVERY']))
-          }
+          onClick={handleCatering}
         >
           {buttons.catering || 'Order Catering'}
         </button>

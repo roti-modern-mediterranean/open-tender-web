@@ -14,6 +14,7 @@ import {
   resetOrder,
   resetOrderType,
   selectTimezone,
+  selectAutoSelect,
 } from '../slices/orderSlice'
 import {
   selectCheckout,
@@ -46,6 +47,7 @@ const CheckoutPage = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
+  const autoSelect = useSelector(selectAutoSelect)
   const { account, auth } = useSelector(selectCustomer)
   const {
     check,
@@ -56,12 +58,13 @@ const CheckoutPage = () => {
     completedOrder,
   } = useSelector(selectCheckout)
   const isComplete = completedOrder ? true : false
-  const { revenueCenter, serviceType, requestedAt, cart } = order
+  const { orderType, serviceType, revenueCenter, requestedAt, cart } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const { access_token } = auth || {}
   const { surcharges, discounts, promoCodes, tenders, tip } = form
   const pending = loading === 'pending'
   const checkUpdating = submitting ? false : pending
+  const isCatering = orderType === 'CATERING'
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -165,6 +168,12 @@ const CheckoutPage = () => {
     return history.push(`/`)
   }
 
+  const handleCatering = (evt) => {
+    evt.preventDefault()
+    history.push(`/catering`)
+    evt.target.blur()
+  }
+
   const handleRevenueCenter = (evt) => {
     evt.preventDefault()
     return history.push(`/locations`)
@@ -213,6 +222,7 @@ const CheckoutPage = () => {
                 </div>
                 <CheckoutForm
                   config={checkoutConfig}
+                  autoSelect={autoSelect}
                   order={order}
                   tz={tz}
                   check={check}
@@ -227,7 +237,9 @@ const CheckoutPage = () => {
                   logout={() => dispatch(logoutCustomer(access_token))}
                   updateRequestedAt={handleRequestedAt}
                   updateRevenueCenter={handleRevenueCenter}
-                  updateServiceType={handleServiceType}
+                  updateServiceType={
+                    isCatering ? handleCatering : handleServiceType
+                  }
                 />
               </div>
             ) : (

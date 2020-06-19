@@ -290,10 +290,14 @@ export const makeFirstTime = (
   return firstTime.utc
 }
 
-export const makeFirstRequestedAt = (revenueCenter, serviceType) => {
+export const makeFirstRequestedAt = (
+  revenueCenter,
+  serviceType,
+  requestedAt
+) => {
   const { timezone, settings, revenue_center_type } = revenueCenter
   const tz = timezoneMap[timezone]
-  const requestedAt = revenue_center_type === 'OLO' ? 'asap' : null
+  requestedAt = requestedAt || (revenue_center_type === 'OLO' ? 'asap' : null)
   return makeFirstTime(
     settings.first_times,
     tz,

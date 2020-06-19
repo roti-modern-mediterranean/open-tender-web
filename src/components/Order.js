@@ -190,6 +190,7 @@ const Order = ({ order, loading, error }) => {
                         <CartItem item={item} showModifiers={true}>
                           <OrderQuantity
                             item={item}
+                            show={lookup ? true : false}
                             favoriteId={favoriteId}
                             addFavorite={addFavorite}
                             removeFavorite={removeFavorite}

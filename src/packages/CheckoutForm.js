@@ -55,6 +55,7 @@ const adjustTenders = (tenders, isPaid, amountRemaining, updateForm) => {
 
 const CheckoutForm = ({
   config,
+  autoSelect,
   order,
   tz,
   check,
@@ -68,7 +69,7 @@ const CheckoutForm = ({
   login,
   logout,
   updateRequestedAt,
-  updateLocation,
+  updateRevenueCenter,
   updateServiceType,
 }) => {
   const submitButton = useRef()
@@ -96,6 +97,7 @@ const CheckoutForm = ({
     <FormContext.Provider
       value={{
         config,
+        autoSelect,
         order,
         tz,
         check,
@@ -107,7 +109,7 @@ const CheckoutForm = ({
         login,
         logout,
         updateRequestedAt,
-        updateLocation,
+        updateRevenueCenter,
         updateServiceType,
       }}
     >

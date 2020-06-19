@@ -1,10 +1,13 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import Button from './Button'
-import { serviceTypeNamesMap } from './utils/constants'
 
-const ButtonServiceType = ({ serviceType, onClick, classes = 'btn' }) => {
-  const serviceTypeName = serviceTypeNamesMap[serviceType]
+const ButtonServiceType = ({
+  serviceType,
+  serviceTypeName,
+  onClick,
+  classes = 'btn',
+}) => {
   return (
     <Button
       text={serviceTypeName}
