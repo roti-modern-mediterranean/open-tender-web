@@ -7,6 +7,7 @@ import {
   selectCartTotal,
   selectMenuSlug,
   selectCanCheckout,
+  selectOrder,
 } from '../slices/orderSlice'
 import SidebarOverlay from './SidebarOverlay'
 import { Button } from '../packages'
@@ -17,6 +18,7 @@ const Sidebar = () => {
   const history = useHistory()
   const { pathname } = useLocation()
   const { isOpen } = useSelector(selectSidebar)
+  const { orderId } = useSelector(selectOrder)
   const cartCount = useSelector(selectCartQuantity)
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
@@ -45,7 +47,9 @@ const Sidebar = () => {
       <div className={classes}>
         <div className="sidebar__container">
           <div className="sidebar__header bg-color">
-            <h2 className="sidebar__title ot-font-size-h3">Your Order</h2>
+            <h2 className="sidebar__title ot-font-size-h3">
+              {orderId ? `Editing Order ${orderId}` : 'Your Order'}
+            </h2>
             {cartCount === 0 ? (
               <p className="font-size-small ot-alert-color">
                 Your cart is currently empty. Please add some items.
@@ -71,7 +75,7 @@ const Sidebar = () => {
                 classes="btn btn--big"
                 disabled={!canCheckout}
               >
-                Back To {isMenu ? 'Order' : 'Menu'}
+                Menu
               </Button>
             </div>
             <div className="sidebar__checkout">

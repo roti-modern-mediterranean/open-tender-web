@@ -28,7 +28,7 @@ const CheckUpdating = () => (
 )
 
 const Check = ({ title, check, tenders, updating = false }) => {
-  const { surcharges, discounts, taxes, totals, details } = check
+  const { order_id, surcharges, discounts, taxes, totals, details } = check
   const {
     subtotal,
     surcharge,
@@ -48,11 +48,14 @@ const Check = ({ title, check, tenders, updating = false }) => {
     <div className="check">
       <div className="check__container">
         {updating && <CheckUpdating />}
-        {title ? (
-          <p className="check__title font-size-big ot-bold border-bottom">
-            {title}
-          </p>
-        ) : null}
+        <div className="check__title font-size-big ot-bold border-bottom">
+          <p>{title}</p>
+          {order_id && (
+            <p className="font-size-small ot-normal">
+              editing order {order_id}
+            </p>
+          )}
+        </div>
         <ul className="check__items">
           <CheckItem label="Cart Total" value={subtotal} />
           {surcharges.length ? (

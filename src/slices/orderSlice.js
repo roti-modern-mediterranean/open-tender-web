@@ -23,6 +23,7 @@ import { setMenuItems } from './menuSlice'
 import { openModal, closeModal } from './modalSlice'
 import { modalConfig as mc } from '../components/modals/config'
 import { updateForm } from './checkoutSlice'
+import { toggleSidebar } from './sidebarSlice'
 
 const initialState = {
   orderId: null,
@@ -94,6 +95,8 @@ export const editOrder = createAsyncThunk(
       const form = rehydrateCheckoutForm(order)
       thunkAPI.dispatch(updateForm(form))
       thunkAPI.dispatch(closeModal())
+      thunkAPI.dispatch(toggleSidebar())
+      // thunkAPI.dispatch(openModal({ type: 'editOrder' }))
       return {
         orderId,
         orderType,
@@ -128,7 +131,12 @@ export const reorderPastOrder = createAsyncThunk(
         const menuItems = await getMenuItems(revenueCenterId, serviceType)
         const { cart, cartCounts } = rehydrateCart(menuItems, items)
         thunkAPI.dispatch(setMenuItems(menuItems))
-        thunkAPI.dispatch(openModal({ type: 'requestedAt' }))
+        thunkAPI.dispatch(
+          openModal({
+            type: 'requestedAt',
+            args: { onCloseAction: toggleSidebar },
+          })
+        )
         return { revenueCenter, requestedAt, cart, cartCounts }
       }
     } catch (err) {

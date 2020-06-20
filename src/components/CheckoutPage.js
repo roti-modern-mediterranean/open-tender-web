@@ -3,7 +3,13 @@ import isEqual from 'lodash/isEqual'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { prepareOrder } from '../packages/utils/cart'
-import { CheckoutForm, Check, ButtonMenu, ButtonAccount } from '../packages'
+import {
+  CheckoutForm,
+  Check,
+  ButtonMenu,
+  ButtonAccount,
+  ButtonCancelEdit,
+} from '../packages'
 import { selectConfig } from '../slices/configSlice'
 import { openModal } from '../slices/modalSlice'
 import { logoutCustomer, selectCustomer } from '../slices/customerSlice'
@@ -26,6 +32,7 @@ import {
   validateOrder,
   submitOrder,
   setSubmitting,
+  resetCheckout,
 } from '../slices/checkoutSlice'
 import { setConfirmationOrder } from '../slices/confirmationSlice'
 import HeaderLogo from './HeaderLogo'
@@ -195,6 +202,14 @@ const CheckoutPage = () => {
     evt.target.blur()
   }
 
+  const handleCancelEdit = (evt) => {
+    evt.preventDefault()
+    dispatch(resetOrder())
+    dispatch(resetCheckout())
+    history.push(`/account`)
+    evt.target.blur()
+  }
+
   return (
     <div className="checkout">
       <div className="checkout__header ot-nav-height bg-color">
@@ -214,6 +229,12 @@ const CheckoutPage = () => {
                   goToAccount={handleAccount}
                   classes="btn--header"
                 />
+                {orderId && (
+                  <ButtonCancelEdit
+                    onClick={handleCancelEdit}
+                    classes="btn--header-cancel"
+                  />
+                )}
               </div>
             </div>
           </div>

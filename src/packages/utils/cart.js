@@ -210,6 +210,22 @@ const rehydratePromoCodes = (discounts) => {
   return discounts.filter((i) => i.is_promo_code).map((i) => i.name)
 }
 
+const rehydrateTenders = (tenders) => {
+  // const giftCards = tenders.filter((i) => i.tender_type === 'GIFT_CARD')
+  const other = tenders
+    .filter((i) => i.tender_type !== 'GIFT_CARD')
+    .map((i) => {
+      if (i.tender_type === 'CREDIT') {
+        return { ...i, ...i.credit_card }
+      } else if (i.tender_type === 'HOUSE_ACCOUNT') {
+        return { ...i, ...i.house_account }
+      } else {
+        return i
+      }
+    })
+  return other
+}
+
 export const rehydrateCheckoutForm = (order) => {
   const form = {
     details: rehydrateDetails(order.details),
@@ -218,7 +234,7 @@ export const rehydrateCheckoutForm = (order) => {
     surcharges: rehydrateSurcharges(order.surcharges),
     discounts: rehydrateDiscounts(order.discounts),
     promoCodes: rehydratePromoCodes(order.discounts),
-    tenders: [],
+    tenders: rehydrateTenders(order.tenders),
     tip: order.totals.tip,
   }
   return form

@@ -14,7 +14,7 @@ import {
   makeEstimatedTime,
 } from '../../packages/utils/datetimes'
 
-const RequestedAtModal = ({ forcedUpdate = false }) => {
+const RequestedAtModal = ({ forcedUpdate = false, onCloseAction }) => {
   const dispatch = useDispatch()
   const { requestedAt, serviceType, revenueCenter } = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
@@ -26,6 +26,7 @@ const RequestedAtModal = ({ forcedUpdate = false }) => {
   const handleRequestedAt = (requestedAt) => {
     dispatch(setRequestedAt(requestedAt))
     dispatch(closeModal())
+    if (onCloseAction) dispatch(onCloseAction())
   }
 
   const estimatedTime = makeEstimatedTime(

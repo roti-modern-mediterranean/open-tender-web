@@ -20,6 +20,13 @@
     // text-align: center;
     padding: 0 0 0.5rem;
     margin: 0 0 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    p {
+      display: block;
+    }
   }
 
   &__items {

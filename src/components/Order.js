@@ -41,7 +41,6 @@ const Order = ({ order, loading, error }) => {
     timezone,
     delivery,
     address,
-    notes,
     cart,
     surcharges,
     discounts,
@@ -62,6 +61,15 @@ const Order = ({ order, loading, error }) => {
   const token = auth ? auth.access_token : null
   const { lookup = {} } = useSelector(selectCustomerFavorites)
   const check = { surcharges, discounts, taxes, totals, details }
+  const {
+    eating_utensils,
+    serving_utensils,
+    person_count,
+    notes,
+    tax_exempt_id,
+  } = details || {}
+  const hasDetails =
+    eating_utensils || serving_utensils || person_count || tax_exempt_id
   const backText = account
     ? 'Head back to your account page'
     : 'Start a new order'
@@ -169,6 +177,32 @@ const Order = ({ order, loading, error }) => {
                       <p className="font-size-small secondary-color">{notes}</p>
                     </SectionRow>
                   ) : null}
+                  {hasDetails && (
+                    <SectionRow title="Other Details">
+                      {eating_utensils ? (
+                        <p className="font-size-small secondary-color">
+                          Eating utensils included
+                          {person_count && `for ${person_count} people`}
+                        </p>
+                      ) : (
+                        person_count && (
+                          <p className="font-size-small secondary-color">
+                            30 people to be accommodated
+                          </p>
+                        )
+                      )}
+                      {serving_utensils && (
+                        <p className="font-size-small secondary-color">
+                          Serving utensils included
+                        </p>
+                      )}
+                      {tax_exempt_id && (
+                        <p className="font-size-small secondary-color">
+                          Tax exempt ID of {tax_exempt_id}
+                        </p>
+                      )}
+                    </SectionRow>
+                  )}
                   {rating ? (
                     <SectionRow title="Rating">
                       <OrderRating {...rating} />

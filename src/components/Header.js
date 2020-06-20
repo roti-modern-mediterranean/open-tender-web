@@ -7,12 +7,14 @@ import {
   selectTimezone,
   resetOrderType,
   selectAutoSelect,
+  resetOrder,
 } from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
 import { selectCustomer, logoutCustomer } from '../slices/customerSlice'
 import {
   ButtonAccount,
   ButtonAllergens,
+  ButtonCancelEdit,
   ButtonGroupOrder,
   ButtonRevenueCenter,
   ButtonRequestedAt,
@@ -20,6 +22,7 @@ import {
 } from '../packages'
 import HeaderLogo from './HeaderLogo'
 import { serviceTypeNamesMap } from '../packages/utils/constants'
+import { resetCheckout } from '../slices/checkoutSlice'
 
 const makeClasses = (pathname) => {
   return ['checkout'].map((i) => (pathname.includes(i) ? 'header__stuck' : ''))
@@ -28,9 +31,13 @@ const makeClasses = (pathname) => {
 const Header = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { orderType, serviceType, revenueCenter, requestedAt } = useSelector(
-    selectOrder
-  )
+  const {
+    orderId,
+    orderType,
+    serviceType,
+    revenueCenter,
+    requestedAt,
+  } = useSelector(selectOrder)
   const autoSelect = useSelector(selectAutoSelect)
   const tz = useSelector(selectTimezone)
   const customer = useSelector(selectCustomer)
@@ -44,6 +51,7 @@ const Header = () => {
   const isCatering = orderType === 'CATERING'
   let serviceTypeName = serviceTypeNamesMap[serviceType]
   if (isCatering) serviceTypeName = `Catering ${serviceTypeName}`
+  const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering_allowed
 
   const handleLogin = (evt) => {
     evt.preventDefault()
@@ -100,6 +108,14 @@ const Header = () => {
     evt.target.blur()
   }
 
+  const handleCancelEdit = (evt) => {
+    evt.preventDefault()
+    dispatch(resetOrder())
+    dispatch(resetCheckout())
+    history.push(`/account`)
+    evt.target.blur()
+  }
+
   return (
     <header
       className={`header container flex ot-header ot-nav-height ${classes}`}
@@ -144,11 +160,19 @@ const Header = () => {
         {isMenu && (
           <>
             <ButtonAllergens onClick={handleAllergens} classes="btn--header" />
-            <ButtonGroupOrder
-              onClick={handleGroupOrder}
-              classes="btn--header"
-            />
+            {hasGroupOrdering && (
+              <ButtonGroupOrder
+                onClick={handleGroupOrder}
+                classes="btn--header"
+              />
+            )}
           </>
+        )}
+        {orderId && (
+          <ButtonCancelEdit
+            onClick={handleCancelEdit}
+            classes="btn--header-cancel"
+          />
         )}
       </div>
     </header>
