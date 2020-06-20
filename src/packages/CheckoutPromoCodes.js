@@ -82,7 +82,10 @@ const CheckoutPromoCodes = () => {
       <div className="form__inputs">
         {checkPromoCodes.map((checkPromoCode) => {
           return (
-            <div class="form__input-with-button border-color">
+            <div
+              key={checkPromoCode}
+              className="form__input-with-button border-color"
+            >
               <Input
                 key={checkPromoCode}
                 label={checkPromoCode}

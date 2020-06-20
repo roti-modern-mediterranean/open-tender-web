@@ -14,6 +14,7 @@ import {
   setOrderServiceType,
   setAddress,
   reorderPastOrder,
+  editOrder,
 } from '../slices/orderSlice'
 import OrderImages from './OrderImages'
 import OrderTag from './OrderTag'
@@ -45,6 +46,7 @@ const OrderCard = ({ order, isLast }) => {
 
   const handleEdit = (evt) => {
     evt.preventDefault()
+    dispatch(editOrder(order))
     evt.target.blur()
   }
 

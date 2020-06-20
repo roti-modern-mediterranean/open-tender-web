@@ -26,6 +26,52 @@ const initialState = {
   loading: 'idle',
 }
 
+/* checkout form looks like this:
+{
+  "details": {
+    "cart_id": null,
+    "eating_utensils": true,
+    "notes": "Notes go here.",
+    "person_count": "15",
+    "serving_utensils": true,
+    "tax_exempt_id": "something"
+  },
+  "customer": {
+    "customer_id": 3,
+    "first_name": "JC",
+    "last_name": "Harrington",
+    "email": "jc.harrington1@gmail.com",
+    "phone": "202-834-3641",
+    "company": "Brandibble Co."
+  },
+  "address": {
+    "unit": "1001",
+    "company": "Brandibble Co.",
+    "contact": "JC",
+    "phone": "202-834-3641"
+  },
+  "surcharges": [
+    {
+      "id": 128
+    },
+    {
+      "id": 192
+    }
+  ],
+  "discounts": [
+    {
+      "id": 3269,
+      "ext_id": ""
+    }
+  ],
+  "promoCodes": [
+    "promocode02"
+  ],
+  "tenders": [],
+  "tip": null
+}
+*/
+
 const refreshKeys = ['revenue_center_id', 'service_type', 'requested_at']
 
 const makeRefreshArgs = (order) => ({
@@ -68,7 +114,7 @@ export const submitOrder = createAsyncThunk(
     thunkAPI.dispatch(openModal({ type: 'working', args }))
     // start order assembly
     const { order, checkout } = thunkAPI.getState()
-    const { revenueCenter, serviceType, requestedAt, cart } = order
+    const { orderId, revenueCenter, serviceType, requestedAt, cart } = order
     const { revenue_center_id: revenueCenterId } = revenueCenter || {}
     const { check, form } = checkout
     const {
@@ -84,6 +130,7 @@ export const submitOrder = createAsyncThunk(
     const defaultTip = check ? getDefaultTip(check.config) : null
     const fullAddress = { ...order.address, ...address }
     const data = {
+      orderId,
       revenueCenterId,
       serviceType,
       requestedAt,

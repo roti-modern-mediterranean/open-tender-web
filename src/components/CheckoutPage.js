@@ -58,7 +58,14 @@ const CheckoutPage = () => {
     completedOrder,
   } = useSelector(selectCheckout)
   const isComplete = completedOrder ? true : false
-  const { orderType, serviceType, revenueCenter, requestedAt, cart } = order
+  const {
+    orderId,
+    orderType,
+    serviceType,
+    revenueCenter,
+    requestedAt,
+    cart,
+  } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const { access_token } = auth || {}
   const { surcharges, discounts, promoCodes, tenders, tip } = form
@@ -106,6 +113,7 @@ const CheckoutPage = () => {
       ? { customer_id: account.customer_id }
       : null
     const dataValidate = {
+      orderId,
       revenueCenterId,
       serviceType,
       requestedAt,
@@ -119,6 +127,7 @@ const CheckoutPage = () => {
     }
     return prepareOrder(dataValidate)
   }, [
+    orderId,
     account,
     revenueCenterId,
     serviceType,
@@ -134,6 +143,7 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (!isComplete && !isEqual(orderValidate, prevOrderValidate)) {
+      // console.log(JSON.stringify(form, null, 2))
       dispatch(validateOrder(orderValidate))
     }
   }, [dispatch, orderValidate, prevOrderValidate, isComplete])

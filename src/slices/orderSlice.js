@@ -7,6 +7,7 @@ import {
   decrementItem,
   calcCartCounts,
   rehydrateCart,
+  rehydrateCheckoutForm,
 } from '../packages/utils/cart'
 import {
   serviceTypeNamesMap,
@@ -21,8 +22,10 @@ import {
 import { setMenuItems } from './menuSlice'
 import { openModal, closeModal } from './modalSlice'
 import { modalConfig as mc } from '../components/modals/config'
+import { updateForm } from './checkoutSlice'
 
 const initialState = {
+  orderId: null,
   orderType: null,
   serviceType: null,
   revenueCenter: null,
@@ -66,6 +69,44 @@ export const refreshRevenueCenter = createAsyncThunk(
       }
     } catch (err) {
       return thunkAPI.dispatch(resetRevenueCenter)
+    }
+  }
+)
+
+export const editOrder = createAsyncThunk(
+  'order/editOrder',
+  async (order, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(openModal(mc.buildOrder))
+      const {
+        order_id: orderId,
+        order_type: orderType,
+        service_type: serviceType,
+        requested_at: requestedAt,
+        revenue_center,
+        address,
+      } = order
+      const revenueCenterId = revenue_center.revenue_center_id
+      const revenueCenter = await getRevenueCenter(revenueCenterId)
+      const menuItems = await getMenuItems(revenueCenterId, serviceType)
+      const { cart, cartCounts } = rehydrateCart(menuItems, order.cart)
+      thunkAPI.dispatch(setMenuItems(menuItems))
+      const form = rehydrateCheckoutForm(order)
+      thunkAPI.dispatch(updateForm(form))
+      thunkAPI.dispatch(closeModal())
+      return {
+        orderId,
+        orderType,
+        serviceType,
+        revenueCenter,
+        requestedAt,
+        address,
+        cart,
+        cartCounts,
+      }
+    } catch (err) {
+      thunkAPI.dispatch(closeModal())
+      return thunkAPI.rejectWithValue(err)
     }
   }
 )
@@ -199,6 +240,37 @@ const orderSlice = createSlice({
       state.loading = 'pending'
     },
     [refreshRevenueCenter.rejected]: (state, action) => {
+      state.error = action.error.detail
+      state.loading = 'idle'
+    },
+
+    // editOrder
+
+    [editOrder.fulfilled]: (state, action) => {
+      const {
+        orderId,
+        orderType,
+        serviceType,
+        revenueCenter,
+        requestedAt,
+        address,
+        cart,
+        cartCounts,
+      } = action.payload
+      state.orderId = orderId
+      state.orderType = orderType
+      state.serviceType = serviceType
+      state.revenueCenter = revenueCenter
+      state.requestedAt = requestedAt
+      state.address = address
+      state.cart = cart
+      state.cartCounts = cartCounts
+      state.loading = 'idle'
+    },
+    [editOrder.pending]: (state) => {
+      state.loading = 'pending'
+    },
+    [editOrder.rejected]: (state, action) => {
       state.error = action.error.detail
       state.loading = 'idle'
     },

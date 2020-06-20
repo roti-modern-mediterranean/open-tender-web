@@ -160,6 +160,70 @@ export const rehydrateCart = (menuItems, simpleCartItems) => {
   return { cart, cartCounts }
 }
 
+const rehydrateDetails = (details) => {
+  return {
+    cart_id: details.cart_id,
+    eating_utensils: details.eating_utensils,
+    notes: details.notes,
+    person_count: details.person_count,
+    serving_utensils: details.serving_utensils,
+    tax_exempt_id: details.tax_exempt_id,
+  }
+}
+
+const rehydrateCustomer = (customer) => {
+  const newCustomer = {
+    first_name: customer.first_name,
+    last_name: customer.last_name,
+    email: customer.email,
+    phone: customer.phone,
+    company: customer.company,
+  }
+  if (customer.customer_id) {
+    newCustomer.customer_id = customer.customer_id
+  }
+  return newCustomer
+}
+
+const rehydrateAddress = (address) => {
+  return {
+    unit: address.unit,
+    company: address.company,
+    contact: address.contact,
+    phone: address.phone,
+  }
+}
+
+const rehydrateSurcharges = (surcharges) => {
+  return surcharges
+    .filter((i) => i.is_optional)
+    .map((i) => ({ id: i.surcharge_id }))
+}
+
+const rehydrateDiscounts = (discounts) => {
+  return discounts
+    .filter((i) => !i.is_promo_code)
+    .map((i) => ({ id: i.discount_id, ext_id: i.ext_id }))
+}
+
+const rehydratePromoCodes = (discounts) => {
+  return discounts.filter((i) => i.is_promo_code).map((i) => i.name)
+}
+
+export const rehydrateCheckoutForm = (order) => {
+  const form = {
+    details: rehydrateDetails(order.details),
+    customer: rehydrateCustomer(order.customer),
+    address: rehydrateAddress(order.address),
+    surcharges: rehydrateSurcharges(order.surcharges),
+    discounts: rehydrateDiscounts(order.discounts),
+    promoCodes: rehydratePromoCodes(order.discounts),
+    tenders: [],
+    tip: order.totals.tip,
+  }
+  return form
+}
+
 // display items from past orders
 
 export const makeItemImageUrl = (images) => {
@@ -541,6 +605,7 @@ export const prepareOrder = (data) => {
   //   order.address = { ...address }
   // }
   if (data.address) order.address = data.address
+  if (data.orderId) order.order_id = data.orderId
   return order
 }
 

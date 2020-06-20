@@ -19,6 +19,7 @@ import {
   setOrderServiceType,
   setAddress,
   reorderPastOrder,
+  editOrder,
 } from '../slices/orderSlice'
 import { resetAccountOrder } from '../slices/accountSlice'
 import OrderRating from './OrderRating'
@@ -74,19 +75,13 @@ const Order = ({ order, loading, error }) => {
     dispatch(removeCustomerFavorite({ token, favoriteId }))
   }
 
-  const editOrder = (evt) => {
+  const handleEdit = (evt) => {
     evt.preventDefault()
+    dispatch(editOrder(order))
     evt.target.blur()
   }
 
-  const updateRating = (evt) => {
-    evt.preventDefault()
-    const args = { orderId: order_id, orderRating: rating || {} }
-    dispatch(openModal({ type: 'rating', args }))
-    evt.target.blur()
-  }
-
-  const reorder = (evt) => {
+  const handleReorder = (evt) => {
     evt.preventDefault()
     evt.target.blur()
     const { revenue_center_id: revenueCenterId } = revenue_center
@@ -94,6 +89,13 @@ const Order = ({ order, loading, error }) => {
     dispatch(setOrderServiceType([order_type, service_type]))
     dispatch(setAddress(address || null))
     dispatch(reorderPastOrder({ revenueCenterId, serviceType, items: cart }))
+  }
+
+  const updateRating = (evt) => {
+    evt.preventDefault()
+    const args = { orderId: order_id, orderRating: rating || {} }
+    dispatch(openModal({ type: 'rating', args }))
+    evt.target.blur()
   }
 
   const backLink = (evt) => {
@@ -120,9 +122,9 @@ const Order = ({ order, loading, error }) => {
             </h1>
             <div className="order__buttons">
               {order.is_editable && (
-                <Button text="Edit" icon="Edit" onClick={editOrder} />
+                <Button text="Edit" icon="Edit" onClick={handleEdit} />
               )}
-              <Button text="Reorder" icon="RefreshCw" onClick={reorder} />
+              <Button text="Reorder" icon="RefreshCw" onClick={handleReorder} />
               {!isUpcoming && (
                 <Button
                   text={rating ? 'Update Rating' : 'Add Rating'}
