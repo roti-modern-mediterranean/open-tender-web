@@ -22,23 +22,23 @@ import {
 const makeModal = (type, args = {}) => {
   switch (type) {
     case 'login':
-      return <LoginModal />
+      return <LoginModal {...args} />
     case 'signUp':
-      return <SignUpModal />
+      return <SignUpModal {...args} />
     case 'address':
-      return <AddressModal />
+      return <AddressModal {...args} />
     case 'creditCard':
-      return <CreditCardModal />
+      return <CreditCardModal {...args} />
     case 'allergens':
-      return <AllergensModal />
+      return <AllergensModal {...args} />
     case 'item':
-      return <MenuItemModal />
+      return <MenuItemModal {...args} />
     case 'requestedAt':
       return <RequestedAtModal {...args} />
     case 'adjustRequestedAt':
       return <AdjustRequestedAtModal {...args} />
     case 'cartErrors':
-      return <CartErrorsModal />
+      return <CartErrorsModal {...args} />
     case 'working':
       return <WorkingModal {...args} />
     case 'closed':

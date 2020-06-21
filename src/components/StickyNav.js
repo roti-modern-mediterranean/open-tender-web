@@ -1,5 +1,5 @@
-import propTypes from 'prop-types'
 import React, { useState, useRef, useEffect } from 'react'
+import propTypes from 'prop-types'
 import { Link } from 'react-scroll'
 import { slugify } from '../packages/utils/helpers'
 

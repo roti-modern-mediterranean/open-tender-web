@@ -6,7 +6,10 @@ export const processError = (msg) => {
     return errMessages.invalidEmail
   } else if (msg.includes("not a 'phone'")) {
     return errMessages.invalidPhone
+  } else if (msg.includes('invalid token')) {
+    return errMessages.invalidToken
   }
+
   return msg
 }
 
@@ -88,6 +91,8 @@ export const errMessages = {
   invalidZip: 'Enter a valid 5 digit zip code',
   invalidPhone: 'Invalid phone number',
   invalidPassword: 'Invalid password. Please see notes below and try again.',
+  invalidToken:
+    'Password reset token is invalid or expired. Please resubmit your password reset request via the login form.',
   requiredField: 'This field is required',
   invalidFilename: 'Invalid filename. Please rename the file and try again.',
   notExist: 'The requested entity does not exist.',

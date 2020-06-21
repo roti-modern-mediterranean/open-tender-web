@@ -9,6 +9,12 @@ export const defaultConfig = {
       'Order history, saved favorites & allergens, saved credit cards, and much more. Signing up takes two seconds - start reaping the benefits today!',
     back: 'Head back to starting an order',
   },
+  resetPassword: {
+    title: 'Reset Your Password',
+    subtitle:
+      'Please enter a new password below. Must be at least 8 characters.',
+    back: 'Start over without resetting your password',
+  },
   googleMaps: {
     apiKey: 'AIzaSyCkllc7M-cYNzSRXO7KE-ZZKTPW59RroDk',
     defaultCenter: { lat: 40.7572285, lng: -73.9729147 },

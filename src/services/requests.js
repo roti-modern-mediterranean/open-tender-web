@@ -59,6 +59,16 @@ export const postLogout = (token) => {
   return authRequest('/revoke', { token })
 }
 
+export const postSendPasswordResetEmail = (email, link_url) => {
+  const data = { email, link_url }
+  return request(`/customer/password/send-email`, 'POST', data)
+}
+
+export const postResetPassword = (new_password, token) => {
+  const data = { new_password, token }
+  return request(`/customer/password/set-new-password`, 'POST', data)
+}
+
 export const getCustomer = (token) => {
   return request(`/customer?with_related=true`, 'GET', null, null, token)
 }

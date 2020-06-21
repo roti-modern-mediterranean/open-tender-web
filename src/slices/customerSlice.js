@@ -20,19 +20,26 @@ import {
   getCustomerLoyalty,
   getCustomerHouseAccounts,
   putCustomerOrderRating,
+  postSendPasswordResetEmail,
+  postResetPassword,
 } from '../services/requests'
 import { showNotification } from './notificationSlice'
 import { makeFavoritesLookup } from '../packages/utils/cart'
 import { setSelectedAllergens } from './menuSlice'
 import { fetchOrder } from './accountSlice'
 import { closeModal } from './modalSlice'
+import { resetOrder } from './orderSlice'
+import { resetCheckout } from './checkoutSlice'
+import { makeFormErrors } from '../packages/utils/errors'
 
 const initialState = {
   auth: null,
   account: null,
+  resetSent: false,
   error: null,
   loading: 'idle',
-  signUp: { error: null, loading: 'idle' },
+  signUp: { loading: 'idle', error: null },
+  resetPassword: { success: false, loading: 'idle', error: null },
   addresses: { entities: [], loading: 'idle', error: null },
   allergens: { entities: [], loading: 'idle', error: null },
   creditCards: { entities: [], loading: 'idle', error: null },
@@ -77,8 +84,32 @@ export const logoutCustomer = createAsyncThunk(
   'customer/logoutCustomer',
   async (token, thunkAPI) => {
     try {
+      thunkAPI.dispatch(resetOrder())
+      thunkAPI.dispatch(resetCheckout())
       thunkAPI.dispatch(setSelectedAllergens(null))
       return await postLogout(token)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const sendPasswordResetEmail = createAsyncThunk(
+  'customer/sendPasswordResetEmail',
+  async ({ email, link_url }, thunkAPI) => {
+    try {
+      return await postSendPasswordResetEmail(email, link_url)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
+export const resetPassword = createAsyncThunk(
+  'customer/resetPassword',
+  async ({ new_password, token }, thunkAPI) => {
+    try {
+      return await postResetPassword(new_password, token)
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
     }
@@ -342,6 +373,12 @@ const customerSlice = createSlice({
     resetSignUp: (state) => {
       state.signUp = initialState.signUp
     },
+    resetResetSent: (state) => {
+      state.resetSent = initialState.resetSent
+    },
+    resetResetPassword: (state) => {
+      state.resetPassword = initialState.resetPassword
+    },
   },
   extraReducers: {
     // signUp
@@ -382,11 +419,43 @@ const customerSlice = createSlice({
       state.loading = 'idle'
     },
 
+    // logout
+
     [logoutCustomer.fulfilled]: () => initialState,
     [logoutCustomer.pending]: (state) => {
       state.loading = 'pending'
     },
     [logoutCustomer.rejected]: () => initialState,
+
+    // send password reset
+
+    [sendPasswordResetEmail.fulfilled]: (state, action) => {
+      state.resetSent = true
+      state.error = null
+      state.loading = 'idle'
+    },
+    [sendPasswordResetEmail.pending]: (state) => {
+      state.loading = 'pending'
+    },
+    [sendPasswordResetEmail.rejected]: (state, action) => {
+      const errors = makeFormErrors(action.payload)
+      state.error = errors.email || errors.form
+      state.loading = 'idle'
+    },
+
+    // reset password
+
+    [resetPassword.fulfilled]: (state, action) => {
+      state.resetPassword.success = true
+      state.resetPassword.loading = 'idle'
+    },
+    [resetPassword.pending]: (state) => {
+      state.resetPassword.loading = 'pending'
+    },
+    [resetPassword.rejected]: (state, action) => {
+      state.resetPassword.error = action.payload
+      state.resetPassword.loading = 'idle'
+    },
 
     // customer
 
@@ -689,9 +758,14 @@ const customerSlice = createSlice({
   },
 })
 
-export const { resetSignUp } = customerSlice.actions
+export const {
+  resetSignUp,
+  resetResetSent,
+  resetResetPassword,
+} = customerSlice.actions
 
 export const selectSignUp = (state) => state.customer.signUp
+export const selectResetPassword = (state) => state.customer.resetPassword
 export const selectCustomer = (state) => state.customer
 export const selectCustomerAccount = (state) => state.customer.account
 export const selectToken = (state) =>

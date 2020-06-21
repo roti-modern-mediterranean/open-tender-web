@@ -13,6 +13,7 @@ import AccountOrdersPage from './AccountOrdersPage'
 import AccountItemsPage from './AccountItemsPage'
 import CateringPage from './CateringPage'
 import SignUpPage from './SignUpPage'
+import ResetPasswordPage from './ResetPasswordPage'
 
 const Routes = () => {
   return (
@@ -22,6 +23,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/signup">
         <SignUpPage />
+      </Route>
+      <Route exact path="/reset-password">
+        <ResetPasswordPage />
       </Route>
       <Route exact path="/catering">
         <CateringPage />

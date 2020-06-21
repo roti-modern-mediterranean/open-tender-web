@@ -7,7 +7,7 @@ import {
   resetSignUp,
 } from '../slices/customerSlice'
 import { makeFormErrors } from '../packages/utils/errors'
-import ClipLoader from 'react-spinners/ClipLoader'
+import SubmitButton from './SubmitButton'
 
 const fields = [
   { label: 'First Name', name: 'first_name', type: 'text' },
@@ -74,30 +74,7 @@ const SignUpForm = () => {
         ))}
       </div>
       <div className="form__submit">
-        {/* <input
-          className="btn"
-          type="submit"
-          value={submitting ? 'Submitting...' : 'Submit'}
-          disabled={submitting}
-          ref={submitButton}
-        /> */}
-        <button
-          className="btn"
-          type="submit"
-          disabled={submitting}
-          ref={submitButton}
-        >
-          {submitting ? (
-            <span>
-              <span className="btn__loader">
-                <ClipLoader size={14} color={'#ffffff'} />
-              </span>
-              <span>Submitting...</span>
-            </span>
-          ) : (
-            'Submit'
-          )}
-        </button>
+        <SubmitButton submitRef={submitButton} submitting={submitting} />
       </div>
     </form>
   )

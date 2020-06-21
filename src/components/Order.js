@@ -123,7 +123,7 @@ const Order = ({ order, loading, error }) => {
       <OrderError error={error} backLink={backLink} backText={backText} />
       {showOrder && (
         <>
-          <div className="order__header">
+          <div className="order__header slide-up">
             <p className="preface">Order #{order_id}</p>
             <h1>
               {capitalize(orderType)} from {revenue_center.name}
@@ -147,7 +147,7 @@ const Order = ({ order, loading, error }) => {
               </button>
             </p>
           </div>
-          <div className="section container">
+          <div className="section container slide-up">
             <div className="section__container">
               {/* <SectionHeader title={title} subtitle={subtitle} /> */}
               <div className="section__content bg-color border-radius">
@@ -212,7 +212,7 @@ const Order = ({ order, loading, error }) => {
               </div>
             </div>
           </div>
-          <div className="section container">
+          <div className="section container slide-up">
             <div className="section__container">
               <SectionHeader title="Items in Your Order" />
               <div className="section__content bg-color border-radius">
@@ -239,15 +239,15 @@ const Order = ({ order, loading, error }) => {
               </div>
             </div>
           </div>
-          <div className="section container">
+          <div className="section container slide-up">
             <div className="section__container">
               <SectionHeader title="Your Receipt" />
               <div className="section__content bg-color border-radius">
-                <Check check={check} tenders={tenders} />
+                <Check title="Order Summary" check={check} tenders={tenders} />
               </div>
             </div>
           </div>
-          <div className="section container">
+          <div className="section container slide-up">
             <div className="section__container">
               <SectionHeader>
                 <p>
