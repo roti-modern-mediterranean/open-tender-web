@@ -14,8 +14,8 @@ const initialState = {
   error: null,
   loading: 'idle',
   selectedAllergens: null,
-  menuItems: { entities: [], loading: false, error: null },
-  allergens: { entities: [], loading: false, error: null },
+  menuItems: { entities: [], loading: 'idle', error: null },
+  allergens: { entities: [], loading: 'idle', error: null },
 }
 
 export const fetchMenu = createAsyncThunk(

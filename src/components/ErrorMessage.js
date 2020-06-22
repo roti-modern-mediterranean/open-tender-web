@@ -3,9 +3,11 @@ import propTypes from 'prop-types'
 
 const ErrorMessage = ({ title, msg, children }) => (
   <div className="error-message ot-error border-radius">
-    <p className="error-message__title heading ot-font-size-h3 ot-error-color">
-      {title}
-    </p>
+    {title && title.length ? (
+      <p className="error-message__title heading ot-font-size-h3 ot-error-color">
+        {title}
+      </p>
+    ) : null}
     <div className="error-message__content">
       <p className="font-size-small">{msg}</p>
     </div>

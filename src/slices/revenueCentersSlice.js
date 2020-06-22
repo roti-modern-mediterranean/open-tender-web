@@ -1,8 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getRevenueCenters } from '../services/requests'
+import { getRevenueCenters, getValidTimes } from '../services/requests'
 import { addDistance } from '../packages/utils/maps'
 
-const initialState = { revenueCenters: [], loading: 'idle', error: null }
+const initialState = {
+  revenueCenters: [],
+  loading: 'idle',
+  error: null,
+  validTimes: { entity: null, loading: 'idle', error: null },
+}
 
 export const fetchRevenueCenters = createAsyncThunk(
   'revenueCenters/getRevenueCenters',
@@ -25,6 +30,17 @@ export const fetchRevenueCenters = createAsyncThunk(
   }
 )
 
+export const fetchValidTimes = createAsyncThunk(
+  'menu/fetchValidTimes',
+  async (orderType, thunkAPI) => {
+    try {
+      return await getValidTimes(orderType)
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
+
 const revenueCentersSlice = createSlice({
   name: 'revenueCenters',
   initialState,
@@ -32,6 +48,8 @@ const revenueCentersSlice = createSlice({
     resetRevenueCenters: () => initialState,
   },
   extraReducers: {
+    // revenue centers
+
     [fetchRevenueCenters.fulfilled]: (state, action) => {
       state.revenueCenters = action.payload
       state.loading = 'idle'
@@ -44,11 +62,31 @@ const revenueCentersSlice = createSlice({
       state.errors = action.payload.params
       state.loading = 'idle'
     },
+
+    // valid times
+
+    [fetchValidTimes.fulfilled]: (state, action) => {
+      state.validTimes = {
+        entity: action.payload,
+        loading: 'idle',
+        error: null,
+      }
+    },
+    [fetchValidTimes.pending]: (state) => {
+      state.validTimes.loading = 'pending'
+    },
+    [fetchValidTimes.rejected]: (state, action) => {
+      const error = action.payload
+        ? action.payload.detail
+        : 'Something went wrong'
+      state.validTimes = { entity: null, loading: 'idle', error }
+    },
   },
 })
 
 export const { resetRevenueCenters } = revenueCentersSlice.actions
 
 export const selectRevenueCenters = (state) => state.revenueCenters
+export const selectValidTimes = (state) => state.revenueCenters.validTimes
 
 export default revenueCentersSlice.reducer

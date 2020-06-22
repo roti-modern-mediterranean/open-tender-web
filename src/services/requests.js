@@ -14,6 +14,11 @@ export const getRevenueCenter = (revenue_center_type_id) => {
   return request(`/revenue-centers/${revenue_center_type_id}`)
 }
 
+export const getValidTimes = (revenueCenterType) => {
+  const params = `revenue_center_type=${revenueCenterType}`
+  return request(`/valid-times?${params}`)
+}
+
 export const getAllergens = () => {
   return request(`/allergens`)
 }

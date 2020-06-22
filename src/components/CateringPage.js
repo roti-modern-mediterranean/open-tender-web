@@ -14,9 +14,19 @@ import {
   dateToIso,
   timezoneMap,
   getUserTimezone,
+  time24ToDate,
+  makeLocalDate,
+  makeLocalDateStr,
+  todayDate,
 } from '../packages/utils/datetimes'
 import Background from './Background'
 import { Button } from '../packages'
+import {
+  fetchValidTimes,
+  selectValidTimes,
+} from '../slices/revenueCentersSlice'
+import Loader from './Loader'
+import ErrorMessage from './ErrorMessage'
 
 const CateringPage = () => {
   const history = useHistory()
@@ -29,11 +39,11 @@ const CateringPage = () => {
   const hasTypes = orderType && serviceType
   const { timezone } = revenueCenter || {}
   const tz = timezone ? timezoneMap[timezone] : getUserTimezone()
-  const requestedAtDate =
-    !requestedAt || requestedAt === 'asap' ? null : isoToDate(requestedAt, tz)
-  const [date, setDate] = useState(requestedAtDate)
-  const interval = 15
-  const minDate = new Date()
+  const [date, setDate] = useState(null)
+  const [minTime, setMinTime] = useState(new Date())
+  const [settings, setSettings] = useState(null)
+  const { entity: validTimes, loading, error } = useSelector(selectValidTimes)
+  const isLoading = loading === 'pending'
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -41,7 +51,47 @@ const CateringPage = () => {
 
   useEffect(() => {
     if (!hasTypes) history.push('/')
-  }, [hasTypes, history])
+    dispatch(fetchValidTimes(orderType))
+  }, [hasTypes, orderType, dispatch, history])
+
+  useEffect(() => {
+    const requestedAtDate =
+      !requestedAt || requestedAt === 'asap' ? null : isoToDate(requestedAt, tz)
+    if (validTimes) {
+      const { first_time, holidays, hours, interval } = validTimes
+      const firstDate = isoToDate(first_time.utc, tz)
+      const newDate =
+        !requestedAtDate || firstDate > requestedAtDate
+          ? firstDate
+          : requestedAtDate
+      setDate(newDate)
+      const newSettings = {
+        minDate: firstDate,
+        minTime: time24ToDate(hours.open),
+        maxTime: time24ToDate(hours.close),
+        excludeDates: holidays.map((i) => makeLocalDate(i)),
+        interval: interval,
+      }
+      setSettings(newSettings)
+    } else {
+      setDate(requestedAtDate)
+    }
+  }, [validTimes, requestedAt, tz])
+
+  useEffect(() => {
+    if (settings && date) {
+      const dateStr = makeLocalDateStr(date)
+      if (dateStr === todayDate()) {
+        const newMinTime =
+          settings.minDate > settings.minTime
+            ? settings.minDate
+            : settings.minTime
+        setMinTime(newMinTime)
+      } else {
+        setMinTime(settings.minTime)
+      }
+    }
+  }, [date, settings])
 
   const chooseServiceType = (evt, serviceType) => {
     evt.preventDefault()
@@ -69,24 +119,43 @@ const CateringPage = () => {
           <p className="secondary-color">{content}</p>
         </div>
         <div className="card__content">
-          <div className="datepicker-inline">
-            <DatePicker
-              showPopperArrow={false}
-              showTimeSelect
-              timeCaption="Time"
-              timeFormat="h:mm aa"
-              dateFormat="yyyy-MM-dd h:mm aa"
-              minDate={minDate}
-              timeIntervals={interval}
-              // excludeDates={holidays}
-              // excludeTimes={excludeTimes}
-              // filterDate={isClosed}
-              selected={date}
-              onChange={(date) => setDate(date)}
-              inline
-              shouldCloseOnSelect={false}
-            />
-          </div>
+          {isLoading ? (
+            <Loader type="Clip" text="Loading calendar..." size={28} />
+          ) : settings ? (
+            <div className="datepicker-inline">
+              <DatePicker
+                showPopperArrow={false}
+                showTimeSelect
+                timeCaption="Time"
+                timeFormat="h:mm aa"
+                dateFormat="yyyy-MM-dd h:mm aa"
+                timeIntervals={settings.interval || 15}
+                minDate={settings.minDate}
+                minTime={minTime || settings.minTime}
+                maxTime={settings.maxTime}
+                excludeDates={settings.excludeDates}
+                // excludeTimes={excludeTimes}
+                // filterDate={isClosed}
+                selected={date}
+                onChange={(date) => setDate(date)}
+                inline
+                shouldCloseOnSelect={false}
+              />
+            </div>
+          ) : error ? (
+            <ErrorMessage msg={error}>
+              <Button
+                text="Start Over"
+                icon="RefreshCw"
+                classes="btn btn--error"
+                onClick={startOver}
+              />
+            </ErrorMessage>
+          ) : (
+            <p className="ot-error-color">
+              This order type isn't currently available
+            </p>
+          )}
           <div className="card__content__buttons">
             <Button
               text="Order Delivery"

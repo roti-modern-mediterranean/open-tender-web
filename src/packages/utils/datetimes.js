@@ -182,6 +182,11 @@ export const makeClosedWeekdays = (weekdayTimes) => {
     .map(([weekday]) => weekdaysUpper.indexOf(weekday))
 }
 
+export const time24ToMinutes = (str) => {
+  const [hours, minutes] = str.split(':')
+  return parseInt(hours) * 60 + parseInt(minutes)
+}
+
 export const minutesToDate = (minutes) => {
   const hours = Math.floor(minutes / 60)
   const mins = minutes % 60
@@ -190,6 +195,11 @@ export const minutesToDate = (minutes) => {
   d.setMinutes(mins)
   d.setSeconds(0)
   return d
+}
+
+export const time24ToDate = (str) => {
+  const minutes = time24ToMinutes(str)
+  return minutesToDate(minutes)
 }
 
 export const minutesToDates = (minutes) => {
