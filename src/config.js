@@ -3,6 +3,11 @@ export const defaultConfig = {
     logo: 'http://s3.amazonaws.com/betterboh/u/img/local/2/1589984577_logo.png',
     title: 'Open Tender',
   },
+  notFound: {
+    title: 'Page Not Found',
+    subtitle: "Sorry, but we couldn't find the page you're looking for.",
+    back: 'Head back to our homepage and give it another try',
+  },
   signUp: {
     title: 'Create An Account',
     subtitle:

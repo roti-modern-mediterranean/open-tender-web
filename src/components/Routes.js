@@ -14,6 +14,7 @@ import AccountItemsPage from './AccountItemsPage'
 import CateringPage from './CateringPage'
 import SignUpPage from './SignUpPage'
 import ResetPasswordPage from './ResetPasswordPage'
+import NotFoundPage from './NotFoundPage'
 
 const Routes = () => {
   return (
@@ -59,6 +60,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/confirmation">
         <ConfirmationPage />
+      </Route>
+      <Route>
+        <NotFoundPage />
       </Route>
     </Switch>
   )

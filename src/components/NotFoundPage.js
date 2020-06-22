@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import SignUpForm from './SignUpForm'
 import { selectConfig } from '../slices/configSlice'
 import SectionHeader from './SectionHeader'
 import { selectToken } from '../slices/customerSlice'
 
-const SignUpPage = () => {
+const NotFoundPage = () => {
   const history = useHistory()
-  const { signUp: signUpConifg } = useSelector(selectConfig)
-  const { title, subtitle, back } = signUpConifg
+  const { notFound: notFoundConifg } = useSelector(selectConfig)
+  const { title, subtitle, back } = notFoundConifg
   const token = useSelector(selectToken)
 
   useEffect(() => {
@@ -23,11 +22,6 @@ const SignUpPage = () => {
         <div className="section container ot-section">
           <div className="section__container">
             <SectionHeader title={title} subtitle={subtitle} />
-            <div className="section__content bg-color border-radius">
-              <div className="signup__form">
-                <SignUpForm />
-              </div>
-            </div>
             <div className="section__footer">
               <p className="">
                 <Link to="/" className="">
@@ -42,5 +36,5 @@ const SignUpPage = () => {
   )
 }
 
-SignUpPage.displayName = 'SignUpPage'
-export default SignUpPage
+NotFoundPage.displayName = 'NotFoundPage'
+export default NotFoundPage
