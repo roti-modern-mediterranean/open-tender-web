@@ -18,12 +18,14 @@ import {
   getUserTimezone,
   makeFirstRequestedAt,
   makeFirstTimes,
+  makeRequestedAtStr,
 } from '../packages/utils/datetimes'
 import { setMenuItems } from './menuSlice'
 import { openModal, closeModal } from './modalSlice'
 import { modalConfig as mc } from '../components/modals/config'
 import { updateForm } from './checkoutSlice'
 import { toggleSidebar } from './sidebarSlice'
+import { makeRandomNumberString } from '../packages/utils/helpers'
 
 const initialState = {
   orderId: null,
@@ -35,6 +37,7 @@ const initialState = {
   currentItem: null,
   cart: [],
   cartCounts: {},
+  messages: [],
   error: null,
   loading: 'idle',
 }
@@ -146,6 +149,10 @@ export const reorderPastOrder = createAsyncThunk(
   }
 )
 
+const makeMessage = (message) => {
+  return { message, id: makeRandomNumberString() }
+}
+
 const orderSlice = createSlice({
   name: 'order',
   initialState,
@@ -158,6 +165,12 @@ const orderSlice = createSlice({
     },
     resetRevenueCenter: (state) => {
       state.revenueCenter = null
+    },
+    showMessage: (state, action) => {
+      state.messages.unshift(makeMessage(action.payload))
+    },
+    hideMessage: (state, action) => {
+      state.messages = state.messages.filter((i) => i.id !== action.payload)
     },
     setOrderType: (state, action) => {
       state.orderType = action.payload
@@ -172,11 +185,23 @@ const orderSlice = createSlice({
     },
     setRevenueCenter: (state, action) => {
       state.revenueCenter = action.payload
+      const previousRequestedAt = state.requestedAt
       const requestedAt = makeFirstRequestedAt(
         action.payload,
         state.serviceType,
-        state.requestedAt
+        previousRequestedAt
       )
+      const otherMessages = state.messages.filter(
+        (i) => !i.message.includes('Requested time')
+      )
+      if (requestedAt !== previousRequestedAt) {
+        const tz = timezoneMap[action.payload.timezone]
+        const requestedAtText = makeRequestedAtStr(requestedAt, tz)
+        const msg = `Requested time updated to ${requestedAtText}`
+        state.messages = [makeMessage(msg), ...otherMessages]
+      } else {
+        state.messages = otherMessages
+      }
       state.requestedAt = requestedAt
     },
     setAddress: (state, action) => {
@@ -309,6 +334,8 @@ export const {
   resetOrder,
   resetRevenueCenter,
   resetOrderType,
+  showMessage,
+  hideMessage,
   setOrderType,
   setServiceType,
   setOrderServiceType,
@@ -388,5 +415,7 @@ export const selectCanCheckout = (state) =>
   state.order.revenueCenter &&
   state.order.serviceType &&
   state.order.requestedAt
+
+export const selectMessages = (state) => state.order.messages
 
 export default orderSlice.reducer

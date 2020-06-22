@@ -14,7 +14,8 @@ const notificationSlice = createSlice({
         message: action.payload,
         id: makeRandomNumberString(),
       }
-      state.messages.unshift(message)
+      // state.messages.unshift(message)
+      state.messages.push(message)
     },
     hideNotification: (state, action) => {
       state.messages = state.messages.filter((i) => i.id !== action.payload)

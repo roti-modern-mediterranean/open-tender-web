@@ -5,9 +5,11 @@ import Routes from './components/Routes'
 import Modal from './components/Modal'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Messages from './components/Messages'
+import Notifications from './components/Notifications'
 import CartButton from './components/CartButton'
 import Sidebar from './components/Sidebar'
-import Notification from './components/Notifications'
+
 import './App.scss'
 
 const App = () => {
@@ -17,8 +19,9 @@ const App = () => {
       <Router>
         <Header />
         <main className="main ot-main">
-          <Notification />
+          <Messages />
           <Routes />
+          <Notifications />
           <CartButton />
         </main>
         <Sidebar />

@@ -18,7 +18,7 @@ import { selectConfig } from '../slices/configSlice'
 const makeOrderMsg = (firstTime, tz, serviceType) => {
   const serviceTypeName = serviceTypeNamesMap[serviceType]
   const readableDate = makeReadableDateStrFromIso(firstTime.utc, tz, true)
-  const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate.toLowerCase()}`
+  const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate}`
   return orderMsg
 }
 

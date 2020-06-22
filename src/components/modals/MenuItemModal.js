@@ -10,6 +10,7 @@ import { closeModal } from '../../slices/modalSlice'
 import { selectSoldOut, selectedAllergenNames } from '../../slices/menuSlice'
 import { Builder, BuilderOption, BuilderHeader } from '../../packages'
 import ModalClose from '../ModalClose'
+import { showNotification } from '../../slices/notificationSlice'
 
 const MenuItemModal = () => {
   const dispatch = useDispatch()
@@ -26,6 +27,7 @@ const MenuItemModal = () => {
 
   const handleAddItem = (item) => {
     dispatch(addItemToCart(item))
+    dispatch(showNotification(`${item.name} added to cart`))
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(setCurrentItem(null))
