@@ -2,8 +2,9 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOrderServiceType } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
+import OrderTypeButton from './OrderTypeButton'
 
-const HomeOrderType = () => {
+const OrderType = () => {
   const { home: homeConfig } = useSelector(selectConfig)
   const { title, subtitle, content, buttons } = homeConfig
   const dispatch = useDispatch()
@@ -11,6 +12,12 @@ const HomeOrderType = () => {
   const handlePickup = (evt) => {
     evt.preventDefault()
     dispatch(setOrderServiceType(['OLO', 'PICKUP']))
+    evt.target.blur()
+  }
+
+  const handleOutpost = (evt) => {
+    evt.preventDefault()
+    dispatch(setOrderServiceType(['OLO', 'OUTPOST']))
     evt.target.blur()
   }
 
@@ -26,6 +33,12 @@ const HomeOrderType = () => {
     evt.target.blur()
   }
 
+  const handleMerch = (evt) => {
+    evt.preventDefault()
+    dispatch(setOrderServiceType(['MERCH', 'DELIVERY']))
+    evt.target.blur()
+  }
+
   return (
     <div className="card overlay border-radius slide-up">
       <div className="card__header">
@@ -34,31 +47,21 @@ const HomeOrderType = () => {
         <p className="secondary-color">{content}</p>
       </div>
       <div className="card__content">
-        <button
-          className="card__button heading bg-color bg-hover-light ot-box-shadow"
-          aria-label="Order for Pickup"
-          onClick={handlePickup}
-        >
-          {buttons.pickup || 'Order Pickup'}
-        </button>
-        <button
-          className="card__button heading bg-color bg-hover-light ot-box-shadow"
-          aria-label="Order for Delivery"
-          onClick={handleDelivery}
-        >
-          {buttons.delivery || 'Order Delivery'}
-        </button>
-        <button
-          className="card__button heading bg-color bg-hover-light ot-box-shadow"
-          aria-label="Order Catering"
-          onClick={handleCatering}
-        >
-          {buttons.catering || 'Order Catering'}
-        </button>
+        <OrderTypeButton orderType={buttons.pickup} handler={handlePickup} />
+        <OrderTypeButton orderType={buttons.outpost} handler={handleOutpost} />
+        <OrderTypeButton
+          orderType={buttons.delivery}
+          handler={handleDelivery}
+        />
+        <OrderTypeButton
+          orderType={buttons.catering}
+          handler={handleCatering}
+        />
+        <OrderTypeButton orderType={buttons.merch} handler={handleMerch} />
       </div>
     </div>
   )
 }
 
-HomeOrderType.displayName = 'HomeOrderType'
-export default HomeOrderType
+OrderType.displayName = 'OrderType'
+export default OrderType

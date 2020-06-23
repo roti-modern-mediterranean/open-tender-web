@@ -10,11 +10,11 @@ import { makeFormErrors } from '../packages/utils/errors'
 import SubmitButton from './SubmitButton'
 
 const fields = [
-  { label: 'First Name', name: 'first_name', type: 'text' },
-  { label: 'Last Name', name: 'last_name', type: 'text' },
-  { label: 'Email', name: 'email', type: 'email' },
-  { label: 'Password', name: 'password', type: 'password' },
-  { label: 'Phone', name: 'phone', type: 'tel' },
+  { label: 'First Name', name: 'first_name', type: 'text', required: true },
+  { label: 'Last Name', name: 'last_name', type: 'text', required: true },
+  { label: 'Email', name: 'email', type: 'email', required: true },
+  { label: 'Password', name: 'password', type: 'password', required: true },
+  { label: 'Phone', name: 'phone', type: 'tel', required: true },
   // { label: 'Company', name: 'company', type: 'text' },
 ]
 

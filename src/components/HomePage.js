@@ -11,7 +11,7 @@ import {
 } from '../slices/geolocationSlice'
 import useGeolocation from '../packages/useGeolocation'
 import Background from './Background'
-import HomeOrderType from './HomeOrderType'
+import OrderType from './OrderType'
 
 const HomePage = () => {
   const history = useHistory()
@@ -43,7 +43,7 @@ const HomePage = () => {
   return (
     <div className="content">
       <Background imageUrl={homeConfig.background} />
-      <HomeOrderType />
+      <OrderType />
     </div>
   )
 }

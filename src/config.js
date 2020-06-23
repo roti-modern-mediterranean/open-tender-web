@@ -2,6 +2,7 @@ export const defaultConfig = {
   brand: {
     logo: 'http://s3.amazonaws.com/betterboh/u/img/local/2/1589984577_logo.png',
     title: 'Open Tender',
+    description: 'An open platform for restaurant innovation',
   },
   notFound: {
     title: 'Page Not Found',
@@ -74,10 +75,19 @@ export const defaultConfig = {
     title: 'How can we help you today?',
     subtitle: "Let's get started, shall we?",
     content: 'Select an order type from the options below.',
+    // orderTypes: {
+    //   pickup: true,
+    //   outpost: true,
+    //   delivery: true,
+    //   catering: true,
+    //   merch: false,
+    // },
     buttons: {
-      pickup: 'Order for Pickup',
+      pickup: 'Order for Pickup at a restaurant',
+      outpost: 'Order for Pickup at your building',
       delivery: 'Order for Delivery',
       catering: 'Order Catering',
+      merch: null,
     },
   },
   catering: {
