@@ -1,3 +1,5 @@
+import { menuServiceTypeMap } from './constants'
+
 export const displayPrice = (price) => {
   return parseFloat(price).toFixed(2)
 }
@@ -596,7 +598,9 @@ export const prepareOrder = (data) => {
   const requestedIso = !data.requestedAt ? 'asap' : data.requestedAt
   const order = {
     revenue_center_id: data.revenueCenterId || null,
-    service_type: data.serviceType || 'PICKUP',
+    service_type: data.serviceType
+      ? menuServiceTypeMap[data.serviceType]
+      : 'PICKUP',
     requested_at: requestedIso,
     cart: data.cart ? makeSimpleCart(data.cart) : [],
   }

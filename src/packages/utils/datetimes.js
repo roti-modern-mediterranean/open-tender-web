@@ -1,6 +1,7 @@
 import { parseISO, add } from 'date-fns'
 import { format, toDate, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz'
 import { isEmpty } from './helpers'
+import { menuServiceTypeMap } from './constants'
 
 /* CONSTANTS */
 
@@ -33,6 +34,24 @@ export const weekdayOptions = weekdays.map((weekday) => ({
   value: weekday.toUpperCase(),
   name: weekday,
 }))
+
+export const makeWeekday = (date = new Date()) => {
+  return format(date, 'EEEE').toUpperCase()
+}
+
+export const dateForWeekday = (weekday) => {
+  const currentWeekday = makeWeekday()
+  const currentIndex = weekdaysUpper.findIndex((i) => i === currentWeekday)
+  const index = weekdaysUpper.findIndex((i) => i === weekday.toUpperCase())
+  const offset = index - currentIndex + (index >= currentIndex ? 0 : 7)
+  return add(new Date(), { days: offset })
+}
+
+export const weekdayAndTimeToDate = (weekday, timeStr) => {
+  const date = dateForWeekday(weekday)
+  const [hours, minutes] = timeStr.split(':').map((i) => parseInt(i))
+  return setTimeForDate(date, hours, minutes)
+}
 
 /* HELPERS */
 
@@ -131,7 +150,8 @@ export const makeEstimatedTime = (
   )
     return null
   const { first_times } = revenueCenter.settings
-  const firstTime = first_times[serviceType]
+  const menuServiceType = menuServiceTypeMap[serviceType]
+  const firstTime = first_times[menuServiceType]
   if (firstTime.date === todayDate()) {
     return `around ${firstTime.time}`
   } else if (firstTime.date === tomorrowDate()) {
@@ -187,19 +207,28 @@ export const time24ToMinutes = (str) => {
   return parseInt(hours) * 60 + parseInt(minutes)
 }
 
+export const setTimeForDate = (date, hours, minutes, seconds = 0) => {
+  date.setHours(hours)
+  date.setMinutes(minutes)
+  date.setSeconds(seconds)
+  date.setMilliseconds(0)
+  return date
+}
+
 export const minutesToDate = (minutes) => {
   const hours = Math.floor(minutes / 60)
   const mins = minutes % 60
-  const d = new Date()
-  d.setHours(hours)
-  d.setMinutes(mins)
-  d.setSeconds(0)
-  return d
+  return setTimeForDate(new Date(), hours, mins)
 }
 
 export const time24ToDate = (str) => {
   const minutes = time24ToMinutes(str)
   return minutesToDate(minutes)
+}
+
+export const time24ToDateStr = (str, fmt = TIME) => {
+  const minutes = time24ToMinutes(str)
+  return format(minutesToDate(minutes), fmt)
 }
 
 export const minutesToDates = (minutes) => {
@@ -273,19 +302,48 @@ export const makeDatepickerArgs = (
   return { excludeTimes, isClosed, updatedDate, minDate, maxDate }
 }
 
+export const makeOrderTimes = (orderTimes, tz) => {
+  const currentDate = new Date()
+  const withDates = orderTimes.map((i) => {
+    const { weekday, time } = i.order_by
+    let orderByDate = weekdayAndTimeToDate(weekday, time)
+    let startDate = weekdayAndTimeToDate(i.weekday, i.start_time)
+    // if (orderByDate < currentDate || startDate < currentDate) {
+    //   startDate = add(startDate, { days: 7 })
+    // }
+    if (orderByDate < currentDate) {
+      orderByDate = add(orderByDate, { days: 7 })
+    }
+    if (startDate < orderByDate) {
+      startDate = add(startDate, { days: 7 })
+    }
+    const orderBy = { ...i.order_by, date: orderByDate }
+    return {
+      ...i,
+      date: startDate,
+      iso: dateToIso(startDate, tz),
+      order_by: orderBy,
+    }
+  })
+  return withDates.sort((a, b) => a.date - b.date)
+}
+
 export const makeFirstTime = (
-  firstTimes,
+  settings,
   tz,
   serviceType,
   revenueCenterType,
   requestedAt
 ) => {
-  if (!firstTimes || isEmpty(firstTimes)) {
-    return null
-  } else if (!firstTimes[serviceType]) {
+  const { first_times, order_times } = settings
+  if (!first_times || isEmpty(first_times)) {
+    if (!order_times) return null
+    const orderTimes = makeOrderTimes(order_times[serviceType], tz)
+    return orderTimes[0].iso
+  } else if (!first_times[serviceType]) {
     return null
   }
-  const firstTime = firstTimes[serviceType]
+  const firstTime = first_times[serviceType]
   const firstDate = isoToDate(firstTime.utc, tz)
   const hasAsap = firstTime.date === todayDate() && revenueCenterType === 'OLO'
   if (requestedAt === 'asap' && hasAsap) {
@@ -308,25 +366,42 @@ export const makeFirstRequestedAt = (
   const { timezone, settings, revenue_center_type } = revenueCenter
   const tz = timezoneMap[timezone]
   requestedAt = requestedAt || (revenue_center_type === 'OLO' ? 'asap' : null)
+  const menuServiceType = menuServiceTypeMap[serviceType]
   return makeFirstTime(
-    settings.first_times,
+    settings,
     tz,
-    serviceType,
+    menuServiceType,
     revenue_center_type,
     requestedAt
   )
 }
 
 export const makeFirstTimes = (revenueCenter, serviceType, requestedAt) => {
-  const { timezone, settings, revenue_center_type: rcType } = revenueCenter
-  const { first_times: ft } = settings
+  const {
+    timezone,
+    settings,
+    revenue_center_type: revenueCenterType,
+  } = revenueCenter
+  const menuServiceType = menuServiceTypeMap[serviceType]
   const tz = timezoneMap[timezone]
-  const otherServiceType = serviceType === 'PICKUP' ? 'DELIVERY' : 'PICKUP'
-  const current = makeFirstTime(ft, tz, serviceType, rcType, requestedAt)
-  const other = makeFirstTime(ft, tz, otherServiceType, rcType, requestedAt)
+  const otherServiceType = menuServiceType === 'PICKUP' ? 'DELIVERY' : 'PICKUP'
+  const current = makeFirstTime(
+    settings,
+    tz,
+    menuServiceType,
+    revenueCenterType,
+    requestedAt
+  )
+  const other = makeFirstTime(
+    settings,
+    tz,
+    otherServiceType,
+    revenueCenterType,
+    requestedAt
+  )
   if (!current && !other) return null
   return [
-    current ? { serviceType: serviceType, requestedAt: current } : null,
+    current ? { serviceType: menuServiceType, requestedAt: current } : null,
     other ? { serviceType: otherServiceType, requestedAt: other } : null,
   ]
   // return { [serviceType]: current, [otherServiceType]: other }

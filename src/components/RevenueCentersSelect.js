@@ -25,7 +25,6 @@ import {
 } from '../packages/utils/maps'
 import RevenueCenter from './RevenueCenter'
 import BarLoader from 'react-spinners/BarLoader'
-import { isString } from '../packages/utils/helpers'
 
 const RevenueCentersSelect = ({
   setCenter,

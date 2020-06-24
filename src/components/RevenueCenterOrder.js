@@ -30,7 +30,7 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
   const { serviceType } = useSelector(selectOrder)
-  const firstTime = firstTimes[serviceType]
+  const firstTime = firstTimes ? firstTimes[serviceType] : null
   const statusMsg = statusMessages[revenueCenter.status]
   const orderMsg =
     !statusMsg && firstTime ? makeOrderMsg(firstTime, tz, serviceType) : null

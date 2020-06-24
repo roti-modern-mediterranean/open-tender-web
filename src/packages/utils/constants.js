@@ -4,6 +4,12 @@ export const serviceTypeNamesMap = {
   OUTPOST: 'Outpost',
 }
 
+export const menuServiceTypeMap = {
+  PICKUP: 'PICKUP',
+  OUTPOST: 'PICKUP',
+  DELIVERY: 'DELIVERY',
+}
+
 export const orderTypeNamesMap = {
   OLO: 'Regular',
   CATERING: 'Catering',

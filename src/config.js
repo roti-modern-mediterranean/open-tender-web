@@ -75,20 +75,35 @@ export const defaultConfig = {
     title: 'How can we help you today?',
     subtitle: "Let's get started, shall we?",
     content: 'Select an order type from the options below.',
-    // orderTypes: {
-    //   pickup: true,
-    //   outpost: true,
-    //   delivery: true,
-    //   catering: true,
-    //   merch: false,
+    buttons: [
+      {
+        type: 'outpost',
+        title: 'Order for Outpost',
+        subtitle: 'Dropoff at your building or office',
+      },
+      {
+        type: 'pickup',
+        title: 'Order for Pickup',
+        subtitle: 'Pickup at a restaurant',
+      },
+      {
+        type: 'delivery',
+        title: 'Order for Delivery',
+        subtitle: 'Directly to your address',
+      },
+      {
+        type: 'catering',
+        title: 'Order Catering',
+        subtitle: 'Large group orders via delivery or pikup',
+      },
+    ],
+    // buttons: {
+    //   outpost: 'Order for Outpost',
+    //   pickup: 'Order for Pickup',
+    //   delivery: 'Order for Delivery',
+    //   catering: 'Order Catering',
+    //   merch: null,
     // },
-    buttons: {
-      pickup: 'Order for Pickup at a restaurant',
-      outpost: 'Order for Pickup at your building',
-      delivery: 'Order for Delivery',
-      catering: 'Order Catering',
-      merch: null,
-    },
   },
   catering: {
     // background:

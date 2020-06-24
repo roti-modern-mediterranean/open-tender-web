@@ -61,9 +61,8 @@ export const refreshRevenueCenter = createAsyncThunk(
       const firstTimes = makeFirstTimes(revenueCenter, serviceType, requestedAt)
       const { status } = revenueCenter
       if (!firstTimes || status !== 'OPEN') {
-        thunkAPI.dispatch(
-          openModal({ type: 'closed', args: { status, preventClose: true } })
-        )
+        const args = { type: 'closed', args: { status, preventClose: true } }
+        thunkAPI.dispatch(openModal(args))
       } else {
         const args = {
           type: 'adjustRequestedAt',
@@ -99,11 +98,14 @@ export const editOrder = createAsyncThunk(
       thunkAPI.dispatch(updateForm(form))
       thunkAPI.dispatch(closeModal())
       thunkAPI.dispatch(toggleSidebar())
+      const orderServiceType = revenueCenter.is_outpost
+        ? 'OUTPOST'
+        : serviceType
       // thunkAPI.dispatch(openModal({ type: 'editOrder' }))
       return {
         orderId,
         orderType,
-        serviceType,
+        serviceType: orderServiceType,
         revenueCenter,
         requestedAt,
         address,
@@ -131,6 +133,7 @@ export const reorderPastOrder = createAsyncThunk(
         )
         return null
       } else {
+        thunkAPI.dispatch(resetRevenueCenter())
         const menuItems = await getMenuItems(revenueCenterId, serviceType)
         const { cart, cartCounts } = rehydrateCart(menuItems, items)
         thunkAPI.dispatch(setMenuItems(menuItems))

@@ -19,6 +19,7 @@ import {
   ButtonRevenueCenter,
   ButtonRequestedAt,
   ButtonServiceType,
+  ButtonStartOver,
 } from '../packages'
 import HeaderLogo from './HeaderLogo'
 import { serviceTypeNamesMap } from '../packages/utils/constants'
@@ -45,6 +46,7 @@ const Header = () => {
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
   if (isCheckout) return null
+  const isHome = pathname === '/'
   const isMenu = pathname.includes('menu')
   const isAccount = pathname.includes('account')
   const classes = makeClasses(pathname)
@@ -68,6 +70,14 @@ const Header = () => {
   const handleLogout = (evt) => {
     evt.preventDefault()
     dispatch(logoutCustomer(auth.access_token))
+    evt.target.blur()
+  }
+
+  const handleStartOver = (evt) => {
+    evt.preventDefault()
+    dispatch(resetOrderType())
+    dispatch(resetCheckout())
+    history.push(`/`)
     evt.target.blur()
   }
 
@@ -122,7 +132,11 @@ const Header = () => {
     >
       <div className="header__nav">
         <div className="header__logo">
-          <HeaderLogo />
+          {isHome ? (
+            <HeaderLogo />
+          ) : (
+            <ButtonStartOver onClick={handleStartOver} classes="btn--header" />
+          )}
         </div>
       </div>
       <div className="header__actions">

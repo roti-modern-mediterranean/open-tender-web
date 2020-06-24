@@ -12,6 +12,7 @@ import {
 import SidebarOverlay from './SidebarOverlay'
 import { Button } from '../packages'
 import Cart from './Cart'
+import SidebarClose from './SidebarClose'
 
 const Sidebar = () => {
   const dispatch = useDispatch()
@@ -46,6 +47,7 @@ const Sidebar = () => {
       <SidebarOverlay />
       <div className={classes}>
         <div className="sidebar__container">
+          {isOpen && <SidebarClose />}
           <div className="sidebar__header bg-color">
             <h2 className="sidebar__title ot-font-size-h3">
               {orderId ? `Editing Order ${orderId}` : 'Your Order'}
@@ -85,7 +87,7 @@ const Sidebar = () => {
                 classes="btn btn--big btn--highlight"
                 disabled={cartCount === 0 || !canCheckout}
               >
-                {isCheckout ? 'Close Sidebar' : 'Checkout'}
+                {isCheckout ? 'Checkout' : 'Checkout'}
               </Button>
             </div>
           </div>

@@ -16,6 +16,7 @@ const RevenueCenter = ({ revenueCenter, classes = '', showImage, isOrder }) => {
   const hoursDesc = hours.description ? stripTags(hours.description) : null
   classes = `rc bg-color border-radius ${classes}`
   const hoursDescIcon = is_outpost ? 'AlertCircle' : 'Clock'
+  const hoursDescClass = is_outpost ? 'ot-alert-color' : 'secondary-color'
 
   const distance =
     revenueCenter.distance !== null && revenueCenter.distance !== undefined
@@ -60,7 +61,7 @@ const RevenueCenter = ({ revenueCenter, classes = '', showImage, isOrder }) => {
           {hoursDesc && (
             <RevenueCenterAction
               icon={hoursDescIcon}
-              iconClass="ot-alert-color"
+              iconClass={hoursDescClass}
               text={hoursDesc}
               arrow={null}
             />

@@ -17,6 +17,7 @@ import ButtonMenu from './ButtonMenu'
 import ButtonRequestedAt from './ButtonRequestedAt'
 import ButtonServiceType from './ButtonServiceType'
 import ButtonSignUp from './ButtonSignUp'
+import ButtonStartOver from './ButtonStartOver'
 import CartItem from './CartItem'
 import CartErrors from './CartErrors'
 import Check from './Check'
@@ -71,6 +72,7 @@ export {
   ButtonRequestedAt,
   ButtonServiceType,
   ButtonSignUp,
+  ButtonStartOver,
   CartItem,
   CartErrors,
   Check,

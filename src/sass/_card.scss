@@ -39,9 +39,24 @@
 
   &__button {
     display: flex;
+    // align-items: center;
+    // height: 6.8rem;
     padding: 2rem 2.5rem;
     border-radius: 0.5rem;
     margin: 0 0 1rem;
-    font-size: 1.8rem;
+
+    &__container {
+      display: block;
+      text-align: left;
+
+      span {
+        display: block;
+      }
+    }
+
+    &__title {
+      font-size: 1.8rem;
+      // margin-bottom: 0.2rem;
+    }
   }
 }

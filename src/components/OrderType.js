@@ -39,6 +39,14 @@ const OrderType = () => {
     evt.target.blur()
   }
 
+  const handler = {
+    outpost: handleOutpost,
+    pickup: handlePickup,
+    delivery: handleDelivery,
+    catering: handleCatering,
+    merch: handleMerch,
+  }
+
   return (
     <div className="card overlay border-radius slide-up">
       <div className="card__header">
@@ -47,17 +55,9 @@ const OrderType = () => {
         <p className="secondary-color">{content}</p>
       </div>
       <div className="card__content">
-        <OrderTypeButton orderType={buttons.pickup} handler={handlePickup} />
-        <OrderTypeButton orderType={buttons.outpost} handler={handleOutpost} />
-        <OrderTypeButton
-          orderType={buttons.delivery}
-          handler={handleDelivery}
-        />
-        <OrderTypeButton
-          orderType={buttons.catering}
-          handler={handleCatering}
-        />
-        <OrderTypeButton orderType={buttons.merch} handler={handleMerch} />
+        {buttons.map((i) => (
+          <OrderTypeButton key={i.type} {...i} handler={handler[i.type]} />
+        ))}
       </div>
     </div>
   )

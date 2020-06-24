@@ -102,21 +102,22 @@ const OrderCard = ({ order, isLast }) => {
         </div>
         <div className="order-card__footer">
           <div className="order-card__footer__buttons">
-            {order.is_editable ? (
+            {order.is_editable && (
               <Button
                 text="Edit"
                 icon="Edit"
                 onClick={handleEdit}
                 classes="btn--small font-size-small"
               />
-            ) : (
-              <Button
-                text="Reorder"
-                icon="RefreshCw"
-                onClick={handleReorder}
-                classes="btn--small font-size-small"
-              />
             )}
+            <Button
+              text="Reorder"
+              icon="RefreshCw"
+              onClick={handleReorder}
+              classes={`btn--small font-size-small ${
+                order.is_editable ? 'btn--secondary' : ''
+              }`}
+            />
             <Button
               text={`Details ${!isUpcoming ? '/ Rate' : ''}`}
               icon="FileText"
