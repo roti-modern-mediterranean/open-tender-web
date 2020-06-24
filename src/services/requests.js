@@ -4,8 +4,14 @@ export const getConfig = () => {
   return request(`/config`)
 }
 
-export const getRevenueCenters = (revenue_center_type, lat, lng) => {
+export const getRevenueCenters = (
+  revenue_center_type,
+  is_outpost,
+  lat,
+  lng
+) => {
   let params = `revenue_center_type=${revenue_center_type}`
+  if (is_outpost) params += '&is_outpost=true'
   if (lat && lng) params += `&lat=${lat}&lng=${lng}`
   return request(`/revenue-centers?${params}`)
 }

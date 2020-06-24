@@ -54,9 +54,11 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
 
   return (
     <div className="rc__order">
-      <div className="rc__order__message">
-        <p className={`font-size-small ${msgClass}`}>{msg}</p>
-      </div>
+      {msg && (
+        <div className="rc__order__message">
+          <p className={`font-size-small ${msgClass}`}>{msg}</p>
+        </div>
+      )}
       {isOrder ? (
         <Button
           text="Order Here"

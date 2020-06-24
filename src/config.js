@@ -120,6 +120,11 @@ export const defaultConfig = {
         msg: "This location isn't accepting orders yet, but it will be soon!",
       },
     },
+    locationName: {
+      PICKUP: ['location', 'locations'],
+      OUTPOST: ['outpost', 'outposts'],
+      DELIVERY: ['location', 'locations'],
+    },
     maxDistance: 100,
     autoSelect: {
       OLO: {

@@ -11,11 +11,16 @@ const initialState = {
 
 export const fetchRevenueCenters = createAsyncThunk(
   'revenueCenters/getRevenueCenters',
-  async ({ revenue_center_type, lat, lng }, thunkAPI) => {
+  async ({ revenue_center_type, is_outpost, lat, lng }, thunkAPI) => {
     try {
       if (lat) lat = parseFloat(lat).toFixed(7)
       if (lng) lng = parseFloat(lng).toFixed(7)
-      const response = await getRevenueCenters(revenue_center_type, lat, lng)
+      const response = await getRevenueCenters(
+        revenue_center_type,
+        is_outpost,
+        lat,
+        lng
+      )
       let revenueCenters = []
       if (lat && lng) {
         const address = { lat: lat, lng: lng }

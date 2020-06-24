@@ -1,40 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import propTypes from 'prop-types'
-import { iconMap } from '../packages/icons'
 import { stripTags } from '../packages/utils/helpers'
 import RevenueCenterOrder from './RevenueCenterOrder'
+import RevenueCenterAction from './RevenueCenterAction'
 
 const placeholder2 =
   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg'
 
-const RevenueCenterAction = ({ icon, text, arrow = 'ArrowRight' }) => {
-  return (
-    <div className="rc__action">
-      <div className="rc__icon secondary-color">{iconMap[icon]}</div>
-      <div className="rc__text">
-        <p className="secondary-color font-size-small">{text}</p>
-      </div>
-      <div className="rc__arrow secondary-color">{iconMap[arrow]}</div>
-    </div>
-  )
-}
-
 const RevenueCenter = ({ revenueCenter, classes = '', showImage, isOrder }) => {
-  const [showHours, setShowHours] = useState(false)
-
-  const { address, images, hours } = revenueCenter
+  const { address, images, hours, is_outpost } = revenueCenter
   let smallImage = images.find((i) => i.type === 'SMALL_IMAGE')
   smallImage = smallImage ? smallImage.url : null
   const bgStyle = { backgroundImage: `url(${smallImage || placeholder2}` }
   const phoneUrl = address.phone ? `tel:${address.phone}` : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
   classes = `rc bg-color border-radius ${classes}`
-
-  const toggleHours = (evt) => {
-    evt.preventDefault()
-    setShowHours(!showHours)
-    evt.target.blur()
-  }
+  const hoursDescIcon = is_outpost ? 'AlertCircle' : 'Clock'
 
   const distance =
     revenueCenter.distance !== null && revenueCenter.distance !== undefined
@@ -77,9 +58,12 @@ const RevenueCenter = ({ revenueCenter, classes = '', showImage, isOrder }) => {
             </a>
           )}
           {hoursDesc && (
-            <button onClick={toggleHours}>
-              <RevenueCenterAction icon="Clock" text={hoursDesc} />
-            </button>
+            <RevenueCenterAction
+              icon={hoursDescIcon}
+              iconClass="ot-alert-color"
+              text={hoursDesc}
+              arrow={null}
+            />
           )}
         </div>
         <RevenueCenterOrder revenueCenter={revenueCenter} isOrder={isOrder} />

@@ -1,4 +1,6 @@
 import inside from 'point-in-polygon'
+import { MAX_DISTANCE } from './constants'
+import { isString } from './helpers'
 
 // seee example Google Maps Place at bottom of file
 const makeComponents = (components) => {
@@ -92,6 +94,150 @@ export const sortRevenueCenters = (revenueCenters, isDelivery = false) => {
     .filter((i) => !i.inZone)
     .sort((a, b) => a.distance - b.distance)
   return [...inZoneWithPriority, ...inZoneWithoutPriority, ...outOfZone]
+}
+
+export const calcMinDistance = (revenueCenters, maxDistance = MAX_DISTANCE) => {
+  const withDistance = revenueCenters
+    .filter((i) => i.distance !== null)
+    .map((i) => i.distance)
+  return withDistance ? Math.min(...withDistance) : maxDistance
+}
+
+export const makePickupRevenueCenters = (
+  revenueCenters,
+  maxDistance = MAX_DISTANCE
+) => {
+  const hasPickup = revenueCenters
+    .filter((i) => i.settings.service_types.includes('PICKUP'))
+    .filter((i) => i.distance === null || i.distance < maxDistance)
+  return sortRevenueCenters(hasPickup)
+}
+
+export const makeDeliveryRevenueCenters = (revenueCenters) => {
+  const hasDelivery = revenueCenters.filter((i) =>
+    i.settings.service_types.includes('DELIVERY')
+  )
+  const sorted = sortRevenueCenters(hasDelivery, true)
+  return sorted.filter((i) => i.inZone)
+}
+
+export const makePickupMesssaging = (
+  address,
+  geoLatLng,
+  count,
+  minDistance,
+  maxDistance = MAX_DISTANCE,
+  messages = LOCATIONS_MESSAGES
+) => {
+  if (address) {
+    if (minDistance >= maxDistance) {
+      return messages.PICKUP.addressFar
+    } else {
+      return {
+        title: `${count} ${messages.PICKUP.address.title}`,
+        msg: messages.PICKUP.address.msg,
+      }
+    }
+  } else if (geoLatLng) {
+    if (minDistance >= maxDistance) {
+      return messages.PICKUP.geoFar
+    } else {
+      return {
+        title: `${count} ${messages.PICKUP.geo.title}`,
+        msg: messages.PICKUP.geo.msg,
+      }
+    }
+  } else {
+    return messages.PICKUP.default
+  }
+}
+
+export const makeDeliveryMesssaging = (
+  address,
+  count,
+  messages = LOCATIONS_MESSAGES
+) => {
+  if (!address) {
+    return messages.DELIVERY.default
+  } else if (!address.street) {
+    return messages.DELIVERY.noStreet
+  } else {
+    if (count) {
+      const locationMsg = count > 1 ? 'locations deliver' : 'location delivers'
+      return {
+        title: messages.DELIVERY.hasDelivery.title,
+        msg: `${count} ${locationMsg} to your address.`,
+        error: null,
+      }
+    } else {
+      return messages.DELIVERY.noDelivery
+    }
+  }
+}
+
+export const LOCATIONS_MESSAGES = {
+  PICKUP: {
+    default: {
+      title: 'Please choose a location',
+      msg: 'Or enter a zip code to find the location nearest you.',
+    },
+    address: {
+      title: 'locations near you',
+      msg: 'Please choose a location below.',
+    },
+    addressFar: {
+      title: "Looks like we don't have any locations in your area",
+      msg:
+        'Sorry about that. Please enter a different address or head back and choose a different order type.',
+    },
+    geo: {
+      title: 'locations in your area',
+      msg: 'Please enter a zip code or address for a more accurate result.',
+    },
+    geoFar: {
+      title: "Looks like we don't have any locations in your area",
+      msg:
+        'Please enter a zip code or address if you live in a different area.',
+    },
+  },
+  DELIVERY: {
+    default: {
+      title: "Let's find the nearest location",
+      msg: 'Please enter your address below.',
+      error: null,
+    },
+    noStreet: {
+      title: 'Please enter a street address',
+      msg: '',
+      error:
+        'A full address with street number is required for delivery orders.',
+    },
+    hasDelivery: {
+      title: 'Delivery is available!',
+      msg: 'Please choose a location below.',
+      error: null,
+    },
+    noDelivery: {
+      title: "Delivery isn't available in your area",
+      msg:
+        "We're really sorry about that. Please enter a different address or head back and start a pickup order.",
+      error: null,
+    },
+  },
+}
+
+export const renameLocation = (str, names) => {
+  if (!isString(str)) return str
+  const [singular, plural] = names
+  return str
+    .replace('1 locations', '1 location')
+    .replace('locations', plural)
+    .replace('location', singular)
+    .replace(' a a', ' an a')
+    .replace(' a e', ' an e')
+    .replace(' a i', ' an i')
+    .replace(' a o', ' an o')
+    .replace(' a u', ' an u')
 }
 
 const makeMapStyles = ({

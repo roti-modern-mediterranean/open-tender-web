@@ -150,7 +150,6 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (!isComplete && !isEqual(orderValidate, prevOrderValidate)) {
-      // console.log(JSON.stringify(form, null, 2))
       dispatch(validateOrder(orderValidate))
     }
   }, [dispatch, orderValidate, prevOrderValidate, isComplete])

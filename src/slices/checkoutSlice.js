@@ -84,11 +84,8 @@ export const validateOrder = createAsyncThunk(
   'checkout/validateOrder',
   async (order, thunkAPI) => {
     try {
-      // console.log(JSON.stringify(order, null, 2))
       const check = await postOrderValidate(order)
-      // console.log(JSON.stringify(check, null, 2))
       const errMessages = handleCheckoutErrors({ params: check.errors })
-      // console.log(errMessages)
       let errors = {}
       const keys = Object.keys(errMessages)
       const args = makeRefreshArgs(order)
@@ -101,7 +98,6 @@ export const validateOrder = createAsyncThunk(
       }
       return { check, errors }
     } catch (err) {
-      // console.log(JSON.stringify(err, null, 2))
       return thunkAPI.rejectWithValue(err)
     }
   }
@@ -147,16 +143,12 @@ export const submitOrder = createAsyncThunk(
     const preparedOrder = prepareOrder(data)
     // end order assembly
     try {
-      // console.log(JSON.stringify(order, null, 2))
       const response = await postOrder(preparedOrder)
       thunkAPI.dispatch(closeModal())
       return response
     } catch (err) {
-      // console.log(JSON.stringify(err, null, 2))
-      // const response = thunkAPI.rejectWithValue(err)
       thunkAPI.dispatch(closeModal())
       const errors = handleCheckoutErrors(err)
-      // console.log(JSON.stringify(errors, null, 2))
       const keys = Object.keys(errors)
       const args = makeRefreshArgs(preparedOrder)
       if (contains(keys, refreshKeys)) {

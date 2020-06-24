@@ -3,7 +3,6 @@ import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { GoogleMapsAutocomplete } from '../packages'
-import { MAX_DISTANCE, LOCATIONS_MESSAGES } from '../packages/utils/constants'
 import { selectConfig } from '../slices/configSlice'
 import {
   setAddress,
@@ -16,86 +15,17 @@ import {
   selectRevenueCenters,
 } from '../slices/revenueCentersSlice'
 import { selectGeoLatLng } from '../slices/geolocationSlice'
-import { sortRevenueCenters } from '../packages/utils/maps'
+import {
+  calcMinDistance,
+  makePickupRevenueCenters,
+  makeDeliveryRevenueCenters,
+  makePickupMesssaging,
+  makeDeliveryMesssaging,
+  renameLocation,
+} from '../packages/utils/maps'
 import RevenueCenter from './RevenueCenter'
 import BarLoader from 'react-spinners/BarLoader'
-
-const calcMinDistance = (revenueCenters, maxDistance = MAX_DISTANCE) => {
-  const withDistance = revenueCenters
-    .filter((i) => i.distance !== null)
-    .map((i) => i.distance)
-  return withDistance ? Math.min(...withDistance) : maxDistance
-}
-
-const makePickupRevenueCenters = (revenueCenters) => {
-  const hasPickup = revenueCenters.filter((i) =>
-    i.settings.service_types.includes('PICKUP')
-  )
-  return sortRevenueCenters(hasPickup)
-}
-
-const makePickupMesssaging = (
-  address,
-  geoLatLng,
-  count,
-  minDistance,
-  maxDistance = MAX_DISTANCE,
-  messages = LOCATIONS_MESSAGES
-) => {
-  if (address) {
-    if (minDistance >= maxDistance) {
-      return messages.PICKUP.addressFar
-    } else {
-      return {
-        title: `${count} ${messages.PICKUP.address.title}`,
-        msg: messages.PICKUP.address.msg,
-      }
-    }
-  } else if (geoLatLng) {
-    if (minDistance >= maxDistance) {
-      return messages.PICKUP.geoFar
-    } else {
-      return {
-        title: `${count} ${messages.PICKUP.geo.title}`,
-        msg: messages.PICKUP.geo.msg,
-      }
-    }
-  } else {
-    return messages.PICKUP.default
-  }
-}
-
-const makeDeliveryRevenueCenters = (revenueCenters) => {
-  const hasDelivery = revenueCenters.filter((i) =>
-    i.settings.service_types.includes('DELIVERY')
-  )
-  const sorted = sortRevenueCenters(hasDelivery, true)
-  return sorted.filter((i) => i.inZone)
-}
-
-const makeDeliveryMesssaging = (
-  address,
-  count,
-  messages = LOCATIONS_MESSAGES
-) => {
-  if (!address) {
-    return messages.DELIVERY.default
-  } else if (!address.street) {
-    return messages.DELIVERY.noStreet
-  } else {
-    if (count) {
-      const restaurantMsg =
-        count > 1 ? 'restaurants deliver' : 'restaurant delivers'
-      return {
-        title: messages.DELIVERY.hasDelivery.title,
-        msg: `${count} ${restaurantMsg} to your address.`,
-        error: null,
-      }
-    } else {
-      return messages.DELIVERY.noDelivery
-    }
-  }
-}
+import { isString } from '../packages/utils/helpers'
 
 const RevenueCentersSelect = ({
   setCenter,
@@ -123,10 +53,11 @@ const RevenueCentersSelect = ({
   useEffect(() => {
     if (orderType) {
       let params = { revenue_center_type: orderType }
+      if (serviceType === 'OUTPOST') params = { ...params, is_outpost: true }
       if (coords) params = { ...params, lat: coords.lat, lng: coords.lng }
       dispatch(fetchRevenueCenters(params))
     }
-  }, [orderType, coords, dispatch])
+  }, [orderType, serviceType, coords, dispatch])
 
   const autoRouteCallack = useCallback(
     (revenueCenter) => {
@@ -138,7 +69,7 @@ const RevenueCentersSelect = ({
   )
 
   useEffect(() => {
-    if (serviceType === 'PICKUP') {
+    if (serviceType === 'PICKUP' || serviceType === 'OUTPOST') {
       const pickupRevenueCenters = makePickupRevenueCenters(revenueCenters)
       const minDistance = calcMinDistance(pickupRevenueCenters)
       const count = pickupRevenueCenters.length
@@ -155,7 +86,7 @@ const RevenueCentersSelect = ({
         setTitle(title)
         setMsg(msg)
         setError(null)
-        setDisplayedRevenueCenters(makePickupRevenueCenters(revenueCenters))
+        setDisplayedRevenueCenters(pickupRevenueCenters)
       }
     } else {
       const deliveryRevenueCenters = makeDeliveryRevenueCenters(revenueCenters)
@@ -180,14 +111,19 @@ const RevenueCentersSelect = ({
     autoRouteCallack,
   ])
 
+  const names = rcConfig.locationName[serviceType]
+  const renamedTitle = renameLocation(title, names)
+  const renamedError = renameLocation(error, names)
+  const renamedMsg = renameLocation(msg, names)
+
   return (
     <div className="card map__card overlay border-radius slide-up ot-box-shadow">
       <div className="card__header">
-        <h1 className="ot-font-size-h3">{title}</h1>
+        <h1 className="ot-font-size-h3">{renamedTitle}</h1>
         {error ? (
-          <p className="ot-error-color">{error}</p>
+          <p className="ot-error-color">{renamedError}</p>
         ) : (
-          <p className="secondary-color">{msg}</p>
+          <p className="secondary-color">{renamedMsg}</p>
         )}
       </div>
       <div className="card__content">
