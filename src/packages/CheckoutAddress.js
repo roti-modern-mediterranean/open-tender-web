@@ -100,6 +100,7 @@ const CheckoutAddress = () => {
             address={order.address}
             onClick={updateRevenueCenter}
             classes="btn--header"
+            disabled={order.revenueCenter.is_outpost}
           />
         </CheckoutLineItem>
         {fields.map((field) => {

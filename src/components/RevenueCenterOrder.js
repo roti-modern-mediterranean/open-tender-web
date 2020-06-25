@@ -20,12 +20,13 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
   const msg = makeRevenueCenterMsg(revenueCenter, serviceType, statusMessages)
+  const { name, slug, revenue_center_type, is_outpost } = revenueCenter
 
   const handleOrder = (evt) => {
     evt.preventDefault()
     dispatch(setRevenueCenter(revenueCenter))
-    const rcType = revenueCenter.revenue_center_type.toLowerCase()
-    history.push(`/menu/${revenueCenter.slug}-${rcType}`)
+    const rcType = revenue_center_type.toLowerCase()
+    history.push(`/menu/${slug}-${rcType}`)
     evt.target.blur()
   }
 
@@ -44,10 +45,12 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {
       )}
       {isLanding ? (
         <RevenueCenterButtons revenueCenter={revenueCenter} />
+      ) : isOrder && is_outpost ? (
+        <RevenueCenterButtons revenueCenter={revenueCenter} />
       ) : isOrder ? (
         <Button
           text="Order Here"
-          ariaLabel={`Order from ${revenueCenter.name}`}
+          ariaLabel={`Order from ${name}`}
           icon="ShoppingBag"
           onClick={handleOrder}
         />

@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import Button from './Button'
 import { makeFullAddress } from './utils/cart'
 
-const ButtonAddress = ({ address, onClick, classes = 'btn' }) => {
+const ButtonAddress = ({ address, onClick, classes = 'btn', disabled }) => {
   if (!address) return null
   const fullAddresss = makeFullAddress(address)
   return (
@@ -13,6 +13,7 @@ const ButtonAddress = ({ address, onClick, classes = 'btn' }) => {
       icon="Navigation"
       classes={classes}
       onClick={onClick}
+      disabled={disabled}
     />
   )
 }
