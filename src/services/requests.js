@@ -1,5 +1,4 @@
 import { request, authRequest } from './request'
-import { menuServiceTypeMap } from '../packages/utils/constants'
 
 export const getConfig = () => {
   return request(`/config`)
@@ -31,14 +30,12 @@ export const getAllergens = () => {
 }
 
 export const getMenu = (revenueCenterId, serviceType, requestedAt) => {
-  const menuServiceType = menuServiceTypeMap[serviceType]
-  const params = `revenue_center_id=${revenueCenterId}&service_type=${menuServiceType}&requested_at=${requestedAt}`
+  const params = `revenue_center_id=${revenueCenterId}&service_type=${serviceType}&requested_at=${requestedAt}`
   return request(`/menus?${params}`)
 }
 
 export const getMenuItems = (revenueCenterId, serviceType) => {
-  const menuServiceType = menuServiceTypeMap[serviceType]
-  const params = `revenue_center_id=${revenueCenterId}&service_type=${menuServiceType}`
+  const params = `revenue_center_id=${revenueCenterId}&service_type=${serviceType}`
   return request(`/menu-items?${params}`)
 }
 

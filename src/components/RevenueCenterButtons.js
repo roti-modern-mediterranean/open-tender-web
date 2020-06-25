@@ -14,23 +14,22 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const {
+    name,
     slug,
     settings,
-    revenue_center_type,
+    revenue_center_type: rcType,
     is_outpost,
     address,
   } = revenueCenter
   const { first_times: ft, order_times: ot } = settings
-  const menuSlug = `/menu/${slug}-${revenue_center_type.toLowerCase()}`
+  const menuSlug = `/menu/${slug}-${rcType.toLowerCase()}`
   const hasPickup = (ft && ft.PICKUP) || (ot && ot.PICKUP)
   const hasDelivery = (ft && ft.DELIVERY) || (ot && ot.DELIVERY)
 
   const handlePickup = (evt) => {
     evt.preventDefault()
-    // const serviceType = is_outpost && ot.PICKUP ? 'OUTPOST' : 'PICKUP'
-    const serviceType = is_outpost ? 'OUTPOST' : 'PICKUP'
     dispatch(setAddress(null))
-    dispatch(setOrderServiceType([revenue_center_type, serviceType]))
+    dispatch(setOrderServiceType([rcType, 'PICKUP', is_outpost]))
     dispatch(setRevenueCenter(revenueCenter))
     history.push(menuSlug)
     evt.target.blur()
@@ -38,7 +37,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
 
   const handleDelivery = (evt) => {
     evt.preventDefault()
-    dispatch(setOrderServiceType([revenue_center_type, 'DELIVERY']))
+    dispatch(setOrderServiceType([rcType, 'DELIVERY', is_outpost]))
     if (is_outpost) {
       dispatch(setAddress(address))
       dispatch(setRevenueCenter(revenueCenter))
@@ -54,8 +53,8 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
     <div className="rc__order">
       {hasPickup && (
         <Button
-          text="Order Pickup"
-          ariaLabel={`Order Pickup from ${revenueCenter.name}`}
+          text={`Order ${hasDelivery ? 'Pickup' : 'Here'}`}
+          ariaLabel={`Order Pickup from ${name}`}
           icon="ShoppingBag"
           onClick={handlePickup}
         />
@@ -63,7 +62,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
       {hasDelivery && (
         <Button
           text="Order Delivery"
-          ariaLabel={`Order Delivery from ${revenueCenter.name}`}
+          ariaLabel={`Order Delivery from ${name}`}
           icon="Truck"
           onClick={handleDelivery}
         />

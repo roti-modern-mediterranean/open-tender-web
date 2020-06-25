@@ -51,11 +51,9 @@ const AccountOrders = () => {
       const { revenue_center_id: revenueCenterId } = revenue_center
       dispatch(fetchMenuItems({ revenueCenterId, serviceType: service_type }))
       if (!cartQuantity) {
-        const orderServiceType = revenue_center.is_outpost
-          ? 'OUTPOST'
-          : service_type
+        const isOutpost = revenue_center.is_outpost
         dispatch(fetchRevenueCenter(revenueCenterId))
-        dispatch(setOrderServiceType([order_type, orderServiceType]))
+        dispatch(setOrderServiceType([order_type, service_type, isOutpost]))
         dispatch(setAddress(address || null))
       }
     }

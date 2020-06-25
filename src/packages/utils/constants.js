@@ -1,13 +1,6 @@
 export const serviceTypeNamesMap = {
   PICKUP: 'Pickup',
   DELIVERY: 'Delivery',
-  OUTPOST: 'Outpost',
-}
-
-export const menuServiceTypeMap = {
-  PICKUP: 'PICKUP',
-  OUTPOST: 'PICKUP',
-  DELIVERY: 'DELIVERY',
 }
 
 export const orderTypeNamesMap = {

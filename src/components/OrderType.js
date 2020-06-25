@@ -9,15 +9,15 @@ const OrderType = () => {
   const { title, subtitle, content, buttons } = homeConfig
   const dispatch = useDispatch()
 
-  const handlePickup = (evt) => {
+  const handleOutpost = (evt) => {
     evt.preventDefault()
-    dispatch(setOrderServiceType(['OLO', 'PICKUP']))
+    dispatch(setOrderServiceType(['OLO', 'PICKUP', true]))
     evt.target.blur()
   }
 
-  const handleOutpost = (evt) => {
+  const handlePickup = (evt) => {
     evt.preventDefault()
-    dispatch(setOrderServiceType(['OLO', 'OUTPOST']))
+    dispatch(setOrderServiceType(['OLO', 'PICKUP']))
     evt.target.blur()
   }
 

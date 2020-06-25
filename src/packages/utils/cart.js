@@ -1,4 +1,4 @@
-import { menuServiceTypeMap, serviceTypeNamesMap } from './constants'
+import { serviceTypeNamesMap } from './constants'
 import {
   timezoneMap,
   makeOrderTimes,
@@ -45,6 +45,16 @@ export const convertStringToArray = (str) => {
     : []
 }
 
+export const makeServiceTypeName = (serviceType, isOutpost, isCatering) => {
+  let serviceTypeName = serviceTypeNamesMap[serviceType]
+  if (isOutpost) {
+    serviceTypeName = `Outpost ${serviceTypeName}`
+  } else if (isCatering) {
+    serviceTypeName = `Catering ${serviceTypeName}`
+  }
+  return serviceTypeName
+}
+
 const makeOrderMsg = (firstTime, orderTime, tz, serviceType) => {
   if (!firstTime && !orderTime) return null
   let firstIso
@@ -67,13 +77,12 @@ export const makeRevenueCenterMsg = (
 ) => {
   const { first_times, order_times } = revenueCenter.settings
   const tz = timezoneMap[revenueCenter.timezone]
-  const menuServiceType = menuServiceTypeMap[serviceType]
-  const firstTime = first_times ? first_times[menuServiceType] : null
-  const orderTime = order_times ? order_times[menuServiceType] : null
+  const firstTime = first_times ? first_times[serviceType] : null
+  const orderTime = order_times ? order_times[serviceType] : null
   const statusMsg = statusMessages[revenueCenter.status]
   const orderMsg =
     !statusMsg && (firstTime || orderTime)
-      ? makeOrderMsg(firstTime, orderTime, tz, menuServiceType)
+      ? makeOrderMsg(firstTime, orderTime, tz, serviceType)
       : null
   const message =
     orderMsg ||
@@ -232,6 +241,7 @@ const rehydrateCustomer = (customer) => {
 }
 
 const rehydrateAddress = (address) => {
+  if (!address) return {}
   return {
     unit: address.unit,
     company: address.company,
@@ -642,9 +652,7 @@ export const prepareOrder = (data) => {
   const requestedIso = !data.requestedAt ? 'asap' : data.requestedAt
   const order = {
     revenue_center_id: data.revenueCenterId || null,
-    service_type: data.serviceType
-      ? menuServiceTypeMap[data.serviceType]
-      : 'PICKUP',
+    service_type: data.serviceType || 'PICKUP',
     requested_at: requestedIso,
     cart: data.cart ? makeSimpleCart(data.cart) : [],
   }

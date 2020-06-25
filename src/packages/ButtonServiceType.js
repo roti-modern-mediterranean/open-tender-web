@@ -4,8 +4,6 @@ import Button from './Button'
 
 const makeIcon = (serviceType) => {
   switch (serviceType) {
-    case 'OUTPOST':
-      return 'MapPin'
     case 'DELIVERY':
       return 'Truck'
     default:

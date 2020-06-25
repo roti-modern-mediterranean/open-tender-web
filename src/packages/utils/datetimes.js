@@ -1,6 +1,5 @@
 import { parseISO, add } from 'date-fns'
 import { format, toDate, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz'
-import { menuServiceTypeMap } from './constants'
 
 /* CONSTANTS */
 
@@ -149,8 +148,7 @@ export const makeEstimatedTime = (
   )
     return null
   const { first_times } = revenueCenter.settings
-  const menuServiceType = menuServiceTypeMap[serviceType]
-  const firstTime = first_times[menuServiceType]
+  const firstTime = first_times[serviceType]
   if (firstTime.date === todayDate()) {
     return `around ${firstTime.time}`
   } else if (firstTime.date === tomorrowDate()) {
@@ -363,11 +361,10 @@ export const makeFirstRequestedAt = (
   const { timezone, settings, revenue_center_type } = revenueCenter
   const tz = timezoneMap[timezone]
   requestedAt = requestedAt || (revenue_center_type === 'OLO' ? 'asap' : null)
-  const menuServiceType = menuServiceTypeMap[serviceType]
   return makeFirstTime(
     settings,
     tz,
-    menuServiceType,
+    serviceType,
     revenue_center_type,
     requestedAt
   )
@@ -379,13 +376,12 @@ export const makeFirstTimes = (revenueCenter, serviceType, requestedAt) => {
     settings,
     revenue_center_type: revenueCenterType,
   } = revenueCenter
-  const menuServiceType = menuServiceTypeMap[serviceType]
   const tz = timezoneMap[timezone]
-  const otherServiceType = menuServiceType === 'PICKUP' ? 'DELIVERY' : 'PICKUP'
+  const otherServiceType = serviceType === 'PICKUP' ? 'DELIVERY' : 'PICKUP'
   const current = makeFirstTime(
     settings,
     tz,
-    menuServiceType,
+    serviceType,
     revenueCenterType,
     requestedAt
   )
@@ -398,7 +394,7 @@ export const makeFirstTimes = (revenueCenter, serviceType, requestedAt) => {
   )
   if (!current && !other) return null
   return [
-    current ? { serviceType: menuServiceType, requestedAt: current } : null,
+    current ? { serviceType: serviceType, requestedAt: current } : null,
     other ? { serviceType: otherServiceType, requestedAt: other } : null,
   ]
   // return { [serviceType]: current, [otherServiceType]: other }

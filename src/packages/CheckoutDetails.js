@@ -14,6 +14,7 @@ import {
 import { serviceTypeNamesMap } from './utils/constants'
 import { FormContext } from './CheckoutForm'
 import { isEmpty } from './utils/helpers'
+import { makeServiceTypeName } from './utils/cart'
 
 const CheckoutDetails = () => {
   const {
@@ -31,12 +32,14 @@ const CheckoutDetails = () => {
   } = useContext(FormContext)
   const [details, setDetails] = useState(form.details)
   const [showTip, setShowTip] = useState(false)
-  const { orderType, serviceType } = order
+  const { orderType, serviceType, isOutpost } = order
   const serviceTypeName = serviceTypeNamesMap[serviceType]
   const isCatering = orderType === 'CATERING'
-  const serviceTypeBtnName = `${
-    isCatering ? 'Catering ' : ''
-  } ${serviceTypeName}`
+  const serviceTypeBtnName = makeServiceTypeName(
+    serviceType,
+    isOutpost,
+    isCatering
+  )
   const allowTaxExempt = check.config.allow_tax_exempt
   const requiredFields = check.config.required.details
   const tipSettings = check.config.gratuity

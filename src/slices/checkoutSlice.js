@@ -6,7 +6,6 @@ import { getDefaultTip, prepareOrder } from '../packages/utils/cart'
 import { isEmpty, contains } from '../packages/utils/helpers'
 import { refreshRevenueCenter } from './orderSlice'
 import { fetchMenu } from './menuSlice'
-import { menuServiceTypeMap } from '../packages/utils/constants'
 // import { getDefaultTip } from '../packages/utils/cart'
 
 const initialState = {
@@ -112,7 +111,6 @@ export const submitOrder = createAsyncThunk(
     // start order assembly
     const { order, checkout } = thunkAPI.getState()
     const { orderId, revenueCenter, serviceType, requestedAt, cart } = order
-    const menuServiceType = menuServiceTypeMap[serviceType]
     const { revenue_center_id: revenueCenterId } = revenueCenter || {}
     const { check, form } = checkout
     const {
@@ -130,7 +128,7 @@ export const submitOrder = createAsyncThunk(
     const data = {
       orderId,
       revenueCenterId,
-      serviceType: menuServiceType,
+      serviceType,
       requestedAt,
       cart,
       customer,

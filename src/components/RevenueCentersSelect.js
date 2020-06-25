@@ -39,7 +39,9 @@ const RevenueCentersSelect = ({
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const geoLatLng = useSelector(selectGeoLatLng)
   const { revenueCenters, loading } = useSelector(selectRevenueCenters)
-  const { serviceType, orderType, address } = useSelector(selectOrder)
+  const { serviceType, orderType, isOutpost, address } = useSelector(
+    selectOrder
+  )
   const coords = address || geoLatLng
   const formattedAddress = address ? address.formatted_address : ''
   const autoSelect = useSelector(selectAutoSelect)
@@ -52,11 +54,11 @@ const RevenueCentersSelect = ({
   useEffect(() => {
     if (orderType) {
       let params = { revenue_center_type: orderType }
-      if (serviceType === 'OUTPOST') params = { ...params, is_outpost: true }
+      if (isOutpost) params = { ...params, is_outpost: true }
       if (coords) params = { ...params, lat: coords.lat, lng: coords.lng }
       dispatch(fetchRevenueCenters(params))
     }
-  }, [orderType, serviceType, coords, dispatch])
+  }, [orderType, isOutpost, coords, dispatch])
 
   const autoRouteCallack = useCallback(
     (revenueCenter) => {
@@ -68,7 +70,7 @@ const RevenueCentersSelect = ({
   )
 
   useEffect(() => {
-    if (serviceType === 'PICKUP' || serviceType === 'OUTPOST') {
+    if (serviceType === 'PICKUP') {
       const pickupRevenueCenters = makePickupRevenueCenters(revenueCenters)
       const minDistance = calcMinDistance(pickupRevenueCenters)
       const count = pickupRevenueCenters.length
@@ -110,7 +112,7 @@ const RevenueCentersSelect = ({
     autoRouteCallack,
   ])
 
-  const names = rcConfig.locationName[serviceType]
+  const names = rcConfig.locationName[isOutpost ? 'OUTPOST' : serviceType]
   const renamedTitle = renameLocation(title, names)
   const renamedError = renameLocation(error, names)
   const renamedMsg = renameLocation(msg, names)

@@ -22,7 +22,7 @@ import {
   ButtonStartOver,
 } from '../packages'
 import HeaderLogo from './HeaderLogo'
-import { serviceTypeNamesMap } from '../packages/utils/constants'
+import { makeServiceTypeName } from '../packages/utils/cart'
 import { resetCheckout } from '../slices/checkoutSlice'
 
 const makeClasses = (pathname) => {
@@ -37,6 +37,7 @@ const Header = () => {
     orderType,
     serviceType,
     revenueCenter,
+    isOutpost,
     requestedAt,
   } = useSelector(selectOrder)
   const autoSelect = useSelector(selectAutoSelect)
@@ -52,8 +53,11 @@ const Header = () => {
   const isAccount = pathname.includes('account')
   const classes = makeClasses(pathname)
   const isCatering = orderType === 'CATERING'
-  let serviceTypeName = serviceTypeNamesMap[serviceType]
-  if (isCatering) serviceTypeName = `Catering ${serviceTypeName}`
+  const serviceTypeName = makeServiceTypeName(
+    serviceType,
+    isOutpost,
+    isCatering
+  )
   const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering_allowed
 
   const handleLogin = (evt) => {

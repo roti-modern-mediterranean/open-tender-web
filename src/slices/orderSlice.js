@@ -31,6 +31,7 @@ const initialState = {
   orderId: null,
   orderType: null,
   serviceType: null,
+  isOutpost: false,
   revenueCenter: null,
   requestedAt: 'asap',
   address: null,
@@ -98,14 +99,12 @@ export const editOrder = createAsyncThunk(
       thunkAPI.dispatch(updateForm(form))
       thunkAPI.dispatch(closeModal())
       thunkAPI.dispatch(toggleSidebar())
-      const orderServiceType = revenueCenter.is_outpost
-        ? 'OUTPOST'
-        : serviceType
-      // thunkAPI.dispatch(openModal({ type: 'editOrder' }))
+      const isOutpost = revenueCenter.is_outpost
       return {
         orderId,
         orderType,
-        serviceType: orderServiceType,
+        serviceType,
+        isOutpost,
         revenueCenter,
         requestedAt,
         address,
@@ -113,6 +112,7 @@ export const editOrder = createAsyncThunk(
         cartCounts,
       }
     } catch (err) {
+      console.log(err)
       thunkAPI.dispatch(closeModal())
       return thunkAPI.rejectWithValue(err)
     }
@@ -182,9 +182,10 @@ const orderSlice = createSlice({
       state.serviceType = action.payload
     },
     setOrderServiceType: (state, action) => {
-      const [orderType, serviceType] = action.payload
+      const [orderType, serviceType, isOutpost] = action.payload
       state.orderType = orderType
       state.serviceType = serviceType
+      state.isOutpost = isOutpost || false
     },
     setRevenueCenter: (state, action) => {
       state.revenueCenter = action.payload

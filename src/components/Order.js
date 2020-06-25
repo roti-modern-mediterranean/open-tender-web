@@ -129,7 +129,7 @@ const Order = ({ order, loading, error }) => {
               {capitalize(orderType)} from {revenue_center.name}
             </h1>
             <div className="order__buttons">
-              {order.is_editable && (
+              {order.is_editable && token && (
                 <Button text="Edit" icon="Edit" onClick={handleEdit} />
               )}
               <Button text="Reorder" icon="RefreshCw" onClick={handleReorder} />
