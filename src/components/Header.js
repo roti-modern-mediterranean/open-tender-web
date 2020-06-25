@@ -24,6 +24,7 @@ import {
 import HeaderLogo from './HeaderLogo'
 import { makeServiceTypeName } from '../packages/utils/cart'
 import { resetCheckout } from '../slices/checkoutSlice'
+import { selectOutpostName } from '../slices/configSlice'
 
 const makeClasses = (pathname) => {
   return ['checkout'].map((i) => (pathname.includes(i) ? 'header__stuck' : ''))
@@ -43,6 +44,7 @@ const Header = () => {
   const autoSelect = useSelector(selectAutoSelect)
   const tz = useSelector(selectTimezone)
   const customer = useSelector(selectCustomer)
+  const outpostName = useSelector(selectOutpostName)
   const { account, auth } = customer
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
@@ -55,8 +57,9 @@ const Header = () => {
   const isCatering = orderType === 'CATERING'
   const serviceTypeName = makeServiceTypeName(
     serviceType,
+    isCatering,
     isOutpost,
-    isCatering
+    outpostName
   )
   const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering_allowed
 

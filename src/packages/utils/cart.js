@@ -45,12 +45,34 @@ export const convertStringToArray = (str) => {
     : []
 }
 
-export const makeServiceTypeName = (serviceType, isOutpost, isCatering) => {
+export const makeOrderTypeFromParam = (param) => {
+  switch (param) {
+    case 'outpost':
+      return ['OLO', 'PICKUP', true]
+    case 'pickup':
+      return ['OLO', 'PICKUP']
+    case 'delivery':
+      return ['OLO', 'DELIVERY']
+    case 'catering':
+      return ['CATERING', 'DELIVERY']
+    case 'merch':
+      return ['MERCH', 'DELIVERY']
+    default:
+      return null
+  }
+}
+
+export const makeServiceTypeName = (
+  serviceType,
+  isCatering,
+  isOutpost,
+  outpostName
+) => {
   let serviceTypeName = serviceTypeNamesMap[serviceType]
-  if (isOutpost) {
-    serviceTypeName = `Outpost ${serviceTypeName}`
-  } else if (isCatering) {
+  if (isCatering) {
     serviceTypeName = `Catering ${serviceTypeName}`
+  } else if (isOutpost) {
+    serviceTypeName = `${outpostName || 'Outpost'} ${serviceTypeName}`
   }
   return serviceTypeName
 }

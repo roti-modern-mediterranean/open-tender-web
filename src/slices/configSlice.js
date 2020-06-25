@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getConfig } from '../services/requests'
 import { defaultConfig } from '../config'
+import { capitalize } from '../packages/utils/helpers'
 
 export const fetchConfig = createAsyncThunk('config/getConfig', async () => {
   return await getConfig()
@@ -26,5 +27,7 @@ export const selectGoogleMapsConfig = (state) => state.config.googleMaps
 export const selectAccountConfig = (state) => state.config.account
 export const selectAccountConfigSections = (state) =>
   state.config.account.sections
+export const selectOutpostName = (state) =>
+  capitalize(state.config.revenueCenters.locationName.OUTPOST[0])
 
 export default configSlice.reducer

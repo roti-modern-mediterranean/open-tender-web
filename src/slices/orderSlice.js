@@ -112,7 +112,6 @@ export const editOrder = createAsyncThunk(
         cartCounts,
       }
     } catch (err) {
-      console.log(err)
       thunkAPI.dispatch(closeModal())
       return thunkAPI.rejectWithValue(err)
     }

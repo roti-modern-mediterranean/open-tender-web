@@ -8,6 +8,7 @@ import {
   setServiceType,
   setRequestedAt,
   resetOrder,
+  setOrderServiceType,
 } from '../slices/orderSlice'
 import {
   isoToDate,
@@ -50,9 +51,11 @@ const CateringPage = () => {
   }, [])
 
   useEffect(() => {
-    if (!hasTypes) history.push('/')
-    dispatch(fetchValidTimes(orderType))
-  }, [hasTypes, orderType, dispatch, history])
+    if (!hasTypes) {
+      dispatch(setOrderServiceType(['CATERING', 'DELIVERY']))
+    }
+    dispatch(fetchValidTimes('CATERING'))
+  }, [hasTypes, dispatch])
 
   useEffect(() => {
     const requestedAtDate =

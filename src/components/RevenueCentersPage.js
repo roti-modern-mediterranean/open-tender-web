@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { selectConfig } from '../slices/configSlice'
-import { selectOrder } from '../slices/orderSlice'
+import { selectOrder, setOrderServiceType } from '../slices/orderSlice'
 import { selectGeoLatLng } from '../slices/geolocationSlice'
 import { selectRevenueCenters } from '../slices/revenueCentersSlice'
 import { GoogleMap, GoogleMapsMarker } from '../packages'
 import RevenueCentersSelect from './RevenueCentersSelect'
+import { makeOrderTypeFromParam } from '../packages/utils/cart'
 
 const RevenueCentersPage = () => {
   const history = useHistory()
+  const dispatch = useDispatch()
   const [activeMarker, setActiveMarker] = useState(null)
   const { orderType, serviceType, address } = useSelector(selectOrder)
   const { googleMaps: mapsConfig } = useSelector(selectConfig)
@@ -21,14 +23,24 @@ const RevenueCentersPage = () => {
   const [center, setCenter] = useState(initialCenter)
   const { revenueCenters } = useSelector(selectRevenueCenters)
   const hasTypes = orderType && serviceType
+  const query = new URLSearchParams(useLocation().search)
+  const param = query.get('type')
 
   useEffect(() => {
     window.scroll(0, 0)
   }, [])
 
   useEffect(() => {
-    if (!hasTypes) history.push('/')
-  }, [hasTypes, history])
+    let paramOrderType = null
+    if (param) {
+      paramOrderType = makeOrderTypeFromParam(param)
+      if (paramOrderType) {
+        dispatch(setOrderServiceType(paramOrderType))
+        if (paramOrderType[0] === 'CATERING') history.push('/catering')
+      }
+    }
+    if (!hasTypes && !paramOrderType) history.push('/')
+  }, [hasTypes, param, dispatch, history])
 
   return (
     <div className="content">

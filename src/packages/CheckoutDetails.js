@@ -32,14 +32,10 @@ const CheckoutDetails = () => {
   } = useContext(FormContext)
   const [details, setDetails] = useState(form.details)
   const [showTip, setShowTip] = useState(false)
-  const { orderType, serviceType, isOutpost } = order
+  const { orderType, serviceType } = order
   const serviceTypeName = serviceTypeNamesMap[serviceType]
   const isCatering = orderType === 'CATERING'
-  const serviceTypeBtnName = makeServiceTypeName(
-    serviceType,
-    isOutpost,
-    isCatering
-  )
+  const serviceTypeBtnName = makeServiceTypeName(serviceType, isCatering)
   const allowTaxExempt = check.config.allow_tax_exempt
   const requiredFields = check.config.required.details
   const tipSettings = check.config.gratuity
