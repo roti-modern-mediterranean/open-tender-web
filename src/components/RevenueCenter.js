@@ -7,7 +7,13 @@ import RevenueCenterAction from './RevenueCenterAction'
 const placeholder2 =
   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg'
 
-const RevenueCenter = ({ revenueCenter, classes = '', showImage, isOrder }) => {
+const RevenueCenter = ({
+  revenueCenter,
+  classes = '',
+  showImage,
+  isOrder,
+  isLanding,
+}) => {
   const { address, images, hours, is_outpost } = revenueCenter
   let smallImage = images.find((i) => i.type === 'SMALL_IMAGE')
   smallImage = smallImage ? smallImage.url : null
@@ -32,7 +38,9 @@ const RevenueCenter = ({ revenueCenter, classes = '', showImage, isOrder }) => {
       )}
       <div className="rc__content">
         <div className="rc__header">
-          <h2 className="ot-font-size-h5">{revenueCenter.name}</h2>
+          <h2 className={isLanding ? 'ot-font-size-h3' : 'ot-font-size-h5'}>
+            {revenueCenter.name}
+          </h2>
           {distance !== null && (
             <p className="font-size-small secondary-color">
               {distance.toFixed(2)} miles away
@@ -67,7 +75,11 @@ const RevenueCenter = ({ revenueCenter, classes = '', showImage, isOrder }) => {
             />
           )}
         </div>
-        <RevenueCenterOrder revenueCenter={revenueCenter} isOrder={isOrder} />
+        <RevenueCenterOrder
+          revenueCenter={revenueCenter}
+          isOrder={isOrder}
+          isLanding={isLanding}
+        />
       </div>
     </div>
   )
@@ -79,6 +91,7 @@ RevenueCenter.propTypes = {
   classes: propTypes.string,
   showImage: propTypes.bool,
   isOrder: propTypes.bool,
+  isLanding: propTypes.bool,
 }
 
 export default RevenueCenter

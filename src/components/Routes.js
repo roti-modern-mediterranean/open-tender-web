@@ -6,6 +6,7 @@ import CheckoutPage from './CheckoutPage'
 import ConfirmationPage from './ConfirmationPage'
 import OrderPage from './OrderPage'
 import RevenueCentersPage from './RevenueCentersPage'
+import RevenueCenterPage from './RevenueCenterPage'
 import AccountPage from './AccountPage'
 import AccountAddressesPage from './AccountAddressesPage'
 import AccountFavoritesPage from './AccountFavoritesPage'
@@ -33,6 +34,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/locations">
         <RevenueCentersPage />
+      </Route>
+      <Route exact path="/locations/:id">
+        <RevenueCenterPage />
       </Route>
       <Route path="/menu/:slug">
         <MenuPage />

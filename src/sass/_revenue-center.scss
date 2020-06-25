@@ -71,6 +71,10 @@
     &__message + button {
       margin-top: 1.75rem;
     }
+
+    button + button {
+      margin: 0 0 0 1rem;
+    }
   }
 }
 

@@ -47,6 +47,7 @@ const Header = () => {
   const isCheckout = pathname.includes('checkout')
   if (isCheckout) return null
   const isHome = pathname === '/'
+  const isRevenueCenterPage = pathname.includes('locations/')
   const isMenu = pathname.includes('menu')
   const isAccount = pathname.includes('account')
   const classes = makeClasses(pathname)
@@ -131,13 +132,13 @@ const Header = () => {
       className={`header container flex ot-header ot-nav-height ${classes}`}
     >
       <div className="header__nav">
-        <div className="header__logo">
-          {isHome ? (
+        {isHome || isRevenueCenterPage ? (
+          <div className="header__logo">
             <HeaderLogo />
-          ) : (
-            <ButtonStartOver onClick={handleStartOver} classes="btn--header" />
-          )}
-        </div>
+          </div>
+        ) : (
+          <ButtonStartOver onClick={handleStartOver} classes="btn--header" />
+        )}
       </div>
       <div className="header__actions">
         <ButtonAccount

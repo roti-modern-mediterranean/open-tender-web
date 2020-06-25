@@ -8,33 +8,54 @@ import {
   selectAutoSelect,
 } from '../slices/orderSlice'
 import { Button } from '../packages'
-import { serviceTypeNamesMap } from '../packages/utils/constants'
+import {
+  serviceTypeNamesMap,
+  menuServiceTypeMap,
+} from '../packages/utils/constants'
 import {
   makeReadableDateStrFromIso,
   timezoneMap,
+  makeOrderTimes,
 } from '../packages/utils/datetimes'
 import { selectConfig } from '../slices/configSlice'
+import RevenueCenterButtons from './RevenueCenterButtons'
 
-const makeOrderMsg = (firstTime, tz, serviceType) => {
+const makeOrderMsg = (firstTime, orderTime, tz, serviceType) => {
+  if (!firstTime && !orderTime) return null
+  let firstIso
+  if (firstTime) {
+    firstIso = firstTime.utc
+  } else {
+    const orderTimes = makeOrderTimes(orderTime)
+    firstIso = orderTimes[0].iso
+  }
   const serviceTypeName = serviceTypeNamesMap[serviceType]
-  const readableDate = makeReadableDateStrFromIso(firstTime.utc, tz, true)
+  const readableDate = makeReadableDateStrFromIso(firstIso, tz, true)
   const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate}`
   return orderMsg
 }
 
-export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
+export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { first_times: firstTimes } = revenueCenter.settings
+  const { first_times, order_times } = revenueCenter.settings
   const tz = timezoneMap[revenueCenter.timezone]
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
   const { serviceType } = useSelector(selectOrder)
-  const firstTime = firstTimes ? firstTimes[serviceType] : null
+  const menuServiceType = menuServiceTypeMap[serviceType]
+  const firstTime = first_times ? first_times[menuServiceType] : null
+  const orderTime = order_times ? order_times[menuServiceType] : null
   const statusMsg = statusMessages[revenueCenter.status]
   const orderMsg =
-    !statusMsg && firstTime ? makeOrderMsg(firstTime, tz, serviceType) : null
-  const msg = orderMsg || statusMsg
+    !statusMsg && (firstTime || orderTime)
+      ? makeOrderMsg(firstTime, orderTime, tz, menuServiceType)
+      : null
+  const msg =
+    orderMsg ||
+    (statusMsg
+      ? statusMsg.msg
+      : 'This location is not currently accepting orders')
   const msgClass = orderMsg ? 'ot-success-color' : 'ot-alert-color'
   const autoSelect = useSelector(selectAutoSelect)
 
@@ -59,7 +80,9 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder }) => {
           <p className={`font-size-small ${msgClass}`}>{msg}</p>
         </div>
       )}
-      {isOrder ? (
+      {isLanding ? (
+        <RevenueCenterButtons revenueCenter={revenueCenter} />
+      ) : isOrder ? (
         <Button
           text="Order Here"
           ariaLabel={`Order from ${revenueCenter.name}`}

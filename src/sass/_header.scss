@@ -6,7 +6,17 @@
   width: 100%;
 
   &__logo {
-    max-width: 16rem;
+    position: relative;
+    top: 0.3rem;
+    display: inline-block;
+    max-width: 15rem;
+    margin: 0rem 3rem 0 0;
+  }
+
+  &__nav {
+    button {
+      margin: -0.3rem 0 0;
+    }
   }
 
   &__stuck {
