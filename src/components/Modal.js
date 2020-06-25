@@ -17,6 +17,7 @@ import {
   ClosedModal,
   AdjustRequestedAtModal,
   OrderRatingModal,
+  OrderTypeModal,
 } from './modals'
 
 const makeModal = (type, args = {}) => {
@@ -43,6 +44,8 @@ const makeModal = (type, args = {}) => {
       return <WorkingModal {...args} />
     case 'closed':
       return <ClosedModal {...args} />
+    case 'orderType':
+      return <OrderTypeModal {...args} />
     case 'rating':
       return <OrderRatingModal {...args} />
     default:

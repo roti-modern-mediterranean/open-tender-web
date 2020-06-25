@@ -1,6 +1,5 @@
 import { parseISO, add } from 'date-fns'
 import { format, toDate, zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz'
-import { isEmpty } from './helpers'
 import { menuServiceTypeMap } from './constants'
 
 /* CONSTANTS */
@@ -336,12 +335,10 @@ export const makeFirstTime = (
   requestedAt
 ) => {
   const { first_times, order_times } = settings
-  if (!first_times || isEmpty(first_times)) {
-    if (!order_times) return null
+  if (!first_times || !first_times[serviceType]) {
+    if (!order_times || !order_times[serviceType]) return null
     const orderTimes = makeOrderTimes(order_times[serviceType], tz)
     return orderTimes[0].iso
-  } else if (!first_times[serviceType]) {
-    return null
   }
   const firstTime = first_times[serviceType]
   const firstDate = isoToDate(firstTime.utc, tz)

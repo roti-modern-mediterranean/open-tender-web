@@ -2,62 +2,24 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { makeRevenueCenterMsg } from '../packages/utils/cart'
 import {
   setRevenueCenter,
   selectOrder,
   selectAutoSelect,
 } from '../slices/orderSlice'
-import { Button } from '../packages'
-import {
-  serviceTypeNamesMap,
-  menuServiceTypeMap,
-} from '../packages/utils/constants'
-import {
-  makeReadableDateStrFromIso,
-  timezoneMap,
-  makeOrderTimes,
-} from '../packages/utils/datetimes'
 import { selectConfig } from '../slices/configSlice'
+import { Button } from '../packages'
 import RevenueCenterButtons from './RevenueCenterButtons'
-
-const makeOrderMsg = (firstTime, orderTime, tz, serviceType) => {
-  if (!firstTime && !orderTime) return null
-  let firstIso
-  if (firstTime) {
-    firstIso = firstTime.utc
-  } else {
-    const orderTimes = makeOrderTimes(orderTime)
-    firstIso = orderTimes[0].iso
-  }
-  const serviceTypeName = serviceTypeNamesMap[serviceType]
-  const readableDate = makeReadableDateStrFromIso(firstIso, tz, true)
-  const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate}`
-  return orderMsg
-}
 
 export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { first_times, order_times } = revenueCenter.settings
-  const tz = timezoneMap[revenueCenter.timezone]
+  const { serviceType } = useSelector(selectOrder)
+  const autoSelect = useSelector(selectAutoSelect)
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
-  const { serviceType } = useSelector(selectOrder)
-  const menuServiceType = menuServiceTypeMap[serviceType]
-  const firstTime = first_times ? first_times[menuServiceType] : null
-  const orderTime = order_times ? order_times[menuServiceType] : null
-  const statusMsg = statusMessages[revenueCenter.status]
-  const orderMsg =
-    !statusMsg && (firstTime || orderTime)
-      ? makeOrderMsg(firstTime, orderTime, tz, menuServiceType)
-      : null
-  const msg =
-    orderMsg ||
-    (statusMsg
-      ? statusMsg.msg
-      : 'This location is not currently accepting orders')
-  const msgClass = orderMsg ? 'ot-success-color' : 'ot-alert-color'
-  const autoSelect = useSelector(selectAutoSelect)
+  const msg = makeRevenueCenterMsg(revenueCenter, serviceType, statusMessages)
 
   const handleOrder = (evt) => {
     evt.preventDefault()
@@ -75,9 +37,9 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {
 
   return (
     <div className="rc__order">
-      {msg && (
+      {msg.message && (
         <div className="rc__order__message">
-          <p className={`font-size-small ${msgClass}`}>{msg}</p>
+          <p className={`font-size-small ${msg.className}`}>{msg.message}</p>
         </div>
       )}
       {isLanding ? (

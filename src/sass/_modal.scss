@@ -53,6 +53,15 @@
     line-height: 1.4;
   }
 
+  &__body.-message {
+    p {
+      line-height: 1.4;
+    }
+    p + p {
+      margin: 1rem 0 0;
+    }
+  }
+
   &__footer {
     margin-top: 2rem;
 

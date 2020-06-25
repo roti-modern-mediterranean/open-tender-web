@@ -7,18 +7,15 @@ import {
 } from '../packages/utils/datetimes'
 import { capitalize } from '../packages/utils/helpers'
 import { Button } from '../packages'
-import { menuServiceTypeMap } from '../packages/utils/constants'
 
 const RequestedAtTimes = ({
-  order_times,
-  serviceType,
+  orderTimes,
   revenueCenter,
   requestedAt,
   setRequestedAt,
 }) => {
   const tz = timezoneMap[revenueCenter.timezone]
-  const menuServiceType = menuServiceTypeMap[serviceType]
-  const orderTimes = makeOrderTimes(order_times[menuServiceType], tz)
+  const availableTimes = makeOrderTimes(orderTimes, tz)
 
   const handleRequestedAt = (evt, requestedAt) => {
     evt.preventDefault()
@@ -38,7 +35,7 @@ const RequestedAtTimes = ({
       </div>
       <div className="modal__body">
         <ul className="order-times">
-          {orderTimes.map((i) => {
+          {availableTimes.map((i) => {
             const { weekday, time } = i.order_by
             const orderBy = `${capitalize(weekday)} at ${time24ToDateStr(time)}`
             const current = requestedAt === i.iso
@@ -77,8 +74,7 @@ const RequestedAtTimes = ({
 
 RequestedAtTimes.displayName = 'RequestedAtTimes'
 RequestedAtTimes.propTypes = {
-  order_times: propTypes.object,
-  serviceType: propTypes.string,
+  orderTimes: propTypes.object,
   revenueCenter: propTypes.object,
   handleClose: propTypes.func,
   setRequestedAt: propTypes.func,

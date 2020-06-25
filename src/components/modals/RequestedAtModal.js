@@ -6,12 +6,16 @@ import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
 import RequestedAtCalendar from '../RequestedAtCalendar'
 import RequestedAtTimes from '../RequestedAtTimes'
+import { menuServiceTypeMap } from '../../packages/utils/constants'
 
 const RequestedAtModal = ({ forcedUpdate = false, onCloseAction }) => {
   const dispatch = useDispatch()
   const { requestedAt, serviceType, revenueCenter } = useSelector(selectOrder)
   const { settings } = revenueCenter || {}
   const { first_times, order_times } = settings || {}
+  const menuServiceType = menuServiceTypeMap[serviceType]
+  const firstTimes = first_times ? first_times[menuServiceType] : null
+  const orderTimes = order_times ? order_times[menuServiceType] : null
 
   const handleClose = () => {
     dispatch(closeModal())
@@ -26,18 +30,18 @@ const RequestedAtModal = ({ forcedUpdate = false, onCloseAction }) => {
   return (
     <>
       <ModalClose onClick={handleClose} />
-      {first_times ? (
+      {firstTimes ? (
         <RequestedAtCalendar
           forcedUpdate={forcedUpdate}
           requestedAt={requestedAt}
-          serviceType={serviceType}
+          serviceType={menuServiceType}
           revenueCenter={revenueCenter}
           handleClose={handleClose}
           setRequestedAt={handleRequestedAt}
         />
-      ) : order_times ? (
+      ) : orderTimes ? (
         <RequestedAtTimes
-          order_times={order_times}
+          orderTimes={orderTimes}
           serviceType={serviceType}
           revenueCenter={revenueCenter}
           requestedAt={requestedAt}

@@ -84,8 +84,10 @@ const Header = () => {
 
   const handleServiceType = (evt) => {
     evt.preventDefault()
-    dispatch(resetOrderType())
-    history.push(`/`)
+    const startOver = () => history.push(`/`)
+    dispatch(openModal({ type: 'orderType', args: { startOver } }))
+    // dispatch(resetOrderType())
+    // history.push(`/`)
     evt.target.blur()
   }
 

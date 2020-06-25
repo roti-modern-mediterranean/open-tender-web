@@ -10,6 +10,7 @@ import CreditCardModal from './CreditCardModal'
 import WorkingModal from './WorkingModal'
 import ClosedModal from './ClosedModal'
 import OrderRatingModal from './OrderRatingModal'
+import OrderTypeModal from './OrderTypeModal'
 
 export {
   LoginModal,
@@ -24,4 +25,5 @@ export {
   WorkingModal,
   ClosedModal,
   OrderRatingModal,
+  OrderTypeModal,
 }

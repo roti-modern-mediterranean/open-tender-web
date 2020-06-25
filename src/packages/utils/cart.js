@@ -1,4 +1,9 @@
-import { menuServiceTypeMap } from './constants'
+import { menuServiceTypeMap, serviceTypeNamesMap } from './constants'
+import {
+  timezoneMap,
+  makeOrderTimes,
+  makeReadableDateStrFromIso,
+} from './datetimes'
 
 export const displayPrice = (price) => {
   return parseFloat(price).toFixed(2)
@@ -38,6 +43,45 @@ export const convertStringToArray = (str) => {
         .map((i) => i.trim())
         .filter((i) => i.length)
     : []
+}
+
+const makeOrderMsg = (firstTime, orderTime, tz, serviceType) => {
+  if (!firstTime && !orderTime) return null
+  let firstIso
+  if (firstTime) {
+    firstIso = firstTime.utc
+  } else {
+    const orderTimes = makeOrderTimes(orderTime, tz)
+    firstIso = orderTimes[0].iso
+  }
+  const serviceTypeName = serviceTypeNamesMap[serviceType]
+  const readableDate = makeReadableDateStrFromIso(firstIso, tz, true)
+  const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate.toLowerCase()}`
+  return orderMsg
+}
+
+export const makeRevenueCenterMsg = (
+  revenueCenter,
+  serviceType,
+  statusMessages
+) => {
+  const { first_times, order_times } = revenueCenter.settings
+  const tz = timezoneMap[revenueCenter.timezone]
+  const menuServiceType = menuServiceTypeMap[serviceType]
+  const firstTime = first_times ? first_times[menuServiceType] : null
+  const orderTime = order_times ? order_times[menuServiceType] : null
+  const statusMsg = statusMessages[revenueCenter.status]
+  const orderMsg =
+    !statusMsg && (firstTime || orderTime)
+      ? makeOrderMsg(firstTime, orderTime, tz, menuServiceType)
+      : null
+  const message =
+    orderMsg ||
+    (statusMsg
+      ? statusMsg.msg
+      : 'This location is not currently accepting orders')
+  const className = orderMsg ? 'ot-success-color' : 'ot-alert-color'
+  return { message, className }
 }
 
 const makeOrderItemGroups = (optionGroups, isEdit, soldOut = []) => {
