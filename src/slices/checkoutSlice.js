@@ -3,7 +3,7 @@ import { postOrderValidate, postOrder } from '../services/requests'
 import { handleCheckoutErrors } from '../packages/utils/errors'
 import { openModal, closeModal } from './modalSlice'
 import { getDefaultTip, prepareOrder } from '../packages/utils/cart'
-import { isEmpty, contains } from '../packages/utils/helpers'
+import { isEmpty, contains, isString } from '../packages/utils/helpers'
 import { refreshRevenueCenter } from './orderSlice'
 import { fetchMenu } from './menuSlice'
 // import { getDefaultTip } from '../packages/utils/cart'
@@ -92,7 +92,13 @@ export const validateOrder = createAsyncThunk(
       if (contains(keys, refreshKeys)) {
         thunkAPI.dispatch(refreshRevenueCenter(args))
       } else if (contains(keys, ['cart'])) {
-        thunkAPI.dispatch(fetchMenu(args))
+        const cartError = errMessages.cart
+        if (isString(cartError)) {
+          thunkAPI.dispatch(fetchMenu(args))
+        } else {
+          const args = { type: 'cartCounts', args: { errors: cartError } }
+          thunkAPI.dispatch(openModal(args))
+        }
       } else if (contains(keys, ['promo_codes'])) {
         errors['promo_codes'] = errMessages.promo_codes
       }
@@ -155,7 +161,13 @@ export const submitOrder = createAsyncThunk(
         thunkAPI.dispatch(refreshRevenueCenter(args))
         return thunkAPI.rejectWithValue(null)
       } else if (contains(keys, ['cart'])) {
-        thunkAPI.dispatch(fetchMenu(args))
+        const cartError = errors.cart
+        if (isString(cartError)) {
+          thunkAPI.dispatch(fetchMenu(args))
+        } else {
+          const args = { type: 'cartCounts', args: { errors: cartError } }
+          thunkAPI.dispatch(openModal(args))
+        }
         return thunkAPI.rejectWithValue(null)
       } else {
         return thunkAPI.rejectWithValue(errors)

@@ -161,9 +161,12 @@ const orderSlice = createSlice({
   reducers: {
     resetOrder: () => initialState,
     resetOrderType: (state) => {
+      state.orderId = null
       state.orderType = null
       state.serviceType = null
+      state.isOutpost = false
       state.revenueCenter = null
+      state.requestedAt = 'asap'
     },
     resetRevenueCenter: (state) => {
       state.revenueCenter = null
@@ -317,6 +320,7 @@ const orderSlice = createSlice({
       if (action.payload) {
         const { revenueCenter, requestedAt, cart, cartCounts } = action.payload
         state.revenueCenter = revenueCenter
+        state.isOutpost = revenueCenter.is_outpost
         state.requestedAt = requestedAt
         state.cart = cart
         state.cartCounts = cartCounts

@@ -18,6 +18,7 @@ import {
   AdjustRequestedAtModal,
   OrderRatingModal,
   OrderTypeModal,
+  CartCountsModal,
 } from './modals'
 
 const makeModal = (type, args = {}) => {
@@ -40,6 +41,8 @@ const makeModal = (type, args = {}) => {
       return <AdjustRequestedAtModal {...args} />
     case 'cartErrors':
       return <CartErrorsModal {...args} />
+    case 'cartCounts':
+      return <CartCountsModal {...args} />
     case 'working':
       return <WorkingModal {...args} />
     case 'closed':
@@ -61,6 +64,7 @@ const classesMap = {
   requestedAt: 'modal--big modal--datepicker',
   allergens: 'modal--big modal--allergens',
   cartErrors: 'modal--big modal--cart-errors',
+  cartCounts: 'modal--big modal--cart-errors',
   working: 'modal--working',
 }
 

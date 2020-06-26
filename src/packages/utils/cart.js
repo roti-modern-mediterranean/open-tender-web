@@ -88,7 +88,9 @@ const makeOrderMsg = (firstTime, orderTime, tz, serviceType) => {
   }
   const serviceTypeName = serviceTypeNamesMap[serviceType]
   const readableDate = makeReadableDateStrFromIso(firstIso, tz, true)
-  const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate.toLowerCase()}`
+    .replace('Today', 'today')
+    .replace('Tomorrow', 'tomorrow')
+  const orderMsg = `The first available ${serviceTypeName.toLowerCase()} time is ${readableDate}`
   return orderMsg
 }
 
