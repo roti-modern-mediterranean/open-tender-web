@@ -173,13 +173,13 @@ const CateringPage = () => {
               disabled={!date}
             />
           </div>
-          <div className="card__content__footer font-size-small">
-            <Button
-              text="Switch to a regular order Pickup or Delivery order"
-              classes="btn-link"
-              onClick={startOver}
-            />
-          </div>
+        </div>
+        <div className="card__footer font-size-small">
+          <Button
+            text="Switch to a regular order Pickup or Delivery order"
+            classes="btn-link"
+            onClick={startOver}
+          />
         </div>
       </div>
     </div>

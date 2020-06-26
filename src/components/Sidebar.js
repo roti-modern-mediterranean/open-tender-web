@@ -6,13 +6,15 @@ import {
   selectCartQuantity,
   selectCartTotal,
   selectMenuSlug,
-  selectCanCheckout,
+  selectCanOrder,
   selectOrder,
+  selectOrderLimits,
 } from '../slices/orderSlice'
 import SidebarOverlay from './SidebarOverlay'
 import { Button } from '../packages'
 import Cart from './Cart'
 import SidebarClose from './SidebarClose'
+import { displayPrice } from '../packages/utils/cart'
 
 const Sidebar = () => {
   const dispatch = useDispatch()
@@ -23,10 +25,13 @@ const Sidebar = () => {
   const cartCount = useSelector(selectCartQuantity)
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
-  const canCheckout = useSelector(selectCanCheckout)
+  const canOrder = useSelector(selectCanOrder)
+  const { orderMinimum } = useSelector(selectOrderLimits)
   const classes = `sidebar bg-secondary-color ${isOpen ? 'is-open' : ''}`
   const isMenu = pathname.includes('menu')
   const isCheckout = pathname.includes('checkout')
+  const belowMinimum = orderMinimum && cartTotal < orderMinimum
+  const canCheckout = canOrder && !belowMinimum && cartCount !== 0
 
   const handleBack = (evt) => {
     evt.preventDefault()
@@ -66,6 +71,14 @@ const Sidebar = () => {
                 before tax
               </p>
             )}
+            {belowMinimum && (
+              <div className="sidebar__header__message">
+                <p className="font-size-small ot-bold ot-alert-color">
+                  Your cart total is below the order minimum of $
+                  {displayPrice(orderMinimum)}. Please add some items.
+                </p>
+              </div>
+            )}
           </div>
           <div className="sidebar__content">
             <Cart />
@@ -75,7 +88,7 @@ const Sidebar = () => {
               <Button
                 onClick={handleBack}
                 classes="btn btn--big"
-                disabled={!canCheckout}
+                disabled={!canOrder}
               >
                 Menu
               </Button>
@@ -85,7 +98,7 @@ const Sidebar = () => {
                 onClick={handleCheckout}
                 // classes={`btn btn--big ${!isCheckout ? 'btn--highlight' : ''}`}
                 classes="btn btn--big btn--highlight"
-                disabled={cartCount === 0 || !canCheckout}
+                disabled={!canCheckout}
               >
                 {isCheckout ? 'Checkout' : 'Checkout'}
               </Button>

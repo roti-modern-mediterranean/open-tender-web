@@ -387,6 +387,19 @@ export const selectTimezone = (state) => {
     ? timezoneMap[state.order.revenueCenter.timezone]
     : getUserTimezone()
 }
+export const selectOrderLimits = (state) => {
+  const { revenueCenter, serviceType } = state.order
+  if (!revenueCenter || !serviceType) {
+    return { orderMinimum: null, orderMaximum: null }
+  }
+  const { order_maximum, order_minimum } = revenueCenter.settings
+  let orderMaximum = parseFloat(order_maximum[serviceType])
+  let orderMinimum = parseFloat(order_minimum[serviceType])
+  return {
+    orderMinimum: orderMinimum > 0 ? orderMinimum : null,
+    orderMaximum: orderMaximum > 0 ? orderMaximum : null,
+  }
+}
 
 export const selectAddress = (state) => state.order.address
 
@@ -419,7 +432,7 @@ export const selectCartTotal = (state) => {
 }
 export const selectCartCounts = (state) => state.order.cartCounts || {}
 
-export const selectCanCheckout = (state) =>
+export const selectCanOrder = (state) =>
   state.order.revenueCenter &&
   state.order.serviceType &&
   state.order.requestedAt

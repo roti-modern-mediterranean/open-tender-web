@@ -2,13 +2,14 @@ import React, { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { GoogleMapsAutocomplete } from '../packages'
+import { GoogleMapsAutocomplete, Button } from '../packages'
 import { selectConfig } from '../slices/configSlice'
 import {
   setAddress,
   selectOrder,
   setRevenueCenter,
   selectAutoSelect,
+  resetOrderType,
 } from '../slices/orderSlice'
 import {
   fetchRevenueCenters,
@@ -25,6 +26,7 @@ import {
 } from '../packages/utils/maps'
 import RevenueCenter from './RevenueCenter'
 import BarLoader from 'react-spinners/BarLoader'
+import { resetCheckout } from '../slices/checkoutSlice'
 
 const RevenueCentersSelect = ({
   setCenter,
@@ -50,6 +52,8 @@ const RevenueCentersSelect = ({
   const [error, setError] = useState(null)
   const [displayedRevenueCenters, setDisplayedRevenueCenters] = useState([])
   const isLoading = loading === 'pending'
+  const showRevenueCenters =
+    !isLoading && !error && displayedRevenueCenters.length > 0
 
   useEffect(() => {
     if (orderType) {
@@ -117,34 +121,48 @@ const RevenueCentersSelect = ({
   const renamedError = renameLocation(error, names)
   const renamedMsg = renameLocation(msg, names)
 
+  const handleStartOver = (evt) => {
+    evt.preventDefault()
+    dispatch(resetOrderType())
+    dispatch(resetCheckout())
+    history.push(`/`)
+    evt.target.blur()
+  }
+
   return (
     <div className="card map__card overlay border-radius slide-up ot-box-shadow">
-      <div className="card__header">
-        <h1 className="ot-font-size-h3">{renamedTitle}</h1>
-        {error ? (
-          <p className="ot-error-color">{renamedError}</p>
-        ) : (
-          <p className="secondary-color">{renamedMsg}</p>
-        )}
-      </div>
-      <div className="card__content">
-        <GoogleMapsAutocomplete
-          maps={maps}
-          map={map}
-          sessionToken={sessionToken}
-          autocomplete={autocomplete}
-          formattedAddress={formattedAddress}
-          setAddress={(address) => dispatch(setAddress(address))}
-          setCenter={setCenter}
-        />
-        {isLoading && address ? (
-          <div className="loading">
-            <div className="loading__loader">
-              <BarLoader size={100} loading={isLoading} />
-            </div>
-            <p>Retrieving nearest locations</p>
+      {isLoading ? (
+        <div className="loading">
+          <div className="loading__loader">
+            <BarLoader size={100} loading={isLoading} />
           </div>
-        ) : !error && displayedRevenueCenters.length > 0 ? (
+          <p>Retrieving nearest locations</p>
+        </div>
+      ) : (
+        <div className="card__header">
+          <h1 className="ot-font-size-h3">{renamedTitle}</h1>
+          {error ? (
+            <p className="ot-error-color ot-line-height">{renamedError}</p>
+          ) : (
+            <p className="secondary-color ot-line-height">{renamedMsg}</p>
+          )}
+        </div>
+      )}
+      <div className="card__content">
+        {!isLoading && (
+          <>
+            <GoogleMapsAutocomplete
+              maps={maps}
+              map={map}
+              sessionToken={sessionToken}
+              autocomplete={autocomplete}
+              formattedAddress={formattedAddress}
+              setAddress={(address) => dispatch(setAddress(address))}
+              setCenter={setCenter}
+            />
+          </>
+        )}
+        {showRevenueCenters ? (
           <div className="rcs">
             <ul>
               {displayedRevenueCenters.map((revenueCenter) => (
@@ -159,7 +177,15 @@ const RevenueCentersSelect = ({
               ))}
             </ul>
           </div>
-        ) : null}
+        ) : (
+          <div className="card__footer">
+            <Button
+              text="Choose a different order type"
+              classes="btn-link"
+              onClick={handleStartOver}
+            ></Button>
+          </div>
+        )}
       </div>
     </div>
   )
