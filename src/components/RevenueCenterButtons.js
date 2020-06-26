@@ -31,6 +31,9 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
     dispatch(setAddress(null))
     dispatch(setOrderServiceType([rcType, 'PICKUP', is_outpost]))
     dispatch(setRevenueCenter(revenueCenter))
+    if (is_outpost) {
+      dispatch(setAddress(address))
+    }
     history.push(menuSlug)
     evt.target.blur()
   }

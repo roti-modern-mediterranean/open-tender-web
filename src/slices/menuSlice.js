@@ -73,10 +73,10 @@ const menuSlice = createSlice({
     setCartErrors: (state, action) => {
       state.cartErrors = action.payload
     },
-    resetCartErrors: (state, action) => {
+    resetCartErrors: (state) => {
       state.cartErrors = null
     },
-    resetMenuVars: (state, action) => {
+    resetMenuVars: (state) => {
       state.menuVars = null
       state.previousMenuVars = null
     },

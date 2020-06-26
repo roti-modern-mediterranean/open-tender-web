@@ -20,7 +20,7 @@ import {
   makeFirstTimes,
   makeRequestedAtStr,
 } from '../packages/utils/datetimes'
-import { setMenuItems } from './menuSlice'
+import { setMenuItems, resetMenuVars } from './menuSlice'
 import { openModal, closeModal } from './modalSlice'
 import { modalConfig as mc } from '../components/modals/config'
 import { updateForm } from './checkoutSlice'
@@ -132,6 +132,7 @@ export const reorderPastOrder = createAsyncThunk(
         )
         return null
       } else {
+        thunkAPI.dispatch(resetMenuVars())
         thunkAPI.dispatch(resetRevenueCenter())
         const menuItems = await getMenuItems(revenueCenterId, serviceType)
         const { cart, cartCounts } = rehydrateCart(menuItems, items)
