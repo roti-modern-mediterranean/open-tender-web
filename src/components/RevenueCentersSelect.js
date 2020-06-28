@@ -23,7 +23,7 @@ import {
   makePickupMesssaging,
   makeDeliveryMesssaging,
   renameLocation,
-} from '../packages/utils/maps'
+} from 'open-tender-js'
 import RevenueCenter from './RevenueCenter'
 import BarLoader from 'react-spinners/BarLoader'
 import { resetCheckout } from '../slices/checkoutSlice'

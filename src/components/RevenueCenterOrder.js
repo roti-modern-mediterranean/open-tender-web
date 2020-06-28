@@ -2,14 +2,15 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { makeRevenueCenterMsg } from '../packages/utils/cart'
+import { makeRevenueCenterMsg } from 'open-tender-js'
 import {
   setRevenueCenter,
   selectOrder,
   selectAutoSelect,
 } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
-import { Button } from '../packages'
+// import { Button } from '../packages'
+import { Button } from 'open-tender'
 import RevenueCenterButtons from './RevenueCenterButtons'
 
 export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {
