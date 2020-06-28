@@ -1,14 +1,12 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
+import { Button, CircleLoader, cardIconMap } from 'open-tender'
 import {
   updateCustomerCreditCard,
   removeCustomerCreditCard,
 } from '../slices/customerSlice'
 import SectionRow from './SectionRow'
-import { Button } from 'open-tender'
-import { cardIcons } from '../packages/utils/cards'
-import CircleLoader from 'open-tender'
 
 const CreditCards = ({ creditCards, token, isLoading }) => {
   const dispatch = useDispatch()
@@ -37,7 +35,7 @@ const CreditCards = ({ creditCards, token, isLoading }) => {
             title={
               <span className="cards__card__image">
                 <img
-                  src={cardIcons[creditCard.card_type]}
+                  src={cardIconMap[creditCard.card_type]}
                   alt={creditCard.card_type_name}
                 />
               </span>

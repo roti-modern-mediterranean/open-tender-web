@@ -1,11 +1,21 @@
 import React, { useState, useCallback, useContext } from 'react'
 import debounce from 'lodash/debounce'
-import { Button, ButtonCheckoutAccount, Input } from 'open-tender-js'
+import { Input } from 'open-tender'
 import { FormContext } from './CheckoutForm'
-import CheckoutLineItem from './CheckoutLineItem'
 
-const makeAccountConfig = (requiredFields) => {
+const initialState = {
+  emaiil: '',
+  first_name: '',
+  last_name: '',
+  phone: '',
+  company: '',
+}
+
+const makeContactConfig = (requiredFields) => {
   return {
+    first_name: { label: 'First Name', included: true, required: true },
+    last_name: { label: 'Last Name', included: true, required: true },
+    email: { label: 'Email', included: true, required: true },
     phone: { label: 'Phone', included: true, required: true },
     company: {
       label: 'Company',
@@ -23,11 +33,19 @@ const fields = [
   { name: 'company', type: 'text' },
 ]
 
-const CheckoutAccount = () => {
-  const formContext = useContext(FormContext)
-  const { config, check, form, updateForm, logout } = formContext
-  const [customer, setCustomer] = useState(form.customer)
+const CheckoutGuest = () => {
+  const { config, check, form, errors, updateForm } = useContext(FormContext)
+  const [customer, setCustomer] = useState(form.customer || initialState)
+  const requiredFields = check.config.required.customer
+  const contactConfig = makeContactConfig(requiredFields)
+  const customerErrors = errors.customer || {}
 
+  // useEffect(() => {
+  //   setCustomer(checkoutCustomer || initialState)
+  // }, [checkoutCustomer])
+
+  // https://medium.com/p/5489fc3461b3/responses/show
+  // https://codesandbox.io/s/functional-component-debounce-cunf7
   const debouncedUpdate = useCallback(
     debounce((newCustomer) => updateForm({ customer: newCustomer }), 500),
     []
@@ -41,33 +59,16 @@ const CheckoutAccount = () => {
     debouncedUpdate(newCustomer)
   }
 
-  const errors = {}
-  const requiredFields = check.config.required.customer
-  const accountConfig = makeAccountConfig(requiredFields)
   return (
     <fieldset className="form__fieldset">
-      <div className="form__legend">
+      <legend className="form__legend">
         <p className="form__legend__title heading ot-font-size-h3">
-          {config.account.title}
-          {/* {customer.first_name} */}
+          {config.guest.title}
         </p>
-        <p className="form__legend__subtitle">
-          Please verify your account information for your order.{' '}
-          <Button
-            text="Click here to logout"
-            ariaLabel="Log out of your account"
-            classes="btn-link"
-            onClick={logout}
-          />{' '}
-          if you want to switch accounts or check out as a guest.
-        </p>
-      </div>
+      </legend>
       <div className="form__inputs">
-        <CheckoutLineItem label="Account">
-          <ButtonCheckoutAccount classes="btn--header" />
-        </CheckoutLineItem>
         {fields.map((field) => {
-          const input = accountConfig[field.name]
+          const input = contactConfig[field.name]
           return (
             input &&
             input.included && (
@@ -78,7 +79,7 @@ const CheckoutAccount = () => {
                 type={field.type}
                 value={customer[field.name]}
                 onChange={handleChange}
-                error={errors[field.name]}
+                error={customerErrors[field.name]}
                 required={input.required}
               />
             )
@@ -89,6 +90,6 @@ const CheckoutAccount = () => {
   )
 }
 
-CheckoutAccount.displayName = 'CheckoutAccount'
+CheckoutGuest.displayName = 'CheckoutGuest'
 
-export default CheckoutAccount
+export default CheckoutGuest

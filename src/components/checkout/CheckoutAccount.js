@@ -1,8 +1,11 @@
 import React, { useState, useCallback, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import debounce from 'lodash/debounce'
-import { Button, ButtonCheckoutAccount, Input } from 'open-tender-js'
+import { Button, ButtonCheckoutAccount, Input } from 'open-tender'
+import { selectCustomerAccount } from '../../slices/customerSlice'
 import { FormContext } from './CheckoutForm'
-import CheckoutLineItem from './CheckoutLineItem'
+import { CheckoutLineItem } from '.'
 
 const makeAccountConfig = (requiredFields) => {
   return {
@@ -24,6 +27,8 @@ const fields = [
 ]
 
 const CheckoutAccount = () => {
+  const account = useSelector(selectCustomerAccount)
+  const history = useHistory()
   const formContext = useContext(FormContext)
   const { config, check, form, updateForm, logout } = formContext
   const [customer, setCustomer] = useState(form.customer)
@@ -39,6 +44,12 @@ const CheckoutAccount = () => {
     const newCustomer = { ...customer, [field]: value }
     setCustomer(newCustomer)
     debouncedUpdate(newCustomer)
+  }
+
+  const handleAccount = (evt) => {
+    evt.preventDefault()
+    history.push(`/account`)
+    evt.target.blur()
   }
 
   const errors = {}
@@ -64,7 +75,11 @@ const CheckoutAccount = () => {
       </div>
       <div className="form__inputs">
         <CheckoutLineItem label="Account">
-          <ButtonCheckoutAccount classes="btn--header" />
+          <ButtonCheckoutAccount
+            customer={account}
+            goToAccount={handleAccount}
+            classes="btn--header"
+          />
         </CheckoutLineItem>
         {fields.map((field) => {
           const input = accountConfig[field.name]
