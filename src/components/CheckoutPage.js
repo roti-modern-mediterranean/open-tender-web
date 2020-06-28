@@ -32,6 +32,7 @@ import { setConfirmationOrder } from '../slices/confirmationSlice'
 import HeaderLogo from './HeaderLogo'
 import { CheckoutForm } from './checkout'
 import Loader from './Loader'
+import { BarLoader } from 'react-spinners'
 
 const usePrevious = (value) => {
   const ref = useRef()
@@ -283,6 +284,7 @@ const CheckoutPage = () => {
                   check={check}
                   tenders={tenders}
                   updating={checkUpdating}
+                  loader={<BarLoader />}
                 />
               </div>
             )}
