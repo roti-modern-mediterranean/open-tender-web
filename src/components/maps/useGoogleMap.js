@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef } from 'react'
 import GoogleMapsApiLoader from 'google-maps-api-loader'
-import makeMapStyles from './utils/maps'
+import makeMapStyles from './mapStyles'
 
 // https://github.com/laurencedorman/google-maps-api-loader
 // https://codesandbox.io/s/lx947qjv0z

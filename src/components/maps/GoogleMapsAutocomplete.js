@@ -1,13 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect, useRef } from 'react'
 import propTypes from 'prop-types'
-import {
-  Input,
-  useGoogleMapsAutocomplete,
-  useGoogleMapsPlace,
-  makeAddress,
-} from './index'
-import { iconMap } from './icons'
+import { useGoogleMapsAutocomplete, useGoogleMapsPlace } from '.'
+import { Input, iconMap } from 'open-tender'
+import { makeAddress } from 'open-tender-js'
 
 const keys = {
   enter: 13,

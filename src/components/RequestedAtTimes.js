@@ -1,12 +1,8 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import {
-  makeOrderTimes,
-  time24ToDateStr,
-  timezoneMap,
-} from '../packages/utils/datetimes'
-import { capitalize } from '../packages/utils/helpers'
-import { Button } from '../packages'
+import { makeOrderTimes, time24ToDateStr, timezoneMap } from 'open-tender-js'
+import { capitalize } from 'open-tender-js'
+import { Button } from 'open-tender'
 
 const RequestedAtTimes = ({
   orderTimes,

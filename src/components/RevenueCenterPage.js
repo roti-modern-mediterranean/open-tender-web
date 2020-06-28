@@ -13,7 +13,7 @@ import {
   setGeoLoading,
 } from '../slices/geolocationSlice'
 import { selectConfig } from '../slices/configSlice'
-import useGeolocation from '../packages/useGeolocation'
+import { useGeolocation } from './maps'
 import Background from './Background'
 import RevenueCenter from './RevenueCenter'
 

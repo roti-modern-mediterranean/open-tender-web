@@ -1,11 +1,8 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import {
-  makeRequestedAtStr,
-  makeEstimatedTime,
-} from '../packages/utils/datetimes'
-import { RequestedAtPicker } from '../packages'
-import { timezoneMap } from '../packages/utils/datetimes'
+import { makeRequestedAtStr, makeEstimatedTime } from 'open-tender-js'
+import { RequestedAtPicker } from 'open-tender'
+import { timezoneMap } from 'open-tender-js'
 
 const RequestedAtCalendar = ({
   forcedUpdate,

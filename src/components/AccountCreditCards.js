@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { slugify } from '../packages/utils/helpers'
+import { slugify } from 'open-tender-js'
 import { selectAccountConfigSections } from '../slices/configSlice'
 import {
   selectToken,
@@ -10,7 +10,7 @@ import {
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
-import { Button } from '../packages'
+import { Button } from 'open-tender'
 import CreditCards from './CreditCards'
 import { openModal } from '../slices/modalSlice'
 import SectionEmpty from './SectionEmpty'

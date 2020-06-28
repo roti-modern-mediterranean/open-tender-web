@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
-import { makeUniqueDisplayItems } from '../packages/utils/cart'
+import { makeUniqueDisplayItems } from 'open-tender-js'
 import { selectAccountConfigSections } from '../slices/configSlice'
 import { selectToken, selectCustomer } from '../slices/customerSlice'
 import SectionHeader from './SectionHeader'

@@ -4,9 +4,9 @@ import { selectAccountConfigSections } from '../slices/configSlice'
 import { selectCustomer, updateCustomer } from '../slices/customerSlice'
 import SectionHeader from './SectionHeader'
 import SectionError from './SectionError'
-import { slugify } from '../packages/utils/helpers'
-import { Input } from '../packages'
-import { handleFormErrors } from '../packages/utils/errors'
+import { slugify } from 'open-tender-js'
+import { Input } from 'open-tender'
+import { handleFormErrors } from 'open-tender-js'
 import SectionLoading from './SectionLoading'
 
 const fields = [

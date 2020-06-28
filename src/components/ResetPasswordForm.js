@@ -2,13 +2,13 @@ import React, { useRef, useState, useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Input, Button } from '../packages'
+import { Input, Button } from 'open-tender'
 import {
   selectResetPassword,
   resetPassword,
   resetResetPassword,
 } from '../slices/customerSlice'
-import { makeFormErrors } from '../packages/utils/errors'
+import { makeFormErrors } from 'open-tender-js'
 import SubmitButton from './SubmitButton'
 import { openModal } from '../slices/modalSlice'
 

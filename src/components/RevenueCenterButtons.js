@@ -8,7 +8,7 @@ import {
   resetRevenueCenter,
   setRevenueCenter,
 } from '../slices/orderSlice'
-import { Button } from '../packages'
+import { Button } from 'open-tender'
 
 export const RevenueCenterButtons = ({ revenueCenter }) => {
   const dispatch = useDispatch()

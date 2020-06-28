@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { resetOrder } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
-import { Button } from '../packages'
+import { Button } from 'open-tender'
 
 const HeaderLogo = () => {
   const history = useHistory()

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { slugify } from '../packages/utils/helpers'
-import { Switch } from '../packages'
+import { slugify } from 'open-tender-js'
+import { Switch } from 'open-tender'
 import { selectAccountConfigSections } from '../slices/configSlice'
 import { selectAllergens, fetchAllergens } from '../slices/menuSlice'
 import {

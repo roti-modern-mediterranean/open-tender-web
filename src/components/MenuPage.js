@@ -19,7 +19,7 @@ import Menu from './Menu'
 import RevenueCenter from './RevenueCenter'
 import Loader from './Loader'
 import ErrorMessage from './ErrorMessage'
-import { Button } from '../packages'
+import { Button } from 'open-tender'
 
 export const MenuContext = createContext(null)
 

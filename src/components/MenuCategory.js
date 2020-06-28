@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { slugify } from '../packages/utils/helpers'
+import { slugify } from 'open-tender-js'
 import MenuItem from './MenuItem'
 
 const MenuCategory = ({ category, isChild }) => {

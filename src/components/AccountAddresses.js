@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { slugify } from '../packages/utils/helpers'
+import { slugify } from 'open-tender-js'
 import { selectAccountConfigSections } from '../slices/configSlice'
 import {
   selectToken,

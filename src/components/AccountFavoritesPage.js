@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
-import { makeDisplayItem } from '../packages/utils/cart'
+import { makeDisplayItem } from 'open-tender-js'
 import { selectAccountConfigSections } from '../slices/configSlice'
 import {
   selectToken,

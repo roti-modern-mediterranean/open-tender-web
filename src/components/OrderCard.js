@@ -2,14 +2,10 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import {
-  timezoneMap,
-  isoToDateStr,
-  isoToDate,
-} from '../packages/utils/datetimes'
-import { capitalize } from '../packages/utils/helpers'
-import { makeOrderAddress } from '../packages/utils/cart'
-import { Button, DeliveryLink } from '../packages'
+import { timezoneMap, isoToDateStr, isoToDate } from 'open-tender-js'
+import { capitalize } from 'open-tender-js'
+import { makeOrderAddress } from 'open-tender-js'
+import { Button, DeliveryLink } from 'open-tender'
 import {
   setOrderServiceType,
   setAddress,

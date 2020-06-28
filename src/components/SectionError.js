@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { isObject } from '../packages/utils/helpers'
+import { isObject } from 'open-tender-js'
 
 const SectionError = ({ error }) => {
   const errMsg = isObject(error) ? error.detail || error.message : error

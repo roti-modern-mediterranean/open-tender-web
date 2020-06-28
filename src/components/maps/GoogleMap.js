@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
-import useGoogleMap from './useGoogleMap'
 import ClipLoader from 'react-spinners/ClipLoader'
+import useGoogleMap from './useGoogleMap'
 
 // https://codesandbox.io/s/lx947qjv0z?file=/src/Consumer.jsx
 

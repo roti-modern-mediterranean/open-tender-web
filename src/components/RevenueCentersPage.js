@@ -5,9 +5,9 @@ import { selectConfig } from '../slices/configSlice'
 import { selectOrder, setOrderServiceType } from '../slices/orderSlice'
 import { selectGeoLatLng } from '../slices/geolocationSlice'
 import { selectRevenueCenters } from '../slices/revenueCentersSlice'
-import { GoogleMap, GoogleMapsMarker } from '../packages'
 import RevenueCentersSelect from './RevenueCentersSelect'
-import { makeOrderTypeFromParam } from '../packages/utils/cart'
+import { makeOrderTypeFromParam } from 'open-tender-js'
+import { GoogleMap, GoogleMapsMarker } from './maps'
 
 const RevenueCentersPage = () => {
   const history = useHistory()

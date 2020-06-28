@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { slugify } from '../packages/utils/helpers'
+import { slugify } from 'open-tender-js'
 import { selectAccountConfigSections } from '../slices/configSlice'
 import {
   selectCustomerHouseAccounts,
@@ -12,10 +12,7 @@ import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionRow from './SectionRow'
 import SectionEmpty from './SectionEmpty'
-import {
-  orderTypeNamesMap,
-  serviceTypeNamesMap,
-} from '../packages/utils/constants'
+import { orderTypeNamesMap, serviceTypeNamesMap } from 'open-tender-js'
 
 const AccountHouseAccounts = () => {
   const dispatch = useDispatch()

@@ -9,13 +9,9 @@ import {
   setGeoError,
   setGeoLoading,
 } from '../slices/geolocationSlice'
-
-import useGeolocation from '../packages/useGeolocation'
-import * as OT from 'open-tender'
-// import { useGeolocation } from 'open-tender'
 import Background from './Background'
 import OrderType from './OrderType'
-console.log(OT)
+import { useGeolocation } from './maps'
 
 const HomePage = () => {
   const history = useHistory()

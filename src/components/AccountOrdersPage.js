@@ -9,7 +9,7 @@ import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionEmpty from './SectionEmpty'
 import OrderCard from './OrderCard'
-import { Button } from '../packages'
+import { Button } from 'open-tender'
 import SectionFooter from './SectionFooter'
 
 const AccountOrdersPage = () => {

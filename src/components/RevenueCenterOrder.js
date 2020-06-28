@@ -9,7 +9,7 @@ import {
   selectAutoSelect,
 } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
-// import { Button } from '../packages'
+// import { Button } from 'open-tender'
 import { Button } from 'open-tender'
 import RevenueCenterButtons from './RevenueCenterButtons'
 

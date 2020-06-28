@@ -10,7 +10,7 @@ import { openModal } from '../slices/modalSlice'
 import { setCurrentAddress } from '../slices/accountSlice'
 import SectionRow from './SectionRow'
 import OrderAddress from './OrderAddress'
-import { Button } from '../packages'
+import { Button } from 'open-tender'
 import { setAddress } from '../slices/orderSlice'
 
 const Addresses = ({ addresses, token, isLoading }) => {

@@ -6,9 +6,9 @@ import {
   removeCustomerCreditCard,
 } from '../slices/customerSlice'
 import SectionRow from './SectionRow'
-import { Button } from '../packages'
+import { Button } from 'open-tender'
 import { cardIcons } from '../packages/utils/cards'
-import CircleLoader from '../packages/CircleLoader'
+import CircleLoader from 'open-tender'
 
 const CreditCards = ({ creditCards, token, isLoading }) => {
   const dispatch = useDispatch()

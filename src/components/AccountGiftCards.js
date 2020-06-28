@@ -1,14 +1,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { slugify } from '../packages/utils/helpers'
+import { slugify } from 'open-tender-js'
 import { selectAccountConfigSections } from '../slices/configSlice'
 import { selectCustomerGiftCards } from '../slices/customerSlice'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionRow from './SectionRow'
-import { Button } from '../packages'
-import { formatDateStr, dateStrToDate } from '../packages/utils/datetimes'
+import { Button } from 'open-tender'
+import { formatDateStr, dateStrToDate } from 'open-tender-js'
 
 const AccountGiftCards = () => {
   const {

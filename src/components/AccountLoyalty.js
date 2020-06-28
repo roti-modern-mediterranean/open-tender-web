@@ -6,7 +6,7 @@ import {
   selectToken,
   selectCustomerLoyalty,
 } from '../slices/customerSlice'
-import { loyaltyType } from '../packages/utils/constants'
+import { loyaltyType } from 'open-tender-js'
 
 const LoyaltyProgram = ({ program }) => {
   const { name, description, loyalty_type, spend, redemption, credit } = program

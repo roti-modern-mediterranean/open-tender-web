@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { GoogleMapsAutocomplete, Button } from '../packages'
+import { GoogleMapsAutocomplete } from './maps'
+import { Button } from 'open-tender'
 import { selectConfig } from '../slices/configSlice'
 import {
   setAddress,

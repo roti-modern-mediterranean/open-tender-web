@@ -41,16 +41,9 @@ import DeliveryLink from './DeliveryLink'
 import ExistingCard from './ExistingCard'
 import NewCard from './NewCard'
 import NewCardModal from './NewCardModal'
-import useGoogleMap from './useGoogleMap'
-import useGoogleMapsAutocomplete from './useGoogleMapsAutocomplete'
-import useGoogleMapsPlace from './useGoogleMapsPlace'
-import GoogleMap from './GoogleMap'
-import GoogleMapsAutocomplete from './GoogleMapsAutocomplete'
-import GoogleMapsMarker from './GoogleMapsMarker'
 import OrderQuantity from './OrderQuantity'
 import RequestedAtPicker from './RequestedAtPicker'
 import { Label, Error, Input, Textarea, Switch, Checkbox } from './Inputs'
-import { makeAddress } from './utils/maps'
 
 export {
   Builder,
@@ -96,13 +89,6 @@ export {
   ExistingCard,
   NewCard,
   NewCardModal,
-  useGoogleMap,
-  useGoogleMapsAutocomplete,
-  useGoogleMapsPlace,
-  GoogleMap,
-  GoogleMapsAutocomplete,
-  GoogleMapsMarker,
-  makeAddress,
   OrderQuantity,
   RequestedAtPicker,
   Error,

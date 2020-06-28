@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentItem, selectCartCounts } from '../slices/orderSlice'
 import { openModal } from '../slices/modalSlice'
 import { MenuContext } from './MenuPage'
-import { convertStringToArray } from '../packages/utils/cart'
+import { convertStringToArray } from 'open-tender-js'
 import Tag from './Tag'
 
 const MenuItem = ({ item }) => {

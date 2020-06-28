@@ -19,9 +19,9 @@ import {
   makeLocalDate,
   makeLocalDateStr,
   todayDate,
-} from '../packages/utils/datetimes'
+} from 'open-tender-js'
 import Background from './Background'
-import { Button } from '../packages'
+import { Button } from 'open-tender'
 import {
   fetchValidTimes,
   selectValidTimes,

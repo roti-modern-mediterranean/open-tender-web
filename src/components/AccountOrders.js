@@ -16,8 +16,8 @@ import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionEmpty from './SectionEmpty'
 import OrderCard from './OrderCard'
-import { slugify } from '../packages/utils/helpers'
-import { Button } from '../packages'
+import { slugify } from 'open-tender-js'
+import { Button } from 'open-tender'
 import SectionFooter from './SectionFooter'
 
 const AccountOrders = () => {

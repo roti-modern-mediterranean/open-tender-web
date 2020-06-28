@@ -20,9 +20,9 @@ import {
   ButtonRequestedAt,
   ButtonServiceType,
   ButtonStartOver,
-} from '../packages'
+} from 'open-tender'
 import HeaderLogo from './HeaderLogo'
-import { makeServiceTypeName } from '../packages/utils/cart'
+import { makeServiceTypeName } from 'open-tender-js'
 import { resetCheckout } from '../slices/checkoutSlice'
 import { selectOutpostName } from '../slices/configSlice'
 

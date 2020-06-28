@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { stripTags } from '../packages/utils/helpers'
+import { stripTags } from 'open-tender-js'
 import RevenueCenterOrder from './RevenueCenterOrder'
 import RevenueCenterAction from './RevenueCenterAction'
 

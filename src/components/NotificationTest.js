@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 
-import { Button } from '../packages'
+import { Button } from 'open-tender'
 import { useDispatch } from 'react-redux'
 
 const NotificationTest = ({ message }) => {

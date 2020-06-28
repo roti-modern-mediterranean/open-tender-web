@@ -1,8 +1,8 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, ButtonFavorite } from '../packages'
-import { displayPrice, rehydrateOrderItem } from '../packages/utils/cart'
+import { Button, ButtonFavorite } from 'open-tender'
+import { displayPrice, rehydrateOrderItem } from 'open-tender-js'
 import {
   selectToken,
   addCustomerFavorite,

@@ -11,10 +11,10 @@ import {
   selectOrderLimits,
 } from '../slices/orderSlice'
 import SidebarOverlay from './SidebarOverlay'
-import { Button } from '../packages'
+import { Button } from 'open-tender'
 import Cart from './Cart'
 import SidebarClose from './SidebarClose'
-import { displayPrice } from '../packages/utils/cart'
+import { displayPrice } from 'open-tender-js'
 
 const Sidebar = () => {
   const dispatch = useDispatch()
