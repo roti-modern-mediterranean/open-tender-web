@@ -2,8 +2,14 @@ import React, { useEffect, useRef, useMemo } from 'react'
 import isEqual from 'lodash/isEqual'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import {
+  CheckoutForm,
+  Check,
+  ButtonMenu,
+  ButtonAccount,
+  ButtonCancelEdit,
+} from 'open-tender'
 import { prepareOrder } from 'open-tender-js'
-import { Check, ButtonMenu, ButtonAccount, ButtonCancelEdit } from 'open-tender'
 import { selectConfig } from '../slices/configSlice'
 import { openModal } from '../slices/modalSlice'
 import { logoutCustomer, selectCustomer } from '../slices/customerSlice'
@@ -30,7 +36,6 @@ import {
 } from '../slices/checkoutSlice'
 import { setConfirmationOrder } from '../slices/confirmationSlice'
 import HeaderLogo from './HeaderLogo'
-import { CheckoutForm } from './checkout'
 import Loader from './Loader'
 import { BarLoader } from 'react-spinners'
 
