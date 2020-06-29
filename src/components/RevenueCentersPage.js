@@ -7,7 +7,8 @@ import { selectGeoLatLng } from '../slices/geolocationSlice'
 import { selectRevenueCenters } from '../slices/revenueCentersSlice'
 import RevenueCentersSelect from './RevenueCentersSelect'
 import { makeOrderTypeFromParam } from 'open-tender-js'
-import { GoogleMap, GoogleMapsMarker } from './maps'
+import { GoogleMap, GoogleMapsMarker } from 'open-tender'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 const RevenueCentersPage = () => {
   const history = useHistory()
@@ -49,6 +50,7 @@ const RevenueCentersPage = () => {
         zoom={zoom}
         styles={styles}
         center={center}
+        loader={<ClipLoader size={30} loading={true} />}
         // events={null}
       >
         <RevenueCentersSelect setCenter={setCenter} center={center} />
