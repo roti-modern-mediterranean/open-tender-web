@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { makeRequestedIso, validateCart } from 'open-tender-js'
 import { getMenu, getMenuItems, getAllergens } from '../services/requests'
 import { refreshRevenueCenter, setCart } from './orderSlice'
-import { makeRequestedIso } from '../packages/utils/datetimes'
-import { validateCart } from '../packages/utils/cart'
 import { openModal } from './modalSlice'
 
 const initialState = {

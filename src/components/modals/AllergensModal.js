@@ -4,7 +4,7 @@ import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
 import { selectCustomerAllergens } from '../../slices/customerSlice'
 import { selectMenu, setSelectedAllergens } from '../../slices/menuSlice'
-import { Switch } from '../../packages'
+import { Switch } from 'open-tender'
 
 const AllergensModal = () => {
   const submitButton = useRef()

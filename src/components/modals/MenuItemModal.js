@@ -8,9 +8,9 @@ import {
 } from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
 import { selectSoldOut, selectedAllergenNames } from '../../slices/menuSlice'
-import { Builder, BuilderOption, BuilderHeader } from '../../packages'
-import ModalClose from '../ModalClose'
 import { showNotification } from '../../slices/notificationSlice'
+import { Builder, BuilderOption, BuilderHeader } from 'open-tender'
+import ModalClose from '../ModalClose'
 
 const MenuItemModal = () => {
   const dispatch = useDispatch()

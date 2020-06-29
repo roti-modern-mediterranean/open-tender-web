@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getRevenueCenter, getMenuItems } from '../services/requests'
 import {
   addItem,
   removeItem,
@@ -8,24 +7,21 @@ import {
   calcCartCounts,
   rehydrateCart,
   rehydrateCheckoutForm,
-} from '../packages/utils/cart'
-import {
   serviceTypeNamesMap,
   orderTypeNamesMap,
-} from '../packages/utils/constants'
-import {
   timezoneMap,
   getUserTimezone,
   makeFirstRequestedAt,
   makeFirstTimes,
   makeRequestedAtStr,
-} from '../packages/utils/datetimes'
+  makeRandomNumberString,
+} from 'open-tender-js'
+import { getRevenueCenter, getMenuItems } from '../services/requests'
 import { setMenuItems, resetMenuVars } from './menuSlice'
 import { openModal, closeModal } from './modalSlice'
-import { modalConfig as mc } from '../components/modals/config'
 import { updateForm } from './checkoutSlice'
 import { toggleSidebar } from './sidebarSlice'
-import { makeRandomNumberString } from '../packages/utils/helpers'
+import { modalConfig as mc } from '../components/modals/config'
 
 const initialState = {
   orderId: null,

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { addDistance } from 'open-tender-js'
 import { getRevenueCenters, getValidTimes } from '../services/requests'
-import { addDistance } from '../packages/utils/maps'
 
 const initialState = {
   revenueCenters: [],

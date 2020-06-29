@@ -1,18 +1,18 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { Button } from '../../packages'
+import {
+  capitalize,
+  makeReadableDateStrFromIso,
+  timezoneMap,
+} from 'open-tender-js'
+import { Button } from 'open-tender'
 import {
   setServiceType,
   setRequestedAt,
   resetRevenueCenter,
 } from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
-import {
-  makeReadableDateStrFromIso,
-  timezoneMap,
-} from '../../packages/utils/datetimes'
-import { capitalize } from '../../packages/utils/helpers'
 import { resetMenuVars, fetchMenu } from '../../slices/menuSlice'
 
 const AdjustRequestedAtModal = ({ firstTimes, revenueCenter }) => {

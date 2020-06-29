@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
-// import propTypes from 'prop-types'
+import { makeFormErrors } from 'open-tender-js'
 import { useSelector, useDispatch } from 'react-redux'
 import { closeModal } from '../../slices/modalSlice'
 import ModalClose from '../ModalClose'
-import { Input, Textarea, Switch } from '../../packages'
+import { Input, Textarea, Switch } from 'open-tender'
 import { selectAccountAddress } from '../../slices/accountSlice'
 import { updateCustomerAddress, selectToken } from '../../slices/customerSlice'
-import { makeFormErrors } from '../../packages/utils/errors'
 
 const fields = [
   // { label: 'Street', name: 'street', type: 'text', required: true },

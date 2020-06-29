@@ -5,7 +5,7 @@ import { selectMenu, fetchMenu } from '../../slices/menuSlice'
 import { selectConfig } from '../../slices/configSlice'
 import { selectRevenueCenters } from '../../slices/revenueCentersSlice'
 import ModalClose from '../ModalClose'
-import { CartErrors } from '../../packages'
+import { CartErrors } from 'open-tender'
 import { setCart, setRevenueCenter } from '../../slices/orderSlice'
 
 const CartErrorsModal = () => {

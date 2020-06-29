@@ -1,20 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react'
 // import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
+import {
+  makeFormErrors,
+  getCardType,
+  makeAcctNumber,
+  validateCreditCard,
+} from 'open-tender-js'
+import { Input } from 'open-tender'
 import { closeModal } from '../../slices/modalSlice'
-import ModalClose from '../ModalClose'
-import { Input } from '../../packages'
 import {
   selectToken,
   addCustomerCreditCard,
   selectCustomerCreditCards,
 } from '../../slices/customerSlice'
-import { makeFormErrors } from '../../packages/utils/errors'
-import {
-  getCardType,
-  makeAcctNumber,
-  validateCreditCard,
-} from '../../packages/utils/cards'
+import ModalClose from '../ModalClose'
 
 const fields = [
   {

@@ -1,12 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import {
+  isEmpty,
+  contains,
+  isString,
+  getDefaultTip,
+  prepareOrder,
+  handleCheckoutErrors,
+} from 'open-tender-js'
 import { postOrderValidate, postOrder } from '../services/requests'
-import { handleCheckoutErrors } from '../packages/utils/errors'
 import { openModal, closeModal } from './modalSlice'
-import { getDefaultTip, prepareOrder } from '../packages/utils/cart'
-import { isEmpty, contains, isString } from '../packages/utils/helpers'
 import { refreshRevenueCenter } from './orderSlice'
 import { fetchMenu } from './menuSlice'
-// import { getDefaultTip } from '../packages/utils/cart'
 
 const initialState = {
   check: null,

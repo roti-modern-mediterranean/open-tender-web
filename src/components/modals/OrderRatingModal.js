@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
+import { Textarea, iconMap } from 'open-tender'
 import { closeModal } from '../../slices/modalSlice'
 import { updateOrderRating, selectToken } from '../../slices/customerSlice'
 import ModalClose from '../ModalClose'
-import { Textarea } from '../../packages'
-import { iconMap } from '../../packages/icons'
 
 const OrderRatingModal = ({ orderId, orderRating }) => {
   const [rating, setRating] = useState(orderRating.rating || 0)

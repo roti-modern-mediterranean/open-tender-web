@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button } from '../../packages'
+import { Button } from 'open-tender'
+import { serviceTypeNamesMap } from 'open-tender-js'
 import { resetOrderType, selectOrder } from '../../slices/orderSlice'
 import { closeModal } from '../../slices/modalSlice'
-import { serviceTypeNamesMap } from '../../packages/utils/constants'
 
 const OrderTypeModal = ({ startOver }) => {
   const dispatch = useDispatch()

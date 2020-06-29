@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { makeRandomNumberString } from '../packages/utils/helpers'
+import { makeRandomNumberString } from 'open-tender-js'
 
 const initialState = {
   messages: [],

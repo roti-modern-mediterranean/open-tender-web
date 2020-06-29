@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getConfig } from '../services/requests'
 import { defaultConfig } from '../config'
-import { capitalize } from '../packages/utils/helpers'
+import { capitalize } from 'open-tender-js'
 
 export const fetchConfig = createAsyncThunk('config/getConfig', async () => {
   return await getConfig()

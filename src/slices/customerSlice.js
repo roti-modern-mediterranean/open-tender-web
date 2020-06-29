@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { makeFavoritesLookup, makeFormErrors } from 'open-tender-js'
 import {
   postSignUp,
   postLogin,
@@ -24,13 +25,11 @@ import {
   postResetPassword,
 } from '../services/requests'
 import { showNotification } from './notificationSlice'
-import { makeFavoritesLookup } from '../packages/utils/cart'
 import { setSelectedAllergens } from './menuSlice'
 import { fetchOrder } from './accountSlice'
 import { closeModal } from './modalSlice'
 import { resetOrder } from './orderSlice'
 import { resetCheckout } from './checkoutSlice'
-import { makeFormErrors } from '../packages/utils/errors'
 
 const initialState = {
   auth: null,

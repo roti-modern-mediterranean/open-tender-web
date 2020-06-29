@@ -9,7 +9,7 @@ import {
   resetResetSent,
 } from '../../slices/customerSlice'
 import ModalClose from '../ModalClose'
-import { Input, Button } from '../../packages'
+import { Input, Button } from 'open-tender'
 
 const messaging = {
   login: {

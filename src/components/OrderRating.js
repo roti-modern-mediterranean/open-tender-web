@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { iconMap } from '../packages/icons'
+import { iconMap } from 'open-tender'
 
 const OrderRating = ({ rating, comments }) => {
   const stars = []

@@ -1,4 +1,4 @@
-import { serialize } from '../packages/utils/helpers'
+import { serialize } from 'open-tender-js'
 
 const baseUrl = process.env.REACT_APP_API_URL
 const authUrl = process.env.REACT_APP_AUTH_URL
