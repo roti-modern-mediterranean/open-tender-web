@@ -11,7 +11,7 @@ import {
 } from '../slices/geolocationSlice'
 import Background from './Background'
 import OrderType from './OrderType'
-import { useGeolocation } from './maps'
+import { useGeolocation } from 'open-tender'
 
 const HomePage = () => {
   const history = useHistory()
