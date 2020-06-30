@@ -4,14 +4,36 @@ import { defaultConfig } from '../config'
 import { defaultTheme } from '../theme'
 import { capitalize } from 'open-tender-js'
 
+const baseUrl = process.env.REACT_APP_API_URL
+const authUrl = process.env.REACT_APP_AUTH_URL
+const clientId = process.env.REACT_APP_CLIENT_ID
+
+// const initialState = {
+//   content: defaultConfig,
+//   theme: defaultTheme,
+// }
+
 const initialState = {
-  content: defaultConfig,
-  theme: defaultTheme,
+  app: null,
+  brand: null,
+  content: null,
+  theme: null,
+  loading: 'idle',
+  error: null,
 }
 
-export const fetchConfig = createAsyncThunk('config/getConfig', async () => {
-  return await getConfig()
-})
+export const fetchConfig = createAsyncThunk(
+  'config/getConfig',
+  async (_, thunkAPI) => {
+    try {
+      const response = await getConfig()
+      const app = { baseUrl, authUrl, clientId }
+      return { ...response, app }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err)
+    }
+  }
+)
 
 // Then, handle actions in your reducers:
 const configSlice = createSlice({
@@ -23,7 +45,14 @@ const configSlice = createSlice({
   extraReducers: {
     // Add reducers for additional action types here, and handle loading state as needed
     [fetchConfig.fulfilled]: (state, action) => {
-      state = action.payload
+      state = { ...state, ...action.payload, loading: 'idle' }
+    },
+    [fetchConfig.pending]: (state) => {
+      state.loading = 'pending'
+    },
+    [fetchConfig.rejected]: (state, action) => {
+      state.error = action.payload.detail
+      state.loading = 'idle'
     },
   },
 })

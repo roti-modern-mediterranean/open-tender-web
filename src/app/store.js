@@ -17,6 +17,7 @@ import confirmationReducer from '../slices/confirmationSlice'
 import geolocationReducer from '../slices/geolocationSlice'
 import accountReducer from '../slices/accountSlice'
 import notificationReducer from '../slices/notificationSlice'
+import testReducer from '../reducers'
 
 const rootReducer = combineReducers({
   config: configReducer,
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   geolocation: geolocationReducer,
   account: accountReducer,
   notification: notificationReducer,
+  test: testReducer,
 })
 
 const persistedState = loadState()

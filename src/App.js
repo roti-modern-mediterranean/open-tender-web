@@ -12,6 +12,7 @@ import Messages from './components/Messages'
 import Notifications from './components/Notifications'
 import CartButton from './components/CartButton'
 import Sidebar from './components/Sidebar'
+import { fetchConfig } from './slices/configSlice'
 
 import './App.scss'
 
@@ -22,7 +23,7 @@ import './App.scss'
 
 class App extends React.Component {
   render() {
-    // console.log(this.props.theme)
+    // console.log(this.props.fetchConfig)
     return (
       <ThemeProvider theme={this.props.theme}>
         <div className="app">
@@ -44,7 +45,9 @@ class App extends React.Component {
   }
 }
 
-export default connect((state) => ({ theme: state.config.theme }), null)(App)
+export default connect((state) => ({ theme: state.config.theme }), {
+  fetchConfig,
+})(App)
 
 // const App = () => {
 //   return (

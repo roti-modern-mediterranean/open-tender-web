@@ -1,7 +1,15 @@
 import { request, authRequest } from './request'
+import { brandConfig, defaultConfig } from '../config'
+import { defaultTheme } from '../theme'
 
 export const getConfig = () => {
-  return request(`/config`)
+  // return request(`/config`)
+  const config = {
+    brand: brandConfig,
+    content: defaultConfig,
+    theme: defaultTheme,
+  }
+  return new Promise((resolve) => resolve(config))
 }
 
 export const getRevenueCenters = (
