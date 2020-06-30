@@ -1,8 +1,15 @@
 import React from 'react'
+// import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOrderServiceType } from '../slices/orderSlice'
 import { selectConfig } from '../slices/configSlice'
 import OrderTypeButton from './OrderTypeButton'
+import { Preface, Subtitle } from './styled'
+
+// const Preface = styled.p`
+//   color: ${(props) => props.theme.colors.secondary};
+//   font-size: ${(props) => props.theme.fontSizes.small};
+// `
 
 const OrderType = () => {
   const { home: homeConfig } = useSelector(selectConfig)
@@ -50,9 +57,11 @@ const OrderType = () => {
   return (
     <div className="card overlay border-radius slide-up">
       <div className="card__header">
-        <p className="preface font-size-small secondary-color">{subtitle}</p>
+        {/* <p className="preface font-size-small secondary-color">{subtitle}</p> */}
+        <Preface className="preface">{subtitle}</Preface>
         <h1 className="ot-font-size-h3">{title}</h1>
-        <p className="secondary-color">{content}</p>
+        {/* <p className="secondary-color">{content}</p> */}
+        <Subtitle>{content}</Subtitle>
       </div>
       <div className="card__content">
         {buttons.map((i) => (

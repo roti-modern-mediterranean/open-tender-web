@@ -364,7 +364,7 @@ export const selectServiceTypeName = (state) =>
   serviceTypeNamesMap[state.order.serviceType]
 
 export const selectAutoSelect = (state) => {
-  const rcConfig = state.config.revenueCenters
+  const rcConfig = state.config.content.revenueCenters
   const { orderType, serviceType } = state.order
   return orderType && serviceType
     ? rcConfig.autoSelect[orderType][serviceType]

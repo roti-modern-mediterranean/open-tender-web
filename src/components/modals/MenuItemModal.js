@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useTheme } from 'emotion-theming'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCurrentItem,
@@ -14,6 +15,7 @@ import ModalClose from '../ModalClose'
 
 const MenuItemModal = () => {
   const dispatch = useDispatch()
+  const theme = useTheme()
   const item = useSelector(selectCurrentItem)
   const soldOut = useSelector(selectSoldOut)
   const allergens = useSelector(selectedAllergenNames)
@@ -46,6 +48,7 @@ const MenuItemModal = () => {
           renderHeader={(props) => <BuilderHeader {...props} />}
           renderOption={(props) => <BuilderOption {...props} />}
           showImage={true}
+          theme={theme}
         />
       </div>
     </>

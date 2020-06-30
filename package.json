@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
     "@reduxjs/toolkit": "^1.1.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -10,6 +12,7 @@
     "@types/react-datepicker": "^2.11.0",
     "date-fns": "^2.14.0",
     "date-fns-tz": "^1.0.10",
+    "emotion-theming": "^10.0.27",
     "google-maps-api-loader": "^1.1.1",
     "node-sass": "^4.14.0",
     "point-in-polygon": "^1.0.1",
