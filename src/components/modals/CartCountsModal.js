@@ -2,9 +2,9 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { closeModal } from '../../slices/modalSlice'
 import { selectConfig } from '../../slices/configSlice'
-import ModalClose from '../ModalClose'
 import { selectCart } from '../../slices/orderSlice'
-import CartCounts from 'open-tender'
+import { CartCounts } from 'open-tender'
+import ModalClose from '../ModalClose'
 
 const CartCountsModal = ({ errors }) => {
   const dispatch = useDispatch()
