@@ -1,17 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getConfig } from '../services/requests'
-import { defaultConfig } from '../config'
-import { defaultTheme } from '../theme'
 import { capitalize } from 'open-tender-js'
+import API from '../services/requestClass'
 
 const baseUrl = process.env.REACT_APP_API_URL
 const authUrl = process.env.REACT_APP_AUTH_URL
 const clientId = process.env.REACT_APP_CLIENT_ID
-
-// const initialState = {
-//   content: defaultConfig,
-//   theme: defaultTheme,
-// }
 
 const initialState = {
   app: null,
@@ -45,7 +39,13 @@ const configSlice = createSlice({
   extraReducers: {
     // Add reducers for additional action types here, and handle loading state as needed
     [fetchConfig.fulfilled]: (state, action) => {
-      state = { ...state, ...action.payload, loading: 'idle' }
+      const { app, brand, content, theme } = action.payload
+      state.app = app
+      state.brand = brand
+      state.content = content
+      state.theme = theme
+      state.loading = 'idle'
+      state.api = new API(app, brand.brandId)
     },
     [fetchConfig.pending]: (state) => {
       state.loading = 'pending'
@@ -57,6 +57,7 @@ const configSlice = createSlice({
   },
 })
 
+export const selectBrand = (state) => state.config.brand
 export const selectTheme = (state) => state.config.theme
 export const selectConfig = (state) => state.config.content
 export const selectGoogleMapsConfig = (state) => state.config.content.googleMaps

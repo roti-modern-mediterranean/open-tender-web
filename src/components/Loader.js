@@ -11,8 +11,14 @@ const loader = (type, size) => {
   }
 }
 
-const Loader = ({ type, text, size = 100, textClass = 'font-size-small' }) => (
-  <div className="loading">
+const Loader = ({
+  type,
+  text,
+  size = 100,
+  className = '',
+  textClass = 'font-size-small',
+}) => (
+  <div className={`loading ${className}`}>
     <div className="loading__loader">{loader(type, size)}</div>
     {text && text.length > 0 && <p className={textClass}>{text}</p>}
   </div>

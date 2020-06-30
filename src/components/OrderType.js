@@ -6,7 +6,7 @@ import { selectConfig } from '../slices/configSlice'
 import OrderTypeButton from './OrderTypeButton'
 import { Preface, Subtitle } from './styled'
 // import { setOrderType } from '../reducers/testOrder'
-// import { fetchRevenueCenters } from '../reducers/testRevenueCenters'
+import { fetchRevenueCenters } from '../reducers/testRevenueCenters'
 
 // const Preface = styled.p`
 //   color: ${(props) => props.theme.colors.secondary};
@@ -18,9 +18,9 @@ const OrderType = () => {
   const { title, subtitle, content, buttons } = homeConfig
   const dispatch = useDispatch()
 
-  // useEffect(() => {
-  //   dispatch(fetchRevenueCenters({ revenue_center_type: 'OLO' }))
-  // }, [dispatch])
+  useEffect(() => {
+    dispatch(fetchRevenueCenters({ revenue_center_type: 'OLO' }))
+  }, [dispatch])
 
   const handleOutpost = (evt) => {
     evt.preventDefault()

@@ -2,13 +2,13 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { resetOrder } from '../slices/orderSlice'
-import { selectConfig } from '../slices/configSlice'
+import { selectBrand } from '../slices/configSlice'
 import { Button } from 'open-tender'
 
 const HeaderLogo = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { brand: brandConfig } = useSelector(selectConfig)
+  const brand = useSelector(selectBrand)
 
   const handleLogo = (evt) => {
     evt.preventDefault()
@@ -19,7 +19,7 @@ const HeaderLogo = () => {
 
   return (
     <Button onClick={handleLogo}>
-      <img src={brandConfig.logo} className="logo" alt="logo" />
+      <img src={brand.logo} className="logo" alt="logo" />
     </Button>
   )
 }

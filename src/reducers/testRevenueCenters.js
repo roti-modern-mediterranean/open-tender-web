@@ -1,5 +1,5 @@
 import { addDistance } from 'open-tender-js'
-import { getRevenueCenters } from '../services/requests'
+import { getRevenueCentersNew } from '../services/requests'
 
 const initState = {
   entities: [],
@@ -23,12 +23,12 @@ export const fetchRevenueCenters = ({
   try {
     if (lat) lat = parseFloat(lat).toFixed(7)
     if (lng) lng = parseFloat(lng).toFixed(7)
-    const response = await getRevenueCenters(
+    const response = await getRevenueCentersNew(getState().config.api, {
       revenue_center_type,
       is_outpost,
       lat,
-      lng
-    )
+      lng,
+    })
     const revenueCenters =
       lat && lng ? addDistance(response.data, { lat, lng }) : response.data
     const payload = { entities: revenueCenters, loading: 'idle' }

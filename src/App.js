@@ -1,9 +1,7 @@
 import React from 'react'
-// import ReactDOM from 'react-dom'
-import { ThemeProvider } from 'emotion-theming'
 import { connect } from 'react-redux'
+import { ThemeProvider } from 'emotion-theming'
 import { BrowserRouter as Router } from 'react-router-dom'
-// import { Counter } from "./features/counter/Counter";
 import Routes from './components/Routes'
 import Modal from './components/Modal'
 import Header from './components/Header'
@@ -15,16 +13,19 @@ import Sidebar from './components/Sidebar'
 import { fetchConfig } from './slices/configSlice'
 
 import './App.scss'
-
-// const theme = {
-//   secondaryColor: 'red',
-//   fontSizeSmall: '1.2rem',
-// }
+import Loader from './components/Loader'
 
 class App extends React.Component {
+  componentDidMount() {
+    this.props.fetchConfig()
+  }
+
   render() {
-    // console.log(this.props.fetchConfig)
-    return (
+    // const isLoading = true
+    const isLoading = this.props.loading === 'pending'
+    return isLoading ? (
+      <Loader className="loading--page" type="Clip" size={32} />
+    ) : (
       <ThemeProvider theme={this.props.theme}>
         <div className="app">
           <Modal />
@@ -45,27 +46,10 @@ class App extends React.Component {
   }
 }
 
-export default connect((state) => ({ theme: state.config.theme }), {
-  fetchConfig,
-})(App)
-
-// const App = () => {
-//   return (
-//     <div className="app">
-//       <Modal />
-//       <Router>
-//         <Header />
-//         <main className="main ot-main">
-//           <Messages />
-//           <Routes />
-//           <Notifications />
-//           <CartButton />
-//         </main>
-//         <Sidebar />
-//         <Footer />
-//       </Router>
-//     </div>
-//   )
-// }
-
-// export default App
+export default connect(
+  (state) => ({
+    theme: state.config.theme,
+    loading: state.config.loading,
+  }),
+  { fetchConfig }
+)(App)
