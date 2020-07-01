@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { useGeolocation } from 'open-tender'
+import { selectOrder, resetRevenueCenters } from 'open-tender-redux'
 import { selectConfig } from '../slices/configSlice'
-import { selectOrder } from '../slices/orderSlice'
-import { resetRevenueCenters } from '../slices/revenueCentersSlice'
 import {
   setGeoLatLng,
   setGeoError,
@@ -11,7 +11,6 @@ import {
 } from '../slices/geolocationSlice'
 import Background from './Background'
 import OrderType from './OrderType'
-import { useGeolocation } from 'open-tender'
 
 const HomePage = () => {
   const history = useHistory()
@@ -20,6 +19,7 @@ const HomePage = () => {
   const { home: homeConfig } = useSelector(selectConfig)
   // const bgStyle = { backgroundImage: `url(${home.background}` }
   const order = useSelector(selectOrder)
+  console.log(order)
   const hasTypes = order.orderType && order.serviceType
   const path = order.orderType === 'CATERING' ? '/catering' : '/locations'
 

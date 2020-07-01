@@ -7,7 +7,7 @@ import {
   setRevenueCenter,
   selectOrder,
   selectAutoSelect,
-} from '../slices/orderSlice'
+} from 'open-tender-redux'
 import { selectConfig } from '../slices/configSlice'
 // import { Button } from 'open-tender'
 import { Button } from 'open-tender'

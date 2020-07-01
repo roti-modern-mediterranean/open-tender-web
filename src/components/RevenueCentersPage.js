@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
-import { selectConfig } from '../slices/configSlice'
-import { selectOrder, setOrderServiceType } from '../slices/orderSlice'
-import { selectGeoLatLng } from '../slices/geolocationSlice'
-import { selectRevenueCenters } from '../slices/revenueCentersSlice'
-import RevenueCentersSelect from './RevenueCentersSelect'
 import { makeOrderTypeFromParam } from 'open-tender-js'
 import { GoogleMap, GoogleMapsMarker } from 'open-tender'
+import {
+  selectOrder,
+  setOrderServiceType,
+  selectRevenueCenters,
+} from 'open-tender-redux'
+import { selectConfig } from '../slices/configSlice'
+import { selectGeoLatLng } from '../slices/geolocationSlice'
+import RevenueCentersSelect from './RevenueCentersSelect'
 import ClipLoader from 'react-spinners/ClipLoader'
 
 const RevenueCentersPage = () => {
@@ -45,49 +48,51 @@ const RevenueCentersPage = () => {
 
   return (
     <div className="content">
-      <GoogleMap
-        apiKey={apiKey}
-        zoom={zoom}
-        styles={styles}
-        center={center}
-        loader={<ClipLoader size={30} loading={true} />}
-        // events={null}
-      >
-        <RevenueCentersSelect setCenter={setCenter} center={center} />
-        {revenueCenters.map((i) => {
-          const isActive = i.revenue_center_id === activeMarker
-          const icon = isActive ? icons.active : icons.inactive
-          return (
+      {apiKey && (
+        <GoogleMap
+          apiKey={apiKey}
+          zoom={zoom}
+          styles={styles}
+          center={center}
+          loader={<ClipLoader size={30} loading={true} />}
+          // events={null}
+        >
+          <RevenueCentersSelect setCenter={setCenter} center={center} />
+          {revenueCenters.map((i) => {
+            const isActive = i.revenue_center_id === activeMarker
+            const icon = isActive ? icons.active : icons.inactive
+            return (
+              <GoogleMapsMarker
+                key={i.revenue_center_id}
+                title={i.name}
+                position={{
+                  lat: i.address.lat,
+                  lng: i.address.lng,
+                }}
+                icon={icon.url}
+                size={icon.size}
+                anchor={icon.anchor}
+                events={{
+                  onClick: () => setActiveMarker(i.revenue_center_id),
+                }}
+              />
+            )
+          })}
+          {address && (
             <GoogleMapsMarker
-              key={i.revenue_center_id}
-              title={i.name}
+              title="Your Location"
               position={{
-                lat: i.address.lat,
-                lng: i.address.lng,
+                lat: center.lat,
+                lng: center.lng,
               }}
-              icon={icon.url}
-              size={icon.size}
-              anchor={icon.anchor}
-              events={{
-                onClick: () => setActiveMarker(i.revenue_center_id),
-              }}
+              icon={icons.user.url}
+              size={icons.user.size}
+              anchor={icons.user.anchor}
+              drop={null}
             />
-          )
-        })}
-        {address && (
-          <GoogleMapsMarker
-            title="Your Location"
-            position={{
-              lat: center.lat,
-              lng: center.lng,
-            }}
-            icon={icons.user.url}
-            size={icons.user.size}
-            anchor={icons.user.anchor}
-            drop={null}
-          />
-        )}
-      </GoogleMap>
+          )}
+        </GoogleMap>
+      )}
     </div>
   )
 }

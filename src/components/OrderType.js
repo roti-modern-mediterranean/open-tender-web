@@ -1,43 +1,24 @@
-import React, { useEffect } from 'react'
-// import styled from '@emotion/styled'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setOrderServiceType } from '../slices/orderSlice'
+import { setOrderServiceType } from 'open-tender-redux'
 import { selectConfig } from '../slices/configSlice'
 import OrderTypeButton from './OrderTypeButton'
 import { Preface, Subtitle } from './styled'
-// import { setOrderType } from '../reducers/testOrder'
-// import { fetchRevenueCenters } from '../reducers/testRevenueCenters'
-import { fetchRevenueCenters, selectRevenueCenters } from 'open-tender-redux'
-console.log(selectRevenueCenters)
-
-// const Preface = styled.p`
-//   color: ${(props) => props.theme.colors.secondary};
-//   font-size: ${(props) => props.theme.fontSizes.small};
-// `
 
 const OrderType = () => {
+  const dispatch = useDispatch()
   const { home: homeConfig } = useSelector(selectConfig)
   const { title, subtitle, content, buttons } = homeConfig
-  const dispatch = useDispatch()
-  const { revenueCenters, loading, error } = useSelector(selectRevenueCenters)
-  console.log(revenueCenters)
-  console.log(loading)
-  console.log(error)
-
-  useEffect(() => {
-    console.log('useEffect is executing')
-    dispatch(fetchRevenueCenters({ type: 'OLO' }))
-  }, [dispatch])
 
   const handleOutpost = (evt) => {
     evt.preventDefault()
-    dispatch(setOrderServiceType(['OLO', 'PICKUP', true]))
+    dispatch(setOrderServiceType('OLO', 'PICKUP', true))
     evt.target.blur()
   }
 
   const handlePickup = (evt) => {
     evt.preventDefault()
-    dispatch(setOrderServiceType(['OLO', 'PICKUP']))
+    dispatch(setOrderServiceType('OLO', 'PICKUP'))
     evt.target.blur()
   }
 

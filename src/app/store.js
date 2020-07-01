@@ -10,7 +10,6 @@ import customerReducer from '../slices/customerSlice'
 import modalReducer from '../slices/modalSlice'
 import sidebarReducer from '../slices/sidebarSlice'
 import orderReducer from '../slices/orderSlice'
-import revenueCentersReducer from '../slices/revenueCentersSlice'
 import menuReducer from '../slices/menuSlice'
 import checkoutReducer from '../slices/checkoutSlice'
 import confirmationReducer from '../slices/confirmationSlice'
@@ -26,7 +25,6 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   sidebar: sidebarReducer,
   order: orderReducer,
-  revenueCenters: revenueCentersReducer,
   menu: menuReducer,
   checkout: checkoutReducer,
   confirmation: confirmationReducer,

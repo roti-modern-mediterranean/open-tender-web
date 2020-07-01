@@ -2,21 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import BarLoader from 'react-spinners/BarLoader'
 import { GoogleMapsAutocomplete } from 'open-tender'
-import { Button } from 'open-tender'
-import { selectConfig } from '../slices/configSlice'
-import {
-  setAddress,
-  selectOrder,
-  setRevenueCenter,
-  selectAutoSelect,
-  resetOrderType,
-} from '../slices/orderSlice'
-import {
-  fetchRevenueCenters,
-  selectRevenueCenters,
-} from '../slices/revenueCentersSlice'
-import { selectGeoLatLng } from '../slices/geolocationSlice'
 import {
   calcMinDistance,
   makePickupRevenueCenters,
@@ -25,8 +12,19 @@ import {
   makeDeliveryMesssaging,
   renameLocation,
 } from 'open-tender-js'
+import {
+  setAddress,
+  selectOrder,
+  setRevenueCenter,
+  selectAutoSelect,
+  resetOrderType,
+  fetchRevenueCenters,
+  selectRevenueCenters,
+} from 'open-tender-redux'
+import { Button } from 'open-tender'
+import { selectConfig } from '../slices/configSlice'
+import { selectGeoLatLng } from '../slices/geolocationSlice'
 import RevenueCenter from './RevenueCenter'
-import BarLoader from 'react-spinners/BarLoader'
 import { resetCheckout } from '../slices/checkoutSlice'
 
 const RevenueCentersSelect = ({
@@ -58,7 +56,7 @@ const RevenueCentersSelect = ({
 
   useEffect(() => {
     if (orderType) {
-      let params = { revenue_center_type: orderType }
+      let params = { type: orderType }
       if (isOutpost) params = { ...params, is_outpost: true }
       if (coords) params = { ...params, lat: coords.lat, lng: coords.lng }
       dispatch(fetchRevenueCenters(params))

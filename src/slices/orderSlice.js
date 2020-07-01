@@ -180,12 +180,6 @@ const orderSlice = createSlice({
     setServiceType: (state, action) => {
       state.serviceType = action.payload
     },
-    setOrderServiceType: (state, action) => {
-      const [orderType, serviceType, isOutpost] = action.payload
-      state.orderType = orderType
-      state.serviceType = serviceType
-      state.isOutpost = isOutpost || false
-    },
     setRevenueCenter: (state, action) => {
       state.revenueCenter = action.payload
       const previousRequestedAt = state.requestedAt

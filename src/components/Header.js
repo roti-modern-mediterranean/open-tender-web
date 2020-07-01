@@ -8,7 +8,7 @@ import {
   resetOrderType,
   selectAutoSelect,
   resetOrder,
-} from '../slices/orderSlice'
+} from 'open-tender-redux'
 import { openModal } from '../slices/modalSlice'
 import { selectCustomer, logoutCustomer } from '../slices/customerSlice'
 import {
