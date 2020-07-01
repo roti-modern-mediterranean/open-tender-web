@@ -33,7 +33,7 @@ const rootReducer = combineReducers({
   geolocation: geolocationReducer,
   account: accountReducer,
   notification: notificationReducer,
-  openTender: openTenderReducer,
+  data: openTenderReducer,
 })
 
 const persistedState = loadState()

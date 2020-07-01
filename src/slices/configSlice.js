@@ -1,10 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getConfig } from '../services/requests'
 import { capitalize } from 'open-tender-js'
-import API from '../services/requestClass'
-console.log('API', API)
-// import { OpenTenderAPI } from 'open-tender-redux'
-// console.log('OpenTenderAPI', OpenTenderAPI.request)
+import { OpenTenderAPI } from 'open-tender-redux'
 
 const baseUrl = process.env.REACT_APP_API_URL
 const authUrl = process.env.REACT_APP_AUTH_URL
@@ -24,7 +21,8 @@ export const fetchConfig = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await getConfig()
-      const app = { baseUrl, authUrl, clientId }
+      const brandId = response.brand.brandId
+      const app = { baseUrl, authUrl, clientId, brandId }
       return { ...response, app }
     } catch (err) {
       return thunkAPI.rejectWithValue(err)
@@ -48,7 +46,7 @@ const configSlice = createSlice({
       state.content = content
       state.theme = theme
       state.loading = 'idle'
-      // state.api = new API(app, brand.brandId)
+      state.api = new OpenTenderAPI(app)
     },
     [fetchConfig.pending]: (state) => {
       state.loading = 'pending'

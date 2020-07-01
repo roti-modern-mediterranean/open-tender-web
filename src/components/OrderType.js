@@ -7,7 +7,8 @@ import OrderTypeButton from './OrderTypeButton'
 import { Preface, Subtitle } from './styled'
 // import { setOrderType } from '../reducers/testOrder'
 // import { fetchRevenueCenters } from '../reducers/testRevenueCenters'
-import { fetchRevenueCenters } from 'open-tender-redux'
+import { fetchRevenueCenters, selectRevenueCenters } from 'open-tender-redux'
+console.log(selectRevenueCenters)
 
 // const Preface = styled.p`
 //   color: ${(props) => props.theme.colors.secondary};
@@ -18,9 +19,14 @@ const OrderType = () => {
   const { home: homeConfig } = useSelector(selectConfig)
   const { title, subtitle, content, buttons } = homeConfig
   const dispatch = useDispatch()
+  const { revenueCenters, loading, error } = useSelector(selectRevenueCenters)
+  console.log(revenueCenters)
+  console.log(loading)
+  console.log(error)
 
   useEffect(() => {
-    dispatch(fetchRevenueCenters({ revenue_center_type: 'OLO' }))
+    console.log('useEffect is executing')
+    dispatch(fetchRevenueCenters({ type: 'OLO' }))
   }, [dispatch])
 
   const handleOutpost = (evt) => {
