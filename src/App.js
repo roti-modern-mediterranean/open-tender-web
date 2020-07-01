@@ -21,9 +21,8 @@ class App extends React.Component {
   }
 
   render() {
-    // const isLoading = true
-    const isLoading = this.props.loading === 'pending'
-    return isLoading ? (
+    const { loading, theme } = this.props
+    return loading === 'pending' || !theme ? (
       <Loader className="loading--page" type="Clip" size={32} />
     ) : (
       <ThemeProvider theme={this.props.theme}>

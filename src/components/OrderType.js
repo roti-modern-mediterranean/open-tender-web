@@ -6,7 +6,8 @@ import { selectConfig } from '../slices/configSlice'
 import OrderTypeButton from './OrderTypeButton'
 import { Preface, Subtitle } from './styled'
 // import { setOrderType } from '../reducers/testOrder'
-import { fetchRevenueCenters } from '../reducers/testRevenueCenters'
+// import { fetchRevenueCenters } from '../reducers/testRevenueCenters'
+import { fetchRevenueCenters } from 'open-tender-redux'
 
 // const Preface = styled.p`
 //   color: ${(props) => props.theme.colors.secondary};
