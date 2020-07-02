@@ -9,7 +9,11 @@ export const getConfig = () => {
     content: defaultConfig,
     theme: defaultTheme,
   }
-  return new Promise((resolve) => resolve(config))
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      resolve(config)
+    }, 0)
+  )
 }
 
 export const getRevenueCenters = (

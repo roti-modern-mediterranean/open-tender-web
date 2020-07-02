@@ -19,7 +19,6 @@ const HomePage = () => {
   const { home: homeConfig } = useSelector(selectConfig)
   // const bgStyle = { backgroundImage: `url(${home.background}` }
   const order = useSelector(selectOrder)
-  console.log(order)
   const hasTypes = order.orderType && order.serviceType
   const path = order.orderType === 'CATERING' ? '/catering' : '/locations'
 

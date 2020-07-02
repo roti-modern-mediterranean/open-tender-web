@@ -12,9 +12,11 @@ export const loadState = () => {
 
 export const saveState = (state) => {
   try {
-    const config = { ...state.config }
-    delete config.api
-    const saveableState = { ...state, config }
+    // const config = { ...state.config }
+    // delete config.api
+    // const saveableState = { ...state, config }
+    const saveableState = { ...state }
+    delete saveableState.config
     const serializedState = JSON.stringify(saveableState)
     localStorage.setItem('state', serializedState)
   } catch (err) {
