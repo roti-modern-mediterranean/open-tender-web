@@ -12,7 +12,7 @@ export const getConfig = () => {
   return new Promise((resolve) =>
     setTimeout(() => {
       resolve(config)
-    }, 0)
+    }, 500)
   )
 }
 
