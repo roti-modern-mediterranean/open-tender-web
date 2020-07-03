@@ -1,19 +1,19 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { slugify } from 'open-tender-js'
-import { selectAccountConfigSections } from '../slices/configSlice'
-import { selectCustomerGiftCards } from '../slices/customerSlice'
+import { selectCustomerGiftCards } from 'open-tender-redux'
+import { slugify, formatDateStr, dateStrToDate } from 'open-tender-js'
+
+import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionRow from './SectionRow'
 import { Button } from 'open-tender'
-import { formatDateStr, dateStrToDate } from 'open-tender-js'
 
 const AccountGiftCards = () => {
   const {
     giftCards: { title, subtitle },
-  } = useSelector(selectAccountConfigSections)
+  } = useSelector(selectConfigAccountSections)
   const giftCards = useSelector(selectCustomerGiftCards)
 
   const handleAddValue = (evt, giftCard) => {

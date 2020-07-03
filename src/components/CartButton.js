@@ -1,9 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCartQuantity } from '../slices/orderSlice'
-import { toggleSidebar } from '../slices/sidebarSlice'
-import { Button } from 'open-tender'
 import { ShoppingBag } from 'react-feather'
+import { selectCartQuantity } from 'open-tender-redux'
+import { Button } from 'open-tender'
+
+import { toggleSidebar } from '../slices'
 
 const CartButton = () => {
   const dispatch = useDispatch()

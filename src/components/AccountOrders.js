@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { selectAccountConfigSections } from '../slices/configSlice'
-import { selectToken } from '../slices/customerSlice'
-import { selectAccountOrders, fetchOrders } from '../slices/accountSlice'
 import {
+  fetchMenuItems,
   fetchRevenueCenter,
   setOrderServiceType,
   setAddress,
   selectCartQuantity,
-} from '../slices/orderSlice'
-import { fetchMenuItems } from '../slices/menuSlice'
+  selectAccountOrders,
+  fetchOrders,
+} from 'open-tender-redux'
+import { slugify } from 'open-tender-js'
+import { Button } from 'open-tender'
+
+import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionEmpty from './SectionEmpty'
 import OrderCard from './OrderCard'
-import { slugify } from 'open-tender-js'
-import { Button } from 'open-tender'
 import SectionFooter from './SectionFooter'
 
 const AccountOrders = () => {
@@ -27,8 +28,7 @@ const AccountOrders = () => {
   const limit = 12
   const {
     recentOrders: { title, subtitle, empty },
-  } = useSelector(selectAccountConfigSections)
-  const token = useSelector(selectToken)
+  } = useSelector(selectConfigAccountSections)
   const orders = useSelector(selectAccountOrders)
   const cartQuantity = useSelector(selectCartQuantity)
   const { entities, loading, error } = orders
@@ -36,8 +36,8 @@ const AccountOrders = () => {
   const showOrders = !isLoading && !error
 
   useEffect(() => {
-    dispatch(fetchOrders({ token, limit: limit + 1 }))
-  }, [dispatch, token])
+    dispatch(fetchOrders({ limit: limit + 1 }))
+  }, [dispatch])
 
   useEffect(() => {
     const recent = entities.length ? entities.slice(0, count) : []

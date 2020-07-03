@@ -63,7 +63,7 @@ export const selectTheme = (state) => state.config.theme
 export const selectConfig = (state) => state.config.content
 export const selectGoogleMapsConfig = (state) => state.config.content.googleMaps
 export const selectAccountConfig = (state) => state.config.content.account
-export const selectAccountConfigSections = (state) =>
+export const selectConfigAccountSections = (state) =>
   state.config.content.account.sections
 export const selectOutpostName = (state) =>
   capitalize(state.config.content.revenueCenters.locationName.OUTPOST[0])

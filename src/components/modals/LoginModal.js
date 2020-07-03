@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { closeModal } from '../../slices/modalSlice'
 import {
   loginCustomer,
   selectCustomer,
+  selectResetPassword,
   sendPasswordResetEmail,
-  resetResetSent,
-} from '../../slices/customerSlice'
-import ModalClose from '../ModalClose'
+  resetPasswordReset,
+} from 'open-tender-redux'
 import { Input, Button } from 'open-tender'
+
+import { closeModal } from '../../slices'
+import ModalClose from '../ModalClose'
 
 const messaging = {
   login: {
@@ -36,7 +38,8 @@ const LoginModal = ({ callback }) => {
   const submitButton = useRef()
   const dispatch = useDispatch()
   const customer = useSelector(selectCustomer)
-  const { loading, error, account, resetSent } = customer
+  const { loading, error, profile } = customer
+  const { resetSent } = useSelector(selectResetPassword)
   const mode = resetSent ? 'resetSent' : isReset ? 'reset' : 'login'
   const msg = messaging[mode]
   const isLoading = loading === 'pending'
@@ -46,9 +49,9 @@ const LoginModal = ({ callback }) => {
   // }, [dispatch])
 
   useEffect(() => {
-    if (account) dispatch(closeModal())
-    return () => dispatch(resetResetSent())
-  }, [account, dispatch])
+    if (profile) dispatch(closeModal())
+    return () => dispatch(resetPasswordReset())
+  }, [profile, dispatch])
 
   const handleClose = () => {
     dispatch(closeModal())
@@ -65,7 +68,8 @@ const LoginModal = ({ callback }) => {
       const link_url = `${window.location.origin}/reset-password`
       dispatch(sendPasswordResetEmail({ email: data.email, link_url }))
     } else {
-      dispatch(loginCustomer(data)).then(() => {
+      const { email, password } = data
+      dispatch(loginCustomer(email, password)).then(() => {
         if (callback) callback()
       })
     }
@@ -81,7 +85,7 @@ const LoginModal = ({ callback }) => {
   const toggleResetSent = (evt) => {
     evt.preventDefault()
     setIsReset(false)
-    dispatch(resetResetSent())
+    dispatch(resetPasswordReset())
     evt.target.blur()
   }
 

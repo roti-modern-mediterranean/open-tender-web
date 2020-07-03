@@ -6,14 +6,15 @@ import {
   fetchRevenueCenter,
   resetOrderType,
   setOrderServiceType,
-} from '../slices/orderSlice'
+} from 'open-tender-redux'
+import { useGeolocation } from 'open-tender'
+
 import {
   setGeoLatLng,
   setGeoError,
   setGeoLoading,
-} from '../slices/geolocationSlice'
-import { selectConfig } from '../slices/configSlice'
-import { useGeolocation } from 'open-tender'
+  selectConfig,
+} from '../slices'
 import Background from './Background'
 import RevenueCenter from './RevenueCenter'
 

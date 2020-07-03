@@ -1,8 +1,8 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { hideMessage } from '../slices/orderSlice'
 import { X } from 'react-feather'
+import { hideMessage } from 'open-tender-redux'
 
 const Message = ({ message, id }) => {
   const dispatch = useDispatch()

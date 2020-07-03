@@ -1,8 +1,9 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { resetOrder } from '../slices/orderSlice'
-import { selectConfig } from '../slices/configSlice'
+import { resetOrder } from 'open-tender-redux'
+
+import { selectConfig } from '../slices'
 import RevenueCenter from './RevenueCenter'
 
 export const RevenueCenters = ({ revenueCenters }) => {

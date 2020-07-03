@@ -1,17 +1,22 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { timezoneMap, isoToDateStr, isoToDate } from 'open-tender-js'
-import { capitalize } from 'open-tender-js'
-import { makeOrderAddress } from 'open-tender-js'
-import { Button, DeliveryLink } from 'open-tender'
+import { useDispatch } from 'react-redux'
 import {
   setOrderServiceType,
   setAddress,
   reorderPastOrder,
   editOrder,
-} from '../slices/orderSlice'
+} from 'open-tender-redux'
+import {
+  timezoneMap,
+  isoToDateStr,
+  isoToDate,
+  capitalize,
+  makeOrderAddress,
+} from 'open-tender-js'
+import { Button, DeliveryLink } from 'open-tender'
+
 import OrderImages from './OrderImages'
 import OrderTag from './OrderTag'
 

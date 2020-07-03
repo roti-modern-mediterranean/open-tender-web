@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react'
 import propTypes from 'prop-types'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { updateOrderRating } from 'open-tender-redux'
 import { Textarea, iconMap } from 'open-tender'
-import { closeModal } from '../../slices/modalSlice'
-import { updateOrderRating, selectToken } from '../../slices/customerSlice'
+
+import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
 
 const OrderRatingModal = ({ orderId, orderRating }) => {
@@ -11,7 +12,6 @@ const OrderRatingModal = ({ orderId, orderRating }) => {
   const [comments, setComments] = useState(orderRating.comments || '')
   const submitButton = useRef()
   const dispatch = useDispatch()
-  const token = useSelector(selectToken)
   const stars = [1, 2, 3, 4, 5]
 
   const handleClose = () => {
@@ -30,7 +30,7 @@ const OrderRatingModal = ({ orderId, orderRating }) => {
   const handleSubmit = (evt) => {
     evt.preventDefault()
     const data = { rating, comments }
-    dispatch(updateOrderRating({ token, orderId, data }))
+    dispatch(updateOrderRating({ orderId, data }))
     dispatch(closeModal())
     submitButton.current.blur()
   }

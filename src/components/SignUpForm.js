@@ -1,12 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Input } from 'open-tender'
-import {
-  selectSignUp,
-  signUpCustomer,
-  resetSignUp,
-} from '../slices/customerSlice'
+import { selectSignUp, signUpCustomer, resetSignUp } from 'open-tender-redux'
 import { makeFormErrors } from 'open-tender-js'
+import { Input } from 'open-tender'
+
 import SubmitButton from './SubmitButton'
 
 const fields = [

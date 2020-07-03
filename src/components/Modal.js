@@ -1,7 +1,8 @@
 import React, { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import { selectModal, closeModal } from '../slices/modalSlice'
+
+import { selectModal, closeModal } from '../slices'
 import ModalOverlay from './ModalOverlay'
 import ModalLoading from './ModalLoading'
 import {

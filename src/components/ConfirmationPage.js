@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectConfig } from '../slices/configSlice'
 import {
+  selectCustomer,
   selectConfirmationOrder,
   resetConfirmation,
-} from '../slices/confirmationSlice'
+} from 'open-tender-redux'
+
+import { selectConfig } from '../slices'
 import Order from './Order'
-import { selectCustomer } from '../slices/customerSlice'
 
 const ConfirmationPage = () => {
   const history = useHistory()

@@ -1,13 +1,13 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import {
   setOrderServiceType,
   setAddress,
   resetRevenueCenter,
   setRevenueCenter,
-} from '../slices/orderSlice'
+} from 'open-tender-redux'
 import { Button } from 'open-tender'
 
 export const RevenueCenterButtons = ({ revenueCenter }) => {

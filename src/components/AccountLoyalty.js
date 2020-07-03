@@ -5,7 +5,7 @@ import {
   fetchCustomerLoyalty,
   selectToken,
   selectCustomerLoyalty,
-} from '../slices/customerSlice'
+} from 'open-tender-redux'
 import { loyaltyType } from 'open-tender-js'
 
 const LoyaltyProgram = ({ program }) => {

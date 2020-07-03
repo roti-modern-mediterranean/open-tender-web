@@ -1,16 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { slugify } from 'open-tender-js'
-import { Switch } from 'open-tender'
-import { selectAccountConfigSections } from '../slices/configSlice'
-import { selectAllergens, fetchAllergens } from '../slices/menuSlice'
 import {
-  selectToken,
-  // fetchCustomerAllergens,
+  selectAllergens,
+  fetchAllergens,
   selectCustomerAllergens,
   updateCustomerAllergens,
-} from '../slices/customerSlice'
+} from 'open-tender-redux'
+import { slugify } from 'open-tender-js'
+import { Switch } from 'open-tender'
 
+import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -22,15 +21,13 @@ const AccountAllergens = () => {
   const dispatch = useDispatch()
   const {
     allergens: { title, subtitle },
-  } = useSelector(selectAccountConfigSections)
-  const token = useSelector(selectToken)
+  } = useSelector(selectConfigAccountSections)
   const allergens = useSelector(selectAllergens)
   const customerAllergens = useSelector(selectCustomerAllergens)
 
   useEffect(() => {
     dispatch(fetchAllergens())
-    // dispatch(fetchCustomerAllergens(token))
-  }, [dispatch, token])
+  }, [dispatch])
 
   useEffect(() => {
     if (customerAllergens.loading === 'idle') setSubmitting(false)
@@ -52,7 +49,7 @@ const AccountAllergens = () => {
     evt.preventDefault()
     setSubmitting(true)
     const newData = data.map((i) => ({ allergen_id: i.allergen_id }))
-    dispatch(updateCustomerAllergens({ token, data: newData }))
+    dispatch(updateCustomerAllergens({ data: newData }))
     submitButton.current.blur()
   }
 

@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { useGeolocation } from 'open-tender'
 import { selectOrder, resetRevenueCenters } from 'open-tender-redux'
-import { selectConfig } from '../slices/configSlice'
+import { useGeolocation } from 'open-tender'
+
 import {
+  selectConfig,
   setGeoLatLng,
   setGeoError,
   setGeoLoading,
-} from '../slices/geolocationSlice'
+} from '../slices'
 import Background from './Background'
 import OrderType from './OrderType'
 

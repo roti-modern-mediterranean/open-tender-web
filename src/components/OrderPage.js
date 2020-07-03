@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectToken } from '../slices/customerSlice'
-import { fetchOrder, selectAccountOrder } from '../slices/accountSlice'
+import { fetchOrder, selectAccountOrder } from 'open-tender-redux'
+
 import Order from './Order'
 
 const OrderPage = () => {
   const dispatch = useDispatch()
   const { id: orderId } = useParams()
-  const token = useSelector(selectToken)
   const accountOrder = useSelector(selectAccountOrder)
 
   useEffect(() => {
@@ -16,8 +15,8 @@ const OrderPage = () => {
   }, [])
 
   useEffect(() => {
-    dispatch(fetchOrder({ token, orderId }))
-  }, [dispatch, token, orderId])
+    dispatch(fetchOrder({ orderId }))
+  }, [dispatch, orderId])
 
   return (
     <div className="content bg-secondary-color">

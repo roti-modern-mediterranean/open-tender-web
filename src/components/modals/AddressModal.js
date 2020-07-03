@@ -1,11 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { makeFormErrors } from 'open-tender-js'
 import { useSelector, useDispatch } from 'react-redux'
-import { closeModal } from '../../slices/modalSlice'
-import ModalClose from '../ModalClose'
+import {
+  selectAccountAddress,
+  updateCustomerAddress,
+  selectToken,
+} from 'open-tender-redux'
+import { makeFormErrors } from 'open-tender-js'
 import { Input, Textarea, Switch } from 'open-tender'
-import { selectAccountAddress } from '../../slices/accountSlice'
-import { updateCustomerAddress, selectToken } from '../../slices/customerSlice'
+
+import { closeModal } from '../../slices'
+import ModalClose from '../ModalClose'
 
 const fields = [
   // { label: 'Street', name: 'street', type: 'text', required: true },

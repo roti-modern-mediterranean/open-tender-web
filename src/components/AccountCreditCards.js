@@ -1,25 +1,25 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { slugify } from 'open-tender-js'
-import { selectAccountConfigSections } from '../slices/configSlice'
 import {
   selectToken,
   fetchCustomerCreditCards,
   selectCustomerCreditCards,
-} from '../slices/customerSlice'
+} from 'open-tender-redux'
+import { slugify } from 'open-tender-js'
+import { Button } from 'open-tender'
+
+import { selectConfigAccountSections, openModal } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
-import { Button } from 'open-tender'
 import CreditCards from './CreditCards'
-import { openModal } from '../slices/modalSlice'
 import SectionEmpty from './SectionEmpty'
 
 const AccountCreditCards = () => {
   const dispatch = useDispatch()
   const {
     creditCards: { title, subtitle, empty },
-  } = useSelector(selectAccountConfigSections)
+  } = useSelector(selectConfigAccountSections)
   const token = useSelector(selectToken)
   const creditCards = useSelector(selectCustomerCreditCards) || {}
 

@@ -6,31 +6,30 @@ import {
 import throttle from 'lodash/throttle'
 import { loadState, saveState } from '../utils/localStorage'
 import configReducer from '../slices/configSlice'
-import customerReducer from '../slices/customerSlice'
+import geolocationReducer from '../slices/geolocationSlice'
 import modalReducer from '../slices/modalSlice'
 import sidebarReducer from '../slices/sidebarSlice'
-import orderReducer from '../slices/orderSlice'
-import menuReducer from '../slices/menuSlice'
-import checkoutReducer from '../slices/checkoutSlice'
-import confirmationReducer from '../slices/confirmationSlice'
-import geolocationReducer from '../slices/geolocationSlice'
-import accountReducer from '../slices/accountSlice'
-import notificationReducer from '../slices/notificationSlice'
-// import testReducer from '../reducers'
 import { openTenderReducer } from 'open-tender-redux'
+// import customerReducer from '../slices/customerSlice'
+// import orderReducer from '../slices/orderSlice'
+// import menuReducer from '../slices/menuSlice'
+// import checkoutReducer from '../slices/checkoutSlice'
+// import confirmationReducer from '../slices/confirmationSlice'
+// import accountReducer from '../slices/accountSlice'
+// import notificationReducer from '../slices/notificationSlice'
 
 const rootReducer = combineReducers({
   config: configReducer,
-  customer: customerReducer,
+  geolocation: geolocationReducer,
   modal: modalReducer,
   sidebar: sidebarReducer,
-  order: orderReducer,
-  menu: menuReducer,
-  checkout: checkoutReducer,
-  confirmation: confirmationReducer,
-  geolocation: geolocationReducer,
-  account: accountReducer,
-  notification: notificationReducer,
+  // order: orderReducer,
+  // menu: menuReducer,
+  // checkout: checkoutReducer,
+  // confirmation: confirmationReducer,
+  // customer: customerReducer,
+  // account: accountReducer,
+  // notification: notificationReducer,
   data: openTenderReducer,
 })
 

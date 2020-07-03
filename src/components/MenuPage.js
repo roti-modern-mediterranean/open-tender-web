@@ -1,25 +1,24 @@
 import React, { useEffect, createContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectConfig } from '../slices/configSlice'
 import {
   selectRevenueCenter,
   selectMenuVars,
   fetchRevenueCenter,
   resetRevenueCenter,
-} from '../slices/orderSlice'
-import {
   fetchMenu,
   selectMenu,
-  selectedAllergenNames,
+  selectSelectedAllergenNames,
   fetchAllergens,
-} from '../slices/menuSlice'
+} from 'open-tender-redux'
+import { Button } from 'open-tender'
+
+import { selectConfig } from '../slices'
 import Hero from './Hero'
 import Menu from './Menu'
 import RevenueCenter from './RevenueCenter'
 import Loader from './Loader'
 import ErrorMessage from './ErrorMessage'
-import { Button } from 'open-tender'
 
 export const MenuContext = createContext(null)
 
@@ -32,7 +31,7 @@ const MenuPage = () => {
     selectMenuVars
   )
   const { categories, soldOut, error, loading } = useSelector(selectMenu)
-  const allergenAlerts = useSelector(selectedAllergenNames)
+  const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const isLoading = loading === 'pending'
 
   useEffect(() => {

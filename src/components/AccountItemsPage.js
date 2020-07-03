@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  selectCustomer,
+  fetchOrders,
+  selectAccountOrders,
+} from 'open-tender-redux'
 import { makeUniqueDisplayItems } from 'open-tender-js'
-import { selectAccountConfigSections } from '../slices/configSlice'
-import { selectToken, selectCustomer } from '../slices/customerSlice'
+
+import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionEmpty from './SectionEmpty'
 import OrderItemCard from './OrderItemCard'
 import SectionFooter from './SectionFooter'
-import { fetchOrders, selectAccountOrders } from '../slices/accountSlice'
 
 const AccountItemsPage = () => {
   const sectionRef = useRef()
@@ -19,8 +23,7 @@ const AccountItemsPage = () => {
   const [items, setItems] = useState([])
   const {
     recentItems: { title, subtitle, empty },
-  } = useSelector(selectAccountConfigSections)
-  const token = useSelector(selectToken)
+  } = useSelector(selectConfigAccountSections)
   const { account } = useSelector(selectCustomer)
   const { entities, loading, error } = useSelector(selectAccountOrders)
   const isLoading = loading === 'pending'
@@ -39,8 +42,8 @@ const AccountItemsPage = () => {
   }, [error])
 
   useEffect(() => {
-    dispatch(fetchOrders({ token, limit: 50 }))
-  }, [dispatch, token])
+    dispatch(fetchOrders({ limit: 50 }))
+  }, [dispatch])
 
   useEffect(() => {
     const displayItems = makeUniqueDisplayItems(entities)

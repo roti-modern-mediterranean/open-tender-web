@@ -2,7 +2,7 @@ import propTypes from 'prop-types'
 import React, { useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { X } from 'react-feather'
-import { toggleSidebar } from '../slices/sidebarSlice'
+import { toggleSidebar } from '../slices'
 
 const SidebarClose = ({ classes = 'btn-link' }) => {
   const dispatch = useDispatch()

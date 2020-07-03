@@ -3,23 +3,23 @@ import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-scroll'
-import ClipLoader from 'react-spinners/ClipLoader'
-import { selectCustomerAccount } from '../slices/customerSlice'
+import { parseISO } from 'date-fns'
 import {
   selectOrder,
   resetOrderType,
   resetOrder,
   resetRevenueCenter,
-} from '../slices/orderSlice'
-import { selectAccountOrders } from '../slices/accountSlice'
-import { selectAccountConfigSections } from '../slices/configSlice'
-import { slugify, capitalize } from 'open-tender-js'
-import { otherOrderTypesMap } from 'open-tender-js'
+  selectCustomerProfile,
+  selectAccountOrders,
+} from 'open-tender-redux'
+import { slugify, capitalize, otherOrderTypesMap } from 'open-tender-js'
 import { Button } from 'open-tender'
+import ClipLoader from 'react-spinners/ClipLoader'
+
+import { selectConfigAccountSections } from '../slices'
 import CurrentOrder from './CurrentOrder'
 import OrderCard from './OrderCard'
 import AccountLoyalty from './AccountLoyalty'
-import { parseISO } from 'date-fns'
 
 const GreetingLink = ({ sectionTitle, text }) => (
   <Link
@@ -46,8 +46,8 @@ const getLastOrder = (orders) => {
 const AccountGreeting = ({ title, subtitle }) => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const config = useSelector(selectAccountConfigSections)
-  const customer = useSelector(selectCustomerAccount)
+  const config = useSelector(selectConfigAccountSections)
+  const customer = useSelector(selectCustomerProfile)
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectAccountOrders)

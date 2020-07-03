@@ -1,7 +1,8 @@
 import React from 'react'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectSidebar, toggleSidebar } from '../slices/sidebarSlice'
+
+import { selectSidebar, toggleSidebar } from '../slices'
 
 const SidebarOverlay = () => {
   const dispatch = useDispatch()

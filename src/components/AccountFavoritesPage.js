@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
-import { makeDisplayItem } from 'open-tender-js'
-import { selectAccountConfigSections } from '../slices/configSlice'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   selectToken,
   selectCustomerFavorites,
   fetchCustomerFavorites,
   selectCustomer,
-} from '../slices/customerSlice'
+} from 'open-tender-redux'
+import { makeDisplayItem } from 'open-tender-js'
+
+import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -23,7 +24,7 @@ const AccountFavoritesPage = () => {
   const [favorites, setFavorites] = useState([])
   const {
     favorites: { title, subtitle, empty },
-  } = useSelector(selectAccountConfigSections)
+  } = useSelector(selectConfigAccountSections)
   const token = useSelector(selectToken)
   const { account } = useSelector(selectCustomer)
   const { entities, loading, error } = useSelector(selectCustomerFavorites)

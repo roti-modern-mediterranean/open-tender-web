@@ -6,10 +6,10 @@ import {
   decrementItemInCart,
   selectCart,
   removeItemFromCart,
-} from '../slices/orderSlice'
-import {} from '../slices/orderSlice'
-import { openModal } from '../slices/modalSlice'
+} from 'open-tender-redux'
 import { CartItem, BuilderQuantity } from 'open-tender'
+
+import { openModal } from '../slices'
 
 const Cart = () => {
   const dispatch = useDispatch()

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
-import { makeOrderTypeFromParam } from 'open-tender-js'
-import { GoogleMap, GoogleMapsMarker } from 'open-tender'
 import {
   selectOrder,
   setOrderServiceType,
   selectRevenueCenters,
 } from 'open-tender-redux'
-import { selectConfig } from '../slices/configSlice'
-import { selectGeoLatLng } from '../slices/geolocationSlice'
+import { makeOrderTypeFromParam } from 'open-tender-js'
+import { GoogleMap, GoogleMapsMarker } from 'open-tender'
+
+import { selectConfig, selectGeoLatLng } from '../slices'
 import RevenueCentersSelect from './RevenueCentersSelect'
 import ClipLoader from 'react-spinners/ClipLoader'
 

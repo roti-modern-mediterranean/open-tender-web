@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { slugify } from 'open-tender-js'
-import { makeUniqueDisplayItems } from 'open-tender-js'
-import { selectAccountConfigSections } from '../slices/configSlice'
-import { selectAccountOrders } from '../slices/accountSlice'
+import { selectAccountOrders } from 'open-tender-redux'
+import { slugify, makeUniqueDisplayItems } from 'open-tender-js'
+
+import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -15,7 +15,7 @@ const AccountItems = () => {
   const [items, setItems] = useState([])
   const {
     recentItems: { title, subtitle, empty },
-  } = useSelector(selectAccountConfigSections)
+  } = useSelector(selectConfigAccountSections)
   const orders = useSelector(selectAccountOrders)
   const { entities, loading, error } = orders
   const isLoading = loading === 'pending'

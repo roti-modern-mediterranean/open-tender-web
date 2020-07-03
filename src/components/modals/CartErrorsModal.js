@@ -1,12 +1,16 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { closeModal } from '../../slices/modalSlice'
-import { selectMenu, fetchMenu } from '../../slices/menuSlice'
-import { selectConfig } from '../../slices/configSlice'
-import { selectRevenueCenters } from 'open-tender-redux'
-import ModalClose from '../ModalClose'
+import {
+  selectMenu,
+  fetchMenu,
+  selectRevenueCenters,
+  setCart,
+  setRevenueCenter,
+} from 'open-tender-redux'
 import { CartErrors } from 'open-tender'
-import { setCart, setRevenueCenter } from '../../slices/orderSlice'
+
+import { closeModal, selectConfig } from '../../slices'
+import ModalClose from '../ModalClose'
 
 const CartErrorsModal = () => {
   const dispatch = useDispatch()

@@ -1,17 +1,17 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, ButtonFavorite } from 'open-tender'
-import { displayPrice, rehydrateOrderItem } from 'open-tender-js'
 import {
   selectToken,
   addCustomerFavorite,
   removeCustomerFavorite,
   selectCustomerFavorites,
-} from '../slices/customerSlice'
-import { selectMenuItems } from '../slices/menuSlice'
-import { showNotification } from '../slices/notificationSlice'
-import { addItemToCart } from '../slices/orderSlice'
+  selectMenuItems,
+  showNotification,
+  addItemToCart,
+} from 'open-tender-redux'
+import { displayPrice, rehydrateOrderItem } from 'open-tender-js'
+import { Button, ButtonFavorite } from 'open-tender'
 
 const OrderItemCard = ({ item }) => {
   const dispatch = useDispatch()

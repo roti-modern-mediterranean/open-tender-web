@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectAccountConfigSections } from '../slices/configSlice'
-import { selectCustomer, updateCustomer } from '../slices/customerSlice'
+import { selectCustomer, updateCustomer } from 'open-tender-redux'
+import { slugify, handleFormErrors } from 'open-tender-js'
+import { Input } from 'open-tender'
+
+import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionError from './SectionError'
-import { slugify } from 'open-tender-js'
-import { Input } from 'open-tender'
-import { handleFormErrors } from 'open-tender-js'
 import SectionLoading from './SectionLoading'
 
 const fields = [
@@ -21,7 +21,7 @@ const AccountDetails = () => {
   const dispatch = useDispatch()
   const {
     accountDetails: { title, subtitle },
-  } = useSelector(selectAccountConfigSections)
+  } = useSelector(selectConfigAccountSections)
   const { auth, account, loading, error } = useSelector(selectCustomer)
   const token = auth.access_token
   const submitButton = useRef()

@@ -1,9 +1,10 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { resetOrder } from '../slices/orderSlice'
-import { selectBrand } from '../slices/configSlice'
+import { resetOrder } from 'open-tender-redux'
 import { Button } from 'open-tender'
+
+import { selectBrand } from '../slices'
 
 const HeaderLogo = () => {
   const history = useHistory()

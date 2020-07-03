@@ -3,15 +3,6 @@ import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import BarLoader from 'react-spinners/BarLoader'
-import { GoogleMapsAutocomplete } from 'open-tender'
-import {
-  calcMinDistance,
-  makePickupRevenueCenters,
-  makeDeliveryRevenueCenters,
-  makePickupMesssaging,
-  makeDeliveryMesssaging,
-  renameLocation,
-} from 'open-tender-js'
 import {
   setAddress,
   selectOrder,
@@ -20,12 +11,20 @@ import {
   resetOrderType,
   fetchRevenueCenters,
   selectRevenueCenters,
+  resetCheckout,
 } from 'open-tender-redux'
-import { Button } from 'open-tender'
-import { selectConfig } from '../slices/configSlice'
-import { selectGeoLatLng } from '../slices/geolocationSlice'
+import {
+  calcMinDistance,
+  makePickupRevenueCenters,
+  makeDeliveryRevenueCenters,
+  makePickupMesssaging,
+  makeDeliveryMesssaging,
+  renameLocation,
+} from 'open-tender-js'
+import { Button, GoogleMapsAutocomplete } from 'open-tender'
+
+import { selectConfig, selectGeoLatLng } from '../slices'
 import RevenueCenter from './RevenueCenter'
-import { resetCheckout } from '../slices/checkoutSlice'
 
 const RevenueCentersSelect = ({
   setCenter,

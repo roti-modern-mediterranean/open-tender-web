@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { slugify } from 'open-tender-js'
-import { makeDisplayItem } from 'open-tender-js'
-import { selectAccountConfigSections } from '../slices/configSlice'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   selectToken,
   selectCustomerFavorites,
   fetchCustomerFavorites,
-} from '../slices/customerSlice'
+} from 'open-tender-redux'
+import { slugify, makeDisplayItem } from 'open-tender-js'
+import { Button } from 'open-tender'
+
+import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionEmpty from './SectionEmpty'
 import OrderItemCard from './OrderItemCard'
-import { Button } from 'open-tender'
 import SectionFooter from './SectionFooter'
 
 const AccountFavorites = () => {
@@ -24,7 +24,7 @@ const AccountFavorites = () => {
   const limit = 12
   const {
     favorites: { title, subtitle, empty },
-  } = useSelector(selectAccountConfigSections)
+  } = useSelector(selectConfigAccountSections)
   const { entities, loading, error } = useSelector(selectCustomerFavorites)
   const isLoading = loading === 'pending'
   const token = useSelector(selectToken)

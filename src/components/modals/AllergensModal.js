@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { closeModal } from '../../slices/modalSlice'
-import ModalClose from '../ModalClose'
-import { selectCustomerAllergens } from '../../slices/customerSlice'
-import { selectMenu, setSelectedAllergens } from '../../slices/menuSlice'
+import {
+  selectCustomerAllergens,
+  selectMenu,
+  setSelectedAllergens,
+} from 'open-tender-redux'
 import { Switch } from 'open-tender'
+
+import { closeModal } from '../../slices'
+import ModalClose from '../ModalClose'
 
 const AllergensModal = () => {
   const submitButton = useRef()

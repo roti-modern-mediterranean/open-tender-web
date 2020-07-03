@@ -1,16 +1,17 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import {
   selectOrder,
   selectTimezone,
   resetOrderType,
   selectAutoSelect,
   resetOrder,
+  resetCheckout,
+  selectCustomer,
+  logoutCustomer,
 } from 'open-tender-redux'
-import { openModal } from '../slices/modalSlice'
-import { selectCustomer, logoutCustomer } from '../slices/customerSlice'
+import { makeServiceTypeName } from 'open-tender-js'
 import {
   ButtonAccount,
   ButtonAllergens,
@@ -21,10 +22,9 @@ import {
   ButtonServiceType,
   ButtonStartOver,
 } from 'open-tender'
+
+import { selectOutpostName, openModal } from '../slices'
 import HeaderLogo from './HeaderLogo'
-import { makeServiceTypeName } from 'open-tender-js'
-import { resetCheckout } from '../slices/checkoutSlice'
-import { selectOutpostName } from '../slices/configSlice'
 
 const makeClasses = (pathname) => {
   return ['checkout'].map((i) => (pathname.includes(i) ? 'header__stuck' : ''))
@@ -43,9 +43,8 @@ const Header = () => {
   } = useSelector(selectOrder)
   const autoSelect = useSelector(selectAutoSelect)
   const tz = useSelector(selectTimezone)
-  const customer = useSelector(selectCustomer)
+  const { profile, auth } = useSelector(selectCustomer)
   const outpostName = useSelector(selectOutpostName)
-  const { account, auth } = customer
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
   if (isCheckout) return null
@@ -151,7 +150,7 @@ const Header = () => {
       </div>
       <div className="header__actions">
         <ButtonAccount
-          account={account}
+          account={profile}
           isAccount={isAccount}
           login={handleLogin}
           logout={handleLogout}

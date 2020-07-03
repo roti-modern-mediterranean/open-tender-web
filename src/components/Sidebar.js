@@ -1,7 +1,6 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
-import { selectSidebar, toggleSidebar } from '../slices/sidebarSlice'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   selectCartQuantity,
   selectCartTotal,
@@ -9,12 +8,14 @@ import {
   selectCanOrder,
   selectOrder,
   selectOrderLimits,
-} from '../slices/orderSlice'
-import SidebarOverlay from './SidebarOverlay'
+} from 'open-tender-redux'
+import { displayPrice } from 'open-tender-js'
 import { Button } from 'open-tender'
+
+import { selectSidebar, toggleSidebar } from '../slices'
+import SidebarOverlay from './SidebarOverlay'
 import Cart from './Cart'
 import SidebarClose from './SidebarClose'
-import { displayPrice } from 'open-tender-js'
 
 const Sidebar = () => {
   const dispatch = useDispatch()

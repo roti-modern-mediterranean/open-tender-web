@@ -1,8 +1,9 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectOrder, setRequestedAt } from '../../slices/orderSlice'
-import { closeModal } from '../../slices/modalSlice'
+import { selectOrder, setRequestedAt } from 'open-tender-redux'
+
+import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
 import RequestedAtCalendar from '../RequestedAtCalendar'
 import RequestedAtTimes from '../RequestedAtTimes'

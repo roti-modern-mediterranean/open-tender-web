@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { selectConfig } from '../slices/configSlice'
 import {
   selectOrder,
   setServiceType,
   setRequestedAt,
   resetOrder,
   setOrderServiceType,
-} from '../slices/orderSlice'
+  fetchValidTimes,
+  selectValidTimes,
+} from 'open-tender-redux'
 import {
   isoToDate,
   dateToIso,
@@ -20,12 +21,10 @@ import {
   makeLocalDateStr,
   todayDate,
 } from 'open-tender-js'
-import Background from './Background'
 import { Button } from 'open-tender'
-import {
-  fetchValidTimes,
-  selectValidTimes,
-} from '../slices/revenueCentersSlice'
+
+import { selectConfig } from '../slices'
+import Background from './Background'
 import Loader from './Loader'
 import ErrorMessage from './ErrorMessage'
 

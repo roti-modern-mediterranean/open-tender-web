@@ -3,14 +3,19 @@ import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-scroll'
-import { timezoneMap, isoToDateStr } from 'open-tender-js'
-import { capitalize, slugify } from 'open-tender-js'
-import { makeOrderAddress } from 'open-tender-js'
+import { selectCartTotal } from 'open-tender-redux'
+import {
+  timezoneMap,
+  isoToDateStr,
+  capitalize,
+  slugify,
+  makeOrderAddress,
+} from 'open-tender-js'
 import { Button } from 'open-tender'
-import { selectAccountConfigSections } from '../slices/configSlice'
+
+import { selectConfigAccountSections } from '../slices'
 import OrderTag from './OrderTag'
 import OrderImage from './OrderImage'
-import { selectCartTotal } from '../slices/orderSlice'
 
 const CurrentOrder = ({ order }) => {
   const history = useHistory()
@@ -22,7 +27,7 @@ const CurrentOrder = ({ order }) => {
     address,
     cart,
   } = order
-  const { addresses: addressConfig } = useSelector(selectAccountConfigSections)
+  const { addresses: addressConfig } = useSelector(selectConfigAccountSections)
   const cartTotal = useSelector(selectCartTotal)
   const tz = timezoneMap[revenueCenter.timezone]
   const requestedAtStr =

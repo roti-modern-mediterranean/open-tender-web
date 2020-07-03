@@ -8,7 +8,7 @@ import {
   selectOrder,
   selectAutoSelect,
 } from 'open-tender-redux'
-import { selectConfig } from '../slices/configSlice'
+import { selectConfig } from '../slices'
 // import { Button } from 'open-tender'
 import { Button } from 'open-tender'
 import RevenueCenterButtons from './RevenueCenterButtons'

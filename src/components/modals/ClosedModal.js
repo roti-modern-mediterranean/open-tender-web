@@ -1,10 +1,10 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
+import { resetRevenueCenter, resetOrderType } from 'open-tender-redux'
 import { Button } from 'open-tender'
-import { resetRevenueCenter, resetOrderType } from '../../slices/orderSlice'
-import { closeModal } from '../../slices/modalSlice'
-import { selectConfig } from '../../slices/configSlice'
+
+import { selectConfig, closeModal } from '../../slices'
 
 const defaultText = {
   title: 'Location currently closed',

@@ -3,17 +3,8 @@ import isEqual from 'lodash/isEqual'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  CheckoutForm,
-  Check,
-  ButtonMenu,
-  ButtonAccount,
-  ButtonCancelEdit,
-} from 'open-tender'
-import { prepareOrder } from 'open-tender-js'
-import { selectConfig } from '../slices/configSlice'
-import { openModal } from '../slices/modalSlice'
-import { logoutCustomer, selectCustomer } from '../slices/customerSlice'
-import {
+  logoutCustomer,
+  selectCustomer,
   selectCartTotal,
   selectMenuSlug,
   selectOrder,
@@ -21,8 +12,6 @@ import {
   resetOrderType,
   selectTimezone,
   selectAutoSelect,
-} from '../slices/orderSlice'
-import {
   selectCheckout,
   resetErrors,
   resetTip,
@@ -33,8 +22,18 @@ import {
   submitOrder,
   setSubmitting,
   resetCheckout,
-} from '../slices/checkoutSlice'
-import { setConfirmationOrder } from '../slices/confirmationSlice'
+  setConfirmationOrder,
+} from 'open-tender-redux'
+import { prepareOrder } from 'open-tender-js'
+import {
+  CheckoutForm,
+  Check,
+  ButtonMenu,
+  ButtonAccount,
+  ButtonCancelEdit,
+} from 'open-tender'
+
+import { selectConfig, openModal } from '../slices'
 import HeaderLogo from './HeaderLogo'
 import Loader from './Loader'
 import { BarLoader } from 'react-spinners'

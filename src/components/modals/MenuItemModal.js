@@ -5,11 +5,13 @@ import {
   selectCurrentItem,
   setCurrentItem,
   addItemToCart,
-} from '../../slices/orderSlice'
-import { closeModal } from '../../slices/modalSlice'
-import { selectSoldOut, selectedAllergenNames } from '../../slices/menuSlice'
-import { showNotification } from '../../slices/notificationSlice'
+  selectSoldOut,
+  selectedAllergenNames,
+  showNotification,
+} from 'open-tender-redux'
 import { Builder, BuilderOption, BuilderHeader } from 'open-tender'
+
+import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
 
 const MenuItemModal = () => {

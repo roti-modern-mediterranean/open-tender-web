@@ -1,15 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
-import { selectAccountConfigSections } from '../slices/configSlice'
-import { selectCustomer } from '../slices/customerSlice'
-import { selectAccountOrders, fetchOrders } from '../slices/accountSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  selectCustomer,
+  selectAccountOrders,
+  fetchOrders,
+} from 'open-tender-redux'
+import { Button } from 'open-tender'
+
+import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionEmpty from './SectionEmpty'
 import OrderCard from './OrderCard'
-import { Button } from 'open-tender'
 import SectionFooter from './SectionFooter'
 
 const AccountOrdersPage = () => {
@@ -22,7 +26,7 @@ const AccountOrdersPage = () => {
   const [count, setCount] = useState(increment)
   const {
     recentOrders: { title, subtitle, empty },
-  } = useSelector(selectAccountConfigSections)
+  } = useSelector(selectConfigAccountSections)
   const { account, auth } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
   const orders = useSelector(selectAccountOrders)

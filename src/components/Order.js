@@ -2,32 +2,29 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { Button, CartItem, OrderQuantity, Check } from 'open-tender'
-import { makeDisplayItem } from 'open-tender-js'
-import { capitalize, isEmpty } from 'open-tender-js'
-import { isoToDate } from 'open-tender-js'
-import SectionHeader from './SectionHeader'
-import SectionRow from './SectionRow'
-import OrderAddress from './OrderAddress'
 import {
   selectCustomer,
   addCustomerFavorite,
   removeCustomerFavorite,
   selectCustomerFavorites,
-} from '../slices/customerSlice'
-import {
   setOrderServiceType,
   setAddress,
   reorderPastOrder,
   editOrder,
-} from '../slices/orderSlice'
-import { resetAccountOrder } from '../slices/accountSlice'
+  resetAccountOrder,
+} from 'open-tender-redux'
+import { makeDisplayItem, capitalize, isEmpty, isoToDate } from 'open-tender-js'
+import { Button, CartItem, OrderQuantity, Check } from 'open-tender'
+
+import { openModal } from '../slices'
+import SectionHeader from './SectionHeader'
+import SectionRow from './SectionRow'
+import OrderAddress from './OrderAddress'
 import OrderRating from './OrderRating'
 import OrderRequestedAt from './OrderRequestedAt'
 import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderError from './OrderError'
 import OrderLoading from './OrderLoading'
-import { openModal } from '../slices/modalSlice'
 
 const Order = ({ order, loading, error }) => {
   const {

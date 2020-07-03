@@ -1,16 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react'
 import propTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Input, Button } from 'open-tender'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   selectResetPassword,
   resetPassword,
   resetResetPassword,
-} from '../slices/customerSlice'
-import { makeFormErrors } from 'open-tender-js'
+} from 'open-tender-redux'
+import { Input, Button } from 'open-tender'
+
+import { openModal } from '../slices'
 import SubmitButton from './SubmitButton'
-import { openModal } from '../slices/modalSlice'
 
 const fields = [
   { label: 'New Password', name: 'new_password', type: 'password' },
@@ -40,7 +40,7 @@ const ResetPasswordForm = ({ token }) => {
 
   useEffect(() => {
     if (loading === 'idle') setSubmitting(false)
-    if (error) setErrors(makeFormErrors(error))
+    if (error) setErrors(error)
   }, [loading, error])
 
   const handleChange = (evt) => {

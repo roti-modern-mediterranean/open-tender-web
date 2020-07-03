@@ -3,15 +3,16 @@ import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import {
+  setCurrentAddress,
   updateCustomerAddress,
   removeCustomerAddress,
-} from '../slices/customerSlice'
-import { openModal } from '../slices/modalSlice'
-import { setCurrentAddress } from '../slices/accountSlice'
+  setAddress,
+} from 'open-tender-redux'
+import { Button } from 'open-tender'
+
+import { openModal } from '../slices'
 import SectionRow from './SectionRow'
 import OrderAddress from './OrderAddress'
-import { Button } from 'open-tender'
-import { setAddress } from '../slices/orderSlice'
 
 const Addresses = ({ addresses, token, isLoading }) => {
   const dispatch = useDispatch()

@@ -1,8 +1,9 @@
 import propTypes from 'prop-types'
 import React, { useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { closeModal } from '../slices/modalSlice'
 import { X } from 'react-feather'
+
+import { closeModal } from '../slices'
 
 const ModalClose = ({ classes = 'btn-link', onClick }) => {
   const dispatch = useDispatch()

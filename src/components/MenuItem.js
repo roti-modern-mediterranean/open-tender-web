@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentItem, selectCartCounts } from '../slices/orderSlice'
-import { openModal } from '../slices/modalSlice'
-import { MenuContext } from './MenuPage'
+import { setCurrentItem, selectCartCounts } from 'open-tender-redux'
 import { convertStringToArray } from 'open-tender-js'
+
+import { openModal } from '../slices'
+import { MenuContext } from './MenuPage'
 import Tag from './Tag'
 
 const MenuItem = ({ item }) => {

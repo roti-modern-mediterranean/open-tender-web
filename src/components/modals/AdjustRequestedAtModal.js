@@ -2,18 +2,20 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import {
+  setServiceType,
+  setRequestedAt,
+  resetRevenueCenter,
+  resetMenuVars,
+  fetchMenu,
+} from 'open-tender-redux'
+import {
   capitalize,
   makeReadableDateStrFromIso,
   timezoneMap,
 } from 'open-tender-js'
 import { Button } from 'open-tender'
-import {
-  setServiceType,
-  setRequestedAt,
-  resetRevenueCenter,
-} from '../../slices/orderSlice'
-import { closeModal } from '../../slices/modalSlice'
-import { resetMenuVars, fetchMenu } from '../../slices/menuSlice'
+
+import { closeModal } from '../../slices'
 
 const AdjustRequestedAtModal = ({ firstTimes, revenueCenter }) => {
   const dispatch = useDispatch()

@@ -1,24 +1,24 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { slugify } from 'open-tender-js'
-import { selectAccountConfigSections } from '../slices/configSlice'
 import {
   selectCustomerHouseAccounts,
   selectToken,
   fetchCustomerHouseAccounts,
-} from '../slices/customerSlice'
+} from 'open-tender-redux'
+import { slugify, orderTypeNamesMap, serviceTypeNamesMap } from 'open-tender-js'
+
+import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionRow from './SectionRow'
 import SectionEmpty from './SectionEmpty'
-import { orderTypeNamesMap, serviceTypeNamesMap } from 'open-tender-js'
 
 const AccountHouseAccounts = () => {
   const dispatch = useDispatch()
   const {
     houseAccounts: { title, subtitle, empty },
-  } = useSelector(selectAccountConfigSections)
+  } = useSelector(selectConfigAccountSections)
   const token = useSelector(selectToken)
   const houseAccounts = useSelector(selectCustomerHouseAccounts)
   const isLoading = houseAccounts.loading === 'pending'

@@ -1,11 +1,12 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { Button, CircleLoader, cardIconMap } from 'open-tender'
 import {
   updateCustomerCreditCard,
   removeCustomerCreditCard,
-} from '../slices/customerSlice'
+} from 'open-tender-redux'
+import { Button, CircleLoader, cardIconMap } from 'open-tender'
+
 import SectionRow from './SectionRow'
 
 const CreditCards = ({ creditCards, token, isLoading }) => {

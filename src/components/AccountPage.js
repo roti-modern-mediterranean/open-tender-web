@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectConfig } from '../slices/configSlice'
-import { selectCustomer, fetchCustomer } from '../slices/customerSlice'
+import { selectCustomer, fetchCustomer } from 'open-tender-redux'
+
+import { selectConfig } from '../slices'
 import StickyNav from './StickyNav'
 import Hero from './Hero'
 import AccountGreeting from './AccountGreeting'
@@ -22,7 +23,7 @@ const AccountPage = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const { background, title, subtitle, sections } = accountConfig
   const navItems = Object.values(sections).map((section) => section.title)
-  const { auth, account } = useSelector(selectCustomer)
+  const { auth, profile } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
 
   useEffect(() => {
@@ -34,24 +35,24 @@ const AccountPage = () => {
     dispatch(fetchCustomer({ token }))
   }, [token, dispatch, history])
 
-  return account ? (
+  return profile ? (
     <>
       <h1 className="sr-only">Account</h1>
       <Hero imageUrl={background} classes="hero--auto transition">
-        <AccountGreeting title={title} subtitle={subtitle} />
+        {/* <AccountGreeting title={title} subtitle={subtitle} /> */}
       </Hero>
       <div className="bg-secondary-color">
         <StickyNav items={navItems} offset={-90} />
         <div className="sections">
-          <AccountFavorites />
+          {/* <AccountFavorites />
           <AccountOrders />
           <AccountItems />
-          <AccountDetails />
+          <AccountDetails /> */}
           <AccountAllergens />
-          <AccountAddresses />
+          {/* <AccountAddresses />
           <AccountGiftCards />
           <AccountCreditCards />
-          <AccountHouseAccounts />
+          <AccountHouseAccounts /> */}
         </div>
       </div>
     </>

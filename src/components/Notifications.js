@@ -1,7 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import { selectNotifications } from '../slices/notificationSlice'
+import { selectNotifications } from 'open-tender-redux'
+
 import Notification from './Notification'
 
 const Notifications = () => {

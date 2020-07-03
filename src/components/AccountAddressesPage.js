@@ -6,12 +6,13 @@ import {
   selectToken,
   fetchCustomerAddresses,
   selectCustomerAddresses,
-} from '../slices/customerSlice'
+} from 'open-tender-redux'
+
+import { selectConfig } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import Addresses from './Addresses'
-import { selectConfig } from '../slices/configSlice'
 
 const AccountAddressesPage = () => {
   const sectionRef = useRef()

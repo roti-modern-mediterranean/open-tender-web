@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { slugify } from 'open-tender-js'
-import { selectAccountConfigSections } from '../slices/configSlice'
 import {
   selectToken,
   fetchCustomerAddresses,
   selectCustomerAddresses,
-} from '../slices/customerSlice'
+} from 'open-tender-redux'
+import { slugify } from 'open-tender-js'
+
+import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -18,7 +19,7 @@ const AccountAddresses = () => {
   const dispatch = useDispatch()
   const {
     addresses: { title, subtitle },
-  } = useSelector(selectAccountConfigSections)
+  } = useSelector(selectConfigAccountSections)
   const token = useSelector(selectToken)
   const addresses = useSelector(selectCustomerAddresses)
 

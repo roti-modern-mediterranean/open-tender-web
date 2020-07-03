@@ -1,7 +1,8 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { closeModal } from '../../slices/modalSlice'
+
+import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
 import SignUpForm from '../SignUpForm'
 
