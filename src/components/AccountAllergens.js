@@ -49,7 +49,8 @@ const AccountAllergens = () => {
     evt.preventDefault()
     setSubmitting(true)
     const newData = data.map((i) => ({ allergen_id: i.allergen_id }))
-    dispatch(updateCustomerAllergens({ data: newData }))
+    console.log(newData)
+    dispatch(updateCustomerAllergens(newData))
     submitButton.current.blur()
   }
 

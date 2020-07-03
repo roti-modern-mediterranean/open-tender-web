@@ -8,7 +8,7 @@ import StickyNav from './StickyNav'
 import Hero from './Hero'
 import AccountGreeting from './AccountGreeting'
 import AccountOrders from './AccountOrders'
-import AccountDetails from './AccountDetails'
+import AccountProfile from './AccountProfile'
 import AccountAllergens from './AccountAllergens'
 import AccountAddresses from './AccountAddresses'
 import AccountGiftCards from './AccountGiftCards'
@@ -38,21 +38,21 @@ const AccountPage = () => {
   return profile ? (
     <>
       <h1 className="sr-only">Account</h1>
-      <Hero imageUrl={background} classes="hero--auto transition">
-        {/* <AccountGreeting title={title} subtitle={subtitle} /> */}
-      </Hero>
+      {/* <Hero imageUrl={background} classes="hero--auto transition">
+        <AccountGreeting title={title} subtitle={subtitle} />
+      </Hero> */}
       <div className="bg-secondary-color">
         <StickyNav items={navItems} offset={-90} />
         <div className="sections">
           {/* <AccountFavorites />
           <AccountOrders />
-          <AccountItems />
-          <AccountDetails /> */}
+          <AccountItems /> */}
+          <AccountProfile />
           <AccountAllergens />
-          {/* <AccountAddresses />
-          <AccountGiftCards />
+          <AccountAddresses />
+          {/* <AccountGiftCards /> */}
           <AccountCreditCards />
-          <AccountHouseAccounts /> */}
+          {/* <AccountHouseAccounts /> */}
         </div>
       </div>
     </>

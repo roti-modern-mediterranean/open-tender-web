@@ -17,16 +17,14 @@ const fields = [
   { label: 'Company', name: 'company', type: 'text' },
 ]
 
-const AccountDetails = () => {
+const AccountProfile = () => {
   const dispatch = useDispatch()
   const {
     accountDetails: { title, subtitle },
   } = useSelector(selectConfigAccountSections)
-  const { auth, account, loading, error } = useSelector(selectCustomer)
-  const token = auth.access_token
+  const { profile, loading, error } = useSelector(selectCustomer)
   const submitButton = useRef()
   const [data, setData] = useState({})
-  // const [updated, setUpdated] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const formErrors = error && error.params ? handleFormErrors(error.params) : {}
   const errMsg = error && !error.params ? error.detail || error.message : null
@@ -36,8 +34,8 @@ const AccountDetails = () => {
   }, [loading])
 
   useEffect(() => {
-    setData(account)
-  }, [account])
+    setData(profile)
+  }, [profile])
 
   const handleChange = (evt) => {
     const { id, value } = evt.target
@@ -51,7 +49,7 @@ const AccountDetails = () => {
       (obj, i) => ({ ...obj, [i.name]: data[i.name] }),
       {}
     )
-    dispatch(updateCustomer({ token, data: update }))
+    dispatch(updateCustomer(update))
     submitButton.current.blur()
   }
 
@@ -100,5 +98,5 @@ const AccountDetails = () => {
   )
 }
 
-AccountDetails.displayName = 'AccountDetails'
-export default AccountDetails
+AccountProfile.displayName = 'AccountProfile'
+export default AccountProfile

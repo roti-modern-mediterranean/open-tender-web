@@ -22,16 +22,16 @@ import {
   CartCountsModal,
 } from './modals'
 
-const makeModal = (type, args = {}) => {
+const makeModal = (type, windowRef, args = {}) => {
   switch (type) {
     case 'login':
       return <LoginModal {...args} />
     case 'signUp':
       return <SignUpModal {...args} />
     case 'address':
-      return <AddressModal {...args} />
+      return <AddressModal windowRef={windowRef} {...args} />
     case 'creditCard':
-      return <CreditCardModal {...args} />
+      return <CreditCardModal windowRef={windowRef} {...args} />
     case 'allergens':
       return <AllergensModal {...args} />
     case 'item':
@@ -75,7 +75,7 @@ const Modal = () => {
   const { loading, type, args } = useSelector(selectModal)
   const preventClose = args && args.preventClose ? true : false
   const showModal = type ? true : false
-  const modal = type ? makeModal(type, args) : null
+  const modal = type ? makeModal(type, windowRef, args) : null
   const classes = `modal-container ${classesMap[type] || ''}`
 
   const handleClose = (evt) => {

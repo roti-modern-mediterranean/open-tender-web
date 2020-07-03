@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  selectToken,
   fetchCustomerCreditCards,
   selectCustomerCreditCards,
 } from 'open-tender-redux'
@@ -20,12 +19,11 @@ const AccountCreditCards = () => {
   const {
     creditCards: { title, subtitle, empty },
   } = useSelector(selectConfigAccountSections)
-  const token = useSelector(selectToken)
   const creditCards = useSelector(selectCustomerCreditCards) || {}
 
   useEffect(() => {
-    dispatch(fetchCustomerCreditCards({ token }))
-  }, [dispatch, token])
+    dispatch(fetchCustomerCreditCards())
+  }, [dispatch])
 
   const handleAddNew = (evt) => {
     evt.preventDefault()
@@ -48,7 +46,6 @@ const AccountCreditCards = () => {
         {showCreditCards ? (
           <CreditCards
             creditCards={creditCards.entities}
-            token={token}
             isLoading={isLoading}
           />
         ) : (

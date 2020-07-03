@@ -1,16 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
+import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  selectToken,
   addCustomerCreditCard,
+  resetCustomerCreditCardsError,
   selectCustomerCreditCards,
 } from 'open-tender-redux'
-import {
-  makeFormErrors,
-  getCardType,
-  makeAcctNumber,
-  validateCreditCard,
-} from 'open-tender-js'
+import { getCardType, makeAcctNumber, validateCreditCard } from 'open-tender-js'
 import { Input } from 'open-tender'
 
 import { closeModal } from '../../slices'
@@ -28,24 +24,26 @@ const fields = [
   { label: 'Zip Code', placeholder: '#####', name: 'zip', type: 'number' },
 ]
 
-const CreditCardModal = () => {
+const CreditCardModal = ({ windowRef }) => {
   const submitButton = useRef()
   const dispatch = useDispatch()
   const [data, setData] = useState({})
   const [cardType, setCardType] = useState('OTHER')
   const [errors, setErrors] = useState({})
   const [submitting, setSubmitting] = useState(false)
-  const token = useSelector(selectToken)
   const { loading, error } = useSelector(selectCustomerCreditCards)
 
   useEffect(() => {
-    if (loading === 'idle') setSubmitting(false)
-    if (error) setErrors(makeFormErrors(error))
-  }, [loading, error])
+    return () => dispatch(resetCustomerCreditCardsError())
+  }, [dispatch])
 
-  const handleClose = () => {
-    dispatch(closeModal())
-  }
+  useEffect(() => {
+    if (loading === 'idle') setSubmitting(false)
+    if (error) {
+      setErrors(error)
+      windowRef.current.scrollTop = 0
+    }
+  }, [loading, error, windowRef])
 
   const handleChange = (evt) => {
     let { id, checked, value } = evt.target
@@ -70,21 +68,18 @@ const CreditCardModal = () => {
     const { card, errors } = validateCreditCard(data, cardType)
     if (errors) {
       setErrors(errors)
+      windowRef.current.scrollTop = 0
     } else {
       setSubmitting(true)
-      const newCard = {
-        token,
-        data: card,
-        callback: () => dispatch(closeModal()),
-      }
-      dispatch(addCustomerCreditCard(newCard))
+      const callback = () => dispatch(closeModal())
+      dispatch(addCustomerCreditCard(card, callback))
     }
     submitButton.current.blur()
   }
 
   return (
     <>
-      <ModalClose classes="btn-link" onClick={handleClose} />
+      <ModalClose classes="btn-link" onClick={() => dispatch(closeModal())} />
       <div className="modal__content">
         <div className="modal__header">
           <p className="modal__title heading ot-font-size-h3">
@@ -135,5 +130,8 @@ const CreditCardModal = () => {
 }
 
 CreditCardModal.displayName = 'CreditCardModal'
+CreditCardModal.propTypes = {
+  windowRef: propTypes.shape({ current: propTypes.any }),
+}
 
 export default CreditCardModal

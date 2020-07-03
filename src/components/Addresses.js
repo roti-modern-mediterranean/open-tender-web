@@ -14,14 +14,14 @@ import { openModal } from '../slices'
 import SectionRow from './SectionRow'
 import OrderAddress from './OrderAddress'
 
-const Addresses = ({ addresses, token, isLoading }) => {
+const Addresses = ({ addresses, isLoading }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
   const handleEdit = (evt, address) => {
     evt.preventDefault()
-    dispatch(setCurrentAddress(address))
-    dispatch(openModal({ type: 'address' }))
+    // dispatch(setCurrentAddress(address))
+    dispatch(openModal({ type: 'address', args: { address } }))
     evt.target.blur()
   }
 
@@ -32,14 +32,14 @@ const Addresses = ({ addresses, token, isLoading }) => {
     delete data.customer_address_id
     delete data.created_at
     delete data.last_used_at
-    dispatch(updateCustomerAddress({ token, addressId, data }))
+    dispatch(updateCustomerAddress(addressId, data))
     evt.target.blur()
   }
 
   const handleDelete = (evt, address) => {
     evt.preventDefault()
     const addressId = address.customer_address_id
-    dispatch(removeCustomerAddress({ token, addressId }))
+    dispatch(removeCustomerAddress(addressId))
     evt.target.blur()
   }
 

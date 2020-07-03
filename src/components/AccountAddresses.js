@@ -22,13 +22,13 @@ const AccountAddresses = () => {
   } = useSelector(selectConfigAccountSections)
   const token = useSelector(selectToken)
   const addresses = useSelector(selectCustomerAddresses)
-
   const isLoading = addresses.loading === 'pending'
   const error = addresses.error
   const showAddresses = addresses.entities.length
+  const limit = 5
 
   useEffect(() => {
-    dispatch(fetchCustomerAddresses({ token, limit: 5 }))
+    dispatch(fetchCustomerAddresses(limit))
   }, [dispatch, token])
 
   useEffect(() => {
@@ -46,11 +46,7 @@ const AccountAddresses = () => {
         <SectionLoading loading={isLoading} />
         <SectionError error={error} />
         {showAddresses && (
-          <Addresses
-            addresses={addresses.entities}
-            token={token}
-            isLoading={isLoading}
-          />
+          <Addresses addresses={addresses.entities} isLoading={isLoading} />
         )}
         <div className="section__footer">
           <p className="font-size-small">

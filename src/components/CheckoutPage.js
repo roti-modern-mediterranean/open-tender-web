@@ -17,7 +17,7 @@ import {
   resetTip,
   resetCompletedOrder,
   updateForm,
-  updateCustomer,
+  updateCheckoutCustomer,
   validateOrder,
   submitOrder,
   setSubmitting,
@@ -37,6 +37,7 @@ import { selectConfig, openModal } from '../slices'
 import HeaderLogo from './HeaderLogo'
 import Loader from './Loader'
 import { BarLoader } from 'react-spinners'
+import { cardIconMap } from '../assets/cardIcons'
 
 const usePrevious = (value) => {
   const ref = useRef()
@@ -112,7 +113,7 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     dispatch(resetErrors())
-    dispatch(updateCustomer(account))
+    dispatch(updateCheckoutCustomer(account))
   }, [dispatch, account])
 
   const orderValidate = useMemo(() => {
@@ -252,6 +253,7 @@ const CheckoutPage = () => {
                 </div>
                 <CheckoutForm
                   config={checkoutConfig}
+                  cardIconMap={cardIconMap}
                   autoSelect={autoSelect}
                   order={order}
                   tz={tz}

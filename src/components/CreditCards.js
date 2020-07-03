@@ -5,25 +5,26 @@ import {
   updateCustomerCreditCard,
   removeCustomerCreditCard,
 } from 'open-tender-redux'
-import { Button, CircleLoader, cardIconMap } from 'open-tender'
+import { Button, CircleLoader } from 'open-tender'
 
 import SectionRow from './SectionRow'
+import { cardIconMap } from '../assets/cardIcons'
 
-const CreditCards = ({ creditCards, token, isLoading }) => {
+const CreditCards = ({ creditCards, isLoading }) => {
   const dispatch = useDispatch()
 
   const handleDefault = (evt, creditCard) => {
     evt.preventDefault()
     const cardId = creditCard.customer_card_id
     const data = { is_default: true }
-    dispatch(updateCustomerCreditCard({ token, cardId, data }))
+    dispatch(updateCustomerCreditCard(cardId, data))
     evt.target.blur()
   }
 
   const handleDelete = (evt, creditCard) => {
     evt.preventDefault()
     const cardId = creditCard.customer_card_id
-    dispatch(removeCustomerCreditCard({ token, cardId }))
+    dispatch(removeCustomerCreditCard(cardId))
     evt.target.blur()
   }
 
@@ -87,7 +88,6 @@ const CreditCards = ({ creditCards, token, isLoading }) => {
 CreditCards.displayName = 'CreditCards'
 CreditCards.prototypes = {
   creditCards: propTypes.array,
-  token: propTypes.string,
   isLoading: propTypes.boolean,
 }
 export default CreditCards

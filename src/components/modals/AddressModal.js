@@ -1,22 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react'
+import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  selectAccountAddress,
+  selectCustomerAddresses,
   updateCustomerAddress,
-  selectToken,
+  resetCustomerAddressesError,
 } from 'open-tender-redux'
-import { makeFormErrors } from 'open-tender-js'
 import { Input, Textarea, Switch } from 'open-tender'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
 
 const fields = [
-  // { label: 'Street', name: 'street', type: 'text', required: true },
-  // { label: 'Unit', name: 'unit', type: 'text' },
-  // { label: 'City', name: 'city', type: 'text', required: true },
-  // { label: 'State', name: 'state', type: 'text', required: true },
-  // { label: 'Zip Code', name: 'postal_code', type: 'text', required: true },
   { label: 'Company', name: 'company', type: 'text' },
   { label: 'Contact Person', name: 'contact', type: 'text' },
   { label: 'Contact Phone', name: 'phone', type: 'tel' },
@@ -25,27 +20,25 @@ const fields = [
   { label: 'Is Default', name: 'is_default', type: 'checkbox' },
 ]
 
-const AddressModal = () => {
+const AddressModal = ({ windowRef, address }) => {
   const submitButton = useRef()
   const dispatch = useDispatch()
-  const [data, setData] = useState({})
+  const [data, setData] = useState(address)
   const [errors, setErrors] = useState({})
   const [submitting, setSubmitting] = useState(false)
-  const token = useSelector(selectToken)
-  const { address, loading, error } = useSelector(selectAccountAddress)
+  const { loading, error } = useSelector(selectCustomerAddresses)
 
   useEffect(() => {
-    setData(address)
-  }, [address])
+    return () => dispatch(resetCustomerAddressesError())
+  }, [dispatch])
 
   useEffect(() => {
     if (loading === 'idle') setSubmitting(false)
-    if (error) setErrors(makeFormErrors(error))
-  }, [loading, error])
-
-  const handleClose = () => {
-    dispatch(closeModal())
-  }
+    if (error) {
+      setErrors(error)
+      windowRef.current.scrollTop = 0
+    }
+  }, [loading, error, windowRef])
 
   const handleChange = (evt) => {
     const { id, type, value, checked } = evt.target
@@ -60,26 +53,20 @@ const AddressModal = () => {
     delete updatedData.customer_address_id
     delete updatedData.created_at
     delete updatedData.last_used_at
-    const updatedAddress = {
-      token,
-      addressId: data.customer_address_id,
-      data: updatedData,
-      callback: () => dispatch(closeModal()),
-    }
-    dispatch(updateCustomerAddress(updatedAddress))
-    // dispatch(closeModal())
+    const addressId = data.customer_address_id
+    const callback = () => dispatch(closeModal())
+    dispatch(updateCustomerAddress(addressId, updatedData, callback))
     submitButton.current.blur()
   }
 
   return (
     <>
-      <ModalClose classes="btn-link" onClick={handleClose} />
+      <ModalClose classes="btn-link" onClick={() => dispatch(closeModal())} />
       <div className="modal__content">
         <div className="modal__header">
           <p className="modal__title heading ot-font-size-h3">
             Update this address
           </p>
-          {/* <p className="modal__subtitle"></p> */}
         </div>
         <div className="modal__body">
           <form
@@ -152,5 +139,9 @@ const AddressModal = () => {
 }
 
 AddressModal.displayName = 'AddressModal'
+AddressModal.propTypes = {
+  address: propTypes.object,
+  windowRef: propTypes.shape({ current: propTypes.any }),
+}
 
 export default AddressModal
