@@ -2,14 +2,14 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { X } from 'react-feather'
-import { hideMessage } from 'open-tender-redux'
+import { removeMessage } from 'open-tender-redux'
 
 const Message = ({ message, id }) => {
   const dispatch = useDispatch()
 
   const handleRemove = (evt) => {
     evt.preventDefault()
-    dispatch(hideMessage(id))
+    dispatch(removeMessage(id))
     evt.target.blur()
   }
 

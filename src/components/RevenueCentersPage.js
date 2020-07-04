@@ -37,9 +37,9 @@ const RevenueCentersPage = () => {
   useEffect(() => {
     let paramOrderType = null
     if (param) {
-      paramOrderType = makeOrderTypeFromParam(param)
+      const [orderType, serviceType, isOutpost] = makeOrderTypeFromParam(param)
       if (paramOrderType) {
-        dispatch(setOrderServiceType(paramOrderType))
+        dispatch(setOrderServiceType(orderType, serviceType, isOutpost))
         if (paramOrderType[0] === 'CATERING') history.push('/catering')
       }
     }

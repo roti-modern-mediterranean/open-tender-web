@@ -56,7 +56,7 @@ const OrderCard = ({ order, isLast }) => {
     evt.target.blur()
     const { revenue_center_id: revenueCenterId } = revenue_center
     const serviceType = service_type
-    dispatch(setOrderServiceType([order_type, service_type]))
+    dispatch(setOrderServiceType(order_type, service_type))
     dispatch(setAddress(address || null))
     dispatch(reorderPastOrder({ revenueCenterId, serviceType, items: cart }))
   }

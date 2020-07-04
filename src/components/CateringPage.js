@@ -51,7 +51,7 @@ const CateringPage = () => {
 
   useEffect(() => {
     if (!hasTypes) {
-      dispatch(setOrderServiceType(['CATERING', 'DELIVERY']))
+      dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
     }
     dispatch(fetchValidTimes('CATERING'))
   }, [hasTypes, dispatch])

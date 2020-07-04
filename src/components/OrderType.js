@@ -24,19 +24,19 @@ const OrderType = () => {
 
   const handleDelivery = (evt) => {
     evt.preventDefault()
-    dispatch(setOrderServiceType(['OLO', 'DELIVERY']))
+    dispatch(setOrderServiceType('OLO', 'DELIVERY'))
     evt.target.blur()
   }
 
   const handleCatering = (evt) => {
     evt.preventDefault()
-    dispatch(setOrderServiceType(['CATERING', 'DELIVERY']))
+    dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
     evt.target.blur()
   }
 
   const handleMerch = (evt) => {
     evt.preventDefault()
-    dispatch(setOrderServiceType(['MERCH', 'DELIVERY']))
+    dispatch(setOrderServiceType('MERCH', 'DELIVERY'))
     evt.target.blur()
   }
 

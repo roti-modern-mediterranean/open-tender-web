@@ -63,7 +63,7 @@ const RevenueCenterPage = () => {
           : 'DELIVERY'
         : null
       if (serviceType) {
-        dispatch(setOrderServiceType([revenue_center_type, serviceType]))
+        dispatch(setOrderServiceType(revenue_center_type, serviceType))
       }
     }
   }, [revenueCenter, rcConfig.Background, dispatch])

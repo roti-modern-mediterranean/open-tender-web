@@ -29,7 +29,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
   const handlePickup = (evt) => {
     evt.preventDefault()
     dispatch(setAddress(null))
-    dispatch(setOrderServiceType([rcType, 'PICKUP', is_outpost]))
+    dispatch(setOrderServiceType(rcType, 'PICKUP', is_outpost))
     dispatch(setRevenueCenter(revenueCenter))
     if (is_outpost) {
       dispatch(setAddress(address))
@@ -40,7 +40,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
 
   const handleDelivery = (evt) => {
     evt.preventDefault()
-    dispatch(setOrderServiceType([rcType, 'DELIVERY', is_outpost]))
+    dispatch(setOrderServiceType(rcType, 'DELIVERY', is_outpost))
     if (is_outpost) {
       dispatch(setAddress(address))
       dispatch(setRevenueCenter(revenueCenter))

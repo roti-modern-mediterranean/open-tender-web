@@ -1,8 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { selectAlert, resetAlert } from 'open-tender-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
-import { selectModal, closeModal } from '../slices'
+import { selectModal, closeModal, openModal } from '../slices'
 import ModalOverlay from './ModalOverlay'
 import ModalLoading from './ModalLoading'
 import {
@@ -72,11 +73,19 @@ const classesMap = {
 const Modal = () => {
   const windowRef = useRef()
   const dispatch = useDispatch()
+  const alert = useSelector(selectAlert)
   const { loading, type, args } = useSelector(selectModal)
   const preventClose = args && args.preventClose ? true : false
   const showModal = type ? true : false
   const modal = type ? makeModal(type, windowRef, args) : null
   const classes = `modal-container ${classesMap[type] || ''}`
+
+  useEffect(() => {
+    if (alert) {
+      dispatch(openModal(alert))
+      dispatch(resetAlert())
+    }
+  }, [alert, dispatch])
 
   const handleClose = (evt) => {
     if (!preventClose && evt.target.id === 'modal-container') {

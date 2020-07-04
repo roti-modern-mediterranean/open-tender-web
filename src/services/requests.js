@@ -32,7 +32,6 @@ export const getRevenueCentersNew = (
   api,
   { revenue_center_type, is_outpost, lat, lng }
 ) => {
-  console.log(api)
   let params = `revenue_center_type=${revenue_center_type}`
   if (is_outpost) params += '&is_outpost=true'
   if (lat && lng) params += `&lat=${lat}&lng=${lng}`

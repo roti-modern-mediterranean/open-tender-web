@@ -53,7 +53,7 @@ const AccountOrders = () => {
       if (!cartQuantity) {
         const isOutpost = revenue_center.is_outpost
         dispatch(fetchRevenueCenter(revenueCenterId))
-        dispatch(setOrderServiceType([order_type, service_type, isOutpost]))
+        dispatch(setOrderServiceType(order_type, service_type, isOutpost))
         dispatch(setAddress(address || null))
       }
     }

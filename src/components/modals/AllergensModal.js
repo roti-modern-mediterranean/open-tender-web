@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   selectCustomerAllergens,
-  selectMenu,
+  selectAllergens,
   setSelectedAllergens,
 } from 'open-tender-redux'
 import { Switch } from 'open-tender'
@@ -16,10 +16,9 @@ const AllergensModal = () => {
   const [allergens, setAllergens] = useState(null)
   // const [submitting, setSubmitting] = useState(false)
   const { entities: customerAllergens } = useSelector(selectCustomerAllergens)
-  const {
-    allergens: { entities: brandAllergens },
-    selectedAllergens,
-  } = useSelector(selectMenu)
+  const { entities: brandAllergens, selectedAllergens } = useSelector(
+    selectAllergens
+  )
 
   useEffect(() => {
     if (!allergens) {

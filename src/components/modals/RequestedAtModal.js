@@ -3,12 +3,16 @@ import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectOrder, setRequestedAt } from 'open-tender-redux'
 
-import { closeModal } from '../../slices'
+import { closeModal, toggleSidebar } from '../../slices'
 import ModalClose from '../ModalClose'
 import RequestedAtCalendar from '../RequestedAtCalendar'
 import RequestedAtTimes from '../RequestedAtTimes'
 
-const RequestedAtModal = ({ forcedUpdate = false, onCloseAction }) => {
+const RequestedAtModal = ({
+  forcedUpdate = false,
+  openSidebar = false,
+  onCloseAction,
+}) => {
   const dispatch = useDispatch()
   const { requestedAt, serviceType, revenueCenter } = useSelector(selectOrder)
   const { settings } = revenueCenter || {}
@@ -24,6 +28,7 @@ const RequestedAtModal = ({ forcedUpdate = false, onCloseAction }) => {
     dispatch(setRequestedAt(requestedAt))
     dispatch(closeModal())
     if (onCloseAction) dispatch(onCloseAction())
+    if (openSidebar) dispatch(toggleSidebar())
   }
 
   return (
@@ -53,7 +58,9 @@ const RequestedAtModal = ({ forcedUpdate = false, onCloseAction }) => {
 
 RequestedAtModal.displayName = 'RequestedAtModal'
 RequestedAtModal.propTypes = {
-  close: propTypes.func,
+  forcedUpdate: propTypes.bool,
+  openSidebar: propTypes.bool,
+  onCloseAction: propTypes.func,
 }
 
 export default RequestedAtModal
