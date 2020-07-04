@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   selectResetPassword,
   resetPassword,
-  resetResetPassword,
+  resetPasswordReset,
 } from 'open-tender-redux'
 import { Input, Button } from 'open-tender'
 
@@ -17,7 +17,7 @@ const fields = [
   { label: 'Confirm Password', name: 'confirm', type: 'password' },
 ]
 
-const ResetPasswordForm = ({ token }) => {
+const ResetPasswordForm = ({ resetToken }) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const submitButton = useRef()
@@ -30,11 +30,11 @@ const ResetPasswordForm = ({ token }) => {
   useEffect(() => {
     setData({})
     setErrors({})
-    dispatch(resetResetPassword())
+    dispatch(resetPasswordReset())
     return () => {
       setData({})
       setErrors({})
-      dispatch(resetResetPassword())
+      dispatch(resetPasswordReset())
     }
   }, [dispatch])
 
@@ -58,7 +58,7 @@ const ResetPasswordForm = ({ token }) => {
     } else {
       setErrors({})
       setSubmitting(true)
-      dispatch(resetPassword({ new_password, token }))
+      dispatch(resetPassword(new_password, resetToken))
     }
     submitButton.current.blur()
   }
@@ -119,7 +119,7 @@ const ResetPasswordForm = ({ token }) => {
 
 ResetPasswordForm.displayName = 'ResetPasswordForm'
 ResetPasswordForm.propTypes = {
-  token: propTypes.string,
+  resetToken: propTypes.string,
 }
 
 export default ResetPasswordForm

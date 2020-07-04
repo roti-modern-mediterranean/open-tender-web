@@ -10,7 +10,7 @@ import ResetPasswordForm from './ResetPasswordForm'
 const ResetPasswordPage = () => {
   const history = useHistory()
   const { hash } = useLocation()
-  const token = hash.includes('#') ? hash.split('#')[1] : ''
+  const resetToken = hash.includes('#') ? hash.split('#')[1] : ''
   const { auth } = useSelector(selectCustomer)
   const { resetPassword: resetPasswordConfig } = useSelector(selectConfig)
   const { title, subtitle, back } = resetPasswordConfig
@@ -18,8 +18,8 @@ const ResetPasswordPage = () => {
 
   useEffect(() => {
     if (auth) return history.push('/account')
-    if (!token) return history.push('/')
-  }, [auth, token, history])
+    if (!resetToken) return history.push('/')
+  }, [auth, resetToken, history])
 
   return (
     <>
@@ -30,7 +30,7 @@ const ResetPasswordPage = () => {
             <SectionHeader title={title} subtitle={subtitle} />
             <div className="section__content bg-color border-radius">
               <div className="signup__form">
-                <ResetPasswordForm token={token} />
+                <ResetPasswordForm resetToken={resetToken} />
               </div>
             </div>
             {!success && (

@@ -1,7 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectSignUp, signUpCustomer, resetSignUp } from 'open-tender-redux'
-import { makeFormErrors } from 'open-tender-js'
+import propTypes from 'prop-types'
 import { Input } from 'open-tender'
 
 import SubmitButton from './SubmitButton'
@@ -15,25 +13,29 @@ const fields = [
   // { label: 'Company', name: 'company', type: 'text' },
 ]
 
-const SignUpForm = () => {
+const SignUpForm = ({
+  loading,
+  error,
+  signUpCustomer,
+  resetSignUp,
+  callback,
+}) => {
   const [data, setData] = useState({})
   const [errors, setErrors] = useState({})
   const [submitting, setSubmitting] = useState(false)
   const submitButton = useRef()
-  const dispatch = useDispatch()
-  const { loading, error } = useSelector(selectSignUp)
 
   useEffect(() => {
     return () => {
       setData({})
       setErrors({})
-      dispatch(resetSignUp())
+      resetSignUp()
     }
-  }, [dispatch])
+  }, [resetSignUp])
 
   useEffect(() => {
     if (loading === 'idle') setSubmitting(false)
-    if (error) setErrors(makeFormErrors(error))
+    if (error) setErrors(error)
   }, [loading, error])
 
   const handleChange = (evt) => {
@@ -45,7 +47,7 @@ const SignUpForm = () => {
     evt.preventDefault()
     setErrors({})
     setSubmitting(true)
-    dispatch(signUpCustomer(data))
+    signUpCustomer(data, callback)
     submitButton.current.blur()
   }
 
@@ -78,5 +80,12 @@ const SignUpForm = () => {
 }
 
 SignUpForm.displayName = 'SignUpForm'
+SignUpForm.propTypes = {
+  loading: propTypes.string,
+  error: propTypes.object,
+  signUpCustomer: propTypes.func,
+  resetSignUp: propTypes.func,
+  callback: propTypes.func,
+}
 
 export default SignUpForm

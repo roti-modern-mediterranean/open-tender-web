@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { selectToken } from 'open-tender-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  selectCustomer,
+  selectSignUp,
+  signUpCustomer,
+  resetSignUp,
+} from 'open-tender-redux'
 
 import { selectConfig } from '../slices'
 import SignUpForm from './SignUpForm'
@@ -9,13 +14,16 @@ import SectionHeader from './SectionHeader'
 
 const SignUpPage = () => {
   const history = useHistory()
+  const dispatch = useDispatch()
   const { signUp: signUpConifg } = useSelector(selectConfig)
   const { title, subtitle, back } = signUpConifg
-  const token = useSelector(selectToken)
+  const { auth } = useSelector(selectCustomer)
+  const { loading, error } = useSelector(selectSignUp)
+  const signUp = (data, callback) => dispatch(signUpCustomer(data, callback))
 
   useEffect(() => {
-    if (token) return history.push('/account')
-  }, [token, history])
+    if (auth) return history.push('/account')
+  }, [auth, history])
 
   return (
     <>
@@ -26,7 +34,12 @@ const SignUpPage = () => {
             <SectionHeader title={title} subtitle={subtitle} />
             <div className="section__content bg-color border-radius">
               <div className="signup__form">
-                <SignUpForm />
+                <SignUpForm
+                  loading={loading}
+                  error={error}
+                  signUpCustomer={signUp}
+                  resetSignUp={() => dispatch(resetSignUp())}
+                />
               </div>
             </div>
             <div className="section__footer">

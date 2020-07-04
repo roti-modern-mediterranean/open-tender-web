@@ -1,6 +1,6 @@
 import React from 'react'
-import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectSignUp, signUpCustomer, resetSignUp } from 'open-tender-redux'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
@@ -8,14 +8,12 @@ import SignUpForm from '../SignUpForm'
 
 const SignUpModal = () => {
   const dispatch = useDispatch()
-
-  const handleClose = () => {
-    dispatch(closeModal())
-  }
+  const { loading, error } = useSelector(selectSignUp)
+  const signUp = (data, callback) => dispatch(signUpCustomer(data, callback))
 
   return (
     <>
-      <ModalClose classes="btn-link" onClick={handleClose} />
+      <ModalClose classes="btn-link" onClick={() => dispatch(closeModal())} />
       <div className="modal__content">
         <div className="modal__header">
           <p className="modal__title heading ot-font-size-h3">
@@ -26,7 +24,13 @@ const SignUpModal = () => {
           </p>
         </div>
         <div className="modal__body">
-          <SignUpForm />
+          <SignUpForm
+            loading={loading}
+            error={error}
+            signUpCustomer={signUp}
+            resetSignUp={() => dispatch(resetSignUp())}
+            calllback={() => dispatch(closeModal())}
+          />
         </div>
       </div>
     </>
@@ -34,8 +38,5 @@ const SignUpModal = () => {
 }
 
 SignUpModal.displayName = 'SignUpModal'
-SignUpModal.propTypes = {
-  close: propTypes.func,
-}
 
 export default SignUpModal

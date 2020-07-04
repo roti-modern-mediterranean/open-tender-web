@@ -66,7 +66,7 @@ const LoginModal = ({ callback }) => {
     evt.preventDefault()
     if (isReset) {
       const link_url = `${window.location.origin}/reset-password`
-      dispatch(sendPasswordResetEmail({ email: data.email, link_url }))
+      dispatch(sendPasswordResetEmail(data.email, link_url))
     } else {
       const { email, password } = data
       dispatch(loginCustomer(email, password)).then(() => {
