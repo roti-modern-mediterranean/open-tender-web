@@ -3,8 +3,8 @@ import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomer,
-  fetchOrders,
-  selectAccountOrders,
+  fetchCustomerOrders,
+  selectCustomerOrders,
 } from 'open-tender-redux'
 import { makeUniqueDisplayItems } from 'open-tender-js'
 
@@ -24,25 +24,26 @@ const AccountItemsPage = () => {
   const {
     recentItems: { title, subtitle, empty },
   } = useSelector(selectConfigAccountSections)
-  const { account } = useSelector(selectCustomer)
-  const { entities, loading, error } = useSelector(selectAccountOrders)
+  const { auth } = useSelector(selectCustomer)
+  const { entities, loading, error } = useSelector(selectCustomerOrders)
   const isLoading = loading === 'pending'
   const showItems = !isLoading && !error
+  const limit = 50
 
   useEffect(() => {
     window.scroll(0, 0)
   }, [])
 
   useEffect(() => {
-    if (!account) return history.push('/')
-  }, [account, history])
+    if (!auth) return history.push('/')
+  }, [auth, history])
 
   useEffect(() => {
     if (error) window.scrollTo(0, sectionRef.current.offsetTop)
   }, [error])
 
   useEffect(() => {
-    dispatch(fetchOrders({ limit: 50 }))
+    dispatch(fetchCustomerOrders(limit))
   }, [dispatch])
 
   useEffect(() => {
@@ -51,7 +52,7 @@ const AccountItemsPage = () => {
     setItems(recentItems)
   }, [entities])
 
-  return account ? (
+  return auth ? (
     <>
       <h1 className="sr-only">{title}</h1>
       <div className="sections bg-secondary-color">

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  selectToken,
   selectCustomerFavorites,
   fetchCustomerFavorites,
   selectCustomer,
@@ -25,8 +24,7 @@ const AccountFavoritesPage = () => {
   const {
     favorites: { title, subtitle, empty },
   } = useSelector(selectConfigAccountSections)
-  const token = useSelector(selectToken)
-  const { account } = useSelector(selectCustomer)
+  const { auth } = useSelector(selectCustomer)
   const { entities, loading, error } = useSelector(selectCustomerFavorites)
   const isLoading = loading === 'pending'
 
@@ -35,23 +33,23 @@ const AccountFavoritesPage = () => {
   }, [])
 
   useEffect(() => {
-    if (!account) return history.push('/')
-  }, [account, history])
+    if (!auth) return history.push('/')
+  }, [auth, history])
 
   useEffect(() => {
     if (error) window.scrollTo(0, sectionRef.current.offsetTop)
   }, [error])
 
   useEffect(() => {
-    dispatch(fetchCustomerFavorites({ token }))
-  }, [dispatch, token])
+    dispatch(fetchCustomerFavorites())
+  }, [dispatch])
 
   useEffect(() => {
     const items = entities.map((i) => ({ ...i, item: makeDisplayItem(i.item) }))
     setFavorites(items)
   }, [entities])
 
-  return account ? (
+  return auth ? (
     <>
       <h1 className="sr-only">{title}</h1>
       <div className="sections bg-secondary-color">

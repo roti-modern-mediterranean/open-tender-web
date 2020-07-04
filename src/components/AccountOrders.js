@@ -7,8 +7,8 @@ import {
   setOrderServiceType,
   setAddress,
   selectCartQuantity,
-  selectAccountOrders,
-  fetchOrders,
+  selectCustomerOrders,
+  fetchCustomerOrders,
 } from 'open-tender-redux'
 import { slugify } from 'open-tender-js'
 import { Button } from 'open-tender'
@@ -29,14 +29,14 @@ const AccountOrders = () => {
   const {
     recentOrders: { title, subtitle, empty },
   } = useSelector(selectConfigAccountSections)
-  const orders = useSelector(selectAccountOrders)
+  const orders = useSelector(selectCustomerOrders)
   const cartQuantity = useSelector(selectCartQuantity)
   const { entities, loading, error } = orders
   const isLoading = loading === 'pending'
   const showOrders = !isLoading && !error
 
   useEffect(() => {
-    dispatch(fetchOrders({ limit: limit + 1 }))
+    dispatch(fetchCustomerOrders(limit + 1))
   }, [dispatch])
 
   useEffect(() => {

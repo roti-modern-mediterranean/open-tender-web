@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  selectToken,
   selectCustomerFavorites,
   fetchCustomerFavorites,
 } from 'open-tender-redux'
@@ -27,11 +26,10 @@ const AccountFavorites = () => {
   } = useSelector(selectConfigAccountSections)
   const { entities, loading, error } = useSelector(selectCustomerFavorites)
   const isLoading = loading === 'pending'
-  const token = useSelector(selectToken)
 
   useEffect(() => {
-    dispatch(fetchCustomerFavorites({ token }))
-  }, [dispatch, token])
+    dispatch(fetchCustomerFavorites())
+  }, [dispatch])
 
   useEffect(() => {
     const items = entities

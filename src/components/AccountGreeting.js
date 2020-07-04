@@ -6,11 +6,11 @@ import { Link } from 'react-scroll'
 import { parseISO } from 'date-fns'
 import {
   selectOrder,
+  selectCustomerProfile,
+  selectCustomerOrders,
   resetOrderType,
   resetOrder,
   resetRevenueCenter,
-  selectCustomerProfile,
-  selectAccountOrders,
 } from 'open-tender-redux'
 import { slugify, capitalize, otherOrderTypesMap } from 'open-tender-js'
 import { Button } from 'open-tender'
@@ -50,7 +50,7 @@ const AccountGreeting = ({ title, subtitle }) => {
   const customer = useSelector(selectCustomerProfile)
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
-  const { entities: orders, loading } = useSelector(selectAccountOrders)
+  const { entities: orders, loading } = useSelector(selectCustomerOrders)
   const isLoading = loading === 'pending'
   const lastOrder = getLastOrder(orders)
   let orderType = null,
@@ -62,8 +62,6 @@ const AccountGreeting = ({ title, subtitle }) => {
   }
   const isCurrentOrder = revenueCenter && serviceType && cart.length
   const accountLoading = isLoading && !isCurrentOrder && !lastOrder
-  // const isOrder = !isLoading && (isCurrentOrder || lastOrder)
-  // const orderClass = isOrder ? '' : '-no-order'
   const orderClass = ''
   const greetingClass = `greeting bg-color border-radius ot-box-shadow slide-up ${orderClass}`
 

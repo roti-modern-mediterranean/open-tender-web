@@ -38,21 +38,21 @@ const AccountPage = () => {
   return profile ? (
     <>
       <h1 className="sr-only">Account</h1>
-      {/* <Hero imageUrl={background} classes="hero--auto transition">
+      <Hero imageUrl={background} classes="hero--auto transition">
         <AccountGreeting title={title} subtitle={subtitle} />
-      </Hero> */}
+      </Hero>
       <div className="bg-secondary-color">
         <StickyNav items={navItems} offset={-90} />
         <div className="sections">
-          {/* <AccountFavorites />
+          <AccountFavorites />
           <AccountOrders />
-          <AccountItems /> */}
+          <AccountItems />
           <AccountProfile />
           <AccountAllergens />
           <AccountAddresses />
-          {/* <AccountGiftCards /> */}
+          <AccountGiftCards />
           <AccountCreditCards />
-          {/* <AccountHouseAccounts /> */}
+          <AccountHouseAccounts />
         </div>
       </div>
     </>

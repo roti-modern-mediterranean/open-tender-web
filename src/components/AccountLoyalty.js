@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  fetchCustomerLoyalty,
-  selectToken,
-  selectCustomerLoyalty,
-} from 'open-tender-redux'
+import { fetchCustomerLoyalty, selectCustomerLoyalty } from 'open-tender-redux'
 import { loyaltyType } from 'open-tender-js'
 
 const LoyaltyProgram = ({ program }) => {
@@ -55,12 +51,11 @@ const LoyaltyProgram = ({ program }) => {
 
 const AccountLoyalty = () => {
   const dispatch = useDispatch()
-  const token = useSelector(selectToken)
   const { entities, loading } = useSelector(selectCustomerLoyalty)
 
   useEffect(() => {
-    dispatch(fetchCustomerLoyalty(token))
-  }, [dispatch, token])
+    dispatch(fetchCustomerLoyalty())
+  }, [dispatch])
 
   return entities.length && loading !== 'pending' ? (
     <div className="loyalty">

@@ -3,8 +3,8 @@ import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomer,
-  selectAccountOrders,
-  fetchOrders,
+  selectCustomerOrders,
+  fetchCustomerOrders,
 } from 'open-tender-redux'
 import { Button } from 'open-tender'
 
@@ -27,9 +27,8 @@ const AccountOrdersPage = () => {
   const {
     recentOrders: { title, subtitle, empty },
   } = useSelector(selectConfigAccountSections)
-  const { account, auth } = useSelector(selectCustomer)
-  const token = auth ? auth.access_token : null
-  const orders = useSelector(selectAccountOrders)
+  const { auth } = useSelector(selectCustomer)
+  const orders = useSelector(selectCustomerOrders)
   const { entities, loading, error } = orders
   const isLoading = loading === 'pending'
   const showOrders = !isLoading && !error
@@ -39,16 +38,16 @@ const AccountOrdersPage = () => {
   }, [])
 
   useEffect(() => {
-    if (!account) return history.push('/')
-  }, [account, history])
+    if (!auth) return history.push('/')
+  }, [auth, history])
 
   useEffect(() => {
     if (error) window.scrollTo(0, sectionRef.current.offsetTop)
   }, [error])
 
   useEffect(() => {
-    dispatch(fetchOrders({ token, limit: limit + 1 }))
-  }, [dispatch, token])
+    dispatch(fetchCustomerOrders(limit + 1))
+  }, [dispatch])
 
   useEffect(() => {
     const recent = entities.length ? entities.slice(0, count) : []
@@ -61,7 +60,7 @@ const AccountOrdersPage = () => {
     evt.target.blur()
   }
 
-  return account ? (
+  return auth ? (
     <>
       <h1 className="sr-only">{title}</h1>
       <div className="sections bg-secondary-color">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { selectAccountOrders } from 'open-tender-redux'
+import { selectCustomerOrders } from 'open-tender-redux'
 import { slugify, makeUniqueDisplayItems } from 'open-tender-js'
 
 import { selectConfigAccountSections } from '../slices'
@@ -16,7 +16,7 @@ const AccountItems = () => {
   const {
     recentItems: { title, subtitle, empty },
   } = useSelector(selectConfigAccountSections)
-  const orders = useSelector(selectAccountOrders)
+  const orders = useSelector(selectCustomerOrders)
   const { entities, loading, error } = orders
   const isLoading = loading === 'pending'
   const showItems = !isLoading && !error

@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  selectToken,
   fetchCustomerAddresses,
   selectCustomerAddresses,
 } from 'open-tender-redux'
@@ -20,7 +19,6 @@ const AccountAddresses = () => {
   const {
     addresses: { title, subtitle },
   } = useSelector(selectConfigAccountSections)
-  const token = useSelector(selectToken)
   const addresses = useSelector(selectCustomerAddresses)
   const isLoading = addresses.loading === 'pending'
   const error = addresses.error
@@ -29,7 +27,7 @@ const AccountAddresses = () => {
 
   useEffect(() => {
     dispatch(fetchCustomerAddresses(limit))
-  }, [dispatch, token])
+  }, [dispatch])
 
   useEffect(() => {
     if (error) window.scrollTo(0, sectionRef.current.offsetTop)

@@ -3,7 +3,6 @@ import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import {
-  setCurrentAddress,
   updateCustomerAddress,
   removeCustomerAddress,
   setAddress,
@@ -20,7 +19,6 @@ const Addresses = ({ addresses, isLoading }) => {
 
   const handleEdit = (evt, address) => {
     evt.preventDefault()
-    // dispatch(setCurrentAddress(address))
     dispatch(openModal({ type: 'address', args: { address } }))
     evt.target.blur()
   }

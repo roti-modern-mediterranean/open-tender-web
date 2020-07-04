@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomerHouseAccounts,
-  selectToken,
   fetchCustomerHouseAccounts,
 } from 'open-tender-redux'
 import { slugify, orderTypeNamesMap, serviceTypeNamesMap } from 'open-tender-js'
@@ -19,15 +18,14 @@ const AccountHouseAccounts = () => {
   const {
     houseAccounts: { title, subtitle, empty },
   } = useSelector(selectConfigAccountSections)
-  const token = useSelector(selectToken)
   const houseAccounts = useSelector(selectCustomerHouseAccounts)
   const isLoading = houseAccounts.loading === 'pending'
   const error = houseAccounts.error
   const showGiftCards = houseAccounts.entities.length
 
   useEffect(() => {
-    dispatch(fetchCustomerHouseAccounts(token))
-  }, [dispatch, token])
+    dispatch(fetchCustomerHouseAccounts())
+  }, [dispatch])
 
   return (
     <div id={slugify(title)} className="section container ot-section">

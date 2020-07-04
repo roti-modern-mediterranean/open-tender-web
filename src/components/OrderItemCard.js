@@ -2,7 +2,6 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  selectToken,
   addCustomerFavorite,
   removeCustomerFavorite,
   selectCustomerFavorites,
@@ -15,7 +14,6 @@ import { Button, ButtonFavorite } from 'open-tender'
 
 const OrderItemCard = ({ item }) => {
   const dispatch = useDispatch()
-  const token = useSelector(selectToken)
   const { lookup } = useSelector(selectCustomerFavorites)
   const { entities: menuItems } = useSelector(selectMenuItems)
   const { name, groups, quantity, totalPrice, imageUrl, signature } = item
@@ -43,11 +41,11 @@ const OrderItemCard = ({ item }) => {
 
   const addFavorite = (cart) => {
     const data = { cart }
-    dispatch(addCustomerFavorite({ token, data }))
+    dispatch(addCustomerFavorite(data))
   }
 
   const removeFavorite = (favoriteId) => {
-    dispatch(removeCustomerFavorite({ token, favoriteId }))
+    dispatch(removeCustomerFavorite(favoriteId))
   }
 
   return (

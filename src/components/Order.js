@@ -11,7 +11,7 @@ import {
   setAddress,
   reorderPastOrder,
   editOrder,
-  resetAccountOrder,
+  resetCustomerOrder,
 } from 'open-tender-redux'
 import { makeDisplayItem, capitalize, isEmpty, isoToDate } from 'open-tender-js'
 import { Button, CartItem, OrderQuantity, Check } from 'open-tender'
@@ -54,8 +54,7 @@ const Order = ({ order, loading, error }) => {
   const orderType = order_type === 'OLO' ? service_type : order_type
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
-  const { auth, account } = useSelector(selectCustomer)
-  const token = auth ? auth.access_token : null
+  const { auth } = useSelector(selectCustomer)
   const { lookup = {} } = useSelector(selectCustomerFavorites)
   const check = { surcharges, discounts, taxes, totals, details }
   const {
@@ -67,17 +66,15 @@ const Order = ({ order, loading, error }) => {
   } = details || {}
   const hasDetails =
     eating_utensils || serving_utensils || person_count || tax_exempt_id
-  const backText = account
-    ? 'Head back to your account page'
-    : 'Start a new order'
+  const backText = auth ? 'Head back to your account page' : 'Start a new order'
 
   const addFavorite = (cart) => {
     const data = { cart }
-    dispatch(addCustomerFavorite({ token, data }))
+    dispatch(addCustomerFavorite(data))
   }
 
   const removeFavorite = (favoriteId) => {
-    dispatch(removeCustomerFavorite({ token, favoriteId }))
+    dispatch(removeCustomerFavorite(favoriteId))
   }
 
   const handleEdit = (evt) => {
@@ -105,8 +102,8 @@ const Order = ({ order, loading, error }) => {
 
   const backLink = (evt) => {
     evt.preventDefault()
-    if (account) {
-      dispatch(resetAccountOrder())
+    if (auth) {
+      dispatch(resetCustomerOrder())
       history.push('/account')
     } else {
       history.push('/')
@@ -126,7 +123,7 @@ const Order = ({ order, loading, error }) => {
               {capitalize(orderType)} from {revenue_center.name}
             </h1>
             <div className="order__buttons">
-              {order.is_editable && token && (
+              {order.is_editable && (
                 <Button text="Edit" icon="Edit" onClick={handleEdit} />
               )}
               <Button text="Reorder" icon="RefreshCw" onClick={handleReorder} />

@@ -30,7 +30,7 @@ const OrderRatingModal = ({ orderId, orderRating }) => {
   const handleSubmit = (evt) => {
     evt.preventDefault()
     const data = { rating, comments }
-    dispatch(updateOrderRating({ orderId, data }))
+    dispatch(updateOrderRating(orderId, data))
     dispatch(closeModal())
     submitButton.current.blur()
   }
