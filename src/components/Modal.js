@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectAlert, resetAlert } from 'open-tender-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
-import { selectModal, closeModal, openModal } from '../slices'
+import { selectModal, closeModal, openModal, toggleSidebar } from '../slices'
 import ModalOverlay from './ModalOverlay'
 import ModalLoading from './ModalLoading'
 import {
@@ -82,7 +82,14 @@ const Modal = () => {
 
   useEffect(() => {
     if (alert) {
-      dispatch(openModal(alert))
+      if (alert.type === 'closeAndSidebar') {
+        dispatch(closeModal())
+        dispatch(toggleSidebar())
+      } else if (alert.type === 'close') {
+        dispatch(closeModal())
+      } else {
+        dispatch(openModal(alert))
+      }
       dispatch(resetAlert())
     }
   }, [alert, dispatch])

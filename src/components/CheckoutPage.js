@@ -56,7 +56,7 @@ const CheckoutPage = () => {
   const order = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
   const autoSelect = useSelector(selectAutoSelect)
-  const { account, auth } = useSelector(selectCustomer)
+  const { auth, profile } = useSelector(selectCustomer)
   const {
     check,
     form,
@@ -113,12 +113,12 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     dispatch(resetErrors())
-    dispatch(updateCheckoutCustomer(account))
-  }, [dispatch, account])
+    dispatch(updateCheckoutCustomer(profile))
+  }, [dispatch, profile])
 
   const orderValidate = useMemo(() => {
-    const customerValidate = account
-      ? { customer_id: account.customer_id }
+    const customerValidate = profile
+      ? { customer_id: profile.customer_id }
       : null
     const dataValidate = {
       orderId,
@@ -136,7 +136,7 @@ const CheckoutPage = () => {
     return prepareOrder(dataValidate)
   }, [
     orderId,
-    account,
+    profile,
     revenueCenterId,
     serviceType,
     requestedAt,
@@ -222,7 +222,7 @@ const CheckoutPage = () => {
               <div className="checkout__actions">
                 <ButtonMenu onClick={handleBackToMenu} classes="btn--header" />
                 <ButtonAccount
-                  account={account}
+                  account={profile}
                   isAccount={false}
                   login={handleLogin}
                   logout={handleLogout}
@@ -267,6 +267,7 @@ const CheckoutPage = () => {
                   submitOrder={() => dispatch(submitOrder())}
                   login={() => dispatch(openModal({ type: 'login' }))}
                   logout={() => dispatch(logoutCustomer(access_token))}
+                  goToAccount={handleAccount}
                   updateRequestedAt={handleRequestedAt}
                   updateRevenueCenter={handleRevenueCenter}
                   updateServiceType={
