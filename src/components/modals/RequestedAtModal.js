@@ -2,11 +2,10 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectOrder, setRequestedAt } from 'open-tender-redux'
+import { RequestedAtCalendar, RequestedAtTimes } from 'open-tender'
 
 import { closeModal, toggleSidebar } from '../../slices'
 import ModalClose from '../ModalClose'
-import RequestedAtCalendar from '../RequestedAtCalendar'
-import RequestedAtTimes from '../RequestedAtTimes'
 
 const RequestedAtModal = ({
   forcedUpdate = false,

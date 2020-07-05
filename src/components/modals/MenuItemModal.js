@@ -6,7 +6,7 @@ import {
   setCurrentItem,
   addItemToCart,
   selectSoldOut,
-  selectedAllergenNames,
+  selectSelectedAllergenNames,
   showNotification,
 } from 'open-tender-redux'
 import { Builder, BuilderOption, BuilderHeader } from 'open-tender'
@@ -18,13 +18,13 @@ const MenuItemModal = () => {
   const dispatch = useDispatch()
   const item = useSelector(selectCurrentItem)
   const soldOut = useSelector(selectSoldOut)
-  const allergens = useSelector(selectedAllergenNames)
+  const allergens = useSelector(selectSelectedAllergenNames)
 
   const handleClose = () => {
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(setCurrentItem(null))
-    }, 250)
+    }, 275)
   }
 
   const handleAddItem = (item) => {
@@ -33,22 +33,24 @@ const MenuItemModal = () => {
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(setCurrentItem(null))
-    }, 250)
+    }, 275)
   }
 
   return (
     <>
       <ModalClose classes="" onClick={handleClose} />
       <div className="modal__content">
-        <Builder
-          menuItem={item}
-          soldOut={soldOut}
-          allergens={allergens}
-          addItemToCart={handleAddItem}
-          renderHeader={(props) => <BuilderHeader {...props} />}
-          renderOption={(props) => <BuilderOption {...props} />}
-          showImage={true}
-        />
+        {item && (
+          <Builder
+            menuItem={item}
+            soldOut={soldOut}
+            allergens={allergens}
+            addItemToCart={handleAddItem}
+            renderHeader={(props) => <BuilderHeader {...props} />}
+            renderOption={(props) => <BuilderOption {...props} />}
+            showImage={true}
+          />
+        )}
       </div>
     </>
   )
