@@ -10,10 +10,10 @@ import Messages from './components/Messages'
 import Notifications from './components/Notifications'
 import CartButton from './components/CartButton'
 import Sidebar from './components/Sidebar'
-import { fetchConfig } from './slices/configSlice'
-
-import './App.scss'
 import Loader from './components/Loader'
+import { fetchConfig } from './slices/configSlice'
+import { GlobalStyles } from './components/Styled'
+import './App.scss'
 
 class App extends React.Component {
   componentDidMount() {
@@ -26,6 +26,7 @@ class App extends React.Component {
       <Loader className="loading--page" type="Clip" size={32} />
     ) : (
       <ThemeProvider theme={this.props.theme}>
+        <GlobalStyles />
         <div className="app">
           <Modal />
           <Router>

@@ -34,24 +34,22 @@ const AccountAddresses = () => {
   }, [error])
 
   return (
-    <div
-      id={slugify(title)}
-      ref={sectionRef}
-      className="section container ot-section"
-    >
-      <div className="section__container">
-        <SectionHeader title={title} subtitle={subtitle} />
-        <SectionLoading loading={isLoading} />
-        <SectionError error={error} />
-        {showAddresses && (
-          <Addresses addresses={addresses.entities} isLoading={isLoading} />
-        )}
-        <div className="section__footer">
-          <p className="font-size-small">
-            <Link to="/addresses" className="">
-              See all addresses you've used in the past
-            </Link>
-          </p>
+    <div id={slugify(title)} ref={sectionRef} className="section">
+      <div class="container">
+        <div className="section__container">
+          <SectionHeader title={title} subtitle={subtitle} />
+          <SectionLoading loading={isLoading} />
+          <SectionError error={error} />
+          {showAddresses && (
+            <Addresses addresses={addresses.entities} isLoading={isLoading} />
+          )}
+          <div className="section__footer">
+            <p>
+              <Link to="/addresses" className="">
+                See all addresses you've used in the past
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

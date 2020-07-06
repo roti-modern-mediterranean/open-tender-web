@@ -79,6 +79,13 @@ body.has-modal {
   min-height: 100vh;
 }
 
+.container {
+  padding: 0 4rem;
+  @include breakpoint(mobile_both) {
+    padding: 0 2rem;
+  }
+}
+
 .loading {
   width: 100%;
   padding: 3rem;

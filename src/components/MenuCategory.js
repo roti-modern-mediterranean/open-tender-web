@@ -4,7 +4,7 @@ import { slugify } from 'open-tender-js'
 import MenuItem from './MenuItem'
 
 const MenuCategory = ({ category, isChild }) => {
-  const child = isChild ? '-child' : 'ot-section'
+  const child = isChild ? '-child' : ''
   return (
     <div
       key={category.id}

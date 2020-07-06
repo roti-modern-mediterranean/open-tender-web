@@ -56,7 +56,7 @@ const AccountItemsPage = () => {
     <>
       <h1 className="sr-only">{title}</h1>
       <div className="sections bg-secondary-color">
-        <div ref={sectionRef} className="section container ot-section">
+        <div ref={sectionRef} className="section container">
           <div className="section__container">
             <SectionHeader title={title} subtitle={subtitle}>
               <div className="section__header__back">

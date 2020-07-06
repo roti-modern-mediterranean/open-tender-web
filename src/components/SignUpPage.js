@@ -41,7 +41,7 @@ const SignUpPage = () => {
     <>
       <h1 className="sr-only">{title}</h1>
       <div className="signup content bg-secondary-color">
-        <div className="section container ot-section">
+        <div className="section container">
           <div className="section__container">
             <SectionHeader title={title} subtitle={subtitle} />
             <div className="section__content bg-color border-radius">

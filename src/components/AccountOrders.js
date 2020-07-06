@@ -60,7 +60,7 @@ const AccountOrders = () => {
   }, [entities, cartQuantity, dispatch])
 
   return (
-    <div id={slugify(title)} className="section container ot-section">
+    <div id={slugify(title)} className="section container">
       <div className="section__container">
         <SectionHeader title={title} subtitle={subtitle} />
         <SectionLoading loading={isLoading} />
