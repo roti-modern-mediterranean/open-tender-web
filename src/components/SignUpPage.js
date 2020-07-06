@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -19,8 +19,15 @@ const SignUpPage = () => {
   const { title, subtitle, back } = signUpConifg
   const { auth } = useSelector(selectCustomer)
   const { loading, error } = useSelector(selectSignUp)
-  const signUp = (data, callback) => dispatch(signUpCustomer(data, callback))
-  const reset = () => dispatch(resetSignUp())
+  const signUp = useCallback(
+    (data, callback) => dispatch(signUpCustomer(data, callback)),
+    [dispatch]
+  )
+
+  useEffect(() => {
+    window.scroll(0, 0)
+    return () => dispatch(resetSignUp())
+  }, [dispatch])
 
   useEffect(() => {
     if (auth) return history.push('/account')
@@ -39,12 +46,7 @@ const SignUpPage = () => {
             <SectionHeader title={title} subtitle={subtitle} />
             <div className="section__content bg-color border-radius">
               <div className="signup__form">
-                <SignUpForm
-                  loading={loading}
-                  error={error}
-                  signUpCustomer={signUp}
-                  resetSignUp={reset}
-                />
+                <SignUpForm loading={loading} error={error} signUp={signUp} />
               </div>
             </div>
             <div className="section__footer">

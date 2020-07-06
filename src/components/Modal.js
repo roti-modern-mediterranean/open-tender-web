@@ -28,7 +28,7 @@ const makeModal = (type, windowRef, args = {}) => {
     case 'login':
       return <LoginModal {...args} />
     case 'signUp':
-      return <SignUpModal {...args} />
+      return <SignUpModal windowRef={windowRef} {...args} />
     case 'address':
       return <AddressModal windowRef={windowRef} {...args} />
     case 'creditCard':

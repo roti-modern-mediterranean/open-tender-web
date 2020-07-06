@@ -56,7 +56,7 @@ const CheckoutPage = () => {
   const order = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
   const autoSelect = useSelector(selectAutoSelect)
-  const { auth, profile } = useSelector(selectCustomer)
+  const { profile } = useSelector(selectCustomer)
   const {
     check,
     form,
@@ -75,7 +75,6 @@ const CheckoutPage = () => {
     cart,
   } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
-  const { access_token } = auth || {}
   const { surcharges, discounts, promoCodes, tenders, tip } = form
   const pending = loading === 'pending'
   const checkUpdating = submitting ? false : pending
@@ -99,7 +98,6 @@ const CheckoutPage = () => {
       dispatch(resetCompletedOrder())
       dispatch(resetOrder())
       return history.push('/confirmation')
-      // return history.push(`/orders/${completedOrder.order_id}`)
     }
   }, [
     history,
@@ -175,7 +173,7 @@ const CheckoutPage = () => {
 
   const handleLogout = (evt) => {
     evt.preventDefault()
-    dispatch(logoutCustomer(auth.access_token))
+    dispatch(logoutCustomer())
     evt.target.blur()
   }
 
@@ -265,8 +263,9 @@ const CheckoutPage = () => {
                   updateForm={(form) => dispatch(updateForm(form))}
                   setSubmitting={(bool) => dispatch(setSubmitting(bool))}
                   submitOrder={() => dispatch(submitOrder())}
+                  signUp={() => dispatch(openModal({ type: 'signUp' }))}
                   login={() => dispatch(openModal({ type: 'login' }))}
-                  logout={() => dispatch(logoutCustomer(access_token))}
+                  logout={() => dispatch(logoutCustomer())}
                   goToAccount={handleAccount}
                   updateRequestedAt={handleRequestedAt}
                   updateRevenueCenter={handleRevenueCenter}

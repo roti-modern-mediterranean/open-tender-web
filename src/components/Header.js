@@ -14,6 +14,7 @@ import {
 import { makeServiceTypeName } from 'open-tender-js'
 import {
   ButtonAccount,
+  ButtonSignUp,
   ButtonAllergens,
   ButtonCancelEdit,
   ButtonGroupOrder,
@@ -43,7 +44,7 @@ const Header = () => {
   } = useSelector(selectOrder)
   const autoSelect = useSelector(selectAutoSelect)
   const tz = useSelector(selectTimezone)
-  const { profile, auth } = useSelector(selectCustomer)
+  const { profile } = useSelector(selectCustomer)
   const outpostName = useSelector(selectOutpostName)
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
@@ -68,6 +69,12 @@ const Header = () => {
     evt.target.blur()
   }
 
+  const handleSignUp = (evt) => {
+    evt.preventDefault()
+    history.push(`/signup`)
+    evt.target.blur()
+  }
+
   const handleAccount = (evt) => {
     evt.preventDefault()
     history.push(`/account`)
@@ -76,7 +83,7 @@ const Header = () => {
 
   const handleLogout = (evt) => {
     evt.preventDefault()
-    dispatch(logoutCustomer(auth.access_token))
+    dispatch(logoutCustomer())
     evt.target.blur()
   }
 
@@ -157,6 +164,13 @@ const Header = () => {
           goToAccount={handleAccount}
           classes="btn--header"
         />
+        {isHome && !profile && (
+          <ButtonSignUp
+            text="Sign Up"
+            signUp={handleSignUp}
+            classes="btn--header"
+          />
+        )}
         {revenueCenter && !isCheckout && !autoSelect && (
           <ButtonRevenueCenter
             revenueCenter={revenueCenter}
