@@ -30,10 +30,6 @@ const AllergensModal = () => {
     }
   }, [allergens, customerAllergens, selectedAllergens])
 
-  const handleClose = () => {
-    dispatch(closeModal())
-  }
-
   const handleChange = (evt) => {
     const { id, checked } = evt.target
     const newAllergens = checked
@@ -54,7 +50,7 @@ const AllergensModal = () => {
 
   return (
     <>
-      <ModalClose classes="btn-link" onClick={handleClose} />
+      <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
           <p className="modal__title heading ot-font-size-h3">

@@ -14,9 +14,6 @@ const OrderRatingModal = ({ orderId, orderRating }) => {
   const dispatch = useDispatch()
   const stars = [1, 2, 3, 4, 5]
 
-  const handleClose = () => {
-    dispatch(closeModal())
-  }
   const handleRating = (evt, star) => {
     evt.preventDefault()
     setRating(star)
@@ -37,7 +34,7 @@ const OrderRatingModal = ({ orderId, orderRating }) => {
 
   return (
     <>
-      <ModalClose classes="btn-link" onClick={handleClose} />
+      <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
           <p className="modal__title heading ot-font-size-h3">

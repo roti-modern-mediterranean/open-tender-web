@@ -19,10 +19,6 @@ const RequestedAtModal = ({
   const firstTimes = first_times ? first_times[serviceType] : null
   const orderTimes = order_times ? order_times[serviceType] : null
 
-  const handleClose = () => {
-    dispatch(closeModal())
-  }
-
   const handleRequestedAt = (requestedAt) => {
     dispatch(setRequestedAt(requestedAt))
     dispatch(closeModal())
@@ -32,14 +28,14 @@ const RequestedAtModal = ({
 
   return (
     <>
-      <ModalClose onClick={handleClose} />
+      <ModalClose />
       {firstTimes ? (
         <RequestedAtCalendar
           forcedUpdate={forcedUpdate}
           requestedAt={requestedAt}
           serviceType={serviceType}
           revenueCenter={revenueCenter}
-          handleClose={handleClose}
+          handleClose={() => dispatch(closeModal())}
           setRequestedAt={handleRequestedAt}
         />
       ) : orderTimes ? (
