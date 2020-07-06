@@ -1,11 +1,4 @@
-export const brandConfig = {
-  brandId: 2,
-  logo: 'http://s3.amazonaws.com/betterboh/u/img/local/2/1589984577_logo.png',
-  title: 'Open Tender',
-  description: 'An open platform for restaurant innovation',
-}
-
-export const defaultConfig = {
+const contentConfig = {
   notFound: {
     title: 'Page Not Found',
     subtitle: "Sorry, but we couldn't find the page you're looking for.",
@@ -27,17 +20,8 @@ export const defaultConfig = {
     apiKey: 'AIzaSyCkllc7M-cYNzSRXO7KE-ZZKTPW59RroDk',
     defaultCenter: { lat: 40.7572285, lng: -73.9729147 },
     zoom: 14,
-    // styles: {
-    //   labelColor: '#5a5aff',
-    //   roadColor: '#edeaff',
-    //   featureColor: '#edeaff',
-    //   waterColor: '#cbe9fd',
-    //   backgroundColor: '#f6f5ff',
-    // },
     styles: {
       labelColor: '#666666',
-      // roadColor: '#e4e9f2',
-      // featureColor: '#e4e9f2'
       roadColor: '#eaeef4',
       featureColor: '#eaeef4',
       waterColor: '#dee5ef',
@@ -45,12 +29,6 @@ export const defaultConfig = {
     },
     icons: {
       user: {
-        // url:
-        //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271579_map-marker_red-dark-red_120x160.png',
-        //  size: { width: 30, height: 40 },
-        //  anchor: null,
-        // url:
-        //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590781979_marker-blinking-static_purple_120x120.png',
         url:
           'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590782366_marker-blinking-static_purple-25_120x120.png',
         size: { width: 70, height: 70 },
@@ -99,19 +77,8 @@ export const defaultConfig = {
         subtitle: 'Large group orders via delivery or pikup',
       },
     ],
-    // buttons: {
-    //   outpost: 'Order for Outpost',
-    //   pickup: 'Order for Pickup',
-    //   delivery: 'Order for Delivery',
-    //   catering: 'Order Catering',
-    //   merch: null,
-    // },
   },
   catering: {
-    // background:
-    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1592579125_9a97d7b25efb11eb92ba.jpg',
-    // background:
-    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1592579576_351fc15cb1e752f1d838.jpg',
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1592580958_4e2729d4c2db9a96116c.jpg',
     title: "When's your event?",
@@ -321,3 +288,5 @@ export const defaultConfig = {
       "Below are all of the addresses from which you've ordered in the past. To add a new address, start a new order and enter a new address.",
   },
 }
+
+export default contentConfig

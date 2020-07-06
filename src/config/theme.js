@@ -1,4 +1,4 @@
-export const defaultTheme = {
+const themeConfig = {
   colors: {
     primary: '#000',
     secondary: '#666',
@@ -15,3 +15,5 @@ export const defaultTheme = {
     xBig: '1.8rem',
   },
 }
+
+export default themeConfig
