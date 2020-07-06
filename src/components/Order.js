@@ -176,7 +176,7 @@ const Order = ({ order, loading, error }) => {
                       {eating_utensils ? (
                         <p className="font-size-small secondary-color">
                           Eating utensils included
-                          {person_count && `for ${person_count} people`}
+                          {person_count && ` for ${person_count} people`}
                         </p>
                       ) : (
                         person_count && (

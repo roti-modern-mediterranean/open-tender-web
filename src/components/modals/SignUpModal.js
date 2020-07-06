@@ -1,10 +1,10 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectSignUp, signUpCustomer, resetSignUp } from 'open-tender-redux'
+import { SignUpForm } from 'open-tender'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
-import SignUpForm from '../SignUpForm'
 
 const SignUpModal = () => {
   const dispatch = useDispatch()

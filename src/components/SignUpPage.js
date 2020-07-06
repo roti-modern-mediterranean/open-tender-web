@@ -7,9 +7,9 @@ import {
   signUpCustomer,
   resetSignUp,
 } from 'open-tender-redux'
+import { SignUpForm } from 'open-tender'
 
 import { selectConfig } from '../slices'
-import SignUpForm from './SignUpForm'
 import SectionHeader from './SectionHeader'
 
 const SignUpPage = () => {
@@ -20,10 +20,15 @@ const SignUpPage = () => {
   const { auth } = useSelector(selectCustomer)
   const { loading, error } = useSelector(selectSignUp)
   const signUp = (data, callback) => dispatch(signUpCustomer(data, callback))
+  const reset = () => dispatch(resetSignUp())
 
   useEffect(() => {
     if (auth) return history.push('/account')
   }, [auth, history])
+
+  useEffect(() => {
+    if (error) window.scroll(0, 0)
+  }, [error])
 
   return (
     <>
@@ -38,7 +43,7 @@ const SignUpPage = () => {
                   loading={loading}
                   error={error}
                   signUpCustomer={signUp}
-                  resetSignUp={() => dispatch(resetSignUp())}
+                  resetSignUp={reset}
                 />
               </div>
             </div>
