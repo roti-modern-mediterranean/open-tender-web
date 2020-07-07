@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { ThemeProvider } from 'emotion-theming'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { ThemeProvider } from 'emotion-theming'
+import GlobalStyles from './components/GlobalStyles'
 import Routes from './components/Routes'
 import Modal from './components/Modal'
 import Header from './components/Header'
@@ -12,7 +13,6 @@ import CartButton from './components/CartButton'
 import Sidebar from './components/Sidebar'
 import Loader from './components/Loader'
 import { fetchConfig } from './slices/configSlice'
-import { GlobalStyles } from './components/Styled'
 import './App.scss'
 
 class App extends React.Component {

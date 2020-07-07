@@ -158,9 +158,6 @@ const AccountGreeting = ({ title, subtitle }) => {
             <p className="font-size-small ot-bold">
               Other things you can do from here...
             </p>
-            {/* <p className="heading ot-font-size-h5">
-              Other things you can do from here...
-            </p> */}
             <ul className="font-size-small">
               <li>
                 <span>

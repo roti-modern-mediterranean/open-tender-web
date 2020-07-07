@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setOrderServiceType } from 'open-tender-redux'
 import { selectConfig } from '../slices'
 import OrderTypeButton from './OrderTypeButton'
-import { Preface, Subtitle } from './Styled'
 
 const OrderType = () => {
   const dispatch = useDispatch()
@@ -51,11 +50,9 @@ const OrderType = () => {
   return (
     <div className="card overlay border-radius slide-up">
       <div className="card__header">
-        {/* <p className="preface font-size-small secondary-color">{subtitle}</p> */}
-        <Preface className="preface">{subtitle}</Preface>
+        <p className="ot-preface">{subtitle}</p>
         <h1 className="ot-font-size-h3">{title}</h1>
-        {/* <p className="secondary-color">{content}</p> */}
-        <Subtitle>{content}</Subtitle>
+        <p className="ot-subtitle">{content}</p>
       </div>
       <div className="card__content">
         {buttons.map((i) => (
