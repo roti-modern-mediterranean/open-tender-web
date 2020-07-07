@@ -1,6 +1,7 @@
 .messages {
   position: fixed;
   z-index: 15;
+  top: $nav-height;
   right: 4rem;
 }
 

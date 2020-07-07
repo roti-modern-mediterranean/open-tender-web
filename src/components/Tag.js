@@ -5,14 +5,16 @@ import { iconMap } from 'open-tender'
 const Tag = ({
   text,
   icon,
-  bgClass = 'bg-secondary-color',
+  bgClass = 'ot-bg-color-secondary',
   textClass = '',
 }) => {
   return (
-    <span className={`tag font-size-x-small ${bgClass} ${textClass}`}>
+    <span className={`tag ot-preface ${bgClass}`}>
       <span className="tag__container">
-        {icon && <span className="tag__icon">{iconMap[icon]}</span>}
-        <span>{text}</span>
+        {icon && (
+          <span className={`tag__icon ${textClass}`}>{iconMap[icon]}</span>
+        )}
+        <span className={`ot-font-size-x-small ${textClass}`}>{text}</span>
       </span>
     </span>
   )

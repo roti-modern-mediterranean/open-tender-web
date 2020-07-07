@@ -68,18 +68,18 @@ const OrderCard = ({ order, isLast }) => {
   }
 
   return (
-    <div className="order-card bg-color border border-radius ot-box-shadow slide-up">
+    <div className="order-card ot-bg-color-primary border border-radius ot-box-shadow slide-up">
       <OrderTag isUpcoming={isUpcoming} status={status} />
       <div className="order-card__container">
         <div className="order-card__header">
-          <p className="order-card__number preface font-size-x-small secondary-color">
+          <p className="order-card__number ot-preface ot-font-size-x-small ot-color-secondary">
             {isLast ? 'Your Last Order' : `Order #${order_id}`}
           </p>
           <p className="order-card__title">
             {capitalize(orderType)} from {revenue_center.name}
           </p>
           {isUpcoming && trackingUrl && (
-            <p className="font-size-small secondary-color">
+            <p className="ot-font-size-small ot-color-secondary">
               <DeliveryLink
                 text="Track your delivery"
                 trackingUrl={trackingUrl}
@@ -88,7 +88,7 @@ const OrderCard = ({ order, isLast }) => {
           )}
         </div>
         <div className="order-card__content">
-          <div className="order-card__details font-size-small secondary-color">
+          <div className="order-card__details ot-font-size-small ot-color-secondary">
             <p>
               {requestedAt} &nbsp;|&nbsp; ${totals.total}
             </p>
@@ -98,7 +98,9 @@ const OrderCard = ({ order, isLast }) => {
             <div className="order-card__images">
               <OrderImages items={cart} />
             </div>
-            <p className="font-size-x-small secondary-color">{itemNames}</p>
+            <p className="ot-font-size-x-small ot-color-secondary">
+              {itemNames}
+            </p>
           </div>
         </div>
         <div className="order-card__footer">
@@ -108,14 +110,14 @@ const OrderCard = ({ order, isLast }) => {
                 text="Edit"
                 icon="Edit"
                 onClick={handleEdit}
-                classes="btn--small font-size-small"
+                classes="btn--small ot-font-size-small"
               />
             )}
             <Button
               text="Reorder"
               icon="RefreshCw"
               onClick={handleReorder}
-              classes={`btn--small font-size-small ${
+              classes={`btn--small ot-font-size-small ${
                 order.is_editable ? 'btn--secondary' : ''
               }`}
             />
@@ -123,7 +125,7 @@ const OrderCard = ({ order, isLast }) => {
               text={`Details ${!isUpcoming ? '/ Rate' : ''}`}
               icon="FileText"
               onClick={handleDetails}
-              classes="btn--small btn--secondary font-size-small"
+              classes="btn--small btn--secondary ot-font-size-small"
             />
           </div>
         </div>

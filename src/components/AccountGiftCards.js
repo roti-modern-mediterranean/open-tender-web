@@ -37,7 +37,7 @@ const AccountGiftCards = () => {
         <SectionLoading loading={isLoading} />
         <SectionError error={error} />
         {showGiftCards && (
-          <div className="section__content bg-color border-radius">
+          <div className="section__content ot-bg-color-primary border-radius">
             <div className="section__rows">
               {giftCards.entities.map((giftCard) => {
                 const expired = dateStrToDate(giftCard.expiration) < new Date()
@@ -49,14 +49,14 @@ const AccountGiftCards = () => {
                     <div className="section__row__container">
                       <div className="section__row__container__content">
                         <p>${giftCard.balance} remaining balance</p>
-                        <p className="font-size-small secondary-color">
+                        <p className="ot-font-size-small ot-color-secondary">
                           {giftCard.orders} orders have been placed with this
                           gift card
                         </p>
                         {giftCard.expiration && (
                           <p
-                            className={`font-size-small ${
-                              expired ? 'ot-alert-color' : 'secondary-color'
+                            className={`ot-font-size-small ${
+                              expired ? 'ot-color-alert' : 'ot-color-secondary'
                             }`}
                           >
                             {expired ? 'Expired ' : 'Expires '}
@@ -70,7 +70,7 @@ const AccountGiftCards = () => {
                             text="Add Value"
                             icon="PlusCircle"
                             onClick={(evt) => handleAddValue(evt, giftCard)}
-                            classes="btn--small font-size-small"
+                            classes="btn--small ot-font-size-small"
                             disabled={isLoading}
                           />
                         </div>
@@ -83,7 +83,7 @@ const AccountGiftCards = () => {
           </div>
         )}
         <div className="section__footer">
-          <p className="font-size-small">
+          <p className="ot-font-size-small">
             <Button
               text="Purchase a new gift card"
               onClick={handlePurchase}

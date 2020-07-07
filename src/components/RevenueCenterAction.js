@@ -4,7 +4,7 @@ import { iconMap } from 'open-tender'
 
 const RevenueCenterAction = ({
   icon,
-  iconClass = 'secondary-color',
+  iconClass = 'ot-color-secondary',
   text,
   arrow = 'ArrowRight',
 }) => {
@@ -13,9 +13,9 @@ const RevenueCenterAction = ({
     <div className="rc__action">
       <div className={`rc__icon ${iconClass}`}>{iconMap[icon]}</div>
       <div className="rc__text">
-        <p className="secondary-color font-size-small">{text}</p>
+        <p className="ot-color-secondary ot-font-size-small">{text}</p>
       </div>
-      <div className="rc__arrow secondary-color">{iconArrow}</div>
+      <div className="rc__arrow ot-color-secondary">{iconArrow}</div>
     </div>
   )
 }

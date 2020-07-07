@@ -128,7 +128,7 @@ const RevenueCentersSelect = ({
   }
 
   return (
-    <div className="card map__card overlay border-radius slide-up ot-box-shadow">
+    <div className="card map__card ot-opacity-light border-radius slide-up ot-box-shadow">
       {isLoading ? (
         <div className="loading">
           <div className="loading__loader">
@@ -140,9 +140,9 @@ const RevenueCentersSelect = ({
         <div className="card__header">
           <h1 className="ot-font-size-h3">{renamedTitle}</h1>
           {error ? (
-            <p className="ot-error-color ot-line-height">{renamedError}</p>
+            <p className="ot-color-error ot-line-height">{renamedError}</p>
           ) : (
-            <p className="secondary-color ot-line-height">{renamedMsg}</p>
+            <p className="ot-color-secondary ot-line-height">{renamedMsg}</p>
           )}
         </div>
       )}

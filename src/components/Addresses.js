@@ -49,7 +49,7 @@ const Addresses = ({ addresses, isLoading }) => {
   }
 
   return (
-    <div className="section__content bg-color border-radius">
+    <div className="section__content ot-bg-color-primary border-radius">
       <div className="section__rows">
         {addresses.map((address) => (
           <SectionRow
@@ -59,12 +59,12 @@ const Addresses = ({ addresses, isLoading }) => {
             <div className="section__row__container">
               <div className="section__row__container__content">
                 {address.is_default && (
-                  <p className="preface font-size-x-small secondary-color">
+                  <p className="ot-preface ot-font-size-x-small ot-color-secondary">
                     Default
                   </p>
                 )}
                 <OrderAddress address={address} isDefault={address.is_default}>
-                  <p className="font-size-small secondary-color">
+                  <p className="ot-font-size-small ot-color-secondary">
                     <Button
                       text="edit"
                       classes="btn-link"
@@ -93,7 +93,7 @@ const Addresses = ({ addresses, isLoading }) => {
                   text="Order from here"
                   icon="RefreshCw"
                   onClick={(evt) => handleReorder(evt, address)}
-                  classes="btn--small font-size-small"
+                  classes="btn--small ot-font-size-small"
                   disabled={isLoading}
                 />
               </div>

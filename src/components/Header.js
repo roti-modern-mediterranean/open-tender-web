@@ -143,9 +143,7 @@ const Header = () => {
   }
 
   return (
-    <header
-      className={`header container flex ot-header ot-nav-height ${classes}`}
-    >
+    <header className={`header container flex ${classes}`}>
       <div className="header__nav">
         {isHome || isRevenueCenterPage ? (
           <div className="header__logo">

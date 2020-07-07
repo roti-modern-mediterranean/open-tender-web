@@ -34,7 +34,7 @@ const AccountHouseAccounts = () => {
         <SectionLoading loading={isLoading} />
         <SectionError error={error} />
         {showGiftCards ? (
-          <div className="section__content bg-color border-radius">
+          <div className="section__content ot-bg-color-primary border-radius">
             <div className="section__rows">
               {houseAccounts.entities.map((houseAccount) => {
                 const orderType =
@@ -55,12 +55,12 @@ const AccountHouseAccounts = () => {
                     <div className="section__row__container">
                       <div className="section__row__container__content">
                         <p>{houseAccount.name}</p>
-                        <p className="font-size-small secondary-color">
+                        <p className="ot-font-size-small ot-color-secondary">
                           {houseAccount.approved_contact
                             ? 'Your account has been specifically approved for this house account'
                             : `This house account is approved for all email addresses ending in ${houseAccount.domain}`}
                         </p>
-                        <p className="font-size-small secondary-color">
+                        <p className="ot-font-size-small ot-color-secondary">
                           Approved for <span className="">{orderTypes}</span>{' '}
                           and <span className="">{serviceTypes}</span>
                         </p>

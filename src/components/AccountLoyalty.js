@@ -19,28 +19,28 @@ const LoyaltyProgram = ({ program }) => {
       <div className="loyalty__program__header">
         <p className="heading ot-font-size-h5">{name}</p>
         {currentCredit ? (
-          <p className="font-size-small ot-success-color">
+          <p className="ot-font-size-small ot-color-success">
             You've got ${currentCredit.toFixed(2)} in credit to redeem!
             {/* {progress
               ? `and you're ${progress}% of the way towards your next reward!`
               : 'to redeem!'} */}
           </p>
         ) : progress ? (
-          <p className="font-size-small">
+          <p className="ot-font-size-small">
             You're {progress}% of the way towards earning your next $
             {redemption.reward} off!
           </p>
         ) : (
-          <p className="font-size-small">{description}</p>
+          <p className="ot-font-size-small">{description}</p>
         )}
       </div>
-      <div className="progress bg-secondary-color ot-box-shadow-inset">
+      <div className="progress ot-bg-color-secondary ot-box-shadow-inset">
         <div className="progress__bar" style={style}>
-          <div className="progress__fill ot-box-shadow bg-link-color"></div>
+          <div className="progress__fill ot-box-shadow ot-highlight"></div>
         </div>
       </div>
       {/* <div className="loyalty__program__footer">
-        <p className="font-size-x-small">
+        <p className="ot-font-size-x-small">
           You're {progress}% of the way towards earning your next $
           {redemption.reward} off!
         </p>

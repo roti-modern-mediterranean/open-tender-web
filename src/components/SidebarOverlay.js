@@ -12,7 +12,7 @@ const SidebarOverlay = () => {
       {isOpen ? (
         <CSSTransition key="sidebar-overlay" classNames="md" timeout={250}>
           <div
-            className="sidebar-overlay overlay-dark"
+            className="sidebar-overlay ot-opacity-dark"
             onClick={() => dispatch(toggleSidebar())}
           />
         </CSSTransition>

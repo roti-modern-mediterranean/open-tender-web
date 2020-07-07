@@ -6,10 +6,10 @@ const OrderRevenueCenter = ({ revenueCenter }) => {
   return (
     <>
       <p>{revenueCenter.name}</p>
-      <p className="font-size-small secondary-color">
+      <p className="ot-font-size-small ot-color-secondary">
         {rcAddr.street}, {rcAddr.city}, {rcAddr.state} {rcAddr.postal_code}
       </p>
-      <p className="font-size-small secondary-color">{rcAddr.phone}</p>
+      <p className="ot-font-size-small ot-color-secondary">{rcAddr.phone}</p>
     </>
   )
 }

@@ -171,6 +171,11 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+
+    &__message {
+      font-weight: bold;
+      text-transform: uppercase;
+    }
   }
 
   &__option__alert {

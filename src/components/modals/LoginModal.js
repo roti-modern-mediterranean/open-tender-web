@@ -93,7 +93,7 @@ const LoginModal = ({ callback }) => {
             <LoginForm {...customer} login={login} callback={callback} />
           )}
         </div>
-        <div className="modal__footer font-size-small">
+        <div className="modal__footer ot-font-size-small">
           <Button
             classes="btn-link"
             onClick={resetSent ? toggleResetSent : toggleReset}

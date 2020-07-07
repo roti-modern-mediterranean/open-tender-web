@@ -63,7 +63,7 @@ const AccountGreeting = ({ title, subtitle }) => {
   const isCurrentOrder = revenueCenter && serviceType && cart.length
   const accountLoading = isLoading && !isCurrentOrder && !lastOrder
   const orderClass = ''
-  const greetingClass = `greeting bg-color border-radius ot-box-shadow slide-up ${orderClass}`
+  const greetingClass = `greeting ot-bg-color-primary border-radius ot-box-shadow slide-up ${orderClass}`
 
   const startNewOrder = (evt) => {
     evt.preventDefault()
@@ -95,7 +95,7 @@ const AccountGreeting = ({ title, subtitle }) => {
 
   return accountLoading ? (
     <div className="hero__loading">
-      <div className="hero__loading__content ot-bold ot-light-color">
+      <div className="hero__loading__content ot-bold ot-color-light">
         <p>Loading your account...</p>
       </div>
       <div className="hero__loading__loader">
@@ -120,7 +120,7 @@ const AccountGreeting = ({ title, subtitle }) => {
                   icon="ShoppingBag"
                   onClick={continueCurrent}
                 />
-                <p className="font-size-small">
+                <p className="ot-font-size-small">
                   <Button
                     text="Or start a new order from scratch"
                     classes="btn-link"
@@ -135,7 +135,7 @@ const AccountGreeting = ({ title, subtitle }) => {
                   icon="ShoppingBag"
                   onClick={continueCurrent}
                 />
-                <p className="font-size-small">
+                <p className="ot-font-size-small">
                   <Button
                     text={`Or switch to ${otherOrderTypes.join(
                       ' or '
@@ -155,10 +155,10 @@ const AccountGreeting = ({ title, subtitle }) => {
           </div>
           <AccountLoyalty />
           <div className="greeting__summary__options">
-            <p className="font-size-small ot-bold">
+            <p className="ot-font-size-small ot-bold">
               Other things you can do from here...
             </p>
-            <ul className="font-size-small">
+            <ul className="ot-font-size-small">
               <li>
                 <span>
                   Reorder from your{' '}
@@ -215,7 +215,7 @@ const AccountGreeting = ({ title, subtitle }) => {
               <>
                 <CurrentOrder order={currentOrder} />
                 <div className="greeting__order__footer">
-                  <p className="font-size-small">
+                  <p className="ot-font-size-small">
                     <Button
                       text="Change location"
                       classes="btn-link"
@@ -234,7 +234,7 @@ const AccountGreeting = ({ title, subtitle }) => {
               <>
                 <OrderCard order={lastOrder} isLast={true} />
                 <div className="greeting__order__footer">
-                  <p className="font-size-small">
+                  <p className="ot-font-size-small">
                     <GreetingLink
                       sectionTitle={config.recentOrders.title}
                       text="See other recent orders..."

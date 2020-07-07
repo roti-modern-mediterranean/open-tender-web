@@ -15,7 +15,7 @@ const OrderRating = ({ rating, comments }) => {
         ))}
       </div>
       {comments.length ? (
-        <p className="font-size-small secondary-color">{comments}</p>
+        <p className="ot-font-size-small ot-color-secondary">{comments}</p>
       ) : null}
     </>
   )

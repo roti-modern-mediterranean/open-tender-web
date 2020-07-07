@@ -59,7 +59,7 @@ const OrderRatingModal = ({ orderId, orderRating }) => {
             <div className="form__inputs">
               <div className="order__stars">
                 {stars.map((star) => {
-                  const classes = star <= rating ? 'ot-link-color' : ''
+                  const classes = star <= rating ? 'ot-color-link' : ''
 
                   return (
                     <button

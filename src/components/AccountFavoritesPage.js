@@ -52,12 +52,12 @@ const AccountFavoritesPage = () => {
   return auth ? (
     <>
       <h1 className="sr-only">{title}</h1>
-      <div className="sections bg-secondary-color">
+      <div className="sections ot-bg-color-secondary">
         <div ref={sectionRef} className="section container">
           <div className="section__container">
             <SectionHeader title={title} subtitle={subtitle}>
               <div className="section__header__back">
-                <p className="font-size-small">
+                <p className="ot-font-size-small">
                   <Link to="/account">Head back to your account page</Link>
                 </p>
               </div>

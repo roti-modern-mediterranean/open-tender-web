@@ -8,7 +8,7 @@ const OrderRequestedAt = ({ requested_at, timezone, is_asap, status }) => {
   return is_asap && status === 'OPEN' ? (
     <>
       <p>ASAP</p>
-      <p className="font-size-small secondary-color">
+      <p className="ot-font-size-small ot-color-secondary">
         {requestedAt} (give or take a few minutes)
       </p>
     </>

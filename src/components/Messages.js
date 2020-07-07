@@ -13,7 +13,7 @@ const Messages = () => {
   // ]
 
   return (
-    <div className="ot-top messages">
+    <div className="messages">
       <TransitionGroup component={'ul'}>
         {messages.map((message) => (
           <CSSTransition

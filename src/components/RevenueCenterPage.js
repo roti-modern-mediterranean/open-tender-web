@@ -72,7 +72,7 @@ const RevenueCenterPage = () => {
     <div className="content">
       <Background imageUrl={imageUrl} />
       {revenueCenter && !isLoading && (
-        <div className="card card--rc overlay border-radius slide-up ot-box-shadow">
+        <div className="card card--rc ot-opacity-light border-radius slide-up ot-box-shadow">
           <h1 className="sr-only">{revenueCenter.name}</h1>
           <div className="card__content">
             <RevenueCenter

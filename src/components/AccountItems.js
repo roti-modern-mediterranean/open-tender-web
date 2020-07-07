@@ -50,7 +50,7 @@ const AccountItems = () => {
             ))}
         </div>
         <div className="section__footer">
-          <p className="font-size-small">
+          <p className="ot-font-size-small">
             <Link to="/items" className="">
               See more recently ordered items
             </Link>

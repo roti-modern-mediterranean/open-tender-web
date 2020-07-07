@@ -28,7 +28,7 @@ const Sidebar = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const canOrder = useSelector(selectCanOrder)
   const { orderMinimum } = useSelector(selectOrderLimits)
-  const classes = `sidebar bg-secondary-color ${isOpen ? 'is-open' : ''}`
+  const classes = `sidebar ot-bg-color-secondary ${isOpen ? 'is-open' : ''}`
   const isMenu = pathname.includes('menu')
   const isCheckout = pathname.includes('checkout')
   const belowMinimum = orderMinimum && cartTotal < orderMinimum
@@ -54,19 +54,21 @@ const Sidebar = () => {
       <div className={classes}>
         <div className="sidebar__container">
           {isOpen && <SidebarClose />}
-          <div className="sidebar__header bg-color">
+          <div className="sidebar__header ot-bg-color-primary">
             <h2 className="sidebar__title ot-font-size-h3">
               {orderId ? `Editing Order ${orderId}` : 'Your Order'}
             </h2>
             {cartCount === 0 ? (
-              <p className="font-size-small ot-alert-color">
+              <p className="ot-font-size-small ot-color-alert">
                 Your cart is currently empty. Please add some items.
               </p>
             ) : (
-              <p className="font-size-small secondary-color">
-                <span className="ot-bold body-color">{cartCount} items</span>{' '}
+              <p className="ot-font-size-small ot-color-secondary">
+                <span className="ot-bold ot-color-primary">
+                  {cartCount} items
+                </span>{' '}
                 for a total of{' '}
-                <span className="ot-bold body-color">
+                <span className="ot-bold ot-color-primary">
                   ${cartTotal.toFixed(2)}
                 </span>{' '}
                 before tax
@@ -74,7 +76,7 @@ const Sidebar = () => {
             )}
             {belowMinimum && (
               <div className="sidebar__header__message">
-                <p className="font-size-small ot-bold ot-alert-color">
+                <p className="ot-font-size-small ot-bold ot-color-alert">
                   Your cart total is below the order minimum of $
                   {displayPrice(orderMinimum)}. Please add some items.
                 </p>
@@ -84,7 +86,7 @@ const Sidebar = () => {
           <div className="sidebar__content">
             <Cart />
           </div>
-          <div className="sidebar__footer bg-color">
+          <div className="sidebar__footer ot-bg-color-primary">
             <div className="sidebar__back">
               <Button
                 onClick={handleBack}

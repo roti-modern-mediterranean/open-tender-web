@@ -2,14 +2,14 @@ import React from 'react'
 import propTypes from 'prop-types'
 
 const ErrorMessage = ({ title, msg, children }) => (
-  <div className="error-message ot-error border-radius">
+  <div className="error-message ot-color-error ot-bg-color-error border-radius">
     {title && title.length ? (
-      <p className="error-message__title heading ot-font-size-h3 ot-error-color">
+      <p className="error-message__title heading ot-font-size-h3 ot-color-error">
         {title}
       </p>
     ) : null}
     <div className="error-message__content">
-      <p className="font-size-small">{msg}</p>
+      <p className="ot-font-size-small">{msg}</p>
     </div>
     {children}
   </div>

@@ -52,11 +52,11 @@ const CurrentOrder = ({ order }) => {
   }
 
   return (
-    <div className="order-card bg-color border border-radius ot-box-shadow slide-up">
+    <div className="order-card ot-bg-color-primary border border-radius ot-box-shadow slide-up">
       <OrderTag isUpcoming={true} status="IN_PROGRESS" />
       <div className="order-card__container">
         <div className="order-card__header">
-          <p className="order-card__number preface font-size-x-small secondary-color">
+          <p className="order-card__number ot-preface ot-font-size-x-small ot-color-secondary">
             Your Current Order
           </p>
           <p className="order-card__title">
@@ -64,7 +64,7 @@ const CurrentOrder = ({ order }) => {
           </p>
         </div>
         <div className="order-card__content">
-          <div className="order-card__details font-size-small secondary-color">
+          <div className="order-card__details ot-font-size-small ot-color-secondary">
             <p>
               {requestedAtStr} &nbsp;|&nbsp; ${cartTotal.toFixed(2)}
             </p>
@@ -94,7 +94,9 @@ const CurrentOrder = ({ order }) => {
                   />
                 ))}
             </div>
-            <p className="font-size-x-small secondary-color">{itemNames}</p>
+            <p className="ot-font-size-x-small ot-color-secondary">
+              {itemNames}
+            </p>
           </div>
         </div>
         <div className="order-card__footer">
@@ -103,13 +105,13 @@ const CurrentOrder = ({ order }) => {
               text="Checkout"
               icon="DollarSign"
               onClick={checkout}
-              classes="btn--small font-size-small"
+              classes="btn--small ot-font-size-small"
             />
             <Button
               text="Back To Menu"
               icon="Map"
               onClick={backToMenu}
-              classes="btn--small btn--secondary font-size-small"
+              classes="btn--small btn--secondary ot-font-size-small"
             />
           </div>
         </div>

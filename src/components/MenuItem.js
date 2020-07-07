@@ -40,20 +40,20 @@ const MenuItem = ({ item }) => {
 
   return (
     <div className={`menu__item ${isSoldOut ? '-sold-out' : ''}`}>
-      <button className="font-size" onClick={handleClick}>
+      <button className="ot-font-size" onClick={handleClick}>
         <div
-          className="menu__item__image bg-image bg-secondary-color border-radius"
+          className="menu__item__image bg-image ot-bg-color-secondary border-radius"
           style={bgStyle}
         >
           {cartCount > 0 && (
-            <div className="menu__item__count btn--cart-count font-size-small">
+            <div className="menu__item__count btn--cart-count ot-font-size-small">
               {cartCount}
             </div>
           )}
           {isSoldOut && soldOutMsg ? (
-            <div className="menu__item__overlay overlay-dark border-radius">
+            <div className="menu__item__overlay ot-opacity-dark border-radius">
               <div className="menu__item__overlay__container">
-                <p className="ot-light-color ot-bold ot-upper font-size-x-big">
+                <p className="menu__item__overlay__message ot-color-light ot-font-size-x-big">
                   {soldOutMsg}
                 </p>
               </div>
@@ -62,14 +62,10 @@ const MenuItem = ({ item }) => {
             allergenAlert.length > 0 && (
               <div className="menu__item__overlay border-radius">
                 <div className="menu__item__overlay__container">
-                  {/* <p className="ot-light-color ot-bold ot-upper font-size-x-big">
-                    Contains {allergenAlert.join(', ')}
-                  </p> */}
                   <Tag
                     icon="AlertCircle"
                     text={`Contains ${allergenAlert.join(', ')}`}
-                    bgClass="bg-alert-color"
-                    textClass="ot-light-color"
+                    bgClass="ot-warning"
                   />
                 </div>
               </div>
@@ -77,29 +73,29 @@ const MenuItem = ({ item }) => {
           )}
         </div>
         <div className="menu__item__content">
-          {/* <p className="menu__item__name ot-bold font-size-big">{item.name}</p> */}
+          {/* <p className="menu__item__name ot-bold ot-font-size-big">{item.name}</p> */}
           <p className="menu__item__name heading ot-font-size-h5">
             {item.name}
           </p>
           {item.description && (
-            <p className="menu__item__desc font-size-small">
+            <p className="menu__item__desc ot-font-size-small">
               {item.description}
             </p>
           )}
           <p className="menu__item__details">
             <span className="menu__item__price ot-bold">${item.price}</span>
             {cals && (
-              <span className="menu__item__cals ot-bold secondary-color">
+              <span className="menu__item__cals ot-bold ot-color-secondary">
                 {cals} cals
               </span>
             )}
             {allergens.length > 0 && (
-              <span className="menu_item__allergens ot-alert-color font-size-small">
+              <span className="menu_item__allergens ot-color-alert ot-font-size-small">
                 {allergens.join(', ')}
               </span>
             )}
             {tags.length > 0 && (
-              <span className="menu_item__tags secondary-color font-size-small">
+              <span className="menu_item__tags ot-color-secondary ot-font-size-small">
                 {tags.join(', ')}
               </span>
             )}

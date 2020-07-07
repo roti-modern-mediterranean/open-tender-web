@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 
 const SectionFooter = ({ children }) => (
   <div className="section__footer">
-    <p className="font-size-small">{children}</p>
+    <p className="ot-font-size-small">{children}</p>
   </div>
 )
 

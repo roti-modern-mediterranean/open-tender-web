@@ -66,7 +66,7 @@ const AccountAllergens = () => {
         <SectionLoading loading={isLoading && !submitting} />
         <SectionError error={error} />
         {showAllergens && (
-          <div className="section__content -narrow bg-color border-radius">
+          <div className="section__content -narrow ot-bg-color-primary border-radius">
             <form
               id="allergen-form"
               className="form"
@@ -74,7 +74,7 @@ const AccountAllergens = () => {
               noValidate
             >
               <div className="section__intro">
-                <p className="font-size-small">I'm allergic to...</p>
+                <p className="ot-font-size-small">I'm allergic to...</p>
               </div>
               <div className="section__rows section__rows--allergens">
                 {allergens.entities.map((allergen) => (

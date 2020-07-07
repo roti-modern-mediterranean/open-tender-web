@@ -20,9 +20,9 @@ const RevenueCenter = ({
   const bgStyle = { backgroundImage: `url(${smallImage || placeholder2}` }
   const phoneUrl = address.phone ? `tel:${address.phone}` : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
-  classes = `rc bg-color border-radius ${classes}`
+  classes = `rc ot-bg-color-primary border-radius ${classes}`
   const hoursDescIcon = is_outpost ? 'AlertCircle' : 'Clock'
-  const hoursDescClass = is_outpost ? 'ot-alert-color' : 'secondary-color'
+  const hoursDescClass = is_outpost ? 'ot-color-alert' : 'ot-color-secondary'
 
   const distance =
     revenueCenter.distance !== null && revenueCenter.distance !== undefined
@@ -32,7 +32,10 @@ const RevenueCenter = ({
   return (
     <div className={classes}>
       {showImage && (
-        <div className="rc__image bg-image bg-secondary-color" style={bgStyle}>
+        <div
+          className="rc__image bg-image ot-bg-color-secondary"
+          style={bgStyle}
+        >
           &nbsp;
         </div>
       )}
@@ -42,7 +45,7 @@ const RevenueCenter = ({
             {revenueCenter.name}
           </h2>
           {distance !== null && (
-            <p className="font-size-small secondary-color">
+            <p className="ot-font-size-small ot-color-secondary">
               {distance.toFixed(2)} miles away
             </p>
           )}

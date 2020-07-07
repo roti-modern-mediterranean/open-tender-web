@@ -27,7 +27,7 @@ const AccountProfile = () => {
         <SectionHeader title={title} subtitle={subtitle} />
         <SectionLoading loading={isLoading} />
         <SectionError error={errMsg} />
-        <div className="section__content bg-color border-radius">
+        <div className="section__content ot-bg-color-primary border-radius">
           <ProfileForm
             profile={profile}
             loading={loading}

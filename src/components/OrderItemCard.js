@@ -49,15 +49,15 @@ const OrderItemCard = ({ item }) => {
   }
 
   return (
-    <div className="order-card bg-color border border-radius ot-box-shadow slide-up">
+    <div className="order-card ot-bg-color-primary border border-radius ot-box-shadow slide-up">
       <div className="order-card__container">
         <div className="order-card__header">
           {totalPrice && (
-            <p className="order-card__number preface font-size-x-small secondary-color">
+            <p className="order-card__number ot-preface ot-font-size-x-small ot-color-secondary">
               ${displayPrice(totalPrice / quantity)}
             </p>
           )}
-          <p className="order-card__title font-size-small">{name}</p>
+          <p className="order-card__title ot-font-size-small">{name}</p>
         </div>
         <div className="order-card__content">
           <div className="">
@@ -67,7 +67,9 @@ const OrderItemCard = ({ item }) => {
                 style={bgStyle}
               ></div>
             )}
-            <p className="font-size-x-small secondary-color">{optionNames}</p>
+            <p className="ot-font-size-x-small ot-color-secondary">
+              {optionNames}
+            </p>
           </div>
         </div>
         <div className="order-card__footer">
@@ -76,7 +78,7 @@ const OrderItemCard = ({ item }) => {
               text="Add To Cart"
               icon="PlusCircle"
               onClick={(evt) => addToCart(evt, item)}
-              classes="btn--small font-size-small"
+              classes="btn--small ot-font-size-small"
             />
             <ButtonFavorite
               item={item}

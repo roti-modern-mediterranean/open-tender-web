@@ -41,7 +41,7 @@ const AccountPage = () => {
       <Hero imageUrl={background} classes="hero--auto transition">
         <AccountGreeting title={title} subtitle={subtitle} />
       </Hero>
-      <div className="bg-secondary-color">
+      <div className="ot-bg-color-secondary">
         <StickyNav items={navItems} offset={-90} />
         <div className="sections">
           <AccountFavorites />

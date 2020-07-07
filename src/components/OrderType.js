@@ -48,7 +48,7 @@ const OrderType = () => {
   }
 
   return (
-    <div className="card overlay border-radius slide-up">
+    <div className="card ot-opacity-light border-radius slide-up">
       <div className="card__header">
         <p className="ot-preface">{subtitle}</p>
         <h1 className="ot-font-size-h3">{title}</h1>

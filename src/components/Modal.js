@@ -117,7 +117,9 @@ const Modal = () => {
               className={classes}
               onClick={handleClose}
             >
-              <div className="modal bg-color border-radius">{modal}</div>
+              <div className="modal ot-bg-color-primary border-radius">
+                {modal}
+              </div>
             </div>
           </CSSTransition>
         ) : null}

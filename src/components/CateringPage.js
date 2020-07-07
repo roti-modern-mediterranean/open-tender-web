@@ -114,11 +114,13 @@ const CateringPage = () => {
   return (
     <div className="content">
       <Background imageUrl={background} />
-      <div className="card overlay border-radius slide-up">
+      <div className="card ot-opacity-light border-radius slide-up">
         <div className="card__header">
-          <p className="preface font-size-small secondary-color">{subtitle}</p>
+          <p className="ot-preface ot-font-size-small ot-color-secondary">
+            {subtitle}
+          </p>
           <h1 className="ot-font-size-h3">{title}</h1>
-          <p className="secondary-color">{content}</p>
+          <p className="ot-color-secondary">{content}</p>
         </div>
         <div className="card__content">
           {isLoading ? (
@@ -154,7 +156,7 @@ const CateringPage = () => {
               />
             </ErrorMessage>
           ) : (
-            <p className="ot-error-color">
+            <p className="ot-color-error">
               This order type isn't currently available
             </p>
           )}
@@ -173,7 +175,7 @@ const CateringPage = () => {
             />
           </div>
         </div>
-        <div className="card__footer font-size-small">
+        <div className="card__footer ot-font-size-small">
           <Button
             text="Switch to a regular order Pickup or Delivery order"
             classes="btn-link"

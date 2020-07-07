@@ -40,11 +40,11 @@ const SignUpPage = () => {
   return (
     <>
       <h1 className="sr-only">{title}</h1>
-      <div className="signup content bg-secondary-color">
+      <div className="signup content ot-bg-color-secondary">
         <div className="section container">
           <div className="section__container">
             <SectionHeader title={title} subtitle={subtitle} />
-            <div className="section__content bg-color border-radius">
+            <div className="section__content ot-bg-color-primary border-radius">
               <div className="signup__form">
                 <SignUpForm loading={loading} error={error} signUp={signUp} />
               </div>

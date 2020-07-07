@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="footer dark">
       <div className="footer__container container flex">
         <div className="footer__logo">
-          <span className="font-size-small">Powered by</span>
+          <span className="ot-font-size-small">Powered by</span>
           <img src={logo} className="logo" alt="logo" />
         </div>
         <nav className="footer__nav">

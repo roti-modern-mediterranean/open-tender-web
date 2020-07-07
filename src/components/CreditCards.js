@@ -29,7 +29,7 @@ const CreditCards = ({ creditCards, isLoading }) => {
   }
 
   return (
-    <div className="section__content bg-color border-radius">
+    <div className="section__content ot-bg-color-primary border-radius">
       <div className="section__rows">
         {creditCards.map((creditCard) => (
           <SectionRow
@@ -46,7 +46,7 @@ const CreditCards = ({ creditCards, isLoading }) => {
             <div className="section__row__container">
               <div className="section__row__container__content">
                 {creditCard.is_default && (
-                  <p className="preface font-size-x-small secondary-color">
+                  <p className="ot-preface ot-font-size-x-small ot-color-secondary">
                     Default
                   </p>
                 )}
@@ -58,10 +58,10 @@ const CreditCards = ({ creditCards, isLoading }) => {
                     </span>
                   )}
                 </p>
-                <p className="font-size-small secondary-color">
+                <p className="ot-font-size-small ot-color-secondary">
                   {creditCard.masked}
                 </p>
-                <p className="font-size-small secondary-color">
+                <p className="ot-font-size-small ot-color-secondary">
                   <Button
                     text="make default"
                     classes="btn-link"

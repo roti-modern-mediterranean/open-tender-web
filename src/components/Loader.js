@@ -16,7 +16,7 @@ const Loader = ({
   text,
   size = 100,
   className = '',
-  textClass = 'font-size-small',
+  textClass = 'ot-font-size-small',
 }) => (
   <div className={`loading ${className}`}>
     <div className="loading__loader">{loader(type, size)}</div>

@@ -118,7 +118,7 @@ const Order = ({ order, loading, error }) => {
       {showOrder && (
         <>
           <div className="order__header slide-up">
-            <p className="preface">Order #{order_id}</p>
+            <p className="ot-preface">Order #{order_id}</p>
             <h1>
               {capitalize(orderType)} from {revenue_center.name}
             </h1>
@@ -135,7 +135,7 @@ const Order = ({ order, loading, error }) => {
                 />
               )}
             </div>
-            <p className="font-size-small">
+            <p className="ot-font-size-small">
               <button type="button" className="btn-link" onClick={backLink}>
                 {backText}
               </button>
@@ -144,7 +144,7 @@ const Order = ({ order, loading, error }) => {
           <div className="section container slide-up">
             <div className="section__container">
               {/* <SectionHeader title={title} subtitle={subtitle} /> */}
-              <div className="section__content bg-color border-radius">
+              <div className="section__content ot-bg-color-primary border-radius">
                 <div className="section__rows">
                   <SectionRow title="Location">
                     <OrderRevenueCenter revenueCenter={revenue_center} />
@@ -168,30 +168,32 @@ const Order = ({ order, loading, error }) => {
                   )}
                   {notes && notes.length ? (
                     <SectionRow title="Notes">
-                      <p className="font-size-small secondary-color">{notes}</p>
+                      <p className="ot-font-size-small ot-color-secondary">
+                        {notes}
+                      </p>
                     </SectionRow>
                   ) : null}
                   {hasDetails && (
                     <SectionRow title="Other Details">
                       {eating_utensils ? (
-                        <p className="font-size-small secondary-color">
+                        <p className="ot-font-size-small ot-color-secondary">
                           Eating utensils included
                           {person_count && ` for ${person_count} people`}
                         </p>
                       ) : (
                         person_count && (
-                          <p className="font-size-small secondary-color">
+                          <p className="ot-font-size-small ot-color-secondary">
                             30 people to be accommodated
                           </p>
                         )
                       )}
                       {serving_utensils && (
-                        <p className="font-size-small secondary-color">
+                        <p className="ot-font-size-small ot-color-secondary">
                           Serving utensils included
                         </p>
                       )}
                       {tax_exempt_id && (
-                        <p className="font-size-small secondary-color">
+                        <p className="ot-font-size-small ot-color-secondary">
                           Tax exempt ID of {tax_exempt_id}
                         </p>
                       )}
@@ -209,7 +211,7 @@ const Order = ({ order, loading, error }) => {
           <div className="section container slide-up">
             <div className="section__container">
               <SectionHeader title="Items in Your Order" />
-              <div className="section__content bg-color border-radius">
+              <div className="section__content ot-bg-color-primary border-radius">
                 <ul className="cart">
                   {displayedItems.map((item, index) => {
                     const favoriteId = lookup
@@ -236,7 +238,7 @@ const Order = ({ order, loading, error }) => {
           <div className="section container slide-up">
             <div className="section__container">
               <SectionHeader title="Your Receipt" />
-              <div className="section__content bg-color border-radius">
+              <div className="section__content ot-bg-color-primary border-radius">
                 <Check title="Order Summary" check={check} tenders={tenders} />
               </div>
             </div>

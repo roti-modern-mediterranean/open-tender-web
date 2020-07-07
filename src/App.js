@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from 'emotion-theming'
-import GlobalStyles from './components/GlobalStyles'
+import GlobalStyles from './GlobalStyles'
 import Routes from './components/Routes'
 import Modal from './components/Modal'
 import Header from './components/Header'
@@ -31,7 +31,7 @@ class App extends React.Component {
           <Modal />
           <Router>
             <Header />
-            <main className="main ot-main">
+            <main className="main">
               <Messages />
               <Routes />
               <Notifications />

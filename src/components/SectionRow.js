@@ -4,7 +4,9 @@ import propTypes from 'prop-types'
 const SectionRow = ({ title, children }) => (
   <div className="section__row border-color">
     <div className="section__row__label">
-      <p className="preface font-size-x-small secondary-color">{title}</p>
+      <p className="ot-preface ot-font-size-x-small ot-color-secondary">
+        {title}
+      </p>
     </div>
     <div className="section__row__content">{children}</div>
   </div>

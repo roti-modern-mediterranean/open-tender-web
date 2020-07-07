@@ -5,20 +5,17 @@ import Tag from './Tag'
 const OrderTag = ({ isUpcoming, status }) => {
   const tag = isUpcoming
     ? {
-        bgClass: '-upcoming bg-alert-color',
-        textClass: 'ot-light-color',
+        bgClass: '-upcoming ot-warning',
         text: status === 'IN_PROGRESS' ? 'In Progress' : 'Coming up',
         icon: 'AlertCircle',
       }
     : status === 'REFUNDED'
     ? {
-        bgClass: '-refunded bg-body-color',
-        textClass: 'ot-light-color',
+        bgClass: '-refunded ot-dark',
         text: 'Refunded',
       }
     : {
-        bgClass: '-completed bg-success-color',
-        textClass: 'ot-light-color',
+        bgClass: '-completed ot-success',
         text: 'Completed',
         icon: 'CheckCircle',
       }

@@ -52,7 +52,7 @@ const AccountCreditCards = () => {
           <SectionEmpty message={empty} />
         )}
         <div className="section__footer">
-          <p className="font-size-small">
+          <p className="ot-font-size-small">
             <Button
               text="Add a new card to your account"
               onClick={handleAddNew}

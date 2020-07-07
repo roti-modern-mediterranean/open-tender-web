@@ -29,7 +29,7 @@ const OrderPage = () => {
   }, [dispatch, orderId])
 
   return (
-    <div className="content bg-secondary-color">
+    <div className="content ot-bg-color-secondary">
       <Order {...customerOrder} />
     </div>
   )

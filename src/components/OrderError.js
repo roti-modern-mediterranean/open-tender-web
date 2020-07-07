@@ -15,11 +15,11 @@ const OrderError = ({ error, backLink, backText }) => {
   const errMsg = handleOrderError(error)
   return (
     <div className="order__header">
-      <p className="preface ot-error-color">Uh oh. Something went wrong.</p>
+      <p className="ot-preface ot-color-error">Uh oh. Something went wrong.</p>
       <div className="order__error">
         <div className="order__error__message">
-          <p className="ot-error-color ot-bold font-size-big">{errMsg}</p>
-          <p className="font-size-small">
+          <p className="ot-color-error ot-bold ot-font-size-big">{errMsg}</p>
+          <p className="ot-font-size-small">
             <button type="button" className="btn-error" onClick={backLink}>
               {backText}
             </button>

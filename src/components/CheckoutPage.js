@@ -210,7 +210,7 @@ const CheckoutPage = () => {
 
   return (
     <div className="checkout">
-      <div className="checkout__header ot-nav-height bg-color">
+      <div className="checkout__header ot-bg-color-primary">
         <div className="checkout__header__wrapper">
           <div className="checkout__header__container">
             <div className="checkout__logo__container">
@@ -280,11 +280,11 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
-      <div className="checkout__sidebar bg-secondary-color">
+      <div className="checkout__sidebar ot-bg-color-secondary">
         <div className="checkout__sidebar__wrapper">
           <div className="checkout__sidebar__container">
             {check && check.totals && (
-              <div className="checkout__totals border-radius bg-color ot-box-shadow slide-up">
+              <div className="checkout__totals border-radius ot-bg-color-primary ot-box-shadow slide-up">
                 <Check
                   title={checkoutConfig.check.title}
                   check={check}

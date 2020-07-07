@@ -41,7 +41,7 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {
     <div className="rc__order">
       {msg.message && (
         <div className="rc__order__message">
-          <p className={`font-size-small ${msg.className}`}>{msg.message}</p>
+          <p className={`ot-font-size-small ${msg.className}`}>{msg.message}</p>
         </div>
       )}
       {isLanding ? (

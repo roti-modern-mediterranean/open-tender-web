@@ -10,7 +10,7 @@ const ModalOverlay = ({ show }) => (
         classNames="md"
         timeout={{ enter: 250, exit: 250 }}
       >
-        <div className="modal-overlay overlay-dark" />
+        <div className="modal-overlay ot-opacity-dark" />
       </CSSTransition>
     ) : null}
   </TransitionGroup>

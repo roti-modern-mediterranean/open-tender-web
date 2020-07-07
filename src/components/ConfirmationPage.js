@@ -26,7 +26,7 @@ const ConfirmationPage = () => {
   }, [order, account, dispatch, history])
 
   return (
-    <div className="content bg-secondary-color">
+    <div className="content ot-bg-color-secondary">
       {/* <h1 className="sr-only">Confirmation Page</h1> */}
       <div className="confirmation">
         <div className="container">
@@ -35,7 +35,7 @@ const ConfirmationPage = () => {
               {config.title}
             </p>
             <p className="confirmation__subtitle">{config.subtitle}</p>
-            <p className="confirmation__subtitle ot-bold ot-alert-color">
+            <p className="confirmation__subtitle ot-bold ot-color-alert">
               {config.spam}
             </p>
           </div>

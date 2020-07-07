@@ -7,7 +7,7 @@ const SectionError = ({ error }) => {
   return error ? (
     <div className="section__error">
       <div className="section__error__message">
-        <p className="ot-error-color">{errMsg}</p>
+        <p className="ot-color-error">{errMsg}</p>
       </div>
     </div>
   ) : null

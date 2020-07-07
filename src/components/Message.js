@@ -14,11 +14,11 @@ const Message = ({ message, id }) => {
   }
 
   return (
-    <li className="message border-radius-small font-size-small ot-alert">
+    <li className="message border-radius-small ot-font-size-small ot-warning">
       <span className="message__container">
         <span>{message}</span>
         <button
-          className="message__close ot-light-color"
+          className="message__close ot-color-light"
           onClick={handleRemove}
         >
           <X size={14} />
