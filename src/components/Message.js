@@ -14,7 +14,7 @@ const Message = ({ message, id }) => {
   }
 
   return (
-    <li className="message border-radius-small ot-font-size-small ot-warning">
+    <li className="message ot-border-radius-small ot-font-size-small ot-warning">
       <span className="message__container">
         <span>{message}</span>
         <button

@@ -31,7 +31,7 @@ const ConfirmationPage = () => {
       <div className="confirmation">
         <div className="container">
           <div className="confirmation__content">
-            <p className="confirmation__title heading ot-font-size-h2">
+            <p className="confirmation__title ot-heading ot-font-size-h2">
               {config.title}
             </p>
             <p className="confirmation__subtitle">{config.subtitle}</p>

@@ -66,7 +66,7 @@ const AccountAllergens = () => {
         <SectionLoading loading={isLoading && !submitting} />
         <SectionError error={error} />
         {showAllergens && (
-          <div className="section__content -narrow ot-bg-color-primary border-radius">
+          <div className="section__content -narrow ot-bg-color-primary ot-border-radius">
             <form
               id="allergen-form"
               className="form"
@@ -89,7 +89,7 @@ const AccountAllergens = () => {
               </div>
               <div className="section__submit">
                 <input
-                  className="btn"
+                  className="ot-btn"
                   type="submit"
                   value="Update Allergens"
                   disabled={submitting}

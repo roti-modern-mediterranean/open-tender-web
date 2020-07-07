@@ -20,7 +20,7 @@ const OrderError = ({ error, backLink, backText }) => {
         <div className="order__error__message">
           <p className="ot-color-error ot-bold ot-font-size-big">{errMsg}</p>
           <p className="ot-font-size-small">
-            <button type="button" className="btn-error" onClick={backLink}>
+            <button type="button" className="ot-btn-link" onClick={backLink}>
               {backText}
             </button>
           </p>

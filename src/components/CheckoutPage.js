@@ -218,19 +218,22 @@ const CheckoutPage = () => {
                 <HeaderLogo />
               </div>
               <div className="checkout__actions">
-                <ButtonMenu onClick={handleBackToMenu} classes="btn--header" />
+                <ButtonMenu
+                  onClick={handleBackToMenu}
+                  classes="ot-btn--secondary ot-btn--header"
+                />
                 <ButtonAccount
                   account={profile}
                   isAccount={false}
                   login={handleLogin}
                   logout={handleLogout}
                   goToAccount={handleAccount}
-                  classes="btn--header"
+                  classes="ot-btn--secondary ot-btn--header"
                 />
                 {orderId && (
                   <ButtonCancelEdit
                     onClick={handleCancelEdit}
-                    classes="btn--header-cancel"
+                    classes="ot-btn--cancel ot-btn--header"
                   />
                 )}
               </div>
@@ -284,7 +287,7 @@ const CheckoutPage = () => {
         <div className="checkout__sidebar__wrapper">
           <div className="checkout__sidebar__container">
             {check && check.totals && (
-              <div className="checkout__totals border-radius ot-bg-color-primary ot-box-shadow slide-up">
+              <div className="checkout__totals ot-border-radius ot-bg-color-primary ot-box-shadow slide-up">
                 <Check
                   title={checkoutConfig.check.title}
                   check={check}

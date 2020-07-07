@@ -11,7 +11,7 @@ export const RevenueCenters = ({ revenueCenters }) => {
   const { title, content } = rcConfig
   const dispatch = useDispatch()
   return (
-    <div className="card card--rc ot-opacity-light border-radius slide-up">
+    <div className="card card--rc ot-opacity-light ot-border-radius slide-up">
       <div className="card__header">
         <h1 className="ot-font-size-h3">
           {revenueCenters.length} {title}
@@ -19,7 +19,7 @@ export const RevenueCenters = ({ revenueCenters }) => {
         <p>
           {content} or{' '}
           <button
-            className="btn-link"
+            className="ot-btn-link"
             aria-label="Start Over"
             onClick={() => dispatch(resetOrder())}
           >

@@ -97,7 +97,7 @@ const AccountOrdersPage = () => {
                   {count === limit || count > entities.length ? (
                     <Link to="/account">Head back to your account page</Link>
                   ) : (
-                    <Button classes="btn-link" onClick={handleClick}>
+                    <Button classes="ot-btn-link" onClick={handleClick}>
                       Load more recent orders
                     </Button>
                   )}

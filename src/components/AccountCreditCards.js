@@ -56,7 +56,7 @@ const AccountCreditCards = () => {
             <Button
               text="Add a new card to your account"
               onClick={handleAddNew}
-              classes="btn-link"
+              classes="ot-btn-link"
             />
           </p>
         </div>

@@ -31,7 +31,7 @@ const SignUpModal = ({ windowRef }) => {
       <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title heading ot-font-size-h3">
+          <p className="modal__title ot-heading ot-font-size-h3">
             Sign up for an account
           </p>
           <p className="modal__subtitle">

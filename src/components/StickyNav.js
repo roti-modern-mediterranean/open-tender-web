@@ -37,7 +37,7 @@ const StickyNav = ({ items, offset = -100, duration = 500 }) => {
                   <li key={sectionId} className="ot-preface ot-font-size-small">
                     <Link
                       activeClass="active"
-                      className="link-dark"
+                      className="ot-link-dark"
                       to={sectionId}
                       spy={true}
                       smooth={true}

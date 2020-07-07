@@ -50,14 +50,14 @@ const ResetPasswordPage = () => {
         <div className="section container">
           <div className="section__container">
             <SectionHeader title={title} subtitle={subtitle} />
-            <div className="section__content ot-bg-color-primary border-radius">
+            <div className="section__content ot-bg-color-primary ot-border-radius">
               <div className="signup__form">
                 {success ? (
                   <div className="password-reset">
                     <p>Success! Your password has been reset.</p>
                     <p>
                       <Button
-                        classes="btn-link"
+                        classes="ot-btn-link"
                         onClick={handleLogin}
                         text="Click here to log into your account"
                       />

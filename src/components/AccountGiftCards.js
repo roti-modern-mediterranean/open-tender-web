@@ -37,7 +37,7 @@ const AccountGiftCards = () => {
         <SectionLoading loading={isLoading} />
         <SectionError error={error} />
         {showGiftCards && (
-          <div className="section__content ot-bg-color-primary border-radius">
+          <div className="section__content ot-bg-color-primary ot-border-radius">
             <div className="section__rows">
               {giftCards.entities.map((giftCard) => {
                 const expired = dateStrToDate(giftCard.expiration) < new Date()
@@ -70,7 +70,7 @@ const AccountGiftCards = () => {
                             text="Add Value"
                             icon="PlusCircle"
                             onClick={(evt) => handleAddValue(evt, giftCard)}
-                            classes="btn--small ot-font-size-small"
+                            classes="ot-btn--small ot-font-size-small"
                             disabled={isLoading}
                           />
                         </div>
@@ -87,7 +87,7 @@ const AccountGiftCards = () => {
             <Button
               text="Purchase a new gift card"
               onClick={handlePurchase}
-              classes="btn-link"
+              classes="ot-btn-link"
             />
           </p>
         </div>

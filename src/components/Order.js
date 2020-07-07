@@ -136,7 +136,7 @@ const Order = ({ order, loading, error }) => {
               )}
             </div>
             <p className="ot-font-size-small">
-              <button type="button" className="btn-link" onClick={backLink}>
+              <button type="button" className="ot-btn-link" onClick={backLink}>
                 {backText}
               </button>
             </p>
@@ -144,7 +144,7 @@ const Order = ({ order, loading, error }) => {
           <div className="section container slide-up">
             <div className="section__container">
               {/* <SectionHeader title={title} subtitle={subtitle} /> */}
-              <div className="section__content ot-bg-color-primary border-radius">
+              <div className="section__content ot-bg-color-primary ot-border-radius">
                 <div className="section__rows">
                   <SectionRow title="Location">
                     <OrderRevenueCenter revenueCenter={revenue_center} />
@@ -211,7 +211,7 @@ const Order = ({ order, loading, error }) => {
           <div className="section container slide-up">
             <div className="section__container">
               <SectionHeader title="Items in Your Order" />
-              <div className="section__content ot-bg-color-primary border-radius">
+              <div className="section__content ot-bg-color-primary ot-border-radius">
                 <ul className="cart">
                   {displayedItems.map((item, index) => {
                     const favoriteId = lookup
@@ -238,7 +238,7 @@ const Order = ({ order, loading, error }) => {
           <div className="section container slide-up">
             <div className="section__container">
               <SectionHeader title="Your Receipt" />
-              <div className="section__content ot-bg-color-primary border-radius">
+              <div className="section__content ot-bg-color-primary ot-border-radius">
                 <Check title="Order Summary" check={check} tenders={tenders} />
               </div>
             </div>
@@ -247,7 +247,11 @@ const Order = ({ order, loading, error }) => {
             <div className="section__container">
               <SectionHeader>
                 <p>
-                  <button type="button" className="btn-link" onClick={backLink}>
+                  <button
+                    type="button"
+                    className="ot-btn-link"
+                    onClick={backLink}
+                  >
                     {backText}
                   </button>
                 </p>

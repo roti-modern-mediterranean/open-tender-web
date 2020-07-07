@@ -52,7 +52,7 @@ const AdjustRequestedAtModal = ({ firstTimes, revenueCenter }) => {
     <>
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title heading ot-font-size-h3">
+          <p className="modal__title ot-heading ot-font-size-h3">
             Order time not currently available
           </p>
         </div>
@@ -67,20 +67,20 @@ const AdjustRequestedAtModal = ({ firstTimes, revenueCenter }) => {
             {current && (
               <Button
                 text={currentStr}
-                classes="btn"
+                classes="ot-btn"
                 onClick={(evt) => handleUpdate(evt, current)}
               />
             )}
             {other && (
               <Button
                 text={otherStr}
-                classes="btn"
+                classes="ot-btn"
                 onClick={(evt) => handleUpdate(evt, other)}
               />
             )}
             <Button
               text="Change Location"
-              classes="btn"
+              classes="ot-btn"
               onClick={changeLocation}
             />
           </div>

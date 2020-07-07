@@ -33,7 +33,7 @@ const CreditCardModal = ({ windowRef }) => {
       <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title heading ot-font-size-h3">
+          <p className="modal__title ot-heading ot-font-size-h3">
             Add a new credit card
           </p>
         </div>

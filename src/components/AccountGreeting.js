@@ -63,7 +63,7 @@ const AccountGreeting = ({ title, subtitle }) => {
   const isCurrentOrder = revenueCenter && serviceType && cart.length
   const accountLoading = isLoading && !isCurrentOrder && !lastOrder
   const orderClass = ''
-  const greetingClass = `greeting ot-bg-color-primary border-radius ot-box-shadow slide-up ${orderClass}`
+  const greetingClass = `greeting ot-bg-color-primary ot-border-radius ot-box-shadow slide-up ${orderClass}`
 
   const startNewOrder = (evt) => {
     evt.preventDefault()
@@ -123,7 +123,7 @@ const AccountGreeting = ({ title, subtitle }) => {
                 <p className="ot-font-size-small">
                   <Button
                     text="Or start a new order from scratch"
-                    classes="btn-link"
+                    classes="ot-btn-link"
                     onClick={startNewOrder}
                   />
                 </p>
@@ -140,7 +140,7 @@ const AccountGreeting = ({ title, subtitle }) => {
                     text={`Or switch to ${otherOrderTypes.join(
                       ' or '
                     )} instead`}
-                    classes="btn-link"
+                    classes="ot-btn-link"
                     onClick={switchOrderType}
                   />
                 </p>
@@ -218,13 +218,13 @@ const AccountGreeting = ({ title, subtitle }) => {
                   <p className="ot-font-size-small">
                     <Button
                       text="Change location"
-                      classes="btn-link"
+                      classes="ot-btn-link"
                       onClick={changeRevenueCenter}
                     />{' '}
                     or{' '}
                     <Button
                       text="switch order type"
-                      classes="btn-link"
+                      classes="ot-btn-link"
                       onClick={switchOrderType}
                     />
                   </p>

@@ -128,7 +128,7 @@ const RevenueCentersSelect = ({
   }
 
   return (
-    <div className="card map__card ot-opacity-light border-radius slide-up ot-box-shadow">
+    <div className="card map__card ot-opacity-light ot-border-radius slide-up ot-box-shadow">
       {isLoading ? (
         <div className="loading">
           <div className="loading__loader">
@@ -179,7 +179,7 @@ const RevenueCentersSelect = ({
           <div className="card__footer">
             <Button
               text="Choose a different order type"
-              classes="btn-link"
+              classes="ot-btn-link"
               onClick={handleStartOver}
             ></Button>
           </div>

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { X } from 'react-feather'
 import { toggleSidebar } from '../slices'
 
-const SidebarClose = ({ classes = 'btn-link' }) => {
+const SidebarClose = ({ classes = 'ot-btn-link' }) => {
   const dispatch = useDispatch()
 
   const handleClose = (evt) => {

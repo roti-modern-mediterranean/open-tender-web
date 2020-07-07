@@ -72,7 +72,7 @@ const MenuPage = () => {
           <Button
             text="Change Location"
             icon="RefreshCw"
-            classes="btn btn--error"
+            classes="ot-btn ot-btn--cancel"
             onClick={changeLocation}
           />
         </ErrorMessage>

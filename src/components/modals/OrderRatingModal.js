@@ -37,7 +37,7 @@ const OrderRatingModal = ({ orderId, orderRating }) => {
       <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title heading ot-font-size-h3">
+          <p className="modal__title ot-heading ot-font-size-h3">
             Rate your order
           </p>
           <p className="modal__subtitle">
@@ -51,11 +51,6 @@ const OrderRatingModal = ({ orderId, orderRating }) => {
             onSubmit={handleSubmit}
             noValidate
           >
-            {/* {error && (
-              <div className="form__error form__error--top form-error">
-                {error}
-              </div>
-            )} */}
             <div className="form__inputs">
               <div className="order__stars">
                 {stars.map((star) => {
@@ -85,7 +80,7 @@ const OrderRatingModal = ({ orderId, orderRating }) => {
             </div>
             <div className="form__submit">
               <input
-                className="btn"
+                className="ot-btn"
                 type="submit"
                 value="Submit"
                 ref={submitButton}

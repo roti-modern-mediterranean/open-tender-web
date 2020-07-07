@@ -34,7 +34,7 @@ const AccountHouseAccounts = () => {
         <SectionLoading loading={isLoading} />
         <SectionError error={error} />
         {showGiftCards ? (
-          <div className="section__content ot-bg-color-primary border-radius">
+          <div className="section__content ot-bg-color-primary ot-border-radius">
             <div className="section__rows">
               {houseAccounts.entities.map((houseAccount) => {
                 const orderType =

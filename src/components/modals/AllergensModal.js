@@ -53,7 +53,7 @@ const AllergensModal = () => {
       <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title heading ot-font-size-h3">
+          <p className="modal__title ot-heading ot-font-size-h3">
             Allergen Alerts
           </p>
           <p className="modal__subtitle">
@@ -80,7 +80,7 @@ const AllergensModal = () => {
             </div>
             <div className="form__submit">
               <input
-                className="btn"
+                className="ot-btn"
                 type="submit"
                 value="Update Selected Allergens"
                 // disabled={submitting}

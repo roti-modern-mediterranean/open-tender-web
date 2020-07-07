@@ -68,7 +68,7 @@ const OrderCard = ({ order, isLast }) => {
   }
 
   return (
-    <div className="order-card ot-bg-color-primary border border-radius ot-box-shadow slide-up">
+    <div className="order-card ot-bg-color-primary ot-border ot-border-radius ot-box-shadow slide-up">
       <OrderTag isUpcoming={isUpcoming} status={status} />
       <div className="order-card__container">
         <div className="order-card__header">
@@ -110,22 +110,22 @@ const OrderCard = ({ order, isLast }) => {
                 text="Edit"
                 icon="Edit"
                 onClick={handleEdit}
-                classes="btn--small ot-font-size-small"
+                classes="ot-btn--small ot-font-size-small"
               />
             )}
             <Button
               text="Reorder"
               icon="RefreshCw"
               onClick={handleReorder}
-              classes={`btn--small ot-font-size-small ${
-                order.is_editable ? 'btn--secondary' : ''
+              classes={`ot-btn--small ot-font-size-small ${
+                order.is_editable ? 'ot-btn--secondary' : ''
               }`}
             />
             <Button
               text={`Details ${!isUpcoming ? '/ Rate' : ''}`}
               icon="FileText"
               onClick={handleDetails}
-              classes="btn--small btn--secondary ot-font-size-small"
+              classes="ot-btn--small ot-btn--secondary ot-font-size-small"
             />
           </div>
         </div>

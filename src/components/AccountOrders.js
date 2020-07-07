@@ -86,7 +86,7 @@ const AccountOrders = () => {
             {count === limit ? (
               <Link to="/orders">See all recent orders</Link>
             ) : (
-              <Button classes="btn-link" onClick={() => setCount(limit)}>
+              <Button classes="ot-btn-link" onClick={() => setCount(limit)}>
                 Load more recent orders
               </Button>
             )}

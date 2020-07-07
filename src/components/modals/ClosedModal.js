@@ -41,7 +41,7 @@ const ClosedModal = ({ status, isCancel }) => {
     <>
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title heading ot-font-size-h3">
+          <p className="modal__title ot-heading ot-font-size-h3">
             {statusMsg.title}
           </p>
         </div>
@@ -52,13 +52,13 @@ const ClosedModal = ({ status, isCancel }) => {
           <div className="modal__footer__buttons">
             <Button
               text="Change Location"
-              classes="btn btn--highlight"
+              classes="ot-btn ot-btn--highlight"
               onClick={changeLocation}
             />
             {isCancel ? (
-              <Button text="Cancel" classes="btn" onClick={cancel} />
+              <Button text="Cancel" classes="ot-btn" onClick={cancel} />
             ) : (
-              <Button text="Start Over" classes="btn" onClick={startOver} />
+              <Button text="Start Over" classes="ot-btn" onClick={startOver} />
             )}
           </div>
         </div>

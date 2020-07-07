@@ -90,7 +90,7 @@ const Sidebar = () => {
             <div className="sidebar__back">
               <Button
                 onClick={handleBack}
-                classes="btn btn--big"
+                classes="ot-btn ot-btn--big"
                 disabled={!canOrder}
               >
                 Menu
@@ -99,8 +99,7 @@ const Sidebar = () => {
             <div className="sidebar__checkout">
               <Button
                 onClick={handleCheckout}
-                // classes={`btn btn--big ${!isCheckout ? 'btn--highlight' : ''}`}
-                classes="btn btn--big btn--highlight"
+                classes="ot-btn ot-btn--big ot-btn--highlight"
                 disabled={!canCheckout}
               >
                 {isCheckout ? 'Checkout' : 'Checkout'}

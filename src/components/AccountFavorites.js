@@ -64,7 +64,7 @@ const AccountFavorites = () => {
             {count === limit ? (
               <Link to="/favorites">See all favorites</Link>
             ) : (
-              <Button classes="btn-link" onClick={() => setCount(limit)}>
+              <Button classes="ot-btn-link" onClick={() => setCount(limit)}>
                 Load more favorites
               </Button>
             )}

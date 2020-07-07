@@ -29,7 +29,7 @@ const Cart = () => {
   }
 
   return cart && cart.length ? (
-    <ul className="cart ot-bg-color-primary border-radius">
+    <ul className="cart ot-bg-color-primary ot-border-radius">
       {cart.map((item, index) => {
         return (
           <li key={`${item.id}-${index}`}>

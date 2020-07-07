@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
-    <footer className="footer dark">
+    <footer className="footer ot-dark">
       <div className="footer__container container flex">
         <div className="footer__logo">
           <span className="ot-font-size-small">Powered by</span>
@@ -14,7 +14,7 @@ const Footer = () => {
           <ul>
             <li>
               <a
-                className="no-link link-light"
+                className="no-link ot-link-light"
                 href="https://demo.brandibble.co/order/terms/"
                 rel="noopener noreferrer"
                 target="_blank"
@@ -24,7 +24,7 @@ const Footer = () => {
             </li>
             <li>
               <a
-                className="no-link link-light"
+                className="no-link ot-link-light"
                 href="https://demo.brandibble.co/order/privacy/"
                 rel="noopener noreferrer"
                 target="_blank"
@@ -33,7 +33,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <Link to="/refunds" className="no-link link-light">
+              <Link to="/refunds" className="no-link ot-link-light">
                 Refunds
               </Link>
             </li>

@@ -44,7 +44,7 @@ const SignUpPage = () => {
         <div className="section container">
           <div className="section__container">
             <SectionHeader title={title} subtitle={subtitle} />
-            <div className="section__content ot-bg-color-primary border-radius">
+            <div className="section__content ot-bg-color-primary ot-border-radius">
               <div className="signup__form">
                 <SignUpForm loading={loading} error={error} signUp={signUp} />
               </div>

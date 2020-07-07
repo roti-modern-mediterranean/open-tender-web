@@ -17,7 +17,7 @@ const LoyaltyProgram = ({ program }) => {
   return (
     <div className="loyalty__program">
       <div className="loyalty__program__header">
-        <p className="heading ot-font-size-h5">{name}</p>
+        <p className="ot-heading ot-font-size-h5">{name}</p>
         {currentCredit ? (
           <p className="ot-font-size-small ot-color-success">
             You've got ${currentCredit.toFixed(2)} in credit to redeem!

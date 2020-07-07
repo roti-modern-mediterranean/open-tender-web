@@ -5,7 +5,7 @@ import { X } from 'react-feather'
 
 import { closeModal } from '../slices'
 
-const ModalClose = ({ classes = 'btn-link', onClick }) => {
+const ModalClose = ({ classes = 'ot-btn-link', onClick }) => {
   const dispatch = useDispatch()
   const handleClose = onClick || (() => dispatch(closeModal()))
 

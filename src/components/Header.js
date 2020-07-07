@@ -150,7 +150,10 @@ const Header = () => {
             <HeaderLogo />
           </div>
         ) : (
-          <ButtonStartOver onClick={handleStartOver} classes="btn--header" />
+          <ButtonStartOver
+            onClick={handleStartOver}
+            classes="ot-btn--secondary ot-btn--header"
+          />
         )}
       </div>
       <div className="header__actions">
@@ -160,20 +163,20 @@ const Header = () => {
           login={handleLogin}
           logout={handleLogout}
           goToAccount={handleAccount}
-          classes="btn--header"
+          classes="ot-btn--secondary ot-btn--header"
         />
         {isHome && !profile && (
           <ButtonSignUp
             text="Sign Up"
             signUp={handleSignUp}
-            classes="btn--header"
+            classes="ot-btn--secondary ot-btn--header"
           />
         )}
         {revenueCenter && !isCheckout && !autoSelect && (
           <ButtonRevenueCenter
             revenueCenter={revenueCenter}
             onClick={handleLocation}
-            classes="btn--header"
+            classes="ot-btn--secondary ot-btn--header"
           />
         )}
         {serviceType && !isCheckout && (
@@ -181,7 +184,7 @@ const Header = () => {
             serviceType={serviceType}
             serviceTypeName={serviceTypeName}
             onClick={isCatering ? handleCatering : handleServiceType}
-            classes="btn--header"
+            classes="ot-btn--secondary ot-btn--header"
           />
         )}
         {revenueCenter && !isCheckout && (
@@ -189,16 +192,19 @@ const Header = () => {
             requestedAt={requestedAt}
             tz={tz}
             onClick={handleRequestedAt}
-            classes="btn--header"
+            classes="ot-btn--secondary ot-btn--header"
           />
         )}
         {isMenu && (
           <>
-            <ButtonAllergens onClick={handleAllergens} classes="btn--header" />
+            <ButtonAllergens
+              onClick={handleAllergens}
+              classes="ot-btn--secondary ot-btn--header"
+            />
             {hasGroupOrdering && (
               <ButtonGroupOrder
                 onClick={handleGroupOrder}
-                classes="btn--header"
+                classes="ot-btn--secondary ot-btn--header"
               />
             )}
           </>
@@ -206,7 +212,7 @@ const Header = () => {
         {orderId && (
           <ButtonCancelEdit
             onClick={handleCancelEdit}
-            classes="btn--header-cancel"
+            classes="ot-btn--cancel ot-btn--header"
           />
         )}
       </div>

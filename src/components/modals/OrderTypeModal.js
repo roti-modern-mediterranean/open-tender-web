@@ -29,7 +29,7 @@ const OrderTypeModal = ({ startOver }) => {
     <>
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title heading ot-font-size-h3">
+          <p className="modal__title ot-heading ot-font-size-h3">
             Change your order type
           </p>
         </div>
@@ -44,12 +44,12 @@ const OrderTypeModal = ({ startOver }) => {
           <div className="modal__footer__buttons">
             <Button
               text={`Keep ${serviceTypeName}`}
-              classes="btn btn--highlight"
+              classes="ot-btn ot-btn--highlight"
               onClick={cancel}
             />
             <Button
               text="Change Order Type"
-              classes="btn"
+              classes="ot-btn"
               onClick={changeOrderType}
             />
           </div>

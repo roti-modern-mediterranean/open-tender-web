@@ -52,7 +52,7 @@ const CurrentOrder = ({ order }) => {
   }
 
   return (
-    <div className="order-card ot-bg-color-primary border border-radius ot-box-shadow slide-up">
+    <div className="order-card ot-bg-color-primary ot-border ot-border-radius ot-box-shadow slide-up">
       <OrderTag isUpcoming={true} status="IN_PROGRESS" />
       <div className="order-card__container">
         <div className="order-card__header">
@@ -105,13 +105,13 @@ const CurrentOrder = ({ order }) => {
               text="Checkout"
               icon="DollarSign"
               onClick={checkout}
-              classes="btn--small ot-font-size-small"
+              classes="ot-btn--small ot-font-size-small"
             />
             <Button
               text="Back To Menu"
               icon="Map"
               onClick={backToMenu}
-              classes="btn--small btn--secondary ot-font-size-small"
+              classes="ot-btn--small ot-btn--secondary ot-font-size-small"
             />
           </div>
         </div>

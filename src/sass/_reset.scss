@@ -32,6 +32,50 @@ legend {
   padding: 0;
 }
 
+fieldset {
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+input,
+textarea,
+select {
+  -webkit-appearance: none;
+  // outline: 0;
+}
+
+input[type='search'] {
+  -webkit-appearance: none;
+
+  &::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    display: none;
+  }
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='submit'] {
+  width: auto;
+  cursor: pointer;
+}
+
+select {
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 ol,
 ul {
   list-style: none;
@@ -53,4 +97,12 @@ button {
   background: transparent;
   border: none;
   padding: 0;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+button > * {
+  pointer-events: none;
 }

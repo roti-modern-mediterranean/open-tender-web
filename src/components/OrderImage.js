@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 
 const OrderImage = ({ imageUrl, title }) => {
   return (
-    <div className="order-card__image border-radius-small ot-box-shadow">
+    <div className="order-card__image ot-border-radius-small ot-box-shadow">
       <img src={imageUrl} title={title} alt={title} />
     </div>
   )

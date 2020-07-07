@@ -73,13 +73,13 @@ const LoginModal = ({ callback }) => {
       <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title heading ot-font-size-h3">{msg.title}</p>
+          <p className="modal__title ot-heading ot-font-size-h3">{msg.title}</p>
           <p className="modal__subtitle">{msg.subtitle}</p>
         </div>
         <div className="modal__body">
           {resetSent ? (
             <Button
-              classes="btn"
+              classes="ot-btn"
               onClick={() => dispatch(closeModal())}
               text="Close"
             />
@@ -95,7 +95,7 @@ const LoginModal = ({ callback }) => {
         </div>
         <div className="modal__footer ot-font-size-small">
           <Button
-            classes="btn-link"
+            classes="ot-btn-link"
             onClick={resetSent ? toggleResetSent : toggleReset}
             text={msg.reset}
           />

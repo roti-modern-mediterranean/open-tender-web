@@ -2,9 +2,9 @@ import React from 'react'
 import propTypes from 'prop-types'
 
 const ErrorMessage = ({ title, msg, children }) => (
-  <div className="error-message ot-color-error ot-bg-color-error border-radius">
+  <div className="error-message ot-color-error ot-bg-color-error ot-border-radius">
     {title && title.length ? (
-      <p className="error-message__title heading ot-font-size-h3 ot-color-error">
+      <p className="error-message__title ot-heading ot-font-size-h3 ot-color-error">
         {title}
       </p>
     ) : null}

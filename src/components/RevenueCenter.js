@@ -20,7 +20,7 @@ const RevenueCenter = ({
   const bgStyle = { backgroundImage: `url(${smallImage || placeholder2}` }
   const phoneUrl = address.phone ? `tel:${address.phone}` : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
-  classes = `rc ot-bg-color-primary border-radius ${classes}`
+  classes = `rc ot-bg-color-primary ot-border-radius ${classes}`
   const hoursDescIcon = is_outpost ? 'AlertCircle' : 'Clock'
   const hoursDescClass = is_outpost ? 'ot-color-alert' : 'ot-color-secondary'
 
@@ -41,7 +41,7 @@ const RevenueCenter = ({
       )}
       <div className="rc__content">
         <div className="rc__header">
-          <h2 className={isLanding ? 'ot-font-size-h3' : 'ot-font-size-h5'}>
+          <h2 className={isLanding ? 'ot-font-size-h3' : 'ot-font-size-h4'}>
             {revenueCenter.name}
           </h2>
           {distance !== null && (

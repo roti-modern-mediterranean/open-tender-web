@@ -20,11 +20,14 @@ const CartButton = () => {
     <div className="cart-button">
       <div className="cart-button__container">
         {cartquantity > 0 && (
-          <div className="cart-button__count btn--cart-count">
+          <div className="cart-button__count ot-warning ot-bold">
             {cartquantity}
           </div>
         )}
-        <Button onClick={handleClick} classes="cart-button__button btn--cart">
+        <Button
+          onClick={handleClick}
+          classes="cart-button__button ot-btn--highlight"
+        >
           <div className="cart-button__icon">
             <ShoppingBag size={null} />
           </div>

@@ -114,7 +114,7 @@ const CateringPage = () => {
   return (
     <div className="content">
       <Background imageUrl={background} />
-      <div className="card ot-opacity-light border-radius slide-up">
+      <div className="card ot-opacity-light ot-border-radius slide-up">
         <div className="card__header">
           <p className="ot-preface ot-font-size-small ot-color-secondary">
             {subtitle}
@@ -151,7 +151,7 @@ const CateringPage = () => {
               <Button
                 text="Start Over"
                 icon="RefreshCw"
-                classes="btn btn--error"
+                classes="ot-btn ot-btn--cancel"
                 onClick={startOver}
               />
             </ErrorMessage>
@@ -163,13 +163,13 @@ const CateringPage = () => {
           <div className="card__content__buttons">
             <Button
               text="Order Delivery"
-              classes="btn"
+              classes="ot-btn"
               onClick={(evt) => chooseServiceType(evt, 'DELIVERY')}
               disabled={!date}
             />
             <Button
               text="Order Pickup"
-              classes="btn"
+              classes="ot-btn"
               onClick={(evt) => chooseServiceType(evt, 'PICKUP')}
               disabled={!date}
             />
@@ -178,7 +178,7 @@ const CateringPage = () => {
         <div className="card__footer ot-font-size-small">
           <Button
             text="Switch to a regular order Pickup or Delivery order"
-            classes="btn-link"
+            classes="ot-btn-link"
             onClick={startOver}
           />
         </div>

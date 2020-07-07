@@ -23,7 +23,9 @@ const CartCountsModal = ({ errors }) => {
       <ModalClose classes="" onClick={handleClose} />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title heading ot-font-size-h3">{config.title}</p>
+          <p className="modal__title ot-heading ot-font-size-h3">
+            {config.title}
+          </p>
           <p className="modal__subtitle">{config.subtitle}</p>
         </div>
         <div className="modal__body">

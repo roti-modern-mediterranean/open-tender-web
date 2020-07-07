@@ -29,7 +29,7 @@ const CreditCards = ({ creditCards, isLoading }) => {
   }
 
   return (
-    <div className="section__content ot-bg-color-primary border-radius">
+    <div className="section__content ot-bg-color-primary ot-border-radius">
       <div className="section__rows">
         {creditCards.map((creditCard) => (
           <SectionRow
@@ -64,14 +64,14 @@ const CreditCards = ({ creditCards, isLoading }) => {
                 <p className="ot-font-size-small ot-color-secondary">
                   <Button
                     text="make default"
-                    classes="btn-link"
+                    classes="ot-btn-link"
                     onClick={(evt) => handleDefault(evt, creditCard)}
                     disabled={creditCard.is_default || isLoading}
                   />
-                  <span className="btn-link-separator">|</span>
+                  <span className="link-separator">|</span>
                   <Button
                     text="remove"
-                    classes="btn-link"
+                    classes="ot-btn-link"
                     onClick={(evt) => handleDelete(evt, creditCard)}
                     disabled={isLoading}
                   />
