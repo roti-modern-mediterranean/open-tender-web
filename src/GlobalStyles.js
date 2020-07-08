@@ -1,7 +1,8 @@
 import React from 'react'
-// import styled from '@emotion/styled'
 import { css, Global } from '@emotion/core'
 import { withTheme } from 'emotion-theming'
+
+// https://stackoverflow.com/questions/51637950/enable-global-theming-with-emotion
 
 const makeGlobalStyles = (theme) => css`
   body {
