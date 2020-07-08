@@ -78,6 +78,9 @@ body.has-modal {
 .main {
   // padding: 0;
   min-height: 100vh;
+  // @include breakpoint(mobile_both) {
+  //   min-height: 0;
+  // }
 
   .header + & {
     padding-top: $nav-height;

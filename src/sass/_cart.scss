@@ -3,8 +3,9 @@
   z-index: 10;
   bottom: 2rem;
   right: 4rem;
-  // width: 5rem;
-  // height: 5rem;
+  @include breakpoint(mobile_both) {
+    right: 2rem;
+  }
 
   &__container {
     position: relative;
@@ -13,6 +14,10 @@
     align-items: center;
     width: 8rem;
     height: 8rem;
+    @include breakpoint(mobile_both) {
+      width: 7rem;
+      height: 7rem;
+    }
   }
 
   &__button {
@@ -29,7 +34,10 @@
     width: 3rem;
     height: 3rem;
     margin: 0 auto;
-    // color: #fff;
+    // @include breakpoint(mobile_both) {
+    //   width: 3rem;
+    //   height: 3rem;
+    // }
   }
 
   &__count {
@@ -44,6 +52,12 @@
     border-radius: 2rem;
     border-width: 0.2rem;
     border-style: solid;
+    @include breakpoint(mobile_both) {
+      top: -0.3rem;
+      right: -0.3rem;
+      min-width: 2.4rem;
+      height: 2.4rem;
+    }
   }
 }
 
