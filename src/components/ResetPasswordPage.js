@@ -47,42 +47,44 @@ const ResetPasswordPage = () => {
     <>
       <h1 className="sr-only">{title}</h1>
       <div className="signup content ot-bg-color-secondary">
-        <div className="section container">
-          <div className="section__container">
-            <SectionHeader title={title} subtitle={subtitle} />
-            <div className="section__content ot-bg-color-primary ot-border-radius">
-              <div className="signup__form">
-                {success ? (
-                  <div className="password-reset">
-                    <p>Success! Your password has been reset.</p>
-                    <p>
-                      <Button
-                        classes="ot-btn-link"
-                        onClick={handleLogin}
-                        text="Click here to log into your account"
-                      />
-                    </p>
-                  </div>
-                ) : (
-                  <ResetPasswordForm
-                    loading={loading}
-                    error={error}
-                    reset={reset}
-                    resetForm={resetForm}
-                    resetToken={resetToken}
-                  />
-                )}
+        <div className="section">
+          <div className="container">
+            <div className="section__container">
+              <SectionHeader title={title} subtitle={subtitle} />
+              <div className="section__content ot-bg-color-primary ot-border-radius">
+                <div className="signup__form">
+                  {success ? (
+                    <div className="password-reset">
+                      <p>Success! Your password has been reset.</p>
+                      <p>
+                        <Button
+                          classes="ot-btn-link"
+                          onClick={handleLogin}
+                          text="Click here to log into your account"
+                        />
+                      </p>
+                    </div>
+                  ) : (
+                    <ResetPasswordForm
+                      loading={loading}
+                      error={error}
+                      reset={reset}
+                      resetForm={resetForm}
+                      resetToken={resetToken}
+                    />
+                  )}
+                </div>
               </div>
+              {!success && (
+                <div className="section__footer">
+                  <p className="">
+                    <Link to="/" className="">
+                      {back}
+                    </Link>
+                  </p>
+                </div>
+              )}
             </div>
-            {!success && (
-              <div className="section__footer">
-                <p className="">
-                  <Link to="/" className="">
-                    {back}
-                  </Link>
-                </p>
-              </div>
-            )}
           </div>
         </div>
       </div>

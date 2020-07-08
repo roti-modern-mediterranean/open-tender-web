@@ -141,121 +141,133 @@ const Order = ({ order, loading, error }) => {
               </button>
             </p>
           </div>
-          <div className="section container slide-up">
-            <div className="section__container">
-              {/* <SectionHeader title={title} subtitle={subtitle} /> */}
-              <div className="section__content ot-bg-color-primary ot-border-radius">
-                <div className="section__rows">
-                  <SectionRow title="Location">
-                    <OrderRevenueCenter revenueCenter={revenue_center} />
-                  </SectionRow>
-                  <SectionRow title="Requested Time">
-                    <OrderRequestedAt
-                      requested_at={requested_at}
-                      timezone={timezone}
-                      is_asap={is_asap}
-                      status={status}
-                    />
-                  </SectionRow>
-                  {service_type === 'DELIVERY' && address && (
-                    <SectionRow title="Delivery Address">
-                      <OrderAddress
-                        address={address}
-                        delivery={delivery}
+          <div className="section slide-up">
+            <div className="container">
+              <div className="section__container">
+                {/* <SectionHeader title={title} subtitle={subtitle} /> */}
+                <div className="section__content ot-bg-color-primary ot-border-radius">
+                  <div className="section__rows">
+                    <SectionRow title="Location">
+                      <OrderRevenueCenter revenueCenter={revenue_center} />
+                    </SectionRow>
+                    <SectionRow title="Requested Time">
+                      <OrderRequestedAt
+                        requested_at={requested_at}
+                        timezone={timezone}
+                        is_asap={is_asap}
                         status={status}
                       />
                     </SectionRow>
-                  )}
-                  {notes && notes.length ? (
-                    <SectionRow title="Notes">
-                      <p className="ot-font-size-small ot-color-secondary">
-                        {notes}
-                      </p>
-                    </SectionRow>
-                  ) : null}
-                  {hasDetails && (
-                    <SectionRow title="Other Details">
-                      {eating_utensils ? (
+                    {service_type === 'DELIVERY' && address && (
+                      <SectionRow title="Delivery Address">
+                        <OrderAddress
+                          address={address}
+                          delivery={delivery}
+                          status={status}
+                        />
+                      </SectionRow>
+                    )}
+                    {notes && notes.length ? (
+                      <SectionRow title="Notes">
                         <p className="ot-font-size-small ot-color-secondary">
-                          Eating utensils included
-                          {person_count && ` for ${person_count} people`}
+                          {notes}
                         </p>
-                      ) : (
-                        person_count && (
+                      </SectionRow>
+                    ) : null}
+                    {hasDetails && (
+                      <SectionRow title="Other Details">
+                        {eating_utensils ? (
                           <p className="ot-font-size-small ot-color-secondary">
-                            30 people to be accommodated
+                            Eating utensils included
+                            {person_count && ` for ${person_count} people`}
                           </p>
-                        )
-                      )}
-                      {serving_utensils && (
-                        <p className="ot-font-size-small ot-color-secondary">
-                          Serving utensils included
-                        </p>
-                      )}
-                      {tax_exempt_id && (
-                        <p className="ot-font-size-small ot-color-secondary">
-                          Tax exempt ID of {tax_exempt_id}
-                        </p>
-                      )}
-                    </SectionRow>
-                  )}
-                  {rating ? (
-                    <SectionRow title="Rating">
-                      <OrderRating {...rating} />
-                    </SectionRow>
-                  ) : null}
+                        ) : (
+                          person_count && (
+                            <p className="ot-font-size-small ot-color-secondary">
+                              30 people to be accommodated
+                            </p>
+                          )
+                        )}
+                        {serving_utensils && (
+                          <p className="ot-font-size-small ot-color-secondary">
+                            Serving utensils included
+                          </p>
+                        )}
+                        {tax_exempt_id && (
+                          <p className="ot-font-size-small ot-color-secondary">
+                            Tax exempt ID of {tax_exempt_id}
+                          </p>
+                        )}
+                      </SectionRow>
+                    )}
+                    {rating ? (
+                      <SectionRow title="Rating">
+                        <OrderRating {...rating} />
+                      </SectionRow>
+                    ) : null}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="section container slide-up">
-            <div className="section__container">
-              <SectionHeader title="Items in Your Order" />
-              <div className="section__content ot-bg-color-primary ot-border-radius">
-                <ul className="cart">
-                  {displayedItems.map((item, index) => {
-                    const favoriteId = lookup
-                      ? lookup[item.signature] || null
-                      : null
-                    return (
-                      <li key={`${item.id}-${index}`}>
-                        <CartItem item={item} showModifiers={true}>
-                          <OrderQuantity
-                            item={item}
-                            show={lookup ? true : false}
-                            favoriteId={favoriteId}
-                            addFavorite={addFavorite}
-                            removeFavorite={removeFavorite}
-                          />
-                        </CartItem>
-                      </li>
-                    )
-                  })}
-                </ul>
+          <div className="section slide-up">
+            <div className="container">
+              <div className="section__container">
+                <SectionHeader title="Items in Your Order" />
+                <div className="section__content ot-bg-color-primary ot-border-radius">
+                  <ul className="cart">
+                    {displayedItems.map((item, index) => {
+                      const favoriteId = lookup
+                        ? lookup[item.signature] || null
+                        : null
+                      return (
+                        <li key={`${item.id}-${index}`}>
+                          <CartItem item={item} showModifiers={true}>
+                            <OrderQuantity
+                              item={item}
+                              show={lookup ? true : false}
+                              favoriteId={favoriteId}
+                              addFavorite={addFavorite}
+                              removeFavorite={removeFavorite}
+                            />
+                          </CartItem>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-          <div className="section container slide-up">
-            <div className="section__container">
-              <SectionHeader title="Your Receipt" />
-              <div className="section__content ot-bg-color-primary ot-border-radius">
-                <Check title="Order Summary" check={check} tenders={tenders} />
+          <div className="section slide-up">
+            <div className="container">
+              <div className="section__container">
+                <SectionHeader title="Your Receipt" />
+                <div className="section__content ot-bg-color-primary ot-border-radius">
+                  <Check
+                    title="Order Summary"
+                    check={check}
+                    tenders={tenders}
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <div className="section container slide-up">
-            <div className="section__container">
-              <SectionHeader>
-                <p>
-                  <button
-                    type="button"
-                    className="ot-btn-link"
-                    onClick={backLink}
-                  >
-                    {backText}
-                  </button>
-                </p>
-              </SectionHeader>
+          <div className="section slide-up">
+            <div className="container">
+              <div className="section__container">
+                <SectionHeader>
+                  <p>
+                    <button
+                      type="button"
+                      className="ot-btn-link"
+                      onClick={backLink}
+                    >
+                      {backText}
+                    </button>
+                  </p>
+                </SectionHeader>
+              </div>
             </div>
           </div>
         </>

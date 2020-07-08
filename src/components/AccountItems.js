@@ -28,33 +28,35 @@ const AccountItems = () => {
   }, [entities])
 
   return (
-    <div id={slugify(title)} className="section container">
-      <div className="section__container">
-        <SectionHeader title={title} subtitle={subtitle} />
-        <SectionLoading loading={isLoading} />
-        <SectionError error={error} />
-        <div className="section__content -wide">
-          {showItems &&
-            (items.length ? (
-              <div className="section__items">
-                {items.map((item) => {
-                  return (
-                    <div key={item.signature} className="section__item">
-                      <OrderItemCard item={item} />
-                    </div>
-                  )
-                })}
-              </div>
-            ) : (
-              <SectionEmpty message={empty} />
-            ))}
-        </div>
-        <div className="section__footer">
-          <p className="ot-font-size-small">
-            <Link to="/items" className="">
-              See more recently ordered items
-            </Link>
-          </p>
+    <div id={slugify(title)} className="section">
+      <div className="container">
+        <div className="section__container">
+          <SectionHeader title={title} subtitle={subtitle} />
+          <SectionLoading loading={isLoading} />
+          <SectionError error={error} />
+          <div className="section__content -wide">
+            {showItems &&
+              (items.length ? (
+                <div className="section__items">
+                  {items.map((item) => {
+                    return (
+                      <div key={item.signature} className="section__item">
+                        <OrderItemCard item={item} />
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                <SectionEmpty message={empty} />
+              ))}
+          </div>
+          <div className="section__footer">
+            <p className="ot-font-size-small">
+              <Link to="/items" className="">
+                See more recently ordered items
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

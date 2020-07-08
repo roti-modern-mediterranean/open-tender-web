@@ -56,36 +56,38 @@ const AccountItemsPage = () => {
     <>
       <h1 className="sr-only">{title}</h1>
       <div className="sections ot-bg-color-secondary">
-        <div ref={sectionRef} className="section container">
-          <div className="section__container">
-            <SectionHeader title={title} subtitle={subtitle}>
-              <div className="section__header__back">
-                <p className="ot-font-size-small">
-                  <Link to="/account">Head back to your account page</Link>
-                </p>
+        <div ref={sectionRef} className="section">
+          <div className="container">
+            <div className="section__container">
+              <SectionHeader title={title} subtitle={subtitle}>
+                <div className="section__header__back">
+                  <p className="ot-font-size-small">
+                    <Link to="/account">Head back to your account page</Link>
+                  </p>
+                </div>
+              </SectionHeader>
+              <SectionLoading loading={isLoading} />
+              <SectionError error={error} />
+              <div className="section__content -wide">
+                {showItems &&
+                  (items.length ? (
+                    <div className="section__items">
+                      {items.map((item) => {
+                        return (
+                          <div key={item.signature} className="section__item">
+                            <OrderItemCard item={item} />
+                          </div>
+                        )
+                      })}
+                    </div>
+                  ) : (
+                    <SectionEmpty message={empty} />
+                  ))}
               </div>
-            </SectionHeader>
-            <SectionLoading loading={isLoading} />
-            <SectionError error={error} />
-            <div className="section__content -wide">
-              {showItems &&
-                (items.length ? (
-                  <div className="section__items">
-                    {items.map((item) => {
-                      return (
-                        <div key={item.signature} className="section__item">
-                          <OrderItemCard item={item} />
-                        </div>
-                      )
-                    })}
-                  </div>
-                ) : (
-                  <SectionEmpty message={empty} />
-                ))}
+              <SectionFooter>
+                <Link to="/account">Head back to your account page</Link>
+              </SectionFooter>
             </div>
-            <SectionFooter>
-              <Link to="/account">Head back to your account page</Link>
-            </SectionFooter>
           </div>
         </div>
       </div>

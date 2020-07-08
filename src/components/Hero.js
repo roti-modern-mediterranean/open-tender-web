@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 
 const Hero = ({ imageUrl, classes = '', children }) => {
   const bgStyle = { backgroundImage: `url(${imageUrl}` }
-  classes = `hero container bg-image ${classes}`
+  classes = `hero bg-image ${classes}`
   return (
     <div className={classes} style={bgStyle}>
       {children}

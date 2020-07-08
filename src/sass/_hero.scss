@@ -1,9 +1,13 @@
 .hero {
   width: 100%;
+  padding: 0 4rem;
   height: $hero-height;
   display: flex;
   justify-content: center;
   align-items: center;
+  @include breakpoint(mobile_both) {
+    padding: 0 2rem;
+  }
 
   &--left {
     justify-content: flex-start;

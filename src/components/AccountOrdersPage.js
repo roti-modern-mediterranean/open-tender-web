@@ -64,45 +64,47 @@ const AccountOrdersPage = () => {
     <>
       <h1 className="sr-only">{title}</h1>
       <div className="sections ot-bg-color-secondary">
-        <div ref={sectionRef} className="section container">
-          <div className="section__container">
-            <SectionHeader title={title} subtitle={subtitle}>
-              <div className="section__header__back">
-                <p className="ot-font-size-small">
-                  <Link to="/account">Head back to your account page</Link>
-                </p>
-              </div>
-            </SectionHeader>
-            <SectionLoading loading={isLoading} />
-            <SectionError error={error} />
-            <div className="section__content -wide">
-              {showOrders &&
-                (recentOrders.length ? (
-                  <div className="section__orders">
-                    {recentOrders.map((order) => {
-                      return (
-                        <div key={order.order_id} className="section__order">
-                          <OrderCard order={order} />
-                        </div>
-                      )
-                    })}
-                  </div>
-                ) : (
-                  <SectionEmpty message={empty} />
-                ))}
-            </div>
-            {showOrders &&
-              (entities.length > count ? (
-                <SectionFooter>
-                  {count === limit || count > entities.length ? (
+        <div ref={sectionRef} className="section">
+          <div className="container">
+            <div className="section__container">
+              <SectionHeader title={title} subtitle={subtitle}>
+                <div className="section__header__back">
+                  <p className="ot-font-size-small">
                     <Link to="/account">Head back to your account page</Link>
+                  </p>
+                </div>
+              </SectionHeader>
+              <SectionLoading loading={isLoading} />
+              <SectionError error={error} />
+              <div className="section__content -wide">
+                {showOrders &&
+                  (recentOrders.length ? (
+                    <div className="section__orders">
+                      {recentOrders.map((order) => {
+                        return (
+                          <div key={order.order_id} className="section__order">
+                            <OrderCard order={order} />
+                          </div>
+                        )
+                      })}
+                    </div>
                   ) : (
-                    <Button classes="ot-btn-link" onClick={handleClick}>
-                      Load more recent orders
-                    </Button>
-                  )}
-                </SectionFooter>
-              ) : null)}
+                    <SectionEmpty message={empty} />
+                  ))}
+              </div>
+              {showOrders &&
+                (entities.length > count ? (
+                  <SectionFooter>
+                    {count === limit || count > entities.length ? (
+                      <Link to="/account">Head back to your account page</Link>
+                    ) : (
+                      <Button classes="ot-btn-link" onClick={handleClick}>
+                        Load more recent orders
+                      </Button>
+                    )}
+                  </SectionFooter>
+                ) : null)}
+            </div>
           </div>
         </div>
       </div>

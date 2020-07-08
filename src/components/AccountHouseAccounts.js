@@ -28,52 +28,54 @@ const AccountHouseAccounts = () => {
   }, [dispatch])
 
   return (
-    <div id={slugify(title)} className="section container">
-      <div className="section__container">
-        <SectionHeader title={title} subtitle={subtitle} />
-        <SectionLoading loading={isLoading} />
-        <SectionError error={error} />
-        {showGiftCards ? (
-          <div className="section__content ot-bg-color-primary ot-border-radius">
-            <div className="section__rows">
-              {houseAccounts.entities.map((houseAccount) => {
-                const orderType =
-                  orderTypeNamesMap[houseAccount.revenue_center_type]
-                const orderTypes = orderType
-                  ? `${orderType} orders`
-                  : 'all order types'
-                const serviceType =
-                  serviceTypeNamesMap[houseAccount.service_type]
-                const serviceTypes = serviceType
-                  ? `the ${serviceType} service type`
-                  : 'all service types'
-                return (
-                  <SectionRow
-                    key={houseAccount.house_account_id}
-                    title={houseAccount.pin}
-                  >
-                    <div className="section__row__container">
-                      <div className="section__row__container__content">
-                        <p>{houseAccount.name}</p>
-                        <p className="ot-font-size-small ot-color-secondary">
-                          {houseAccount.approved_contact
-                            ? 'Your account has been specifically approved for this house account'
-                            : `This house account is approved for all email addresses ending in ${houseAccount.domain}`}
-                        </p>
-                        <p className="ot-font-size-small ot-color-secondary">
-                          Approved for <span className="">{orderTypes}</span>{' '}
-                          and <span className="">{serviceTypes}</span>
-                        </p>
+    <div id={slugify(title)} className="section">
+      <div className="container">
+        <div className="section__container">
+          <SectionHeader title={title} subtitle={subtitle} />
+          <SectionLoading loading={isLoading} />
+          <SectionError error={error} />
+          {showGiftCards ? (
+            <div className="section__content ot-bg-color-primary ot-border-radius">
+              <div className="section__rows">
+                {houseAccounts.entities.map((houseAccount) => {
+                  const orderType =
+                    orderTypeNamesMap[houseAccount.revenue_center_type]
+                  const orderTypes = orderType
+                    ? `${orderType} orders`
+                    : 'all order types'
+                  const serviceType =
+                    serviceTypeNamesMap[houseAccount.service_type]
+                  const serviceTypes = serviceType
+                    ? `the ${serviceType} service type`
+                    : 'all service types'
+                  return (
+                    <SectionRow
+                      key={houseAccount.house_account_id}
+                      title={houseAccount.pin}
+                    >
+                      <div className="section__row__container">
+                        <div className="section__row__container__content">
+                          <p>{houseAccount.name}</p>
+                          <p className="ot-font-size-small ot-color-secondary">
+                            {houseAccount.approved_contact
+                              ? 'Your account has been specifically approved for this house account'
+                              : `This house account is approved for all email addresses ending in ${houseAccount.domain}`}
+                          </p>
+                          <p className="ot-font-size-small ot-color-secondary">
+                            Approved for <span className="">{orderTypes}</span>{' '}
+                            and <span className="">{serviceTypes}</span>
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </SectionRow>
-                )
-              })}
+                    </SectionRow>
+                  )
+                })}
+              </div>
             </div>
-          </div>
-        ) : (
-          <SectionEmpty message={empty} />
-        )}
+          ) : (
+            <SectionEmpty message={empty} />
+          )}
+        </div>
       </div>
     </div>
   )

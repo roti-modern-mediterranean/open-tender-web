@@ -74,8 +74,12 @@ const AccountGreeting = ({ title, subtitle }) => {
 
   const continueCurrent = (evt) => {
     evt.preventDefault()
-    const rcType = revenueCenter.revenue_center_type.toLowerCase()
-    history.push(`/menu/${revenueCenter.slug}-${rcType}`)
+    if (revenueCenter) {
+      const rcType = revenueCenter.revenue_center_type.toLowerCase()
+      history.push(`/menu/${revenueCenter.slug}-${rcType}`)
+    } else {
+      history.push(`/`)
+    }
     evt.target.blur()
   }
 

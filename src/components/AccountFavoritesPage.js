@@ -53,35 +53,40 @@ const AccountFavoritesPage = () => {
     <>
       <h1 className="sr-only">{title}</h1>
       <div className="sections ot-bg-color-secondary">
-        <div ref={sectionRef} className="section container">
-          <div className="section__container">
-            <SectionHeader title={title} subtitle={subtitle}>
-              <div className="section__header__back">
-                <p className="ot-font-size-small">
-                  <Link to="/account">Head back to your account page</Link>
-                </p>
-              </div>
-            </SectionHeader>
-            <SectionLoading loading={isLoading} />
-            <SectionError error={error} />
-            <div className="section__content -wide">
-              {favorites.length ? (
-                <div className="section__items">
-                  {favorites.map((favorite) => {
-                    return (
-                      <div key={favorite.favorite_id} className="section__item">
-                        <OrderItemCard item={favorite.item} />
-                      </div>
-                    )
-                  })}
+        <div ref={sectionRef} className="section">
+          <div className="container">
+            <div className="section__container">
+              <SectionHeader title={title} subtitle={subtitle}>
+                <div className="section__header__back">
+                  <p className="ot-font-size-small">
+                    <Link to="/account">Head back to your account page</Link>
+                  </p>
                 </div>
-              ) : (
-                <SectionEmpty message={empty} />
-              )}
+              </SectionHeader>
+              <SectionLoading loading={isLoading} />
+              <SectionError error={error} />
+              <div className="section__content -wide">
+                {favorites.length ? (
+                  <div className="section__items">
+                    {favorites.map((favorite) => {
+                      return (
+                        <div
+                          key={favorite.favorite_id}
+                          className="section__item"
+                        >
+                          <OrderItemCard item={favorite.item} />
+                        </div>
+                      )
+                    })}
+                  </div>
+                ) : (
+                  <SectionEmpty message={empty} />
+                )}
+              </div>
+              <SectionFooter>
+                <Link to="/account">Head back to your account page</Link>
+              </SectionFooter>
             </div>
-            <SectionFooter>
-              <Link to="/account">Head back to your account page</Link>
-            </SectionFooter>
           </div>
         </div>
       </div>

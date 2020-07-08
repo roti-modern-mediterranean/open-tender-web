@@ -41,20 +41,22 @@ const SignUpPage = () => {
     <>
       <h1 className="sr-only">{title}</h1>
       <div className="signup content ot-bg-color-secondary">
-        <div className="section container">
-          <div className="section__container">
-            <SectionHeader title={title} subtitle={subtitle} />
-            <div className="section__content ot-bg-color-primary ot-border-radius">
-              <div className="signup__form">
-                <SignUpForm loading={loading} error={error} signUp={signUp} />
+        <div className="section">
+          <div className="container">
+            <div className="section__container">
+              <SectionHeader title={title} subtitle={subtitle} />
+              <div className="section__content ot-bg-color-primary ot-border-radius">
+                <div className="signup__form">
+                  <SignUpForm loading={loading} error={error} signUp={signUp} />
+                </div>
               </div>
-            </div>
-            <div className="section__footer">
-              <p className="">
-                <Link to="/" className="">
-                  {back}
-                </Link>
-              </p>
+              <div className="section__footer">
+                <p className="">
+                  <Link to="/" className="">
+                    {back}
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
         </div>

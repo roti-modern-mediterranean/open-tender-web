@@ -39,37 +39,39 @@ const AccountFavorites = () => {
   }, [entities, count])
 
   return (
-    <div id={slugify(title)} className="section container">
-      <div className="section__container">
-        <SectionHeader title={title} subtitle={subtitle} />
-        <SectionLoading loading={isLoading} />
-        <SectionError error={error} />
-        <div className="section__content -wide">
-          {favorites.length ? (
-            <div className="section__items">
-              {favorites.map((favorite) => {
-                return (
-                  <div key={favorite.favorite_id} className="section__item">
-                    <OrderItemCard item={favorite.item} />
-                  </div>
-                )
-              })}
-            </div>
-          ) : (
-            <SectionEmpty message={empty} />
-          )}
-        </div>
-        {entities.length > count ? (
-          <SectionFooter>
-            {count === limit ? (
-              <Link to="/favorites">See all favorites</Link>
+    <div id={slugify(title)} className="section">
+      <div className="container">
+        <div className="section__container">
+          <SectionHeader title={title} subtitle={subtitle} />
+          <SectionLoading loading={isLoading} />
+          <SectionError error={error} />
+          <div className="section__content -wide">
+            {favorites.length ? (
+              <div className="section__items">
+                {favorites.map((favorite) => {
+                  return (
+                    <div key={favorite.favorite_id} className="section__item">
+                      <OrderItemCard item={favorite.item} />
+                    </div>
+                  )
+                })}
+              </div>
             ) : (
-              <Button classes="ot-btn-link" onClick={() => setCount(limit)}>
-                Load more favorites
-              </Button>
+              <SectionEmpty message={empty} />
             )}
-          </SectionFooter>
-        ) : null}
+          </div>
+          {entities.length > count ? (
+            <SectionFooter>
+              {count === limit ? (
+                <Link to="/favorites">See all favorites</Link>
+              ) : (
+                <Button classes="ot-btn-link" onClick={() => setCount(limit)}>
+                  Load more favorites
+                </Button>
+              )}
+            </SectionFooter>
+          ) : null}
+        </div>
       </div>
     </div>
   )

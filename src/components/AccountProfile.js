@@ -22,18 +22,20 @@ const AccountProfile = () => {
   ])
 
   return (
-    <div id={slugify(title)} className="section container">
-      <div className="section__container">
-        <SectionHeader title={title} subtitle={subtitle} />
-        <SectionLoading loading={isLoading} />
-        <SectionError error={errMsg} />
-        <div className="section__content ot-bg-color-primary ot-border-radius">
-          <ProfileForm
-            profile={profile}
-            loading={loading}
-            error={error}
-            update={update}
-          />
+    <div id={slugify(title)} className="section">
+      <div className="container">
+        <div className="section__container">
+          <SectionHeader title={title} subtitle={subtitle} />
+          <SectionLoading loading={isLoading} />
+          <SectionError error={errMsg} />
+          <div className="section__content ot-bg-color-primary ot-border-radius">
+            <ProfileForm
+              profile={profile}
+              loading={loading}
+              error={error}
+              update={update}
+            />
+          </div>
         </div>
       </div>
     </div>

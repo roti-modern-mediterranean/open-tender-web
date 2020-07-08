@@ -477,9 +477,6 @@ const makeGlobalStyles = (theme) => css`
   }
 `
 
-// btn--tip
-// btn--back
-
 const GlobalStyles = withTheme(({ theme }) => (
   <Global styles={makeGlobalStyles(theme)} />
 ))

@@ -60,38 +60,40 @@ const AccountOrders = () => {
   }, [entities, cartQuantity, dispatch])
 
   return (
-    <div id={slugify(title)} className="section container">
-      <div className="section__container">
-        <SectionHeader title={title} subtitle={subtitle} />
-        <SectionLoading loading={isLoading} />
-        <SectionError error={error} />
-        <div className="section__content -wide">
-          {showOrders &&
-            (recentOrders.length ? (
-              <div className="section__orders">
-                {recentOrders.map((order) => {
-                  return (
-                    <div key={order.order_id} className="section__order">
-                      <OrderCard order={order} />
-                    </div>
-                  )
-                })}
-              </div>
-            ) : (
-              <SectionEmpty message={empty} />
-            ))}
+    <div id={slugify(title)} className="section">
+      <div className="container">
+        <div className="section__container">
+          <SectionHeader title={title} subtitle={subtitle} />
+          <SectionLoading loading={isLoading} />
+          <SectionError error={error} />
+          <div className="section__content -wide">
+            {showOrders &&
+              (recentOrders.length ? (
+                <div className="section__orders">
+                  {recentOrders.map((order) => {
+                    return (
+                      <div key={order.order_id} className="section__order">
+                        <OrderCard order={order} />
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                <SectionEmpty message={empty} />
+              ))}
+          </div>
+          {entities.length > count ? (
+            <SectionFooter>
+              {count === limit ? (
+                <Link to="/orders">See all recent orders</Link>
+              ) : (
+                <Button classes="ot-btn-link" onClick={() => setCount(limit)}>
+                  Load more recent orders
+                </Button>
+              )}
+            </SectionFooter>
+          ) : null}
         </div>
-        {entities.length > count ? (
-          <SectionFooter>
-            {count === limit ? (
-              <Link to="/orders">See all recent orders</Link>
-            ) : (
-              <Button classes="ot-btn-link" onClick={() => setCount(limit)}>
-                Load more recent orders
-              </Button>
-            )}
-          </SectionFooter>
-        ) : null}
       </div>
     </div>
   )

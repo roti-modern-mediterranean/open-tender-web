@@ -38,27 +38,29 @@ const AccountCreditCards = () => {
     : false
 
   return (
-    <div id={slugify(title)} className="section container">
-      <div className="section__container">
-        <SectionHeader title={title} subtitle={subtitle} />
-        <SectionLoading loading={isLoading} />
-        <SectionError error={error} />
-        {showCreditCards ? (
-          <CreditCards
-            creditCards={creditCards.entities}
-            isLoading={isLoading}
-          />
-        ) : (
-          <SectionEmpty message={empty} />
-        )}
-        <div className="section__footer">
-          <p className="ot-font-size-small">
-            <Button
-              text="Add a new card to your account"
-              onClick={handleAddNew}
-              classes="ot-btn-link"
+    <div id={slugify(title)} className="section">
+      <div className="container">
+        <div className="section__container">
+          <SectionHeader title={title} subtitle={subtitle} />
+          <SectionLoading loading={isLoading} />
+          <SectionError error={error} />
+          {showCreditCards ? (
+            <CreditCards
+              creditCards={creditCards.entities}
+              isLoading={isLoading}
             />
-          </p>
+          ) : (
+            <SectionEmpty message={empty} />
+          )}
+          <div className="section__footer">
+            <p className="ot-font-size-small">
+              <Button
+                text="Add a new card to your account"
+                onClick={handleAddNew}
+                classes="ot-btn-link"
+              />
+            </p>
+          </div>
         </div>
       </div>
     </div>
