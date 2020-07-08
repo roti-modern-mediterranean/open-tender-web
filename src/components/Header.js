@@ -22,7 +22,7 @@ import {
   ButtonRequestedAt,
   ButtonServiceType,
   ButtonStartOver,
-} from 'open-tender'
+} from '@open-tender/components'
 
 import { selectOutpostName, openModal } from '../slices'
 import HeaderLogo from './HeaderLogo'

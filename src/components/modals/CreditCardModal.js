@@ -6,7 +6,7 @@ import {
   resetCustomerCreditCardsError,
   selectCustomerCreditCards,
 } from '@open-tender/redux'
-import { CreditCardForm } from 'open-tender'
+import { CreditCardForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'

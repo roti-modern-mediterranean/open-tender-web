@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetOrderType, selectOrder } from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 

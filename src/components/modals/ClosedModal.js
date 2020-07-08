@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetRevenueCenter, resetOrderType } from '@open-tender/redux'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { selectConfig, closeModal } from '../../slices'
 

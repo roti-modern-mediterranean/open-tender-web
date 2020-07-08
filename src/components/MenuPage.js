@@ -11,7 +11,7 @@ import {
   selectSelectedAllergenNames,
   fetchAllergens,
 } from '@open-tender/redux'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { selectConfig } from '../slices'
 import Hero from './Hero'

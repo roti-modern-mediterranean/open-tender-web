@@ -7,7 +7,7 @@ import {
   signUpCustomer,
   resetSignUp,
 } from '@open-tender/redux'
-import { SignUpForm } from 'open-tender'
+import { SignUpForm } from '@open-tender/components'
 
 import { selectConfig } from '../slices'
 import SectionHeader from './SectionHeader'

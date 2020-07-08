@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ShoppingBag } from 'react-feather'
 import { selectCartQuantity } from '@open-tender/redux'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { toggleSidebar } from '../slices'
 

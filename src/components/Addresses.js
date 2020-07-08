@@ -7,7 +7,7 @@ import {
   removeCustomerAddress,
   setAddress,
 } from '@open-tender/redux'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { openModal } from '../slices'
 import SectionRow from './SectionRow'

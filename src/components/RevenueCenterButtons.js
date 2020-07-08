@@ -8,7 +8,7 @@ import {
   resetRevenueCenter,
   setRevenueCenter,
 } from '@open-tender/redux'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 export const RevenueCenterButtons = ({ revenueCenter }) => {
   const dispatch = useDispatch()

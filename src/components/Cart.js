@@ -7,7 +7,7 @@ import {
   selectCart,
   removeItemFromCart,
 } from '@open-tender/redux'
-import { CartItem, BuilderQuantity } from 'open-tender'
+import { CartItem, BuilderQuantity } from '@open-tender/components'
 
 import { openModal } from '../slices'
 

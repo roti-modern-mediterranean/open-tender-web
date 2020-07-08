@@ -13,7 +13,7 @@ import {
   makeReadableDateStrFromIso,
   timezoneMap,
 } from '@open-tender/js'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 

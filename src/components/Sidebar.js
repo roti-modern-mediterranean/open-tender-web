@@ -10,7 +10,7 @@ import {
   selectOrderLimits,
 } from '@open-tender/redux'
 import { displayPrice } from '@open-tender/js'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { selectSidebar, toggleSidebar } from '../slices'
 import SidebarOverlay from './SidebarOverlay'

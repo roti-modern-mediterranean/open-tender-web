@@ -7,7 +7,7 @@ import {
   updateCustomerAllergens,
 } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
-import { Switch } from 'open-tender'
+import { Switch } from '@open-tender/components'
 
 import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'

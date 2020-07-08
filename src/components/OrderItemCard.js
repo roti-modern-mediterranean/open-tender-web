@@ -10,7 +10,7 @@ import {
   addItemToCart,
 } from '@open-tender/redux'
 import { displayPrice, rehydrateOrderItem } from '@open-tender/js'
-import { Button, ButtonFavorite } from 'open-tender'
+import { Button, ButtonFavorite } from '@open-tender/components'
 
 const OrderItemCard = ({ item }) => {
   const dispatch = useDispatch()

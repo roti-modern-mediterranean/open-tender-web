@@ -11,7 +11,7 @@ import {
   fetchCustomerOrders,
 } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'

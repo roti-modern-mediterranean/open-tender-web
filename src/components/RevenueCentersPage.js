@@ -7,7 +7,7 @@ import {
   selectRevenueCenters,
 } from '@open-tender/redux'
 import { makeOrderTypeFromParam } from '@open-tender/js'
-import { GoogleMap, GoogleMapsMarker } from 'open-tender'
+import { GoogleMap, GoogleMapsMarker } from '@open-tender/components'
 
 import { selectConfig, selectGeoLatLng } from '../slices'
 import RevenueCentersSelect from './RevenueCentersSelect'

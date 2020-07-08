@@ -7,7 +7,7 @@ import {
   setCart,
   setRevenueCenter,
 } from '@open-tender/redux'
-import { CartErrors } from 'open-tender'
+import { CartErrors } from '@open-tender/components'
 
 import { closeModal, selectConfig } from '../../slices'
 import ModalClose from '../ModalClose'

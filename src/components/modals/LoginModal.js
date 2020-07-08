@@ -8,7 +8,7 @@ import {
   sendPasswordResetEmail,
   resetPasswordReset,
 } from '@open-tender/redux'
-import { LoginForm, SendResetForm, Button } from 'open-tender'
+import { LoginForm, SendResetForm, Button } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'

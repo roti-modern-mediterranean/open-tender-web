@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectSignUp, signUpCustomer, resetSignUp } from '@open-tender/redux'
-import { SignUpForm } from 'open-tender'
+import { SignUpForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'

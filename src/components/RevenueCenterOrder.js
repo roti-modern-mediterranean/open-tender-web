@@ -9,8 +9,8 @@ import {
   selectAutoSelect,
 } from '@open-tender/redux'
 import { selectConfig } from '../slices'
-// import { Button } from 'open-tender'
-import { Button } from 'open-tender'
+// import { Button } from '@open-tender/components'
+import { Button } from '@open-tender/components'
 import RevenueCenterButtons from './RevenueCenterButtons'
 
 export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {

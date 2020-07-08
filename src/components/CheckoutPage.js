@@ -31,7 +31,7 @@ import {
   ButtonMenu,
   ButtonAccount,
   ButtonCancelEdit,
-} from 'open-tender'
+} from '@open-tender/components'
 
 import { selectConfig, openModal } from '../slices'
 import HeaderLogo from './HeaderLogo'

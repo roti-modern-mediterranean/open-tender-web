@@ -9,7 +9,7 @@ import {
   selectSelectedAllergenNames,
   showNotification,
 } from '@open-tender/redux'
-import { Builder, BuilderOption, BuilderHeader } from 'open-tender'
+import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'

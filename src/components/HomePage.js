@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { selectOrder, resetRevenueCenters } from '@open-tender/redux'
-import { useGeolocation } from 'open-tender'
+import { useGeolocation } from '@open-tender/components'
 
 import {
   selectConfig,

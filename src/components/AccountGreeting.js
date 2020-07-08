@@ -13,7 +13,7 @@ import {
   resetRevenueCenter,
 } from '@open-tender/redux'
 import { slugify, capitalize, otherOrderTypesMap } from '@open-tender/js'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 import ClipLoader from 'react-spinners/ClipLoader'
 
 import { selectConfigAccountSections } from '../slices'

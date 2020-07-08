@@ -19,7 +19,7 @@ import {
   isEmpty,
   isoToDate,
 } from '@open-tender/js'
-import { Button, CartItem, OrderQuantity, Check } from 'open-tender'
+import { Button, CartItem, OrderQuantity, Check } from '@open-tender/components'
 
 import { openModal } from '../slices'
 import SectionHeader from './SectionHeader'

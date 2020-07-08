@@ -5,7 +5,7 @@ import {
   updateCustomerCreditCard,
   removeCustomerCreditCard,
 } from '@open-tender/redux'
-import { Button, CircleLoader } from 'open-tender'
+import { Button, CircleLoader } from '@open-tender/components'
 
 import SectionRow from './SectionRow'
 import { cardIconMap } from '../assets/cardIcons'

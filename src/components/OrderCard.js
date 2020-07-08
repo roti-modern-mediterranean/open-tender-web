@@ -15,7 +15,7 @@ import {
   capitalize,
   makeOrderAddress,
 } from '@open-tender/js'
-import { Button, DeliveryLink } from 'open-tender'
+import { Button, DeliveryLink } from '@open-tender/components'
 
 import OrderImages from './OrderImages'
 import OrderTag from './OrderTag'

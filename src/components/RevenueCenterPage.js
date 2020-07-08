@@ -7,7 +7,7 @@ import {
   resetOrderType,
   setOrderServiceType,
 } from '@open-tender/redux'
-import { useGeolocation } from 'open-tender'
+import { useGeolocation } from '@open-tender/components'
 
 import {
   setGeoLatLng,

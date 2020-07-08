@@ -21,7 +21,7 @@ import {
   makeDeliveryMesssaging,
   renameLocation,
 } from '@open-tender/js'
-import { Button, GoogleMapsAutocomplete } from 'open-tender'
+import { Button, GoogleMapsAutocomplete } from '@open-tender/components'
 
 import { selectConfig, selectGeoLatLng } from '../slices'
 import RevenueCenter from './RevenueCenter'

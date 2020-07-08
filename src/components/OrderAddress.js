@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { DeliveryLink, CircleLoader } from 'open-tender'
+import { DeliveryLink, CircleLoader } from '@open-tender/components'
 
 const Default = ({ isDefault }) =>
   isDefault ? (

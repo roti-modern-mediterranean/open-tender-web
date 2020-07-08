@@ -11,7 +11,7 @@ import {
   slugify,
   makeOrderAddress,
 } from '@open-tender/js'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { selectConfigAccountSections } from '../slices'
 import OrderTag from './OrderTag'

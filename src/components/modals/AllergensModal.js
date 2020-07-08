@@ -5,7 +5,7 @@ import {
   selectAllergens,
   setSelectedAllergens,
 } from '@open-tender/redux'
-import { Switch } from 'open-tender'
+import { Switch } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'

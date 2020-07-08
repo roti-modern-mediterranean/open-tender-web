@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { updateOrderRating } from '@open-tender/redux'
-import { Textarea, iconMap } from 'open-tender'
+import { Textarea, iconMap } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'

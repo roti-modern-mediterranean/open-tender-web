@@ -21,7 +21,7 @@ import {
   makeLocalDateStr,
   todayDate,
 } from '@open-tender/js'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { selectConfig } from '../slices'
 import Background from './Background'

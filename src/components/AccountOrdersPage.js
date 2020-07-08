@@ -6,7 +6,7 @@ import {
   selectCustomerOrders,
   fetchCustomerOrders,
 } from '@open-tender/redux'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'

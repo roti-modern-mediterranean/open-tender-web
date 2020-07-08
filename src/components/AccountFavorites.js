@@ -6,7 +6,7 @@ import {
   fetchCustomerFavorites,
 } from '@open-tender/redux'
 import { slugify, makeDisplayItem } from '@open-tender/js'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'

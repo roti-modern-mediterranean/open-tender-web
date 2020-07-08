@@ -8,7 +8,7 @@ import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionRow from './SectionRow'
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 const AccountGiftCards = () => {
   const {

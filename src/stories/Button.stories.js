@@ -1,7 +1,7 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
 
-import { Button } from 'open-tender'
+import { Button } from '@open-tender/components'
 
 export default {
   component: Button,
