@@ -6,7 +6,7 @@ import {
   fetchRevenueCenter,
   resetOrderType,
   setOrderServiceType,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { useGeolocation } from 'open-tender'
 
 import {

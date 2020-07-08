@@ -3,8 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomerHouseAccounts,
   fetchCustomerHouseAccounts,
-} from 'open-tender-redux'
-import { slugify, orderTypeNamesMap, serviceTypeNamesMap } from 'open-tender-js'
+} from '@open-tender/redux'
+import {
+  slugify,
+  orderTypeNamesMap,
+  serviceTypeNamesMap,
+} from '@open-tender/js'
 
 import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'

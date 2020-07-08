@@ -10,7 +10,7 @@ import {
   selectMenu,
   selectSelectedAllergenNames,
   fetchAllergens,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { Button } from 'open-tender'
 
 import { selectConfig } from '../slices'

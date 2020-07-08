@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectAlert, resetAlert } from 'open-tender-redux'
+import { selectAlert, resetAlert } from '@open-tender/redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import { selectModal, closeModal, openModal, toggleSidebar } from '../slices'

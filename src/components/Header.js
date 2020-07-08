@@ -10,8 +10,8 @@ import {
   resetCheckout,
   selectCustomer,
   logoutCustomer,
-} from 'open-tender-redux'
-import { makeServiceTypeName } from 'open-tender-js'
+} from '@open-tender/redux'
+import { makeServiceTypeName } from '@open-tender/js'
 import {
   ButtonAccount,
   ButtonSignUp,

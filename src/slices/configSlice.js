@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { capitalize } from 'open-tender-js'
-import { OpenTenderAPI } from 'open-tender-redux'
+import { capitalize } from '@open-tender/js'
+import { OpenTenderAPI } from '@open-tender/redux'
 import { brandConfig, contentConfig, themeConfig } from '../config/index'
 
 const baseUrl = process.env.REACT_APP_API_URL

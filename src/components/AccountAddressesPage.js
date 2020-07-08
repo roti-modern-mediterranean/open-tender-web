@@ -5,7 +5,7 @@ import {
   selectCustomer,
   fetchCustomerAddresses,
   selectCustomerAddresses,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 
 import { selectConfig } from '../slices'
 import SectionHeader from './SectionHeader'

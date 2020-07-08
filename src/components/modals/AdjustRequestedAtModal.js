@@ -7,12 +7,12 @@ import {
   resetRevenueCenter,
   resetMenuVars,
   fetchMenu,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import {
   capitalize,
   makeReadableDateStrFromIso,
   timezoneMap,
-} from 'open-tender-js'
+} from '@open-tender/js'
 import { Button } from 'open-tender'
 
 import { closeModal } from '../../slices'

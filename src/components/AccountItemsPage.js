@@ -5,8 +5,8 @@ import {
   selectCustomer,
   fetchCustomerOrders,
   selectCustomerOrders,
-} from 'open-tender-redux'
-import { makeUniqueDisplayItems } from 'open-tender-js'
+} from '@open-tender/redux'
+import { makeUniqueDisplayItems } from '@open-tender/js'
 
 import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'

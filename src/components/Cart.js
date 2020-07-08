@@ -6,7 +6,7 @@ import {
   decrementItemInCart,
   selectCart,
   removeItemFromCart,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { CartItem, BuilderQuantity } from 'open-tender'
 
 import { openModal } from '../slices'

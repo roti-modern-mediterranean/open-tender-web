@@ -8,8 +8,8 @@ import {
   selectCanOrder,
   selectOrder,
   selectOrderLimits,
-} from 'open-tender-redux'
-import { displayPrice } from 'open-tender-js'
+} from '@open-tender/redux'
+import { displayPrice } from '@open-tender/js'
 import { Button } from 'open-tender'
 
 import { selectSidebar, toggleSidebar } from '../slices'

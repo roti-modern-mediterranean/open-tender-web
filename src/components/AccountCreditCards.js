@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   fetchCustomerCreditCards,
   selectCustomerCreditCards,
-} from 'open-tender-redux'
-import { slugify } from 'open-tender-js'
+} from '@open-tender/redux'
+import { slugify } from '@open-tender/js'
 import { Button } from 'open-tender'
 
 import { selectConfigAccountSections, openModal } from '../slices'

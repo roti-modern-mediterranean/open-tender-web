@@ -12,7 +12,7 @@ import {
   fetchRevenueCenters,
   selectRevenueCenters,
   resetCheckout,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import {
   calcMinDistance,
   makePickupRevenueCenters,
@@ -20,7 +20,7 @@ import {
   makePickupMesssaging,
   makeDeliveryMesssaging,
   renameLocation,
-} from 'open-tender-js'
+} from '@open-tender/js'
 import { Button, GoogleMapsAutocomplete } from 'open-tender'
 
 import { selectConfig, selectGeoLatLng } from '../slices'

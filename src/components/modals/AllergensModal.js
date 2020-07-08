@@ -4,7 +4,7 @@ import {
   selectCustomerAllergens,
   selectAllergens,
   setSelectedAllergens,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { Switch } from 'open-tender'
 
 import { closeModal } from '../../slices'

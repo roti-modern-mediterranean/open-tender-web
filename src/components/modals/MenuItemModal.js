@@ -8,7 +8,7 @@ import {
   selectSoldOut,
   selectSelectedAllergenNames,
   showNotification,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { Builder, BuilderOption, BuilderHeader } from 'open-tender'
 
 import { closeModal } from '../../slices'

@@ -23,8 +23,8 @@ import {
   setSubmitting,
   resetCheckout,
   setConfirmationOrder,
-} from 'open-tender-redux'
-import { prepareOrder } from 'open-tender-js'
+} from '@open-tender/redux'
+import { prepareOrder } from '@open-tender/js'
 import {
   CheckoutForm,
   Check,

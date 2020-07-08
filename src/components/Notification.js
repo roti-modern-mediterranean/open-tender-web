@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { hideNotification } from 'open-tender-redux'
+import { hideNotification } from '@open-tender/redux'
 
 const Notification = ({ message, id }) => {
   const dispatch = useDispatch()

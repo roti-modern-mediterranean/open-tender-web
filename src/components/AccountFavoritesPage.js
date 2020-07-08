@@ -5,8 +5,8 @@ import {
   selectCustomerFavorites,
   fetchCustomerFavorites,
   selectCustomer,
-} from 'open-tender-redux'
-import { makeDisplayItem } from 'open-tender-js'
+} from '@open-tender/redux'
+import { makeDisplayItem } from '@open-tender/js'
 
 import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'

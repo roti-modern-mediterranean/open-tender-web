@@ -10,7 +10,7 @@ import {
   setOrderServiceType,
   fetchValidTimes,
   selectValidTimes,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import {
   isoToDate,
   dateToIso,
@@ -20,7 +20,7 @@ import {
   makeLocalDate,
   makeLocalDateStr,
   todayDate,
-} from 'open-tender-js'
+} from '@open-tender/js'
 import { Button } from 'open-tender'
 
 import { selectConfig } from '../slices'

@@ -5,7 +5,7 @@ import {
   selectCustomer,
   selectCustomerOrders,
   fetchCustomerOrders,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { Button } from 'open-tender'
 
 import { selectConfigAccountSections } from '../slices'

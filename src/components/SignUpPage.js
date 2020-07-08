@@ -6,7 +6,7 @@ import {
   selectSignUp,
   signUpCustomer,
   resetSignUp,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { SignUpForm } from 'open-tender'
 
 import { selectConfig } from '../slices'

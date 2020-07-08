@@ -8,8 +8,8 @@ import {
   selectMenuItems,
   showNotification,
   addItemToCart,
-} from 'open-tender-redux'
-import { displayPrice, rehydrateOrderItem } from 'open-tender-js'
+} from '@open-tender/redux'
+import { displayPrice, rehydrateOrderItem } from '@open-tender/js'
 import { Button, ButtonFavorite } from 'open-tender'
 
 const OrderItemCard = ({ item }) => {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectToken } from 'open-tender-redux'
+import { selectToken } from '@open-tender/redux'
 
 import { selectConfig } from '../slices'
 import SectionHeader from './SectionHeader'

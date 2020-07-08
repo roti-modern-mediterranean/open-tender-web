@@ -6,7 +6,7 @@ import {
   updateCustomerAddress,
   removeCustomerAddress,
   setAddress,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { Button } from 'open-tender'
 
 import { openModal } from '../slices'

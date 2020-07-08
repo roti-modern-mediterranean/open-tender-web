@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectCustomer, updateCustomer } from 'open-tender-redux'
-import { slugify } from 'open-tender-js'
+import { selectCustomer, updateCustomer } from '@open-tender/redux'
+import { slugify } from '@open-tender/js'
 import { ProfileForm } from 'open-tender'
 
 import { selectConfigAccountSections } from '../slices'

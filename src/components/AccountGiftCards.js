@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { selectCustomerGiftCards } from 'open-tender-redux'
-import { slugify, formatDateStr, dateStrToDate } from 'open-tender-js'
+import { selectCustomerGiftCards } from '@open-tender/redux'
+import { slugify, formatDateStr, dateStrToDate } from '@open-tender/js'
 
 import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'

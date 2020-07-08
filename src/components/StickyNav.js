@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import propTypes from 'prop-types'
 import { Link } from 'react-scroll'
-import { slugify } from 'open-tender-js'
+import { slugify } from '@open-tender/js'
 
 const StickyNav = ({ items, offset = -100, duration = 500 }) => {
   const [isSticky, setSticky] = useState(false)

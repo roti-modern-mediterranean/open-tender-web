@@ -11,8 +11,8 @@ import {
   resetOrderType,
   resetOrder,
   resetRevenueCenter,
-} from 'open-tender-redux'
-import { slugify, capitalize, otherOrderTypesMap } from 'open-tender-js'
+} from '@open-tender/redux'
+import { slugify, capitalize, otherOrderTypesMap } from '@open-tender/js'
 import { Button } from 'open-tender'
 import ClipLoader from 'react-spinners/ClipLoader'
 

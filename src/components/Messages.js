@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import { selectMessages } from 'open-tender-redux'
+import { selectMessages } from '@open-tender/redux'
 
 import Message from './Message'
 

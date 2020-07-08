@@ -5,7 +5,7 @@ import {
   selectCustomer,
   selectConfirmationOrder,
   resetConfirmation,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 
 import { selectConfig } from '../slices'
 import Order from './Order'

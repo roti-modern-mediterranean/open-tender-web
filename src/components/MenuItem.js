@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentItem, selectCartCounts } from 'open-tender-redux'
-import { convertStringToArray } from 'open-tender-js'
+import { setCurrentItem, selectCartCounts } from '@open-tender/redux'
+import { convertStringToArray } from '@open-tender/js'
 
 import { openModal } from '../slices'
 import { MenuContext } from './MenuPage'

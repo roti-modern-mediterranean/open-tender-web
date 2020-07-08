@@ -3,14 +3,14 @@ import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-scroll'
-import { selectCartTotal } from 'open-tender-redux'
+import { selectCartTotal } from '@open-tender/redux'
 import {
   timezoneMap,
   isoToDateStr,
   capitalize,
   slugify,
   makeOrderAddress,
-} from 'open-tender-js'
+} from '@open-tender/js'
 import { Button } from 'open-tender'
 
 import { selectConfigAccountSections } from '../slices'

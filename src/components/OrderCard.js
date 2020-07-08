@@ -7,14 +7,14 @@ import {
   setAddress,
   reorderPastOrder,
   editOrder,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import {
   timezoneMap,
   isoToDateStr,
   isoToDate,
   capitalize,
   makeOrderAddress,
-} from 'open-tender-js'
+} from '@open-tender/js'
 import { Button, DeliveryLink } from 'open-tender'
 
 import OrderImages from './OrderImages'

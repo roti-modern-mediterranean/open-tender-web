@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   fetchCustomerAddresses,
   selectCustomerAddresses,
-} from 'open-tender-redux'
-import { slugify } from 'open-tender-js'
+} from '@open-tender/redux'
+import { slugify } from '@open-tender/js'
 
 import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'

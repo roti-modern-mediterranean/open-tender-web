@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectCustomer, fetchCustomer } from 'open-tender-redux'
+import { selectCustomer, fetchCustomer } from '@open-tender/redux'
 
 import { selectConfig } from '../slices'
 import StickyNav from './StickyNav'

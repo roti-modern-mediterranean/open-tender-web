@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setOrderServiceType } from 'open-tender-redux'
+import { setOrderServiceType } from '@open-tender/redux'
 import { selectConfig } from '../slices'
 import OrderTypeButton from './OrderTypeButton'
 

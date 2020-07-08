@@ -5,8 +5,8 @@ import {
   fetchAllergens,
   selectCustomerAllergens,
   updateCustomerAllergens,
-} from 'open-tender-redux'
-import { slugify } from 'open-tender-js'
+} from '@open-tender/redux'
+import { slugify } from '@open-tender/js'
 import { Switch } from 'open-tender'
 
 import { selectConfigAccountSections } from '../slices'

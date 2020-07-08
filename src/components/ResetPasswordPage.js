@@ -6,7 +6,7 @@ import {
   selectResetPassword,
   resetPassword,
   resetPasswordReset,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { Button, ResetPasswordForm } from 'open-tender'
 
 import { selectConfig, openModal } from '../slices'

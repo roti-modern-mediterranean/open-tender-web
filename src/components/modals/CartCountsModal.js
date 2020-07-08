@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectCart } from 'open-tender-redux'
+import { selectCart } from '@open-tender/redux'
 import { CartCounts } from 'open-tender'
 
 import { closeModal, selectConfig } from '../../slices'

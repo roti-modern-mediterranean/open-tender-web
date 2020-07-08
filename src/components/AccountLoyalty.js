@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCustomerLoyalty, selectCustomerLoyalty } from 'open-tender-redux'
-import { loyaltyType } from 'open-tender-js'
+import { fetchCustomerLoyalty, selectCustomerLoyalty } from '@open-tender/redux'
+import { loyaltyType } from '@open-tender/js'
 
 const LoyaltyProgram = ({ program }) => {
   const { name, description, loyalty_type, spend, redemption, credit } = program

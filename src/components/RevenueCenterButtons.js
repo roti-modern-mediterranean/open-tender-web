@@ -7,7 +7,7 @@ import {
   setAddress,
   resetRevenueCenter,
   setRevenueCenter,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { Button } from 'open-tender'
 
 export const RevenueCenterButtons = ({ revenueCenter }) => {

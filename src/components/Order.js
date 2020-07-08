@@ -12,8 +12,13 @@ import {
   reorderPastOrder,
   editOrder,
   resetCustomerOrder,
-} from 'open-tender-redux'
-import { makeDisplayItem, capitalize, isEmpty, isoToDate } from 'open-tender-js'
+} from '@open-tender/redux'
+import {
+  makeDisplayItem,
+  capitalize,
+  isEmpty,
+  isoToDate,
+} from '@open-tender/js'
 import { Button, CartItem, OrderQuantity, Check } from 'open-tender'
 
 import { openModal } from '../slices'

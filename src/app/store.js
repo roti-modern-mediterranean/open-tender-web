@@ -9,7 +9,7 @@ import configReducer from '../slices/configSlice'
 import geolocationReducer from '../slices/geolocationSlice'
 import modalReducer from '../slices/modalSlice'
 import sidebarReducer from '../slices/sidebarSlice'
-import { openTenderReducer } from 'open-tender-redux'
+import { openTenderReducer } from '@open-tender/redux'
 
 const rootReducer = combineReducers({
   config: configReducer,

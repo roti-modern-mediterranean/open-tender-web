@@ -9,8 +9,8 @@ import {
   selectCartQuantity,
   selectCustomerOrders,
   fetchCustomerOrders,
-} from 'open-tender-redux'
-import { slugify } from 'open-tender-js'
+} from '@open-tender/redux'
+import { slugify } from '@open-tender/js'
 import { Button } from 'open-tender'
 
 import { selectConfigAccountSections } from '../slices'

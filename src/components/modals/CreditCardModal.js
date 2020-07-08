@@ -5,7 +5,7 @@ import {
   addCustomerCreditCard,
   resetCustomerCreditCardsError,
   selectCustomerCreditCards,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { CreditCardForm } from 'open-tender'
 
 import { closeModal } from '../../slices'

@@ -5,7 +5,7 @@ import {
   selectCustomerAddresses,
   updateCustomerAddress,
   resetCustomerAddressesError,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { AddressForm } from 'open-tender'
 
 import { closeModal } from '../../slices'

@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomerFavorites,
   fetchCustomerFavorites,
-} from 'open-tender-redux'
-import { slugify, makeDisplayItem } from 'open-tender-js'
+} from '@open-tender/redux'
+import { slugify, makeDisplayItem } from '@open-tender/js'
 import { Button } from 'open-tender'
 
 import { selectConfigAccountSections } from '../slices'

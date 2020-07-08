@@ -2,12 +2,12 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { makeRevenueCenterMsg } from 'open-tender-js'
+import { makeRevenueCenterMsg } from '@open-tender/js'
 import {
   setRevenueCenter,
   selectOrder,
   selectAutoSelect,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { selectConfig } from '../slices'
 // import { Button } from 'open-tender'
 import { Button } from 'open-tender'

@@ -5,7 +5,7 @@ import {
   selectCustomer,
   fetchCustomerOrder,
   selectCustomerOrder,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 
 import Order from './Order'
 

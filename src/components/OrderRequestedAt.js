@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { timezoneMap, makeRequestedAtStr } from 'open-tender-js'
+import { timezoneMap, makeRequestedAtStr } from '@open-tender/js'
 
 const OrderRequestedAt = ({ requested_at, timezone, is_asap, status }) => {
   const tz = timezone && timezoneMap[timezone]

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import {
   updateCustomerCreditCard,
   removeCustomerCreditCard,
-} from 'open-tender-redux'
+} from '@open-tender/redux'
 import { Button, CircleLoader } from 'open-tender'
 
 import SectionRow from './SectionRow'
