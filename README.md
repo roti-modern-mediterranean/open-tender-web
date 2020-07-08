@@ -1,4 +1,32 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# Open Tender
+
+An open source web app powered by the Open Tender e-commerce platform for restaurants.
+
+## Getting started with the Open Tender Web App
+
+This project was originally bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template. See the "Available Scripts" section below for guidance on basic usage.
+
+To get started, pull down a copy of the repo and run `yarn install` in your new directory. This will install all of the dependencies for the project. Once you've done this, follow the steps below to get up and running.
+
+Add an `.env` file that looks like this:
+
+```
+SKIP_PREFLIGHT_CHECK=true
+```
+
+Add an `.env.development` file that looks like this:
+
+```
+REACT_APP_AUTH_URL=https://api.sandbox.opentender.io
+REACT_APP_API_URL=https://api.sandbox.opentender.io/order-api
+REACT_APP_CLIENT_ID=[YOUR_OPEN_TENDER_CLIENT_ID]
+```
+
+An Open Tender client ID will be provided by the Open Tender dev team.
+
+In `/src/config/brand.js`, add the ID of the brand you're working with (this part of the process will soon change), which will also be provided by the Open Tender dev team.
+
+Once those files have been added, run `yarn start` to start the app. The app should open up at http://localhost:3000, and it should be able to make requests to the Open Tender Sandbox API.
 
 ## Available Scripts
 
