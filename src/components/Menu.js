@@ -8,7 +8,7 @@ const Menu = ({ categories }) => {
   return (
     <>
       <StickyNav items={navItems} offset={-90} />
-      <div className="menu container">
+      <div className="menu">
         {categories.map((category) => (
           <div key={category.id}>
             <MenuCategory category={category} />

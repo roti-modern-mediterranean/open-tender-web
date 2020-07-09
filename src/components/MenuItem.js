@@ -40,68 +40,70 @@ const MenuItem = ({ item }) => {
 
   return (
     <div className={`menu__item ${isSoldOut ? '-sold-out' : ''}`}>
-      <button className="ot-font-size" onClick={handleClick}>
-        <div
-          className="menu__item__image bg-image ot-bg-color-secondary ot-border-radius"
-          style={bgStyle}
-        >
-          {cartCount > 0 && (
-            <div className="menu__item__count ot-warning ot-bold ot-font-size-small">
-              {cartCount}
-            </div>
-          )}
-          {isSoldOut && soldOutMsg ? (
-            <div className="menu__item__overlay ot-opacity-dark ot-border-radius">
-              <div className="menu__item__overlay__container">
-                <p className="menu__item__overlay__message ot-color-light ot-font-size-x-big">
-                  {soldOutMsg}
-                </p>
+      <div className="menu__item__container ot-border-color">
+        <button className="ot-font-size" onClick={handleClick}>
+          <div
+            className="menu__item__image bg-image ot-bg-color-secondary ot-border-radius"
+            style={bgStyle}
+          >
+            {cartCount > 0 && (
+              <div className="menu__item__count ot-warning ot-bold ot-font-size-small">
+                {cartCount}
               </div>
-            </div>
-          ) : (
-            allergenAlert.length > 0 && (
-              <div className="menu__item__overlay ot-border-radius">
+            )}
+            {isSoldOut && soldOutMsg ? (
+              <div className="menu__item__overlay ot-opacity-dark ot-border-radius">
                 <div className="menu__item__overlay__container">
-                  <Tag
-                    icon="AlertCircle"
-                    text={`Contains ${allergenAlert.join(', ')}`}
-                    bgClass="ot-warning"
-                  />
+                  <p className="menu__item__overlay__message ot-color-light ot-font-size-x-big">
+                    {soldOutMsg}
+                  </p>
                 </div>
               </div>
-            )
-          )}
-        </div>
-        <div className="menu__item__content">
-          {/* <p className="menu__item__name ot-bold ot-font-size-big">{item.name}</p> */}
-          <p className="menu__item__name ot-heading ot-font-size-h5">
-            {item.name}
-          </p>
-          {item.description && (
-            <p className="menu__item__desc ot-font-size-small">
-              {item.description}
+            ) : (
+              allergenAlert.length > 0 && (
+                <div className="menu__item__overlay ot-border-radius">
+                  <div className="menu__item__overlay__container">
+                    <Tag
+                      icon="AlertCircle"
+                      text={`Contains ${allergenAlert.join(', ')}`}
+                      bgClass="ot-warning"
+                    />
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+          <div className="menu__item__content">
+            {/* <p className="menu__item__name ot-bold ot-font-size-big">{item.name}</p> */}
+            <p className="menu__item__name ot-heading ot-font-size-big">
+              {item.name}
             </p>
-          )}
-          <p className="menu__item__details">
-            <span className="menu__item__price ot-bold">${item.price}</span>
-            {cals && (
-              <span className="menu__item__cals ot-bold ot-color-secondary">
-                {cals} cals
-              </span>
+            {item.description && (
+              <p className="menu__item__desc ot-color-secondary ot-font-size-small">
+                {item.description}
+              </p>
             )}
-            {allergens.length > 0 && (
-              <span className="menu_item__allergens ot-color-alert ot-font-size-small">
-                {allergens.join(', ')}
-              </span>
-            )}
-            {tags.length > 0 && (
-              <span className="menu_item__tags ot-color-secondary ot-font-size-small">
-                {tags.join(', ')}
-              </span>
-            )}
-          </p>
-        </div>
-      </button>
+            <p className="menu__item__details">
+              <span className="menu__item__price ot-bold">${item.price}</span>
+              {cals && (
+                <span className="menu__item__cals ot-bold ot-color-secondary">
+                  {cals} cals
+                </span>
+              )}
+              {allergens.length > 0 && (
+                <span className="menu__item__allergens ot-color-alert ot-font-size-small">
+                  {allergens.join(', ')}
+                </span>
+              )}
+              {tags.length > 0 && (
+                <span className="menu__item__tags ot-color-secondary ot-font-size-small">
+                  {tags.join(', ')}
+                </span>
+              )}
+            </p>
+          </div>
+        </button>
+      </div>
     </div>
   )
 }

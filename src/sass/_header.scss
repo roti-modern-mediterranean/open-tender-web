@@ -7,6 +7,10 @@
   max-width: 100%;
   height: $nav-height;
 
+  .main--menu & {
+    width: 100%;
+  }
+
   &__container {
     display: flex;
     justify-content: space-between;
@@ -44,6 +48,11 @@
       margin: 0 0 0 1rem;
       &:first-child {
         margin: 0;
+      }
+      .ot-btn__icon-wrapper span:not(.ot-btn__icon) {
+        @include breakpoint(mobile) {
+          display: none;
+        }
       }
     }
   }

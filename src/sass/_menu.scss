@@ -1,33 +1,64 @@
-$padding-x: 3rem;
-
 .menu {
-  margin: 0 0 10rem;
+  margin: 0 0 $padding;
 }
 
 .menu__category {
-  padding: 6rem 0 0;
+  padding: $padding 0 0;
   &.-child {
-    padding: 3rem 0 0;
+    padding: $padding-mobile 0 0;
+  }
+
+  &__header {
+    margin: 0 0 1rem;
+  }
+
+  &__title {
+    margin: 0 0 0 -0.1rem;
+  }
+
+  &__subtitle {
+    margin: 1rem 0 0;
   }
 }
 
-.menu__category__title {
-  margin: 0 0 0.5rem -0.1rem;
-}
-
 .menu__items {
-  margin: 0 (-$padding-x) 0 0;
+  // margin: 0 (-$padding) 0 0;
   display: flex;
   flex-wrap: wrap;
+  padding: 0 0 $padding $padding;
+  @include breakpoint(mobile_both) {
+    padding: 0 0 $padding-mobile $padding-mobile;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+  }
 }
 
 .menu__item {
   position: relative;
   width: 20%;
-  padding: 2.5rem $padding-x 0 0;
+  padding: $padding $padding 0 0;
+  @include breakpoint(tablet_land) {
+    width: 25%;
+  }
+  @include breakpoint(tablet) {
+    width: 33.33333%;
+  }
+  @include breakpoint(mobile_both) {
+    width: 24rem;
+    flex-shrink: 0;
+    padding: $padding-mobile $padding-mobile 0 0;
+  }
+
+  &__container {
+    width: 100%;
+    height: 100%;
+    border-width: 0.1rem;
+    border-style: solid;
+  }
 
   button {
     cursor: pointer;
+    display: block;
     width: 100%;
     text-align: left;
     background-color: transparent;
@@ -45,7 +76,6 @@ $padding-x: 3rem;
     position: relative;
     width: 100%;
     padding: 30%;
-    margin-bottom: 1.4rem;
   }
 
   &__count {
@@ -82,13 +112,23 @@ $padding-x: 3rem;
     }
   }
 
+  &__content {
+    padding: 1.6rem 1.5rem 1.3rem;
+  }
+
   &__name {
     line-height: 1.3;
+    // @include breakpoint(mobile_both) {
+    //   font-size: 1.4rem;
+    // }
   }
 
   &__desc {
     margin: 0.5rem 0 0;
     line-height: 1.5;
+    @include breakpoint(mobile_both) {
+      display: none;
+    }
   }
 
   &__details {
@@ -100,6 +140,13 @@ $padding-x: 3rem;
       margin: 0 1.5rem 0 0;
       &:last-child {
         margin-right: 0;
+      }
+    }
+
+    span.menu__item__allergens,
+    span.menu__item__tags {
+      @include breakpoint(mobile_both) {
+        display: none;
       }
     }
   }
@@ -115,10 +162,8 @@ $padding-x: 3rem;
       }
     }
 
-    .menu__item__name,
-    .menu__item__desc,
-    .menu__item__price {
-      opacity: 0.5;
+    .menu__item__content {
+      opacity: 0.3;
     }
   }
 }

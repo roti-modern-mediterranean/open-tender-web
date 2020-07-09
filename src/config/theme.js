@@ -70,8 +70,8 @@ const themeConfig = {
     bgColorStuck: bgColorPrimary,
   },
   preface: {
-    textTransform: 'none',
-    letterSpacing: '0',
+    textTransform: 'uppercase',
+    letterSpacing: '0.05em',
   },
   links: {
     textDecoration: 'none',

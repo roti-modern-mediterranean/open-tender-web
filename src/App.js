@@ -6,6 +6,7 @@ import GlobalStyles from './GlobalStyles'
 import Routes from './components/Routes'
 import Modal from './components/Modal'
 import Header from './components/Header'
+import Main from './components/Main'
 import Footer from './components/Footer'
 import Messages from './components/Messages'
 import Notifications from './components/Notifications'
@@ -30,14 +31,14 @@ class App extends React.Component {
         <div className="app">
           <Modal />
           <Router>
-            <Header />
-            <main className="main ot-bg-color-primary">
+            <Main>
+              <Header />
               <Messages />
               <Routes />
               <Notifications />
               <CartButton />
               <Footer />
-            </main>
+            </Main>
             <Sidebar />
           </Router>
         </div>

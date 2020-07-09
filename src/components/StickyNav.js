@@ -22,35 +22,33 @@ const StickyNav = ({ items, offset = -100, duration = 500 }) => {
 
   const stickyClass = `sticky ${isSticky ? 'ot-stuck' : ''}`
   const stickyInnerClass = `sticky__inner ot-sticky-inner ${
-    isSticky ? 'ot-bg-color-primary ot-box-shadow' : ''
+    isSticky ? 'ot-bg-color-primary ot-border-color ot-box-shadow' : ''
   }`
 
   return (
     <div className={stickyClass} ref={stickyRef}>
       <div className={stickyInnerClass}>
-        <div className="container">
-          <div className="sticky__items">
-            <ul>
-              {items.map((item) => {
-                const sectionId = slugify(item)
-                return (
-                  <li key={sectionId} className="ot-preface ot-font-size-small">
-                    <Link
-                      activeClass="active"
-                      className="ot-link-dark"
-                      to={sectionId}
-                      spy={true}
-                      smooth={true}
-                      offset={offset}
-                      duration={duration}
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
+        <div className="sticky__items">
+          <ul>
+            {items.map((item) => {
+              const sectionId = slugify(item)
+              return (
+                <li key={sectionId} className="ot-preface ot-font-size-small">
+                  <Link
+                    activeClass="active"
+                    className="ot-link-dark"
+                    to={sectionId}
+                    spy={true}
+                    smooth={true}
+                    offset={offset}
+                    duration={duration}
+                  >
+                    {item}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
         </div>
       </div>
     </div>

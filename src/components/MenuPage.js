@@ -56,7 +56,7 @@ const MenuPage = () => {
 
   return (
     <MenuContext.Provider value={{ soldOut, menuConfig, allergenAlerts }}>
-      <Hero imageUrl={menuConfig.background} classes="hero--right">
+      <Hero imageUrl={menuConfig.background} classes="hero--right hero--top">
         {revenueCenter && (
           <RevenueCenter
             revenueCenter={revenueCenter}

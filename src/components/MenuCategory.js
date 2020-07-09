@@ -12,12 +12,18 @@ const MenuCategory = ({ category, isChild }) => {
       className={`menu__category ${child}`}
     >
       <div className="menu__category__header">
-        {isChild ? (
-          <h3 className="menu__category__title">{category.name}</h3>
-        ) : (
-          <h2 className="menu__category__title">{category.name}</h2>
-        )}
-        <p>{category.description}</p>
+        <div className="container">
+          {isChild ? (
+            <h3 className="menu__category__title">{category.name}</h3>
+          ) : (
+            <h2 className="menu__category__title">{category.name}</h2>
+          )}
+          {category.description && (
+            <p className="menu__category__subtitle ot-color-secondary ot-line-height">
+              {category.description}
+            </p>
+          )}
+        </div>
       </div>
       <div className="menu__items">
         {category.items.map((item) => (

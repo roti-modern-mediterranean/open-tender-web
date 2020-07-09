@@ -66,6 +66,10 @@ body.has-modal {
   float: right;
   width: 100%;
   max-width: $width;
+
+  &--menu {
+    max-width: 100%;
+  }
 }
 
 // .main {
