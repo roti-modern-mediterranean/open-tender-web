@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { selectOrder, resetRevenueCenters } from '@open-tender/redux'
 import { useGeolocation } from '@open-tender/components'
+import { isBrowser } from 'react-device-detect'
 
 import {
   selectConfig,
@@ -10,14 +11,15 @@ import {
   setGeoError,
   setGeoLoading,
 } from '../slices'
-import Background from './Background'
 import OrderType from './OrderType'
+import PageTitle from './PageTitle'
+import Background from './Background'
 
 const HomePage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { geoLatLng, geoError } = useGeolocation()
-  const { home: homeConfig } = useSelector(selectConfig)
+  const config = useSelector(selectConfig)
   // const bgStyle = { backgroundImage: `url(${home.background}` }
   const order = useSelector(selectOrder)
   const hasTypes = order.orderType && order.serviceType
@@ -41,10 +43,17 @@ const HomePage = () => {
   }, [geoLatLng, geoError, dispatch])
 
   return (
-    <div className="content">
-      <Background imageUrl={homeConfig.background} />
-      <OrderType />
-    </div>
+    <>
+      {isBrowser && <Background imageUrl={config.home.background} />}
+      <div className="content">
+        <PageTitle {...config.home} />
+        <div className="content__body">
+          <div className="container">
+            <OrderType />
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 

@@ -14,7 +14,7 @@ const makeGlobalStyles = (theme) => css`
     background-color: ${theme.bgColors.primary};
   }
   header {
-    background-color: ${theme.bgColors.primary};
+    background-color: ${theme.header.bgColor};
   }
   h1,
   h2,
@@ -83,13 +83,18 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .ot-preface {
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    text-transform: ${theme.preface.textTransform};
+    letter-spacing: ${theme.preface.letterSpacing};
     color: ${theme.colors.secondary};
     font-size: ${theme.fontSizes.small};
   }
+  .ot-title {
+    color: ${theme.colors.primary};
+    font-size: ${theme.fonts.headings.sizes.h1};
+  }
   .ot-subtitle {
     color: ${theme.colors.secondary};
+    line-height: ${theme.text.lineHeight};
   }
 
   .ot-line-height {
@@ -281,7 +286,7 @@ const makeGlobalStyles = (theme) => css`
   .ot-btn--light {
     color: ${theme.colors.primary};
     background-color: ${theme.bgColors.primary};
-    border-color: ${theme.bgColors.primary};
+    border-color: ${theme.border.color};
 
     &:hover,
     &:active,

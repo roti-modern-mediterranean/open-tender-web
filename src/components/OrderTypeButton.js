@@ -4,16 +4,16 @@ import { ArrowRight } from 'react-feather'
 
 const OrderTypeButton = ({ title, handler, icon }) => (
   <button
-    className="card__button ot-btn--light ot-box-shadow"
+    className="content__button ot-btn--light ot-box-shadow ot-border-radius-small"
     aria-label={title}
     onClick={handler}
   >
-    <span className="card__button__container">
-      <span className="card__button__icon ot-color-primary">{icon}</span>
-      <span className="card__button__title ot-heading ot-font-size-x-big">
+    <span className="content__button__container">
+      <span className="content__button__icon ot-color-primary">{icon}</span>
+      <span className="content__button__title ot-heading ot-font-size-h4">
         {title}
       </span>
-      <span className="card__button__arrow ot-color-primary">
+      <span className="content__button__arrow ot-color-primary">
         <ArrowRight size={null} />
       </span>
     </span>

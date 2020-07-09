@@ -7,8 +7,8 @@ import { Flag, ShoppingBag, Truck, Users, Gift } from 'react-feather'
 
 const OrderType = () => {
   const dispatch = useDispatch()
-  const { home: homeConfig } = useSelector(selectConfig)
-  const { title, subtitle, content, buttons } = homeConfig
+  const config = useSelector(selectConfig)
+  const { buttons } = config.home
 
   const handleOutpost = (evt) => {
     evt.preventDefault()
@@ -57,22 +57,15 @@ const OrderType = () => {
   }
 
   return (
-    <div className="card ot-opacity-light ot-border-radius slide-up">
-      <div className="card__header">
-        <p className="ot-preface">{subtitle}</p>
-        <h1 className="ot-font-size-h3">{title}</h1>
-        <p className="ot-subtitle">{content}</p>
-      </div>
-      <div className="card__content">
-        {buttons.map((i) => (
-          <OrderTypeButton
-            key={i.type}
-            {...i}
-            icon={icons[i.type]}
-            handler={handlers[i.type]}
-          />
-        ))}
-      </div>
+    <div className="content__buttons slide-up">
+      {buttons.map((i) => (
+        <OrderTypeButton
+          key={i.type}
+          {...i}
+          icon={icons[i.type]}
+          handler={handlers[i.type]}
+        />
+      ))}
     </div>
   )
 }

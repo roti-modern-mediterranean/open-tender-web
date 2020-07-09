@@ -20,7 +20,7 @@ const RevenueCenter = ({
   const bgStyle = { backgroundImage: `url(${smallImage || placeholder2}` }
   const phoneUrl = address.phone ? `tel:${address.phone}` : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
-  classes = `rc ot-bg-color-primary ot-border-radius ${classes}`
+  classes = `rc ot-bg-color-primary ot-border-radius ot-border-color ${classes}`
   const hoursDescIcon = is_outpost ? 'AlertCircle' : 'Clock'
   const hoursDescClass = is_outpost ? 'ot-color-alert' : 'ot-color-secondary'
 
@@ -40,49 +40,51 @@ const RevenueCenter = ({
         </div>
       )}
       <div className="rc__content">
-        <div className="rc__header">
-          <h2 className={isLanding ? 'ot-font-size-h3' : 'ot-font-size-h4'}>
-            {revenueCenter.name}
-          </h2>
-          {distance !== null && (
-            <p className="ot-font-size-small ot-color-secondary">
-              {distance.toFixed(2)} miles away
-            </p>
-          )}
-        </div>
-        <div className="rc__actions">
-          <a
-            className="no-link"
-            href={revenueCenter.directions_url}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <RevenueCenterAction icon="MapPin" text={address.street} />
-          </a>
-          {phoneUrl && (
+        <div className="rc__container">
+          <div className="rc__header">
+            <h2 className={isLanding ? 'ot-font-size-h3' : 'ot-font-size-h4'}>
+              {revenueCenter.name}
+            </h2>
+            {distance !== null && (
+              <p className="ot-font-size-small ot-color-secondary">
+                {distance.toFixed(2)} miles away
+              </p>
+            )}
+          </div>
+          <div className="rc__actions">
             <a
               className="no-link"
-              href={phoneUrl}
+              href={revenueCenter.directions_url}
               rel="noopener noreferrer"
               target="_blank"
             >
-              <RevenueCenterAction icon="Phone" text={address.phone} />
+              <RevenueCenterAction icon="MapPin" text={address.street} />
             </a>
-          )}
-          {hoursDesc && (
-            <RevenueCenterAction
-              icon={hoursDescIcon}
-              iconClass={hoursDescClass}
-              text={hoursDesc}
-              arrow={null}
-            />
-          )}
+            {phoneUrl && (
+              <a
+                className="no-link"
+                href={phoneUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <RevenueCenterAction icon="Phone" text={address.phone} />
+              </a>
+            )}
+            {hoursDesc && (
+              <RevenueCenterAction
+                icon={hoursDescIcon}
+                iconClass={hoursDescClass}
+                text={hoursDesc}
+                arrow={null}
+              />
+            )}
+          </div>
+          <RevenueCenterOrder
+            revenueCenter={revenueCenter}
+            isOrder={isOrder}
+            isLanding={isLanding}
+          />
         </div>
-        <RevenueCenterOrder
-          revenueCenter={revenueCenter}
-          isOrder={isOrder}
-          isLanding={isLanding}
-        />
       </div>
     </div>
   )

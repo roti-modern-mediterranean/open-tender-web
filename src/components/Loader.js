@@ -19,8 +19,10 @@ const Loader = ({
   textClass = 'ot-font-size-small',
 }) => (
   <div className={`loading ${className}`}>
-    <div className="loading__loader">{loader(type, size)}</div>
-    {text && text.length > 0 && <p className={textClass}>{text}</p>}
+    <div className="container">
+      <div className="loading__loader">{loader(type, size)}</div>
+      {text && text.length > 0 && <p className={textClass}>{text}</p>}
+    </div>
   </div>
 )
 

@@ -31,14 +31,14 @@ class App extends React.Component {
           <Modal />
           <Router>
             <Header />
-            <main className="main">
+            <main className="main ot-bg-color-primary">
               <Messages />
               <Routes />
               <Notifications />
               <CartButton />
+              <Footer />
             </main>
             <Sidebar />
-            <Footer />
           </Router>
         </div>
       </ThemeProvider>

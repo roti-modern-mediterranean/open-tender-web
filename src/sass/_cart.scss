@@ -2,9 +2,9 @@
   position: fixed;
   z-index: 10;
   bottom: 2rem;
-  right: 4rem;
+  right: $padding;
   @include breakpoint(mobile_both) {
-    right: 2rem;
+    right: $padding-mobile;
   }
 
   &__container {

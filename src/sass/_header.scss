@@ -2,8 +2,9 @@
   position: fixed;
   z-index: 10;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: 0;
+  width: $width;
+  max-width: 100%;
   height: $nav-height;
 
   &__container {
@@ -17,11 +18,13 @@
     position: relative;
     top: 0.3rem;
     display: inline-block;
-    max-width: 15rem;
+    max-width: 12rem;
     margin: 0rem 3rem 0 0;
+    margin-left: 1.1rem;
   }
 
   &__nav {
+    margin-left: -1.1rem;
     button {
       margin: -0.2rem 0 0;
       @include breakpoint(mobile_both) {
@@ -36,6 +39,7 @@
   }
 
   &__actions {
+    margin-right: -1.1rem;
     button {
       margin: 0 0 0 1rem;
       &:first-child {

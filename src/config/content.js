@@ -20,12 +20,19 @@ const contentConfig = {
     apiKey: 'AIzaSyCkllc7M-cYNzSRXO7KE-ZZKTPW59RroDk',
     defaultCenter: { lat: 40.7572285, lng: -73.9729147 },
     zoom: 14,
+    // styles: {
+    //   labelColor: '#666666',
+    //   roadColor: '#eaeef4',
+    //   featureColor: '#eaeef4',
+    //   waterColor: '#dee5ef',
+    //   backgroundColor: '#f5f7fa',
+    // },
     styles: {
       labelColor: '#666666',
-      roadColor: '#eaeef4',
-      featureColor: '#eaeef4',
-      waterColor: '#dee5ef',
-      backgroundColor: '#f5f7fa',
+      roadColor: '#1c1c1c',
+      featureColor: '#1c1c1c',
+      waterColor: '#1c1c1c',
+      backgroundColor: '#000000',
     },
     icons: {
       user: {
@@ -50,11 +57,13 @@ const contentConfig = {
     },
   },
   home: {
+    // background:
+    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588197308_asian-food-spread-top-down_color_1800x1200.jpg',
     background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588197308_asian-food-spread-top-down_color_1800x1200.jpg',
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594323134_french-toast_1547x2000.jpg',
     title: 'How can we help you today?',
-    subtitle: "Let's get started, shall we?",
-    content: 'Select an order type from the options below.',
+    // preface: "Let's get started, shall we?",
+    // subtitle: 'Select an order type from the options below.',
     buttons: [
       {
         type: 'outpost',

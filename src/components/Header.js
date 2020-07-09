@@ -1,7 +1,6 @@
 import React from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isMobile } from 'react-device-detect'
 import {
   selectOrder,
   selectTimezone,
@@ -56,7 +55,6 @@ const Header = () => {
   const isLocations = pathname.includes('locations')
   const isAccount = pathname.includes('account')
   let classes = makeClasses(pathname)
-  if (isMobile) classes += ' ot-bg-color-secondary'
   const isCatering = orderType === 'CATERING'
   const serviceTypeName = makeServiceTypeName(
     serviceType,

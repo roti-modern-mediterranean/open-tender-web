@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import BarLoader from 'react-spinners/BarLoader'
 import {
   setAddress,
   selectOrder,
@@ -25,6 +24,8 @@ import { Button, GoogleMapsAutocomplete } from '@open-tender/components'
 
 import { selectConfig, selectGeoLatLng } from '../slices'
 import RevenueCenter from './RevenueCenter'
+import PageTitle from './PageTitle'
+import Loader from './Loader'
 
 const RevenueCentersSelect = ({
   setCenter,
@@ -128,63 +129,63 @@ const RevenueCentersSelect = ({
   }
 
   return (
-    <div className="card map__card ot-opacity-light ot-border-radius slide-up ot-box-shadow">
+    <div className="map-content ot-bg-color-primary">
       {isLoading ? (
-        <div className="loading">
-          <div className="loading__loader">
-            <BarLoader size={100} loading={isLoading} />
-          </div>
-          <p>Retrieving nearest locations</p>
-        </div>
+        <Loader
+          text="Retrieving nearest locations..."
+          className="loading--left"
+        />
       ) : (
-        <div className="card__header">
-          <h1 className="ot-font-size-h3">{renamedTitle}</h1>
-          {error ? (
-            <p className="ot-color-error ot-line-height">{renamedError}</p>
-          ) : (
-            <p className="ot-color-secondary ot-line-height">{renamedMsg}</p>
+        <PageTitle
+          title={renamedTitle}
+          subtitle={!error ? renamedMsg : null}
+          error={error ? renamedError : null}
+        />
+      )}
+      <div className="content__body">
+        <div className="container">
+          {!isLoading && (
+            <div className="">
+              <GoogleMapsAutocomplete
+                maps={maps}
+                map={map}
+                sessionToken={sessionToken}
+                autocomplete={autocomplete}
+                formattedAddress={formattedAddress}
+                setAddress={(address) => dispatch(setAddress(address))}
+                setCenter={setCenter}
+              />
+            </div>
+          )}
+          {showRevenueCenters && (
+            <div className="rcs">
+              <ul>
+                {displayedRevenueCenters.map((revenueCenter) => (
+                  <li key={revenueCenter.revenue_center_id}>
+                    <RevenueCenter
+                      revenueCenter={revenueCenter}
+                      showImage={true}
+                      isOrder={true}
+                      classes="rc--card"
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </div>
-      )}
-      <div className="card__content">
-        {!isLoading && (
-          <>
-            <GoogleMapsAutocomplete
-              maps={maps}
-              map={map}
-              sessionToken={sessionToken}
-              autocomplete={autocomplete}
-              formattedAddress={formattedAddress}
-              setAddress={(address) => dispatch(setAddress(address))}
-              setCenter={setCenter}
-            />
-          </>
-        )}
-        {showRevenueCenters ? (
-          <div className="rcs">
-            <ul>
-              {displayedRevenueCenters.map((revenueCenter) => (
-                <li key={revenueCenter.revenue_center_id}>
-                  <RevenueCenter
-                    revenueCenter={revenueCenter}
-                    showImage={true}
-                    isOrder={true}
-                    classes="rc--card"
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <div className="card__footer">
+      </div>
+      {!isLoading && !showRevenueCenters && (
+        <div className="content__footer">
+          <div className="container">
             <Button
               text="Choose a different order type"
               classes="ot-btn-link"
               onClick={handleStartOver}
             ></Button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
