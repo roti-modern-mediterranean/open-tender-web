@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { isMobile } from 'react-device-detect'
 import {
   selectOrder,
   selectTimezone,
@@ -52,8 +53,10 @@ const Header = () => {
   const isHome = pathname === '/'
   const isRevenueCenterPage = pathname.includes('locations/')
   const isMenu = pathname.includes('menu')
+  const isLocations = pathname.includes('locations')
   const isAccount = pathname.includes('account')
-  const classes = makeClasses(pathname)
+  let classes = makeClasses(pathname)
+  if (isMobile) classes += ' ot-bg-color-secondary'
   const isCatering = orderType === 'CATERING'
   const serviceTypeName = makeServiceTypeName(
     serviceType,
@@ -62,6 +65,7 @@ const Header = () => {
     outpostName
   )
   const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering_allowed
+  const showSignUp = false
 
   const handleLogin = (evt) => {
     evt.preventDefault()
@@ -143,78 +147,87 @@ const Header = () => {
   }
 
   return (
-    <header className={`header container flex ${classes}`}>
-      <div className="header__nav">
-        {isHome || isRevenueCenterPage ? (
-          <div className="header__logo">
-            <HeaderLogo />
-          </div>
-        ) : (
-          <ButtonStartOver
-            onClick={handleStartOver}
-            classes="ot-btn--secondary ot-btn--header"
-          />
-        )}
-      </div>
-      <div className="header__actions">
-        <ButtonAccount
-          account={profile}
-          isAccount={isAccount}
-          login={handleLogin}
-          logout={handleLogout}
-          goToAccount={handleAccount}
-          classes="ot-btn--secondary ot-btn--header"
-        />
-        {isHome && !profile && (
-          <ButtonSignUp
-            text="Sign Up"
-            signUp={handleSignUp}
-            classes="ot-btn--secondary ot-btn--header"
-          />
-        )}
-        {revenueCenter && !isCheckout && !autoSelect && (
-          <ButtonRevenueCenter
-            revenueCenter={revenueCenter}
-            onClick={handleLocation}
-            classes="ot-btn--secondary ot-btn--header"
-          />
-        )}
-        {serviceType && !isCheckout && (
-          <ButtonServiceType
-            serviceType={serviceType}
-            serviceTypeName={serviceTypeName}
-            onClick={isCatering ? handleCatering : handleServiceType}
-            classes="ot-btn--secondary ot-btn--header"
-          />
-        )}
-        {revenueCenter && !isCheckout && (
-          <ButtonRequestedAt
-            requestedAt={requestedAt}
-            tz={tz}
-            onClick={handleRequestedAt}
-            classes="ot-btn--secondary ot-btn--header"
-          />
-        )}
-        {isMenu && (
-          <>
-            <ButtonAllergens
-              onClick={handleAllergens}
-              classes="ot-btn--secondary ot-btn--header"
-            />
-            {hasGroupOrdering && (
-              <ButtonGroupOrder
-                onClick={handleGroupOrder}
+    <header className={`header ${classes}`}>
+      <div className="container">
+        <div className="header__container">
+          <div className="header__nav">
+            {isHome || isRevenueCenterPage ? (
+              <div className="header__logo">
+                <HeaderLogo />
+              </div>
+            ) : isLocations ? (
+              <ButtonStartOver
+                onClick={handleStartOver}
+                classes="ot-btn--secondary ot-btn--header"
+              />
+            ) : (
+              <ButtonStartOver
+                onClick={handleStartOver}
                 classes="ot-btn--secondary ot-btn--header"
               />
             )}
-          </>
-        )}
-        {orderId && (
-          <ButtonCancelEdit
-            onClick={handleCancelEdit}
-            classes="ot-btn--cancel ot-btn--header"
-          />
-        )}
+          </div>
+          <div className="header__actions">
+            <ButtonAccount
+              account={profile}
+              isAccount={isAccount}
+              login={handleLogin}
+              logout={handleLogout}
+              goToAccount={handleAccount}
+              classes="ot-btn--secondary ot-btn--header"
+            />
+            {isHome && !profile && showSignUp && (
+              <ButtonSignUp
+                text="Sign Up"
+                signUp={handleSignUp}
+                classes="ot-btn--secondary ot-btn--header"
+              />
+            )}
+            {revenueCenter && !isCheckout && !autoSelect && (
+              <ButtonRevenueCenter
+                revenueCenter={revenueCenter}
+                onClick={handleLocation}
+                classes="ot-btn--secondary ot-btn--header"
+              />
+            )}
+            {serviceType && !isCheckout && (
+              <ButtonServiceType
+                serviceType={serviceType}
+                serviceTypeName={serviceTypeName}
+                onClick={isCatering ? handleCatering : handleServiceType}
+                classes="ot-btn--secondary ot-btn--header"
+              />
+            )}
+            {revenueCenter && !isCheckout && (
+              <ButtonRequestedAt
+                requestedAt={requestedAt}
+                tz={tz}
+                onClick={handleRequestedAt}
+                classes="ot-btn--secondary ot-btn--header"
+              />
+            )}
+            {isMenu && (
+              <>
+                <ButtonAllergens
+                  onClick={handleAllergens}
+                  classes="ot-btn--secondary ot-btn--header"
+                />
+                {hasGroupOrdering && (
+                  <ButtonGroupOrder
+                    onClick={handleGroupOrder}
+                    classes="ot-btn--secondary ot-btn--header"
+                  />
+                )}
+              </>
+            )}
+            {orderId && (
+              <ButtonCancelEdit
+                onClick={handleCancelEdit}
+                classes="ot-btn--cancel ot-btn--header"
+              />
+            )}
+          </div>
+        </div>
       </div>
     </header>
   )

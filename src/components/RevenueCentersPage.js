@@ -47,7 +47,7 @@ const RevenueCentersPage = () => {
   }, [hasTypes, param, dispatch, history])
 
   return (
-    <div className="content">
+    <div className="content ot-bg-color-secondary">
       {apiKey && (
         <GoogleMap
           apiKey={apiKey}

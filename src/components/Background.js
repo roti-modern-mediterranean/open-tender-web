@@ -1,8 +1,10 @@
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import { ClipLoader } from 'react-spinners'
 
 const Background = ({ imageUrl }) => {
-  const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
+  const bgStyle =
+    imageUrl && !isMobile ? { backgroundImage: `url(${imageUrl}` } : null
   return (
     <div className="background bg-image ot-bg-color-secondary" style={bgStyle}>
       {!bgStyle && (

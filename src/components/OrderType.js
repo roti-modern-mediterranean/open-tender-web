@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setOrderServiceType } from '@open-tender/redux'
 import { selectConfig } from '../slices'
 import OrderTypeButton from './OrderTypeButton'
+import { Flag, ShoppingBag, Truck, Users, Gift } from 'react-feather'
 
 const OrderType = () => {
   const dispatch = useDispatch()
@@ -39,12 +40,20 @@ const OrderType = () => {
     evt.target.blur()
   }
 
-  const handler = {
+  const handlers = {
     outpost: handleOutpost,
     pickup: handlePickup,
     delivery: handleDelivery,
     catering: handleCatering,
     merch: handleMerch,
+  }
+
+  const icons = {
+    outpost: <Flag size={null} />,
+    pickup: <ShoppingBag size={null} />,
+    delivery: <Truck size={null} />,
+    catering: <Users size={null} />,
+    merch: <Gift size={null} />,
   }
 
   return (
@@ -56,7 +65,12 @@ const OrderType = () => {
       </div>
       <div className="card__content">
         {buttons.map((i) => (
-          <OrderTypeButton key={i.type} {...i} handler={handler[i.type]} />
+          <OrderTypeButton
+            key={i.type}
+            {...i}
+            icon={icons[i.type]}
+            handler={handlers[i.type]}
+          />
         ))}
       </div>
     </div>

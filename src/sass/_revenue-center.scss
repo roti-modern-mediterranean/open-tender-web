@@ -80,6 +80,9 @@
 
 .rc--card {
   margin: 0 0 2rem;
+  ul li:last-child & {
+    margin: 0;
+  }
 }
 
 .rc--hero {
