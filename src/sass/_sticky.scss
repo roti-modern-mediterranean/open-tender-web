@@ -18,6 +18,12 @@
       // border-left: 0;
       // border-right: 0;
     }
+
+    .main--account .ot-stuck & {
+      left: auto;
+      width: 100%;
+      max-width: $width;
+    }
   }
 
   &__container {
@@ -35,7 +41,6 @@
       align-items: center;
       width: 100%;
       height: $nav-height;
-      padding-bottom: 0.3rem;
 
       li {
         display: block;
@@ -43,6 +48,13 @@
         padding: 0 0 0 $padding;
         @include breakpoint(mobile_both) {
           padding-left: $padding-mobile;
+        }
+
+        &:last-child {
+          padding-right: $padding;
+          @include breakpoint(mobile_both) {
+            padding-right: $padding-mobile;
+          }
         }
 
         a {

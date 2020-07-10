@@ -13,6 +13,7 @@ import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import CreditCards from './CreditCards'
 import SectionEmpty from './SectionEmpty'
+import SectionFooter from './SectionFooter'
 
 const AccountCreditCards = () => {
   const dispatch = useDispatch()
@@ -52,15 +53,13 @@ const AccountCreditCards = () => {
           ) : (
             <SectionEmpty message={empty} />
           )}
-          <div className="section__footer">
-            <p className="ot-font-size-small">
-              <Button
-                text="Add a new card to your account"
-                onClick={handleAddNew}
-                classes="ot-btn-link"
-              />
-            </p>
-          </div>
+          <SectionFooter>
+            <Button
+              text="Add a new card to your account"
+              onClick={handleAddNew}
+              classes="ot-btn-link"
+            />
+          </SectionFooter>
         </div>
       </div>
     </div>

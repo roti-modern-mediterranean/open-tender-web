@@ -85,6 +85,7 @@ const AccountAllergens = () => {
                       id={`${allergen.allergen_id}`}
                       on={customerAllergenIds.includes(allergen.allergen_id)}
                       onChange={handleChange}
+                      classes="-allergen"
                     />
                   ))}
                 </div>

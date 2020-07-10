@@ -81,7 +81,8 @@ const themeConfig = {
     },
     light: {
       color: colorLight,
-      hover: '#aaaaaa',
+      // hover: '#aaaaaa',
+      hover: colorLink,
     },
     dark: {
       color: colorPrimary,
@@ -100,8 +101,8 @@ const themeConfig = {
     inset: 'inset 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
   },
   border: {
-    // color: '#edf0f6',
-    color: '#e8e9eb',
+    color: '#edf0f6',
+    // color: '#e8e9eb',
     width: '0.1rem',
     // radius: '1.0rem',
     // radiusSmall: '0.5rem',

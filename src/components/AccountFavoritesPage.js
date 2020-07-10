@@ -9,12 +9,13 @@ import {
 import { makeDisplayItem } from '@open-tender/js'
 
 import { selectConfigAccountSections } from '../slices'
-import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionEmpty from './SectionEmpty'
 import OrderItemCard from './OrderItemCard'
 import SectionFooter from './SectionFooter'
+import PageTitle from './PageTitle'
+import AccountBackground from './AccountBackground'
 
 const AccountFavoritesPage = () => {
   const sectionRef = useRef()
@@ -51,21 +52,15 @@ const AccountFavoritesPage = () => {
 
   return auth ? (
     <>
-      <h1 className="sr-only">{title}</h1>
-      <div className="sections ot-bg-color-secondary">
-        <div ref={sectionRef} className="section">
+      <AccountBackground />
+      <div ref={sectionRef} className="content">
+        <PageTitle title={title} subtitle={subtitle} />
+        <div className="section">
           <div className="container">
             <div className="section__container">
-              <SectionHeader title={title} subtitle={subtitle}>
-                <div className="section__header__back">
-                  <p className="ot-font-size-small">
-                    <Link to="/account">Head back to your account page</Link>
-                  </p>
-                </div>
-              </SectionHeader>
-              <SectionLoading loading={isLoading} />
+              {isLoading && <SectionLoading loading={isLoading} />}
               <SectionError error={error} />
-              <div className="section__content -wide">
+              <div className="section__content">
                 {favorites.length ? (
                   <div className="section__items">
                     {favorites.map((favorite) => {

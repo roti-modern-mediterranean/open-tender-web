@@ -122,7 +122,8 @@ const OrderCard = ({ order, isLast }) => {
               }`}
             />
             <Button
-              text={`Details ${!isUpcoming ? '/ Rate' : ''}`}
+              // text={`Details ${!isUpcoming ? '/ Rate' : ''}`}
+              text="Details"
               icon="FileText"
               onClick={handleDetails}
               classes="ot-btn--small ot-btn--secondary ot-font-size-small"

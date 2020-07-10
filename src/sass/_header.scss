@@ -22,13 +22,13 @@
     position: relative;
     top: 0.3rem;
     display: inline-block;
-    max-width: 12rem;
+    max-width: 16rem;
     margin: 0rem 3rem 0 0;
     margin-left: 1.1rem;
   }
 
   &__nav {
-    margin-left: -1.1rem;
+    margin-left: -1.6rem;
     button {
       margin: -0.2rem 0 0;
       @include breakpoint(mobile_both) {

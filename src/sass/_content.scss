@@ -17,6 +17,14 @@
     margin: 0 0 5rem;
   }
 
+  &__footer {
+    margin: 0 0 5rem;
+
+    p {
+      margin: 1em 0;
+    }
+  }
+
   &__preface {
     margin: 0 0 0.25rem;
   }
@@ -27,6 +35,10 @@
 
   &__subtitle {
     margin: 1.5rem 0 0;
+  }
+
+  &__link {
+    margin: 4rem 0 0;
   }
 
   &__button__wrapper {

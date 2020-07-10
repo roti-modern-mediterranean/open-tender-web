@@ -21,7 +21,7 @@ const StickyNav = ({ items, offset = -100, duration = 500 }) => {
   }, [])
 
   const stickyClass = `sticky ${isSticky ? 'ot-stuck' : ''}`
-  const stickyInnerClass = `sticky__inner ot-sticky-inner ${
+  const stickyInnerClass = `sticky__inner ot-dark ${
     isSticky ? 'ot-bg-color-primary ot-border-color ot-box-shadow' : ''
   }`
 
@@ -36,7 +36,7 @@ const StickyNav = ({ items, offset = -100, duration = 500 }) => {
                 <li key={sectionId} className="ot-preface ot-font-size-small">
                   <Link
                     activeClass="active"
-                    className="ot-link-dark"
+                    className="ot-link-light"
                     to={sectionId}
                     spy={true}
                     smooth={true}

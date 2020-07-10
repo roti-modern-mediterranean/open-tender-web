@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
 import {
   fetchMenuItems,
   fetchRevenueCenter,
@@ -23,9 +24,9 @@ import SectionFooter from './SectionFooter'
 
 const AccountOrders = () => {
   const dispatch = useDispatch()
+  const limit = 9
   const [recentOrders, setRecentOrders] = useState([])
-  const [count, setCount] = useState(3)
-  const limit = 12
+  const [count, setCount] = useState(isBrowser ? 3 : limit)
   const {
     recentOrders: { title, subtitle, empty },
   } = useSelector(selectConfigAccountSections)
@@ -69,10 +70,10 @@ const AccountOrders = () => {
           <div className="section__content -wide">
             {showOrders &&
               (recentOrders.length ? (
-                <div className="section__orders">
+                <div className="section__items">
                   {recentOrders.map((order) => {
                     return (
-                      <div key={order.order_id} className="section__order">
+                      <div key={order.order_id} className="section__item">
                         <OrderCard order={order} />
                       </div>
                     )

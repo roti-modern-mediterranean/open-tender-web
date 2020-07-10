@@ -6,11 +6,15 @@
 .section {
   padding: 6rem 0 0;
 
+  .content__header + & {
+    padding: 0 0 6rem;
+  }
+
   &__header,
   &__footer {
-    max-width: 96rem;
+    // max-width: 96rem;
     margin: 0 auto;
-    text-align: center;
+    // text-align: center;
   }
 
   &__header__back {
@@ -46,60 +50,74 @@
   }
 
   &__error {
-    text-align: center;
+    // text-align: center;
     padding: 0 0 4rem;
   }
 
   &__content {
-    max-width: 64rem;
+    // max-width: 64rem;
     margin: 0 auto;
 
-    &.-wide {
-      max-width: 96rem;
+    .form {
+      margin: -1.25rem 0 0;
+      @include breakpoint(mobile) {
+        margin: 0;
+      }
     }
-
-    &.-narrow {
-      max-width: 32rem;
-    }
-  }
-
-  &__empty {
-    text-align: center;
   }
 
   &__orders {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -1rem;
+    // margin: 0 -1rem;
+    margin: 0 -0.5rem;
   }
 
   &__order {
     width: 33.33333%;
     flex-shrink: 0;
-    padding: 0 1rem;
-    margin: 0 0 2rem;
+    // padding: 0 1rem;
+    // margin: 0 0 2rem;
+    padding: 0 0.5rem;
+    margin: 0 0 1rem;
   }
 
   &__items {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -0.5rem;
+    @include breakpoint(mobile_both) {
+      margin: -1rem (-$padding-mobile) 0;
+      padding: 1rem 0 0;
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+    }
   }
 
   &__item {
-    width: 25%;
+    // width: 25%;
+    width: 33.33333%;
     flex-shrink: 0;
     padding: 0 0.5rem;
     margin: 0 0 1rem;
+    @include breakpoint(mobile_both) {
+      width: 28rem;
+      flex-shrink: 0;
+    }
+    &:first-child {
+      @include breakpoint(mobile_both) {
+        padding-left: $padding-mobile;
+      }
+    }
+    &:last-child {
+      @include breakpoint(mobile_both) {
+        padding-right: $padding-mobile;
+      }
+    }
   }
 
   &__intro {
-    text-align: center;
     padding: 2.5rem 0 0rem;
-  }
-
-  &__rows {
-    padding: 1rem 2rem;
   }
 
   &__row {
@@ -116,6 +134,9 @@
     &__label {
       width: 15rem;
       flex-shrink: 0;
+      @include breakpoint(mobile_both) {
+        width: 10rem;
+      }
     }
 
     &__content {
@@ -141,6 +162,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      @include breakpoint(mobile) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
 
       &__content {
         flex: 1;
@@ -148,7 +173,9 @@
 
       &__buttons {
         flex-shrink: 0;
-        // flex: 0 0;
+        @include breakpoint(mobile) {
+          margin: 1rem 0 0;
+        }
       }
     }
   }
@@ -167,7 +194,6 @@
   }
 
   &__submit {
-    text-align: center;
-    padding: 0 0 2.5rem;
+    padding: 1.25rem 0 0;
   }
 }

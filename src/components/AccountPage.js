@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { isBrowser } from 'react-device-detect'
 import { selectCustomer, fetchCustomer } from '@open-tender/redux'
 
 import { selectConfig } from '../slices'
 import StickyNav from './StickyNav'
-import Hero from './Hero'
 import AccountGreeting from './AccountGreeting'
 import AccountOrders from './AccountOrders'
 import AccountProfile from './AccountProfile'
@@ -16,6 +16,8 @@ import AccountCreditCards from './AccountCreditCards'
 import AccountItems from './AccountItems'
 import AccountFavorites from './AccountFavorites'
 import AccountHouseAccounts from './AccountHouseAccounts'
+import Background from './Background'
+import PageTitle from './PageTitle'
 
 const AccountPage = () => {
   const history = useHistory()
@@ -25,6 +27,7 @@ const AccountPage = () => {
   const navItems = Object.values(sections).map((section) => section.title)
   const { auth, profile } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
+  const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -37,11 +40,14 @@ const AccountPage = () => {
 
   return profile ? (
     <>
-      <h1 className="sr-only">Account</h1>
-      <Hero imageUrl={background} classes="hero--auto transition">
+      {/* <h1 className="sr-only">Account</h1> */}
+      {isBrowser && <Background imageUrl={background} />}
+      {/* <Hero imageUrl={background} classes="hero--auto transition">
         <AccountGreeting title={title} subtitle={subtitle} />
-      </Hero>
-      <div className="ot-bg-color-secondary">
+      </Hero> */}
+      <div className="content">
+        <PageTitle title={pageTitle} subtitle={subtitle} />
+        <AccountGreeting />
         <StickyNav items={navItems} offset={-90} />
         <div className="sections">
           <AccountFavorites />

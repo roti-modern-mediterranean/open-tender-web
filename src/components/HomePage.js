@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
 import { selectOrder, resetRevenueCenters } from '@open-tender/redux'
 import { useGeolocation } from '@open-tender/components'
-import { isBrowser } from 'react-device-detect'
 
 import {
   selectConfig,
@@ -52,6 +52,15 @@ const HomePage = () => {
             <OrderType />
           </div>
         </div>
+        {config.home.content && config.home.content.length > 0 && (
+          <div className="content__footer ot-color-secondary ot-line-height">
+            <div className="container">
+              {config.home.content.map((i, index) => (
+                <p key={index}>{i}</p>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </>
   )

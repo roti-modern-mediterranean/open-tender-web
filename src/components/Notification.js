@@ -14,9 +14,7 @@ const Notification = ({ message, id }) => {
   }, [dispatch, id])
 
   return (
-    <li className="notification ot-border-radius-small ot-highlight ot-font-size-small">
-      {message}
-    </li>
+    <li className="notification ot-highlight ot-font-size-small">{message}</li>
   )
 }
 

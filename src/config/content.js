@@ -63,7 +63,12 @@ const contentConfig = {
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594323134_french-toast_1547x2000.jpg',
     title: 'How can we help you today?',
     // preface: "Let's get started, shall we?",
-    // subtitle: 'Select an order type from the options below.',
+    subtitle:
+      'To get started, please choose an order type from the options below.',
+    content: [
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui ipsum, feugiat quis urna quis, posuere facilisis tellus. Fusce sit amet purus non arcu venenatis viverra ut a risus. Vestibulum dapibus sapien est.',
+      'Morbi ac nisi ac dui ultrices bibendum nec in lorem. Vestibulum ut semper est, eget posuere turpis. Donec quis rhoncus nulla. Fusce id sagittis eros.',
+    ],
     buttons: [
       {
         type: 'outpost',
@@ -217,8 +222,12 @@ const contentConfig = {
   account: {
     // background:
     //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',
+    // background:
+    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303382_1dc3f02769734bc95870.jpg',
+    // background:
+    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594352610_0e3430676ba806674262.jpg',
     background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303382_1dc3f02769734bc95870.jpg',
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594352748_salad-top-down_1500x2250.jpg',
     title: 'Welcome back',
     subtitle: 'How can we help you today?',
     sections: {

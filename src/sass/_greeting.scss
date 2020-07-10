@@ -1,7 +1,5 @@
 .greeting {
-  width: 90%;
-  max-width: 76rem;
-  padding: 2.5rem 3rem 3rem;
+  margin: 0 0 4rem;
 
   &.-no-order {
     max-width: 44rem;
@@ -14,11 +12,17 @@
   &__content {
     display: flex;
     justify-content: space-between;
+    @include breakpoint(mobile) {
+      flex-direction: column;
+    }
   }
 
   &__summary {
     width: 100%;
     padding: 0 5rem 0 0;
+    @include breakpoint(mobile) {
+      padding: 0 0 5rem;
+    }
 
     &__header {
       margin: 0 0 2.5rem;
@@ -40,6 +44,9 @@
 
     &__options {
       margin: 3rem 0 0;
+      @include breakpoint(mobile) {
+        display: none;
+      }
 
       ul {
         list-style: disc inside;
@@ -61,7 +68,7 @@
     width: 31rem;
     flex-grow: 0;
     flex-shrink: 0;
-    padding: 2.5rem 0 1rem;
+    padding: 0 0 1rem;
 
     .order-card {
       height: auto;
@@ -74,7 +81,7 @@
 
     &__footer {
       margin: 1.5rem 0 0;
-      text-align: center;
+      // text-align: center;
     }
   }
 }

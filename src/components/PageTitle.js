@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 
-const PageTitle = ({ title, subtitle, preface, error }) => {
+const PageTitle = ({ title, subtitle, preface, error, link }) => {
   return (
     <div className="content__header slide-up">
       <div className="container">
@@ -15,6 +15,7 @@ const PageTitle = ({ title, subtitle, preface, error }) => {
             {error}
           </p>
         )}
+        {link && <p className="content__link ot-subtitle">{link}</p>}
       </div>
     </div>
   )
@@ -22,9 +23,11 @@ const PageTitle = ({ title, subtitle, preface, error }) => {
 
 PageTitle.displayName = 'PageTitle'
 PageTitle.propTypes = {
-  title: propTypes.string,
-  subtitle: propTypes.string,
-  preface: propTypes.string,
+  title: propTypes.oneOfType([propTypes.string, propTypes.element]),
+  subtitle: propTypes.oneOfType([propTypes.string, propTypes.element]),
+  preface: propTypes.oneOfType([propTypes.string, propTypes.element]),
+  error: propTypes.oneOfType([propTypes.string, propTypes.element]),
+  link: propTypes.element,
 }
 
 export default PageTitle

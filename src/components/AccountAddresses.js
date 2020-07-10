@@ -35,7 +35,7 @@ const AccountAddresses = () => {
 
   return (
     <div id={slugify(title)} ref={sectionRef} className="section">
-      <div class="container">
+      <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />

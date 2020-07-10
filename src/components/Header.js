@@ -26,9 +26,18 @@ import {
 
 import { selectOutpostName, openModal } from '../slices'
 import HeaderLogo from './HeaderLogo'
+import ButtonBackToAccount from './buttons/ButtonBackToAccount'
 
 const makeClasses = (pathname) => {
   return ['checkout'].map((i) => (pathname.includes(i) ? 'header__stuck' : ''))
+}
+
+const testAccountSubpage = (pathname) => {
+  return (
+    ['items', 'orders', 'favorites', 'addresses'].filter((i) =>
+      pathname.includes(i)
+    ).length > 0
+  )
 }
 
 const Header = () => {
@@ -54,6 +63,7 @@ const Header = () => {
   const isMenu = pathname.includes('menu')
   const isLocations = pathname.includes('locations')
   const isAccount = pathname.includes('account')
+  const isAccountSubpage = testAccountSubpage(pathname)
   let classes = makeClasses(pathname)
   const isCatering = orderType === 'CATERING'
   const serviceTypeName = makeServiceTypeName(
@@ -158,6 +168,8 @@ const Header = () => {
                 onClick={handleStartOver}
                 classes="ot-btn--secondary ot-btn--header"
               />
+            ) : isAccountSubpage ? (
+              <ButtonBackToAccount />
             ) : (
               <ButtonStartOver
                 onClick={handleStartOver}
@@ -168,7 +180,7 @@ const Header = () => {
           <div className="header__actions">
             <ButtonAccount
               account={profile}
-              isAccount={isAccount}
+              isAccount={isAccount || isAccountSubpage}
               login={handleLogin}
               logout={handleLogout}
               goToAccount={handleAccount}

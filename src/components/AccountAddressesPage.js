@@ -8,10 +8,12 @@ import {
 } from '@open-tender/redux'
 
 import { selectConfig } from '../slices'
-import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import Addresses from './Addresses'
+import AccountBackground from './AccountBackground'
+import PageTitle from './PageTitle'
+import SectionFooter from './SectionFooter'
 
 const AccountAddressesPage = () => {
   const sectionRef = useRef()
@@ -45,19 +47,13 @@ const AccountAddressesPage = () => {
 
   return auth ? (
     <>
-      <h1 className="sr-only">{title}</h1>
-      <div className="sections ot-bg-color-secondary">
-        <div ref={sectionRef} className="section">
+      <AccountBackground />
+      <div ref={sectionRef} className="content">
+        <PageTitle title={title} subtitle={subtitle} />
+        <div className="section">
           <div className="container">
             <div className="section__container">
-              <SectionHeader title={title} subtitle={subtitle}>
-                <div className="section__header__back">
-                  <p className="ot-font-size-small">
-                    <Link to="/account">Head back to your account page</Link>
-                  </p>
-                </div>
-              </SectionHeader>
-              <SectionLoading loading={isLoading} />
+              {isLoading && <SectionLoading loading={isLoading} />}
               <SectionError error={error} />
               {showAddresses && (
                 <Addresses
@@ -65,11 +61,9 @@ const AccountAddressesPage = () => {
                   isLoading={isLoading}
                 />
               )}
-              <div className="section__footer">
-                <p className="ot-font-size-small">
-                  <Link to="/account">Head back to your account page</Link>
-                </p>
-              </div>
+              <SectionFooter>
+                <Link to="/account">Head back to your account page</Link>
+              </SectionFooter>
             </div>
           </div>
         </div>

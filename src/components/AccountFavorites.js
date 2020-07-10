@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { isBrowser } from 'react-device-detect'
 import {
   selectCustomerFavorites,
   fetchCustomerFavorites,
@@ -18,9 +19,9 @@ import SectionFooter from './SectionFooter'
 
 const AccountFavorites = () => {
   const dispatch = useDispatch()
+  const limit = 9
   const [favorites, setFavorites] = useState([])
-  const [count, setCount] = useState(4)
-  const limit = 12
+  const [count, setCount] = useState(isBrowser ? 3 : limit)
   const {
     favorites: { title, subtitle, empty },
   } = useSelector(selectConfigAccountSections)
@@ -45,7 +46,7 @@ const AccountFavorites = () => {
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
-          <div className="section__content -wide">
+          <div className="section__content">
             {favorites.length ? (
               <div className="section__items">
                 {favorites.map((favorite) => {

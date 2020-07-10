@@ -9,6 +9,7 @@ import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionRow from './SectionRow'
 import { Button } from '@open-tender/components'
+import SectionFooter from './SectionFooter'
 
 const AccountGiftCards = () => {
   const {
@@ -89,15 +90,13 @@ const AccountGiftCards = () => {
               </div>
             </div>
           )}
-          <div className="section__footer">
-            <p className="ot-font-size-small">
-              <Button
-                text="Purchase a new gift card"
-                onClick={handlePurchase}
-                classes="ot-btn-link"
-              />
-            </p>
-          </div>
+          <SectionFooter>
+            <Button
+              text="Purchase a new gift card"
+              onClick={handlePurchase}
+              classes="ot-btn-link"
+            />
+          </SectionFooter>
         </div>
       </div>
     </div>

@@ -1,12 +1,10 @@
 import React from 'react'
-import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-scroll'
 import { parseISO } from 'date-fns'
 import {
   selectOrder,
-  selectCustomerProfile,
   selectCustomerOrders,
   resetOrderType,
   resetOrder,
@@ -14,12 +12,12 @@ import {
 } from '@open-tender/redux'
 import { slugify, capitalize, otherOrderTypesMap } from '@open-tender/js'
 import { Button } from '@open-tender/components'
-import ClipLoader from 'react-spinners/ClipLoader'
 
 import { selectConfigAccountSections } from '../slices'
 import CurrentOrder from './CurrentOrder'
 import OrderCard from './OrderCard'
 import AccountLoyalty from './AccountLoyalty'
+import Loader from './Loader'
 
 const GreetingLink = ({ sectionTitle, text }) => (
   <Link
@@ -43,11 +41,10 @@ const getLastOrder = (orders) => {
   return withCreated[0]
 }
 
-const AccountGreeting = ({ title, subtitle }) => {
+const AccountGreeting = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const config = useSelector(selectConfigAccountSections)
-  const customer = useSelector(selectCustomerProfile)
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectCustomerOrders)
@@ -63,7 +60,7 @@ const AccountGreeting = ({ title, subtitle }) => {
   const isCurrentOrder = revenueCenter && serviceType && cart.length
   const accountLoading = isLoading && !isCurrentOrder && !lastOrder
   const orderClass = ''
-  const greetingClass = `greeting ot-bg-color-primary ot-border-radius ot-box-shadow slide-up ${orderClass}`
+  const greetingClass = `greeting slide-up ${orderClass}`
 
   const startNewOrder = (evt) => {
     evt.preventDefault()
@@ -98,166 +95,156 @@ const AccountGreeting = ({ title, subtitle }) => {
   }
 
   return accountLoading ? (
-    <div className="hero__loading">
-      <div className="hero__loading__content ot-bold ot-color-light">
-        <p>Loading your account...</p>
-      </div>
-      <div className="hero__loading__loader">
-        <ClipLoader size={36} color={'#ffffff'} />
-      </div>
-    </div>
+    <>
+      <Loader
+        text="Retrieving your account info..."
+        className="loading--left"
+      />
+    </>
   ) : (
     <div className={greetingClass}>
-      <div className="greeting__content">
-        <div className="greeting__summary">
-          <div className="greeting__summary__header">
-            <h2>
-              {title}, {customer.first_name}!
-            </h2>
-            <p>{subtitle}</p>
-          </div>
-          <div className="greeting__summary__order">
-            {isCurrentOrder ? (
-              <>
-                <Button
-                  text="Continue Current Order"
-                  icon="ShoppingBag"
-                  onClick={continueCurrent}
-                />
-                <p className="ot-font-size-small">
+      <div className="container">
+        <div className="greeting__content">
+          <div className="greeting__summary">
+            <div className="greeting__summary__order">
+              {isCurrentOrder ? (
+                <>
                   <Button
-                    text="Or start a new order from scratch"
-                    classes="ot-btn-link"
-                    onClick={startNewOrder}
+                    text="Continue Current Order"
+                    icon="ShoppingBag"
+                    onClick={continueCurrent}
                   />
-                </p>
-              </>
-            ) : lastOrder ? (
-              <>
-                <Button
-                  text={`Order ${capitalize(orderType)} Again`}
-                  icon="ShoppingBag"
-                  onClick={continueCurrent}
-                />
-                <p className="ot-font-size-small">
-                  <Button
-                    text={`Or switch to ${otherOrderTypes.join(
-                      ' or '
-                    )} instead`}
-                    classes="ot-btn-link"
-                    onClick={switchOrderType}
-                  />
-                </p>
-              </>
-            ) : (
-              <Button
-                text="Start a New Order"
-                icon="ShoppingBag"
-                onClick={startNewOrder}
-              />
-            )}
-          </div>
-          <AccountLoyalty />
-          <div className="greeting__summary__options">
-            <p className="ot-font-size-small ot-bold">
-              Other things you can do from here...
-            </p>
-            <ul className="ot-font-size-small">
-              <li>
-                <span>
-                  Reorder from your{' '}
-                  <GreetingLink
-                    sectionTitle={config.favorites.title}
-                    text="favorites"
-                  />{' '}
-                  or{' '}
-                  <GreetingLink
-                    sectionTitle={config.recentItems.title}
-                    text="recently ordered items"
-                  />
-                </span>
-              </li>
-              <li>
-                <span>
-                  Update your{' '}
-                  <GreetingLink
-                    sectionTitle={config.accountDetails.title}
-                    text="profile"
-                  />
-                  ,{' '}
-                  <GreetingLink
-                    sectionTitle={config.allergens.title}
-                    text="allergens"
-                  />{' '}
-                  or{' '}
-                  <GreetingLink
-                    sectionTitle={config.creditCards.title}
-                    text="cards on file"
-                  />
-                </span>
-              </li>
-              <li>
-                <span>
-                  Manage your{' '}
-                  <GreetingLink
-                    sectionTitle={config.addresses.title}
-                    text="addresses"
-                  />{' '}
-                  and{' '}
-                  <GreetingLink
-                    sectionTitle={config.giftCards.title}
-                    text="gift cards"
-                  />
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        {(isCurrentOrder || lastOrder) && (
-          <div className="greeting__order">
-            {isCurrentOrder ? (
-              <>
-                <CurrentOrder order={currentOrder} />
-                <div className="greeting__order__footer">
                   <p className="ot-font-size-small">
                     <Button
-                      text="Change location"
+                      text="Or start a new order from scratch"
                       classes="ot-btn-link"
-                      onClick={changeRevenueCenter}
-                    />{' '}
-                    or{' '}
+                      onClick={startNewOrder}
+                    />
+                  </p>
+                </>
+              ) : lastOrder ? (
+                <>
+                  <Button
+                    text={`Order ${capitalize(orderType)} Again`}
+                    icon="ShoppingBag"
+                    onClick={continueCurrent}
+                  />
+                  <p className="ot-font-size-small">
                     <Button
-                      text="switch order type"
+                      text={`Or switch to ${otherOrderTypes.join(
+                        ' or '
+                      )} instead`}
                       classes="ot-btn-link"
                       onClick={switchOrderType}
                     />
                   </p>
-                </div>
-              </>
-            ) : lastOrder ? (
-              <>
-                <OrderCard order={lastOrder} isLast={true} />
-                <div className="greeting__order__footer">
-                  <p className="ot-font-size-small">
+                </>
+              ) : (
+                <Button
+                  text="Start a New Order"
+                  icon="ShoppingBag"
+                  onClick={startNewOrder}
+                />
+              )}
+            </div>
+            <AccountLoyalty />
+            <div className="greeting__summary__options">
+              <p className="ot-font-size-small ot-bold">
+                Other things you can do from here...
+              </p>
+              <ul className="ot-font-size-small">
+                <li>
+                  <span>
+                    Reorder from your{' '}
                     <GreetingLink
-                      sectionTitle={config.recentOrders.title}
-                      text="See other recent orders..."
+                      sectionTitle={config.favorites.title}
+                      text="favorites"
+                    />{' '}
+                    or{' '}
+                    <GreetingLink
+                      sectionTitle={config.recentItems.title}
+                      text="recently ordered items"
                     />
-                  </p>
-                </div>
-              </>
-            ) : null}
+                  </span>
+                </li>
+                <li>
+                  <span>
+                    Update your{' '}
+                    <GreetingLink
+                      sectionTitle={config.accountDetails.title}
+                      text="profile"
+                    />
+                    ,{' '}
+                    <GreetingLink
+                      sectionTitle={config.allergens.title}
+                      text="allergens"
+                    />{' '}
+                    or{' '}
+                    <GreetingLink
+                      sectionTitle={config.creditCards.title}
+                      text="cards on file"
+                    />
+                  </span>
+                </li>
+                <li>
+                  <span>
+                    Manage your{' '}
+                    <GreetingLink
+                      sectionTitle={config.addresses.title}
+                      text="addresses"
+                    />{' '}
+                    and{' '}
+                    <GreetingLink
+                      sectionTitle={config.giftCards.title}
+                      text="gift cards"
+                    />
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
-        )}
+          {(isCurrentOrder || lastOrder) && (
+            <div className="greeting__order">
+              {isCurrentOrder ? (
+                <>
+                  <CurrentOrder order={currentOrder} />
+                  <div className="greeting__order__footer">
+                    <p className="ot-font-size-small">
+                      <Button
+                        text="Change location"
+                        classes="ot-btn-link"
+                        onClick={changeRevenueCenter}
+                      />{' '}
+                      or{' '}
+                      <Button
+                        text="switch order type"
+                        classes="ot-btn-link"
+                        onClick={switchOrderType}
+                      />
+                    </p>
+                  </div>
+                </>
+              ) : lastOrder ? (
+                <>
+                  <OrderCard order={lastOrder} isLast={true} />
+                  <div className="greeting__order__footer">
+                    <p className="ot-font-size-small">
+                      <GreetingLink
+                        sectionTitle={config.recentOrders.title}
+                        text="See other recent orders..."
+                      />
+                    </p>
+                  </div>
+                </>
+              ) : null}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
 }
 
 AccountGreeting.displayName = 'AccountGreeting'
-AccountGreeting.propTypes = {
-  title: propTypes.string,
-  subtitle: propTypes.string,
-}
 
 export default AccountGreeting

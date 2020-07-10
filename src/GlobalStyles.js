@@ -68,7 +68,8 @@ const makeGlobalStyles = (theme) => css`
     color: ${theme.links.light.color};
     &:hover,
     &:active,
-    &:focus {
+    &:focus,
+    &.active {
       color: ${theme.links.light.hover};
     }
   }
