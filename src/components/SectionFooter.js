@@ -7,7 +7,7 @@ const SectionFooter = ({ children }) => (
   </div>
 )
 
-SectionFooter.displayName = 'SectionHeader'
+SectionFooter.displayName = 'SectionFooter'
 SectionFooter.propTypes = {
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),

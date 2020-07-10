@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectConfirmationOrder,
@@ -9,6 +10,8 @@ import {
 
 import { selectConfig } from '../slices'
 import Order from './Order'
+import Background from './Background'
+import PageTitle from './PageTitle'
 
 const ConfirmationPage = () => {
   const history = useHistory()
@@ -26,23 +29,13 @@ const ConfirmationPage = () => {
   }, [order, account, dispatch, history])
 
   return (
-    <div className="content ot-bg-color-secondary">
-      {/* <h1 className="sr-only">Confirmation Page</h1> */}
-      <div className="confirmation">
-        <div className="container">
-          <div className="confirmation__content">
-            <p className="confirmation__title ot-heading ot-font-size-h2">
-              {config.title}
-            </p>
-            <p className="confirmation__subtitle">{config.subtitle}</p>
-            <p className="confirmation__subtitle ot-bold ot-color-alert">
-              {config.spam}
-            </p>
-          </div>
-        </div>
+    <>
+      {isBrowser && <Background imageUrl={config.background} />}
+      <div className="content">
+        <PageTitle {...config} />
+        <Order order={order} />
       </div>
-      <Order order={order} />
-    </div>
+    </>
   )
 }
 

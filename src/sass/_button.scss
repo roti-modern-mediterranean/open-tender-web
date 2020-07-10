@@ -28,6 +28,10 @@ button {
 }
 
 .ot-btn {
+  & + .ot-btn {
+    margin-left: 1rem;
+  }
+
   &__icon-wrapper {
     display: flex;
     align-items: center;

@@ -1,10 +1,15 @@
 .order {
   &__header {
-    text-align: center;
+    margin: 4rem 0 0;
+
+    h1 {
+      line-height: 1;
+      margin: 1rem 0 0;
+    }
   }
 
   &__buttons {
-    margin: 2rem 0 2rem;
+    margin: 2rem 0 0;
 
     button + button {
       margin-left: 1rem;
@@ -22,8 +27,25 @@
     }
   }
 
+  .section {
+    padding: 4rem 0 0;
+  }
+
   .section__header {
     margin-bottom: 2.5rem;
+  }
+
+  .section__footer {
+    margin: 4rem 0;
+  }
+
+  .section__check {
+    padding: 1rem;
+    border-width: 0.1rem;
+    border-style: solid;
+    @include breakpoint(mobile) {
+      padding: 0;
+    }
   }
 
   .builder__option {
@@ -32,8 +54,11 @@
     border-bottom-style: solid;
   }
 
-  .cart li:last-child .builder__option {
-    border-bottom: 0;
+  .cart {
+    padding: 0;
+    li:last-child .builder__option {
+      border-bottom: 0;
+    }
   }
 
   &__stars {
@@ -49,10 +74,13 @@
 
   &__quantity {
     display: inline-flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     min-width: 10rem;
     text-align: center;
+    @include breakpoint(mobile_both) {
+      min-width: 7.5rem;
+    }
 
     &__count {
       display: inline-block;

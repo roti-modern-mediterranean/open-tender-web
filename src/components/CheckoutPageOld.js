@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useMemo } from 'react'
 import isEqual from 'lodash/isEqual'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
 import {
   logoutCustomer,
   selectCustomer,
@@ -22,17 +21,23 @@ import {
   validateOrder,
   submitOrder,
   setSubmitting,
+  resetCheckout,
   setConfirmationOrder,
 } from '@open-tender/redux'
 import { prepareOrder } from '@open-tender/js'
-import { CheckoutForm, Check } from '@open-tender/components'
+import {
+  CheckoutForm,
+  Check,
+  ButtonMenu,
+  ButtonAccount,
+  ButtonCancelEdit,
+} from '@open-tender/components'
 
 import { selectConfig, openModal } from '../slices'
+import HeaderLogo from './HeaderLogo'
 import Loader from './Loader'
 import { BarLoader } from 'react-spinners'
 import { cardIconMap } from '../assets/cardIcons'
-import Background from './Background'
-import PageTitle from './PageTitle'
 
 const usePrevious = (value) => {
   const ref = useRef()
@@ -148,9 +153,27 @@ const CheckoutPage = () => {
     }
   }, [dispatch, orderValidate, prevOrderValidate, isComplete])
 
+  const handleBackToMenu = (evt) => {
+    evt.preventDefault()
+    history.push(menuSlug)
+    evt.target.blur()
+  }
+
+  const handleLogin = (evt) => {
+    evt.preventDefault()
+    dispatch(openModal({ type: 'login' }))
+    evt.target.blur()
+  }
+
   const handleAccount = (evt) => {
     evt.preventDefault()
     history.push(`/account`)
+    evt.target.blur()
+  }
+
+  const handleLogout = (evt) => {
+    evt.preventDefault()
+    dispatch(logoutCustomer())
     evt.target.blur()
   }
 
@@ -177,46 +200,58 @@ const CheckoutPage = () => {
     evt.target.blur()
   }
 
+  const handleCancelEdit = (evt) => {
+    evt.preventDefault()
+    dispatch(resetOrder())
+    dispatch(resetCheckout())
+    history.push(`/account`)
+    evt.target.blur()
+  }
+
   return (
-    <>
-      {isBrowser && <Background imageUrl={checkoutConfig.background} />}
-      <div className="content">
-        <PageTitle {...checkoutConfig} />
-        <div className="checkout">
-          <div className="container">
-            {check && check.totals && (
-              <>
-                {isBrowser ? (
-                  <div className="checkout__check">
-                    <div className="checkout__check__wrapper ot-border-color">
-                      <div className="checkout__check__totals ot-border-radius ot-bg-color-primary ot-box-shadow slide-up">
-                        <Check
-                          title={checkoutConfig.check.title}
-                          check={check}
-                          tenders={tenders}
-                          updating={checkUpdating}
-                          loader={<BarLoader />}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="checkout__summary">
-                    <div className="checkout__totals ot-border-radius ot-bg-color-primary ot-border-color ot-box-shadow slide-up">
-                      <Check
-                        title={checkoutConfig.check.title}
-                        check={check}
-                        tenders={tenders}
-                        updating={checkUpdating}
-                        loader={<BarLoader />}
-                      />
-                    </div>
-                  </div>
+    <div className="checkout">
+      <div className="checkout__header ot-bg-color-primary">
+        <div className="checkout__header__wrapper">
+          <div className="checkout__header__container">
+            <div className="checkout__logo__container">
+              <div className="checkout__logo">
+                <HeaderLogo />
+              </div>
+              <div className="checkout__actions">
+                <ButtonMenu
+                  onClick={handleBackToMenu}
+                  classes="ot-btn--secondary ot-btn--header"
+                />
+                <ButtonAccount
+                  account={profile}
+                  isAccount={false}
+                  login={handleLogin}
+                  logout={handleLogout}
+                  goToAccount={handleAccount}
+                  classes="ot-btn--secondary ot-btn--header"
+                />
+                {orderId && (
+                  <ButtonCancelEdit
+                    onClick={handleCancelEdit}
+                    classes="ot-btn--cancel ot-btn--header"
+                  />
                 )}
-              </>
-            )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="checkout__content">
+        <div className="checkout__content__wrapper">
+          <div className="checkout__content__container">
             {check ? (
               <div className="checkout__form slide-up">
+                <div className="checkout__form__header">
+                  <h1 className="checkout__title">{checkoutConfig.title}</h1>
+                  <p className="checkout__subtitle">
+                    {checkoutConfig.subtitle}
+                  </p>
+                </div>
                 <CheckoutForm
                   config={checkoutConfig}
                   cardIconMap={cardIconMap}
@@ -248,7 +283,24 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
-    </>
+      <div className="checkout__sidebar ot-bg-color-secondary">
+        <div className="checkout__sidebar__wrapper">
+          <div className="checkout__sidebar__container">
+            {check && check.totals && (
+              <div className="checkout__totals ot-border-radius ot-bg-color-primary ot-box-shadow slide-up">
+                <Check
+                  title={checkoutConfig.check.title}
+                  check={check}
+                  tenders={tenders}
+                  updating={checkUpdating}
+                  loader={<BarLoader />}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

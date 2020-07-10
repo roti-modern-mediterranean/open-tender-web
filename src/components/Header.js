@@ -26,11 +26,11 @@ import {
 
 import { selectOutpostName, openModal } from '../slices'
 import HeaderLogo from './HeaderLogo'
-import ButtonBackToAccount from './buttons/ButtonBackToAccount'
+import { ButtonMenu, ButtonBackToAccount } from './buttons'
 
-const makeClasses = (pathname) => {
-  return ['checkout'].map((i) => (pathname.includes(i) ? 'header__stuck' : ''))
-}
+// const makeClasses = (pathname) => {
+//   return ['checkout'].map((i) => (pathname.includes(i) ? 'header__stuck' : ''))
+// }
 
 const testAccountSubpage = (pathname) => {
   return (
@@ -57,14 +57,13 @@ const Header = () => {
   const outpostName = useSelector(selectOutpostName)
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
-  if (isCheckout) return null
+  // if (isCheckout) return null
   const isHome = pathname === '/'
   const isRevenueCenterPage = pathname.includes('locations/')
   const isMenu = pathname.includes('menu')
   const isLocations = pathname.includes('locations')
   const isAccount = pathname.includes('account')
   const isAccountSubpage = testAccountSubpage(pathname)
-  let classes = makeClasses(pathname)
   const isCatering = orderType === 'CATERING'
   const serviceTypeName = makeServiceTypeName(
     serviceType,
@@ -74,6 +73,8 @@ const Header = () => {
   )
   const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering_allowed
   const showSignUp = false
+  // let classes = makeClasses(pathname)
+  const classes = ''
 
   const handleLogin = (evt) => {
     evt.preventDefault()
@@ -170,6 +171,8 @@ const Header = () => {
               />
             ) : isAccountSubpage ? (
               <ButtonBackToAccount />
+            ) : isCheckout ? (
+              <ButtonMenu text="Back To Menu" />
             ) : (
               <ButtonStartOver
                 onClick={handleStartOver}

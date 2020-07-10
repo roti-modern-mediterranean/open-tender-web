@@ -171,6 +171,8 @@ const contentConfig = {
     },
   },
   checkout: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594392655_cash-register-black-and-white_1800x1200.jpg',
     title: "Let's get you checked out",
     subtitle: '',
     check: {
@@ -213,10 +215,12 @@ const contentConfig = {
     },
   },
   confirmation: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594402866_delivery-bag-thank-you_1800x1800.jpg',
     title: 'Thanks for your order!',
     subtitle:
       "Below are the details, and we'll be sending a confirmation email shortly, which will serve as your receipt.",
-    spam:
+    error:
       "Please be sure to check your spam folder if you don't receive the confirmation email.",
   },
   account: {

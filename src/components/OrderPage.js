@@ -8,6 +8,7 @@ import {
 } from '@open-tender/redux'
 
 import Order from './Order'
+import AccountBackground from './AccountBackground'
 
 const OrderPage = () => {
   const dispatch = useDispatch()
@@ -29,9 +30,12 @@ const OrderPage = () => {
   }, [dispatch, orderId])
 
   return (
-    <div className="content ot-bg-color-secondary">
-      <Order {...customerOrder} />
-    </div>
+    <>
+      <AccountBackground />
+      <div className="content">
+        <Order {...customerOrder} />
+      </div>
+    </>
   )
 }
 

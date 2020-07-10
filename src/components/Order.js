@@ -30,6 +30,7 @@ import OrderRequestedAt from './OrderRequestedAt'
 import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderError from './OrderError'
 import OrderLoading from './OrderLoading'
+import SectionFooter from './SectionFooter'
 
 const Order = ({ order, loading, error }) => {
   const {
@@ -123,28 +124,29 @@ const Order = ({ order, loading, error }) => {
       {showOrder && (
         <>
           <div className="order__header slide-up">
-            <p className="ot-preface">Order #{order_id}</p>
-            <h1>
-              {capitalize(orderType)} from {revenue_center.name}
-            </h1>
-            <div className="order__buttons">
-              {order.is_editable && (
-                <Button text="Edit" icon="Edit" onClick={handleEdit} />
-              )}
-              <Button text="Reorder" icon="RefreshCw" onClick={handleReorder} />
-              {!isUpcoming && (
+            <div className="container">
+              <p className="ot-preface">Order #{order_id}</p>
+              <h1>
+                {capitalize(orderType)} from {revenue_center.name}
+              </h1>
+              <div className="order__buttons">
+                {order.is_editable && (
+                  <Button text="Edit" icon="Edit" onClick={handleEdit} />
+                )}
                 <Button
-                  text={rating ? 'Update Rating' : 'Add Rating'}
-                  icon="Star"
-                  onClick={updateRating}
+                  text="Reorder"
+                  icon="RefreshCw"
+                  onClick={handleReorder}
                 />
-              )}
+                {!isUpcoming && (
+                  <Button
+                    text={rating ? 'Update Rating' : 'Add Rating'}
+                    icon="Star"
+                    onClick={updateRating}
+                  />
+                )}
+              </div>
             </div>
-            <p className="ot-font-size-small">
-              <button type="button" className="ot-btn-link" onClick={backLink}>
-                {backText}
-              </button>
-            </p>
           </div>
           <div className="section slide-up">
             <div className="container">
@@ -249,29 +251,23 @@ const Order = ({ order, loading, error }) => {
               <div className="section__container">
                 <SectionHeader title="Your Receipt" />
                 <div className="section__content ot-bg-color-primary ot-border-radius">
-                  <Check
-                    title="Order Summary"
-                    check={check}
-                    tenders={tenders}
-                  />
+                  <div className="section__check ot-border-color">
+                    <Check
+                      title="Order Summary"
+                      check={check}
+                      tenders={tenders}
+                    />
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="section slide-up">
-            <div className="container">
-              <div className="section__container">
-                <SectionHeader>
-                  <p>
-                    <button
-                      type="button"
-                      className="ot-btn-link"
-                      onClick={backLink}
-                    >
-                      {backText}
-                    </button>
-                  </p>
-                </SectionHeader>
+                <SectionFooter>
+                  <button
+                    type="button"
+                    className="ot-btn-link"
+                    onClick={backLink}
+                  >
+                    {backText}
+                  </button>
+                </SectionFooter>
               </div>
             </div>
           </div>

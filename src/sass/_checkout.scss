@@ -1,109 +1,95 @@
 .checkout {
-  display: flex;
-  justify-content: space-between;
-  min-height: 100vh;
+  // margin: 2rem 0 0;
 
   .loading {
     padding: 8rem 0;
-    // text-align: left;
+    text-align: left;
   }
 
-  &__header {
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    width: 55%;
-    height: $nav-height;
-  }
-
-  &__header__wrapper {
-    height: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-
-  &__header__container {
-    flex-grow: 1;
-    max-width: 70.4rem;
-    padding: 0 3.5rem;
-  }
-
-  &__logo__container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &__logo {
-    max-width: 14rem;
-    margin-top: 0.4rem;
-  }
-
-  &__actions {
-    button {
-      margin: 0 0 0 1rem;
-      &:first-child {
-        margin: 0;
-      }
-    }
-  }
-
-  &__content {
-    width: 55%;
-    padding: 12rem 0;
-  }
-
-  &__content__wrapper {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  &__content__container {
-    flex-grow: 1;
-    max-width: 70.4rem;
-    padding: 0 3.5rem;
-  }
-
-  &__sidebar {
-    position: relative;
-    width: 45%;
-    padding: 3.5rem 0;
-  }
-
-  &__sidebar__wrapper {
-    position: sticky;
-    top: 3.5rem;
-    display: flex;
-    justify-content: flex-start;
-  }
-
-  &__sidebar__container {
-    flex-grow: 1;
-    max-width: 57.6rem;
-    padding: 0 3.5rem;
+  &__summary {
+    margin: 0 0 4rem;
   }
 
   &__totals {
-    width: auto;
-    max-width: 50.6rem;
+    padding: 1rem;
+    border-width: 0.1rem;
+    border-style: solid;
+    @include breakpoint(mobile) {
+      padding: 0;
+    }
   }
 
-  // &__form {
-  //   margin: 0 0 10rem;
-  // }
-
-  &__form__header {
-    margin: 0 0 5rem;
-    // text-align: center;
+  &__form {
+    margin: 0 0 4rem;
   }
 
-  &__title {
-    margin: 0 0 0 -0.1rem;
+  &__check {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    right: $width;
+    left: 0;
+    @include breakpoint(mobile_both) {
+      position: static;
+      top: auto;
+      bottom: auto;
+      right: auto;
+      left: auto;
+      margin: 0 0 4rem;
+    }
+
+    &__wrapper {
+      float: right;
+      position: sticky;
+      width: 100%;
+      max-width: 60rem;
+      padding: $padding;
+      // display: flex;
+      // justify-content: flex-start;
+      @include breakpoint(mobile_both) {
+        float: none;
+        position: static;
+        max-width: 100%;
+        padding: 0;
+        border-width: 0.1rem;
+        border-style: solid;
+      }
+    }
+
+    &__totals {
+      padding: 1rem;
+    }
+  }
+}
+
+$width-tablet-land: 50%;
+$width-tablet: 50%;
+
+.main--checkout {
+  @include breakpoint(tablet_land) {
+    width: $width-tablet-land;
+  }
+  @include breakpoint(tablet) {
+    width: $width-tablet;
   }
 
-  &__subtitle {
-    margin: 1rem 0 0;
+  .header {
+    @include breakpoint(tablet_land) {
+      width: $width-tablet-land;
+    }
+    @include breakpoint(tablet) {
+      width: $width-tablet;
+    }
+  }
+
+  .background,
+  .checkout__check {
+    @include breakpoint(tablet_land) {
+      right: $width-tablet-land;
+    }
+    @include breakpoint(tablet) {
+      right: $width-tablet;
+    }
   }
 }
