@@ -48,15 +48,6 @@
     }
   }
 
-  &__actions {
-    a,
-    button {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-
   &__action {
     display: flex;
     // justify-content: flex-start;
@@ -72,9 +63,29 @@
     height: 1.5rem;
   }
 
+  &__arrow {
+    transition: all 0.15s ease;
+    transform: translateX(0);
+  }
+
   &__text {
     width: 100%;
     padding: 0 1rem;
+  }
+
+  &__actions {
+    a,
+    button {
+      display: block;
+      width: 100%;
+      text-align: left;
+
+      &:hover {
+        .rc__arrow {
+          transform: translateX(0.5rem);
+        }
+      }
+    }
   }
 
   &__order {

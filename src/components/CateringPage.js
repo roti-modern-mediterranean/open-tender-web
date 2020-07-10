@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
 import {
   selectOrder,
   setServiceType,
@@ -27,12 +28,12 @@ import { selectConfig } from '../slices'
 import Background from './Background'
 import Loader from './Loader'
 import ErrorMessage from './ErrorMessage'
+import PageTitle from './PageTitle'
 
 const CateringPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { catering: cateringConfig } = useSelector(selectConfig)
-  const { title, subtitle, content, background } = cateringConfig
+  const config = useSelector(selectConfig)
   const { orderType, serviceType, requestedAt, revenueCenter } = useSelector(
     selectOrder
   )
@@ -112,78 +113,94 @@ const CateringPage = () => {
   }
 
   return (
-    <div className="content">
-      <Background imageUrl={background} />
-      <div className="card ot-opacity-light ot-border-radius slide-up">
-        <div className="card__header">
-          <p className="ot-preface ot-font-size-small ot-color-secondary">
-            {subtitle}
-          </p>
-          <h1 className="ot-font-size-h3">{title}</h1>
-          <p className="ot-color-secondary">{content}</p>
-        </div>
-        <div className="card__content">
-          {isLoading ? (
-            <Loader type="Clip" text="Loading calendar..." size={28} />
-          ) : settings ? (
-            <div className="datepicker-inline">
-              <DatePicker
-                showPopperArrow={false}
-                showTimeSelect
-                timeCaption="Time"
-                timeFormat="h:mm aa"
-                dateFormat="yyyy-MM-dd h:mm aa"
-                timeIntervals={settings.interval || 15}
-                minDate={settings.minDate}
-                minTime={minTime || settings.minTime}
-                maxTime={settings.maxTime}
-                excludeDates={settings.excludeDates}
-                // excludeTimes={excludeTimes}
-                // filterDate={isClosed}
-                selected={date}
-                onChange={(date) => setDate(date)}
-                inline
-                shouldCloseOnSelect={false}
-              />
+    <>
+      {isBrowser && <Background imageUrl={config.catering.background} />}
+      <div className="content">
+        <PageTitle {...config.catering} />
+        <div className="content__body">
+          <div className="container">
+            <div className="catering">
+              <div className="catering__datepicker">
+                {isLoading ? (
+                  <Loader type="Clip" text="Loading calendar..." size={28} />
+                ) : settings ? (
+                  <div className="datepicker-inline ot-font-size-small ot-border ot-border-radius-small ot-bg-color-primary">
+                    <DatePicker
+                      showPopperArrow={false}
+                      showTimeSelect
+                      timeCaption="Time"
+                      timeFormat="h:mm aa"
+                      dateFormat="yyyy-MM-dd h:mm aa"
+                      timeIntervals={settings.interval || 15}
+                      minDate={settings.minDate}
+                      minTime={minTime || settings.minTime}
+                      maxTime={settings.maxTime}
+                      excludeDates={settings.excludeDates}
+                      // excludeTimes={excludeTimes}
+                      // filterDate={isClosed}
+                      selected={date}
+                      onChange={(date) => setDate(date)}
+                      inline
+                      shouldCloseOnSelect={false}
+                    />
+                  </div>
+                ) : error ? (
+                  <ErrorMessage msg={error}>
+                    <Button
+                      text="Start Over"
+                      icon="RefreshCw"
+                      classes="ot-btn ot-btn--cancel"
+                      onClick={startOver}
+                    />
+                  </ErrorMessage>
+                ) : (
+                  <p className="ot-color-error">
+                    This order type isn't currently available
+                  </p>
+                )}
+              </div>
+              <div className="catering__buttons">
+                <Button
+                  text="Order Delivery"
+                  classes="ot-btn"
+                  onClick={(evt) => chooseServiceType(evt, 'DELIVERY')}
+                  disabled={!date}
+                />
+                <Button
+                  text="Order Pickup"
+                  classes="ot-btn"
+                  onClick={(evt) => chooseServiceType(evt, 'PICKUP')}
+                  disabled={!date}
+                />
+              </div>
+              <div className="catering__footer ot-font-size-small">
+                <Button
+                  text="Switch to a regular order Pickup or Delivery order"
+                  classes="ot-btn-link"
+                  onClick={startOver}
+                />
+              </div>
             </div>
-          ) : error ? (
-            <ErrorMessage msg={error}>
-              <Button
-                text="Start Over"
-                icon="RefreshCw"
-                classes="ot-btn ot-btn--cancel"
-                onClick={startOver}
-              />
-            </ErrorMessage>
-          ) : (
-            <p className="ot-color-error">
-              This order type isn't currently available
-            </p>
-          )}
-          <div className="card__content__buttons">
-            <Button
-              text="Order Delivery"
-              classes="ot-btn"
-              onClick={(evt) => chooseServiceType(evt, 'DELIVERY')}
-              disabled={!date}
-            />
-            <Button
-              text="Order Pickup"
-              classes="ot-btn"
-              onClick={(evt) => chooseServiceType(evt, 'PICKUP')}
-              disabled={!date}
-            />
           </div>
         </div>
-        <div className="card__footer ot-font-size-small">
-          <Button
-            text="Switch to a regular order Pickup or Delivery order"
-            classes="ot-btn-link"
-            onClick={startOver}
-          />
-        </div>
+        {config.catering.content && config.catering.content.length > 0 && (
+          <div className="content__footer">
+            <div className="container">
+              <div className="catering__fine-print">
+                <p className="catering__fine-print__title ot-heading ot-font-size-h3">
+                  The Fine Print
+                </p>
+                <div className="catering__fine-print__content ot-color-secondary ot-line-height">
+                  {config.home.content.map((i, index) => (
+                    <p key={index}>{i}</p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
+    </>
   )
 }
 

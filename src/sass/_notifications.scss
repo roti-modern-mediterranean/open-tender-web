@@ -2,7 +2,10 @@
   position: fixed;
   z-index: 15;
   bottom: 12rem;
-  right: 4rem;
+  right: $padding;
+  @include breakpoint(mobile_both) {
+    right: $padding-mobile;
+  }
 }
 
 .notification {

@@ -93,11 +93,18 @@ const contentConfig = {
     ],
   },
   catering: {
+    // background:
+    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1592580958_4e2729d4c2db9a96116c.jpg',
     background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1592580958_4e2729d4c2db9a96116c.jpg',
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594417045_5c93dab58fc356b9096a.jpg',
     title: "When's your event?",
-    subtitle: "We'll make this quick",
-    content: 'Please choose a date and time and confirm your service type',
+    // preface: "We'll make this quick",
+    subtitle:
+      'We require 24 hours notice for catering orders. Please see the fine print section below for additional info.',
+    content: [
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui ipsum, feugiat quis urna quis, posuere facilisis tellus. Fusce sit amet purus non arcu venenatis viverra ut a risus. Vestibulum dapibus sapien est.',
+      'Morbi ac nisi ac dui ultrices bibendum nec in lorem. Vestibulum ut semper est, eget posuere turpis. Donec quis rhoncus nulla. Fusce id sagittis eros.',
+    ],
   },
   revenueCenters: {
     title: "Let's find the nearest location",

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
 import {
   selectOrder,
   fetchRevenueCenter,
@@ -69,22 +70,27 @@ const RevenueCenterPage = () => {
   }, [revenueCenter, rcConfig.Background, dispatch])
 
   return (
-    <div className="content">
-      <Background imageUrl={imageUrl} />
-      {revenueCenter && !isLoading && (
-        <div className="card card--rc ot-opacity-light ot-border-radius slide-up ot-box-shadow">
-          <h1 className="sr-only">{revenueCenter.name}</h1>
-          <div className="card__content">
-            <RevenueCenter
-              revenueCenter={revenueCenter}
-              showImage={false}
-              isLanding={true}
-              classes="rc--solo"
-            />
+    <>
+      {isBrowser && <Background imageUrl={imageUrl} />}
+      <div className="content">
+        <Background imageUrl={imageUrl} />
+        {revenueCenter && !isLoading && (
+          <div className="map-content ot-bg-color-primary">
+            <h1 className="sr-only">{revenueCenter.name}</h1>
+            <div className="content__body">
+              <div className="container">
+                <RevenueCenter
+                  revenueCenter={revenueCenter}
+                  showImage={true}
+                  isLanding={true}
+                  classes="rc--solo"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   )
 }
 

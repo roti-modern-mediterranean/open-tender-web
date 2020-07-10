@@ -34,7 +34,7 @@ const LoyaltyProgram = ({ program }) => {
           <p className="ot-font-size-small">{description}</p>
         )}
       </div>
-      <div className="progress ot-bg-color-secondary ot-box-shadow-inset">
+      <div className="progress ot-bg-color-secondary ot-box-shadow-inset ot-border-color">
         <div className="progress__bar" style={style}>
           <div className="progress__fill ot-box-shadow ot-highlight"></div>
         </div>

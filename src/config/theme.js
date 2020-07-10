@@ -99,6 +99,7 @@ const themeConfig = {
     outer: 'none',
     // outer: '0 1px 2px -1px rgba(0, 0, 0, 0.2)',
     inset: 'inset 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
+    // inset: 'none',
   },
   border: {
     color: '#edf0f6',

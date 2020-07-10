@@ -11,16 +11,16 @@
 
 .progress {
   width: 100%;
-  border-radius: 2rem;
+  // border-radius: 2rem;
 
-  &__bar {
-    padding: 0.4rem;
-  }
+  // &__bar {
+  //   padding: 0.4rem;
+  // }
 
   &__fill {
     width: 0;
     height: 1.5rem;
-    border-radius: 2rem;
+    // border-radius: 2rem;
     animation: fill-bar 0.5s ease-in-out 0.25s forwards;
   }
 }

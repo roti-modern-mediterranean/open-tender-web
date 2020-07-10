@@ -482,6 +482,48 @@ const makeGlobalStyles = (theme) => css`
   input.radio__input:checked + span.radio__custom:before {
     background-color: ${theme.colors.primary};
   }
+
+  .react-datepicker__navigation--previous {
+    border-right-color: ${theme.colors.link};
+  }
+  .react-datepicker__navigation--next {
+    border-left-color: ${theme.colors.link};
+  }
+  .react-datepicker__time-container {
+    border-left-color: ${theme.border.color};
+  }
+  .react-datepicker__day,
+  .react-datepicker__time-list-item {
+    color: ${theme.colors.link};
+  }
+  .react-datepicker__day--selected,
+  .react-datepicker__day:hover,
+  .react-datepicker__day:active,
+  .react-datepicker__day:focus,
+  .react-datepicker__time-list-item--selected,
+  .react-datepicker__time-list-item:hover,
+  .react-datepicker__time-list-item:active,
+  .react-datepicker__time-list-item:focus {
+    color: ${theme.colors.light};
+    background-color: ${theme.colors.link};
+  }
+
+  .react-datepicker__day--today {
+    background-color: ${theme.bgColors.secondary};
+  }
+  .react-datepicker__day--disabled,
+  .react-datepicker__time-list-item--disabled {
+    color: ${theme.colors.secondary};
+  }
+
+  .circle-loader {
+    border-color: ${theme.border.color};
+    border-left-color: ${theme.colors.link};
+  }
+  .load-complete {
+    border-color: ${theme.colors.link};
+    background-color: ${theme.colors.link};
+  }
 `
 
 const GlobalStyles = withTheme(({ theme }) => (
