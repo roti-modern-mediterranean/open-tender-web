@@ -1,5 +1,8 @@
 .check {
-  padding: 2rem 2rem 0;
+  padding: 2rem;
+  @include breakpoint(mobile_both) {
+    padding: 0.5rem;
+  }
 
   &__container {
     position: relative;
@@ -21,7 +24,7 @@
     padding: 0 0 0.5rem;
     border-bottom-width: 0.1rem;
     border-bottom-style: solid;
-    margin: 0 0 0.75rem;
+    margin: 0 0 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -31,9 +34,9 @@
     }
   }
 
-  &__items {
-    padding: 0 0 2.5rem;
-  }
+  // &__items {
+  //   padding: 0 0 2.5rem;
+  // }
 
   &__item {
     width: 100%;

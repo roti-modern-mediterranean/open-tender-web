@@ -43,6 +43,7 @@ const usePrevious = (value) => {
 }
 
 const CheckoutPage = () => {
+  const formRef = useRef()
   const history = useHistory()
   const dispatch = useDispatch()
   const { checkout: checkoutConfig } = useSelector(selectConfig)
@@ -177,6 +178,34 @@ const CheckoutPage = () => {
     evt.target.blur()
   }
 
+  const checkSummary = (
+    <Check
+      title={checkoutConfig.check.title}
+      check={check}
+      tenders={tenders}
+      updating={checkUpdating}
+      loader={<BarLoader />}
+    />
+  )
+
+  // const desktopCheck = (
+  //   <div className="checkout__check">
+  //     <div className="checkout__check__wrapper ot-border-color">
+  //       <div className="checkout__check__totals ot-border-radius ot-bg-color-primary ot-box-shadow slide-up">
+  //         {checkSummary}
+  //       </div>
+  //     </div>
+  //   </div>
+  // )
+
+  const mobileCheck = (
+    <div className="checkout__summary">
+      <div className="checkout__totals ot-border-radius ot-bg-color-primary ot-border-color ot-box-shadow slide-up">
+        {checkSummary}
+      </div>
+    </div>
+  )
+
   return (
     <>
       {isBrowser && <Background imageUrl={checkoutConfig.background} />}
@@ -184,39 +213,9 @@ const CheckoutPage = () => {
         <PageTitle {...checkoutConfig} />
         <div className="checkout">
           <div className="container">
-            {check && check.totals && (
-              <>
-                {isBrowser ? (
-                  <div className="checkout__check">
-                    <div className="checkout__check__wrapper ot-border-color">
-                      <div className="checkout__check__totals ot-border-radius ot-bg-color-primary ot-box-shadow slide-up">
-                        <Check
-                          title={checkoutConfig.check.title}
-                          check={check}
-                          tenders={tenders}
-                          updating={checkUpdating}
-                          loader={<BarLoader />}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="checkout__summary">
-                    <div className="checkout__totals ot-border-radius ot-bg-color-primary ot-border-color ot-box-shadow slide-up">
-                      <Check
-                        title={checkoutConfig.check.title}
-                        check={check}
-                        tenders={tenders}
-                        updating={checkUpdating}
-                        loader={<BarLoader />}
-                      />
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
+            {/* {check && check.totals && isBrowser && desktopCheck} */}
             {check ? (
-              <div className="checkout__form slide-up">
+              <div ref={formRef} className="checkout__form slide-up">
                 <CheckoutForm
                   config={checkoutConfig}
                   cardIconMap={cardIconMap}
@@ -228,6 +227,8 @@ const CheckoutPage = () => {
                   submitting={submitting}
                   loading={loading}
                   errors={errors}
+                  // checkSummary={!isBrowser ? mobileCheck : null}
+                  checkSummary={mobileCheck}
                   updateForm={(form) => dispatch(updateForm(form))}
                   setSubmitting={(bool) => dispatch(setSubmitting(bool))}
                   submitOrder={() => dispatch(submitOrder())}

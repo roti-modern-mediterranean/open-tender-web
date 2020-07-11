@@ -38,7 +38,7 @@ const MenuItemModal = () => {
 
   return (
     <>
-      <ModalClose classes="" onClick={handleClose} />
+      <ModalClose classes="ot-btn-link" onClick={handleClose} />
       <div className="modal__content">
         {item && (
           <Builder

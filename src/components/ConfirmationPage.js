@@ -6,6 +6,7 @@ import {
   selectCustomer,
   selectConfirmationOrder,
   resetConfirmation,
+  resetCustomerOrder,
 } from '@open-tender/redux'
 
 import { selectConfig } from '../slices'
@@ -18,21 +19,65 @@ const ConfirmationPage = () => {
   const dispatch = useDispatch()
   const { confirmation: config } = useSelector(selectConfig)
   const order = useSelector(selectConfirmationOrder)
-  const { account } = useSelector(selectCustomer)
+  const { auth } = useSelector(selectCustomer)
 
   useEffect(() => {
-    if (!order) history.push(account ? '/account' : '/')
+    if (!order) history.push(auth ? '/account' : '/')
     window.scroll(0, 0)
     return () => {
       dispatch(resetConfirmation())
     }
-  }, [order, account, dispatch, history])
+  }, [order, auth, dispatch, history])
+
+  const reviewAccount = (evt) => {
+    evt.preventDefault()
+    dispatch(resetCustomerOrder())
+    history.push('/account')
+    evt.target.blur()
+  }
+
+  const startNewOrder = (evt) => {
+    evt.preventDefault()
+    history.push('/')
+    evt.target.blur()
+  }
 
   return (
     <>
       {isBrowser && <Background imageUrl={config.background} />}
       <div className="content">
         <PageTitle {...config} />
+        <div className="container">
+          {auth ? (
+            <p>
+              <button
+                type="button"
+                className="ot-btn-link"
+                onClick={reviewAccount}
+              >
+                Review your account
+              </button>
+              {' or '}
+              <button
+                type="button"
+                className="ot-btn-link"
+                onClick={startNewOrder}
+              >
+                start a new order
+              </button>
+            </p>
+          ) : (
+            <p>
+              <button
+                type="button"
+                className="ot-btn-link"
+                onClick={startNewOrder}
+              >
+                Start a new order
+              </button>
+            </p>
+          )}
+        </div>
         <Order order={order} />
       </div>
     </>

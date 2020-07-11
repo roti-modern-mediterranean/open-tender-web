@@ -1,9 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  selectCustomer,
   addCustomerFavorite,
   removeCustomerFavorite,
   selectCustomerFavorites,
@@ -11,7 +9,6 @@ import {
   setAddress,
   reorderPastOrder,
   editOrder,
-  resetCustomerOrder,
 } from '@open-tender/redux'
 import {
   makeDisplayItem,
@@ -29,7 +26,6 @@ import OrderRating from './OrderRating'
 import OrderRequestedAt from './OrderRequestedAt'
 import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderError from './OrderError'
-import SectionFooter from './SectionFooter'
 import Loader from './Loader'
 
 const Order = ({ order, loading, error }) => {
@@ -54,13 +50,11 @@ const Order = ({ order, loading, error }) => {
     rating,
   } = order || {}
   const dispatch = useDispatch()
-  const history = useHistory()
   const isLoading = loading === 'pending'
   const showOrder = !isLoading && !error && !isEmpty(order)
   const orderType = order_type === 'OLO' ? service_type : order_type
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
-  const { auth } = useSelector(selectCustomer)
   const { lookup = {} } = useSelector(selectCustomerFavorites)
   const check = { surcharges, discounts, taxes, totals, details }
   const {
@@ -72,7 +66,6 @@ const Order = ({ order, loading, error }) => {
   } = details || {}
   const hasDetails =
     eating_utensils || serving_utensils || person_count || tax_exempt_id
-  const backText = auth ? 'Head back to your account page' : 'Start a new order'
 
   const addFavorite = (cart) => {
     const data = { cart }
@@ -106,23 +99,12 @@ const Order = ({ order, loading, error }) => {
     evt.target.blur()
   }
 
-  const backLink = (evt) => {
-    evt.preventDefault()
-    if (auth) {
-      dispatch(resetCustomerOrder())
-      history.push('/account')
-    } else {
-      history.push('/')
-    }
-    evt.target.blur()
-  }
-
   return (
     <div className="order">
       {isLoading && (
         <Loader text={'Retrieving your order...'} className="loading--left" />
       )}
-      <OrderError error={error} backLink={backLink} backText={backText} />
+      <OrderError error={error} />
       {showOrder && (
         <>
           <div className="order__header slide-up">
@@ -261,15 +243,6 @@ const Order = ({ order, loading, error }) => {
                     />
                   </div>
                 </div>
-                <SectionFooter>
-                  <button
-                    type="button"
-                    className="ot-btn-link"
-                    onClick={backLink}
-                  >
-                    {backText}
-                  </button>
-                </SectionFooter>
               </div>
             </div>
           </div>

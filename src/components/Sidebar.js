@@ -28,7 +28,7 @@ const Sidebar = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const canOrder = useSelector(selectCanOrder)
   const { orderMinimum } = useSelector(selectOrderLimits)
-  const classes = `sidebar ot-bg-color-secondary ${isOpen ? 'is-open' : ''}`
+  const classes = `sidebar ot-bg-color-primary ${isOpen ? 'is-open' : ''}`
   const isMenu = pathname.includes('menu')
   const isCheckout = pathname.includes('checkout')
   const belowMinimum = orderMinimum && cartTotal < orderMinimum

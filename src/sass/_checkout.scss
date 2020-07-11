@@ -14,9 +14,6 @@
     padding: 1rem;
     border-width: 0.1rem;
     border-style: solid;
-    @include breakpoint(mobile) {
-      padding: 0;
-    }
   }
 
   &__form {
@@ -30,7 +27,9 @@
     bottom: 0;
     right: $width;
     left: 0;
+    overflow-y: scroll;
     @include breakpoint(mobile_both) {
+      display: none;
       position: static;
       top: auto;
       bottom: auto;

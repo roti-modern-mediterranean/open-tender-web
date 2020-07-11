@@ -1,3 +1,10 @@
+.cart {
+  padding: 0;
+  li:last-child .builder__option {
+    border-bottom: 0;
+  }
+}
+
 .cart-button {
   position: fixed;
   z-index: 10;
@@ -57,10 +64,7 @@
       right: -0.3rem;
       min-width: 2.4rem;
       height: 2.4rem;
+      font-size: 1.2rem;
     }
   }
-}
-
-.cart {
-  padding: 1rem 2rem;
 }

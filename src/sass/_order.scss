@@ -1,4 +1,6 @@
 .order {
+  margin: 0 0 4rem;
+
   &__header {
     margin: 4rem 0 0;
 
@@ -45,19 +47,6 @@
     border-style: solid;
     @include breakpoint(mobile) {
       padding: 0;
-    }
-  }
-
-  .builder__option {
-    padding: 1.5rem 0;
-    border-bottom-width: 0.1rem;
-    border-bottom-style: solid;
-  }
-
-  .cart {
-    padding: 0;
-    li:last-child .builder__option {
-      border-bottom: 0;
     }
   }
 
