@@ -29,8 +29,8 @@ import OrderRating from './OrderRating'
 import OrderRequestedAt from './OrderRequestedAt'
 import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderError from './OrderError'
-import OrderLoading from './OrderLoading'
 import SectionFooter from './SectionFooter'
+import Loader from './Loader'
 
 const Order = ({ order, loading, error }) => {
   const {
@@ -119,7 +119,9 @@ const Order = ({ order, loading, error }) => {
 
   return (
     <div className="order">
-      <OrderLoading loading={isLoading} />
+      {isLoading && (
+        <Loader text={'Retrieving your order...'} className="loading--left" />
+      )}
       <OrderError error={error} backLink={backLink} backText={backText} />
       {showOrder && (
         <>

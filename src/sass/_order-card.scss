@@ -3,7 +3,7 @@ $image-size: 4.5rem;
 .order-card {
   position: relative;
   height: 100%;
-  padding: 2rem 2rem 1rem;
+  padding: 1.5rem 1rem 0.5rem;
   // border: 0.1rem solid #f3f3f3;
   // border-width: 0.1rem;
   // border-style: solid;
@@ -84,7 +84,7 @@ $image-size: 4.5rem;
       button {
         margin: 0 1rem 1rem 0;
         &:last-child {
-          margin-right: 0;
+          margin: 0;
         }
       }
     }
