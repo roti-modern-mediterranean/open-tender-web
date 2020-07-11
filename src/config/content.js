@@ -5,12 +5,16 @@ const contentConfig = {
     back: 'Head back to our homepage and give it another try',
   },
   signUp: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594425195_f6bbb0def5961ba79c8c.jpg',
     title: 'Create An Account',
     subtitle:
       'Order history, saved favorites & allergens, saved credit cards, and much more. Signing up takes two seconds - start reaping the benefits today!',
     back: 'Head back to starting an order',
   },
   resetPassword: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594425807_ice-cream-cone-spilled.jpg',
     title: 'Reset Your Password',
     subtitle:
       'Please enter a new password below. Must be at least 8 characters.',

@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react'
 import { useHistory, useLocation, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectResetPassword,
@@ -10,7 +11,9 @@ import {
 import { Button, ResetPasswordForm } from '@open-tender/components'
 
 import { selectConfig, openModal } from '../slices'
-import SectionHeader from './SectionHeader'
+import PageTitle from './PageTitle'
+import Background from './Background'
+import SectionFooter from './SectionFooter'
 
 const ResetPasswordPage = () => {
   const history = useHistory()
@@ -18,8 +21,7 @@ const ResetPasswordPage = () => {
   const { hash } = useLocation()
   const resetToken = hash.includes('#') ? hash.split('#')[1] : ''
   const { auth } = useSelector(selectCustomer)
-  const { resetPassword: resetPasswordConfig } = useSelector(selectConfig)
-  const { title, subtitle, back } = resetPasswordConfig
+  const config = useSelector(selectConfig)
   const { success, loading, error } = useSelector(selectResetPassword)
   const reset = useCallback(
     (new_password, resetToken) =>
@@ -45,26 +47,28 @@ const ResetPasswordPage = () => {
 
   return (
     <>
-      <h1 className="sr-only">{title}</h1>
-      <div className="signup content ot-bg-color-secondary">
-        <div className="section">
-          <div className="container">
-            <div className="section__container">
-              <SectionHeader title={title} subtitle={subtitle} />
-              <div className="section__content ot-bg-color-primary ot-border-radius">
-                <div className="signup__form">
-                  {success ? (
-                    <div className="password-reset">
-                      <p>Success! Your password has been reset.</p>
-                      <p>
-                        <Button
-                          classes="ot-btn-link"
-                          onClick={handleLogin}
-                          text="Click here to log into your account"
-                        />
-                      </p>
-                    </div>
-                  ) : (
+      {isBrowser && <Background imageUrl={config.resetPassword.background} />}
+      {success ? (
+        <div className="content">
+          <PageTitle
+            title="Success!"
+            subtitle={
+              <Button
+                classes="ot-btn-link"
+                onClick={handleLogin}
+                text="Click here to log into your account"
+              />
+            }
+          />
+        </div>
+      ) : (
+        <div className="content">
+          <PageTitle {...config.resetPassword} />
+          <div className="section slide-up">
+            <div className="container">
+              <div className="section__container">
+                <div className="section__content">
+                  <div className="signup__form">
                     <ResetPasswordForm
                       loading={loading}
                       error={error}
@@ -72,22 +76,18 @@ const ResetPasswordPage = () => {
                       resetForm={resetForm}
                       resetToken={resetToken}
                     />
-                  )}
+                  </div>
                 </div>
+                <SectionFooter>
+                  <Link to="/" className="">
+                    {config.resetPassword.back}
+                  </Link>
+                </SectionFooter>
               </div>
-              {!success && (
-                <div className="section__footer">
-                  <p className="">
-                    <Link to="/" className="">
-                      {back}
-                    </Link>
-                  </p>
-                </div>
-              )}
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   )
 }

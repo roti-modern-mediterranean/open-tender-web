@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectSignUp,
@@ -10,13 +11,14 @@ import {
 import { SignUpForm } from '@open-tender/components'
 
 import { selectConfig } from '../slices'
-import SectionHeader from './SectionHeader'
+import PageTitle from './PageTitle'
+import Background from './Background'
+import SectionFooter from './SectionFooter'
 
 const SignUpPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { signUp: signUpConifg } = useSelector(selectConfig)
-  const { title, subtitle, back } = signUpConifg
+  const config = useSelector(selectConfig)
   const { auth } = useSelector(selectCustomer)
   const { loading, error } = useSelector(selectSignUp)
   const signUp = useCallback(
@@ -39,24 +41,22 @@ const SignUpPage = () => {
 
   return (
     <>
-      <h1 className="sr-only">{title}</h1>
-      <div className="signup content ot-bg-color-secondary">
-        <div className="section">
+      {isBrowser && <Background imageUrl={config.signUp.background} />}
+      <div className="content">
+        <PageTitle {...config.signUp} />
+        <div className="section slide-up">
           <div className="container">
             <div className="section__container">
-              <SectionHeader title={title} subtitle={subtitle} />
-              <div className="section__content ot-bg-color-primary ot-border-radius">
+              <div className="section__content">
                 <div className="signup__form">
                   <SignUpForm loading={loading} error={error} signUp={signUp} />
                 </div>
               </div>
-              <div className="section__footer">
-                <p className="">
-                  <Link to="/" className="">
-                    {back}
-                  </Link>
-                </p>
-              </div>
+              <SectionFooter>
+                <Link to="/" className="">
+                  {config.signUp.back}
+                </Link>
+              </SectionFooter>
             </div>
           </div>
         </div>

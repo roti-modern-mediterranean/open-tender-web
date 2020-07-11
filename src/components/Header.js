@@ -72,7 +72,7 @@ const Header = () => {
     outpostName
   )
   const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering_allowed
-  const showSignUp = false
+  const showSignUp = true
   // let classes = makeClasses(pathname)
   const classes = ''
 
