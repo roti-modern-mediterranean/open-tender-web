@@ -1,13 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { slugify } from '@open-tender/js'
 import {
-  selectAllergens,
   fetchAllergens,
+  selectAllergens,
   selectCustomerAllergens,
+  setSelectedAllergens,
   updateCustomerAllergens,
 } from '@open-tender/redux'
-import { slugify } from '@open-tender/js'
-import { Switch } from '@open-tender/components'
+import { AllergenForm } from '@open-tender/components'
 
 import { selectConfigAccountSections } from '../slices'
 import SectionHeader from './SectionHeader'
@@ -15,91 +16,54 @@ import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 
 const AccountAllergens = () => {
-  const [data, setData] = useState([])
-  const [submitting, setSubmitting] = useState(false)
-  const submitButton = useRef()
   const dispatch = useDispatch()
   const {
     allergens: { title, subtitle },
   } = useSelector(selectConfigAccountSections)
-  const allergens = useSelector(selectAllergens)
+  const brandAllergens = useSelector(selectAllergens)
   const customerAllergens = useSelector(selectCustomerAllergens)
+  const isLoading =
+    brandAllergens.loading === 'pending' ||
+    customerAllergens.loading === 'pending'
+  const error = brandAllergens.error || customerAllergens.error
+  const showAllergens = brandAllergens.entities.length > 0
+  const setAllergens = useCallback(
+    (data) => dispatch(setSelectedAllergens(data)),
+    [dispatch]
+  )
+  const updateAllergens = useCallback(
+    (data) => dispatch(updateCustomerAllergens(data)),
+    [dispatch]
+  )
 
   useEffect(() => {
     dispatch(fetchAllergens())
   }, [dispatch])
-
-  useEffect(() => {
-    if (customerAllergens.loading === 'idle') setSubmitting(false)
-  }, [customerAllergens.loading])
-
-  useEffect(() => {
-    setData(customerAllergens.entities)
-  }, [customerAllergens.entities, allergens.entities])
-
-  const handleChange = (evt) => {
-    const { id, checked } = evt.target
-    const newData = checked
-      ? [...data, { allergen_id: parseInt(id) }]
-      : data.filter((i) => i.allergen_id !== parseInt(id))
-    setData(newData)
-  }
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault()
-    setSubmitting(true)
-    const newData = data.map((i) => ({ allergen_id: i.allergen_id }))
-    dispatch(updateCustomerAllergens(newData))
-    submitButton.current.blur()
-  }
-
-  const isLoading =
-    allergens.loading === 'pending' || customerAllergens.loading === 'pending'
-  const error = customerAllergens.error || allergens.error
-  const showAllergens = submitting || (!isLoading && !error)
-  const customerAllergenIds = data.map((i) => i.allergen_id)
 
   return (
     <div id={slugify(title)} className="section">
       <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle} />
-          <SectionLoading loading={isLoading && !submitting} />
+          <SectionLoading loading={isLoading} />
           <SectionError error={error} />
           {showAllergens && (
             <div className="section__content -narrow ot-bg-color-primary ot-border-radius">
-              <form
-                id="allergen-form"
-                className="form"
-                onSubmit={handleSubmit}
-                noValidate
-              >
-                <div className="section__intro">
-                  <p className="ot-font-size-small">I'm allergic to...</p>
-                </div>
-                <div className="section__rows section__rows--allergens">
-                  {allergens.entities.map((allergen) => (
-                    <Switch
-                      key={allergen.allergen_id}
-                      label={allergen.name}
-                      id={`${allergen.allergen_id}`}
-                      on={customerAllergenIds.includes(allergen.allergen_id)}
-                      onChange={handleChange}
-                      classes="-allergen"
-                    />
-                  ))}
-                </div>
-                <div className="section__submit">
-                  <input
-                    className="ot-btn"
-                    type="submit"
-                    value="Update Allergens"
-                    disabled={submitting}
-                    ref={submitButton}
-                  />
-                </div>
-              </form>
+              <div className="section__intro">
+                <p className="ot-font-size-small">I'm allergic to...</p>
+              </div>
+              <AllergenForm
+                allergens={brandAllergens.entities}
+                selectedAllergens={customerAllergens.entities}
+                isLoading={isLoading}
+                error={error}
+                setAllergens={setAllergens}
+                updateAllergens={updateAllergens}
+              />
             </div>
+          )}
+          {!showAllergens && !isLoading && (
+            <p>Allergens aren't currently listed on our menu.</p>
           )}
         </div>
       </div>

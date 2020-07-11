@@ -1,11 +1,21 @@
 .menu {
-  margin: $padding 0 $padding;
+  margin: 0 0 ($padding * 2);
+  @include breakpoint(mobile_both) {
+    padding: 0 0 ($padding-mobile * 2);
+  }
 }
 
 .menu__category {
-  padding: $padding 0 0;
+  padding: ($padding * 2) 0 0;
+  @include breakpoint(mobile_both) {
+    padding: ($padding-mobile * 2) 0 0;
+  }
+
   &.-child {
     padding: $padding-mobile 0 0;
+    @include breakpoint(mobile_both) {
+      padding: ($padding-mobile / 2) 0 0;
+    }
   }
 
   &__header {
