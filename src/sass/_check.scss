@@ -1,7 +1,10 @@
 .check {
-  padding: 2rem;
+  border-width: 0.1rem;
+  border-style: solid;
+  padding: $padding;
+  margin: 0 0 4rem;
   @include breakpoint(mobile_both) {
-    padding: 0.5rem;
+    padding: $padding-mobile;
   }
 
   &__container {

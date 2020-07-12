@@ -47,36 +47,38 @@ const ConfirmationPage = () => {
       {isBrowser && <Background imageUrl={config.background} />}
       <div className="content">
         <PageTitle {...config} />
-        <div className="container">
-          {auth ? (
-            <p>
-              <button
-                type="button"
-                className="ot-btn-link"
-                onClick={reviewAccount}
-              >
-                Review your account
-              </button>
-              {' or '}
-              <button
-                type="button"
-                className="ot-btn-link"
-                onClick={startNewOrder}
-              >
-                start a new order
-              </button>
-            </p>
-          ) : (
-            <p>
-              <button
-                type="button"
-                className="ot-btn-link"
-                onClick={startNewOrder}
-              >
-                Start a new order
-              </button>
-            </p>
-          )}
+        <div className="slide-up">
+          <div className="container">
+            {auth ? (
+              <p>
+                <button
+                  type="button"
+                  className="ot-btn-link"
+                  onClick={reviewAccount}
+                >
+                  Review your account
+                </button>
+                {' or '}
+                <button
+                  type="button"
+                  className="ot-btn-link"
+                  onClick={startNewOrder}
+                >
+                  start a new order
+                </button>
+              </p>
+            ) : (
+              <p>
+                <button
+                  type="button"
+                  className="ot-btn-link"
+                  onClick={startNewOrder}
+                >
+                  Start a new order
+                </button>
+              </p>
+            )}
+          </div>
         </div>
         <Order order={order} />
       </div>

@@ -234,14 +234,12 @@ const Order = ({ order, loading, error }) => {
             <div className="container">
               <div className="section__container">
                 <SectionHeader title="Your Receipt" />
-                <div className="section__content ot-bg-color-primary ot-border-radius">
-                  <div className="section__check ot-border-color">
-                    <Check
-                      title="Order Summary"
-                      check={check}
-                      tenders={tenders}
-                    />
-                  </div>
+                <div className="section__content">
+                  <Check
+                    title="Order Summary"
+                    check={check}
+                    tenders={tenders}
+                  />
                 </div>
               </div>
             </div>

@@ -91,7 +91,7 @@ const themeConfig = {
   },
   opacity: {
     light: 'rgba(255, 255, 255, 0.9)',
-    dark: 'rgba(0, 0, 0, 0.5)',
+    dark: 'rgba(0, 0, 0, 0.6)',
     alert: 'rgba(239, 35, 60, 0.75)',
   },
   boxShadow: {

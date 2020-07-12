@@ -190,7 +190,7 @@ const contentConfig = {
       title: 'Order Summary',
     },
     details: {
-      title: 'Please review your order details',
+      title: 'Review your order details',
     },
     address: { title: 'Confirm your address' },
     sign_up: {
