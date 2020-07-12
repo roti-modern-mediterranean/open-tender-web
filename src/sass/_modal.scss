@@ -145,6 +145,17 @@
     .modal__body {
       .datepicker-inline {
         margin-top: 1.5rem;
+        @include breakpoint(mobile_both) {
+          font-size: 1rem;
+        }
+      }
+      .form__submit {
+        button {
+          margin: 1rem 1rem 0 0;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
       }
     }
   }

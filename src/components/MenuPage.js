@@ -65,9 +65,7 @@ const MenuPage = () => {
         )}
       </Hero>
       <h1 className="sr-only">Menu</h1>
-      {isLoading ? (
-        <Loader text={menuConfig.loading} />
-      ) : error ? (
+      {error ? (
         <ErrorMessage title="Menu Not Found" msg={error}>
           <Button
             text="Change Location"
@@ -77,7 +75,14 @@ const MenuPage = () => {
           />
         </ErrorMessage>
       ) : (
-        <Menu categories={categories} soldOut={soldOut} />
+        <div className="menu__wrapper">
+          {isLoading && (
+            <div className="menu__loading ot-opacity-light">
+              <Loader text={menuConfig.loading} />
+            </div>
+          )}
+          <Menu categories={categories} soldOut={soldOut} />
+        </div>
       )}
     </MenuContext.Provider>
   )

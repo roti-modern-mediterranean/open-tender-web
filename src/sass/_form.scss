@@ -15,6 +15,23 @@
     }
   }
 
+  &__signup {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    @include breakpoint(mobile) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .ot-btn-link {
+      margin: 0 0 0 1rem;
+      @include breakpoint(mobile) {
+        margin: 1rem 0 0 0;
+      }
+    }
+  }
+
   &__inputs {
     width: 100%;
     // padding: 2rem 2.5rem 0.5rem;
