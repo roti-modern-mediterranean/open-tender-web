@@ -24,7 +24,7 @@ import {
   setSubmitting,
   setConfirmationOrder,
 } from '@open-tender/redux'
-import { prepareOrder } from '@open-tender/js'
+import { prepareOrder, displayPrice } from '@open-tender/js'
 import { CheckoutForm, Check } from '@open-tender/components'
 
 import { selectConfig, openModal } from '../slices'
@@ -210,6 +210,22 @@ const CheckoutPage = () => {
     <>
       {isBrowser && <Background imageUrl={checkoutConfig.background} />}
       <div className="content">
+        {check && check.totals && (
+          <div className="checkout__header ot-dark">
+            <div className="container">
+              <div className="checkout__header__container">
+                <div className="checkout__header__label">
+                  <p className="ot-preface ot-font-size">
+                    Order Total w/ Tax & Tip
+                  </p>
+                </div>
+                <div className="checkout__header__value">
+                  <p className="">${displayPrice(check.totals.total)}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <PageTitle {...checkoutConfig} />
         <div className="checkout">
           <div className="container">

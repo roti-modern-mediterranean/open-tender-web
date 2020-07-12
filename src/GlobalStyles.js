@@ -89,6 +89,9 @@ const makeGlobalStyles = (theme) => css`
     color: ${theme.colors.secondary};
     font-size: ${theme.fontSizes.small};
   }
+  .ot-dark .ot-preface {
+    color: ${theme.colors.light};
+  }
   .ot-title {
     color: ${theme.colors.primary};
     font-size: ${theme.fonts.headings.sizes.h1};

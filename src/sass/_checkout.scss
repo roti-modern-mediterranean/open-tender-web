@@ -1,9 +1,24 @@
 .checkout {
-  // margin: 2rem 0 0;
-
   .loading {
     padding: 8rem 0;
     text-align: left;
+  }
+
+  &__header {
+    position: fixed;
+    z-index: 10;
+    top: $nav-height;
+    right: 0;
+    width: $width;
+    max-width: 100%;
+    height: $nav-height;
+
+    &__container {
+      height: $nav-height;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
   &__summary {
@@ -80,6 +95,10 @@ $width-tablet: 50%;
     @include breakpoint(tablet) {
       width: $width-tablet;
     }
+  }
+
+  .content {
+    padding-top: 2 * $nav-height;
   }
 
   .background,

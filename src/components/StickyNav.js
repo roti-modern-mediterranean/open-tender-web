@@ -22,7 +22,7 @@ const StickyNav = ({ items, offset = -100, duration = 500 }) => {
 
   const stickyClass = `sticky ${isSticky ? 'ot-stuck' : ''}`
   const stickyInnerClass = `sticky__inner ot-dark ${
-    isSticky ? 'ot-bg-color-primary ot-border-color ot-box-shadow' : ''
+    isSticky ? 'ot-border-color ot-box-shadow' : ''
   }`
 
   return (
