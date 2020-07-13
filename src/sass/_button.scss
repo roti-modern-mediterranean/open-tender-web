@@ -19,18 +19,10 @@ button {
   height: 1.2rem;
 }
 
-.clear-input {
-  position: absolute;
-  top: 1.2rem;
-  right: 0.7rem;
-  width: 1.4rem;
-  height: 1.4rem;
-}
-
 .ot-btn {
-  & + .ot-btn {
-    margin-left: 1rem;
-  }
+  // & + .ot-btn {
+  //   margin-left: 1rem;
+  // }
 
   &__icon-wrapper {
     display: flex;

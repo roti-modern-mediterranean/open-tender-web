@@ -80,6 +80,7 @@ $image-size: 4.5rem;
     &__buttons {
       display: flex;
       align-items: flex-start;
+      flex-wrap: wrap;
 
       button {
         margin: 0 0.5rem 0.5rem 0;

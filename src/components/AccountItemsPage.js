@@ -61,7 +61,7 @@ const AccountItemsPage = () => {
         <div className="section">
           <div className="container">
             <div className="section__container">
-              {isLoading && <SectionLoading loading={isLoading} />}
+              <SectionLoading loading={isLoading} />
               <SectionError error={error} />
               <div className="section__content">
                 {showItems &&

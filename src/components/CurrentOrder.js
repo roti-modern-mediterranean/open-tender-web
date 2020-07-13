@@ -85,9 +85,9 @@ const CurrentOrder = ({ order }) => {
             <div className="order-card__images">
               {cart
                 .filter((i) => i.imageUrl)
-                .map((i) => (
+                .map((i, index) => (
                   <OrderImage
-                    key={i.imageUrl}
+                    key={`${i.imageUrl}-${index}`}
                     imageUrl={i.imageUrl}
                     alt={i.name}
                     title={i.name}

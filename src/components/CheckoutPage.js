@@ -23,6 +23,7 @@ import { cardIconMap } from '../assets/cardIcons'
 import Background from './Background'
 import PageTitle from './PageTitle'
 import CheckoutHeader from './CheckoutHeader'
+import { User } from 'react-feather'
 
 const CheckoutPage = () => {
   const formRef = useRef()
@@ -38,6 +39,9 @@ const CheckoutPage = () => {
   const { check, completedOrder } = checkout
   const { serviceType, revenueCenter } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
+  const iconMap = {
+    signUp: <User size={null} />,
+  }
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -86,6 +90,7 @@ const CheckoutPage = () => {
               <CheckoutForm
                 dispatch={dispatch}
                 history={history}
+                iconMap={iconMap}
                 cardIconMap={cardIconMap}
                 config={checkoutConfig}
                 checkout={checkout}

@@ -188,6 +188,40 @@
   }
 }
 
+.clear-input {
+  position: absolute;
+  top: 1.4rem;
+  right: 0.9rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 0.1rem solid #000;
+  border-radius: 0.75rem;
+  opacity: 1;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:before,
+  &:after {
+    position: absolute;
+    top: 0.2rem;
+    left: 0.6rem;
+    content: ' ';
+    height: 0.9rem;
+    width: 0.1rem;
+    background-color: #000;
+  }
+
+  &:before {
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    transform: rotate(-45deg);
+  }
+}
+
 input,
 textarea,
 select {

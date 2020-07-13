@@ -21,6 +21,10 @@
     @include breakpoint(mobile_both) {
       padding: 0 0 ($padding-mobile * 2);
     }
+
+    .section__loading {
+      margin: -($padding) 0 0;
+    }
   }
 
   &__header,

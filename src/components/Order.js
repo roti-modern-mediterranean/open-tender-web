@@ -2,8 +2,6 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  addCustomerFavorite,
-  removeCustomerFavorite,
   selectCustomerFavorites,
   setOrderServiceType,
   setAddress,
@@ -16,7 +14,7 @@ import {
   isEmpty,
   isoToDate,
 } from '@open-tender/js'
-import { Button, CartItem, OrderQuantity, Check } from '@open-tender/components'
+import { Button, CartItem, Check } from '@open-tender/components'
 
 import { openModal } from '../slices'
 import SectionHeader from './SectionHeader'
@@ -26,6 +24,7 @@ import OrderRating from './OrderRating'
 import OrderRequestedAt from './OrderRequestedAt'
 import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderError from './OrderError'
+import OrderQuantity from './OrderQuantity'
 import Loader from './Loader'
 
 const Order = ({ order, loading, error }) => {
@@ -66,15 +65,6 @@ const Order = ({ order, loading, error }) => {
   } = details || {}
   const hasDetails =
     eating_utensils || serving_utensils || person_count || tax_exempt_id
-
-  const addFavorite = (cart) => {
-    const data = { cart }
-    dispatch(addCustomerFavorite(data))
-  }
-
-  const removeFavorite = (favoriteId) => {
-    dispatch(removeCustomerFavorite(favoriteId))
-  }
 
   const handleEdit = (evt) => {
     evt.preventDefault()
@@ -218,8 +208,6 @@ const Order = ({ order, loading, error }) => {
                               item={item}
                               show={lookup ? true : false}
                               favoriteId={favoriteId}
-                              addFavorite={addFavorite}
-                              removeFavorite={removeFavorite}
                             />
                           </CartItem>
                         </li>

@@ -527,6 +527,21 @@ const makeGlobalStyles = (theme) => css`
     border-color: ${theme.colors.link};
     background-color: ${theme.colors.link};
   }
+
+  .clear-input {
+    border-color: ${theme.colors.link};
+    &:before,
+    &:after {
+      background-color: ${theme.colors.link};
+    }
+    &:hover {
+      border-color: ${theme.colors.primary};
+      &:before,
+      &:after {
+        background-color: ${theme.colors.primary};
+      }
+    }
+  }
 `
 
 const GlobalStyles = withTheme(({ theme }) => (

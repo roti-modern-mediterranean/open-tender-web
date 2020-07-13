@@ -2,15 +2,15 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  addCustomerFavorite,
-  removeCustomerFavorite,
   selectCustomerFavorites,
   selectMenuItems,
   showNotification,
   addItemToCart,
 } from '@open-tender/redux'
 import { displayPrice, rehydrateOrderItem } from '@open-tender/js'
-import { Button, ButtonFavorite } from '@open-tender/components'
+import { Button } from '@open-tender/components'
+
+import { ButtonFavorite } from './buttons'
 
 const OrderItemCard = ({ item }) => {
   const dispatch = useDispatch()
@@ -37,15 +37,6 @@ const OrderItemCard = ({ item }) => {
       dispatch(showNotification('Item added to cart!'))
     }
     evt.target.blur()
-  }
-
-  const addFavorite = (cart) => {
-    const data = { cart }
-    dispatch(addCustomerFavorite(data))
-  }
-
-  const removeFavorite = (favoriteId) => {
-    dispatch(removeCustomerFavorite(favoriteId))
   }
 
   return (
@@ -80,12 +71,7 @@ const OrderItemCard = ({ item }) => {
               onClick={(evt) => addToCart(evt, item)}
               classes="ot-btn--small ot-font-size-small"
             />
-            <ButtonFavorite
-              item={item}
-              favoriteId={favoriteId}
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
-            />
+            <ButtonFavorite item={item} favoriteId={favoriteId} />
           </div>
         </div>
       </div>

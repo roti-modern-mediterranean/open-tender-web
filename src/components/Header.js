@@ -6,18 +6,11 @@ import {
   selectTimezone,
   resetOrderType,
   selectAutoSelect,
-  resetOrder,
   resetCheckout,
   selectCustomer,
-  logoutCustomer,
 } from '@open-tender/redux'
 import { makeServiceTypeName } from '@open-tender/js'
 import {
-  ButtonAccount,
-  ButtonSignUp,
-  ButtonAllergens,
-  ButtonCancelEdit,
-  ButtonGroupOrder,
   ButtonRevenueCenter,
   ButtonRequestedAt,
   ButtonServiceType,
@@ -26,7 +19,15 @@ import {
 
 import { selectOutpostName, openModal } from '../slices'
 import HeaderLogo from './HeaderLogo'
-import { ButtonMenu, ButtonBackToAccount } from './buttons'
+import {
+  ButtonAccount,
+  ButtonAllergens,
+  ButtonBackToAccount,
+  ButtonCancelEdit,
+  ButtonGroupOrder,
+  ButtonMenu,
+  ButtonSignUp,
+} from './buttons'
 
 // const makeClasses = (pathname) => {
 //   return ['checkout'].map((i) => (pathname.includes(i) ? 'header__stuck' : ''))
@@ -62,7 +63,6 @@ const Header = () => {
   const isRevenueCenterPage = pathname.includes('locations/')
   const isMenu = pathname.includes('menu')
   const isLocations = pathname.includes('locations')
-  const isAccount = pathname.includes('account')
   const isAccountSubpage = testAccountSubpage(pathname)
   const isCatering = orderType === 'CATERING'
   const serviceTypeName = makeServiceTypeName(
@@ -71,34 +71,9 @@ const Header = () => {
     isOutpost,
     outpostName
   )
-  const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering_allowed
   const showSignUp = true
   // let classes = makeClasses(pathname)
   const classes = ''
-
-  const handleLogin = (evt) => {
-    evt.preventDefault()
-    dispatch(openModal({ type: 'login' }))
-    evt.target.blur()
-  }
-
-  const handleSignUp = (evt) => {
-    evt.preventDefault()
-    history.push(`/signup`)
-    evt.target.blur()
-  }
-
-  const handleAccount = (evt) => {
-    evt.preventDefault()
-    history.push(`/account`)
-    evt.target.blur()
-  }
-
-  const handleLogout = (evt) => {
-    evt.preventDefault()
-    dispatch(logoutCustomer())
-    evt.target.blur()
-  }
 
   const handleStartOver = (evt) => {
     evt.preventDefault()
@@ -112,8 +87,6 @@ const Header = () => {
     evt.preventDefault()
     const startOver = () => history.push(`/`)
     dispatch(openModal({ type: 'orderType', args: { startOver } }))
-    // dispatch(resetOrderType())
-    // history.push(`/`)
     evt.target.blur()
   }
 
@@ -132,26 +105,6 @@ const Header = () => {
   const handleRequestedAt = (evt) => {
     evt.preventDefault()
     dispatch(openModal({ type: 'requestedAt' }))
-    evt.target.blur()
-  }
-
-  const handleAllergens = (evt) => {
-    evt.preventDefault()
-    dispatch(openModal({ type: 'allergens' }))
-    evt.target.blur()
-  }
-
-  const handleGroupOrder = (evt) => {
-    evt.preventDefault()
-    dispatch(openModal({ type: 'groupOrder' }))
-    evt.target.blur()
-  }
-
-  const handleCancelEdit = (evt) => {
-    evt.preventDefault()
-    dispatch(resetOrder())
-    dispatch(resetCheckout())
-    history.push(`/account`)
     evt.target.blur()
   }
 
@@ -181,21 +134,8 @@ const Header = () => {
             )}
           </div>
           <div className="header__actions">
-            <ButtonAccount
-              account={profile}
-              isAccount={isAccount || isAccountSubpage}
-              login={handleLogin}
-              logout={handleLogout}
-              goToAccount={handleAccount}
-              classes="ot-btn--secondary ot-btn--header"
-            />
-            {isHome && !profile && showSignUp && (
-              <ButtonSignUp
-                text="Sign Up"
-                signUp={handleSignUp}
-                classes="ot-btn--secondary ot-btn--header"
-              />
-            )}
+            <ButtonAccount />
+            {isHome && !profile && showSignUp && <ButtonSignUp />}
             {revenueCenter && !isCheckout && !autoSelect && (
               <ButtonRevenueCenter
                 revenueCenter={revenueCenter}
@@ -221,24 +161,11 @@ const Header = () => {
             )}
             {isMenu && (
               <>
-                <ButtonAllergens
-                  onClick={handleAllergens}
-                  classes="ot-btn--secondary ot-btn--header"
-                />
-                {hasGroupOrdering && (
-                  <ButtonGroupOrder
-                    onClick={handleGroupOrder}
-                    classes="ot-btn--secondary ot-btn--header"
-                  />
-                )}
+                <ButtonAllergens />
+                <ButtonGroupOrder />
               </>
             )}
-            {orderId && (
-              <ButtonCancelEdit
-                onClick={handleCancelEdit}
-                classes="ot-btn--cancel ot-btn--header"
-              />
-            )}
+            {orderId && <ButtonCancelEdit orderId={orderId} />}
           </div>
         </div>
       </div>
