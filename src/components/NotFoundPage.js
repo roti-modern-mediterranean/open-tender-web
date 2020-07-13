@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 import { selectToken } from '@open-tender/redux'
 
 import { selectConfig } from '../slices'
-import SectionHeader from './SectionHeader'
+import PageTitle from './PageTitle'
+import Background from './Background'
 
 const NotFoundPage = () => {
   const history = useHistory()
-  const { notFound: notFoundConifg } = useSelector(selectConfig)
-  const { title, subtitle, back } = notFoundConifg
+  const config = useSelector(selectConfig)
+  const { background, back } = config.notFound
   const token = useSelector(selectToken)
 
   useEffect(() => {
@@ -18,20 +20,16 @@ const NotFoundPage = () => {
 
   return (
     <>
-      <h1 className="sr-only">{title}</h1>
-      <div className="signup content ot-bg-color-secondary">
-        <div className="section">
+      {isBrowser && <Background imageUrl={background} />}
+      <div className="content">
+        <PageTitle {...config.notFound} />
+        <div className="content__body slide-up">
           <div className="container">
-            <div className="section__container">
-              <SectionHeader title={title} subtitle={subtitle} />
-              <div className="section__footer">
-                <p className="">
-                  <Link to="/" className="">
-                    {back}
-                  </Link>
-                </p>
-              </div>
-            </div>
+            <p className="">
+              <Link to="/" className="">
+                {back}
+              </Link>
+            </p>
           </div>
         </div>
       </div>

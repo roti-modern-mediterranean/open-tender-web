@@ -23,7 +23,7 @@ import { cardIconMap } from '../assets/cardIcons'
 import Background from './Background'
 import PageTitle from './PageTitle'
 import CheckoutHeader from './CheckoutHeader'
-import { User } from 'react-feather'
+import { User, ShoppingBag, Truck, Clock, MapPin } from 'react-feather'
 
 const CheckoutPage = () => {
   const formRef = useRef()
@@ -41,6 +41,11 @@ const CheckoutPage = () => {
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const iconMap = {
     signUp: <User size={null} />,
+    account: <User size={null} />,
+    pickup: <ShoppingBag size={null} />,
+    delivery: <Truck size={null} />,
+    requestedAt: <Clock size={null} />,
+    revenueCenter: <MapPin size={null} />,
   }
 
   useEffect(() => {

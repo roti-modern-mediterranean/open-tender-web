@@ -1,5 +1,7 @@
 const contentConfig = {
   notFound: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594650725_f5fcb07c62de0bedd619.jpg',
     title: 'Page Not Found',
     subtitle: "Sorry, but we couldn't find the page you're looking for.",
     back: 'Head back to our homepage and give it another try',
