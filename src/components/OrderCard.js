@@ -19,6 +19,7 @@ import { Button, DeliveryLink } from '@open-tender/components'
 
 import OrderImages from './OrderImages'
 import OrderTag from './OrderTag'
+import iconMap from './iconMap'
 
 const OrderCard = ({ order, isLast }) => {
   const history = useHistory()
@@ -108,14 +109,14 @@ const OrderCard = ({ order, isLast }) => {
             {order.is_editable && (
               <Button
                 text="Edit"
-                icon="Edit"
+                icon={iconMap['Edit']}
                 onClick={handleEdit}
                 classes="ot-btn--small ot-font-size-small"
               />
             )}
             <Button
               text="Reorder"
-              icon="RefreshCw"
+              icon={iconMap['RefreshCw']}
               onClick={handleReorder}
               classes={`ot-btn--small ot-font-size-small ${
                 order.is_editable ? 'ot-btn--secondary' : ''
@@ -124,7 +125,7 @@ const OrderCard = ({ order, isLast }) => {
             <Button
               // text={`Details ${!isUpcoming ? '/ Rate' : ''}`}
               text="Details"
-              icon="FileText"
+              icon={iconMap['FileText']}
               onClick={handleDetails}
               classes="ot-btn--small ot-btn--secondary ot-font-size-small"
             />

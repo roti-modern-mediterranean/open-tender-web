@@ -3,9 +3,12 @@ import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { Button } from '@open-tender/components'
 
+import iconMap from '../iconMap'
+
 const ButtonBackToAccount = ({
   text = 'Back To Account',
   classes = 'ot-btn--secondary ot-btn--header',
+  icon = iconMap['ArrowLeft'],
 }) => {
   const history = useHistory()
 
@@ -16,20 +19,15 @@ const ButtonBackToAccount = ({
   }
 
   return (
-    <Button
-      text={text}
-      icon="ArrowLeft"
-      classes={classes}
-      onClick={backToAccount}
-    />
+    <Button text={text} icon={icon} classes={classes} onClick={backToAccount} />
   )
 }
 
 ButtonBackToAccount.displayName = 'ButtonBackToAccount'
 ButtonBackToAccount.propTypes = {
   text: propTypes.string,
-  onClick: propTypes.func,
   classes: propTypes.string,
+  icon: propTypes.element,
 }
 
 export default ButtonBackToAccount

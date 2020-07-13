@@ -19,6 +19,7 @@ import Menu from './Menu'
 import RevenueCenter from './RevenueCenter'
 import Loader from './Loader'
 import ErrorMessage from './ErrorMessage'
+import iconMap from './iconMap'
 
 export const MenuContext = createContext(null)
 
@@ -69,7 +70,7 @@ const MenuPage = () => {
         <ErrorMessage title="Menu Not Found" msg={error}>
           <Button
             text="Change Location"
-            icon="RefreshCw"
+            icon={iconMap['RefreshCw']}
             classes="ot-btn ot-btn--cancel"
             onClick={changeLocation}
           />

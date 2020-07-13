@@ -16,6 +16,7 @@ import { Button } from '@open-tender/components'
 import { selectConfigAccountSections } from '../slices'
 import OrderTag from './OrderTag'
 import OrderImage from './OrderImage'
+import iconMap from './iconMap'
 
 const CurrentOrder = ({ order }) => {
   const history = useHistory()
@@ -103,13 +104,13 @@ const CurrentOrder = ({ order }) => {
           <div className="order-card__footer__buttons">
             <Button
               text="Checkout"
-              icon="DollarSign"
+              icon={iconMap['DollarSign']}
               onClick={checkout}
               classes="ot-btn--small ot-font-size-small"
             />
             <Button
               text="Back To Menu"
-              icon="Map"
+              icon={iconMap['Map']}
               onClick={backToMenu}
               classes="ot-btn--small ot-btn--secondary ot-font-size-small"
             />

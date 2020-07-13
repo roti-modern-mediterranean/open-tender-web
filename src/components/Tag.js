@@ -1,6 +1,5 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { iconMap } from '@open-tender/components'
 
 const Tag = ({
   text,
@@ -11,9 +10,7 @@ const Tag = ({
   return (
     <span className={`tag ot-preface ${bgClass}`}>
       <span className="tag__container">
-        {icon && (
-          <span className={`tag__icon ${textClass}`}>{iconMap[icon]}</span>
-        )}
+        {icon && <span className={`tag__icon ${textClass}`}>{icon}</span>}
         <span className={`ot-font-size-x-small ${textClass}`}>{text}</span>
       </span>
     </span>

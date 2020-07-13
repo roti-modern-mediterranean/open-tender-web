@@ -7,6 +7,7 @@ import { convertStringToArray } from '@open-tender/js'
 import { openModal } from '../slices'
 import { MenuContext } from './MenuPage'
 import Tag from './Tag'
+import iconMap from './iconMap'
 
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
@@ -64,7 +65,7 @@ const MenuItem = ({ item }) => {
                 <div className="menu__item__overlay ot-border-radius">
                   <div className="menu__item__overlay__container">
                     <Tag
-                      icon="AlertCircle"
+                      icon={iconMap['AlertCircle']}
                       text={`Contains ${allergenAlert.join(', ')}`}
                       bgClass="ot-warning"
                     />

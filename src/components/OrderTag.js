@@ -2,12 +2,14 @@ import React from 'react'
 import propTypes from 'prop-types'
 import Tag from './Tag'
 
+import iconMap from './iconMap'
+
 const OrderTag = ({ isUpcoming, status }) => {
   const tag = isUpcoming
     ? {
         bgClass: '-upcoming ot-warning',
         text: status === 'IN_PROGRESS' ? 'In Progress' : 'Coming up',
-        icon: 'AlertCircle',
+        icon: iconMap['AlertCircle'],
       }
     : status === 'REFUNDED'
     ? {
@@ -17,7 +19,7 @@ const OrderTag = ({ isUpcoming, status }) => {
     : {
         bgClass: '-completed ot-success',
         text: 'Completed',
-        icon: 'CheckCircle',
+        icon: iconMap['CheckCircle'],
       }
   return (
     <Tag

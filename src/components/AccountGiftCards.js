@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectCustomerGiftCards } from '@open-tender/redux'
+import { Button } from '@open-tender/components'
 import { slugify, formatDateStr, dateStrToDate } from '@open-tender/js'
 
 import { selectConfigAccountSections } from '../slices'
@@ -8,8 +9,8 @@ import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionRow from './SectionRow'
-import { Button } from '@open-tender/components'
 import SectionFooter from './SectionFooter'
+import iconMap from './iconMap'
 
 const AccountGiftCards = () => {
   const {
@@ -76,7 +77,7 @@ const AccountGiftCards = () => {
                           <div className="section__row__container__buttons">
                             <Button
                               text="Add Value"
-                              icon="PlusCircle"
+                              icon={iconMap['PlusCircle']}
                               onClick={(evt) => handleAddValue(evt, giftCard)}
                               classes="ot-btn--small ot-font-size-small"
                               disabled={isLoading}

@@ -11,6 +11,7 @@ import { displayPrice, rehydrateOrderItem } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
 import { ButtonFavorite } from './buttons'
+import iconMap from './iconMap'
 
 const OrderItemCard = ({ item }) => {
   const dispatch = useDispatch()
@@ -67,7 +68,7 @@ const OrderItemCard = ({ item }) => {
           <div className="order-card__footer__buttons">
             <Button
               text="Add To Cart"
-              icon="PlusCircle"
+              icon={iconMap['PlusCircle']}
               onClick={(evt) => addToCart(evt, item)}
               classes="ot-btn--small ot-font-size-small"
             />

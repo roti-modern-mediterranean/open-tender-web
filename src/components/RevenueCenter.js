@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import { stripTags } from '@open-tender/js'
 import RevenueCenterOrder from './RevenueCenterOrder'
 import RevenueCenterAction from './RevenueCenterAction'
+import iconMap from './iconMap'
 
 const placeholder2 =
   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg'
@@ -21,7 +22,7 @@ const RevenueCenter = ({
   const phoneUrl = address.phone ? `tel:${address.phone}` : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
   classes = `rc ot-bg-color-primary ot-border-radius ot-border-color ${classes}`
-  const hoursDescIcon = is_outpost ? 'AlertCircle' : 'Clock'
+  const hoursDescIcon = is_outpost ? iconMap['AlertCircle'] : iconMap['Clock']
   const hoursDescClass = is_outpost ? 'ot-color-alert' : 'ot-color-secondary'
 
   const distance =
@@ -58,7 +59,10 @@ const RevenueCenter = ({
               rel="noopener noreferrer"
               target="_blank"
             >
-              <RevenueCenterAction icon="MapPin" text={address.street} />
+              <RevenueCenterAction
+                icon={iconMap['MapPin']}
+                text={address.street}
+              />
             </a>
             {phoneUrl && (
               <a
@@ -67,7 +71,10 @@ const RevenueCenter = ({
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <RevenueCenterAction icon="Phone" text={address.phone} />
+                <RevenueCenterAction
+                  icon={iconMap['Phone']}
+                  text={address.phone}
+                />
               </a>
             )}
             {hoursDesc && (

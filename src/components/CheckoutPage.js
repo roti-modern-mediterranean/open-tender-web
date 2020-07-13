@@ -23,7 +23,20 @@ import { cardIconMap } from '../assets/cardIcons'
 import Background from './Background'
 import PageTitle from './PageTitle'
 import CheckoutHeader from './CheckoutHeader'
-import { User, ShoppingBag, Truck, Clock, MapPin } from 'react-feather'
+import {
+  User,
+  ShoppingBag,
+  Truck,
+  Clock,
+  MapPin,
+  Navigation,
+  DollarSign,
+  XCircle,
+  PlusCircle,
+  Grid,
+  CreditCard,
+  Home,
+} from 'react-feather'
 
 const CheckoutPage = () => {
   const formRef = useRef()
@@ -46,6 +59,14 @@ const CheckoutPage = () => {
     delivery: <Truck size={null} />,
     requestedAt: <Clock size={null} />,
     revenueCenter: <MapPin size={null} />,
+    address: <Navigation size={null} />,
+    tip: <DollarSign size={null} />,
+    add: <PlusCircle size={null} />,
+    remove: <XCircle size={null} />,
+    cash: <DollarSign size={null} />,
+    credit: <CreditCard size={null} />,
+    levelup: <Grid size={null} />,
+    house_account: <Home size={null} />,
   }
 
   useEffect(() => {

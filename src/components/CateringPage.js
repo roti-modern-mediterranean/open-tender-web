@@ -29,6 +29,7 @@ import Background from './Background'
 import Loader from './Loader'
 import ErrorMessage from './ErrorMessage'
 import PageTitle from './PageTitle'
+import iconMap from './iconMap'
 
 const CateringPage = () => {
   const history = useHistory()
@@ -148,7 +149,7 @@ const CateringPage = () => {
                   <ErrorMessage msg={error}>
                     <Button
                       text="Start Over"
-                      icon="RefreshCw"
+                      icon={iconMap['RefreshCw']}
                       classes="ot-btn ot-btn--cancel"
                       onClick={startOver}
                     />

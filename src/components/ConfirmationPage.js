@@ -9,7 +9,7 @@ import {
   resetCustomerOrder,
 } from '@open-tender/redux'
 
-import { selectConfig } from '../slices'
+import { selectConfig, selectBrand } from '../slices'
 import Order from './Order'
 import Background from './Background'
 import PageTitle from './PageTitle'
@@ -17,7 +17,8 @@ import PageTitle from './PageTitle'
 const ConfirmationPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { confirmation: config } = useSelector(selectConfig)
+  const config = useSelector(selectConfig)
+  const brand = useSelector(selectBrand)
   const order = useSelector(selectConfirmationOrder)
   const { auth } = useSelector(selectCustomer)
 
@@ -44,9 +45,9 @@ const ConfirmationPage = () => {
 
   return (
     <>
-      {isBrowser && <Background imageUrl={config.background} />}
+      {isBrowser && <Background imageUrl={config.confirmation.background} />}
       <div className="content">
-        <PageTitle {...config} />
+        <PageTitle {...config.confirmation} />
         <div className="slide-up">
           <div className="container">
             {auth ? (
@@ -56,7 +57,7 @@ const ConfirmationPage = () => {
                   className="ot-btn-link"
                   onClick={reviewAccount}
                 >
-                  Review your account
+                  Head back to your account
                 </button>
                 {' or '}
                 <button
@@ -64,17 +65,25 @@ const ConfirmationPage = () => {
                   className="ot-btn-link"
                   onClick={startNewOrder}
                 >
-                  start a new order
+                  start another order
                 </button>
               </p>
             ) : (
               <p>
+                <a
+                  className="no-link"
+                  href={brand.url}
+                  rel="noopener noreferrer"
+                >
+                  Head back to our website
+                </a>
+                {' or '}
                 <button
                   type="button"
                   className="ot-btn-link"
                   onClick={startNewOrder}
                 >
-                  Start a new order
+                  start another order
                 </button>
               </p>
             )}

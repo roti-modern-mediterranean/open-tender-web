@@ -2,6 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import {
+  selectCustomer,
   selectCustomerFavorites,
   setOrderServiceType,
   setAddress,
@@ -26,6 +27,7 @@ import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderError from './OrderError'
 import OrderQuantity from './OrderQuantity'
 import Loader from './Loader'
+import iconMap from './iconMap'
 
 const Order = ({ order, loading, error }) => {
   const {
@@ -55,6 +57,7 @@ const Order = ({ order, loading, error }) => {
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
   const { lookup = {} } = useSelector(selectCustomerFavorites)
+  const { auth } = useSelector(selectCustomer)
   const check = { surcharges, discounts, taxes, totals, details }
   const {
     eating_utensils,
@@ -105,17 +108,21 @@ const Order = ({ order, loading, error }) => {
               </h1>
               <div className="order__buttons">
                 {order.is_editable && (
-                  <Button text="Edit" icon="Edit" onClick={handleEdit} />
+                  <Button
+                    text="Edit"
+                    icon={iconMap['Edit']}
+                    onClick={handleEdit}
+                  />
                 )}
                 <Button
                   text="Reorder"
-                  icon="RefreshCw"
+                  icon={iconMap['RefreshCw']}
                   onClick={handleReorder}
                 />
                 {!isUpcoming && (
                   <Button
                     text={rating ? 'Update Rating' : 'Add Rating'}
-                    icon="Star"
+                    icon={iconMap['Star']}
                     onClick={updateRating}
                   />
                 )}
@@ -206,7 +213,7 @@ const Order = ({ order, loading, error }) => {
                           <CartItem item={item} showModifiers={true}>
                             <OrderQuantity
                               item={item}
-                              show={lookup ? true : false}
+                              show={auth && lookup ? true : false}
                               favoriteId={favoriteId}
                             />
                           </CartItem>

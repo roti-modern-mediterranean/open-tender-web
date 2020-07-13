@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { iconMap } from '@open-tender/components'
+
+import iconMap from './iconMap'
 
 const RevenueCenterAction = ({
   icon,
@@ -11,7 +12,7 @@ const RevenueCenterAction = ({
   const iconArrow = arrow === null ? ' ' : iconMap[arrow]
   return (
     <div className="rc__action">
-      <div className={`rc__icon ${iconClass}`}>{iconMap[icon]}</div>
+      <div className={`rc__icon ${iconClass}`}>{icon}</div>
       <div className="rc__text">
         <p className="ot-color-secondary ot-font-size-small">{text}</p>
       </div>

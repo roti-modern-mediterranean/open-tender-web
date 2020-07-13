@@ -18,6 +18,7 @@ import CurrentOrder from './CurrentOrder'
 import OrderCard from './OrderCard'
 import AccountLoyalty from './AccountLoyalty'
 import Loader from './Loader'
+import iconMap from './iconMap'
 
 const GreetingLink = ({ sectionTitle, text }) => (
   <Link
@@ -111,7 +112,7 @@ const AccountGreeting = () => {
                 <>
                   <Button
                     text="Continue Current Order"
-                    icon="ShoppingBag"
+                    icon={iconMap['ShoppingBag']}
                     onClick={continueCurrent}
                   />
                   <p className="ot-font-size-small">
@@ -126,7 +127,7 @@ const AccountGreeting = () => {
                 <>
                   <Button
                     text={`Order ${capitalize(orderType)} Again`}
-                    icon="ShoppingBag"
+                    icon={iconMap['ShoppingBag']}
                     onClick={continueCurrent}
                   />
                   <p className="ot-font-size-small">
@@ -142,7 +143,7 @@ const AccountGreeting = () => {
               ) : (
                 <Button
                   text="Start a New Order"
-                  icon="ShoppingBag"
+                  icon={iconMap['ShoppingBag']}
                   onClick={startNewOrder}
                 />
               )}

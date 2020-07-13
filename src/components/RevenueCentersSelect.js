@@ -23,6 +23,7 @@ import {
 import { Button, GoogleMapsAutocomplete } from '@open-tender/components'
 
 import { selectConfig, selectGeoLatLng } from '../slices'
+import iconMap from './iconMap'
 import RevenueCenter from './RevenueCenter'
 import PageTitle from './PageTitle'
 import Loader from './Loader'
@@ -154,6 +155,7 @@ const RevenueCentersSelect = ({
                 formattedAddress={formattedAddress}
                 setAddress={(address) => dispatch(setAddress(address))}
                 setCenter={setCenter}
+                icon={iconMap['Navigation']}
               />
             </div>
           )}

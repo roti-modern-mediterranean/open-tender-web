@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Plus, Minus } from 'react-feather'
 import {
   setCurrentItem,
   incrementItemInCart,
@@ -10,6 +11,11 @@ import {
 import { CartItem, BuilderQuantity } from '@open-tender/components'
 
 import { openModal } from '../slices'
+
+const iconMap = {
+  plus: <Plus size={null} />,
+  minus: <Minus size={null} />,
+}
 
 const Cart = () => {
   const dispatch = useDispatch()
@@ -47,6 +53,7 @@ const Cart = () => {
                 incrementDisabled={item.quantity === item.max}
                 decrementDisabled={false}
                 classes={null}
+                iconMap={iconMap}
               />
             </CartItem>
           </li>

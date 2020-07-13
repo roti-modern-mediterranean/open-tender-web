@@ -11,20 +11,21 @@ import { CartErrors } from '@open-tender/components'
 
 import { closeModal, selectConfig } from '../../slices'
 import ModalClose from '../ModalClose'
+import iconMap from '../iconMap'
 
 const CartErrorsModal = () => {
   const dispatch = useDispatch()
   const { cartErrors, previousMenuVars, menuVars } = useSelector(selectMenu)
-  const { newCart, errors } = cartErrors
+  const { newCart, errors } = cartErrors || {}
   const { menu: menuConfig } = useSelector(selectConfig)
   const { validate: config } = menuConfig
   const { revenueCenters } = useSelector(selectRevenueCenters)
 
   const handleRevert = (evt, revenueCenter, menuVars) => {
     evt.preventDefault()
+    dispatch(closeModal())
     dispatch(setRevenueCenter(revenueCenter))
     dispatch(fetchMenu(menuVars))
-    dispatch(closeModal())
     evt.target.blur()
   }
 
@@ -51,7 +52,9 @@ const CartErrorsModal = () => {
             errors={errors}
             config={config}
             revert={handleRevert}
+            revertIcon={iconMap['ChevronLeft']}
             proceed={handleProceed}
+            proceedIcon={iconMap['Trash2']}
             revenueCenters={revenueCenters}
             previousMenuVars={previousMenuVars}
             menuVars={menuVars}

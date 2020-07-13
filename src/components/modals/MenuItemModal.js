@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
+import { Plus, Minus } from 'react-feather'
 import {
   selectCurrentItem,
   setCurrentItem,
@@ -13,6 +14,11 @@ import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
+
+const iconMap = {
+  plus: <Plus size={null} />,
+  minus: <Minus size={null} />,
+}
 
 const MenuItemModal = () => {
   const dispatch = useDispatch()
@@ -49,6 +55,7 @@ const MenuItemModal = () => {
             renderHeader={(props) => <BuilderHeader {...props} />}
             renderOption={(props) => <BuilderOption {...props} />}
             showImage={true}
+            iconMap={iconMap}
           />
         )}
       </div>

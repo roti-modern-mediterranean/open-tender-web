@@ -10,6 +10,8 @@ import {
 } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
+import iconMap from './iconMap'
+
 export const RevenueCenterButtons = ({ revenueCenter }) => {
   const dispatch = useDispatch()
   const history = useHistory()
@@ -58,7 +60,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
         <Button
           text={`Order ${hasDelivery ? 'Pickup' : 'Here'}`}
           ariaLabel={`Order Pickup from ${name}`}
-          icon="ShoppingBag"
+          icon={iconMap['ShoppingBag']}
           onClick={handlePickup}
         />
       )}
@@ -66,7 +68,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
         <Button
           text="Order Delivery"
           ariaLabel={`Order Delivery from ${name}`}
-          icon="Truck"
+          icon={iconMap['Truck']}
           onClick={handleDelivery}
         />
       )}

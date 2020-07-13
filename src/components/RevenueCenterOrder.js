@@ -8,10 +8,11 @@ import {
   selectOrder,
   selectAutoSelect,
 } from '@open-tender/redux'
-import { selectConfig } from '../slices'
-// import { Button } from '@open-tender/components'
 import { Button } from '@open-tender/components'
+
+import { selectConfig } from '../slices'
 import RevenueCenterButtons from './RevenueCenterButtons'
+import iconMap from './iconMap'
 
 export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {
   const dispatch = useDispatch()
@@ -52,13 +53,13 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {
         <Button
           text="Order Here"
           ariaLabel={`Order from ${name}`}
-          icon="ShoppingBag"
+          icon={iconMap['ShoppingBag']}
           onClick={handleOrder}
         />
       ) : !autoSelect ? (
         <Button
           text="Change Location"
-          icon="RefreshCw"
+          icon={iconMap['RefreshCw']}
           onClick={handleChange}
         />
       ) : null}

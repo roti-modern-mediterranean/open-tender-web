@@ -5,9 +5,12 @@ import { useSelector } from 'react-redux'
 import { selectMenuSlug } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
+import iconMap from '../iconMap'
+
 const ButtonMenu = ({
   text = 'Back To Menu',
   classes = 'ot-btn--secondary ot-btn--header',
+  icon = iconMap['ArrowLeft'],
 }) => {
   const history = useHistory()
   const menuSlug = useSelector(selectMenuSlug)
@@ -16,9 +19,7 @@ const ButtonMenu = ({
     history.push(menuSlug)
     evt.target.blur()
   }
-  return (
-    <Button text={text} icon="ArrowLeft" classes={classes} onClick={onClick} />
-  )
+  return <Button text={text} icon={icon} classes={classes} onClick={onClick} />
 }
 
 ButtonMenu.displayName = 'ButtonMenu'

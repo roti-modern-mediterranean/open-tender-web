@@ -12,6 +12,7 @@ import { Button } from '@open-tender/components'
 import { openModal } from '../slices'
 import SectionRow from './SectionRow'
 import OrderAddress from './OrderAddress'
+import iconMap from './iconMap'
 
 const Addresses = ({ addresses, isLoading }) => {
   const dispatch = useDispatch()
@@ -91,7 +92,7 @@ const Addresses = ({ addresses, isLoading }) => {
               <div className="section__row__container__buttons">
                 <Button
                   text="Order from here"
-                  icon="RefreshCw"
+                  icon={iconMap['RefreshCw']}
                   onClick={(evt) => handleReorder(evt, address)}
                   classes="ot-btn--small ot-font-size-small"
                   disabled={isLoading}
