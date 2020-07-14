@@ -12,12 +12,19 @@
     width: $width;
     max-width: 100%;
     height: $nav-height;
+    @include breakpoint(mobile_both) {
+      top: 0;
+      height: $nav-height-mobile;
+    }
 
     &__container {
       height: $nav-height;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      @include breakpoint(mobile_both) {
+        height: $nav-height-mobile;
+      }
     }
   }
 
@@ -89,6 +96,9 @@ $width-tablet: 50%;
 
   .content {
     padding-top: 2 * $nav-height;
+    @include breakpoint(mobile_both) {
+      padding-top: $nav-height-mobile;
+    }
   }
 
   .background,

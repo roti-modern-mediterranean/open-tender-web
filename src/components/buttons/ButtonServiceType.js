@@ -23,7 +23,14 @@ const ButtonServiceType = ({
     isOutpost,
     outpostName
   )
-  const icon = iconMap[serviceType === 'DELIVERY' ? 'Truck' : 'ShoppingBag']
+  const icon =
+    iconMap[
+      isCatering
+        ? 'Calendar'
+        : serviceType === 'DELIVERY'
+        ? 'Truck'
+        : 'ShoppingBag'
+    ]
 
   const handleServiceType = (evt) => {
     evt.preventDefault()

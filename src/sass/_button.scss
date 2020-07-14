@@ -78,3 +78,26 @@ button {
     flex-shrink: 0;
   }
 }
+
+.ot-btn.ot-btn--mobile {
+  .ot-btn__icon-wrapper {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .ot-btn__icon {
+    margin: 0;
+    top: auto;
+    width: 1.8rem;
+    height: 1.8rem;
+    flex-shrink: 0;
+  }
+
+  .ot-btn__text {
+    display: none;
+    margin: 0.4rem 0 0 -0.1rem;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}

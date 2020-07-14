@@ -2,7 +2,16 @@
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  padding-top: $nav-height;
+  padding: $nav-height 0 0;
+  @include breakpoint(mobile_both) {
+    padding: 0;
+  }
+
+  .main--account & {
+    @include breakpoint(mobile_both) {
+      padding: $nav-height-mobile 0 0;
+    }
+  }
 
   &__container {
     max-width: 108rem;
@@ -14,11 +23,11 @@
   }
 
   &__body {
-    margin: 0 0 5rem;
+    padding: 0 0 5rem;
   }
 
   &__footer {
-    margin: 0 0 5rem;
+    padding: 0 0 5rem;
 
     p {
       margin: 1em 0;
@@ -116,5 +125,6 @@
   z-index: 1;
   @include breakpoint(mobile_both) {
     margin-top: $map-mobile-height;
+    // min-height: 100vh;
   }
 }

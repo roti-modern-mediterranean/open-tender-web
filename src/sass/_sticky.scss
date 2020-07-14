@@ -1,6 +1,15 @@
 .sticky {
   width: 100%;
   height: $nav-height;
+  @include breakpoint(mobile_both) {
+    height: $nav-height-mobile;
+  }
+
+  .main--account & {
+    @include breakpoint(mobile_both) {
+      height: 0;
+    }
+  }
 
   &__inner {
     width: 100%;
@@ -12,11 +21,21 @@
       top: $nav-height;
       left: 0;
       right: 0;
-      // border-width: 0.1rem;
-      // border-style: solid;
-      // border-top: 0;
-      // border-left: 0;
-      // border-right: 0;
+      @include breakpoint(mobile_both) {
+        top: 0;
+        height: $nav-height-mobile;
+      }
+    }
+
+    .main--account & {
+      @include breakpoint(mobile_both) {
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: $nav-height-mobile;
+      }
     }
 
     .main--account .ot-stuck & {
@@ -41,6 +60,9 @@
       align-items: center;
       width: 100%;
       height: $nav-height;
+      @include breakpoint(mobile_both) {
+        height: $nav-height-mobile;
+      }
 
       li {
         display: block;

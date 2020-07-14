@@ -1,5 +1,8 @@
 .greeting {
   margin: 0 0 4rem;
+  @include breakpoint(mobile_both) {
+    margin: 0;
+  }
 
   &.-no-order {
     max-width: 44rem;

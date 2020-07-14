@@ -6,6 +6,11 @@
   width: $width;
   max-width: 100%;
   height: $nav-height;
+  @include breakpoint(mobile_both) {
+    top: auto;
+    bottom: 0;
+    height: $nav-height-mobile;
+  }
 
   .main--menu & {
     width: 100%;
@@ -16,6 +21,9 @@
     justify-content: space-between;
     align-items: center;
     height: $nav-height;
+    @include breakpoint(mobile_both) {
+      height: $nav-height-mobile;
+    }
   }
 
   &__logo {
@@ -24,11 +32,18 @@
     display: inline-block;
     max-width: 14rem;
     margin: 0rem 3rem 0 0;
-    margin-left: 1.1rem;
+    margin-left: 1.6rem;
+    @include breakpoint(mobile_both) {
+      margin-left: 1.3rem;
+    }
   }
 
   &__nav {
     margin-left: -1.6rem;
+    @include breakpoint(mobile_both) {
+      margin-left: -1.3rem;
+    }
+
     button {
       margin: -0.2rem 0 0;
       @include breakpoint(mobile_both) {
@@ -44,15 +59,14 @@
 
   &__actions {
     margin-right: -1.1rem;
+    @include breakpoint(mobile_both) {
+      margin-right: -1.3rem;
+    }
+
     button {
       margin: 0 0 0 1rem;
       &:first-child {
         margin: 0;
-      }
-      .ot-btn__icon-wrapper span:not(.ot-btn__icon) {
-        @include breakpoint(mobile) {
-          display: none;
-        }
       }
     }
   }

@@ -143,7 +143,7 @@ const RevenueCentersSelect = ({
           error={error ? renamedError : null}
         />
       )}
-      <div className="content__body">
+      <div className="content__body ot-bg-color-primary">
         <div className="container">
           {!isLoading && (
             <div className="">

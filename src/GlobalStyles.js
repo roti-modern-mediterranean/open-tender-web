@@ -347,6 +347,31 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
+  .ot-btn--mobile {
+    width: 4.4rem;
+    height: 4.4rem;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    color: ${theme.colors.light};
+    background-color: ${theme.colors.primary};
+    border-color: ${theme.colors.primary};
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: ${theme.colors.light};
+      background-color: ${theme.colors.primary};
+      border-color: ${theme.colors.primary};
+    }
+
+    &:disabled {
+      color: ${theme.colors.light};
+      background-color: ${theme.colors.primary};
+      border-color: ${theme.colors.primary};
+    }
+  }
+
   .ot-btn--big {
     font-size: ${theme.fontSizes.big};
   }

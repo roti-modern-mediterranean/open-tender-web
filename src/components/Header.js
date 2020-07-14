@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { isMobile } from 'react-device-detect'
 import { selectAutoSelect, selectCustomer } from '@open-tender/redux'
 
 import HeaderLogo from './HeaderLogo'
@@ -37,9 +38,13 @@ const Header = () => {
   const isMenu = pathname.includes('menu')
   const isAccountSubpage = testAccountSubpage(pathname)
   const showSignUp = true
+  const className = isMobile ? `header ot-dark` : `header`
+  const btnClass = isMobile
+    ? 'ot-btn--mobile'
+    : 'ot-btn--secondary ot-btn--header'
 
   return (
-    <header className="header">
+    <header className={className}>
       <div className="container">
         <div className="header__container">
           <div className="header__nav">
@@ -48,25 +53,27 @@ const Header = () => {
                 <HeaderLogo />
               </div>
             ) : isMenu && !autoSelect ? (
-              <ButtonLocations />
+              <ButtonLocations classes={btnClass} />
             ) : isCheckout ? (
-              <ButtonMenu />
+              <ButtonMenu classes={btnClass} />
             ) : isAccountSubpage ? (
-              <ButtonBackToAccount />
+              <ButtonBackToAccount classes={btnClass} />
             ) : (
-              <ButtonStartOver />
+              <ButtonStartOver classes={btnClass} />
             )}
           </div>
           <div className="header__actions">
-            <ButtonAccount />
-            {isHome && !profile && showSignUp && <ButtonSignUp />}
-            {!isCheckout && <ButtonRevenueCenter />}
-            {!isCheckout && <ButtonServiceType />}
-            {!isCheckout && <ButtonRequestedAt />}
+            <ButtonAccount classes={btnClass} />
+            {isHome && !profile && showSignUp && (
+              <ButtonSignUp classes={btnClass} />
+            )}
+            {!isCheckout && <ButtonRevenueCenter classes={btnClass} />}
+            {!isCheckout && <ButtonServiceType classes={btnClass} />}
+            {!isCheckout && <ButtonRequestedAt classes={btnClass} />}
             {isMenu && (
               <>
-                <ButtonAllergens />
-                <ButtonGroupOrder />
+                <ButtonAllergens classes={btnClass} />
+                <ButtonGroupOrder classes={btnClass} />
               </>
             )}
             <ButtonCancelEdit />

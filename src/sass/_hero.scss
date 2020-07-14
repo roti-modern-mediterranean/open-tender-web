@@ -11,6 +11,9 @@
 
   &--top {
     margin: $nav-height 0 0;
+    @include breakpoint(mobile_both) {
+      margin: 0;
+    }
   }
 
   &--left {

@@ -39,6 +39,8 @@ import {
   Flag,
   Plus,
   Minus,
+  UserX,
+  Calendar,
 } from 'react-feather'
 
 const iconMap = {
@@ -46,6 +48,7 @@ const iconMap = {
   AlertTriangle: <AlertTriangle size={null} />,
   ArrowLeft: <ArrowLeft size={null} />,
   ArrowRight: <ArrowRight size={null} />,
+  Calendar: <Calendar size={null} />,
   Check: <Check size={null} />,
   CheckCircle: <CheckCircle size={null} />,
   ChevronLeft: <ChevronLeft size={null} />,
@@ -79,6 +82,7 @@ const iconMap = {
   Truck: <Truck size={null} />,
   User: <User size={null} />,
   UserPlus: <UserPlus size={null} />,
+  UserX: <UserX size={null} />,
   Users: <Users size={null} />,
   XCircle: <XCircle size={null} />,
 }

@@ -8,7 +8,7 @@ import iconMap from '../iconMap'
 const ButtonSignUp = ({
   text = 'Sign Up',
   classes = 'ot-btn--secondary ot-btn--header',
-  icon = iconMap['UserPlus'],
+  icon = iconMap['PlusCircle'],
 }) => {
   const history = useHistory()
 

@@ -8,10 +8,7 @@ import { Button } from '@open-tender/components'
 import { openModal } from '../../slices'
 import iconMap from '../iconMap'
 
-const ButtonAccount = ({
-  classes = 'ot-btn--secondary ot-btn--header',
-  icon = iconMap['User'],
-}) => {
+const ButtonAccount = ({ classes = 'ot-btn--secondary ot-btn--header' }) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
@@ -41,7 +38,7 @@ const ButtonAccount = ({
       <Button
         text="Logout"
         ariaLabel="Log out of your account"
-        icon={icon}
+        icon={iconMap['UserX']}
         classes={classes}
         onClick={handleLogout}
       />
@@ -49,7 +46,7 @@ const ButtonAccount = ({
       <Button
         text="Account"
         ariaLabel="Manage your account"
-        icon={icon}
+        icon={iconMap['User']}
         classes={classes}
         onClick={handleAccount}
       />
@@ -58,7 +55,7 @@ const ButtonAccount = ({
     <Button
       text="Login"
       ariaLabel="Log into your account"
-      icon={icon}
+      icon={iconMap['UserPlus']}
       classes={classes}
       onClick={handleLogin}
     />
@@ -68,7 +65,6 @@ const ButtonAccount = ({
 ButtonAccount.displayName = 'ButtonAccount'
 ButtonAccount.propTypes = {
   classes: propTypes.string,
-  icon: propTypes.element,
 }
 
 export default ButtonAccount
