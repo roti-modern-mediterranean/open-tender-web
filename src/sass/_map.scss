@@ -17,6 +17,15 @@
   height: 100%;
 }
 
+.map__content {
+  position: relative;
+  z-index: 1;
+  @include breakpoint(mobile_both) {
+    margin-top: $map-mobile-height;
+    min-height: 100vh;
+  }
+}
+
 .map__loading {
   position: absolute;
   z-index: 1;

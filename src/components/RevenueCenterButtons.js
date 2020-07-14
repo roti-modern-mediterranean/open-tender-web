@@ -47,6 +47,9 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
       dispatch(setAddress(address))
       dispatch(setRevenueCenter(revenueCenter))
       history.push(menuSlug)
+      // } else if (order.address) {
+      //   dispatch(setRevenueCenter(revenueCenter))
+      //   history.push(menuSlug)
     } else {
       dispatch(resetRevenueCenter())
       history.push('/locations')
@@ -55,7 +58,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
   }
 
   return (
-    <div className="rc__order">
+    <div className="rc__order__buttons">
       {hasPickup && (
         <Button
           text={`Order ${hasDelivery ? 'Pickup' : 'Here'}`}

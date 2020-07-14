@@ -1,6 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { displayPrice } from '@open-tender/js'
+import { formatDollars } from '@open-tender/js'
 
 const CheckoutHeader = ({ checkout = {} }) => {
   const { check, loading, submitting } = checkout
@@ -21,7 +21,7 @@ const CheckoutHeader = ({ checkout = {} }) => {
                 {updating
                   ? 'Updating...'
                   : `
-                $${displayPrice(check.totals.total)}`}
+                ${formatDollars(check.totals.total)}`}
               </p>
             </div>
           </div>

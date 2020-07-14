@@ -50,18 +50,22 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {
       ) : isOrder && is_outpost ? (
         <RevenueCenterButtons revenueCenter={revenueCenter} />
       ) : isOrder ? (
-        <Button
-          text="Order Here"
-          ariaLabel={`Order from ${name}`}
-          icon={iconMap['ShoppingBag']}
-          onClick={handleOrder}
-        />
+        <div className="rc__order__buttons">
+          <Button
+            text="Order Here"
+            ariaLabel={`Order from ${name}`}
+            icon={iconMap['ShoppingBag']}
+            onClick={handleOrder}
+          />
+        </div>
       ) : !autoSelect ? (
-        <Button
-          text="Change Location"
-          icon={iconMap['RefreshCw']}
-          onClick={handleChange}
-        />
+        <div className="rc__order__buttons">
+          <Button
+            text="Change Location"
+            icon={iconMap['RefreshCw']}
+            onClick={handleChange}
+          />
+        </div>
       ) : null}
     </div>
   )

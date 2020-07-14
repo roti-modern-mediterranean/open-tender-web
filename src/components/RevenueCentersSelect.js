@@ -130,7 +130,7 @@ const RevenueCentersSelect = ({
   }
 
   return (
-    <div className="map-content ot-bg-color-primary">
+    <div className="map__content ot-bg-color-primary">
       {isLoading ? (
         <Loader
           text="Retrieving nearest locations..."

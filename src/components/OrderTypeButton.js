@@ -4,7 +4,7 @@ import { ArrowRight } from 'react-feather'
 
 const OrderTypeButton = ({ title, handler, icon }) => (
   <button
-    className="content__button ot-btn--light ot-box-shadow ot-border-radius-small"
+    className="content__button ot-btn--light ot-box-shadow ot-border-radius-small ot-font-size"
     aria-label={title}
     onClick={handler}
   >

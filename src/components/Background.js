@@ -6,7 +6,7 @@ const Background = ({ imageUrl, children }) => {
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
   return (
     <div className="background bg-image ot-bg-color-secondary" style={bgStyle}>
-      {!bgStyle && (
+      {imageUrl && !bgStyle && (
         <div className="map__loading">
           <ClipLoader size={30} loading={true} />
         </div>
