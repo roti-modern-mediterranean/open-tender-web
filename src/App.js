@@ -15,6 +15,7 @@ import Sidebar from './components/Sidebar'
 import Loader from './components/Loader'
 import { fetchConfig } from './slices/configSlice'
 import './App.scss'
+import ErrorBoundary from './components/ErrorBoundary'
 
 class App extends React.Component {
   componentDidMount() {
@@ -28,20 +29,22 @@ class App extends React.Component {
     ) : (
       <ThemeProvider theme={this.props.theme}>
         <GlobalStyles />
-        <div className="app">
-          <Modal />
-          <Router>
-            <Main>
-              <Header />
-              <Messages />
-              <Routes />
-              <Notifications />
-              <CartButton />
-              <Footer />
-            </Main>
-            <Sidebar />
-          </Router>
-        </div>
+        <ErrorBoundary>
+          <div className="app">
+            <Modal />
+            <Router>
+              <Main>
+                <Header />
+                <Messages />
+                <Routes />
+                <Notifications />
+                <CartButton />
+                <Footer />
+              </Main>
+              <Sidebar />
+            </Router>
+          </div>
+        </ErrorBoundary>
       </ThemeProvider>
     )
   }

@@ -1,6 +1,5 @@
 import React from 'react'
 import logo from '../assets/logo_footer.png'
-import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -30,14 +29,14 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  Pricvacy Policy
+                  Privacy Policy
                 </a>
               </li>
-              <li>
-                <Link to="/refunds" className="no-link ot-link-light">
+              {/* <li>
+                <a className="no-link ot-link-light" href="/refunds">
                   Refunds
-                </Link>
-              </li>
+                </a>
+              </li> */}
             </ul>
           </nav>
         </div>

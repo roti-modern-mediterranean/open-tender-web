@@ -1,4 +1,11 @@
 const contentConfig = {
+  error: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594425807_ice-cream-cone-spilled.jpg',
+    title: 'Something Went Wrong',
+    subtitle:
+      "We're really sorry about this, but our development team has already been alerted about this issue. Please provide additional feedback below in order to help us resolve this issue ASAP.",
+  },
   notFound: {
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594650725_f5fcb07c62de0bedd619.jpg',
