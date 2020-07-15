@@ -1456,19 +1456,19 @@
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
 "@open-tender/components@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-1.0.1.tgz#751d1f911384ad925205c4538a6086b3c8341554"
-  integrity sha512-xh3MVDuKmJuFwntnAVjU5gPB4SY4xxXN5jjZIvfTO4aS4OP1dPPx5/DrjrBB8SzPDx9ytpLrHYdOmwcnArtOjA==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-1.0.3.tgz#c10144342b0919ae2ee78b020cbd69914efc0d5f"
+  integrity sha512-0AYmkZrJfE8dyR0cw2EExim7/X9Wyl7XTUuOpLta6uyWvTNxJoiyM7KEMLt38KjgBUpj/fddFYxZAWaC95161g==
 
 "@open-tender/js@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.0.2.tgz#3c2bbe30268d981e3107f2c5a34ec2a5dfe7165b"
-  integrity sha512-uu9hADnAGtzC/5UUdge+R7ogRZ1GxnvaLsxjBnStniFvx+8QBdxL4OJHdydsVfrRAE/nDNLyY7gf4zKJmbUUFg==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.0.3.tgz#7e334bfcf974bc1ba734c399d66dae581a34c5b6"
+  integrity sha512-waD5r1PBDUC6xbbufbiXAN7zma+5dL5I9qf6+jJNnu8tr1XVgl+tnwmVvOjbK6PmvM2fpjCEAl0eOZuMCvcbiQ==
 
 "@open-tender/redux@^1.0.1":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.0.2.tgz#78e86059e07ddc69040b14282c1c7b7416166881"
-  integrity sha512-RtTgzU2VXz+t1r2SvqGtkxfi4Z0bvxITKG15uKy0yWXs7L8AABq7sYS8glb7XO9oOYo5sq86tavD3vVmcNaBUA==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.0.3.tgz#6b2bb5da0b3b745676075d3af53fc753e812b680"
+  integrity sha512-jn1TPwgFwm+20GdwNpV+g4Og6A3McVpImai507e5Acl2Y2Z873Ia6zd3sVIF2lz2eOg4DtGCTBb8rsWFd6pRZQ==
 
 "@reach/router@^1.2.1":
   version "1.3.4"
