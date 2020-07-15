@@ -74,9 +74,9 @@ const Sidebar = () => {
                 before tax
               </p>
             )}
-            {belowMinimum && (
+            {cartCount !== 0 && belowMinimum && (
               <div className="sidebar__header__message">
-                <p className="ot-font-size-small ot-bold ot-color-alert">
+                <p className="ot-font-size-small ot-color-alert">
                   Your cart total is below the order minimum of $
                   {displayPrice(orderMinimum)}. Please add some items.
                 </p>
