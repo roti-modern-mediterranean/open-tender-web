@@ -7,13 +7,13 @@
   &__header {
     position: fixed;
     z-index: 10;
-    top: $nav-height;
     right: 0;
     width: $width;
     max-width: 100%;
+    top: $nav-height;
     height: $nav-height;
     @include breakpoint(mobile_both) {
-      top: 0;
+      top: $nav-height-mobile;
       height: $nav-height-mobile;
     }
 
@@ -97,7 +97,7 @@ $width-tablet: 50%;
   .content {
     padding-top: 2 * $nav-height;
     @include breakpoint(mobile_both) {
-      padding-top: $nav-height-mobile;
+      padding-top: 2 * $nav-height-mobile;
     }
   }
 

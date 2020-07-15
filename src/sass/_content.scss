@@ -4,12 +4,12 @@
   min-height: 100vh;
   padding: $nav-height 0 0;
   @include breakpoint(mobile_both) {
-    padding: 0;
+    padding: $nav-height-mobile 0 0;
   }
 
   .main--account & {
     @include breakpoint(mobile_both) {
-      padding: $nav-height-mobile 0 0;
+      padding: ($nav-height-mobile * 2) 0 0;
     }
   }
 

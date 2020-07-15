@@ -4,6 +4,7 @@
   top: $nav-height;
   right: $padding;
   @include breakpoint(mobile_both) {
+    top: $nav-height-mobile;
     right: $padding-mobile;
   }
 }

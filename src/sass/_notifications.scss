@@ -6,7 +6,7 @@
   @include breakpoint(mobile_both) {
     right: auto;
     left: $padding-mobile;
-    bottom: $nav-height-mobile + 2rem;
+    bottom: 2rem;
   }
 }
 

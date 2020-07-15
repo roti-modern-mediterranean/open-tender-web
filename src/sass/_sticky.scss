@@ -5,12 +5,6 @@
     height: $nav-height-mobile;
   }
 
-  .main--account & {
-    @include breakpoint(mobile_both) {
-      height: 0;
-    }
-  }
-
   &__inner {
     width: 100%;
     overflow-x: scroll;
@@ -22,8 +16,7 @@
       left: 0;
       right: 0;
       @include breakpoint(mobile_both) {
-        top: 0;
-        height: $nav-height-mobile;
+        top: $nav-height-mobile;
       }
     }
 
@@ -31,7 +24,7 @@
       @include breakpoint(mobile_both) {
         position: fixed;
         z-index: 10;
-        top: 0;
+        top: $nav-height-mobile;
         left: 0;
         right: 0;
         height: $nav-height-mobile;

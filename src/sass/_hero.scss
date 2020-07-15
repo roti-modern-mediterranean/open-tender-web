@@ -12,7 +12,7 @@
   &--top {
     margin: $nav-height 0 0;
     @include breakpoint(mobile_both) {
-      margin: 0;
+      margin: $nav-height-mobile 0 0;
     }
   }
 

@@ -2,9 +2,6 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  @include breakpoint(mobile_both) {
-    margin: 0 0 ($nav-height-mobile - 0.1rem);
-  }
 
   &__container {
     height: 18rem;

@@ -6,7 +6,7 @@
   left: 0;
   right: $width;
   @include breakpoint(mobile_both) {
-    top: 0;
+    top: $nav-height-mobile;
     right: 0;
     bottom: auto;
     height: $map-mobile-height;

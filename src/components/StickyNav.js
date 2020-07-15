@@ -7,7 +7,7 @@ import { slugify } from '@open-tender/js'
 const StickyNav = ({ items, offset = -100, duration = 500 }) => {
   const [isSticky, setSticky] = useState(false)
   const stickyRef = useRef(null)
-  const topOffset = isMobile ? 0 : 60
+  const topOffset = isMobile ? 60 : 60
 
   useEffect(() => {
     const handleScroll = () => {
