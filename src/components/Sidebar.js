@@ -48,6 +48,12 @@ const Sidebar = () => {
     evt.target.blur()
   }
 
+  const handleClose = (evt) => {
+    evt.preventDefault()
+    dispatch(toggleSidebar())
+    evt.target.blur()
+  }
+
   return (
     <>
       <SidebarOverlay />
@@ -87,23 +93,35 @@ const Sidebar = () => {
             <Cart />
           </div>
           <div className="sidebar__footer ot-bg-color-primary">
-            <div className="sidebar__back">
-              <Button
-                onClick={handleBack}
-                classes="ot-btn ot-btn--big"
-                disabled={!canOrder}
-              >
-                Menu
-              </Button>
+            <div className="sidebar__footer__container">
+              <div className="sidebar__back">
+                <Button
+                  onClick={handleBack}
+                  classes="ot-btn ot-btn--big"
+                  disabled={!canOrder}
+                >
+                  Menu
+                </Button>
+              </div>
+              <div className="sidebar__checkout">
+                <Button
+                  onClick={handleCheckout}
+                  classes="ot-btn ot-btn--big ot-btn--highlight"
+                  disabled={!canCheckout}
+                >
+                  {isCheckout ? 'Checkout' : 'Checkout'}
+                </Button>
+              </div>
             </div>
-            <div className="sidebar__checkout">
-              <Button
-                onClick={handleCheckout}
-                classes="ot-btn ot-btn--big ot-btn--highlight"
-                disabled={!canCheckout}
-              >
-                {isCheckout ? 'Checkout' : 'Checkout'}
-              </Button>
+            <div className="sidebar__footer__cancel">
+              <div className="sidebar__footer__cancel__button ot-font-size-small">
+                <Button
+                  onClick={handleClose}
+                  classes="ot-btn-link-subtle ot-preface"
+                >
+                  Close Sidebar
+                </Button>
+              </div>
             </div>
           </div>
         </div>

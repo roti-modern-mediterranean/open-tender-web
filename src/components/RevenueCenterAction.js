@@ -23,7 +23,7 @@ const RevenueCenterAction = ({
 
 RevenueCenterAction.displayName = 'RevenueCenterAction'
 RevenueCenterAction.propTypes = {
-  icon: propTypes.string,
+  icon: propTypes.element,
   iconClass: propTypes.string,
   text: propTypes.string,
   arrow: propTypes.string,

@@ -116,6 +116,14 @@
     padding-bottom: 0.1rem;
     border-width: 0.2rem;
     border-style: solid;
+    @include breakpoint(mobile_both) {
+      top: -1rem;
+      right: -0.9rem;
+      min-width: 2.2rem;
+      height: 2.2rem;
+      font-size: 1rem;
+      padding: 0 0 0.1rem;
+    }
   }
 
   &__overlay {

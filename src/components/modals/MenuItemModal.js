@@ -56,6 +56,7 @@ const MenuItemModal = () => {
             renderOption={(props) => <BuilderOption {...props} />}
             showImage={true}
             iconMap={iconMap}
+            closeModal={handleClose}
           />
         )}
       </div>

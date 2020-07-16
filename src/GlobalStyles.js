@@ -237,6 +237,20 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
+  .ot-btn-link-subtle {
+    font-size: inherit;
+    color: ${theme.colors.primary};
+    &:hover,
+    &:active,
+    &:focus {
+      color: ${theme.colors.primary};
+    }
+    &:disabled {
+      color: ${theme.colors.primary};
+      opacity: 0.5;
+    }
+  }
+
   .ot-btn {
     display: inline-block;
     line-height: 1;
