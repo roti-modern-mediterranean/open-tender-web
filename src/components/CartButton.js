@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import { ShoppingBag } from 'react-feather'
 import { isMobile } from 'react-device-detect'
 import { selectCartQuantity } from '@open-tender/redux'
@@ -9,8 +10,12 @@ import { toggleSidebar } from '../slices'
 
 const CartButton = () => {
   const dispatch = useDispatch()
-  const cartquantity = useSelector(selectCartQuantity)
+  const { pathname } = useLocation()
+  const cartQuantity = useSelector(selectCartQuantity)
   const countFontSize = isMobile ? 'ot-font-size-x-small' : 'ot-font-size-small'
+  const isHome = pathname === '/'
+  const isLocations = pathname.includes('locations')
+  const hideCart = (isHome || isLocations) && cartQuantity === 0
 
   const handleClick = (evt) => {
     evt.preventDefault()
@@ -18,14 +23,14 @@ const CartButton = () => {
     evt.target.blur()
   }
 
-  return (
+  return !hideCart ? (
     <div className="cart-button">
       <div className="cart-button__container">
-        {cartquantity > 0 && (
+        {cartQuantity > 0 && (
           <div
             className={`cart-button__count ot-warning ot-bold ${countFontSize}`}
           >
-            {cartquantity}
+            {cartQuantity}
           </div>
         )}
         <Button
@@ -38,7 +43,7 @@ const CartButton = () => {
         </Button>
       </div>
     </div>
-  )
+  ) : null
 }
 
 CartButton.displayName = 'CartButton'
