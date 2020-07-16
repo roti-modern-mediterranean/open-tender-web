@@ -31,7 +31,7 @@ const contentConfig = {
   },
   googleMaps: {
     apiKey: 'AIzaSyCkllc7M-cYNzSRXO7KE-ZZKTPW59RroDk',
-    defaultCenter: { lat: 40.7572285, lng: -73.9729147 },
+    defaultCenter: { lat: 41.889434, lng: -87.6377857 },
     zoom: 14,
     // styles: {
     //   labelColor: '#666666',
