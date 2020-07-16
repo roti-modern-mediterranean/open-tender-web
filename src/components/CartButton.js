@@ -15,7 +15,8 @@ const CartButton = () => {
   const countFontSize = isMobile ? 'ot-font-size-x-small' : 'ot-font-size-small'
   const isHome = pathname === '/'
   const isLocations = pathname.includes('locations')
-  const hideCart = (isHome || isLocations) && cartQuantity === 0
+  const isAccount = pathname.includes('account')
+  const hideCart = (isHome || isLocations || isAccount) && cartQuantity === 0
 
   const handleClick = (evt) => {
     evt.preventDefault()
