@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
+import { isMobile } from 'react-device-detect'
 import { setCurrentItem, selectCartCounts } from '@open-tender/redux'
 import { convertStringToArray } from '@open-tender/js'
 
@@ -29,6 +30,7 @@ const MenuItem = ({ item }) => {
   const allergenAlert = allergens.length
     ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
     : []
+  const countFontSize = isMobile ? 'ot-font-size-x-small' : 'ot-font-size-small'
 
   const handleClick = (evt) => {
     evt.preventDefault()
@@ -48,7 +50,9 @@ const MenuItem = ({ item }) => {
             style={bgStyle}
           >
             {cartCount > 0 && (
-              <div className="menu__item__count ot-warning ot-bold ot-font-size-small">
+              <div
+                className={`menu__item__count ot-warning ot-bold ${countFontSize}`}
+              >
                 {cartCount}
               </div>
             )}
