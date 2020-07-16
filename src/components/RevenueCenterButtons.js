@@ -24,7 +24,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
     address,
   } = revenueCenter
   const { first_times: ft, order_times: ot } = settings
-  const menuSlug = `/menu/${slug}-${rcType.toLowerCase()}`
+  const menuSlug = `/menu/${slug}`
   const hasPickup = (ft && ft.PICKUP) || (ot && ot.PICKUP)
   const hasDelivery = (ft && ft.DELIVERY) || (ot && ot.DELIVERY)
 

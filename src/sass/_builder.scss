@@ -29,15 +29,20 @@
   }
 }
 
+$footer-height: 8rem;
+$footer-height-mobile: 12.5rem;
+
 .builder {
   &__item {
     position: relative;
     display: block;
     width: 100%;
     height: 100%;
-    padding: 0 0 8rem;
+    padding: 0 0 $footer-height;
     margin: 0;
-    // overflow-y: scroll;
+    @include breakpoint(mobile_both) {
+      padding: 0 0 $footer-height-mobile;
+    }
   }
 
   &__content {
@@ -101,14 +106,14 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 8rem;
+    height: $footer-height;
     @include breakpoint(mobile) {
-      height: 12.5rem;
+      height: $footer-height-mobile;
     }
 
     &__container {
       width: 100%;
-      height: 8rem;
+      height: $footer-height;
       padding: 0 3rem;
       display: flex;
       justify-content: space-between;

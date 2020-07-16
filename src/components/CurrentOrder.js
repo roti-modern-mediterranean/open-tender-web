@@ -47,8 +47,7 @@ const CurrentOrder = ({ order }) => {
 
   const backToMenu = (evt) => {
     evt.preventDefault()
-    const rcType = revenueCenter.revenue_center_type.toLowerCase()
-    history.push(`/menu/${revenueCenter.slug}-${rcType}`)
+    history.push(`/menu/${revenueCenter.slug}`)
     evt.target.blur()
   }
 

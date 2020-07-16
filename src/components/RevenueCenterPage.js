@@ -32,7 +32,7 @@ const makeImageUrl = (images, defaultImageUrl) => {
 const RevenueCenterPage = () => {
   const dispatch = useDispatch()
   const [imageUrl, setImageUrl] = useState(null)
-  const { id: revenueCenterId } = useParams()
+  const { slug } = useParams()
   const { geoLatLng, geoError } = useGeolocation()
   const { revenueCenter: rcConfig } = useSelector(selectConfig)
   const order = useSelector(selectOrder)
@@ -43,8 +43,8 @@ const RevenueCenterPage = () => {
     window.scroll(0, 0)
     dispatch(setGeoLoading())
     dispatch(resetOrderType())
-    dispatch(fetchRevenueCenter(revenueCenterId))
-  }, [dispatch, revenueCenterId])
+    dispatch(fetchRevenueCenter(slug))
+  }, [dispatch, slug])
 
   useEffect(() => {
     if (geoLatLng) {

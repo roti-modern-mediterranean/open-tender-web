@@ -67,8 +67,7 @@ const RevenueCentersSelect = ({
   const autoRouteCallack = useCallback(
     (revenueCenter) => {
       dispatch(setRevenueCenter(revenueCenter))
-      const rcType = revenueCenter.revenue_center_type.toLowerCase()
-      return history.push(`/menu/${revenueCenter.slug}-${rcType}`)
+      return history.push(`/menu/${revenueCenter.slug}`)
     },
     [dispatch, history]
   )

@@ -73,8 +73,7 @@ const AccountGreeting = () => {
   const continueCurrent = (evt) => {
     evt.preventDefault()
     if (revenueCenter) {
-      const rcType = revenueCenter.revenue_center_type.toLowerCase()
-      history.push(`/menu/${revenueCenter.slug}-${rcType}`)
+      history.push(`/menu/${revenueCenter.slug}`)
     } else {
       history.push(`/`)
     }

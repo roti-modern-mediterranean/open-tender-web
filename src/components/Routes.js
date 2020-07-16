@@ -35,7 +35,7 @@ const Routes = () => {
       <Route exact path="/locations">
         <RevenueCentersPage />
       </Route>
-      <Route exact path="/locations/:id">
+      <Route exact path="/locations/:slug">
         <RevenueCenterPage />
       </Route>
       <Route path="/menu/:slug">

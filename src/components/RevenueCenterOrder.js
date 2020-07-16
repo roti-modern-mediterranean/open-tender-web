@@ -22,13 +22,12 @@ export const RevenueCenterOrder = ({ revenueCenter, isOrder, isLanding }) => {
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
   const msg = makeRevenueCenterMsg(revenueCenter, serviceType, statusMessages)
-  const { name, slug, revenue_center_type, is_outpost } = revenueCenter
+  const { name, slug, is_outpost } = revenueCenter
 
   const handleOrder = (evt) => {
     evt.preventDefault()
     dispatch(setRevenueCenter(revenueCenter))
-    const rcType = revenue_center_type.toLowerCase()
-    history.push(`/menu/${slug}-${rcType}`)
+    history.push(`/menu/${slug}`)
     evt.target.blur()
   }
 
