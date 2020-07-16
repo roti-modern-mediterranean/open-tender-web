@@ -103,7 +103,7 @@
     right: 0;
     height: 8rem;
     @include breakpoint(mobile) {
-      height: 11rem;
+      height: 12rem;
     }
 
     &__container {
@@ -124,7 +124,7 @@
 
     &__cancel {
       width: 100%;
-      height: 4rem;
+      height: 5rem;
       padding: 0 3rem;
       // display: flex;
       justify-content: center;
@@ -136,7 +136,7 @@
       }
 
       &__button {
-        padding: 0.5rem 0 0;
+        padding: 1rem 0 0;
       }
     }
   }
