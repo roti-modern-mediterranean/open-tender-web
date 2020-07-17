@@ -42,6 +42,9 @@ const Header = () => {
   const btnClass = isMobile
     ? 'ot-btn--mobile'
     : 'ot-btn--secondary ot-btn--header'
+  const btnCancelClass = isMobile
+    ? 'ot-btn--mobile'
+    : 'ot-btn--cancel ot-btn--header'
 
   return (
     <header className={className}>
@@ -76,7 +79,7 @@ const Header = () => {
                 <ButtonGroupOrder classes={btnClass} />
               </>
             )}
-            <ButtonCancelEdit />
+            <ButtonCancelEdit classes={btnCancelClass} />
           </div>
         </div>
       </div>
