@@ -56,15 +56,9 @@ button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: $quantity-size;
-  height: $quantity-size;
-  border-radius: $quantity-size / 2;
-  padding: 0;
 
   .favorite__icon {
     display: block;
-    width: 1.6rem;
-    height: 1.6rem;
   }
 }
 

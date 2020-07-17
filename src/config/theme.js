@@ -55,12 +55,12 @@ const themeConfig = {
       letterSpacing: '0',
       color: colorPrimary,
       sizes: {
-        h1: '2.25em',
-        h2: '2.0em',
-        h3: '1.75em',
-        h4: '1.4em',
-        h5: '1.25em',
-        h6: '1.1em',
+        h1: '3.2rem',
+        h2: '2.8rem',
+        h3: '2.4rem',
+        h4: '2.0rem',
+        h5: '1.8rem',
+        h6: '1.6rem',
       },
     },
   },
@@ -71,7 +71,7 @@ const themeConfig = {
   },
   preface: {
     textTransform: 'uppercase',
-    letterSpacing: '0.05em',
+    letterSpacing: '0.1rem',
   },
   links: {
     textDecoration: 'none',
@@ -105,48 +105,66 @@ const themeConfig = {
     color: '#edf0f6',
     // color: '#e8e9eb',
     width: '0.1rem',
-    // radius: '1.0rem',
-    // radiusSmall: '0.5rem',
     radius: '0',
     radiusSmall: '0',
   },
+  favorite: {
+    size: '2.8rem',
+    iconSize: '1.4rem',
+  },
   buttons: {
-    primary: {
-      padding: '0.7em 1.5em',
-      borderWidth: '0',
-      borderRadius: '3em',
-      initial: {
-        color: colorLight,
-        bgColor: colorPrimary,
-        borderColor: colorPrimary,
+    sizes: {
+      main: {
+        padding: '1.0rem 2.0rem',
+        borderWidth: '0',
+        borderRadius: '2.0rem',
       },
-      hover: {
-        color: colorLight,
-        bgColor: colorLink,
-        borderColor: colorLink,
+      small: {
+        padding: '0.8rem 1.7rem',
+        borderWidth: '0',
+        borderRadius: '1.8rem',
       },
-    },
-    secondary: {
-      initial: {
-        color: colorPrimary,
-        bgColor: bgColorPrimary,
-        borderColor: bgColorPrimary,
+      big: {
+        padding: '1.1rem 2.2rem',
+        borderWidth: '0',
+        borderRadius: '2.2rem',
       },
-      hover: {
-        color: colorPrimary,
-        bgColor: bgColorSecondary,
-        borderColor: bgColorSecondary,
+      header: {
+        padding: '0.8rem 1.3rem',
+        borderWidth: '0',
+        borderRadius: '0.5rem',
       },
     },
-    header: {
-      padding: '0.7em 1.1em',
-      borderWidth: '0',
-      borderRadius: '0.5rem',
+    colors: {
+      primary: {
+        initial: {
+          color: colorLight,
+          bgColor: colorPrimary,
+          borderColor: colorPrimary,
+        },
+        hover: {
+          color: colorLight,
+          bgColor: colorLink,
+          borderColor: colorLink,
+        },
+      },
+      secondary: {
+        initial: {
+          color: colorPrimary,
+          bgColor: bgColorPrimary,
+          borderColor: bgColorPrimary,
+        },
+        hover: {
+          color: colorPrimary,
+          bgColor: bgColorSecondary,
+          borderColor: bgColorSecondary,
+        },
+      },
     },
   },
   inputs: {
     lineHeight: '1.2',
-    padding: '0.9em',
+    padding: '1.2rem 1.4rem',
     boxShadow: 'none',
   },
 }

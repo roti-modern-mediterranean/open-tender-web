@@ -257,47 +257,85 @@ const makeGlobalStyles = (theme) => css`
     margin: 0;
     text-align: center;
     font-size: ${theme.fontSizes.main};
-    padding: ${theme.buttons.primary.padding};
-    border-width: ${theme.buttons.primary.borderWidth};
-    border-radius: ${theme.buttons.primary.borderRadius};
-    color: ${theme.buttons.primary.initial.color};
-    background-color: ${theme.buttons.primary.initial.bgColor};
-    border-color: ${theme.buttons.primary.initial.borderColor};
+    padding: ${theme.buttons.sizes.main.padding};
+    border-width: ${theme.buttons.sizes.main.borderWidth};
+    border-radius: ${theme.buttons.sizes.main.borderRadius};
+    color: ${theme.buttons.colors.primary.initial.color};
+    background-color: ${theme.buttons.colors.primary.initial.bgColor};
+    border-color: ${theme.buttons.colors.primary.initial.borderColor};
 
     &:hover,
     &:active,
     &:focus {
-      border-width: ${theme.buttons.primary.borderWidth};
-      color: ${theme.buttons.primary.hover.color};
-      background-color: ${theme.buttons.primary.hover.bgColor};
-      border-color: ${theme.buttons.primary.hover.borderColor};
+      border-width: ${theme.buttons.sizes.main.borderWidth};
+      color: ${theme.buttons.colors.primary.hover.color};
+      background-color: ${theme.buttons.colors.primary.hover.bgColor};
+      border-color: ${theme.buttons.colors.primary.hover.borderColor};
     }
 
     &:disabled {
-      color: ${theme.buttons.primary.initial.color};
-      background-color: ${theme.buttons.primary.initial.bgColor};
-      border-color: ${theme.buttons.primary.initial.borderColor};
+      color: ${theme.buttons.colors.primary.initial.color};
+      background-color: ${theme.buttons.colors.primary.initial.bgColor};
+      border-color: ${theme.buttons.colors.primary.initial.borderColor};
+    }
+  }
+
+  .ot-btn--small {
+    font-size: ${theme.fontSizes.small};
+    padding: ${theme.buttons.sizes.small.padding};
+    border-width: ${theme.buttons.sizes.small.borderWidth};
+    border-radius: ${theme.buttons.sizes.small.borderRadius};
+
+    &:hover,
+    &:active,
+    &:focus {
+      border-width: ${theme.buttons.sizes.small.borderWidth};
+    }
+  }
+
+  .ot-btn--big {
+    font-size: ${theme.fontSizes.big};
+    padding: ${theme.buttons.sizes.big.padding};
+    border-width: ${theme.buttons.sizes.big.borderWidth};
+    border-radius: ${theme.buttons.sizes.big.borderRadius};
+
+    &:hover,
+    &:active,
+    &:focus {
+      border-width: ${theme.buttons.sizes.big.borderWidth};
+    }
+  }
+
+  .ot-btn--header {
+    font-size: ${theme.fontSizes.small};
+    padding: ${theme.buttons.sizes.header.padding};
+    border-width: ${theme.buttons.sizes.header.borderWidth};
+    border-radius: ${theme.buttons.sizes.header.borderRadius};
+
+    &:hover,
+    &:active,
+    &:focus {
+      border-width: ${theme.buttons.sizes.header.borderWidth};
     }
   }
 
   .ot-btn--secondary {
-    color: ${theme.buttons.secondary.initial.color};
-    background-color: ${theme.buttons.secondary.initial.bgColor};
-    border-color: ${theme.buttons.secondary.initial.borderColor};
+    color: ${theme.buttons.colors.secondary.initial.color};
+    background-color: ${theme.buttons.colors.secondary.initial.bgColor};
+    border-color: ${theme.buttons.colors.secondary.initial.borderColor};
 
     &:hover,
     &:active,
     &:focus {
-      border-width: ${theme.buttons.secondary.borderWidth};
-      color: ${theme.buttons.secondary.hover.color};
-      background-color: ${theme.buttons.secondary.hover.bgColor};
-      border-color: ${theme.buttons.secondary.hover.borderColor};
+      color: ${theme.buttons.colors.secondary.hover.color};
+      background-color: ${theme.buttons.colors.secondary.hover.bgColor};
+      border-color: ${theme.buttons.colors.secondary.hover.borderColor};
     }
 
     &:disabled {
-      color: ${theme.buttons.secondary.initial.color};
-      background-color: ${theme.buttons.secondary.initial.bgColor};
-      border-color: ${theme.buttons.secondary.initial.borderColor};
+      color: ${theme.buttons.colors.secondary.initial.color};
+      background-color: ${theme.buttons.colors.secondary.initial.bgColor};
+      border-color: ${theme.buttons.colors.secondary.initial.borderColor};
     }
   }
 
@@ -386,19 +424,22 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
-  .ot-btn--big {
-    font-size: ${theme.fontSizes.big};
+  .ot-input-quantity,
+  .ot-btn.favorite {
+    padding: 0;
+    text-align: center;
+    width: ${theme.favorite.size};
+    height: ${theme.favorite.size};
+    border-radius: ${theme.favorite.size};
   }
 
-  .ot-btn--small {
-    font-size: ${theme.fontSizes.small};
+  .ot-input-quantity {
+    line-height: ${theme.favorite.size};
   }
 
-  .ot-btn--header {
-    font-size: ${theme.fontSizes.small};
-    padding: ${theme.buttons.header.padding};
-    border-width: ${theme.buttons.header.borderWidth};
-    border-radius: ${theme.buttons.header.borderRadius};
+  .ot-btn.favorite .favorite__icon {
+    width: ${theme.favorite.iconSize};
+    height: ${theme.favorite.iconSize};
   }
 
   span.required {
@@ -446,15 +487,6 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
-  input[type='submit'] {
-    border: ${theme.buttons.primary.borderWidth};
-
-    &:active,
-    &:focus {
-      border: ${theme.buttons.primary.borderWidth};
-    }
-  }
-
   input,
   textarea {
     box-shadow: ${theme.inputs.boxShadow};
@@ -466,17 +498,17 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .ot-input-quantity {
-    color: ${theme.buttons.primary.initial.color};
-    background-color: ${theme.buttons.primary.initial.bgColor};
-    border-color: ${theme.buttons.primary.initial.borderColor};
+    color: ${theme.buttons.colors.primary.initial.color};
+    background-color: ${theme.buttons.colors.primary.initial.bgColor};
+    border-color: ${theme.buttons.colors.primary.initial.borderColor};
 
     &:active,
     &:focus,
     &:disabled,
     &:read-only {
-      color: ${theme.buttons.primary.initial.color};
-      background-color: ${theme.buttons.primary.initial.bgColor};
-      border-color: ${theme.buttons.primary.initial.borderColor};
+      color: ${theme.buttons.colors.primary.initial.color};
+      background-color: ${theme.buttons.colors.primary.initial.bgColor};
+      border-color: ${theme.buttons.colors.primary.initial.borderColor};
     }
   }
 

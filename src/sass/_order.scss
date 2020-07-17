@@ -73,12 +73,6 @@
 
     &__count {
       display: inline-block;
-      width: $quantity-size;
-      height: $quantity-size;
-      line-height: $quantity-size;
-      border-radius: $quantity-size / 2;
-      padding: 0;
-      text-align: center;
 
       & + .favorite {
         margin: 0 0 0 1.25rem;
