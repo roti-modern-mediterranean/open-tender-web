@@ -34,7 +34,7 @@ const RevenueCenterPage = () => {
   const [imageUrl, setImageUrl] = useState(null)
   const { slug } = useParams()
   const { geoLatLng, geoError } = useGeolocation()
-  const { revenueCenter: rcConfig } = useSelector(selectConfig)
+  const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const order = useSelector(selectOrder)
   const { revenueCenter, loading } = order
   const isLoading = loading === 'pending'

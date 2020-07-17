@@ -120,9 +120,10 @@ const contentConfig = {
     ],
   },
   revenueCenters: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg',
     title: "Let's find the nearest location",
-    subtitle: "We'll make this quick",
-    content: 'Please enter a zip code or address below.',
+    subtitle: 'Please enter a zip code or address below.',
     statusMessages: {
       CLOSED: {
         title: 'Location currently closed',
@@ -159,10 +160,6 @@ const contentConfig = {
       },
     },
   },
-  revenueCenter: {
-    background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg',
-  },
   menu: {
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',
@@ -177,17 +174,6 @@ const contentConfig = {
     validate: {
       title: 'Invalid Items in Cart',
       subtitle: 'Uh oh. Certain items in your cart are no longer available.',
-      proceed: {
-        message:
-          'Please click the button below to remove these items and proceed with your order.',
-        buttonProceed: 'Remove Items',
-      },
-      revert: {
-        message:
-          'Please either remove these itemse or switch back to your previous menu.',
-        buttonProceed: 'Remove Items',
-        buttonRevert: 'Back to Previous Menu',
-      },
     },
   },
   checkout: {
@@ -244,12 +230,6 @@ const contentConfig = {
       "Please be sure to check your spam folder if you don't receive the confirmation email.",
   },
   account: {
-    // background:
-    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',
-    // background:
-    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303382_1dc3f02769734bc95870.jpg',
-    // background:
-    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594352610_0e3430676ba806674262.jpg',
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594352748_salad-top-down_1500x2250.jpg',
     title: 'Welcome back',
@@ -273,7 +253,7 @@ const contentConfig = {
           "Below is a list of the items you've ordered recently. Click to reorder or add to your favorites.",
         empty: "Looks like you haven't ordered any items yet",
       },
-      accountDetails: {
+      profile: {
         title: 'Account',
         subtitle:
           'Below is the info we have on file for you. Make updates at any time.',
@@ -311,16 +291,6 @@ const contentConfig = {
       //   title: 'Loyalty',
       //   subtitle:
       //     'A summary of your active loyalty programs and any available discounts.',
-      // },
-      // upcomingOrders: {
-      //   title: 'Upcoming Orders',
-      //   subtitle: 'Review & update orders that have yet to be fulfilled',
-      //   empty: "Looks like you don't currently have any upcoming orders",
-      // },
-      // pastOrders: {
-      //   title: 'Recent Orders',
-      //   subtitle: 'Reorder a past order, view details, and add ratings',
-      //   empty: "Looks like you don't currently have any past orders",
       // },
     },
   },

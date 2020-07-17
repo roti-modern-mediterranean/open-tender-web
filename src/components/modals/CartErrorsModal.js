@@ -50,7 +50,6 @@ const CartErrorsModal = () => {
           <CartErrors
             newCart={newCart}
             errors={errors}
-            config={config}
             revert={handleRevert}
             revertIcon={iconMap['ChevronLeft']}
             proceed={handleProceed}

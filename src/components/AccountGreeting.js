@@ -171,7 +171,7 @@ const AccountGreeting = () => {
                   <span>
                     Update your{' '}
                     <GreetingLink
-                      sectionTitle={config.accountDetails.title}
+                      sectionTitle={config.profile.title}
                       text="profile"
                     />
                     ,{' '}

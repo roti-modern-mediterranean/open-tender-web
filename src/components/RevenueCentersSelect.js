@@ -48,7 +48,7 @@ const RevenueCentersSelect = ({
   const formattedAddress = address ? address.formatted_address : ''
   const autoSelect = useSelector(selectAutoSelect)
   const [title, setTitle] = useState(rcConfig.title)
-  const [msg, setMsg] = useState(rcConfig.content)
+  const [msg, setMsg] = useState(rcConfig.subtitle)
   const [error, setError] = useState(null)
   const [displayedRevenueCenters, setDisplayedRevenueCenters] = useState([])
   const isLoading = loading === 'pending'

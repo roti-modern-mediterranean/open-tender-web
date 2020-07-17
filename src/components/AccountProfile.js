@@ -12,7 +12,7 @@ import SectionLoading from './SectionLoading'
 const AccountProfile = () => {
   const dispatch = useDispatch()
   const {
-    accountDetails: { title, subtitle },
+    profile: { title, subtitle },
   } = useSelector(selectConfigAccountSections)
   const { profile, loading, error } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
