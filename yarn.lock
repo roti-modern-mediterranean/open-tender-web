@@ -1463,9 +1463,9 @@
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
 "@open-tender/components@^1.0.1":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-1.0.5.tgz#875bc1841da05ca271888725cf711a8487ffb901"
-  integrity sha512-CJtrCMd0c2wPCDXWlpSxwtgOyagp+n0IobLsunZXxXrGDNkv/vWP4Ex3U41ixxGt14tU/dwu3WGrRNpyBvqplw==
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-1.0.6.tgz#05a2cd19aa2b826ca64a4e56e6cd4ca581efb846"
+  integrity sha512-YpzYD1nkihN8OG515G0XGJ2IrA1+8uMPlwdNltrSmmdxrG1gGyxRpMLjLTIi4boS/m2njTz0Yzti1im/z7bo5g==
 
 "@open-tender/js@^1.0.2":
   version "1.0.3"
