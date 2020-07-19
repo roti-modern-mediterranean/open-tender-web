@@ -7,7 +7,6 @@ const colorError = '#ef233c'
 
 const bgColorPrimary = '#ffffff'
 const bgColorSecondary = '#f5f7fa'
-const bgColorTertiary = '#e4e9f2'
 
 const themeConfig = {
   transition: 'all 0.15s ease',
@@ -27,7 +26,6 @@ const themeConfig = {
   bgColors: {
     primary: bgColorPrimary,
     secondary: bgColorSecondary,
-    tertiary: bgColorTertiary,
     alert: '#fbdee3',
     error: '#fbdee3',
     success: '#e6fff3',
