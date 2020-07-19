@@ -40,15 +40,23 @@ const themeConfig = {
   },
   fonts: {
     body: {
+      url:
+        'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,400&display=swap',
       fontFamily: "'Roboto', sans-serif",
-      // fontFamily: "'Heebo', sans-serif",
-      fontWeight: 'normal',
+      fontWeight: '400',
+      // link: 'https://use.typekit.net/rsb8uny.css',
+      // fontFamily: "'effra', Helvetica, Arial, sans-serif",
+      // fontWeight: '500',
       letterSpacing: '0',
       color: colorPrimary,
     },
     headings: {
+      url:
+        'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,500&display=swap',
       fontFamily: "'Roboto', sans-serif",
-      // fontFamily: "'Heebo', sans-serif",
+      // link:
+      //   'https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap',
+      // fontFamily: "'Roboto Slab', serif",
       fontWeight: '500',
       letterSpacing: '0',
       color: colorPrimary,

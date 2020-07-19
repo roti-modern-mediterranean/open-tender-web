@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import { ThemeProvider } from 'emotion-theming'
 import GlobalStyles from './GlobalStyles'
 import Routes from './components/Routes'
@@ -13,9 +14,9 @@ import Notifications from './components/Notifications'
 import CartButton from './components/CartButton'
 import Sidebar from './components/Sidebar'
 import Loader from './components/Loader'
+import ErrorBoundary from './components/ErrorBoundary'
 import { fetchConfig } from './slices/configSlice'
 import './App.scss'
-import ErrorBoundary from './components/ErrorBoundary'
 
 class App extends React.Component {
   componentDidMount() {
@@ -23,7 +24,8 @@ class App extends React.Component {
   }
 
   render() {
-    const { loading, theme } = this.props
+    const { loading, theme, brand } = this.props
+    const { body, headings } = theme ? theme.fonts : {}
     return loading === 'pending' || !theme ? (
       <Loader className="loading--page" type="Clip" size={32} />
     ) : (
@@ -31,6 +33,17 @@ class App extends React.Component {
         <GlobalStyles />
         <ErrorBoundary>
           <div className="app">
+            <Helmet>
+              <title>{brand.title}</title>
+              <meta name="description" content={brand.description} />
+              <link rel="icon" href={brand.favicon} />
+              <link rel="apple-touch-icon" href={brand.appleTouchIcon} />
+              <link href={body.url} rel="stylesheet" />
+              {headings.url && body.url !== headings.url && (
+                <link href={headings.url} rel="stylesheet" />
+              )}
+              <link href="" rel="stylesheet" />
+            </Helmet>
             <Modal />
             <Router>
               <Main>
@@ -53,6 +66,7 @@ class App extends React.Component {
 export default connect(
   (state) => ({
     theme: state.config.theme,
+    brand: state.config.brand,
     loading: state.config.loading,
   }),
   { fetchConfig }
