@@ -1,14 +1,16 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOrderServiceType } from '@open-tender/redux'
-import { selectConfig } from '../slices'
+
+import { selectConfig, selectSettings } from '../slices'
 import OrderTypeButton from './OrderTypeButton'
 import { Flag, ShoppingBag, Truck, Users, Gift } from 'react-feather'
 
 const OrderType = () => {
   const dispatch = useDispatch()
+  const { orderTypes } = useSelector(selectSettings)
   const config = useSelector(selectConfig)
-  const { buttons } = config.home
+  const { order_types } = config.home
 
   const handleOutpost = (evt) => {
     evt.preventDefault()
@@ -58,12 +60,12 @@ const OrderType = () => {
 
   return (
     <div className="content__buttons slide-up">
-      {buttons.map((i) => (
+      {orderTypes.map((orderType) => (
         <OrderTypeButton
-          key={i.type}
-          {...i}
-          icon={icons[i.type]}
-          handler={handlers[i.type]}
+          key={orderType}
+          {...order_types[orderType]}
+          icon={icons[orderType]}
+          handler={handlers[orderType]}
         />
       ))}
     </div>

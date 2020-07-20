@@ -9,7 +9,7 @@ import {
 import { makeOrderTypeFromParam } from '@open-tender/js'
 import { GoogleMap, GoogleMapsMarker } from '@open-tender/components'
 
-import { selectConfig, selectGeoLatLng } from '../slices'
+import { selectSettings, selectGeoLatLng } from '../slices'
 import RevenueCentersSelect from './RevenueCentersSelect'
 import ClipLoader from 'react-spinners/ClipLoader'
 
@@ -18,8 +18,8 @@ const RevenueCentersPage = () => {
   const dispatch = useDispatch()
   const [activeMarker, setActiveMarker] = useState(null)
   const { orderType, serviceType, address } = useSelector(selectOrder)
-  const { googleMaps: mapsConfig } = useSelector(selectConfig)
-  const { apiKey, defaultCenter, zoom, styles, icons } = mapsConfig
+  const { googleMaps } = useSelector(selectSettings)
+  const { apiKey, defaultCenter, zoom, styles, icons } = googleMaps
   const geoLatLng = useSelector(selectGeoLatLng)
   const initialCenter = address
     ? { lat: address.lat, lng: address.lng }

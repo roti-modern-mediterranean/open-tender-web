@@ -10,7 +10,7 @@ import {
 } from '@open-tender/redux'
 import { CartItem, BuilderQuantity } from '@open-tender/components'
 
-import { openModal } from '../slices'
+import { openModal, selectDisplaySettings } from '../slices'
 
 const iconMap = {
   plus: <Plus size={null} />,
@@ -20,6 +20,7 @@ const iconMap = {
 const Cart = () => {
   const dispatch = useDispatch()
   const cart = useSelector(selectCart)
+  const displaySettings = useSelector(selectDisplaySettings)
 
   const editItem = (evt, item) => {
     evt.preventDefault()
@@ -44,6 +45,7 @@ const Cart = () => {
               showModifiers={true}
               editItem={(evt) => editItem(evt, item)}
               removeItem={(evt) => removeItem(evt, item)}
+              displaySettings={displaySettings}
             >
               <BuilderQuantity
                 item={item}

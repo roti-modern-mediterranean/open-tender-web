@@ -1,77 +1,5 @@
 const contentConfig = {
-  error: {
-    background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594425807_ice-cream-cone-spilled.jpg',
-    title: 'Something Went Wrong',
-    subtitle:
-      "We're really sorry about this, but our development team has already been alerted about this issue. Please provide additional feedback below in order to help us resolve this issue ASAP.",
-  },
-  notFound: {
-    background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594650725_f5fcb07c62de0bedd619.jpg',
-    title: 'Page Not Found',
-    subtitle: "Sorry, but we couldn't find the page you're looking for.",
-    back: 'Head back to our homepage and give it another try',
-  },
-  signUp: {
-    background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594425195_f6bbb0def5961ba79c8c.jpg',
-    title: 'Create An Account',
-    subtitle:
-      'Order history, saved favorites & allergens, saved credit cards, and much more. Signing up takes two seconds - start reaping the benefits today!',
-    back: 'Head back to starting an order',
-  },
-  resetPassword: {
-    background:
-      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594425807_ice-cream-cone-spilled.jpg',
-    title: 'Reset Your Password',
-    subtitle:
-      'Please enter a new password below. Must be at least 8 characters.',
-    back: 'Start over without resetting your password',
-  },
-  googleMaps: {
-    apiKey: 'AIzaSyCkllc7M-cYNzSRXO7KE-ZZKTPW59RroDk',
-    defaultCenter: { lat: 41.889434, lng: -87.6377857 },
-    zoom: 14,
-    // styles: {
-    //   labelColor: '#666666',
-    //   roadColor: '#eaeef4',
-    //   featureColor: '#eaeef4',
-    //   waterColor: '#dee5ef',
-    //   backgroundColor: '#f5f7fa',
-    // },
-    styles: {
-      labelColor: '#666666',
-      roadColor: '#1c1c1c',
-      featureColor: '#1c1c1c',
-      waterColor: '#1c1c1c',
-      backgroundColor: '#000000',
-    },
-    icons: {
-      user: {
-        url:
-          'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590782366_marker-blinking-static_purple-25_120x120.png',
-        size: { width: 70, height: 70 },
-        anchor: { x: 35, y: 35 },
-      },
-      active: {
-        url:
-          'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271604_map-marker_black_120x160.png',
-        size: { width: 30, height: 40 },
-        anchor: null,
-      },
-
-      inactive: {
-        url:
-          'https://s3.amazonaws.com/betterboh/u/img/prod/2/1590271631_map-marker_purple_120x160.png',
-        size: { width: 30, height: 40 },
-        anchor: null,
-      },
-    },
-  },
   home: {
-    // background:
-    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588197308_asian-food-spread-top-down_color_1800x1200.jpg',
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594323134_french-toast_1547x2000.jpg',
     title: 'How can we help you today?',
@@ -82,36 +10,33 @@ const contentConfig = {
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui ipsum, feugiat quis urna quis, posuere facilisis tellus. Fusce sit amet purus non arcu venenatis viverra ut a risus. Vestibulum dapibus sapien est.',
       'Morbi ac nisi ac dui ultrices bibendum nec in lorem. Vestibulum ut semper est, eget posuere turpis. Donec quis rhoncus nulla. Fusce id sagittis eros.',
     ],
-    buttons: [
-      {
-        type: 'outpost',
+    order_types: {
+      outpost: {
         title: 'Order for Outpost',
         subtitle: 'Dropoff at your building or office',
       },
-      {
-        type: 'pickup',
+      pickup: {
         title: 'Order for Pickup',
         subtitle: 'Pickup at a restaurant',
       },
-      {
-        type: 'delivery',
+      delivery: {
         title: 'Order for Delivery',
         subtitle: 'Directly to your address',
       },
-      {
-        type: 'catering',
+      catering: {
         title: 'Order Catering',
         subtitle: 'Large group orders via delivery or pikup',
       },
-    ],
+      merch: {
+        title: 'Order Merch',
+        subtitle: 'T-shirts, gift cards, and other non-food items',
+      },
+    },
   },
   catering: {
-    // background:
-    //   'https://s3.amazonaws.com/betterboh/u/img/prod/2/1592580958_4e2729d4c2db9a96116c.jpg',
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594417045_5c93dab58fc356b9096a.jpg',
     title: "When's your event?",
-    // preface: "We'll make this quick",
     subtitle:
       'We require 24 hours notice for catering orders. Please see the fine print section below for additional info.',
     content: [
@@ -139,34 +64,11 @@ const contentConfig = {
         msg: "This location isn't accepting orders yet, but it will be soon!",
       },
     },
-    locationName: {
-      PICKUP: ['location', 'locations'],
-      OUTPOST: ['outpost', 'outposts'],
-      DELIVERY: ['location', 'locations'],
-    },
-    maxDistance: 100,
-    autoSelect: {
-      OLO: {
-        PICKUP: false,
-        DELIVERY: false,
-      },
-      CATERING: {
-        PICKUP: false,
-        DELIVERY: true,
-      },
-      MERCH: {
-        PICKUP: true,
-        DELIVERY: true,
-      },
-    },
   },
   menu: {
     background:
       'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588456921_burger-with-knife-black-napkin_flipped-cropped_2400x800.jpg',
     loading: 'Retrieving the menu. Please hang tight.',
-    displayCalories: true,
-    displayAllergens: true,
-    displayTags: true,
     soldOut: {
       image: null,
       message: 'Sold Out For The Day',
@@ -298,6 +200,36 @@ const contentConfig = {
     title: 'Your Addresses',
     subtitle:
       "Below are all of the addresses from which you've ordered in the past. To add a new address, start a new order and enter a new address.",
+  },
+  error: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594425807_ice-cream-cone-spilled.jpg',
+    title: 'Something Went Wrong',
+    subtitle:
+      "We're really sorry about this, but our development team has already been alerted about this issue. Please provide additional feedback below in order to help us resolve this issue ASAP.",
+  },
+  notFound: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594650725_f5fcb07c62de0bedd619.jpg',
+    title: 'Page Not Found',
+    subtitle: "Sorry, but we couldn't find the page you're looking for.",
+    back: 'Head back to our homepage and give it another try',
+  },
+  signUp: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594425195_f6bbb0def5961ba79c8c.jpg',
+    title: 'Create An Account',
+    subtitle:
+      'Order history, saved favorites & allergens, saved credit cards, and much more. Signing up takes two seconds - start reaping the benefits today!',
+    back: 'Head back to starting an order',
+  },
+  resetPassword: {
+    background:
+      'https://s3.amazonaws.com/betterboh/u/img/prod/2/1594425807_ice-cream-cone-spilled.jpg',
+    title: 'Reset Your Password',
+    subtitle:
+      'Please enter a new password below. Must be at least 8 characters.',
+    back: 'Start over without resetting your password',
   },
 }
 

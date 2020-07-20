@@ -1,9 +1,9 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '@open-tender/components'
 
-import { openModal } from '../../slices'
+import { selectDisplaySettings, openModal } from '../../slices'
 import iconMap from '../iconMap'
 
 const ButtonAllergens = ({
@@ -12,6 +12,7 @@ const ButtonAllergens = ({
   icon = iconMap['Sliders'],
 }) => {
   const dispatch = useDispatch()
+  const { allergens: showAllergens } = useSelector(selectDisplaySettings)
 
   const onClick = (evt) => {
     evt.preventDefault()
@@ -19,7 +20,7 @@ const ButtonAllergens = ({
     evt.target.blur()
   }
 
-  return (
+  return showAllergens ? (
     <Button
       text={text}
       ariaLabel="Highlight allergens on the menu"
@@ -27,7 +28,7 @@ const ButtonAllergens = ({
       classes={classes}
       onClick={onClick}
     />
-  )
+  ) : null
 }
 
 ButtonAllergens.displayName = 'ButtonAllergens'

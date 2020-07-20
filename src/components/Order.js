@@ -17,7 +17,7 @@ import {
 } from '@open-tender/js'
 import { Button, CartItem, Check } from '@open-tender/components'
 
-import { openModal } from '../slices'
+import { openModal, selectDisplaySettings } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionRow from './SectionRow'
 import OrderAddress from './OrderAddress'
@@ -58,6 +58,7 @@ const Order = ({ order, loading, error }) => {
   const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
   const { lookup = {} } = useSelector(selectCustomerFavorites)
   const { auth } = useSelector(selectCustomer)
+  const displaySettings = useSelector(selectDisplaySettings)
   const check = { surcharges, discounts, taxes, totals, details }
   const {
     eating_utensils,
@@ -210,7 +211,11 @@ const Order = ({ order, loading, error }) => {
                         : null
                       return (
                         <li key={`${item.id}-${index}`}>
-                          <CartItem item={item} showModifiers={true}>
+                          <CartItem
+                            item={item}
+                            showModifiers={true}
+                            displaySettings={displaySettings}
+                          >
                             <OrderQuantity
                               item={item}
                               show={auth && lookup ? true : false}

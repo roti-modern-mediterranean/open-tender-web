@@ -1,7 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { capitalize } from '@open-tender/js'
 import { OpenTenderAPI } from '@open-tender/redux'
-import { brandConfig, contentConfig, themeConfig } from '../config/index'
+import {
+  brandConfig,
+  contentConfig,
+  themeConfig,
+  settingsConfig,
+} from '../config/index'
 
 const baseUrl = process.env.REACT_APP_API_URL
 const authUrl = process.env.REACT_APP_AUTH_URL
@@ -12,6 +17,7 @@ const initialState = {
   brand: null,
   content: null,
   theme: null,
+  settings: null,
   loading: 'idle',
   error: null,
 }
@@ -23,6 +29,7 @@ const getConfig = () => {
     brand: brandConfig,
     content: contentConfig,
     theme: themeConfig,
+    settings: settingsConfig,
   }
   return new Promise((resolve) =>
     setTimeout(() => {
@@ -55,11 +62,12 @@ const configSlice = createSlice({
   extraReducers: {
     // Add reducers for additional action types here, and handle loading state as needed
     [fetchConfig.fulfilled]: (state, action) => {
-      const { app, brand, content, theme } = action.payload
+      const { app, brand, content, theme, settings } = action.payload
       state.app = app
       state.brand = brand
       state.content = content
       state.theme = theme
+      state.settings = settings
       state.loading = 'idle'
       state.api = new OpenTenderAPI(app)
     },
@@ -76,11 +84,16 @@ const configSlice = createSlice({
 export const selectBrand = (state) => state.config.brand
 export const selectTheme = (state) => state.config.theme
 export const selectConfig = (state) => state.config.content
-export const selectGoogleMapsConfig = (state) => state.config.content.googleMaps
+export const selectSettings = (state) => state.config.settings
+
 export const selectAccountConfig = (state) => state.config.content.account
 export const selectConfigAccountSections = (state) =>
   state.config.content.account.sections
 export const selectOutpostName = (state) =>
-  capitalize(state.config.content.revenueCenters.locationName.OUTPOST[0])
+  capitalize(state.config.settings.locationName.OUTPOST[0])
+export const selectDisplaySettings = (state) => {
+  const orderType = state.data.order.orderType || 'OLO'
+  return state.config.settings.displaySettings[orderType]
+}
 
 export default configSlice.reducer

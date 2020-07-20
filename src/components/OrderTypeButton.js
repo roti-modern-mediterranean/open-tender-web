@@ -10,7 +10,7 @@ const OrderTypeButton = ({ title, handler, icon }) => (
   >
     <span className="content__button__container">
       <span className="content__button__icon ot-color-primary">{icon}</span>
-      <span className="content__button__title ot-heading ot-font-size-h4">
+      <span className="content__button__title ot-heading ot-font-size-x-big">
         {title}
       </span>
       <span className="content__button__arrow ot-color-primary">

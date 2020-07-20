@@ -5,7 +5,7 @@ import { isMobile } from 'react-device-detect'
 import { setCurrentItem, selectCartCounts } from '@open-tender/redux'
 import { convertStringToArray } from '@open-tender/js'
 
-import { openModal } from '../slices'
+import { selectDisplaySettings, openModal } from '../slices'
 import { MenuContext } from './MenuPage'
 import Tag from './Tag'
 import iconMap from './iconMap'
@@ -13,7 +13,13 @@ import iconMap from './iconMap'
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
   const { soldOut, menuConfig, allergenAlerts } = useContext(MenuContext)
-  const { displayCalories, displayAllergens, displayTags } = menuConfig
+  // const displaySettings = useSelector(selectDisplaySettings)
+  const {
+    menuImages: showImage,
+    calories: showCals,
+    tags: showTags,
+    allergens: showAllergens,
+  } = useSelector(selectDisplaySettings)
   const { image: soldOutImage, message: soldOutMsg } = menuConfig.soldOut
   const cartCounts = useSelector(selectCartCounts)
   const isSoldOut = soldOut.includes(item.id)
@@ -22,11 +28,11 @@ const MenuItem = ({ item }) => {
   const bgImage = isSoldOut && soldOutImage ? soldOutImage : smallImg
   const bgStyle = bgImage ? { backgroundImage: `url(${bgImage}` } : null
   const cals =
-    displayCalories && item.nutritional_info
+    showCals && item.nutritional_info
       ? parseInt(item.nutritional_info.calories) || null
       : null
-  const allergens = displayAllergens ? convertStringToArray(item.allergens) : []
-  const tags = displayTags ? convertStringToArray(item.tags) : []
+  const allergens = showAllergens ? convertStringToArray(item.allergens) : []
+  const tags = showTags ? convertStringToArray(item.tags) : []
   const allergenAlert = allergens.length
     ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
     : []
@@ -45,39 +51,41 @@ const MenuItem = ({ item }) => {
     <div className={`menu__item ${isSoldOut ? '-sold-out' : ''}`}>
       <div className="menu__item__container ot-border-color">
         <button className="ot-font-size" onClick={handleClick}>
-          <div
-            className="menu__item__image bg-image ot-bg-color-secondary ot-border-radius"
-            style={bgStyle}
-          >
-            {cartCount > 0 && (
-              <div
-                className={`menu__item__count ot-warning ot-bold ${countFontSize}`}
-              >
-                {cartCount}
-              </div>
-            )}
-            {isSoldOut && soldOutMsg ? (
-              <div className="menu__item__overlay ot-opacity-dark ot-border-radius">
-                <div className="menu__item__overlay__container">
-                  <p className="menu__item__overlay__message ot-color-light ot-font-size-x-big">
-                    {soldOutMsg}
-                  </p>
+          {showImage && (
+            <div
+              className="menu__item__image bg-image ot-bg-color-secondary ot-border-radius"
+              style={bgStyle}
+            >
+              {cartCount > 0 && (
+                <div
+                  className={`menu__item__count ot-warning ot-bold ${countFontSize}`}
+                >
+                  {cartCount}
                 </div>
-              </div>
-            ) : (
-              allergenAlert.length > 0 && (
-                <div className="menu__item__overlay ot-border-radius">
+              )}
+              {isSoldOut && soldOutMsg ? (
+                <div className="menu__item__overlay ot-opacity-dark ot-border-radius">
                   <div className="menu__item__overlay__container">
-                    <Tag
-                      icon={iconMap['AlertCircle']}
-                      text={`Contains ${allergenAlert.join(', ')}`}
-                      bgClass="ot-warning"
-                    />
+                    <p className="menu__item__overlay__message ot-color-light ot-font-size-x-big">
+                      {soldOutMsg}
+                    </p>
                   </div>
                 </div>
-              )
-            )}
-          </div>
+              ) : (
+                allergenAlert.length > 0 && (
+                  <div className="menu__item__overlay ot-border-radius">
+                    <div className="menu__item__overlay__container">
+                      <Tag
+                        icon={iconMap['AlertCircle']}
+                        text={`Contains ${allergenAlert.join(', ')}`}
+                        bgClass="ot-warning"
+                      />
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          )}
           <div className="menu__item__content">
             {/* <p className="menu__item__name ot-bold ot-font-size-big">{item.name}</p> */}
             <p className="menu__item__name ot-heading ot-font-size-big">

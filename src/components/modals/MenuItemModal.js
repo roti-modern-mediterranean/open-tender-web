@@ -12,7 +12,7 @@ import {
 } from '@open-tender/redux'
 import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
 
-import { closeModal } from '../../slices'
+import { closeModal, selectDisplaySettings } from '../../slices'
 import ModalClose from '../ModalClose'
 
 const iconMap = {
@@ -25,6 +25,7 @@ const MenuItemModal = () => {
   const item = useSelector(selectCurrentItem)
   const soldOut = useSelector(selectSoldOut)
   const allergens = useSelector(selectSelectedAllergenNames)
+  const displaySettings = useSelector(selectDisplaySettings)
 
   const handleClose = () => {
     dispatch(closeModal())
@@ -55,6 +56,7 @@ const MenuItemModal = () => {
             renderHeader={(props) => <BuilderHeader {...props} />}
             renderOption={(props) => <BuilderOption {...props} />}
             showImage={true}
+            displaySettings={displaySettings}
             iconMap={iconMap}
             closeModal={handleClose}
           />

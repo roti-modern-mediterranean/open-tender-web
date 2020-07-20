@@ -22,7 +22,7 @@ import {
 } from '@open-tender/js'
 import { Button, GoogleMapsAutocomplete } from '@open-tender/components'
 
-import { selectConfig, selectGeoLatLng } from '../slices'
+import { selectConfig, selectSettings, selectGeoLatLng } from '../slices'
 import iconMap from './iconMap'
 import RevenueCenter from './RevenueCenter'
 import PageTitle from './PageTitle'
@@ -39,6 +39,7 @@ const RevenueCentersSelect = ({
   const dispatch = useDispatch()
   const history = useHistory()
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
+  const { maxDistance, locationName } = useSelector(selectSettings)
   const geoLatLng = useSelector(selectGeoLatLng)
   const { revenueCenters, loading } = useSelector(selectRevenueCenters)
   const { serviceType, orderType, isOutpost, address } = useSelector(
@@ -85,7 +86,7 @@ const RevenueCentersSelect = ({
           geoLatLng,
           count,
           minDistance,
-          rcConfig.maxDistance
+          maxDistance
         )
         setTitle(title)
         setMsg(msg)
@@ -110,12 +111,12 @@ const RevenueCentersSelect = ({
     address,
     geoLatLng,
     revenueCenters,
-    rcConfig.maxDistance,
+    maxDistance,
     autoSelect,
     autoRouteCallack,
   ])
 
-  const names = rcConfig.locationName[isOutpost ? 'OUTPOST' : serviceType]
+  const names = locationName[isOutpost ? 'OUTPOST' : serviceType]
   const renamedTitle = renameLocation(title, names)
   const renamedError = renameLocation(error, names)
   const renamedMsg = renameLocation(msg, names)

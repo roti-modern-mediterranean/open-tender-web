@@ -12,7 +12,7 @@ const themeConfig = {
   transition: 'all 0.15s ease',
   text: {
     lineHeight: '1.4',
-    bold: 'bold',
+    bold: '700',
   },
   colors: {
     primary: colorPrimary,
@@ -41,7 +41,7 @@ const themeConfig = {
   fonts: {
     body: {
       url:
-        'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,400&display=swap',
+        'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap',
       fontFamily: "'Roboto', sans-serif",
       fontWeight: '400',
       // link: 'https://use.typekit.net/rsb8uny.css',
