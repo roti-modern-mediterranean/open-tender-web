@@ -13,7 +13,7 @@ import {
 } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import OrderTag from './OrderTag'
 import OrderImage from './OrderImage'
 import iconMap from './iconMap'
@@ -28,7 +28,7 @@ const CurrentOrder = ({ order }) => {
     address,
     cart,
   } = order
-  const { addresses: addressConfig } = useSelector(selectConfigAccountSections)
+  const { addresses: addressConfig } = useSelector(selectAccountConfig)
   const cartTotal = useSelector(selectCartTotal)
   const tz = timezoneMap[revenueCenter.timezone]
   const requestedAtStr =

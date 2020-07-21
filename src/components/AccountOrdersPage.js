@@ -9,7 +9,7 @@ import {
 } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionEmpty from './SectionEmpty'
@@ -28,7 +28,7 @@ const AccountOrdersPage = () => {
   const [count, setCount] = useState(isBrowser ? increment : limit)
   const {
     recentOrders: { title, subtitle, empty },
-  } = useSelector(selectConfigAccountSections)
+  } = useSelector(selectAccountConfig)
   const { auth } = useSelector(selectCustomer)
   const orders = useSelector(selectCustomerOrders)
   const { entities, loading, error } = orders

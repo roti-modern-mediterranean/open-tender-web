@@ -6,7 +6,7 @@ import { selectCustomerOrders } from '@open-tender/redux'
 import { slugify, makeUniqueDisplayItems } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -21,7 +21,7 @@ const AccountItems = () => {
   const [count, setCount] = useState(isBrowser ? 3 : limit)
   const {
     recentItems: { title, subtitle, empty },
-  } = useSelector(selectConfigAccountSections)
+  } = useSelector(selectAccountConfig)
   const orders = useSelector(selectCustomerOrders)
   const { entities, loading, error } = orders
 

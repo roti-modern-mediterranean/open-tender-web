@@ -10,7 +10,7 @@ import {
 } from '@open-tender/redux'
 import { AllergenForm } from '@open-tender/components'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -19,7 +19,7 @@ const AccountAllergens = () => {
   const dispatch = useDispatch()
   const {
     allergens: { title, subtitle },
-  } = useSelector(selectConfigAccountSections)
+  } = useSelector(selectAccountConfig)
   const brandAllergens = useSelector(selectAllergens)
   const customerAllergens = useSelector(selectCustomerAllergens)
   const isLoading =

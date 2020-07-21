@@ -4,7 +4,7 @@ import { selectCustomerGiftCards } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 import { slugify, formatDateStr, dateStrToDate } from '@open-tender/js'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -15,7 +15,7 @@ import iconMap from './iconMap'
 const AccountGiftCards = () => {
   const {
     giftCards: { title, subtitle },
-  } = useSelector(selectConfigAccountSections)
+  } = useSelector(selectAccountConfig)
   const giftCards = useSelector(selectCustomerGiftCards)
 
   const handleAddValue = (evt, giftCard) => {

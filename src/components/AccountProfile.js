@@ -4,7 +4,7 @@ import { selectCustomer, updateCustomer } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
 import { ProfileForm } from '@open-tender/components'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionError from './SectionError'
 import SectionLoading from './SectionLoading'
@@ -13,7 +13,7 @@ const AccountProfile = () => {
   const dispatch = useDispatch()
   const {
     profile: { title, subtitle },
-  } = useSelector(selectConfigAccountSections)
+  } = useSelector(selectAccountConfig)
   const { profile, loading, error } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
   const errMsg = error ? error.message || null : null

@@ -34,7 +34,7 @@ import iconMap from './iconMap'
 const CateringPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const config = useSelector(selectConfig)
+  const { catering } = useSelector(selectConfig)
   const { orderType, serviceType, requestedAt, revenueCenter } = useSelector(
     selectOrder
   )
@@ -115,9 +115,9 @@ const CateringPage = () => {
 
   return (
     <>
-      {isBrowser && <Background imageUrl={config.catering.background} />}
+      {isBrowser && <Background imageUrl={catering.background} />}
       <div className="content">
-        <PageTitle {...config.catering} />
+        <PageTitle {...catering} />
         <div className="content__body">
           <div className="container">
             <div className="catering">
@@ -184,21 +184,29 @@ const CateringPage = () => {
             </div>
           </div>
         </div>
-        {config.catering.content && config.catering.content.length > 0 && (
-          <div className="content__footer">
-            <div className="container">
-              <div className="catering__fine-print">
+        <div className="content__footer">
+          <div className="container">
+            <div className="catering__fine-print">
+              {catering.policy.title.length > 0 && (
                 <p className="catering__fine-print__title ot-heading ot-font-size-h3">
-                  The Fine Print
+                  {catering.policy.title}
                 </p>
+              )}
+              {catering.policy.subtitle.length > 0 && (
+                <p className="catering__fine-print__subtitle ot-heading ot-font-size-big">
+                  {catering.policy.title}
+                </p>
+              )}
+              {catering.policy.content.length > 0 && (
                 <div className="catering__fine-print__content ot-color-secondary ot-line-height">
-                  {config.home.content.map((i, index) => (
+                  {catering.policy.content.map((i, index) => (
                     <p key={index}>{i}</p>
                   ))}
                 </div>
-              </div>
+              )}
             </div>
           </div>
+        </div>
         )}
       </div>
     </>

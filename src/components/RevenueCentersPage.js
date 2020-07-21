@@ -60,7 +60,7 @@ const RevenueCentersPage = () => {
           <RevenueCentersSelect setCenter={setCenter} center={center} />
           {revenueCenters.map((i) => {
             const isActive = i.revenue_center_id === activeMarker
-            const icon = isActive ? icons.active : icons.inactive
+            const icon = isActive ? icons.location : icons.locationSelected
             return (
               <GoogleMapsMarker
                 key={i.revenue_center_id}

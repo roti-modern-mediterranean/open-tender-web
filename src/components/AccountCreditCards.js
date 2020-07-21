@@ -7,7 +7,7 @@ import {
 import { slugify } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
-import { selectConfigAccountSections, openModal } from '../slices'
+import { selectAccountConfig, openModal } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -19,7 +19,7 @@ const AccountCreditCards = () => {
   const dispatch = useDispatch()
   const {
     creditCards: { title, subtitle, empty },
-  } = useSelector(selectConfigAccountSections)
+  } = useSelector(selectAccountConfig)
   const creditCards = useSelector(selectCustomerCreditCards) || {}
 
   useEffect(() => {

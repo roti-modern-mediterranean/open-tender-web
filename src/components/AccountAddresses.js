@@ -7,7 +7,7 @@ import {
 } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -18,7 +18,7 @@ const AccountAddresses = () => {
   const dispatch = useDispatch()
   const {
     addresses: { title, subtitle },
-  } = useSelector(selectConfigAccountSections)
+  } = useSelector(selectAccountConfig)
   const addresses = useSelector(selectCustomerAddresses)
   const isLoading = addresses.loading === 'pending'
   const error = addresses.error

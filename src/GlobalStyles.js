@@ -6,15 +6,19 @@ import { withTheme } from 'emotion-theming'
 
 const makeGlobalStyles = (theme) => css`
   body {
-    font-family: ${theme.fonts.body.fontFamily};
-    font-weight: ${theme.fonts.body.fontWeight};
+    font-family: ${theme.fonts.body.family};
+    font-weight: ${theme.fonts.body.weight};
     letter-spacing: ${theme.fonts.body.letterSpacing};
+    text-transform: ${theme.fonts.body.textTransform};
     color: ${theme.fonts.body.color};
-    font-size: ${theme.fontSizes.main};
+    font-size: ${theme.fonts.sizes.main};
     background-color: ${theme.bgColors.primary};
   }
   header {
-    background-color: ${theme.header.bgColor};
+    background-color: ${theme.header.primary};
+    &.stuck {
+      background-color: ${theme.header.stuck};
+    }
   }
   h1,
   h2,
@@ -23,40 +27,41 @@ const makeGlobalStyles = (theme) => css`
   h5,
   h6,
   .ot-heading {
-    font-family: ${theme.fonts.headings.fontFamily};
-    font-weight: ${theme.fonts.headings.fontWeight};
+    font-family: ${theme.fonts.headings.family};
+    font-weight: ${theme.fonts.headings.weight};
     letter-spacing: ${theme.fonts.headings.letterSpacing};
+    text-transform: ${theme.fonts.headings.textTransform};
     color: ${theme.fonts.headings.color};
   }
   h1,
   .ot-font-size-h1 {
-    font-size: ${theme.fonts.headings.sizes.h1};
+    font-size: ${theme.fonts.sizes.h1};
   }
   h2,
   .ot-font-size-h2 {
-    font-size: ${theme.fonts.headings.sizes.h2};
+    font-size: ${theme.fonts.sizes.h2};
   }
   h3,
   .ot-font-size-h3 {
-    font-size: ${theme.fonts.headings.sizes.h3};
+    font-size: ${theme.fonts.sizes.h3};
   }
   h4,
   .ot-font-size-h4 {
-    font-size: ${theme.fonts.headings.sizes.h4};
+    font-size: ${theme.fonts.sizes.h4};
   }
   h5,
   .ot-font-size-h5 {
-    font-size: ${theme.fonts.headings.sizes.h5};
+    font-size: ${theme.fonts.sizes.h5};
   }
   h6,
   .ot-font-size-h6 {
-    font-size: ${theme.fonts.headings.sizes.h6};
+    font-size: ${theme.fonts.sizes.h6};
   }
 
   a {
     cursor: pointer;
     text-decoration: ${theme.links.textDecoration};
-    transition: ${theme.transition};
+    transition: ${theme.links.transition};
     color: ${theme.links.primary.color};
     &:hover,
     &:active,
@@ -84,44 +89,46 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .ot-preface {
-    text-transform: ${theme.preface.textTransform};
-    letter-spacing: ${theme.preface.letterSpacing};
+    font-family: ${theme.fonts.preface.family};
+    font-weight: ${theme.fonts.preface.weight};
+    letter-spacing: ${theme.fonts.preface.letterSpacing};
+    text-transform: ${theme.fonts.preface.textTransform};
     color: ${theme.colors.secondary};
-    font-size: ${theme.fontSizes.small};
+    font-size: ${theme.fonts.sizes.small};
   }
   .ot-dark .ot-preface {
     color: ${theme.colors.light};
   }
   .ot-title {
     color: ${theme.colors.primary};
-    font-size: ${theme.fonts.headings.sizes.h1};
+    font-size: ${theme.fonts.sizes.h1};
   }
   .ot-subtitle {
     color: ${theme.colors.secondary};
-    line-height: ${theme.text.lineHeight};
+    line-height: ${theme.lineHeight};
   }
 
   .ot-line-height {
-    line-height: ${theme.text.lineHeight};
+    line-height: ${theme.lineHeight};
   }
   .ot-bold {
-    font-weight: ${theme.text.bold};
+    font-weight: ${theme.boldWeight};
   }
 
   .ot-font-size-x-small {
-    font-size: ${theme.fontSizes.xSmall};
+    font-size: ${theme.fonts.sizes.xSmall};
   }
   .ot-font-size-small {
-    font-size: ${theme.fontSizes.small};
+    font-size: ${theme.fonts.sizes.small};
   }
   .ot-font-size {
-    font-size: ${theme.fontSizes.main};
+    font-size: ${theme.fonts.sizes.main};
   }
   .ot-font-size-big {
-    font-size: ${theme.fontSizes.big};
+    font-size: ${theme.fonts.sizes.big};
   }
   .ot-font-size-x-big {
-    font-size: ${theme.fontSizes.xBig};
+    font-size: ${theme.fonts.sizes.xBig};
   }
 
   .ot-color-primary {
@@ -143,7 +150,7 @@ const makeGlobalStyles = (theme) => css`
     color: ${theme.colors.light};
   }
   .ot-color-link {
-    color: ${theme.colors.link};
+    color: ${theme.links.primary.color};
   }
 
   .ot-bg-color-primary {
@@ -180,17 +187,17 @@ const makeGlobalStyles = (theme) => css`
   }
   .ot-highlight {
     color: ${theme.colors.light};
-    background-color: ${theme.colors.link};
+    background-color: ${theme.links.primary.color};
   }
 
   .ot-opacity-light {
-    background-color: ${theme.opacity.light};
+    background-color: ${theme.overlay.light};
   }
   .ot-opacity-dark {
-    background-color: ${theme.opacity.dark};
+    background-color: ${theme.overlay.dark};
   }
   .ot-opacity-alert {
-    background-color: ${theme.opacity.alert};
+    background-color: ${theme.overlay.alert};
   }
 
   .ot-box-shadow {
@@ -214,9 +221,9 @@ const makeGlobalStyles = (theme) => css`
   }
 
   button {
-    font-family: ${theme.fonts.body.fontFamily};
-    font-weight: ${theme.fonts.body.fontWeight};
-    transition: ${theme.transition};
+    font-family: ${theme.fonts.body.family};
+    font-weight: ${theme.fonts.body.weight};
+    transition: ${theme.links.transition};
   }
 
   button:disabled {
@@ -256,32 +263,32 @@ const makeGlobalStyles = (theme) => css`
     line-height: 1;
     margin: 0;
     text-align: center;
-    font-size: ${theme.fontSizes.main};
-    padding: ${theme.buttons.sizes.main.padding};
-    border-width: ${theme.buttons.sizes.main.borderWidth};
-    border-radius: ${theme.buttons.sizes.main.borderRadius};
-    color: ${theme.buttons.colors.primary.initial.color};
-    background-color: ${theme.buttons.colors.primary.initial.bgColor};
-    border-color: ${theme.buttons.colors.primary.initial.borderColor};
+    font-size: ${theme.fonts.sizes.main};
+    padding: ${theme.buttons.sizes.default.padding};
+    border-width: ${theme.buttons.sizes.default.borderWidth};
+    border-radius: ${theme.buttons.sizes.default.borderRadius};
+    color: ${theme.buttons.colors.primary.color};
+    background-color: ${theme.buttons.colors.primary.bgColor};
+    border-color: ${theme.buttons.colors.primary.borderColor};
 
     &:hover,
     &:active,
     &:focus {
-      border-width: ${theme.buttons.sizes.main.borderWidth};
-      color: ${theme.buttons.colors.primary.hover.color};
-      background-color: ${theme.buttons.colors.primary.hover.bgColor};
-      border-color: ${theme.buttons.colors.primary.hover.borderColor};
+      border-width: ${theme.buttons.sizes.default.borderWidth};
+      color: ${theme.buttons.colors.primaryHover.color};
+      background-color: ${theme.buttons.colors.primaryHover.bgColor};
+      border-color: ${theme.buttons.colors.primaryHover.borderColor};
     }
 
     &:disabled {
-      color: ${theme.buttons.colors.primary.initial.color};
-      background-color: ${theme.buttons.colors.primary.initial.bgColor};
-      border-color: ${theme.buttons.colors.primary.initial.borderColor};
+      color: ${theme.buttons.colors.primary.color};
+      background-color: ${theme.buttons.colors.primary.bgColor};
+      border-color: ${theme.buttons.colors.primary.borderColor};
     }
   }
 
   .ot-btn--small {
-    font-size: ${theme.fontSizes.small};
+    font-size: ${theme.fonts.sizes.small};
     padding: ${theme.buttons.sizes.small.padding};
     border-width: ${theme.buttons.sizes.small.borderWidth};
     border-radius: ${theme.buttons.sizes.small.borderRadius};
@@ -294,7 +301,7 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .ot-btn--big {
-    font-size: ${theme.fontSizes.big};
+    font-size: ${theme.fonts.sizes.big};
     padding: ${theme.buttons.sizes.big.padding};
     border-width: ${theme.buttons.sizes.big.borderWidth};
     border-radius: ${theme.buttons.sizes.big.borderRadius};
@@ -307,7 +314,7 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .ot-btn--header {
-    font-size: ${theme.fontSizes.small};
+    font-size: ${theme.fonts.sizes.small};
     padding: ${theme.buttons.sizes.header.padding};
     border-width: ${theme.buttons.sizes.header.borderWidth};
     border-radius: ${theme.buttons.sizes.header.borderRadius};
@@ -320,22 +327,22 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .ot-btn--secondary {
-    color: ${theme.buttons.colors.secondary.initial.color};
-    background-color: ${theme.buttons.colors.secondary.initial.bgColor};
-    border-color: ${theme.buttons.colors.secondary.initial.borderColor};
+    color: ${theme.buttons.colors.secondary.color};
+    background-color: ${theme.buttons.colors.secondary.bgColor};
+    border-color: ${theme.buttons.colors.secondary.borderColor};
 
     &:hover,
     &:active,
     &:focus {
-      color: ${theme.buttons.colors.secondary.hover.color};
-      background-color: ${theme.buttons.colors.secondary.hover.bgColor};
-      border-color: ${theme.buttons.colors.secondary.hover.borderColor};
+      color: ${theme.buttons.colors.secondaryHover.color};
+      background-color: ${theme.buttons.colors.secondaryHover.bgColor};
+      border-color: ${theme.buttons.colors.secondaryHover.borderColor};
     }
 
     &:disabled {
-      color: ${theme.buttons.colors.secondary.initial.color};
-      background-color: ${theme.buttons.colors.secondary.initial.bgColor};
-      border-color: ${theme.buttons.colors.secondary.initial.borderColor};
+      color: ${theme.buttons.colors.secondary.color};
+      background-color: ${theme.buttons.colors.secondary.bgColor};
+      border-color: ${theme.buttons.colors.secondary.borderColor};
     }
   }
 
@@ -381,8 +388,8 @@ const makeGlobalStyles = (theme) => css`
 
   .ot-btn--highlight {
     color: ${theme.colors.light};
-    background-color: ${theme.colors.link};
-    border-color: ${theme.colors.link};
+    background-color: ${theme.links.primary.color};
+    border-color: ${theme.links.primary.color};
 
     &:hover,
     &:active,
@@ -394,8 +401,8 @@ const makeGlobalStyles = (theme) => css`
 
     &:disabled {
       color: ${theme.colors.light};
-      background-color: ${theme.colors.link};
-      border-color: ${theme.colors.link};
+      background-color: ${theme.links.primary.color};
+      border-color: ${theme.links.primary.color};
     }
   }
 
@@ -453,12 +460,12 @@ const makeGlobalStyles = (theme) => css`
     line-height: ${theme.inputs.lineHeight};
     padding: ${theme.inputs.padding};
     border-radius: ${theme.border.radiusSmall};
-    font-family: ${theme.fonts.body.fontFamily};
-    font-size: ${theme.fontSizes.main};
+    font-family: ${theme.fonts.body.family};
+    font-size: ${theme.fonts.sizes.main};
     color: ${theme.fonts.body.color};
     background-color: ${theme.bgColors.secondary};
     border: ${theme.border.width} solid ${theme.bgColors.secondary};
-    transition: ${theme.transition};
+    transition: ${theme.links.transition};
 
     &::placeholder {
       color: ${theme.fonts.body.color};
@@ -498,17 +505,17 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .ot-input-quantity {
-    color: ${theme.buttons.colors.primary.initial.color};
-    background-color: ${theme.buttons.colors.primary.initial.bgColor};
-    border-color: ${theme.buttons.colors.primary.initial.borderColor};
+    color: ${theme.buttons.colors.primary.color};
+    background-color: ${theme.buttons.colors.primary.bgColor};
+    border-color: ${theme.buttons.colors.primary.borderColor};
 
     &:active,
     &:focus,
     &:disabled,
     &:read-only {
-      color: ${theme.buttons.colors.primary.initial.color};
-      background-color: ${theme.buttons.colors.primary.initial.bgColor};
-      border-color: ${theme.buttons.colors.primary.initial.borderColor};
+      color: ${theme.buttons.colors.primary.color};
+      background-color: ${theme.buttons.colors.primary.bgColor};
+      border-color: ${theme.buttons.colors.primary.borderColor};
     }
   }
 
@@ -541,7 +548,7 @@ const makeGlobalStyles = (theme) => css`
   }
 
   input.switch__input:checked + span.switch__toggle {
-    background-color: ${theme.colors.link};
+    background-color: ${theme.links.primary.color};
   }
 
   span.radio__custom {
@@ -558,17 +565,17 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .react-datepicker__navigation--previous {
-    border-right-color: ${theme.colors.link};
+    border-right-color: ${theme.links.primary.color};
   }
   .react-datepicker__navigation--next {
-    border-left-color: ${theme.colors.link};
+    border-left-color: ${theme.links.primary.color};
   }
   .react-datepicker__time-container {
     border-left-color: ${theme.border.color};
   }
   .react-datepicker__day,
   .react-datepicker__time-list-item {
-    color: ${theme.colors.link};
+    color: ${theme.links.primary.color};
   }
   .react-datepicker__day--selected,
   .react-datepicker__day:hover,
@@ -579,7 +586,7 @@ const makeGlobalStyles = (theme) => css`
   .react-datepicker__time-list-item:active,
   .react-datepicker__time-list-item:focus {
     color: ${theme.colors.light};
-    background-color: ${theme.colors.link};
+    background-color: ${theme.links.primary.color};
   }
 
   .react-datepicker__day--today {
@@ -592,18 +599,18 @@ const makeGlobalStyles = (theme) => css`
 
   .circle-loader {
     border-color: ${theme.border.color};
-    border-left-color: ${theme.colors.link};
+    border-left-color: ${theme.links.primary.color};
   }
   .load-complete {
-    border-color: ${theme.colors.link};
-    background-color: ${theme.colors.link};
+    border-color: ${theme.links.primary.color};
+    background-color: ${theme.links.primary.color};
   }
 
   .clear-input {
-    border-color: ${theme.colors.link};
+    border-color: ${theme.links.primary.color};
     &:before,
     &:after {
-      background-color: ${theme.colors.link};
+      background-color: ${theme.links.primary.color};
     }
     &:hover {
       border-color: ${theme.colors.primary};

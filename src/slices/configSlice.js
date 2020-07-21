@@ -87,8 +87,6 @@ export const selectConfig = (state) => state.config.content
 export const selectSettings = (state) => state.config.settings
 
 export const selectAccountConfig = (state) => state.config.content.account
-export const selectConfigAccountSections = (state) =>
-  state.config.content.account.sections
 export const selectOutpostName = (state) =>
   capitalize(state.config.settings.locationName.OUTPOST[0])
 export const selectDisplaySettings = (state) => {

@@ -14,7 +14,7 @@ import {
 import { slugify } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -29,7 +29,7 @@ const AccountOrders = () => {
   const [count, setCount] = useState(isBrowser ? 3 : limit)
   const {
     recentOrders: { title, subtitle, empty },
-  } = useSelector(selectConfigAccountSections)
+  } = useSelector(selectAccountConfig)
   const orders = useSelector(selectCustomerOrders)
   const cartQuantity = useSelector(selectCartQuantity)
   const { entities, loading, error } = orders

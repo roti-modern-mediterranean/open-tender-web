@@ -8,8 +8,7 @@ import ModalClose from '../ModalClose'
 
 const CartCountsModal = ({ errors }) => {
   const dispatch = useDispatch()
-  const { menu: menuConfig } = useSelector(selectConfig)
-  const { validate: config } = menuConfig
+  const { menu } = useSelector(selectConfig)
   const cart = useSelector(selectCart)
 
   const handleClose = (evt) => {
@@ -24,9 +23,9 @@ const CartCountsModal = ({ errors }) => {
       <div className="modal__content">
         <div className="modal__header">
           <p className="modal__title ot-heading ot-font-size-h3">
-            {config.title}
+            {menu.cartErrors.title}
           </p>
-          <p className="modal__subtitle">{config.subtitle}</p>
+          <p className="modal__subtitle">{menu.cartErrors.subtitle}</p>
         </div>
         <div className="modal__body">
           <CartCounts cart={cart} errors={errors} />

@@ -79,7 +79,7 @@ const MenuPage = () => {
         <div className="menu__wrapper">
           {isLoading && (
             <div className="menu__loading ot-opacity-light">
-              <Loader text={menuConfig.loading} />
+              <Loader text={menuConfig.loadingMessage} />
             </div>
           )}
           <Menu categories={categories} soldOut={soldOut} />

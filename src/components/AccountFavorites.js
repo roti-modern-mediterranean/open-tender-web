@@ -9,7 +9,7 @@ import {
 import { slugify, makeDisplayItem } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -24,7 +24,7 @@ const AccountFavorites = () => {
   const [count, setCount] = useState(isBrowser ? 3 : limit)
   const {
     favorites: { title, subtitle, empty },
-  } = useSelector(selectConfigAccountSections)
+  } = useSelector(selectAccountConfig)
   const { entities, loading, error } = useSelector(selectCustomerFavorites)
   const isLoading = loading === 'pending'
 

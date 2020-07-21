@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { selectCustomer, fetchCustomer } from '@open-tender/redux'
 
-import { selectConfig } from '../slices'
+import { selectConfig, selectSettings } from '../slices'
 import StickyNav from './StickyNav'
 import AccountGreeting from './AccountGreeting'
 import AccountOrders from './AccountOrders'
@@ -19,12 +19,27 @@ import AccountHouseAccounts from './AccountHouseAccounts'
 import Background from './Background'
 import PageTitle from './PageTitle'
 
+const sections = {
+  favorites: <AccountFavorites />,
+  recentOrders: <AccountOrders />,
+  recentItems: <AccountItems />,
+  profile: <AccountProfile />,
+  allergens: <AccountAllergens />,
+  addresses: <AccountAddresses />,
+  giftCards: <AccountGiftCards />,
+  creditCards: <AccountCreditCards />,
+  houseAccounts: <AccountHouseAccounts />,
+}
+
 const AccountPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { account: accountConfig } = useSelector(selectConfig)
-  const { background, title, subtitle, sections } = accountConfig
-  const navItems = Object.values(sections).map((section) => section.title)
+  const { background, title, subtitle } = accountConfig
+  const { accountSections } = useSelector(selectSettings)
+  const navItems = Object.values(accountSections).map(
+    (section) => accountConfig[section].title
+  )
   const { auth, profile } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
@@ -50,15 +65,7 @@ const AccountPage = () => {
         <AccountGreeting />
         <StickyNav items={navItems} offset={-90} />
         <div className="sections">
-          <AccountFavorites />
-          <AccountOrders />
-          <AccountItems />
-          <AccountProfile />
-          <AccountAllergens />
-          <AccountAddresses />
-          <AccountGiftCards />
-          <AccountCreditCards />
-          <AccountHouseAccounts />
+          {accountSections.map((section) => sections[section])}
         </div>
       </div>
     </>

@@ -9,8 +9,7 @@ import { Flag, ShoppingBag, Truck, Users, Gift } from 'react-feather'
 const OrderType = () => {
   const dispatch = useDispatch()
   const { orderTypes } = useSelector(selectSettings)
-  const config = useSelector(selectConfig)
-  const { order_types } = config.home
+  const { home } = useSelector(selectConfig)
 
   const handleOutpost = (evt) => {
     evt.preventDefault()
@@ -43,19 +42,19 @@ const OrderType = () => {
   }
 
   const handlers = {
-    outpost: handleOutpost,
-    pickup: handlePickup,
-    delivery: handleDelivery,
-    catering: handleCatering,
-    merch: handleMerch,
+    OUTPOST: handleOutpost,
+    PICKUP: handlePickup,
+    DELIVERY: handleDelivery,
+    CATERING: handleCatering,
+    MERCH: handleMerch,
   }
 
   const icons = {
-    outpost: <Flag size={null} />,
-    pickup: <ShoppingBag size={null} />,
-    delivery: <Truck size={null} />,
-    catering: <Users size={null} />,
-    merch: <Gift size={null} />,
+    OUTPOST: <Flag size={null} />,
+    PICKUP: <ShoppingBag size={null} />,
+    DELIVERY: <Truck size={null} />,
+    CATERING: <Users size={null} />,
+    MERCH: <Gift size={null} />,
   }
 
   return (
@@ -63,7 +62,7 @@ const OrderType = () => {
       {orderTypes.map((orderType) => (
         <OrderTypeButton
           key={orderType}
-          {...order_types[orderType]}
+          {...home.orderTypes[orderType]}
           icon={icons[orderType]}
           handler={handlers[orderType]}
         />

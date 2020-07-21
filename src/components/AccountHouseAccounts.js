@@ -10,7 +10,7 @@ import {
   serviceTypeNamesMap,
 } from '@open-tender/js'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -21,7 +21,7 @@ const AccountHouseAccounts = () => {
   const dispatch = useDispatch()
   const {
     houseAccounts: { title, subtitle, empty },
-  } = useSelector(selectConfigAccountSections)
+  } = useSelector(selectAccountConfig)
   const houseAccounts = useSelector(selectCustomerHouseAccounts)
   const isLoading = houseAccounts.loading === 'pending'
   const error = houseAccounts.error

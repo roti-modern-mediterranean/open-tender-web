@@ -9,20 +9,6 @@ const bgColorPrimary = '#ffffff'
 const bgColorSecondary = '#f5f7fa'
 
 const themeConfig = {
-  transition: 'all 0.15s ease',
-  text: {
-    lineHeight: '1.4',
-    bold: '700',
-  },
-  colors: {
-    primary: colorPrimary,
-    secondary: colorSecondary,
-    alert: colorError,
-    error: colorError,
-    success: '#03A376',
-    light: colorLight,
-    link: colorLink,
-  },
   bgColors: {
     primary: bgColorPrimary,
     secondary: bgColorSecondary,
@@ -31,96 +17,42 @@ const themeConfig = {
     success: '#e6fff3',
     dark: colorPrimary,
   },
-  fontSizes: {
-    xSmall: '1.0rem',
-    small: '1.2rem',
-    main: '1.4rem',
-    big: '1.6rem',
-    xBig: '1.8rem',
-  },
-  fonts: {
-    body: {
-      url:
-        'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap',
-      fontFamily: "'Roboto', sans-serif",
-      fontWeight: '400',
-      // link: 'https://use.typekit.net/rsb8uny.css',
-      // fontFamily: "'effra', Helvetica, Arial, sans-serif",
-      // fontWeight: '500',
-      letterSpacing: '0',
-      color: colorPrimary,
-    },
-    headings: {
-      url:
-        'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,500&display=swap',
-      fontFamily: "'Roboto', sans-serif",
-      // link:
-      //   'https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap',
-      // fontFamily: "'Roboto Slab', serif",
-      fontWeight: '500',
-      letterSpacing: '0',
-      color: colorPrimary,
-      sizes: {
-        h1: '3.2rem',
-        h2: '2.8rem',
-        h3: '2.4rem',
-        h4: '2.0rem',
-        h5: '1.8rem',
-        h6: '1.6rem',
-      },
-    },
-  },
-  header: {
-    // bgColor: 'transparent',
-    bgColor: bgColorPrimary,
-    bgColorStuck: bgColorPrimary,
-  },
-  preface: {
-    textTransform: 'uppercase',
-    letterSpacing: '0.1rem',
-  },
-  links: {
-    textDecoration: 'none',
-    primary: {
-      color: colorLink,
-      hover: colorLinkHover,
-    },
-    light: {
-      color: colorLight,
-      // hover: '#aaaaaa',
-      hover: colorLink,
-    },
-    dark: {
-      color: colorPrimary,
-      hover: colorLink,
-    },
-  },
-  opacity: {
-    light: 'rgba(255, 255, 255, 0.9)',
-    dark: 'rgba(0, 0, 0, 0.6)',
-    alert: 'rgba(239, 35, 60, 0.75)',
-  },
-  boxShadow: {
-    // outer: '0 2px 4px -1px rgba(0, 0, 0, 0.2)',
-    outer: 'none',
-    // outer: '0 1px 2px -1px rgba(0, 0, 0, 0.2)',
-    inset: 'inset 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
-    // inset: 'none',
-  },
+  boldWeight: '700',
   border: {
     color: '#edf0f6',
-    // color: '#e8e9eb',
     width: '0.1rem',
     radius: '0',
     radiusSmall: '0',
   },
-  favorite: {
-    size: '2.8rem',
-    iconSize: '1.4rem',
+  boxShadow: {
+    outer: 'none',
+    inset: 'inset 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
   },
   buttons: {
+    colors: {
+      primary: {
+        color: colorLight,
+        bgColor: colorPrimary,
+        borderColor: colorPrimary,
+      },
+      primaryHover: {
+        color: colorLight,
+        bgColor: colorLink,
+        borderColor: colorLink,
+      },
+      secondary: {
+        color: colorPrimary,
+        bgColor: bgColorPrimary,
+        borderColor: bgColorPrimary,
+      },
+      secondaryHover: {
+        color: colorPrimary,
+        bgColor: bgColorSecondary,
+        borderColor: bgColorSecondary,
+      },
+    },
     sizes: {
-      main: {
+      default: {
         padding: '1.0rem 2.0rem',
         borderWidth: '0',
         borderRadius: '2.0rem',
@@ -141,37 +73,88 @@ const themeConfig = {
         borderRadius: '0.5rem',
       },
     },
-    colors: {
-      primary: {
-        initial: {
-          color: colorLight,
-          bgColor: colorPrimary,
-          borderColor: colorPrimary,
-        },
-        hover: {
-          color: colorLight,
-          bgColor: colorLink,
-          borderColor: colorLink,
-        },
-      },
-      secondary: {
-        initial: {
-          color: colorPrimary,
-          bgColor: bgColorPrimary,
-          borderColor: bgColorPrimary,
-        },
-        hover: {
-          color: colorPrimary,
-          bgColor: bgColorSecondary,
-          borderColor: bgColorSecondary,
-        },
-      },
+  },
+  colors: {
+    primary: colorPrimary,
+    secondary: colorSecondary,
+    alert: colorError,
+    error: colorError,
+    success: '#03A376',
+    light: colorLight,
+  },
+  favorite: {
+    size: '2.8rem',
+    iconSize: '1.4rem',
+  },
+  fonts: {
+    body: {
+      url:
+        'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap',
+      family: "'Roboto', sans-serif",
+      weight: '400',
+      letterSpacing: '0',
+      textTransform: 'none',
+      color: colorPrimary,
     },
+    headings: {
+      url:
+        'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,500&display=swap',
+      family: "'Roboto', sans-serif",
+      weight: '500',
+      letterSpacing: '0',
+      textTransform: 'none',
+      color: colorPrimary,
+    },
+    preface: {
+      family: "'Roboto', sans-serif",
+      weight: '400',
+      letterSpacing: '0.1rem',
+      textTransform: 'uppercase',
+    },
+    sizes: {
+      xSmall: '1.0rem',
+      small: '1.2rem',
+      main: '1.4rem',
+      big: '1.6rem',
+      xBig: '1.8rem',
+      h1: '3.2rem',
+      h2: '2.8rem',
+      h3: '2.4rem',
+      h4: '2.0rem',
+      h5: '1.8rem',
+      h6: '1.6rem',
+    },
+  },
+  header: {
+    primary: bgColorPrimary,
+    stuck: bgColorPrimary,
   },
   inputs: {
     lineHeight: '1.2',
     padding: '1.2rem 1.4rem',
     boxShadow: 'none',
+  },
+  lineHeight: '1.4',
+  links: {
+    textDecoration: 'none',
+    transition: 'all 0.15s ease',
+    primary: {
+      color: colorLink,
+      hover: colorLinkHover,
+    },
+    light: {
+      color: colorLight,
+      hover: colorLink,
+    },
+    dark: {
+      color: colorPrimary,
+      hover: colorLink,
+    },
+  },
+  overlay: {
+    light: 'rgba(255, 255, 255, 0.9)',
+    dark: 'rgba(0, 0, 0, 0.6)',
+    alert: 'rgba(239, 35, 60, 0.75)',
   },
 }
 

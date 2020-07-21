@@ -8,7 +8,7 @@ import {
 } from '@open-tender/redux'
 import { makeUniqueDisplayItems } from '@open-tender/js'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionEmpty from './SectionEmpty'
@@ -24,7 +24,7 @@ const AccountItemsPage = () => {
   const [items, setItems] = useState([])
   const {
     recentItems: { title, subtitle, empty },
-  } = useSelector(selectConfigAccountSections)
+  } = useSelector(selectAccountConfig)
   const { auth } = useSelector(selectCustomer)
   const { entities, loading, error } = useSelector(selectCustomerOrders)
   const isLoading = loading === 'pending'

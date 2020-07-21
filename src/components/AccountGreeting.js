@@ -13,7 +13,7 @@ import {
 import { slugify, capitalize, otherOrderTypesMap } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
-import { selectConfigAccountSections } from '../slices'
+import { selectAccountConfig } from '../slices'
 import CurrentOrder from './CurrentOrder'
 import OrderCard from './OrderCard'
 import AccountLoyalty from './AccountLoyalty'
@@ -45,7 +45,7 @@ const getLastOrder = (orders) => {
 const AccountGreeting = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const config = useSelector(selectConfigAccountSections)
+  const config = useSelector(selectAccountConfig)
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectCustomerOrders)

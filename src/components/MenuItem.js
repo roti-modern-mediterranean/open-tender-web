@@ -13,20 +13,19 @@ import iconMap from './iconMap'
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()
   const { soldOut, menuConfig, allergenAlerts } = useContext(MenuContext)
-  // const displaySettings = useSelector(selectDisplaySettings)
   const {
     menuImages: showImage,
     calories: showCals,
     tags: showTags,
     allergens: showAllergens,
   } = useSelector(selectDisplaySettings)
-  const { image: soldOutImage, message: soldOutMsg } = menuConfig.soldOut
+  const soldOutMsg = menuConfig.soldOutMessage || 'Sold out for day'
   const cartCounts = useSelector(selectCartCounts)
   const isSoldOut = soldOut.includes(item.id)
   const cartCount = cartCounts[item.id] || 0
-  const smallImg = item.small_image_url
-  const bgImage = isSoldOut && soldOutImage ? soldOutImage : smallImg
-  const bgStyle = bgImage ? { backgroundImage: `url(${bgImage}` } : null
+  const smallImg =
+    item.small_image_url || item.app_image_url || item.big_image_url
+  const bgStyle = smallImg ? { backgroundImage: `url(${smallImg}` } : null
   const cals =
     showCals && item.nutritional_info
       ? parseInt(item.nutritional_info.calories) || null
