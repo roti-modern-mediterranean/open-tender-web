@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { capitalize } from '@open-tender/js'
 import { OpenTenderAPI } from '@open-tender/redux'
-// import {
-//   brandConfig,
-//   contentConfig,
-//   themeConfig,
-//   settingsConfig,
-// } from '../config/index'
 
 const baseUrl = process.env.REACT_APP_API_URL
 const authUrl = process.env.REACT_APP_AUTH_URL
@@ -22,22 +16,6 @@ const initialState = {
   loading: 'idle',
   error: null,
 }
-
-// fake config request for now
-// const getConfig = () => {
-//   const config = {
-//     clientId: clientId,
-//     brand: brandConfig,
-//     content: contentConfig,
-//     theme: themeConfig,
-//     settings: settingsConfig,
-//   }
-//   return new Promise((resolve) =>
-//     setTimeout(() => {
-//       resolve(config)
-//     }, 500)
-//   )
-// }
 
 export const fetchConfig = createAsyncThunk(
   'config/getConfig',
