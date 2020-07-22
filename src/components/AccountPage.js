@@ -31,6 +31,8 @@ const sections = {
   houseAccounts: <AccountHouseAccounts />,
 }
 
+const AccountSection = ({ section }) => sections[section]
+
 const AccountPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -65,7 +67,9 @@ const AccountPage = () => {
         <AccountGreeting />
         <StickyNav items={navItems} offset={-90} />
         <div className="sections">
-          {accountSections.map((section) => sections[section])}
+          {accountSections.map((section) => (
+            <AccountSection key={section} section={section} />
+          ))}
         </div>
       </div>
     </>

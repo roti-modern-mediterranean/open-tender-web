@@ -14,6 +14,7 @@ import Notifications from './components/Notifications'
 import CartButton from './components/CartButton'
 import Sidebar from './components/Sidebar'
 import Loader from './components/Loader'
+import ErrorFatalPage from './components/ErrorFatalPage'
 import ErrorBoundary from './components/ErrorBoundary'
 import { fetchConfig } from './slices/configSlice'
 import './App.scss'
@@ -24,10 +25,13 @@ class App extends React.Component {
   }
 
   render() {
-    const { loading, theme, brand } = this.props
+    const { loading, theme, brand, error } = this.props
     const { body, headings } = theme ? theme.fonts : {}
-    return loading === 'pending' || !theme ? (
+    console.log(loading, error)
+    return loading === 'pending' || (!theme && !error) ? (
       <Loader className="loading--page" type="Clip" size={32} />
+    ) : error ? (
+      <ErrorFatalPage error={error} />
     ) : (
       <ThemeProvider theme={this.props.theme}>
         <GlobalStyles />
@@ -68,6 +72,7 @@ export default connect(
     theme: state.config.theme,
     brand: state.config.brand,
     loading: state.config.loading,
+    error: state.config.error,
   }),
   { fetchConfig }
 )(App)

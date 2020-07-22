@@ -1,16 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { capitalize } from '@open-tender/js'
 import { OpenTenderAPI } from '@open-tender/redux'
-import {
-  brandConfig,
-  contentConfig,
-  themeConfig,
-  settingsConfig,
-} from '../config/index'
+// import {
+//   brandConfig,
+//   contentConfig,
+//   themeConfig,
+//   settingsConfig,
+// } from '../config/index'
 
 const baseUrl = process.env.REACT_APP_API_URL
 const authUrl = process.env.REACT_APP_AUTH_URL
-const clientId = process.env.REACT_APP_CLIENT_ID
+// const clientId = process.env.REACT_APP_CLIENT_ID
+// const brandId = process.env.REACT_APP_BRAND_ID
 
 const initialState = {
   app: null,
@@ -23,27 +24,31 @@ const initialState = {
 }
 
 // fake config request for now
-const getConfig = () => {
-  // return request(`/config`)
-  const config = {
-    brand: brandConfig,
-    content: contentConfig,
-    theme: themeConfig,
-    settings: settingsConfig,
-  }
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve(config)
-    }, 500)
-  )
-}
+// const getConfig = () => {
+//   const config = {
+//     clientId: clientId,
+//     brand: brandConfig,
+//     content: contentConfig,
+//     theme: themeConfig,
+//     settings: settingsConfig,
+//   }
+//   return new Promise((resolve) =>
+//     setTimeout(() => {
+//       resolve(config)
+//     }, 500)
+//   )
+// }
 
 export const fetchConfig = createAsyncThunk(
   'config/getConfig',
   async (_, thunkAPI) => {
     try {
-      const response = await getConfig()
+      // const options = { baseUrl, authUrl, clientId, brandId }
+      const options = { baseUrl, authUrl }
+      const api = new OpenTenderAPI(options)
+      const response = await api.getConfig()
       const brandId = response.brand.brandId
+      const clientId = response.clientId
       const app = { baseUrl, authUrl, clientId, brandId }
       return { ...response, app }
     } catch (err) {
@@ -75,7 +80,7 @@ const configSlice = createSlice({
       state.loading = 'pending'
     },
     [fetchConfig.rejected]: (state, action) => {
-      state.error = action.payload.detail
+      state.error = action.payload
       state.loading = 'idle'
     },
   },
