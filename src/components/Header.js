@@ -41,10 +41,10 @@ const Header = () => {
   const className = isMobile ? `header ot-dark` : `header`
   const btnClass = isMobile
     ? 'ot-btn--mobile'
-    : 'ot-btn--secondary ot-btn--header'
+    : 'ot-btn--header ot-btn--secondary'
   const btnCancelClass = isMobile
-    ? 'ot-btn--mobile'
-    : 'ot-btn--cancel ot-btn--header'
+    ? 'ot-btn--mobile ot-btn--cancel'
+    : 'ot-btn--header ot-btn--cancel'
 
   return (
     <header className={className}>

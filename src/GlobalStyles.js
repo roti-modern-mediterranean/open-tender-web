@@ -366,26 +366,6 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
-  .ot-btn--cancel {
-    color: ${theme.colors.light};
-    background-color: ${theme.colors.error};
-    border-color: ${theme.colors.error};
-
-    &:hover,
-    &:active,
-    &:focus {
-      color: ${theme.colors.light};
-      background-color: ${theme.colors.primary};
-      border-color: ${theme.colors.primary};
-    }
-
-    &:disabled {
-      color: ${theme.colors.light};
-      background-color: ${theme.colors.error};
-      border-color: ${theme.colors.error};
-    }
-  }
-
   .ot-btn--highlight {
     color: ${theme.colors.light};
     background-color: ${theme.links.primary.color};
@@ -403,6 +383,26 @@ const makeGlobalStyles = (theme) => css`
       color: ${theme.colors.light};
       background-color: ${theme.links.primary.color};
       border-color: ${theme.links.primary.color};
+    }
+  }
+
+  .ot-btn--cancel {
+    color: ${theme.colors.light};
+    background-color: ${theme.colors.error};
+    border-color: ${theme.colors.error};
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: ${theme.colors.light};
+      background-color: ${theme.colors.primary};
+      border-color: ${theme.colors.primary};
+    }
+
+    &:disabled {
+      color: ${theme.colors.light};
+      background-color: ${theme.colors.error};
+      border-color: ${theme.colors.error};
     }
   }
 
@@ -428,6 +428,19 @@ const makeGlobalStyles = (theme) => css`
       color: ${theme.colors.light};
       background-color: ${theme.colors.primary};
       border-color: ${theme.colors.primary};
+    }
+  }
+
+  .ot-btn--mobile.ot-btn--cancel {
+    color: ${theme.colors.error};
+    &:hover,
+    &:active,
+    &:focus {
+      color: ${theme.colors.error};
+    }
+
+    &:disabled {
+      color: ${theme.colors.error};
     }
   }
 

@@ -37,6 +37,7 @@ import {
   CreditCard,
   Home,
 } from 'react-feather'
+import CheckoutCancelEdit from './CheckoutCancelEdit'
 
 const CheckoutPage = () => {
   const formRef = useRef()
@@ -106,6 +107,7 @@ const CheckoutPage = () => {
         <PageTitle {...checkoutConfig} />
         <div className="checkout">
           <div className="container">
+            <CheckoutCancelEdit />
             <div ref={formRef} className="checkout__form slide-up">
               {!check && (
                 <Loader

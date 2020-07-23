@@ -22,7 +22,7 @@ const AccountAddresses = () => {
   const addresses = useSelector(selectCustomerAddresses)
   const isLoading = addresses.loading === 'pending'
   const error = addresses.error
-  const showAddresses = addresses.entities.length
+  const showAddresses = addresses.entities.length > 0
   const limit = 5
 
   useEffect(() => {
@@ -41,15 +41,17 @@ const AccountAddresses = () => {
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
           {showAddresses && (
-            <Addresses addresses={addresses.entities} isLoading={isLoading} />
+            <>
+              <Addresses addresses={addresses.entities} isLoading={isLoading} />
+              <div className="section__footer">
+                <p>
+                  <Link to="/addresses" className="">
+                    See all addresses you've used in the past
+                  </Link>
+                </p>
+              </div>
+            </>
           )}
-          <div className="section__footer">
-            <p>
-              <Link to="/addresses" className="">
-                See all addresses you've used in the past
-              </Link>
-            </p>
-          </div>
         </div>
       </div>
     </div>

@@ -57,11 +57,7 @@ const AccountPage = () => {
 
   return profile ? (
     <>
-      {/* <h1 className="sr-only">Account</h1> */}
       {isBrowser && <Background imageUrl={background} />}
-      {/* <Hero imageUrl={background} classes="hero--auto transition">
-        <AccountGreeting title={title} subtitle={subtitle} />
-      </Hero> */}
       <div className="content">
         <PageTitle title={pageTitle} subtitle={subtitle} />
         <AccountGreeting />

@@ -11,10 +11,11 @@ import SectionError from './SectionError'
 import SectionRow from './SectionRow'
 import SectionFooter from './SectionFooter'
 import iconMap from './iconMap'
+import SectionEmpty from './SectionEmpty'
 
 const AccountGiftCards = () => {
   const {
-    giftCards: { title, subtitle },
+    giftCards: { title, subtitle, empty },
   } = useSelector(selectAccountConfig)
   const giftCards = useSelector(selectCustomerGiftCards)
 
@@ -30,7 +31,7 @@ const AccountGiftCards = () => {
 
   const isLoading = giftCards.loading === 'pending'
   const error = giftCards.error
-  const showGiftCards = giftCards.entities.length
+  const showGiftCards = giftCards.entities.length > 0
 
   return (
     <div id={slugify(title)} className="section">
@@ -39,7 +40,7 @@ const AccountGiftCards = () => {
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
-          {showGiftCards && (
+          {showGiftCards ? (
             <div className="section__content ot-bg-color-primary ot-border-radius">
               <div className="section__rows">
                 {giftCards.entities.map((giftCard) => {
@@ -90,7 +91,10 @@ const AccountGiftCards = () => {
                 })}
               </div>
             </div>
+          ) : (
+            <SectionEmpty message={empty} />
           )}
+
           <SectionFooter>
             <Button
               text="Purchase a new gift card"

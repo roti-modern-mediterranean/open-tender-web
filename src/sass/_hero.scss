@@ -1,11 +1,12 @@
 .hero {
   width: 100%;
-  height: $hero-height;
+  min-height: $hero-height;
   padding: 0 $padding;
   display: flex;
   justify-content: center;
   align-items: center;
   @include breakpoint(mobile_both) {
+    min-height: 0;
     padding: 0 $padding-mobile;
   }
 

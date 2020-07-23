@@ -111,7 +111,10 @@
   &.rc--hero {
     width: 100%;
     max-width: 44rem;
-    margin: 0;
+    margin: $padding 0;
+    @include breakpoint(mobile_both) {
+      margin: $padding-mobile 0;
+    }
 
     .rc__content {
       padding: 0;
