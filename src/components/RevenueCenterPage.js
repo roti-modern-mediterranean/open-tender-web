@@ -82,9 +82,9 @@ const RevenueCenterPage = () => {
                 <div className="container">
                   <RevenueCenter
                     revenueCenter={revenueCenter}
+                    classes="rc--solo"
                     showImage={true}
                     isLanding={true}
-                    classes="rc--solo"
                   />
                 </div>
               </div>

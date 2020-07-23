@@ -27,7 +27,6 @@ class App extends React.Component {
   render() {
     const { loading, theme, brand, error } = this.props
     const { body, headings } = theme ? theme.fonts : {}
-    console.log(loading, error)
     return loading === 'pending' || (!theme && !error) ? (
       <Loader className="loading--page" type="Clip" size={32} />
     ) : error ? (

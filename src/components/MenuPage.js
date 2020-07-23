@@ -62,6 +62,7 @@ const MenuPage = () => {
           <RevenueCenter
             revenueCenter={revenueCenter}
             classes="rc--hero slide-up"
+            isMenu={true}
           />
         )}
       </Hero>

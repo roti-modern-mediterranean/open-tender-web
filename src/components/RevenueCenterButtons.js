@@ -1,8 +1,9 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
+  selectServiceType,
   setOrderServiceType,
   setAddress,
   resetRevenueCenter,
@@ -12,7 +13,7 @@ import { Button } from '@open-tender/components'
 
 import iconMap from './iconMap'
 
-export const RevenueCenterButtons = ({ revenueCenter }) => {
+export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const {
@@ -20,39 +21,40 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
     slug,
     settings,
     revenue_center_type: rcType,
-    is_outpost,
+    is_outpost: isOutpost,
     address,
   } = revenueCenter
   const { first_times: ft, order_times: ot } = settings
   const menuSlug = `/menu/${slug}`
-  const hasPickup = (ft && ft.PICKUP) || (ot && ot.PICKUP)
-  const hasDelivery = (ft && ft.DELIVERY) || (ot && ot.DELIVERY)
+  const serviceType = useSelector(selectServiceType)
+  const serviceTypes =
+    isLanding || isOutpost ? ['PICKUP', 'DELIVERY'] : [serviceType]
+  const hasPickup =
+    ((ft && ft.PICKUP) || (ot && ot.PICKUP)) && serviceTypes.includes('PICKUP')
+  const hasDelivery =
+    ((ft && ft.DELIVERY) || (ot && ot.DELIVERY)) &&
+    serviceTypes.includes('DELIVERY')
 
   const handlePickup = (evt) => {
     evt.preventDefault()
     dispatch(setAddress(null))
-    dispatch(setOrderServiceType(rcType, 'PICKUP', is_outpost))
+    dispatch(setOrderServiceType(rcType, 'PICKUP', isOutpost))
+    if (isOutpost) dispatch(setAddress(address))
     dispatch(setRevenueCenter(revenueCenter))
-    if (is_outpost) {
-      dispatch(setAddress(address))
-    }
     history.push(menuSlug)
     evt.target.blur()
   }
 
   const handleDelivery = (evt) => {
     evt.preventDefault()
-    dispatch(setOrderServiceType(rcType, 'DELIVERY', is_outpost))
-    if (is_outpost) {
-      dispatch(setAddress(address))
-      dispatch(setRevenueCenter(revenueCenter))
-      history.push(menuSlug)
-      // } else if (order.address) {
-      //   dispatch(setRevenueCenter(revenueCenter))
-      //   history.push(menuSlug)
-    } else {
+    dispatch(setOrderServiceType(rcType, 'DELIVERY', isOutpost))
+    if (isLanding) {
       dispatch(resetRevenueCenter())
       history.push('/locations')
+    } else {
+      if (isOutpost) dispatch(setAddress(address))
+      dispatch(setRevenueCenter(revenueCenter))
+      history.push(menuSlug)
     }
     evt.target.blur()
   }

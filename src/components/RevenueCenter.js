@@ -12,7 +12,7 @@ const RevenueCenter = ({
   revenueCenter,
   classes = '',
   showImage,
-  isOrder,
+  isMenu,
   isLanding,
 }) => {
   const { address, images, hours, is_outpost } = revenueCenter
@@ -88,7 +88,7 @@ const RevenueCenter = ({
           </div>
           <RevenueCenterOrder
             revenueCenter={revenueCenter}
-            isOrder={isOrder}
+            isMenu={isMenu}
             isLanding={isLanding}
           />
         </div>
@@ -102,7 +102,7 @@ RevenueCenter.propTypes = {
   revenueCenter: propTypes.object,
   classes: propTypes.string,
   showImage: propTypes.bool,
-  isOrder: propTypes.bool,
+  isMenu: propTypes.bool,
   isLanding: propTypes.bool,
 }
 

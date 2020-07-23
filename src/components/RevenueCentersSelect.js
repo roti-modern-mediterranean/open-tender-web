@@ -53,8 +53,12 @@ const RevenueCentersSelect = ({
   const [error, setError] = useState(null)
   const [displayedRevenueCenters, setDisplayedRevenueCenters] = useState([])
   const isLoading = loading === 'pending'
+  const missingAddress = serviceType === 'DELIVERY' && !address
   const showRevenueCenters =
-    !isLoading && !error && displayedRevenueCenters.length > 0
+    !isLoading &&
+    !error &&
+    displayedRevenueCenters.length > 0 &&
+    !missingAddress
 
   useEffect(() => {
     if (orderType) {
@@ -166,9 +170,8 @@ const RevenueCentersSelect = ({
                   <li key={revenueCenter.revenue_center_id}>
                     <RevenueCenter
                       revenueCenter={revenueCenter}
-                      showImage={true}
-                      isOrder={true}
                       classes="rc--card"
+                      showImage={true}
                     />
                   </li>
                 ))}
