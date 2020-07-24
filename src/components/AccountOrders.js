@@ -11,7 +11,7 @@ import {
   selectCustomerOrders,
   fetchCustomerOrders,
 } from '@open-tender/redux'
-import { slugify } from '@open-tender/js'
+import { slugify, getLastOrder } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
 import { selectAccountConfig } from '../slices'
@@ -46,7 +46,7 @@ const AccountOrders = () => {
   }, [entities, count])
 
   useEffect(() => {
-    const lastOrder = entities.length ? entities[0] : null
+    const lastOrder = getLastOrder(entities)
     if (lastOrder) {
       const { revenue_center, service_type, order_type, address } = lastOrder
       const { revenue_center_id: revenueCenterId } = revenue_center

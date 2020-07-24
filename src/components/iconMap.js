@@ -41,6 +41,7 @@ import {
   Minus,
   UserX,
   Calendar,
+  Slash,
 } from 'react-feather'
 
 const iconMap = {
@@ -76,6 +77,7 @@ const iconMap = {
   Navigation: <Navigation size={null} />,
   RefreshCw: <RefreshCw size={null} />,
   ShoppingBag: <ShoppingBag size={null} />,
+  Slash: <Slash size={null} />,
   Sliders: <Sliders size={null} />,
   Star: <Star size={null} />,
   Trash2: <Trash2 size={null} />,

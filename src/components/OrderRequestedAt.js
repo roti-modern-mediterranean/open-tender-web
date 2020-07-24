@@ -2,24 +2,24 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { timezoneMap, makeRequestedAtStr } from '@open-tender/js'
 
-const OrderRequestedAt = ({ requested_at, timezone, is_asap, status }) => {
+const OrderRequestedAt = ({ estimated_at, timezone, is_asap, status }) => {
   const tz = timezone && timezoneMap[timezone]
-  const requestedAt = requested_at && makeRequestedAtStr(requested_at, tz, true)
+  const estimatedAt = estimated_at && makeRequestedAtStr(estimated_at, tz, true)
   return is_asap && status === 'OPEN' ? (
     <>
       <p>ASAP</p>
       <p className="ot-font-size-small ot-color-secondary">
-        {requestedAt} (give or take a few minutes)
+        {estimatedAt} (give or take a few minutes)
       </p>
     </>
   ) : (
-    <p>{requestedAt}</p>
+    <p>{estimatedAt}</p>
   )
 }
 
 OrderRequestedAt.displayName = 'OrderRequestedAt'
 OrderRequestedAt.propTypes = {
-  requested_at: propTypes.string,
+  estimated_at: propTypes.string,
   timezone: propTypes.string,
   is_asap: propTypes.bool,
   status: propTypes.string,

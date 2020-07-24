@@ -35,7 +35,10 @@ const MenuItem = ({ item }) => {
   const allergenAlert = allergens.length
     ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
     : []
+  const hasAllergens = allergenAlert.length > 0
   const countFontSize = isMobile ? 'ot-font-size-x-small' : 'ot-font-size-small'
+  const overlayClass = isSoldOut ? 'ot-opacity-dark' : ''
+  const overlayClassName = `menu__item__overlay ot-border-radius ${overlayClass}`
 
   const handleClick = (evt) => {
     evt.preventDefault()
@@ -46,42 +49,41 @@ const MenuItem = ({ item }) => {
     evt.target.blur()
   }
 
+  const itemTag = isSoldOut ? (
+    <Tag icon={iconMap['Slash']} text={soldOutMsg} bgClass="ot-dark" />
+  ) : hasAllergens ? (
+    <Tag
+      icon={iconMap['AlertCircle']}
+      text={`Contains ${allergenAlert.join(', ')}`}
+      bgClass="ot-warning"
+    />
+  ) : null
+
   return (
     <div className={`menu__item ${isSoldOut ? '-sold-out' : ''}`}>
       <div className="menu__item__container ot-border-color">
+        {cartCount > 0 && (
+          <div
+            className={`menu__item__count ot-warning ot-bold ${countFontSize}`}
+          >
+            {cartCount}
+          </div>
+        )}
+        {!showImage && itemTag ? (
+          <div className="menu__item__alert">{itemTag}</div>
+        ) : null}
         <button className="ot-font-size" onClick={handleClick}>
           {showImage && (
             <div
               className="menu__item__image bg-image ot-bg-color-secondary ot-border-radius"
               style={bgStyle}
             >
-              {cartCount > 0 && (
-                <div
-                  className={`menu__item__count ot-warning ot-bold ${countFontSize}`}
-                >
-                  {cartCount}
-                </div>
-              )}
-              {isSoldOut && soldOutMsg ? (
-                <div className="menu__item__overlay ot-opacity-dark ot-border-radius">
+              {itemTag && (
+                <div className={overlayClassName}>
                   <div className="menu__item__overlay__container">
-                    <p className="menu__item__overlay__message ot-color-light ot-font-size-x-big">
-                      {soldOutMsg}
-                    </p>
+                    {itemTag}
                   </div>
                 </div>
-              ) : (
-                allergenAlert.length > 0 && (
-                  <div className="menu__item__overlay ot-border-radius">
-                    <div className="menu__item__overlay__container">
-                      <Tag
-                        icon={iconMap['AlertCircle']}
-                        text={`Contains ${allergenAlert.join(', ')}`}
-                        bgClass="ot-warning"
-                      />
-                    </div>
-                  </div>
-                )
               )}
             </div>
           )}

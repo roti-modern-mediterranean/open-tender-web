@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-scroll'
-import { parseISO } from 'date-fns'
 import {
   selectOrder,
   selectCustomerOrders,
@@ -10,7 +9,12 @@ import {
   resetOrder,
   resetRevenueCenter,
 } from '@open-tender/redux'
-import { slugify, capitalize, otherOrderTypesMap } from '@open-tender/js'
+import {
+  slugify,
+  capitalize,
+  getLastOrder,
+  otherOrderTypesMap,
+} from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
 import { selectAccountConfig } from '../slices'
@@ -32,15 +36,6 @@ const GreetingLink = ({ sectionTitle, text }) => (
     {text}
   </Link>
 )
-
-const getLastOrder = (orders) => {
-  if (!orders || !orders.length) return null
-  const withCreated = orders
-    .map((i) => ({ ...i, createdAt: parseISO(i.created_at) }))
-    .sort((a, b) => a.createdAt - b.createdAt)
-    .reverse()
-  return withCreated[0]
-}
 
 const AccountGreeting = () => {
   const history = useHistory()
