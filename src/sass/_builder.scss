@@ -1,8 +1,13 @@
 .nutrition {
-  padding: 3rem;
-  margin: 0 0 3rem;
+  padding: $padding;
+  margin: 0 0 $padding;
   @include breakpoint(mobile_both) {
-    padding: 1.5rem;
+    padding: $padding-mobile;
+    margin: 0;
+  }
+
+  .builder__option + & {
+    padding: $padding-mobile;
     margin: 0;
   }
 
@@ -352,6 +357,10 @@ $footer-height-mobile: 12.5rem;
         }
       }
     }
+  }
+
+  &__option__nutrition {
+    margin: 0;
   }
 
   &__made-for,
