@@ -6,13 +6,16 @@
   &__container {
     height: 18rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    @include breakpoint(mobile_both) {
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-    }
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    // justify-content: space-between;
+    // align-items: center;
+    // @include breakpoint(mobile_both) {
+    //   flex-direction: column;
+    //   justify-content: center;
+    //   align-items: flex-start;
+    // }
   }
 
   &__logo {
@@ -28,9 +31,10 @@
   }
 
   &__nav {
+    margin: 1.5rem 0 0;
     ul li {
       float: left;
-      margin: 0 0 0 4rem;
+      margin: 0 0 0 2rem;
       @include breakpoint(mobile_both) {
         margin: 0 0 0 2rem;
       }

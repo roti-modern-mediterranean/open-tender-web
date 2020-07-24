@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import logo from '../assets/logo_footer.png'
 
 const Footer = () => {
@@ -10,7 +11,7 @@ const Footer = () => {
             <span className="ot-font-size-small">Powered by</span>
             <img src={logo} className="logo" alt="logo" />
           </div>
-          <nav className="footer__nav">
+          <nav className="footer__nav ot-font-size-small">
             <ul>
               <li>
                 <a
@@ -32,11 +33,11 @@ const Footer = () => {
                   Privacy Policy
                 </a>
               </li>
-              {/* <li>
-                <a className="no-link ot-link-light" href="/refunds">
-                  Refunds
-                </a>
-              </li> */}
+              <li>
+                <Link to="/refunds" className="no-link ot-link-light">
+                  Refund Policy
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>

@@ -16,6 +16,7 @@ import CateringPage from './CateringPage'
 import SignUpPage from './SignUpPage'
 import ResetPasswordPage from './ResetPasswordPage'
 import NotFoundPage from './NotFoundPage'
+import RefundPolicyPage from './RefundPolicyPage'
 
 const Routes = () => {
   return (
@@ -64,6 +65,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/confirmation">
         <ConfirmationPage />
+      </Route>
+      <Route exact path="/refunds">
+        <RefundPolicyPage />
       </Route>
       <Route>
         <NotFoundPage />
