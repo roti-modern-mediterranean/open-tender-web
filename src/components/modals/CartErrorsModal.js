@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   selectMenu,
   fetchMenu,
-  selectRevenueCenters,
   setCart,
-  setRevenueCenter,
+  setRequestedAt,
+  setServiceType,
+  fetchRevenueCenter,
 } from '@open-tender/redux'
 import { CartErrors } from '@open-tender/components'
 
@@ -18,12 +19,13 @@ const CartErrorsModal = () => {
   const { cartErrors, previousMenuVars, menuVars } = useSelector(selectMenu)
   const { newCart, errors } = cartErrors || {}
   const { menu } = useSelector(selectConfig)
-  const { revenueCenters } = useSelector(selectRevenueCenters)
 
   const handleRevert = (evt, revenueCenter, menuVars) => {
     evt.preventDefault()
     dispatch(closeModal())
-    dispatch(setRevenueCenter(revenueCenter))
+    dispatch(setRequestedAt(menuVars.requestedAt))
+    dispatch(setServiceType(menuVars.serviceType))
+    dispatch(fetchRevenueCenter(menuVars.revenueCenterId))
     dispatch(fetchMenu(menuVars))
     evt.target.blur()
   }
@@ -53,7 +55,6 @@ const CartErrorsModal = () => {
             revertIcon={iconMap['ChevronLeft']}
             proceed={handleProceed}
             proceedIcon={iconMap['Trash2']}
-            revenueCenters={revenueCenters}
             previousMenuVars={previousMenuVars}
             menuVars={menuVars}
           />
