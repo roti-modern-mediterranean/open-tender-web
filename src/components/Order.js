@@ -108,7 +108,7 @@ const Order = ({ order, loading, error }) => {
                 {capitalize(orderType)} from {revenue_center.name}
               </h1>
               <div className="order__buttons">
-                {order.is_editable && (
+                {auth && order.is_editable && (
                   <Button
                     text="Edit"
                     icon={iconMap['Edit']}

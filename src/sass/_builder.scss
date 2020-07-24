@@ -252,6 +252,10 @@ $footer-height-mobile: 12.5rem;
     width: 9.2rem;
     min-width: 9.2rem;
     text-align: center;
+    &.-disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
   }
 
   &__option {

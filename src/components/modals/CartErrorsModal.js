@@ -1,13 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  selectMenu,
-  fetchMenu,
-  setCart,
-  setRequestedAt,
-  setServiceType,
-  fetchRevenueCenter,
-} from '@open-tender/redux'
+import { selectMenu, setCart, revertMenu } from '@open-tender/redux'
 import { CartErrors } from '@open-tender/components'
 
 import { closeModal, selectConfig } from '../../slices'
@@ -20,13 +13,10 @@ const CartErrorsModal = () => {
   const { newCart, errors } = cartErrors || {}
   const { menu } = useSelector(selectConfig)
 
-  const handleRevert = (evt, revenueCenter, menuVars) => {
+  const handleRevert = (evt, menuVars) => {
     evt.preventDefault()
     dispatch(closeModal())
-    dispatch(setRequestedAt(menuVars.requestedAt))
-    dispatch(setServiceType(menuVars.serviceType))
-    dispatch(fetchRevenueCenter(menuVars.revenueCenterId))
-    dispatch(fetchMenu(menuVars))
+    dispatch(revertMenu(menuVars))
     evt.target.blur()
   }
 

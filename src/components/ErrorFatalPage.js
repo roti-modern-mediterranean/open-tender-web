@@ -33,7 +33,7 @@ const ErrorFatalPage = ({ error }) => {
               rel="noopener noreferrer"
             >
               help@opentender.io
-            </a>
+            </a>{' '}
             and provid the details of the error message below.
           </p>
           <pre>
