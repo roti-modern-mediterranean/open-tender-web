@@ -5,7 +5,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
-    "@open-tender/components": "^1.0.8",
+    "@open-tender/components": "^1.0.9",
     "@open-tender/js": "^1.0.4",
     "@open-tender/redux": "^1.0.6",
     "@reduxjs/toolkit": "^1.1.0",
