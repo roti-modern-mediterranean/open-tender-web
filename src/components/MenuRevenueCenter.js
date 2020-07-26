@@ -2,21 +2,19 @@ import React from 'react'
 import propTypes from 'prop-types'
 
 const MenuRevenueCenter = ({ revenueCenter, change }) => {
-  const logo = revenueCenter.app_image_url
+  const logo = revenueCenter.small_image_url
   // const bgImage = revenueCenter.small_image_url || revenueCenter.large_image_url
   // const bgStyle = bgImage ? { backgroundImage: `url(${bgImage}` } : null
   const bgStyle = null
 
   const handleClick = (evt) => {
     evt.preventDefault()
-    console.log(evt)
-    console.log(revenueCenter)
     change(revenueCenter)
     evt.target.blur()
   }
 
   return (
-    <div className="menu__item">
+    <div className="menu__rcs__item">
       <div className="menu__item__container ot-border-color">
         <button className="ot-font-size" onClick={handleClick}>
           <div
@@ -33,7 +31,7 @@ const MenuRevenueCenter = ({ revenueCenter, change }) => {
               </div>
             </div>
           </div>
-          <div className="menu__item__content">
+          {/* <div className="menu__item__content">
             <p className="menu__item__name ot-heading ot-font-size-big">
               {revenueCenter.name}
             </p>
@@ -42,7 +40,7 @@ const MenuRevenueCenter = ({ revenueCenter, change }) => {
                 {revenueCenter.description}
               </p>
             )}
-          </div>
+          </div> */}
         </button>
       </div>
     </div>

@@ -10,12 +10,12 @@
     padding: 0 $padding-mobile;
   }
 
-  &--top {
-    margin: $nav-height 0 0;
-    @include breakpoint(mobile_both) {
-      margin: $nav-height-mobile 0 0;
-    }
-  }
+  // &--top {
+  //   margin: $nav-height 0 0;
+  //   @include breakpoint(mobile_both) {
+  //     margin: $nav-height-mobile 0 0;
+  //   }
+  // }
 
   &--left {
     justify-content: flex-start;

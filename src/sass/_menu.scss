@@ -4,9 +4,16 @@
     padding: 0 0 ($padding-mobile * 2);
   }
 
+  &__page {
+    margin: $nav-height 0 0;
+    @include breakpoint(mobile_both) {
+      margin: $nav-height-mobile 0 0;
+    }
+  }
+
   &__wrapper {
     position: relative;
-    min-height: 50vh;
+    min-height: 100vh;
   }
 
   &__loading {
@@ -79,23 +86,6 @@
     height: 100%;
     border-width: 0.1rem;
     border-style: solid;
-  }
-
-  button {
-    cursor: pointer;
-    display: block;
-    width: 100%;
-    margin: 0;
-    text-align: left;
-    background-color: transparent;
-    opacity: 1;
-    transition: all 0.15s ease;
-
-    &:hover,
-    &:active,
-    &:focus {
-      opacity: 0.8;
-    }
   }
 
   &__image {
@@ -214,6 +204,65 @@
 
     .menu__item__content {
       opacity: 0.3;
+    }
+  }
+}
+
+.menu__rcs {
+  padding: $padding-mobile 0;
+  @include breakpoint(mobile_both) {
+    padding: $padding-mobile 0;
+  }
+  &__header {
+    text-align: center;
+  }
+}
+
+.menu__rcs__items {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 0 $padding $padding;
+  @include breakpoint(mobile_both) {
+    padding: 0 0 $padding-mobile $padding-mobile;
+  }
+}
+
+.menu__rcs__item {
+  position: relative;
+  width: 16.66667%;
+  padding: $padding $padding 0 0;
+  @include breakpoint(tablet_land) {
+    width: 20%;
+  }
+  @include breakpoint(tablet) {
+    width: 25%;
+  }
+  @include breakpoint(mobile_land) {
+    width: 33.33333%;
+    padding: $padding-mobile $padding-mobile 0 0;
+  }
+  @include breakpoint(mobile) {
+    width: 50%;
+    padding: $padding-mobile $padding-mobile 0 0;
+  }
+}
+
+.menu__item,
+.menu__rcs__item {
+  button {
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    margin: 0;
+    text-align: left;
+    background-color: transparent;
+    opacity: 1;
+    transition: all 0.15s ease;
+
+    &:hover,
+    &:active,
+    &:focus {
+      opacity: 0.8;
     }
   }
 }

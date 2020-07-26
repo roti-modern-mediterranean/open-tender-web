@@ -37,7 +37,7 @@ export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
 
   const handlePickup = (evt) => {
     evt.preventDefault()
-    dispatch(setAddress(null))
+    // dispatch(setAddress(null))
     dispatch(setOrderServiceType(rcType, 'PICKUP', isOutpost))
     if (isOutpost) dispatch(setAddress(address))
     dispatch(setRevenueCenter(revenueCenter))
