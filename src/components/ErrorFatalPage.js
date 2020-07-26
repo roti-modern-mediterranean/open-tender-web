@@ -34,7 +34,7 @@ const ErrorFatalPage = ({ error }) => {
             >
               help@opentender.io
             </a>{' '}
-            and provid the details of the error message below.
+            and provide the details of the error message below.
           </p>
           <pre>
             <h2>{title}</h2>
