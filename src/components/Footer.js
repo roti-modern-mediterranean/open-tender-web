@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo_footer.png'
 
-const Footer = () => {
+const Footer = ({ hasRouter = true }) => {
   return (
     <footer className="footer ot-dark">
       <div className="container">
@@ -33,11 +33,13 @@ const Footer = () => {
                   Privacy Policy
                 </a>
               </li>
-              <li>
-                <Link to="/refunds" className="no-link ot-link-light">
-                  Refund Policy
-                </Link>
-              </li>
+              {hasRouter && (
+                <li>
+                  <Link to="/refunds" className="no-link ot-link-light">
+                    Refund Policy
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
         </div>

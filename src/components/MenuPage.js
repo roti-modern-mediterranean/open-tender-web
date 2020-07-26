@@ -31,7 +31,9 @@ const MenuPage = () => {
   const { revenueCenterId, serviceType, requestedAt } = useSelector(
     selectMenuVars
   )
-  const { categories, soldOut, error, loading } = useSelector(selectMenu)
+  const { revenueCenters, categories, soldOut, error, loading } = useSelector(
+    selectMenu
+  )
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const isLoading = loading === 'pending'
 
@@ -49,7 +51,7 @@ const MenuPage = () => {
     }
   }, [revenueCenterId, serviceType, requestedAt, dispatch, history])
 
-  const changeLocation = (evt) => {
+  const changeRevenueCenter = (evt) => {
     evt.preventDefault()
     dispatch(resetRevenueCenter())
     evt.target.blur()
@@ -73,7 +75,7 @@ const MenuPage = () => {
             text="Change Location"
             icon={iconMap['RefreshCw']}
             classes="ot-btn ot-btn--cancel"
-            onClick={changeLocation}
+            onClick={changeRevenueCenter}
           />
         </ErrorMessage>
       ) : (
@@ -83,7 +85,7 @@ const MenuPage = () => {
               <Loader text={menuConfig.loadingMessage} />
             </div>
           )}
-          <Menu categories={categories} soldOut={soldOut} />
+          <Menu categories={categories} revenueCenters={revenueCenters} />
         </div>
       )}
     </MenuContext.Provider>

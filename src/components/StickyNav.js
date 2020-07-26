@@ -31,10 +31,13 @@ const StickyNav = ({ items, offset = -100, duration = 500 }) => {
       <div className={stickyInnerClass}>
         <div className="sticky__items">
           <ul>
-            {items.map((item) => {
+            {items.map((item, index) => {
               const sectionId = slugify(item)
               return (
-                <li key={sectionId} className="ot-preface ot-font-size-small">
+                <li
+                  key={`${sectionId}-${index}`}
+                  className="ot-preface ot-font-size-small"
+                >
                   <Link
                     activeClass="active"
                     className="ot-link-light"
