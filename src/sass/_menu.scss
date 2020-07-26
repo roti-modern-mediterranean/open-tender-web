@@ -209,41 +209,45 @@
 }
 
 .menu__rcs {
-  padding: $padding-mobile 0;
-  @include breakpoint(mobile_both) {
-    padding: $padding-mobile 0;
-  }
   &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: $nav-height;
     text-align: center;
+    @include breakpoint(mobile_both) {
+      height: $nav-height-mobile;
+    }
   }
-}
 
-.menu__rcs__items {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 0 $padding $padding;
-  @include breakpoint(mobile_both) {
-    padding: 0 0 $padding-mobile $padding-mobile;
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 0 $padding $padding;
+    @include breakpoint(mobile_both) {
+      padding: 0 0 $padding-mobile $padding-mobile;
+    }
   }
-}
 
-.menu__rcs__item {
-  position: relative;
-  width: 16.66667%;
-  padding: $padding $padding 0 0;
-  @include breakpoint(tablet_land) {
-    width: 20%;
-  }
-  @include breakpoint(tablet) {
-    width: 25%;
-  }
-  @include breakpoint(mobile_land) {
-    width: 33.33333%;
-    padding: $padding-mobile $padding-mobile 0 0;
-  }
-  @include breakpoint(mobile) {
-    width: 50%;
-    padding: $padding-mobile $padding-mobile 0 0;
+  &__item {
+    position: relative;
+    width: 16.66667%;
+    padding: $padding $padding 0 0;
+    @include breakpoint(tablet_land) {
+      width: 20%;
+    }
+    @include breakpoint(tablet) {
+      width: 25%;
+    }
+    @include breakpoint(mobile_land) {
+      width: 33.33333%;
+      padding: $padding-mobile $padding-mobile 0 0;
+    }
+    @include breakpoint(mobile) {
+      width: 50%;
+      padding: $padding-mobile $padding-mobile 0 0;
+    }
   }
 }
 

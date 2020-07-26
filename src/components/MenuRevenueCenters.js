@@ -4,13 +4,15 @@ import MenuRevenueCenter from './MenuRevenueCenter'
 
 const MenuRevenueCenters = ({ revenueCenters, selected, change }) => {
   return revenueCenters && !selected ? (
-    <div className="menu__rcs slide-up">
-      <div className="menu__rcs__header">
+    <div className="menu__rcs">
+      <div className="menu__rcs__header ot-dark">
         <div className="container">
-          <h3 className="menu__rcs__title">Please select a vendor</h3>
+          <p className="menu__rcs__title ot-preface ot-font-size-small">
+            Please select a vendor
+          </p>
         </div>
       </div>
-      <div className="menu__rcs__items">
+      <div className="menu__rcs__items slide-up">
         {revenueCenters.map((i) => (
           <MenuRevenueCenter
             key={i.revenue_center_id}
