@@ -55,8 +55,8 @@ jobs:
       - run: sudo apt-get install python-dev python-pip
       - run: sudo pip install awscli
       - run: aws configure set preview.cloudfront true
-      - run: aws s3 sync build s3://io-opentender-web--production/ --delete
-      - run: aws s3 cp build/index.html s3://io-opentender-web--production/ --cache-control max-age=0
+      - run: aws s3 sync build s3://io-opentender-web-production/ --delete
+      - run: aws s3 cp build/index.html s3://io-opentender-web-production/ --cache-control max-age=0
       - run: aws cloudfront create-invalidation --distribution-id E3M9U7ONDMILBH --paths '/*'
 
 workflows:
