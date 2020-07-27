@@ -12,14 +12,7 @@ import {
   selectRevenueCenters,
   resetCheckout,
 } from '@open-tender/redux'
-import {
-  calcMinDistance,
-  makePickupRevenueCenters,
-  makeDeliveryRevenueCenters,
-  makePickupMesssaging,
-  makeDeliveryMesssaging,
-  renameLocation,
-} from '@open-tender/js'
+import { makeDisplayedRevenueCenters, renameLocation } from '@open-tender/js'
 import { Button, GoogleMapsAutocomplete } from '@open-tender/components'
 
 import { selectConfig, selectSettings, selectGeoLatLng } from '../slices'
@@ -78,43 +71,28 @@ const RevenueCentersSelect = ({
   )
 
   useEffect(() => {
-    if (serviceType === 'PICKUP') {
-      const pickupRevenueCenters = makePickupRevenueCenters(revenueCenters)
-      const minDistance = calcMinDistance(pickupRevenueCenters)
-      const count = pickupRevenueCenters.length
-      if (count && autoSelect) {
-        autoRouteCallack(pickupRevenueCenters[0])
-      } else {
-        const { title, msg } = makePickupMesssaging(
-          address,
-          geoLatLng,
-          count,
-          minDistance,
-          maxDistance
-        )
-        setTitle(title)
-        setMsg(msg)
-        setError(null)
-        setDisplayedRevenueCenters(pickupRevenueCenters)
-      }
+    const { title, msg, error, displayed } = makeDisplayedRevenueCenters(
+      revenueCenters,
+      serviceType,
+      address,
+      geoLatLng,
+      maxDistance
+    )
+    const count = displayed.length
+    // if (((count && autoSelect) || count === 1) && !error) {
+    if (count && autoSelect && !error) {
+      autoRouteCallack(displayed[0])
     } else {
-      const deliveryRevenueCenters = makeDeliveryRevenueCenters(revenueCenters)
-      const count = deliveryRevenueCenters.length
-      const { title, msg, error } = makeDeliveryMesssaging(address, count)
-      if (count && autoSelect && !error) {
-        autoRouteCallack(deliveryRevenueCenters[0])
-      } else {
-        setTitle(title)
-        setMsg(msg)
-        setError(error)
-        setDisplayedRevenueCenters(deliveryRevenueCenters)
-      }
+      setTitle(title)
+      setMsg(msg)
+      setError(error)
+      setDisplayedRevenueCenters(displayed)
     }
   }, [
+    revenueCenters,
     serviceType,
     address,
     geoLatLng,
-    revenueCenters,
     maxDistance,
     autoSelect,
     autoRouteCallack,

@@ -10,6 +10,7 @@ import {
   editOrder,
 } from '@open-tender/redux'
 import {
+  makeOrderTypeName,
   makeDisplayItem,
   capitalize,
   isEmpty,
@@ -54,7 +55,7 @@ const Order = ({ order, loading, error }) => {
   const dispatch = useDispatch()
   const isLoading = loading === 'pending'
   const showOrder = !isLoading && !error && !isEmpty(order)
-  const orderType = order_type === 'OLO' ? service_type : order_type
+  const orderTypeName = makeOrderTypeName(order_type, service_type)
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
   const { lookup = {} } = useSelector(selectCustomerFavorites)
@@ -106,7 +107,7 @@ const Order = ({ order, loading, error }) => {
             <div className="container">
               <p className="ot-preface">Order #{order_id}</p>
               <h1>
-                {capitalize(orderType)} from {revenue_center.name}
+                {orderTypeName} from {revenue_center.name}
               </h1>
               <div className="order__buttons">
                 {auth && order.is_editable && (

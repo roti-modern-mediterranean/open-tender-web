@@ -16,8 +16,9 @@ const RequestedAtModal = ({
   const { requestedAt, serviceType, revenueCenter } = useSelector(selectOrder)
   const { settings } = revenueCenter || {}
   const { first_times, order_times } = settings || {}
-  const firstTimes = first_times ? first_times[serviceType] : null
-  const orderTimes = order_times ? order_times[serviceType] : null
+  const st = serviceType === 'WALKIN' ? 'PICKUP' : serviceType
+  const firstTimes = first_times ? first_times[st] : null
+  const orderTimes = order_times ? order_times[st] : null
 
   const handleRequestedAt = (requestedAt) => {
     dispatch(setRequestedAt(requestedAt))
@@ -41,7 +42,6 @@ const RequestedAtModal = ({
       ) : orderTimes ? (
         <RequestedAtTimes
           orderTimes={orderTimes}
-          serviceType={serviceType}
           revenueCenter={revenueCenter}
           requestedAt={requestedAt}
           setRequestedAt={handleRequestedAt}

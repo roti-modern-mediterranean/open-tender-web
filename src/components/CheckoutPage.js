@@ -36,6 +36,7 @@ import {
   Grid,
   CreditCard,
   Home,
+  Coffee,
 } from 'react-feather'
 import CheckoutCancelEdit from './CheckoutCancelEdit'
 
@@ -56,6 +57,7 @@ const CheckoutPage = () => {
   const iconMap = {
     signUp: <User size={null} />,
     account: <User size={null} />,
+    walkin: <Coffee size={null} />,
     pickup: <ShoppingBag size={null} />,
     delivery: <Truck size={null} />,
     requestedAt: <Clock size={null} />,

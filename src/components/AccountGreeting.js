@@ -11,9 +11,9 @@ import {
 } from '@open-tender/redux'
 import {
   slugify,
-  capitalize,
   getLastOrder,
   otherOrderTypesMap,
+  makeOrderTypeName,
 } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
@@ -46,12 +46,13 @@ const AccountGreeting = () => {
   const { entities: orders, loading } = useSelector(selectCustomerOrders)
   const isLoading = loading === 'pending'
   const lastOrder = getLastOrder(orders)
-  let orderType = null,
+  let orderTypeName = null,
     otherOrderTypes = null
   if (lastOrder) {
     const { order_type, service_type } = lastOrder
-    orderType = order_type === 'OLO' ? service_type : order_type
-    otherOrderTypes = otherOrderTypesMap[orderType]
+    orderTypeName = makeOrderTypeName(order_type, service_type)
+    otherOrderTypes =
+      otherOrderTypesMap[order_type === 'OLO' ? service_type : order_type]
   }
   const isCurrentOrder = revenueCenter && serviceType && cart.length
   const accountLoading = isLoading && !isCurrentOrder && !lastOrder
@@ -120,7 +121,7 @@ const AccountGreeting = () => {
               ) : lastOrder ? (
                 <>
                   <Button
-                    text={`Order ${capitalize(orderType)} Again`}
+                    text={`Order ${orderTypeName} Again`}
                     icon={iconMap['ShoppingBag']}
                     onClick={continueCurrent}
                   />

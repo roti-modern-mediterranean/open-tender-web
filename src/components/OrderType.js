@@ -4,7 +4,7 @@ import { setOrderServiceType } from '@open-tender/redux'
 
 import { selectConfig, selectSettings } from '../slices'
 import OrderTypeButton from './OrderTypeButton'
-import { Flag, ShoppingBag, Truck, Users, Gift } from 'react-feather'
+import { Flag, ShoppingBag, Truck, Users, Gift, Coffee } from 'react-feather'
 
 const OrderType = () => {
   const dispatch = useDispatch()
@@ -14,6 +14,12 @@ const OrderType = () => {
   const handleOutpost = (evt) => {
     evt.preventDefault()
     dispatch(setOrderServiceType('OLO', 'PICKUP', true))
+    evt.target.blur()
+  }
+
+  const handleWalkin = (evt) => {
+    evt.preventDefault()
+    dispatch(setOrderServiceType('OLO', 'WALKIN'))
     evt.target.blur()
   }
 
@@ -43,6 +49,7 @@ const OrderType = () => {
 
   const handlers = {
     OUTPOST: handleOutpost,
+    WALKIN: handleWalkin,
     PICKUP: handlePickup,
     DELIVERY: handleDelivery,
     CATERING: handleCatering,
@@ -51,6 +58,7 @@ const OrderType = () => {
 
   const icons = {
     OUTPOST: <Flag size={null} />,
+    WALKIN: <Coffee size={null} />,
     PICKUP: <ShoppingBag size={null} />,
     DELIVERY: <Truck size={null} />,
     CATERING: <Users size={null} />,

@@ -42,6 +42,7 @@ import {
   UserX,
   Calendar,
   Slash,
+  Coffee,
 } from 'react-feather'
 
 const iconMap = {
@@ -56,6 +57,7 @@ const iconMap = {
   ChevronRight: <ChevronRight size={null} />,
   ChevronUp: <ChevronUp size={null} />,
   ChevronDown: <ChevronDown size={null} />,
+  Coffee: <Coffee size={null} />,
   Clock: <Clock size={null} />,
   CreditCard: <CreditCard size={null} />,
   Delete: <Delete size={null} />,
