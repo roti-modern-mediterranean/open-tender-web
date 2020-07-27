@@ -4,8 +4,6 @@ import { OpenTenderAPI } from '@open-tender/redux'
 
 const baseUrl = process.env.REACT_APP_API_URL
 const authUrl = process.env.REACT_APP_AUTH_URL
-// const clientId = process.env.REACT_APP_CLIENT_ID
-// const brandId = process.env.REACT_APP_BRAND_ID
 
 const initialState = {
   app: null,
@@ -17,11 +15,11 @@ const initialState = {
   error: null,
 }
 
+// fetch config via origin
 export const fetchConfig = createAsyncThunk(
   'config/getConfig',
   async (_, thunkAPI) => {
     try {
-      // const options = { baseUrl, authUrl, clientId, brandId }
       const options = { baseUrl, authUrl }
       const api = new OpenTenderAPI(options)
       const response = await api.getConfig()
@@ -35,15 +33,29 @@ export const fetchConfig = createAsyncThunk(
   }
 )
 
-// Then, handle actions in your reducers:
+// fetch config via explicit brandId and clientId
+// const clientId = process.env.REACT_APP_CLIENT_ID
+// const brandId = process.env.REACT_APP_BRAND_ID
+// export const fetchConfig = createAsyncThunk(
+//   'config/getConfig',
+//   async (_, thunkAPI) => {
+//     try {
+//       const options = { baseUrl, authUrl, clientId, brandId }
+//       const api = new OpenTenderAPI(options)
+//       const response = await api.getConfig()
+//       const app = { baseUrl, authUrl, clientId, brandId }
+//       return { ...response, app }
+//     } catch (err) {
+//       return thunkAPI.rejectWithValue(err)
+//     }
+//   }
+// )
+
 const configSlice = createSlice({
   name: 'config',
   initialState: initialState,
-  reducers: {
-    // standard reducer logic, with auto-generated action types per reducer
-  },
+  reducers: {},
   extraReducers: {
-    // Add reducers for additional action types here, and handle loading state as needed
     [fetchConfig.fulfilled]: (state, action) => {
       const { app, brand, content, theme, settings } = action.payload
       state.app = app
