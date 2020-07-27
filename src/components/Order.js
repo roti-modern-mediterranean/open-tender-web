@@ -12,7 +12,6 @@ import {
 import {
   makeOrderTypeName,
   makeDisplayItem,
-  capitalize,
   isEmpty,
   isoToDate,
 } from '@open-tender/js'

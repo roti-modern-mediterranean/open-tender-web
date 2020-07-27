@@ -79,8 +79,8 @@ const RevenueCentersSelect = ({
       maxDistance
     )
     const count = displayed.length
-    // if (((count && autoSelect) || count === 1) && !error) {
-    if (count && autoSelect && !error) {
+    // if (count && autoSelect && !error) {
+    if (((count && autoSelect) || count === 1) && !error) {
       autoRouteCallack(displayed[0])
     } else {
       setTitle(title)

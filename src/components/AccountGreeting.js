@@ -9,12 +9,7 @@ import {
   resetOrder,
   resetRevenueCenter,
 } from '@open-tender/redux'
-import {
-  slugify,
-  getLastOrder,
-  otherOrderTypesMap,
-  makeOrderTypeName,
-} from '@open-tender/js'
+import { slugify, getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
 import { selectAccountConfig } from '../slices'
@@ -46,13 +41,10 @@ const AccountGreeting = () => {
   const { entities: orders, loading } = useSelector(selectCustomerOrders)
   const isLoading = loading === 'pending'
   const lastOrder = getLastOrder(orders)
-  let orderTypeName = null,
-    otherOrderTypes = null
+  let orderTypeName = null
   if (lastOrder) {
     const { order_type, service_type } = lastOrder
     orderTypeName = makeOrderTypeName(order_type, service_type)
-    otherOrderTypes =
-      otherOrderTypesMap[order_type === 'OLO' ? service_type : order_type]
   }
   const isCurrentOrder = revenueCenter && serviceType && cart.length
   const accountLoading = isLoading && !isCurrentOrder && !lastOrder
@@ -127,9 +119,7 @@ const AccountGreeting = () => {
                   />
                   <p className="ot-font-size-small">
                     <Button
-                      text={`Or switch to ${otherOrderTypes.join(
-                        ' or '
-                      )} instead`}
+                      text="Or switch to a different order type"
                       classes="ot-btn-link"
                       onClick={switchOrderType}
                     />
