@@ -1,12 +1,19 @@
 .menu {
   margin: 0 0 ($padding * 2);
   @include breakpoint(mobile_both) {
-    padding: 0 0 ($padding-mobile * 2);
+    margin: 0 0 ($padding-mobile * 2);
+  }
+
+  &__page {
+    min-height: 100vh;
+    padding: $nav-height 0 0;
+    @include breakpoint(mobile_both) {
+      padding: $nav-height-mobile 0 0;
+    }
   }
 
   &__wrapper {
     position: relative;
-    min-height: 50vh;
   }
 
   &__loading {
@@ -81,23 +88,6 @@
     border-style: solid;
   }
 
-  button {
-    cursor: pointer;
-    display: block;
-    width: 100%;
-    margin: 0;
-    text-align: left;
-    background-color: transparent;
-    opacity: 1;
-    transition: all 0.15s ease;
-
-    &:hover,
-    &:active,
-    &:focus {
-      opacity: 0.8;
-    }
-  }
-
   &__image {
     position: relative;
     width: 100%;
@@ -156,6 +146,12 @@
     }
   }
 
+  &__overlay__logo {
+    display: inline-block;
+    width: 80%;
+    max-width: 24rem;
+  }
+
   &__content {
     padding: 1.6rem 1.5rem 1.3rem;
   }
@@ -208,6 +204,69 @@
 
     .menu__item__content {
       opacity: 0.3;
+    }
+  }
+}
+
+.menu__rcs {
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: $nav-height;
+    text-align: center;
+    @include breakpoint(mobile_both) {
+      height: $nav-height-mobile;
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 0 $padding $padding;
+    @include breakpoint(mobile_both) {
+      padding: 0 0 $padding-mobile $padding-mobile;
+    }
+  }
+
+  &__item {
+    position: relative;
+    width: 16.66667%;
+    padding: $padding $padding 0 0;
+    @include breakpoint(tablet_land) {
+      width: 20%;
+    }
+    @include breakpoint(tablet) {
+      width: 25%;
+    }
+    @include breakpoint(mobile_land) {
+      width: 33.33333%;
+      padding: $padding-mobile $padding-mobile 0 0;
+    }
+    @include breakpoint(mobile) {
+      width: 50%;
+      padding: $padding-mobile $padding-mobile 0 0;
+    }
+  }
+}
+
+.menu__item,
+.menu__rcs__item {
+  button {
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    margin: 0;
+    text-align: left;
+    background-color: transparent;
+    opacity: 1;
+    transition: all 0.15s ease;
+
+    &:hover,
+    &:active,
+    &:focus {
+      opacity: 0.8;
     }
   }
 }

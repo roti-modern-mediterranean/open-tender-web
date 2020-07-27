@@ -77,7 +77,7 @@ const ErrorPage = ({ error, errorInfo, eventId }) => {
             </div>
           </div>
         </div>
-        <Footer />
+        <Footer hasRouter={false} />
       </main>
     </div>
   )

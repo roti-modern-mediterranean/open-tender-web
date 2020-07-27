@@ -2,7 +2,11 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
-import { selectAutoSelect, selectCustomer } from '@open-tender/redux'
+import {
+  selectAutoSelect,
+  selectCustomer,
+  selectRevenueCenterCount,
+} from '@open-tender/redux'
 
 import HeaderLogo from './HeaderLogo'
 import {
@@ -30,6 +34,7 @@ const testAccountSubpage = (pathname) => {
 
 const Header = () => {
   const autoSelect = useSelector(selectAutoSelect)
+  const count = useSelector(selectRevenueCenterCount)
   const { profile } = useSelector(selectCustomer)
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
@@ -55,7 +60,7 @@ const Header = () => {
               <div className="header__logo">
                 <HeaderLogo />
               </div>
-            ) : isMenu && !autoSelect ? (
+            ) : isMenu && !autoSelect && count !== 1 ? (
               <ButtonLocations classes={btnClass} />
             ) : isCheckout ? (
               <ButtonMenu classes={btnClass} />

@@ -31,13 +31,24 @@ export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
     isLanding || isOutpost ? ['PICKUP', 'DELIVERY'] : [serviceType]
   const hasPickup =
     ((ft && ft.PICKUP) || (ot && ot.PICKUP)) && serviceTypes.includes('PICKUP')
+  const hasWalkin =
+    ((ft && ft.PICKUP) || (ot && ot.PICKUP)) && serviceTypes.includes('WALKIN')
   const hasDelivery =
     ((ft && ft.DELIVERY) || (ot && ot.DELIVERY)) &&
     serviceTypes.includes('DELIVERY')
 
+  const handleWalkin = (evt) => {
+    evt.preventDefault()
+    // dispatch(setAddress(null))
+    dispatch(setOrderServiceType(rcType, 'WALKIN', false))
+    dispatch(setRevenueCenter(revenueCenter))
+    history.push(menuSlug)
+    evt.target.blur()
+  }
+
   const handlePickup = (evt) => {
     evt.preventDefault()
-    dispatch(setAddress(null))
+    // dispatch(setAddress(null))
     dispatch(setOrderServiceType(rcType, 'PICKUP', isOutpost))
     if (isOutpost) dispatch(setAddress(address))
     dispatch(setRevenueCenter(revenueCenter))
@@ -61,6 +72,14 @@ export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
 
   return (
     <div className="rc__order__buttons">
+      {hasWalkin && (
+        <Button
+          text={`Order ${hasDelivery ? 'Dine-in' : 'Here'}`}
+          ariaLabel={`Order Dine-in from ${name}`}
+          icon={iconMap['Coffee']}
+          onClick={handleWalkin}
+        />
+      )}
       {hasPickup && (
         <Button
           text={`Order ${hasDelivery ? 'Pickup' : 'Here'}`}

@@ -27,11 +27,14 @@ const MenuPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { menu: menuConfig } = useSelector(selectConfig)
+  const { background, loadingMessage } = menuConfig
   const revenueCenter = useSelector(selectRevenueCenter)
   const { revenueCenterId, serviceType, requestedAt } = useSelector(
     selectMenuVars
   )
-  const { categories, soldOut, error, loading } = useSelector(selectMenu)
+  const { revenueCenters, categories, soldOut, error, loading } = useSelector(
+    selectMenu
+  )
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const isLoading = loading === 'pending'
 
@@ -49,44 +52,46 @@ const MenuPage = () => {
     }
   }, [revenueCenterId, serviceType, requestedAt, dispatch, history])
 
-  const changeLocation = (evt) => {
+  const changeRevenueCenter = (evt) => {
     evt.preventDefault()
     dispatch(resetRevenueCenter())
     evt.target.blur()
   }
 
   return (
-    <MenuContext.Provider value={{ soldOut, menuConfig, allergenAlerts }}>
-      <Hero imageUrl={menuConfig.background} classes="hero--right hero--top">
-        {revenueCenter && (
-          <RevenueCenter
-            revenueCenter={revenueCenter}
-            classes="rc--hero slide-up"
-            isMenu={true}
-          />
+    <div className="menu__page">
+      <MenuContext.Provider value={{ soldOut, menuConfig, allergenAlerts }}>
+        <h1 className="sr-only">Menu</h1>
+        {revenueCenter && !revenueCenter.is_parent && (
+          <Hero imageUrl={background} classes="hero--right hero--top">
+            <RevenueCenter
+              revenueCenter={revenueCenter}
+              classes="rc--hero slide-up"
+              isMenu={true}
+            />
+          </Hero>
         )}
-      </Hero>
-      <h1 className="sr-only">Menu</h1>
-      {error ? (
-        <ErrorMessage title="Menu Not Found" msg={error}>
-          <Button
-            text="Change Location"
-            icon={iconMap['RefreshCw']}
-            classes="ot-btn ot-btn--cancel"
-            onClick={changeLocation}
-          />
-        </ErrorMessage>
-      ) : (
-        <div className="menu__wrapper">
-          {isLoading && (
-            <div className="menu__loading ot-opacity-light">
-              <Loader text={menuConfig.loadingMessage} />
-            </div>
-          )}
-          <Menu categories={categories} soldOut={soldOut} />
-        </div>
-      )}
-    </MenuContext.Provider>
+        {error ? (
+          <ErrorMessage title="Menu Not Found" msg={error}>
+            <Button
+              text="Change Location"
+              icon={iconMap['RefreshCw']}
+              classes="ot-btn ot-btn--cancel"
+              onClick={changeRevenueCenter}
+            />
+          </ErrorMessage>
+        ) : (
+          <div className="menu__wrapper">
+            {isLoading && (
+              <div className="menu__loading ot-opacity-light">
+                <Loader text={loadingMessage} />
+              </div>
+            )}
+            <Menu categories={categories} revenueCenters={revenueCenters} />
+          </div>
+        )}
+      </MenuContext.Provider>
+    </div>
   )
 }
 

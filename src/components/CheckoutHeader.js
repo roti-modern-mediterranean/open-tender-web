@@ -8,7 +8,7 @@ const CheckoutHeader = ({ checkout = {} }) => {
   return (
     check &&
     check.totals && (
-      <div className="checkout__header slide-up ot-dark">
+      <div className="checkout__header ot-dark">
         <div className="container">
           <div className="checkout__header__container">
             <div className="checkout__header__label">

@@ -12,8 +12,8 @@ import {
   timezoneMap,
   isoToDateStr,
   isoToDate,
-  capitalize,
   makeOrderAddress,
+  makeOrderTypeName,
 } from '@open-tender/js'
 import { Button, DeliveryLink } from '@open-tender/components'
 
@@ -38,7 +38,7 @@ const OrderCard = ({ order, isLast }) => {
     delivery,
   } = order
   const isOpen = status === 'OPEN'
-  const orderType = order_type === 'OLO' ? service_type : order_type
+  const orderTypeName = makeOrderTypeName(order_type, service_type)
   const tz = timezoneMap[timezone]
   const requestedAt = isoToDateStr(requested_at, tz, 'MMMM d, yyyy @ h:mma')
   const isUpcoming = isoToDate(requested_at) > new Date()
@@ -77,7 +77,7 @@ const OrderCard = ({ order, isLast }) => {
             {isLast ? 'Your Last Order' : `Order #${order_id}`}
           </p>
           <p className="order-card__title">
-            {capitalize(orderType)} from {revenue_center.name}
+            {orderTypeName} from {revenue_center.name}
           </p>
           {isUpcoming && trackingUrl && (
             <p className="ot-font-size-small ot-color-secondary">

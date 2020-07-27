@@ -39,12 +39,18 @@
   }
 
   &__container {
-    position: relative;
     width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    @include breakpoint(mobile) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 
   &__items {
-    width: 100%;
+    // width: 100%;
     transition: all 500ms ease;
 
     ul {
@@ -76,6 +82,37 @@
           cursor: pointer;
         }
       }
+    }
+  }
+
+  &__filter {
+    height: 100%;
+    flex: 0 0;
+    padding: 0 0 0 $padding;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    @include breakpoint(mobile) {
+      width: 100%;
+      min-height: $nav-height-mobile;
+      padding: 0;
+      justify-content: center;
+    }
+
+    &__logo {
+      min-width: 4rem;
+      padding: 0;
+      margin: 0 2rem 0 0;
+
+      img {
+        width: auto;
+        max-width: none;
+        height: $nav-height - 2rem;
+      }
+    }
+
+    &__name {
+      display: block;
     }
   }
 }
