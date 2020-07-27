@@ -79,8 +79,7 @@ const RevenueCentersSelect = ({
       maxDistance
     )
     const count = displayed.length
-    // if (count && autoSelect && !error) {
-    if (((count && autoSelect) || count === 1) && !error) {
+    if (count && autoSelect && !error && !missingAddress) {
       autoRouteCallack(displayed[0])
     } else {
       setTitle(title)
@@ -96,6 +95,7 @@ const RevenueCentersSelect = ({
     maxDistance,
     autoSelect,
     autoRouteCallack,
+    missingAddress,
   ])
 
   const names = locationName[isOutpost ? 'OUTPOST' : serviceType]
