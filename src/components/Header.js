@@ -2,6 +2,7 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
+import { contains } from '@open-tender/js'
 import {
   selectAutoSelect,
   selectCustomer,
@@ -24,13 +25,7 @@ import {
   ButtonLocations,
 } from './buttons'
 
-const testAccountSubpage = (pathname) => {
-  return (
-    ['items', 'orders', 'favorites', 'addresses'].filter((i) =>
-      pathname.includes(i)
-    ).length > 0
-  )
-}
+const accountSubPages = ['items', 'orders', 'favorites', 'addresses']
 
 const Header = () => {
   const autoSelect = useSelector(selectAutoSelect)
@@ -41,7 +36,7 @@ const Header = () => {
   const isHome = pathname === '/'
   const isRevenueCenterPage = pathname.includes('locations/')
   const isMenu = pathname.includes('menu')
-  const isAccountSubpage = testAccountSubpage(pathname)
+  const isAccountSubpage = contains(pathname, accountSubPages)
   const showSignUp = true
   const className = isMobile ? `header ot-dark` : `header`
   const btnClass = isMobile

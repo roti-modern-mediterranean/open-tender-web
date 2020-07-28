@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { ShoppingBag } from 'react-feather'
 import { isMobile } from 'react-device-detect'
+import { contains } from '@open-tender/js'
 import { selectCartQuantity } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
@@ -13,10 +14,8 @@ const CartButton = () => {
   const { pathname } = useLocation()
   const cartQuantity = useSelector(selectCartQuantity)
   const countFontSize = isMobile ? 'ot-font-size-x-small' : 'ot-font-size-small'
-  const isHome = pathname === '/'
-  const isLocations = pathname.includes('locations')
-  const isAccount = pathname.includes('account')
-  const hideCart = (isHome || isLocations || isAccount) && cartQuantity === 0
+  const showEmptyCart = contains(pathname, ['menu', 'checkout'])
+  const hideCart = cartQuantity === 0 && !showEmptyCart
 
   const handleClick = (evt) => {
     evt.preventDefault()
