@@ -10,6 +10,7 @@ const makeGlobalStyles = (theme) => css`
     font-weight: ${theme.fonts.body.weight};
     letter-spacing: ${theme.fonts.body.letterSpacing};
     text-transform: ${theme.fonts.body.textTransform};
+    -webkit-font-smoothing: ${theme.fonts.body.fontSmoothing};
     color: ${theme.fonts.body.color};
     font-size: ${theme.fonts.sizes.main};
     background-color: ${theme.bgColors.primary};
@@ -31,6 +32,7 @@ const makeGlobalStyles = (theme) => css`
     font-weight: ${theme.fonts.headings.weight};
     letter-spacing: ${theme.fonts.headings.letterSpacing};
     text-transform: ${theme.fonts.headings.textTransform};
+    -webkit-font-smoothing: ${theme.fonts.headings.fontSmoothing};
     color: ${theme.fonts.headings.color};
   }
   h1,
@@ -93,6 +95,7 @@ const makeGlobalStyles = (theme) => css`
     font-weight: ${theme.fonts.preface.weight};
     letter-spacing: ${theme.fonts.preface.letterSpacing};
     text-transform: ${theme.fonts.preface.textTransform};
+    -webkit-font-smoothing: ${theme.fonts.preface.fontSmoothing};
     color: ${theme.colors.secondary};
     font-size: ${theme.fonts.sizes.small};
   }

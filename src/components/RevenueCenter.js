@@ -47,7 +47,7 @@ const RevenueCenter = ({
               {revenueCenter.name}
             </h2>
             {distance !== null && (
-              <p className="ot-font-size-small ot-color-secondary">
+              <p className="ot-font-size-x-small ot-color-secondary">
                 {distance.toFixed(2)} miles away
               </p>
             )}
