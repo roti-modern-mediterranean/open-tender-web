@@ -5,7 +5,7 @@ import { ButtonFavorite } from './buttons'
 const OrderQuantity = ({ item, show, favoriteId }) => {
   return (
     <div className="order__quantity">
-      <div className="order__quantity__count ot-input-quantity ot-bold ot-font-size-small">
+      <div className="order__quantity__count ot-input-quantity ot-input-quantity-order ot-bold ot-font-size-small">
         {item.quantity}
       </div>
       {show && <ButtonFavorite item={item} favoriteId={favoriteId} />}

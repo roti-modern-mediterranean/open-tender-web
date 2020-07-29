@@ -456,7 +456,7 @@ const makeGlobalStyles = (theme) => css`
     border-radius: ${theme.favorite.size};
   }
 
-  .ot-input-quantity {
+  .ot-input-quantity-order {
     line-height: ${theme.favorite.size};
   }
 
