@@ -47,11 +47,8 @@ const RevenueCentersSelect = ({
   const [displayedRevenueCenters, setDisplayedRevenueCenters] = useState([])
   const isLoading = loading === 'pending'
   const missingAddress = serviceType === 'DELIVERY' && !address
-  const showRevenueCenters =
-    !isLoading &&
-    !error &&
-    displayedRevenueCenters.length > 0 &&
-    !missingAddress
+  const count = displayedRevenueCenters && displayedRevenueCenters.length > 0
+  const showRevenueCenters = !isLoading && !error && count && !missingAddress
 
   useEffect(() => {
     if (orderType) {
@@ -78,7 +75,7 @@ const RevenueCentersSelect = ({
       geoLatLng,
       maxDistance
     )
-    const count = displayed.length
+    const count = displayed ? displayed.length : 0
     if (count && autoSelect && !error && !missingAddress) {
       autoRouteCallack(displayed[0])
     } else {

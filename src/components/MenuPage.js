@@ -11,15 +11,9 @@ import {
   selectSelectedAllergenNames,
   fetchAllergens,
 } from '@open-tender/redux'
-import { Button } from '@open-tender/components'
 
 import { selectConfig } from '../slices'
-import Hero from './Hero'
 import Menu from './Menu'
-import RevenueCenter from './RevenueCenter'
-import Loader from './Loader'
-import ErrorMessage from './ErrorMessage'
-import iconMap from './iconMap'
 
 export const MenuContext = createContext(null)
 
@@ -27,7 +21,7 @@ const MenuPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { menu: menuConfig } = useSelector(selectConfig)
-  const { background, loadingMessage } = menuConfig
+  const { loadingMessage } = menuConfig
   const revenueCenter = useSelector(selectRevenueCenter)
   const { revenueCenterId, serviceType, requestedAt } = useSelector(
     selectMenuVars
@@ -60,36 +54,22 @@ const MenuPage = () => {
 
   return (
     <div className="menu__page">
-      <MenuContext.Provider value={{ soldOut, menuConfig, allergenAlerts }}>
+      <MenuContext.Provider
+        value={{
+          menuConfig,
+          revenueCenter,
+          categories,
+          revenueCenters,
+          changeRevenueCenter,
+          soldOut,
+          allergenAlerts,
+          isLoading,
+          loadingMessage,
+          error,
+        }}
+      >
         <h1 className="sr-only">Menu</h1>
-        {revenueCenter && !revenueCenter.is_parent && (
-          <Hero imageUrl={background} classes="hero--right hero--top">
-            <RevenueCenter
-              revenueCenter={revenueCenter}
-              classes="rc--hero slide-up"
-              isMenu={true}
-            />
-          </Hero>
-        )}
-        {error ? (
-          <ErrorMessage title="Menu Not Found" msg={error}>
-            <Button
-              text="Change Location"
-              icon={iconMap['RefreshCw']}
-              classes="ot-btn ot-btn--cancel"
-              onClick={changeRevenueCenter}
-            />
-          </ErrorMessage>
-        ) : (
-          <div className="menu__wrapper">
-            {isLoading && (
-              <div className="menu__loading ot-opacity-light">
-                <Loader text={loadingMessage} />
-              </div>
-            )}
-            <Menu categories={categories} revenueCenters={revenueCenters} />
-          </div>
-        )}
+        <Menu />
       </MenuContext.Provider>
     </div>
   )
