@@ -93,7 +93,7 @@ const MenuItem = ({ item }) => {
               {item.name}
             </p>
             {item.description && (
-              <p className="menu__item__desc ot-font-size-small">
+              <p className="menu__item__desc ot-font-size-small ot-color-body">
                 {item.description}
               </p>
             )}
