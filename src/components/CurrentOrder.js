@@ -56,15 +56,15 @@ const CurrentOrder = ({ order }) => {
       <OrderTag isUpcoming={true} status="IN_PROGRESS" />
       <div className="order-card__container">
         <div className="order-card__header">
-          <p className="order-card__number ot-preface ot-font-size-x-small ot-color-secondary">
+          <p className="order-card__number ot-preface ot-font-size-x-small">
             Your Current Order
           </p>
-          <p className="order-card__title">
+          <p className="order-card__title ot-color-headings">
             {capitalize(orderTypeStr)} from {revenueCenter.name}
           </p>
         </div>
         <div className="order-card__content">
-          <div className="order-card__details ot-font-size-small ot-color-secondary">
+          <div className="order-card__details ot-font-size-small">
             <p>
               {requestedAtStr} &nbsp;|&nbsp; ${cartTotal.toFixed(2)}
             </p>
@@ -94,9 +94,7 @@ const CurrentOrder = ({ order }) => {
                   />
                 ))}
             </div>
-            <p className="ot-font-size-x-small ot-color-secondary">
-              {itemNames}
-            </p>
+            <p className="ot-font-size-x-small">{itemNames}</p>
           </div>
         </div>
         <div className="order-card__footer">

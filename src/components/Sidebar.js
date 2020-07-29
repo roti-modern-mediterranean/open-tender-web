@@ -69,12 +69,12 @@ const Sidebar = () => {
                 Your cart is currently empty. Please add some items.
               </p>
             ) : (
-              <p className="ot-font-size-small ot-color-secondary">
-                <span className="ot-bold ot-color-primary">
+              <p className="ot-font-size-small">
+                <span className="ot-bold ot-color-headings">
                   {cartCount} items
                 </span>{' '}
                 for a total of{' '}
-                <span className="ot-bold ot-color-primary">
+                <span className="ot-bold ot-color-headings">
                   ${cartTotal.toFixed(2)}
                 </span>{' '}
                 before tax

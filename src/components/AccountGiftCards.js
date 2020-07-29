@@ -54,16 +54,14 @@ const AccountGiftCards = () => {
                       <div className="section__row__container">
                         <div className="section__row__container__content">
                           <p>${giftCard.balance} remaining balance</p>
-                          <p className="ot-font-size-small ot-color-secondary">
+                          <p className="ot-font-size-small">
                             {giftCard.orders} orders have been placed with this
                             gift card
                           </p>
                           {giftCard.expiration && (
                             <p
                               className={`ot-font-size-small ${
-                                expired
-                                  ? 'ot-color-alert'
-                                  : 'ot-color-secondary'
+                                expired ? 'ot-color-alert' : ''
                               }`}
                             >
                               {expired ? 'Expired ' : 'Expires '}

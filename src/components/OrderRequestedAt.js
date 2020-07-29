@@ -7,13 +7,13 @@ const OrderRequestedAt = ({ estimated_at, timezone, is_asap, status }) => {
   const estimatedAt = estimated_at && makeRequestedAtStr(estimated_at, tz, true)
   return is_asap && status === 'OPEN' ? (
     <>
-      <p>ASAP</p>
-      <p className="ot-font-size-small ot-color-secondary">
+      <p className="ot-color-headings">ASAP</p>
+      <p className="ot-font-size-small">
         {estimatedAt} (give or take a few minutes)
       </p>
     </>
   ) : (
-    <p>{estimatedAt}</p>
+    <p className="ot-color-headings">{estimatedAt}</p>
   )
 }
 

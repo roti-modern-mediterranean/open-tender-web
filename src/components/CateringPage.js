@@ -199,7 +199,7 @@ const CateringPage = () => {
               )}
               {catering.policy.content.length > 0 && (
                 <div className="content__text">
-                  <div className="catering__fine-print__content ot-color-secondary ot-line-height">
+                  <div className="catering__fine-print__content ot-line-height">
                     {catering.policy.content.map((i, index) => (
                       <p key={index}>{i}</p>
                     ))}

@@ -4,7 +4,7 @@ import propTypes from 'prop-types'
 const SectionEmpty = ({ message }) => (
   <div className="section__empty">
     <div className="section__empty__message">
-      <p className="ot-color-secondary">{message}</p>
+      <p>{message}</p>
     </div>
   </div>
 )

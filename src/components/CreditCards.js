@@ -46,11 +46,9 @@ const CreditCards = ({ creditCards, isLoading }) => {
             <div className="section__row__container">
               <div className="section__row__container__content">
                 {creditCard.is_default && (
-                  <p className="ot-preface ot-font-size-x-small ot-color-secondary">
-                    Default
-                  </p>
+                  <p className="ot-preface ot-font-size-x-small">Default</p>
                 )}
-                <p className="section__row__relative">
+                <p className="section__row__relative ot-color-headings">
                   {creditCard.card_type_name} ending in {creditCard.last4}
                   {creditCard.is_default && (
                     <span className="section__row__default">
@@ -58,10 +56,8 @@ const CreditCards = ({ creditCards, isLoading }) => {
                     </span>
                   )}
                 </p>
-                <p className="ot-font-size-small ot-color-secondary">
-                  {creditCard.masked}
-                </p>
-                <p className="ot-font-size-small ot-color-secondary">
+                <p className="ot-font-size-small">{creditCard.masked}</p>
+                <p className="ot-font-size-small">
                   <Button
                     text="make default"
                     classes="ot-btn-link"

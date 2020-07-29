@@ -22,7 +22,7 @@ const RevenueCenter = ({
   const hoursDesc = hours.description ? stripTags(hours.description) : null
   classes = `rc ot-bg-color-primary ot-border-radius ot-border-color ${classes}`
   const hoursDescIcon = is_outpost ? iconMap['AlertCircle'] : iconMap['Clock']
-  const hoursDescClass = is_outpost ? 'ot-color-alert' : 'ot-color-secondary'
+  const hoursDescClass = is_outpost ? 'ot-color-alert' : ''
 
   const distance =
     revenueCenter.distance !== null && revenueCenter.distance !== undefined
@@ -46,7 +46,7 @@ const RevenueCenter = ({
               {revenueCenter.name}
             </h2>
             {distance !== null && (
-              <p className="ot-font-size-x-small ot-color-secondary">
+              <p className="ot-font-size-x-small">
                 {distance.toFixed(2)} miles away
               </p>
             )}

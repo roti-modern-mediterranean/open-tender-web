@@ -96,18 +96,18 @@ const makeGlobalStyles = (theme) => css`
     letter-spacing: ${theme.fonts.preface.letterSpacing};
     text-transform: ${theme.fonts.preface.textTransform};
     -webkit-font-smoothing: ${theme.fonts.preface.fontSmoothing};
-    color: ${theme.colors.secondary};
+    color: ${theme.fonts.body.color};
     font-size: ${theme.fonts.sizes.small};
   }
   .ot-dark .ot-preface {
     color: ${theme.colors.light};
   }
   .ot-title {
-    color: ${theme.colors.primary};
+    color: ${theme.colors.title};
     font-size: ${theme.fonts.sizes.h1};
   }
   .ot-subtitle {
-    color: ${theme.colors.secondary};
+    color: ${theme.fonts.body.color};
     line-height: ${theme.lineHeight};
   }
 
@@ -134,11 +134,14 @@ const makeGlobalStyles = (theme) => css`
     font-size: ${theme.fonts.sizes.xBig};
   }
 
-  .ot-color-primary {
-    color: ${theme.colors.primary};
+  .ot-color-body {
+    color: ${theme.fonts.body.color};
   }
-  .ot-color-secondary {
-    color: ${theme.colors.secondary};
+  .ot-color-headings {
+    color: ${theme.fonts.headings.color};
+  }
+  .ot-color-title {
+    color: ${theme.colors.title};
   }
   .ot-color-alert {
     color: ${theme.colors.alert};
@@ -186,7 +189,7 @@ const makeGlobalStyles = (theme) => css`
   }
   .ot-dark {
     color: ${theme.colors.light};
-    background-color: ${theme.colors.primary};
+    background-color: ${theme.bgColors.dark};
   }
   .ot-highlight {
     color: ${theme.colors.light};
@@ -249,14 +252,14 @@ const makeGlobalStyles = (theme) => css`
 
   .ot-btn-link-subtle {
     font-size: inherit;
-    color: ${theme.colors.primary};
+    color: ${theme.fonts.body.color};
     &:hover,
     &:active,
     &:focus {
-      color: ${theme.colors.primary};
+      color: ${theme.fonts.headings.color};
     }
     &:disabled {
-      color: ${theme.colors.primary};
+      color: ${theme.fonts.body.color};
       opacity: 0.5;
     }
   }
@@ -266,7 +269,12 @@ const makeGlobalStyles = (theme) => css`
     line-height: 1;
     margin: 0;
     text-align: center;
-    font-size: ${theme.fonts.sizes.main};
+    font-family: ${theme.buttons.sizes.default.family};
+    font-weight: ${theme.buttons.sizes.default.weight};
+    letter-spacing: ${theme.buttons.sizes.default.letterSpacing};
+    text-transform: ${theme.buttons.sizes.default.textTransform};
+    -webkit-font-smoothing: ${theme.buttons.sizes.default.fontSmoothing};
+    font-size: ${theme.buttons.sizes.default.fontSize};
     padding: ${theme.buttons.sizes.default.padding};
     border-width: ${theme.buttons.sizes.default.borderWidth};
     border-radius: ${theme.buttons.sizes.default.borderRadius};
@@ -291,7 +299,12 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .ot-btn--small {
-    font-size: ${theme.fonts.sizes.small};
+    font-family: ${theme.buttons.sizes.small.family};
+    font-weight: ${theme.buttons.sizes.small.weight};
+    letter-spacing: ${theme.buttons.sizes.small.letterSpacing};
+    text-transform: ${theme.buttons.sizes.small.textTransform};
+    -webkit-font-smoothing: ${theme.buttons.sizes.small.fontSmoothing};
+    font-size: ${theme.buttons.sizes.small.fontSize};
     padding: ${theme.buttons.sizes.small.padding};
     border-width: ${theme.buttons.sizes.small.borderWidth};
     border-radius: ${theme.buttons.sizes.small.borderRadius};
@@ -304,7 +317,12 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .ot-btn--big {
-    font-size: ${theme.fonts.sizes.big};
+    font-family: ${theme.buttons.sizes.big.family};
+    font-weight: ${theme.buttons.sizes.big.weight};
+    letter-spacing: ${theme.buttons.sizes.big.letterSpacing};
+    text-transform: ${theme.buttons.sizes.big.textTransform};
+    -webkit-font-smoothing: ${theme.buttons.sizes.big.fontSmoothing};
+    font-size: ${theme.buttons.sizes.big.fontSize};
     padding: ${theme.buttons.sizes.big.padding};
     border-width: ${theme.buttons.sizes.big.borderWidth};
     border-radius: ${theme.buttons.sizes.big.borderRadius};
@@ -313,19 +331,6 @@ const makeGlobalStyles = (theme) => css`
     &:active,
     &:focus {
       border-width: ${theme.buttons.sizes.big.borderWidth};
-    }
-  }
-
-  .ot-btn--header {
-    font-size: ${theme.fonts.sizes.small};
-    padding: ${theme.buttons.sizes.header.padding};
-    border-width: ${theme.buttons.sizes.header.borderWidth};
-    border-radius: ${theme.buttons.sizes.header.borderRadius};
-
-    &:hover,
-    &:active,
-    &:focus {
-      border-width: ${theme.buttons.sizes.header.borderWidth};
     }
   }
 
@@ -349,43 +354,73 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
+  .ot-btn--header {
+    font-family: ${theme.buttons.sizes.header.family};
+    font-weight: ${theme.buttons.sizes.header.weight};
+    letter-spacing: ${theme.buttons.sizes.header.letterSpacing};
+    text-transform: ${theme.buttons.sizes.header.textTransform};
+    -webkit-font-smoothing: ${theme.buttons.sizes.header.fontSmoothing};
+    font-size: ${theme.buttons.sizes.header.fontSize};
+    padding: ${theme.buttons.sizes.header.padding};
+    border-width: ${theme.buttons.sizes.header.borderWidth};
+    border-radius: ${theme.buttons.sizes.header.borderRadius};
+    color: ${theme.buttons.colors.header.color};
+    background-color: ${theme.buttons.colors.header.bgColor};
+    border-color: ${theme.buttons.colors.header.borderColor};
+
+    &:hover,
+    &:active,
+    &:focus {
+      border-width: ${theme.buttons.sizes.header.borderWidth};
+      color: ${theme.buttons.colors.headerHover.color};
+      background-color: ${theme.buttons.colors.headerHover.bgColor};
+      border-color: ${theme.buttons.colors.headerHover.borderColor};
+    }
+
+    &:disabled {
+      color: ${theme.buttons.colors.header.color};
+      background-color: ${theme.buttons.colors.header.bgColor};
+      border-color: ${theme.buttons.colors.header.borderColor};
+    }
+  }
+
   .ot-btn--light {
-    color: ${theme.colors.primary};
+    color: ${theme.fonts.headings.color};
     background-color: ${theme.bgColors.primary};
     border-color: ${theme.border.color};
 
     &:hover,
     &:active,
     &:focus {
-      color: ${theme.colors.primary};
+      color: ${theme.fonts.headings.color};
       background-color: ${theme.bgColors.secondary};
       border-color: ${theme.bgColors.secondary};
     }
 
     &:disabled {
-      color: ${theme.colors.primary};
+      color: ${theme.fonts.headings.color};
       background-color: ${theme.bgColors.primary};
       border-color: ${theme.bgColors.primary};
     }
   }
 
   .ot-btn--highlight {
-    color: ${theme.colors.light};
-    background-color: ${theme.links.primary.color};
-    border-color: ${theme.links.primary.color};
+    color: ${theme.buttons.colors.primaryHover.color};
+    background-color: ${theme.buttons.colors.primaryHover.bgColor};
+    border-color: ${theme.buttons.colors.primaryHover.borderColor};
 
     &:hover,
     &:active,
     &:focus {
-      color: ${theme.colors.light};
-      background-color: ${theme.colors.primary};
-      border-color: ${theme.colors.primary};
+      color: ${theme.buttons.colors.primary.color};
+      background-color: ${theme.buttons.colors.primary.bgColor};
+      border-color: ${theme.buttons.colors.primary.borderColor};
     }
 
     &:disabled {
-      color: ${theme.colors.light};
-      background-color: ${theme.links.primary.color};
-      border-color: ${theme.links.primary.color};
+      color: ${theme.buttons.colors.primaryHover.color};
+      background-color: ${theme.buttons.colors.primaryHover.bgColor};
+      border-color: ${theme.buttons.colors.primaryHover.borderColor};
     }
   }
 
@@ -398,8 +433,8 @@ const makeGlobalStyles = (theme) => css`
     &:active,
     &:focus {
       color: ${theme.colors.light};
-      background-color: ${theme.colors.primary};
-      border-color: ${theme.colors.primary};
+      background-color: ${theme.fonts.headings.color};
+      border-color: ${theme.fonts.headings.color};
     }
 
     &:disabled {
@@ -416,21 +451,21 @@ const makeGlobalStyles = (theme) => css`
     border: 0;
     border-radius: 0;
     color: ${theme.colors.light};
-    background-color: ${theme.colors.primary};
-    border-color: ${theme.colors.primary};
+    background-color: ${theme.bgColors.dark};
+    border-color: ${theme.bgColors.dark};
 
     &:hover,
     &:active,
     &:focus {
       color: ${theme.colors.light};
-      background-color: ${theme.colors.primary};
-      border-color: ${theme.colors.primary};
+      background-color: ${theme.bgColors.dark};
+      border-color: ${theme.bgColors.dark};
     }
 
     &:disabled {
       color: ${theme.colors.light};
-      background-color: ${theme.colors.primary};
-      border-color: ${theme.colors.primary};
+      background-color: ${theme.bgColors.dark};
+      border-color: ${theme.bgColors.dark};
     }
   }
 
@@ -478,13 +513,13 @@ const makeGlobalStyles = (theme) => css`
     border-radius: ${theme.border.radiusSmall};
     font-family: ${theme.fonts.body.family};
     font-size: ${theme.fonts.sizes.main};
-    color: ${theme.fonts.body.color};
+    color: ${theme.fonts.headings.color};
     background-color: ${theme.bgColors.secondary};
     border: ${theme.border.width} solid ${theme.bgColors.secondary};
     transition: ${theme.links.transition};
 
     &::placeholder {
-      color: ${theme.fonts.body.color};
+      color: ${theme.fonts.headings.color};
       opacity: 0.5;
     }
 
@@ -495,7 +530,7 @@ const makeGlobalStyles = (theme) => css`
 
     &:active,
     &:focus {
-      color: ${theme.fonts.body.color};
+      color: ${theme.fonts.headings.color};
       background-color: ${theme.bgColors.primary};
       border: ${theme.border.width} solid ${theme.border.color};
     }
@@ -504,7 +539,7 @@ const makeGlobalStyles = (theme) => css`
     &:read-only {
       cursor: default;
       opacity: 0.5;
-      color: ${theme.fonts.body.color};
+      color: ${theme.fonts.headings.color};
       background-color: ${theme.bgColors.secondary};
       border: ${theme.border.width} solid ${theme.border.color};
     }
@@ -552,7 +587,7 @@ const makeGlobalStyles = (theme) => css`
   }
 
   span.checkbox__custom:before {
-    color: ${theme.colors.primary};
+    color: ${theme.fonts.headings.color};
   }
 
   span.switch__toggle {
@@ -573,11 +608,11 @@ const makeGlobalStyles = (theme) => css`
   }
 
   input.radio__input:checked + span.radio__custom {
-    border-color: ${theme.colors.primary};
+    border-color: ${theme.fonts.headings.color};
   }
 
   input.radio__input:checked + span.radio__custom:before {
-    background-color: ${theme.colors.primary};
+    background-color: ${theme.fonts.headings.color};
   }
 
   .react-datepicker__navigation--previous {
@@ -629,10 +664,10 @@ const makeGlobalStyles = (theme) => css`
       background-color: ${theme.links.primary.color};
     }
     &:hover {
-      border-color: ${theme.colors.primary};
+      border-color: ${theme.fonts.headings.color};
       &:before,
       &:after {
-        background-color: ${theme.colors.primary};
+        background-color: ${theme.fonts.headings.color};
       }
     }
   }

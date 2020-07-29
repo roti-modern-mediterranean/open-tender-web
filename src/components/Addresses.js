@@ -60,12 +60,10 @@ const Addresses = ({ addresses, isLoading }) => {
             <div className="section__row__container">
               <div className="section__row__container__content">
                 {address.is_default && (
-                  <p className="ot-preface ot-font-size-x-small ot-color-secondary">
-                    Default
-                  </p>
+                  <p className="ot-preface ot-font-size-x-small">Default</p>
                 )}
                 <OrderAddress address={address} isDefault={address.is_default}>
-                  <p className="ot-font-size-small ot-color-secondary">
+                  <p className="ot-font-size-small">
                     <Button
                       text="edit"
                       classes="ot-btn-link"

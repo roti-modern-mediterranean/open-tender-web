@@ -20,7 +20,7 @@ const CheckoutCancelEdit = () => {
 
   return orderId ? (
     <div className="checkout__cancel slide-up">
-      <p className="ot-line-height ot-color-secondary">
+      <p className="ot-line-height">
         You're currently editing order #{orderId}.{' '}
         <Button
           text="Click here to cancel this edit."

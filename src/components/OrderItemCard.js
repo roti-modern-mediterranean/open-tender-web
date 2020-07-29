@@ -45,11 +45,13 @@ const OrderItemCard = ({ item }) => {
       <div className="order-card__container">
         <div className="order-card__header">
           {totalPrice && (
-            <p className="order-card__number ot-preface ot-font-size-x-small ot-color-secondary">
+            <p className="order-card__number ot-preface ot-font-size-x-small">
               ${displayPrice(totalPrice / quantity)}
             </p>
           )}
-          <p className="order-card__title ot-font-size-small">{name}</p>
+          <p className="order-card__title ot-font-size-small ot-color-headings">
+            {name}
+          </p>
         </div>
         <div className="order-card__content">
           <div className="">
@@ -59,9 +61,7 @@ const OrderItemCard = ({ item }) => {
                 style={bgStyle}
               ></div>
             )}
-            <p className="ot-font-size-x-small ot-color-secondary">
-              {optionNames}
-            </p>
+            <p className="ot-font-size-x-small">{optionNames}</p>
           </div>
         </div>
         <div className="order-card__footer">

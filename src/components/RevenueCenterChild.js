@@ -8,9 +8,7 @@ import iconMap from './iconMap'
 const RevenueCenterDesc = ({ text }) => {
   return (
     <div className="rc__action">
-      <p className="ot-color-secondary ot-line-height ot-font-size-small">
-        {text}
-      </p>
+      <p className="ot-line-height ot-font-size-small">{text}</p>
     </div>
   )
 }
@@ -32,7 +30,6 @@ const RevenueCenterChild = ({ revenueCenter, classes = '' }) => {
             {hoursDesc && (
               <RevenueCenterAction
                 icon={iconMap['Clock']}
-                iconClass="ot-color-secondary"
                 text={hoursDesc}
                 arrow={null}
               />

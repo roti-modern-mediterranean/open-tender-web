@@ -9,11 +9,11 @@ const OrderTypeButton = ({ title, handler, icon }) => (
     onClick={handler}
   >
     <span className="content__button__container">
-      <span className="content__button__icon ot-color-primary">{icon}</span>
+      <span className="content__button__icon ot-color-headings">{icon}</span>
       <span className="content__button__title ot-heading ot-font-size-x-big">
         {title}
       </span>
-      <span className="content__button__arrow ot-color-primary">
+      <span className="content__button__arrow ot-color-headings">
         <ArrowRight size={null} />
       </span>
     </span>

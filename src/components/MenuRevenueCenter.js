@@ -31,16 +31,6 @@ const MenuRevenueCenter = ({ revenueCenter, change }) => {
               </div>
             </div>
           </div>
-          {/* <div className="menu__item__content">
-            <p className="menu__item__name ot-heading ot-font-size-big">
-              {revenueCenter.name}
-            </p>
-            {revenueCenter.description && (
-              <p className="menu__item__desc ot-color-secondary ot-font-size-small">
-                {revenueCenter.description}
-              </p>
-            )}
-          </div> */}
         </button>
       </div>
     </div>

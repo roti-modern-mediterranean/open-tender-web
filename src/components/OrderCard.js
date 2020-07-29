@@ -73,14 +73,14 @@ const OrderCard = ({ order, isLast }) => {
       <OrderTag isUpcoming={isUpcoming} status={status} />
       <div className="order-card__container">
         <div className="order-card__header">
-          <p className="order-card__number ot-preface ot-font-size-x-small ot-color-secondary">
+          <p className="order-card__number ot-preface ot-font-size-x-small">
             {isLast ? 'Your Last Order' : `Order #${order_id}`}
           </p>
-          <p className="order-card__title">
+          <p className="order-card__title ot-color-headings">
             {orderTypeName} from {revenue_center.name}
           </p>
           {isUpcoming && trackingUrl && (
-            <p className="ot-font-size-small ot-color-secondary">
+            <p className="ot-font-size-small">
               <DeliveryLink
                 text="Track your delivery"
                 trackingUrl={trackingUrl}
@@ -89,7 +89,7 @@ const OrderCard = ({ order, isLast }) => {
           )}
         </div>
         <div className="order-card__content">
-          <div className="order-card__details ot-font-size-small ot-color-secondary">
+          <div className="order-card__details ot-font-size-small">
             <p>
               {requestedAt} &nbsp;|&nbsp; ${totals.total}
             </p>
@@ -99,9 +99,7 @@ const OrderCard = ({ order, isLast }) => {
             <div className="order-card__images">
               <OrderImages items={cart} />
             </div>
-            <p className="ot-font-size-x-small ot-color-secondary">
-              {itemNames}
-            </p>
+            <p className="ot-font-size-x-small">{itemNames}</p>
           </div>
         </div>
         <div className="order-card__footer">

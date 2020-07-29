@@ -159,32 +159,30 @@ const Order = ({ order, loading, error }) => {
                     )}
                     {notes && notes.length ? (
                       <SectionRow title="Notes">
-                        <p className="ot-font-size-small ot-color-secondary">
-                          {notes}
-                        </p>
+                        <p className="ot-font-size-small">{notes}</p>
                       </SectionRow>
                     ) : null}
                     {hasDetails && (
                       <SectionRow title="Other Details">
                         {eating_utensils ? (
-                          <p className="ot-font-size-small ot-color-secondary">
+                          <p className="ot-font-size-small">
                             Eating utensils included
                             {person_count && ` for ${person_count} people`}
                           </p>
                         ) : (
                           person_count && (
-                            <p className="ot-font-size-small ot-color-secondary">
+                            <p className="ot-font-size-small">
                               30 people to be accommodated
                             </p>
                           )
                         )}
                         {serving_utensils && (
-                          <p className="ot-font-size-small ot-color-secondary">
+                          <p className="ot-font-size-small">
                             Serving utensils included
                           </p>
                         )}
                         {tax_exempt_id && (
-                          <p className="ot-font-size-small ot-color-secondary">
+                          <p className="ot-font-size-small">
                             Tax exempt ID of {tax_exempt_id}
                           </p>
                         )}

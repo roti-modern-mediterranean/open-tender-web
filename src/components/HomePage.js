@@ -53,7 +53,7 @@ const HomePage = () => {
           </div>
         </div>
         {config.home.content && config.home.content.length > 0 && (
-          <div className="content__footer ot-color-secondary ot-line-height slide-up">
+          <div className="content__footer ot-line-height slide-up">
             <div className="container">
               <div className="content__text">
                 {config.home.content.map((i, index) => (

@@ -19,7 +19,7 @@ const MenuCategory = ({ category, isChild }) => {
             <h2 className="menu__category__title">{category.name}</h2>
           )}
           {category.description && (
-            <p className="menu__category__subtitle ot-color-secondary ot-line-height">
+            <p className="menu__category__subtitle ot-line-height">
               {category.description}
             </p>
           )}

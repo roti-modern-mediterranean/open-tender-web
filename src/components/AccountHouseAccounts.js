@@ -59,13 +59,15 @@ const AccountHouseAccounts = () => {
                     >
                       <div className="section__row__container">
                         <div className="section__row__container__content">
-                          <p>{houseAccount.name}</p>
-                          <p className="ot-font-size-small ot-color-secondary">
+                          <p className="ot-color-headings">
+                            {houseAccount.name}
+                          </p>
+                          <p className="ot-font-size-small">
                             {houseAccount.approved_contact
                               ? 'Your account has been specifically approved for this house account'
                               : `This house account is approved for all email addresses ending in ${houseAccount.domain}`}
                           </p>
-                          <p className="ot-font-size-small ot-color-secondary">
+                          <p className="ot-font-size-small">
                             Approved for <span className="">{orderTypes}</span>{' '}
                             and <span className="">{serviceTypes}</span>
                           </p>

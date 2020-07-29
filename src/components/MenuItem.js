@@ -93,14 +93,16 @@ const MenuItem = ({ item }) => {
               {item.name}
             </p>
             {item.description && (
-              <p className="menu__item__desc ot-color-secondary ot-font-size-small">
+              <p className="menu__item__desc ot-font-size-small">
                 {item.description}
               </p>
             )}
             <p className="menu__item__details">
-              <span className="menu__item__price ot-bold">${item.price}</span>
+              <span className="menu__item__price ot-bold ot-color-headings">
+                ${item.price}
+              </span>
               {cals && (
-                <span className="menu__item__cals ot-bold ot-color-secondary">
+                <span className="menu__item__cals ot-bold ot-color-body">
                   {cals} cals
                 </span>
               )}
@@ -110,7 +112,7 @@ const MenuItem = ({ item }) => {
                 </span>
               )}
               {tags.length > 0 && (
-                <span className="menu__item__tags ot-color-secondary ot-font-size-small">
+                <span className="menu__item__tags ot-color-body ot-font-size-small">
                   {tags.join(', ')}
                 </span>
               )}

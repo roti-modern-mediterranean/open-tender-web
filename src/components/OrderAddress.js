@@ -20,26 +20,22 @@ const OrderAddress = ({ address, delivery, status, isDefault, children }) => {
     <>
       {company ? (
         <>
-          <p className="section__row__relative">
+          <p className="section__row__relative ot-color-headings">
             {company}
             <Default isDefault={isDefault} />
           </p>
-          <p className="ot-font-size-small ot-color-secondary">
-            {streetAddress}
-          </p>
+          <p className="ot-font-size-small">{streetAddress}</p>
         </>
       ) : (
-        <p className="section__row__relative">
+        <p className="section__row__relative ot-color-headings">
           {streetAddress}
           <Default isDefault={isDefault} />
         </p>
       )}
-      <p className="ot-font-size-small ot-color-secondary">
+      <p className="ot-font-size-small">
         {city}, {state} {postal_code}
       </p>
-      {contactPhone && (
-        <p className="ot-font-size-small ot-color-secondary">{contactPhone}</p>
-      )}
+      {contactPhone && <p className="ot-font-size-small">{contactPhone}</p>}
       {trackingUrl && (
         <p className="ot-font-size-small">
           <DeliveryLink
