@@ -1,12 +1,10 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { stripTags } from '@open-tender/js'
+
 import RevenueCenterOrder from './RevenueCenterOrder'
 import RevenueCenterAction from './RevenueCenterAction'
 import iconMap from './iconMap'
-
-const placeholder2 =
-  'https://s3.amazonaws.com/betterboh/u/img/prod/2/1588303325_976877dbfac85a83d9e9.jpg'
 
 const RevenueCenter = ({
   revenueCenter,
@@ -16,9 +14,10 @@ const RevenueCenter = ({
   isLanding,
 }) => {
   const { address, images, hours, is_outpost } = revenueCenter
-  let smallImage = images.find((i) => i.type === 'SMALL_IMAGE')
-  smallImage = smallImage ? smallImage.url : null
-  const bgStyle = { backgroundImage: `url(${smallImage || placeholder2}` }
+  const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
+  const largeImg = images.find((i) => i.type === 'SMALL_IMAGE')
+  const bgImage = smallImg.url || largeImg.url
+  const bgStyle = bgImage ? { backgroundImage: `url(${bgImage}` } : null
   const phoneUrl = address.phone ? `tel:${address.phone}` : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
   classes = `rc ot-bg-color-primary ot-border-radius ot-border-color ${classes}`

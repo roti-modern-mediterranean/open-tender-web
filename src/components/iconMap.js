@@ -43,6 +43,7 @@ import {
   Calendar,
   Slash,
   Coffee,
+  Info,
 } from 'react-feather'
 
 const iconMap = {
@@ -70,6 +71,7 @@ const iconMap = {
   Grid: <Grid size={null} />,
   Heart: <Heart size={null} />,
   Home: <Home size={null} />,
+  Info: <Info size={null} />,
   Phone: <Phone size={null} />,
   Plus: <Plus size={null} />,
   PlusCircle: <PlusCircle size={null} />,
