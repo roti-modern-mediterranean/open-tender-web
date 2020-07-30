@@ -42,6 +42,7 @@ const RequestedAtModal = ({
       ) : orderTimes ? (
         <RequestedAtTimes
           orderTimes={orderTimes}
+          serviceType={serviceType}
           revenueCenter={revenueCenter}
           requestedAt={requestedAt}
           setRequestedAt={handleRequestedAt}
