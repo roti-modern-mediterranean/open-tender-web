@@ -135,7 +135,7 @@ const AccountGreeting = () => {
             </div>
             <AccountLoyalty />
             <div className="greeting__summary__options">
-              <p className="ot-font-size-small ot-bold">
+              <p className="ot-font-size-small ot-bold ot-color-headings">
                 Other things you can do from here...
               </p>
               <ul className="ot-font-size-small">

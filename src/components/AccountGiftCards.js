@@ -53,7 +53,9 @@ const AccountGiftCards = () => {
                     >
                       <div className="section__row__container">
                         <div className="section__row__container__content">
-                          <p>${giftCard.balance} remaining balance</p>
+                          <p className="ot-color-headings">
+                            ${giftCard.balance} remaining balance
+                          </p>
                           <p className="ot-font-size-small">
                             {giftCard.orders} orders have been placed with this
                             gift card
