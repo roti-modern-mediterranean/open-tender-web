@@ -4,11 +4,7 @@
 
   &__list {
     display: block;
-    // max-width: 40rem;
     margin: 0 auto;
-    // &.-disabled {
-    //   opacity: 0.5;
-    // }
 
     li {
       position: relative;
@@ -22,12 +18,6 @@
       &:last-child {
         margin-bottom: 0;
       }
-
-      // &:nth-child(1) {
-      //   .cards__new {
-      //     padding: 0;
-      //   }
-      // }
     }
   }
 

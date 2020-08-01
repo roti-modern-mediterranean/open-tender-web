@@ -11,7 +11,7 @@ const WorkingModal = ({ text = defaultText }) => {
         <div className="modal__body">
           <div className="modal__working">
             <div className="modal__working__content">
-              <p className="ot-headings-color">{text}</p>
+              <p className="ot-color-headings">{text}</p>
             </div>
             <div className="modal__working__loader">
               <BarLoader size={100} loading={true} />
