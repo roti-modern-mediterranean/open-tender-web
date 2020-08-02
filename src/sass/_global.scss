@@ -131,3 +131,17 @@ pre {
     padding: $padding-mobile;
   }
 }
+
+ol {
+  list-style: decimal outside;
+  padding: 0 0 0 1.5rem;
+
+  li {
+    margin: 1em 0 0;
+
+    span {
+      position: relative;
+      left: 0rem;
+    }
+  }
+}

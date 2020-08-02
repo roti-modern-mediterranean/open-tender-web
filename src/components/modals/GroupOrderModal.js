@@ -1,21 +1,23 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCustomer } from '@open-tender/redux'
+import { selectCustomer, selectCartToken, shareCart } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
-import { openModal, closeModal } from '../../slices'
+import { closeModal } from '../../slices'
+import GroupOrderGuest from '../GroupOrderGuest'
+import GroupOrderSteps from '../GroupOrderSteps'
+import ModalClose from '../ModalClose'
 
 const GroupOrderModal = () => {
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
+  const token = useSelector(selectCartToken)
+  const origin = window.location.origin
+  const url = `${origin}/group-order/${token}`
 
-  const login = (evt, type) => {
+  const start = (evt) => {
     evt.preventDefault()
-    dispatch(closeModal())
-    console.log(type)
-    setTimeout(() => {
-      dispatch(openModal({ type }))
-    }, 250)
+    dispatch(shareCart())
     evt.target.blur()
   }
 
@@ -27,48 +29,42 @@ const GroupOrderModal = () => {
 
   return (
     <>
+      <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
           <p className="modal__title ot-heading ot-font-size-h3">
             Start a group order
           </p>
+          {auth && <p className="modal__subtitle">Here's how it works</p>}
         </div>
         {!auth ? (
+          <GroupOrderGuest />
+        ) : token ? (
+          <div className="modal__body -message">
+            <p>{url}</p>
+          </div>
+        ) : (
           <>
-            <div className="modal__body -message">
-              <p>You must be logged into your accout to start a group order.</p>
-              <Button
-                text="Click here to login"
-                classes="ot-btn-link"
-                onClick={(evt) => login(evt, 'login')}
-              />
-              <p>Don't have an accout?</p>
-              <Button
-                text="Click here to create an account"
-                classes="ot-btn-link"
-                onClick={(evt) => login(evt, 'signUp')}
-              />
+            <div className="modal__body -message ot-font-size-small ot-line-height">
+              <GroupOrderSteps />
             </div>
             <div className="modal__footer">
               <div className="modal__footer__buttons">
                 <Button
-                  text="Nevermind"
+                  text="Start a Group Order"
                   classes="ot-btn ot-btn--highlight"
-                  onClick={cancel}
+                  onClick={start}
                 />
+                <Button text="Nevermind" classes="ot-btn" onClick={cancel} />
               </div>
             </div>
           </>
-        ) : (
-          <div className="modal__body -message">
-            <p>Let's start a group order!</p>
-          </div>
         )}
       </div>
     </>
   )
 }
 
-GroupOrderModal.displayName = 'OrderTypeModal'
+GroupOrderModal.displayName = 'GroupOrderModal'
 
 export default GroupOrderModal

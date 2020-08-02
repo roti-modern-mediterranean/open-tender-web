@@ -53,12 +53,20 @@
     line-height: 1.4;
   }
 
-  &__body.-message {
-    p {
-      line-height: 1.4;
+  &__body {
+    &__section {
+      margin: 0 0 $padding;
+      &:last-child {
+        margin: 0;
+      }
     }
-    p + p {
-      margin: 1rem 0 0;
+    &.-message {
+      p {
+        line-height: 1.4;
+      }
+      p + p {
+        margin: 1rem 0 0;
+      }
     }
   }
 
@@ -107,7 +115,7 @@
 .modal--wide {
   .modal {
     width: 90%;
-    max-width: 80rem;
+    max-width: 64rem;
   }
 }
 
