@@ -11,12 +11,14 @@ import MenuLoading from './MenuLoading'
 import RevenueCenter from './RevenueCenter'
 import Hero from './Hero'
 import RevenueCenterChild from './RevenueCenterChild'
+import MenuError from './MenuError'
 
 const Menu = () => {
   const {
     revenueCenter,
     categories,
     revenueCenters,
+    isLoading,
     error,
     menuConfig,
   } = useContext(MenuContext)
@@ -79,7 +81,7 @@ const Menu = () => {
           />
         </Hero>
       )}
-      {!error && (
+      {!error ? (
         <div className="menu__wrapper">
           <MenuLoading />
           <div ref={topRef}>
@@ -101,7 +103,9 @@ const Menu = () => {
             )}
           </div>
         </div>
-      )}
+      ) : !isLoading ? (
+        <MenuError />
+      ) : null}
     </>
   )
 }
