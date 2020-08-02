@@ -21,6 +21,7 @@ import {
   OrderRatingModal,
   OrderTypeModal,
   CartCountsModal,
+  GroupOrderModal,
 } from './modals'
 
 const makeModal = (type, windowRef, args = {}) => {
@@ -53,6 +54,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <OrderTypeModal {...args} />
     case 'rating':
       return <OrderRatingModal {...args} />
+    case 'groupOrder':
+      return <GroupOrderModal {...args} />
     default:
       return null
   }

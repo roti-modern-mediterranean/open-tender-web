@@ -1,4 +1,5 @@
 import React from 'react'
+import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetOrderType, selectOrder } from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
@@ -60,5 +61,8 @@ const OrderTypeModal = ({ startOver }) => {
 }
 
 OrderTypeModal.displayName = 'OrderTypeModal'
+OrderTypeModal.prototypes = {
+  startOver: propTypes.func,
+}
 
 export default OrderTypeModal

@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
-// import { selectOrder } from '@open-tender/redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectOrder } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
 import { openModal } from '../../slices'
@@ -13,9 +13,9 @@ const ButtonGroupOrder = ({
   icon = iconMap['Users'],
 }) => {
   const dispatch = useDispatch()
-  // const { revenueCenter } = useSelector(selectOrder)
-  // const hasGroupOrdering = revenueCenter && revenueCenter.group_ordering_allowed
-  const hasGroupOrdering = false
+  const { revenueCenter } = useSelector(selectOrder)
+  const hasGroupOrdering =
+    revenueCenter && revenueCenter.settings.group_ordering_allowed
 
   const onClick = (evt) => {
     evt.preventDefault()

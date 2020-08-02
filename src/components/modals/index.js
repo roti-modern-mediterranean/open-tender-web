@@ -12,6 +12,7 @@ import WorkingModal from './WorkingModal'
 import ClosedModal from './ClosedModal'
 import OrderRatingModal from './OrderRatingModal'
 import OrderTypeModal from './OrderTypeModal'
+import GroupOrderModal from './GroupOrderModal'
 
 export {
   LoginModal,
@@ -28,4 +29,5 @@ export {
   ClosedModal,
   OrderRatingModal,
   OrderTypeModal,
+  GroupOrderModal,
 }
