@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { selectGroupOrderToken } from '@open-tender/redux'
+import { selectGroupOrderToken, resetGroupOrder } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
+
+import { closeModal } from '../slices'
 import iconMap from './iconMap'
 
 const GroupOrderShare = () => {
@@ -13,6 +15,10 @@ const GroupOrderShare = () => {
   const token = useSelector(selectGroupOrderToken)
   const origin = window.location.origin
   const url = `${origin}/join/${token}`
+
+  useEffect(() => {
+    setCopied(false)
+  }, [])
 
   const copy = (evt) => {
     evt.preventDefault()
@@ -27,6 +33,8 @@ const GroupOrderShare = () => {
 
   const save = (evt) => {
     evt.preventDefault()
+    dispatch(resetGroupOrder())
+    dispatch(closeModal())
     evt.target.blur()
   }
 
@@ -56,8 +64,15 @@ const GroupOrderShare = () => {
               onClick={copy}
             />
           </CopyToClipboard>
-        </div>
-        <div className="modal__body__section">
+          {copied ? (
+            <p className="copied ot-font-size-small ot-color-success">
+              Copied to clipboard!
+            </p>
+          ) : (
+            <p className="copied ot-font-size-small">
+              Click button above to copy the link to your clipboard
+            </p>
+          )}
           <p>
             Once you've added your own items, proceed to the next page to review
             the orders that have been submitted before you proceed to the
