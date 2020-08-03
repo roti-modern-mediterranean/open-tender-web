@@ -23,7 +23,12 @@ const GroupOrderGuest = () => {
   }
 
   return (
-    <>
+    <div className="modal__content">
+      <div className="modal__header">
+        <p className="modal__title ot-heading ot-font-size-h3">
+          Start a group order
+        </p>
+      </div>
       <div className="modal__body -message">
         <div className="modal__body__section">
           <p>You must be logged into your accout to start a group order.</p>
@@ -55,7 +60,7 @@ const GroupOrderGuest = () => {
           />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
