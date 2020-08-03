@@ -5,6 +5,7 @@ import { Button } from '@open-tender/components'
 
 import { closeModal } from '../slices'
 import GroupOrderSteps from './GroupOrderSteps'
+import iconMap from './iconMap'
 
 const GroupOrderStart = () => {
   const dispatch = useDispatch()
@@ -37,6 +38,7 @@ const GroupOrderStart = () => {
           <Button
             text="Start a Group Order"
             classes="ot-btn ot-btn--highlight"
+            icon={iconMap['Users']}
             onClick={start}
           />
           <Button text="Nevermind" classes="ot-btn" onClick={cancel} />

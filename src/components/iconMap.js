@@ -45,6 +45,7 @@ import {
   Coffee,
   Info,
   Save,
+  Clipboard,
 } from 'react-feather'
 
 const iconMap = {
@@ -59,6 +60,7 @@ const iconMap = {
   ChevronRight: <ChevronRight size={null} />,
   ChevronUp: <ChevronUp size={null} />,
   ChevronDown: <ChevronDown size={null} />,
+  Clipboard: <Clipboard size={null} />,
   Coffee: <Coffee size={null} />,
   Clock: <Clock size={null} />,
   CreditCard: <CreditCard size={null} />,

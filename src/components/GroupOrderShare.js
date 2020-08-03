@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { selectCartToken } from '@open-tender/redux'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { selectGroupOrderToken } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 import iconMap from './iconMap'
 
 const GroupOrderShare = () => {
+  const [copied, setCopied] = useState(false)
   const dispatch = useDispatch()
   const history = useHistory()
-  const token = useSelector(selectCartToken)
+  const token = useSelector(selectGroupOrderToken)
   const origin = window.location.origin
-  const url = `${origin}/group-order/${token}`
+  const url = `${origin}/join/${token}`
+
+  const copy = (evt) => {
+    evt.preventDefault()
+    evt.target.blur()
+  }
 
   const proceed = (evt) => {
     evt.preventDefault()
@@ -41,18 +48,25 @@ const GroupOrderShare = () => {
       </div>
       <div className="modal__body -message ot-line-height">
         <div className="modal__body__section">
-          <p>{url}</p>
+          <CopyToClipboard text={url} onCopy={() => setCopied(true)}>
+            <Button
+              text={url}
+              classes="ot-btn ot-btn--small ot-btn--highlight"
+              icon={iconMap['Clipboard']}
+              onClick={copy}
+            />
+          </CopyToClipboard>
         </div>
         <div className="modal__body__section">
           <p>
             Once you've added your own items, proceed to the next page to review
             the orders that have been submitted before you proceed to the
-            checkout page
+            checkout page.
           </p>
           <p>
             <Button
               text="Review All Orders"
-              classes="ot-btn ot-btn--highlight"
+              classes="ot-btn"
               icon={iconMap['ShoppingBag']}
               onClick={proceed}
             />

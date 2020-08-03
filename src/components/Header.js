@@ -36,6 +36,7 @@ const Header = () => {
   const isHome = pathname === '/'
   const isRevenueCenterPage = pathname.includes('locations/')
   const isMenu = pathname.includes('menu')
+  const isGroupOrder = pathname.includes('join')
   const isAccountSubpage = contains(pathname, accountSubPages)
   const showSignUp = true
   const className = isMobile ? `header ot-dark` : `header`
@@ -51,7 +52,7 @@ const Header = () => {
       <div className="container">
         <div className="header__container">
           <div className="header__nav">
-            {isHome || isRevenueCenterPage ? (
+            {isHome || isRevenueCenterPage || isGroupOrder ? (
               <div className="header__logo">
                 <HeaderLogo />
               </div>
@@ -66,7 +67,7 @@ const Header = () => {
             )}
           </div>
           <div className="header__actions">
-            <ButtonAccount classes={btnClass} />
+            {!isGroupOrder && <ButtonAccount classes={btnClass} />}
             {isHome && !profile && showSignUp && (
               <ButtonSignUp classes={btnClass} />
             )}

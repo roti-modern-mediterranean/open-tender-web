@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@open-tender/components'
 
 import { openModal, closeModal } from '../slices'
+import iconMap from './iconMap'
 
 const GroupOrderGuest = () => {
   const dispatch = useDispatch()
@@ -12,7 +13,7 @@ const GroupOrderGuest = () => {
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(openModal({ type }))
-    }, 250)
+    }, 300)
     evt.target.blur()
   }
 
@@ -34,15 +35,16 @@ const GroupOrderGuest = () => {
           <p>You must be logged into your accout to start a group order.</p>
           <p>
             <Button
-              text="Click here to login."
-              classes="ot-btn-link"
+              text="Click here to login"
+              classes="ot-btn ot-btn--highlight"
+              icon={iconMap['User']}
               onClick={(evt) => login(evt, 'login')}
             />
           </p>
         </div>
         <div className="modal__body__section">
-          <p>Don't have an account?</p>
           <p>
+            Don't have an account?{' '}
             <Button
               text="Click here to create one."
               classes="ot-btn-link"
@@ -53,11 +55,7 @@ const GroupOrderGuest = () => {
       </div>
       <div className="modal__footer">
         <div className="modal__footer__buttons">
-          <Button
-            text="Nevermind"
-            classes="ot-btn ot-btn--highlight"
-            onClick={cancel}
-          />
+          <Button text="Nevermind" classes="ot-btn" onClick={cancel} />
         </div>
       </div>
     </div>
