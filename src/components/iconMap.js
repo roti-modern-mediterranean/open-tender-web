@@ -44,6 +44,7 @@ import {
   Slash,
   Coffee,
   Info,
+  Save,
 } from 'react-feather'
 
 const iconMap = {
@@ -80,6 +81,7 @@ const iconMap = {
   Minus: <Minus size={null} />,
   Navigation: <Navigation size={null} />,
   RefreshCw: <RefreshCw size={null} />,
+  Save: <Save size={null} />,
   ShoppingBag: <ShoppingBag size={null} />,
   Slash: <Slash size={null} />,
   Sliders: <Sliders size={null} />,
