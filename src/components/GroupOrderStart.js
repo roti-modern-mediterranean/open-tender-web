@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectOrder, shareCart } from '@open-tender/redux'
+import {
+  selectOrder,
+  startGroupOrder,
+  updateGroupOrder,
+  setRequestedAt,
+} from '@open-tender/redux'
 import { makeGroupOrderTime } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
@@ -17,12 +22,12 @@ const GroupOrderStart = () => {
   const { revenueCenter, serviceType, requestedAt } = useSelector(selectOrder)
 
   useEffect(() => {
-    const suggestedTime = makeGroupOrderTime(
+    const groupOrderTime = makeGroupOrderTime(
       revenueCenter,
       serviceType,
       requestedAt
     )
-    setOrderTime(suggestedTime)
+    setOrderTime(groupOrderTime)
   }, [revenueCenter, serviceType, requestedAt])
 
   const adjust = (evt, type) => {
@@ -36,7 +41,10 @@ const GroupOrderStart = () => {
 
   const start = (evt) => {
     evt.preventDefault()
-    dispatch(shareCart())
+    const { firstIso, cutoffIso } = orderTime
+    dispatch(updateGroupOrder({ firstIso, cutoffIso }))
+    dispatch(setRequestedAt(orderTime.iso))
+    dispatch(startGroupOrder())
     evt.target.blur()
   }
 
@@ -68,12 +76,12 @@ const GroupOrderStart = () => {
                 cutoff time of {formatOrderTime(orderTime.cutoffDateStr)}
               </span>{' '}
               (this is the time by which all orders must be submitted).{' '}
-              {orderTime.isAdjusted && (
+              {/* {orderTime.isAdjusted && (
                 <span className="ot-color-alert">
                   We'd strongly suggest you choose a later time so your friends
                   have more time to place their orders.
                 </span>
-              )}
+              )} */}
             </p>
             <p>
               <Button
