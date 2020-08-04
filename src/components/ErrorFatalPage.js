@@ -7,8 +7,8 @@ const ErrorFatalPage = ({ error }) => {
 
   useEffect(() => {
     window.scroll(0, 0)
-    Sentry.captureException(new Error('Fatal Error'))
-  }, [])
+    Sentry.captureException(new Error(`Fatal Error: ${detail}`))
+  }, [detail])
 
   return (
     <div className="fatal-error">
