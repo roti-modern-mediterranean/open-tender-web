@@ -26,9 +26,14 @@ const OrderAddress = ({ address, delivery, status, isDefault, children }) => {
           </p>
           <p className="ot-font-size-small">{streetAddress}</p>
         </>
-      ) : (
+      ) : streetAddress ? (
         <p className="section__row__relative ot-color-headings">
           {streetAddress}
+          <Default isDefault={isDefault} />
+        </p>
+      ) : (
+        <p className="section__row__relative ot-color-headings">
+          {postal_code}
           <Default isDefault={isDefault} />
         </p>
       )}
