@@ -1462,10 +1462,10 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@open-tender/components@^1.0.14":
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-1.0.14.tgz#aa6e231d6ae39a607635f2a3da2b18e1d2138556"
-  integrity sha512-oNZLEpA8/oxZxyszBKy0RTIeRLGZzPHtxQvilmCf3eN4hpfcmo3zUSJBWzp9kNjt0sF9nwJu/jL+/GPNbT7xJw==
+"@open-tender/components@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-1.0.15.tgz#fbffabc8387363709e533b32107a1d5f31b20e9e"
+  integrity sha512-ntfwSaqeCAvXDPWXrOaH9XHpQPYX+edkPzHLEFTNRVk8b5Br9FcSSQZVORgi4xtHJMmXbXmXkhoA3uGGI6dMeQ==
 
 "@open-tender/js@^1.0.7":
   version "1.0.7"
@@ -4487,6 +4487,11 @@ cookie@0.4.0:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
   integrity sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==
 
+cookiejar@:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.2.tgz#dd8a235530752f988f9a0844f3fc589e3111125c"
+  integrity sha512-Mw+adcfzPxcPeI+0WlvRrr/3lGVO0bD75SxX6811cxSh1Wbxx7xZBGK1eVtDf6si8rg2lhnUjsVLMFMfbRIuwA==
+
 copy-concurrently@^1.0.0:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/copy-concurrently/-/copy-concurrently-1.0.5.tgz#92297398cae34937fcafd6ec8139c18051f0b5e0"
@@ -5998,6 +6003,13 @@ fault@^1.0.2:
   dependencies:
     format "^0.2.0"
 
+faye-websocket@>=0.4.0, faye-websocket@~0.11.1:
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/faye-websocket/-/faye-websocket-0.11.3.tgz#5c0e9a8968e8912c286639fde977a8b209f2508e"
+  integrity sha512-D2y4bovYpzziGgbHYtGCMjlJM36vAl/y+xUyn1C+FVx8szd1E+86KwVw6XvYSzOP8iMpm1X0I4xJD+QtUb36OA==
+  dependencies:
+    websocket-driver ">=0.5.1"
+
 faye-websocket@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/faye-websocket/-/faye-websocket-0.10.0.tgz#4e492f8d04dfb6f89003507f6edbf2d501e7c6f4"
@@ -6005,12 +6017,13 @@ faye-websocket@^0.10.0:
   dependencies:
     websocket-driver ">=0.5.1"
 
-faye-websocket@~0.11.1:
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/faye-websocket/-/faye-websocket-0.11.3.tgz#5c0e9a8968e8912c286639fde977a8b209f2508e"
-  integrity sha512-D2y4bovYpzziGgbHYtGCMjlJM36vAl/y+xUyn1C+FVx8szd1E+86KwVw6XvYSzOP8iMpm1X0I4xJD+QtUb36OA==
+faye@~0.8.3:
+  version "0.8.11"
+  resolved "https://registry.yarnpkg.com/faye/-/faye-0.8.11.tgz#06b25f22c9be51ebe6fe6d8d59dee6e546751967"
+  integrity sha1-BrJfIsm+Uevm/m2NWd7m5UZ1GWc=
   dependencies:
-    websocket-driver ">=0.5.1"
+    cookiejar ""
+    faye-websocket ">=0.4.0"
 
 fb-watchman@^2.0.0:
   version "2.0.1"
@@ -6222,6 +6235,15 @@ for-own@^0.1.3:
   integrity sha1-UmXGgaTylNq78XyVCbZ2OqhFEM4=
   dependencies:
     for-in "^1.0.1"
+
+force@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/force/-/force-0.0.3.tgz#16a711e6b9a542a974da85546434a3ae94d66b14"
+  integrity sha1-FqcR5rmlQql02oVUZDSjrpTWaxQ=
+  dependencies:
+    faye "~0.8.3"
+    mime "~1.2.9"
+    request "*"
 
 forever-agent@~0.6.1:
   version "0.6.1"
@@ -8831,6 +8853,11 @@ mime@^2.4.4:
   version "2.4.6"
   resolved "https://registry.yarnpkg.com/mime/-/mime-2.4.6.tgz#e5b407c90db442f2beb5b162373d07b69affa4d1"
   integrity sha512-RZKhC3EmpBchfTGBVb8fb+RL2cWyw/32lshnsETttkBAyAUXSGHxbEJWWRXc751DrIxG1q04b8QwMbAwkRPpUA==
+
+mime@~1.2.9:
+  version "1.2.11"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-1.2.11.tgz#58203eed86e3a5ef17aed2b7d9ebd47f0a60dd10"
+  integrity sha1-WCA+7Ybjpe8XrtK32evUfwpg3RA=
 
 mimic-fn@^1.0.0:
   version "1.2.0"
@@ -11610,7 +11637,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.87.0, request@^2.88.0:
+request@*, request@^2.87.0, request@^2.88.0:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
