@@ -532,7 +532,7 @@ const makeGlobalStyles = (theme) => css`
     &:focus {
       color: ${theme.fonts.headings.color};
       background-color: ${theme.bgColors.primary};
-      border: ${theme.border.width} solid ${theme.border.color};
+      border: ${theme.border.width} solid ${theme.bgColors.primary};
     }
 
     &:disabled,
@@ -541,8 +541,12 @@ const makeGlobalStyles = (theme) => css`
       opacity: 0.5;
       color: ${theme.fonts.headings.color};
       background-color: ${theme.bgColors.secondary};
-      border: ${theme.border.width} solid ${theme.border.color};
+      border: ${theme.border.width} solid ${theme.bgColors.secondary};
     }
+  }
+
+  select:read-only {
+    opacity: 1;
   }
 
   input,
@@ -580,6 +584,10 @@ const makeGlobalStyles = (theme) => css`
     border-radius: ${theme.border.radiusSmall};
     color: ${theme.colors.error};
     background-color: ${theme.bgColors.error};
+  }
+
+  .ot-form-error.form__error--top {
+    margin-bottom: 2rem;
   }
 
   span.checkbox__custom {
