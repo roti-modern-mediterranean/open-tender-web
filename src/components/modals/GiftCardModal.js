@@ -48,15 +48,22 @@ const GiftCardModal = ({ windowRef, giftCard }) => {
           </p>
         </div>
         <div className="modal__body">
-          <GiftCardForm
-            giftCard={giftCard}
-            creditCards={creditCards}
-            loading={loading}
-            error={error}
-            update={update}
-            add={add}
-            callback={callback}
-          />
+          {!creditCards || !creditCards.length ? (
+            <p>
+              Please save a credit card to your account before purchasing a gift
+              card.
+            </p>
+          ) : (
+            <GiftCardForm
+              giftCard={giftCard}
+              creditCards={creditCards}
+              loading={loading}
+              error={error}
+              update={update}
+              add={add}
+              callback={callback}
+            />
+          )}
         </div>
       </div>
     </>
