@@ -2,7 +2,14 @@ import React, { useEffect } from 'react'
 import { isBrowser } from 'react-device-detect'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { fetchGroupOrder, selectGroupOrder } from '@open-tender/redux'
+import { makeReadableDateStrFromIso } from '@open-tender/js'
+import {
+  fetchGroupOrder,
+  selectGroupOrder,
+  resetGroupOrder,
+  // selectRevenueCenter,
+  selectTimezone,
+} from '@open-tender/redux'
 
 import { selectConfig } from '../slices'
 import PageTitle from './PageTitle'
@@ -31,17 +38,34 @@ const makeTitle = (isLoading, error, closed, cartOwnerName) => {
 
 const GroupOrderGuestPage = () => {
   const dispatch = useDispatch()
-  const config = useSelector(selectConfig)
   const { token } = useParams()
+  const config = useSelector(selectConfig)
   const groupOrder = useSelector(selectGroupOrder)
-  const { cartOwnerName, closed, loading, error } = groupOrder
+  // const revenueCenter = useSelector(selectRevenueCenter)
+  const tz = useSelector(selectTimezone)
+  const {
+    cartOwnerName,
+    cartGuestId,
+    closed,
+    loading,
+    error,
+    cutoffAt,
+    requestedAt,
+  } = groupOrder
   const isLoading = loading === 'pending'
   const { title, subtitle } = makeTitle(isLoading, error, closed, cartOwnerName)
+  const cutoffTime =
+    cutoffAt && tz ? makeReadableDateStrFromIso(cutoffAt, tz) : null
+  const orderTime =
+    requestedAt && tz ? makeReadableDateStrFromIso(requestedAt, tz) : null
 
   useEffect(() => {
     window.scroll(0, 0)
     dispatch(fetchGroupOrder(token))
-  }, [dispatch, token])
+    return () => {
+      if (!cartGuestId) dispatch(resetGroupOrder())
+    }
+  }, [dispatch, token, cartGuestId])
 
   return (
     <>
@@ -69,7 +93,11 @@ const GroupOrderGuestPage = () => {
                       not too late to reopen it.
                     </p>
                   ) : (
-                    <p>Cart guest form will go here...</p>
+                    <>
+                      <p>{orderTime}</p>
+                      <p>{cutoffTime}</p>
+                      <p>Cart guest form will go here...</p>
+                    </>
                   )}
                 </div>
               </div>

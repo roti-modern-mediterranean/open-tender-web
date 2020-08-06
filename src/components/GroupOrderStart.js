@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   selectOrder,
   startGroupOrder,
-  updateGroupOrder,
-  setRequestedAt,
+  // updateGroupOrder,
 } from '@open-tender/redux'
 import { makeGroupOrderTime } from '@open-tender/js'
 import { Button } from '@open-tender/components'
@@ -41,9 +40,8 @@ const GroupOrderStart = () => {
 
   const start = (evt) => {
     evt.preventDefault()
-    const { firstIso, cutoffIso } = orderTime
-    dispatch(updateGroupOrder({ firstIso, cutoffIso }))
-    dispatch(setRequestedAt(orderTime.iso))
+    // const { firstIso } = orderTime
+    // dispatch(updateGroupOrder({ firstIso }))
     dispatch(startGroupOrder())
     evt.target.blur()
   }
