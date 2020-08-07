@@ -3,7 +3,7 @@ import React from 'react'
 const GroupOrderSteps = () => {
   return (
     <>
-      <p>Here's how it works from here...</p>
+      <p>How it works from here...</p>
       <ol>
         <li>
           Clicking the button below will officially start a group order and

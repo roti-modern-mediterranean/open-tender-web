@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectOrder } from '@open-tender/redux'
+import { selectOrder, selectGroupOrder } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
 import { openModal } from '../../slices'
@@ -14,8 +14,10 @@ const ButtonGroupOrder = ({
 }) => {
   const dispatch = useDispatch()
   const { revenueCenter } = useSelector(selectOrder)
+  const { isCartOwner, cartGuestId } = useSelector(selectGroupOrder)
   const hasGroupOrdering =
     revenueCenter && revenueCenter.settings.group_ordering_allowed
+  classes = isCartOwner ? 'ot-btn--highlight ot-btn--header' : classes
 
   const onClick = (evt) => {
     evt.preventDefault()
@@ -23,7 +25,7 @@ const ButtonGroupOrder = ({
     evt.target.blur()
   }
 
-  return hasGroupOrdering ? (
+  return hasGroupOrdering && !cartGuestId ? (
     <Button
       text={text}
       ariaLabel="Start A Group Order"

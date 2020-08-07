@@ -71,7 +71,7 @@ const classesMap = {
   cartErrors: 'modal--big modal--cart-errors',
   cartCounts: 'modal--big modal--cart-errors',
   working: 'modal--working',
-  groupOrder: 'modal--big modal--wide',
+  groupOrder: 'modal--big modal--guest',
 }
 
 const Modal = () => {

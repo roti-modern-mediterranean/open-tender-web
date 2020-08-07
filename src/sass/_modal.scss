@@ -121,6 +121,31 @@
   }
 }
 
+.modal--guest {
+  .modal {
+    width: 90%;
+    max-width: 56rem;
+  }
+
+  form {
+    margin: 2rem 0 0;
+
+    .form__input__wrapper {
+      .label {
+        width: auto;
+        flex-grow: 1;
+      }
+
+      .input {
+        flex-grow: 0;
+        input {
+          width: 12rem;
+        }
+      }
+    }
+  }
+}
+
 .modal--item {
   // align-items: flex-start;
   .modal {

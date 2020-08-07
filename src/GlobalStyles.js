@@ -237,6 +237,7 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .ot-btn-link {
+    display: inline;
     font-size: inherit;
     color: ${theme.links.primary.color};
     &:hover,

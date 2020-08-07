@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   selectOrder,
+  selectGroupOrder,
   startGroupOrder,
   // updateGroupOrder,
 } from '@open-tender/redux'
 import { makeGroupOrderTime } from '@open-tender/js'
-import { Button } from '@open-tender/components'
+import { Button, Input } from '@open-tender/components'
 
 import { openModal, closeModal } from '../slices'
 import GroupOrderSteps from './GroupOrderSteps'
@@ -17,8 +18,12 @@ const formatOrderTime = (s) =>
 
 const GroupOrderStart = () => {
   const [orderTime, setOrderTime] = useState(null)
+  const [spendingLimit, setSpendingLimit] = useState(null)
+  // const [error, setError] = useState(null)
   const dispatch = useDispatch()
   const { revenueCenter, serviceType, requestedAt } = useSelector(selectOrder)
+  const { loading } = useSelector(selectGroupOrder)
+  const isLoading = loading === 'pending'
 
   useEffect(() => {
     const groupOrderTime = makeGroupOrderTime(
@@ -42,7 +47,10 @@ const GroupOrderStart = () => {
     evt.preventDefault()
     // const { firstIso } = orderTime
     // dispatch(updateGroupOrder({ firstIso }))
-    dispatch(startGroupOrder())
+    const limit = isNaN(spendingLimit)
+      ? null
+      : parseFloat(spendingLimit).toFixed(2)
+    dispatch(startGroupOrder(limit))
     evt.target.blur()
   }
 
@@ -50,6 +58,11 @@ const GroupOrderStart = () => {
     evt.preventDefault()
     dispatch(closeModal())
     evt.target.blur()
+  }
+
+  const handleSpendingLimit = (evt) => {
+    const { value } = evt.target
+    setSpendingLimit(value ? Math.abs(value) : null)
   }
 
   return (
@@ -63,45 +76,55 @@ const GroupOrderStart = () => {
         </p>
       </div>
       <div className="modal__body -message">
-        {orderTime && (
-          <div className="modal__body__section ot-line-height">
-            <p className="ot-color-headings ot-bold">
-              {orderTime.isAdjusted
-                ? 'The first available group order time is'
-                : 'Your currently selected group order time is'}{' '}
-              {formatOrderTime(orderTime.dateStr)}, which will result in a{' '}
-              <span className="ot-color-alert">
-                cutoff time of {formatOrderTime(orderTime.cutoffDateStr)}
-              </span>{' '}
-              (this is the time by which all orders must be submitted).{' '}
-              {/* {orderTime.isAdjusted && (
+        <div className="modal__body__section ot-line-height">
+          {orderTime && (
+            <>
+              <p className="ot-color-headings ot-bold">
+                {orderTime.isAdjusted
+                  ? 'The first available order time is'
+                  : 'Your currently selected order time is'}{' '}
+                {formatOrderTime(orderTime.dateStr)}, which means that{' '}
                 <span className="ot-color-alert">
-                  We'd strongly suggest you choose a later time so your friends
-                  have more time to place their orders.
+                  all orders must be submitted by{' '}
+                  {formatOrderTime(orderTime.cutoffDateStr)}
                 </span>
-              )} */}
-            </p>
-            <p>
-              <Button
-                text="Click here if you want to choose a different time"
-                classes="ot-btn-link"
-                onClick={adjust}
-              />{' '}
-              or move on to the steps below.
-            </p>
+                .
+              </p>
+              <p>
+                <Button
+                  text="Click here to choose a different time"
+                  classes="ot-btn-link"
+                  onClick={adjust}
+                />{' '}
+                or set a spending limit below.
+              </p>
+              <form className="form" noValidate>
+                <div className="form__inputs">
+                  <Input
+                    label="Spending Limit (optional)"
+                    name="spending_limit"
+                    type="number"
+                    value={spendingLimit || ''}
+                    onChange={handleSpendingLimit}
+                    error={null}
+                  />
+                </div>
+              </form>
+            </>
+          )}
+          <div className="ot-font-size-small">
+            <GroupOrderSteps />
           </div>
-        )}
-        <div className="modal__body__section ot-font-size-small ot-line-height">
-          <GroupOrderSteps />
         </div>
       </div>
       <div className="modal__footer">
         <div className="modal__footer__buttons">
           <Button
-            text="Start a Group Order"
+            text={isLoading ? 'Starting Group Order...' : 'Start a Group Order'}
             classes="ot-btn ot-btn--highlight"
             icon={iconMap['Users']}
             onClick={start}
+            disabled={isLoading}
           />
           <Button text="Nevermind" classes="ot-btn" onClick={cancel} />
         </div>
