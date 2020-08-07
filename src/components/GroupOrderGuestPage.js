@@ -1,20 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { isBrowser } from 'react-device-detect'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { isoToDate, makeReadableDateStrFromIso } from '@open-tender/js'
 import {
   fetchGroupOrder,
   selectGroupOrder,
   resetGroupOrder,
-  // selectRevenueCenter,
+  selectRevenueCenter,
   selectTimezone,
+  joinGroupOrder,
 } from '@open-tender/redux'
+import { CartGuestForm } from '@open-tender/components'
 
 import { selectConfig } from '../slices'
 import PageTitle from './PageTitle'
 import Background from './Background'
 import { Loader } from 'react-feather'
+import GroupOrderInfo from './GroupOrderInfo'
+import GroupOrderError from './GroupOrderError'
 
 const makeTitle = (
   isLoading,
@@ -50,14 +54,17 @@ const makeTitle = (
 
 const GroupOrderGuestPage = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { token } = useParams()
   const config = useSelector(selectConfig)
   const groupOrder = useSelector(selectGroupOrder)
-  // const revenueCenter = useSelector(selectRevenueCenter)
+  const revenueCenter = useSelector(selectRevenueCenter)
+  const { slug } = revenueCenter || {}
   const tz = useSelector(selectTimezone)
   const {
     cartOwnerName,
-    cartGuestId,
+    cartGuest,
+    cartId,
     closed,
     loading,
     error,
@@ -72,9 +79,10 @@ const GroupOrderGuestPage = () => {
     cutoffAt && tz ? makeReadableDateStrFromIso(cutoffAt, tz) : null
   const orderTime =
     requestedAt && tz ? makeReadableDateStrFromIso(requestedAt, tz) : null
-  const cutoffDate = isoToDate(cutoffAt, tz)
-  const pastCutoff = new Date() > cutoffDate
+  const cutoffDate = cutoffAt ? isoToDate(cutoffAt, tz) : null
+  const pastCutoff = cutoffDate ? new Date() > cutoffDate : false
   const spotsRemaining = guestLimit ? guestLimit - guestCount : null
+  const atCapacity = spotsRemaining !== null && spotsRemaining <= 0
   const { title, subtitle } = makeTitle(
     isLoading,
     error,
@@ -84,13 +92,22 @@ const GroupOrderGuestPage = () => {
     cartOwnerName
   )
 
+  const joinCart = useCallback(
+    (data, callback) => dispatch(joinGroupOrder(data, callback)),
+    [dispatch]
+  )
+
   useEffect(() => {
     window.scroll(0, 0)
-    dispatch(fetchGroupOrder(token))
-    return () => {
-      if (!cartGuestId) dispatch(resetGroupOrder())
+    if (cartGuest) {
+      if (slug) history.push(`/menu/${slug}`)
+    } else {
+      dispatch(fetchGroupOrder(token))
     }
-  }, [dispatch, token, cartGuestId])
+    return () => {
+      if (!cartGuest) dispatch(resetGroupOrder())
+    }
+  }, [dispatch, history, token, cartGuest, slug])
 
   return (
     <>
@@ -107,39 +124,28 @@ const GroupOrderGuestPage = () => {
             <div className="content__body ot-line-height slide-up">
               <div className="container">
                 <div className="content__text">
-                  {error ? (
-                    <p>
-                      Please double check the link you were provided to make
-                      sure it's accurate.
-                    </p>
-                  ) : closed || pastCutoff ? (
-                    <p>
-                      Please get in touch with {cartOwnerName} to see if it's
-                      not too late to reopen it.
-                    </p>
-                  ) : (
+                  <GroupOrderError
+                    cartId={cartId}
+                    error={error}
+                    closed={closed}
+                    pastCutoff={pastCutoff}
+                    atCapacity={atCapacity}
+                    cartOwnerName={cartOwnerName}
+                  />
+                  {cartId && (
                     <>
-                      <p>
-                        This order is current scheduled for {orderTime}, and{' '}
-                        <span className="">
-                          orders must be submitted by {cutoffTime}
-                        </span>
-                        .
-                      </p>
-                      {spendingLimit && (
-                        <p>
-                          There is a spending limit of ${spendingLimit} for this
-                          order.
-                        </p>
-                      )}
-                      <p>
-                        {spotsRemaining && (
-                          <span className="">
-                            Only {spotsRemaining} spots left!{' '}
-                          </span>
-                        )}{' '}
-                        Please enter a first and last name to get started.
-                      </p>
+                      <GroupOrderInfo
+                        orderTime={orderTime}
+                        cutoffTime={cutoffTime}
+                        spendingLimit={spendingLimit}
+                        spotsRemaining={spotsRemaining}
+                      />
+                      <CartGuestForm
+                        cartId={cartId}
+                        joinCart={joinCart}
+                        loading={loading}
+                        error={error}
+                      />
                     </>
                   )}
                 </div>
