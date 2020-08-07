@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { isBrowser } from 'react-device-detect'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { makeReadableDateStrFromIso } from '@open-tender/js'
+import { isoToDate, makeReadableDateStrFromIso } from '@open-tender/js'
 import {
   fetchGroupOrder,
   selectGroupOrder,
@@ -16,7 +16,14 @@ import PageTitle from './PageTitle'
 import Background from './Background'
 import { Loader } from 'react-feather'
 
-const makeTitle = (isLoading, error, closed, cartOwnerName) => {
+const makeTitle = (
+  isLoading,
+  error,
+  closed,
+  pastCutoff,
+  spotsRemaining,
+  cartOwnerName
+) => {
   if (isLoading) return {}
   if (error) {
     return {
@@ -28,10 +35,15 @@ const makeTitle = (isLoading, error, closed, cartOwnerName) => {
       title: 'Group Order Closed',
       subtitle: 'Sorry, but this group order has already been closed',
     }
+  } else if (pastCutoff) {
+    return {
+      title: 'Order cutoff time has passed',
+      subtitle: 'Sorry, but this group order is no longer open to new guests',
+    }
   } else {
     return {
       title: `Welcome to ${cartOwnerName}'s group order!`,
-      subtitle: 'Please enter a first and last name to get started',
+      subtitle: null,
     }
   }
 }
@@ -51,13 +63,26 @@ const GroupOrderGuestPage = () => {
     error,
     cutoffAt,
     requestedAt,
+    spendingLimit,
+    guestLimit,
+    guestCount,
   } = groupOrder
   const isLoading = loading === 'pending'
-  const { title, subtitle } = makeTitle(isLoading, error, closed, cartOwnerName)
   const cutoffTime =
     cutoffAt && tz ? makeReadableDateStrFromIso(cutoffAt, tz) : null
   const orderTime =
     requestedAt && tz ? makeReadableDateStrFromIso(requestedAt, tz) : null
+  const cutoffDate = isoToDate(cutoffAt, tz)
+  const pastCutoff = new Date() > cutoffDate
+  const spotsRemaining = guestLimit ? guestLimit - guestCount : null
+  const { title, subtitle } = makeTitle(
+    isLoading,
+    error,
+    closed,
+    pastCutoff,
+    spotsRemaining,
+    cartOwnerName
+  )
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -87,16 +112,34 @@ const GroupOrderGuestPage = () => {
                       Please double check the link you were provided to make
                       sure it's accurate.
                     </p>
-                  ) : closed ? (
+                  ) : closed || pastCutoff ? (
                     <p>
                       Please get in touch with {cartOwnerName} to see if it's
                       not too late to reopen it.
                     </p>
                   ) : (
                     <>
-                      <p>{orderTime}</p>
-                      <p>{cutoffTime}</p>
-                      <p>Cart guest form will go here...</p>
+                      <p>
+                        This order is current scheduled for {orderTime}, and{' '}
+                        <span className="">
+                          orders must be submitted by {cutoffTime}
+                        </span>
+                        .
+                      </p>
+                      {spendingLimit && (
+                        <p>
+                          There is a spending limit of ${spendingLimit} for this
+                          order.
+                        </p>
+                      )}
+                      <p>
+                        {spotsRemaining && (
+                          <span className="">
+                            Only {spotsRemaining} spots left!{' '}
+                          </span>
+                        )}{' '}
+                        Please enter a first and last name to get started.
+                      </p>
                     </>
                   )}
                 </div>

@@ -4,7 +4,6 @@ import {
   selectOrder,
   selectGroupOrder,
   startGroupOrder,
-  // updateGroupOrder,
 } from '@open-tender/redux'
 import { makeGroupOrderTime } from '@open-tender/js'
 import { Button, Input } from '@open-tender/components'
@@ -45,8 +44,6 @@ const GroupOrderStart = () => {
 
   const start = (evt) => {
     evt.preventDefault()
-    // const { firstIso } = orderTime
-    // dispatch(updateGroupOrder({ firstIso }))
     const limit = isNaN(spendingLimit)
       ? null
       : parseFloat(spendingLimit).toFixed(2)
@@ -79,39 +76,46 @@ const GroupOrderStart = () => {
         <div className="modal__body__section ot-line-height">
           {orderTime && (
             <>
-              <p className="ot-color-headings ot-bold">
-                {orderTime.isAdjusted
-                  ? 'The first available order time is'
-                  : 'Your currently selected order time is'}{' '}
-                {formatOrderTime(orderTime.dateStr)}, which means that{' '}
-                <span className="ot-color-alert">
-                  all orders must be submitted by{' '}
-                  {formatOrderTime(orderTime.cutoffDateStr)}
-                </span>
-                .
-              </p>
-              <p>
-                <Button
-                  text="Click here to choose a different time"
-                  classes="ot-btn-link"
-                  onClick={adjust}
-                />{' '}
-                or set a spending limit below.
-              </p>
-              <form className="form" noValidate>
-                <div className="form__inputs">
-                  <Input
-                    label="Spending Limit (optional)"
-                    name="spending_limit"
-                    type="number"
-                    value={spendingLimit || ''}
-                    onChange={handleSpendingLimit}
-                    error={null}
-                  />
-                </div>
-              </form>
+              {orderTime.prepTime ? (
+                <p className="ot-color-headings ot-bold">
+                  The current wait time for group orders is {orderTime.prepTime}{' '}
+                  minutes from the time the order is submitted.
+                </p>
+              ) : (
+                <p className="ot-color-headings ot-bold">
+                  {orderTime.isAdjusted
+                    ? 'The first available group order time is'
+                    : 'Your currently selected group order time is'}{' '}
+                  {formatOrderTime(orderTime.dateStr)}, which means that{' '}
+                  <span className="ot-color-alert">
+                    all orders must be submitted by{' '}
+                    {formatOrderTime(orderTime.cutoffDateStr)}
+                  </span>
+                  .
+                </p>
+              )}
             </>
           )}
+          <p>
+            <Button
+              text="Click here to choose a different time"
+              classes="ot-btn-link"
+              onClick={adjust}
+            />{' '}
+            or set a spending limit below.
+          </p>
+          <form className="form" noValidate>
+            <div className="form__inputs">
+              <Input
+                label="Spending Limit (optional)"
+                name="spending_limit"
+                type="number"
+                value={spendingLimit || ''}
+                onChange={handleSpendingLimit}
+                error={null}
+              />
+            </div>
+          </form>
           <div className="ot-font-size-small">
             <GroupOrderSteps />
           </div>

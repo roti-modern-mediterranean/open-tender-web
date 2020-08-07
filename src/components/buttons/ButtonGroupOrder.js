@@ -13,10 +13,10 @@ const ButtonGroupOrder = ({
   icon = iconMap['Users'],
 }) => {
   const dispatch = useDispatch()
-  const { revenueCenter } = useSelector(selectOrder)
   const { isCartOwner, cartGuestId } = useSelector(selectGroupOrder)
+  const { revenueCenter } = useSelector(selectOrder)
   const hasGroupOrdering =
-    revenueCenter && revenueCenter.settings.group_ordering_allowed
+    revenueCenter && revenueCenter.settings.group_ordering
   classes = isCartOwner ? 'ot-btn--highlight ot-btn--header' : classes
 
   const onClick = (evt) => {
