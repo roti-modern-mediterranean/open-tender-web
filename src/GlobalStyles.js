@@ -178,6 +178,16 @@ const makeGlobalStyles = (theme) => css`
     background-color: ${theme.bgColors.dark};
   }
 
+  .ot-alert {
+    color: ${theme.colors.light};
+    background-color: ${theme.colors.alert};
+    border-color: ${theme.colors.alert};
+  }
+  .ot-error {
+    color: ${theme.colors.light};
+    background-color: ${theme.colors.error};
+    border-color: ${theme.colors.error};
+  }
   .ot-warning {
     color: ${theme.colors.light};
     background-color: ${theme.colors.error};

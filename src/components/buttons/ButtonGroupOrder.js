@@ -13,7 +13,7 @@ const ButtonGroupOrder = ({
   icon = iconMap['Users'],
 }) => {
   const dispatch = useDispatch()
-  const { isCartOwner, cartGuestId } = useSelector(selectGroupOrder)
+  const { isCartOwner, cartGuest } = useSelector(selectGroupOrder)
   const { revenueCenter } = useSelector(selectOrder)
   const hasGroupOrdering =
     revenueCenter && revenueCenter.settings.group_ordering
@@ -25,7 +25,7 @@ const ButtonGroupOrder = ({
     evt.target.blur()
   }
 
-  return hasGroupOrdering && !cartGuestId ? (
+  return hasGroupOrdering && !cartGuest ? (
     <Button
       text={text}
       ariaLabel="Start A Group Order"

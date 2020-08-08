@@ -6,7 +6,7 @@ import { isoToDate, makeReadableDateStrFromIso } from '@open-tender/js'
 import {
   fetchGroupOrder,
   selectGroupOrder,
-  resetGroupOrder,
+  // resetGroupOrder,
   selectRevenueCenter,
   selectTimezone,
   joinGroupOrder,
@@ -16,18 +16,11 @@ import { CartGuestForm } from '@open-tender/components'
 import { selectConfig } from '../slices'
 import PageTitle from './PageTitle'
 import Background from './Background'
-import { Loader } from 'react-feather'
+import Loader from './Loader'
 import GroupOrderInfo from './GroupOrderInfo'
 import GroupOrderError from './GroupOrderError'
 
-const makeTitle = (
-  isLoading,
-  error,
-  closed,
-  pastCutoff,
-  spotsRemaining,
-  cartOwnerName
-) => {
+const makeTitle = (isLoading, error, closed, pastCutoff, cartOwnerName) => {
   if (isLoading) return {}
   if (error) {
     return {
@@ -75,10 +68,11 @@ const GroupOrderGuestPage = () => {
     guestCount,
   } = groupOrder
   const isLoading = loading === 'pending'
-  const cutoffTime =
-    cutoffAt && tz ? makeReadableDateStrFromIso(cutoffAt, tz) : null
+  const { cartGuestId } = cartGuest || {}
   const orderTime =
-    requestedAt && tz ? makeReadableDateStrFromIso(requestedAt, tz) : null
+    requestedAt && tz ? makeReadableDateStrFromIso(requestedAt, tz, true) : null
+  const cutoffTime =
+    cutoffAt && tz ? makeReadableDateStrFromIso(cutoffAt, tz, true) : null
   const cutoffDate = cutoffAt ? isoToDate(cutoffAt, tz) : null
   const pastCutoff = cutoffDate ? new Date() > cutoffDate : false
   const spotsRemaining = guestLimit ? guestLimit - guestCount : null
@@ -88,9 +82,9 @@ const GroupOrderGuestPage = () => {
     error,
     closed,
     pastCutoff,
-    spotsRemaining,
     cartOwnerName
   )
+  const showForm = cartId && !closed && !pastCutoff && !atCapacity
 
   const joinCart = useCallback(
     (data, callback) => dispatch(joinGroupOrder(data, callback)),
@@ -99,15 +93,18 @@ const GroupOrderGuestPage = () => {
 
   useEffect(() => {
     window.scroll(0, 0)
-    if (cartGuest) {
+    // return () => {
+    //   if (!cartGuestId) dispatch(resetGroupOrder())
+    // }
+  }, [dispatch, cartGuestId])
+
+  useEffect(() => {
+    if (cartGuestId) {
       if (slug) history.push(`/menu/${slug}`)
     } else {
       dispatch(fetchGroupOrder(token))
     }
-    return () => {
-      if (!cartGuest) dispatch(resetGroupOrder())
-    }
-  }, [dispatch, history, token, cartGuest, slug])
+  }, [dispatch, history, token, cartGuestId, slug])
 
   return (
     <>
@@ -132,7 +129,7 @@ const GroupOrderGuestPage = () => {
                     atCapacity={atCapacity}
                     cartOwnerName={cartOwnerName}
                   />
-                  {cartId && (
+                  {showForm && (
                     <>
                       <GroupOrderInfo
                         orderTime={orderTime}

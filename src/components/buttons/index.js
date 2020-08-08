@@ -11,6 +11,8 @@ import ButtonRevenueCenter from './ButtonRevenueCenter'
 import ButtonServiceType from './ButtonServiceType'
 import ButtonSignUp from './ButtonSignUp'
 import ButtonStartOver from './ButtonStartOver'
+import ButtonLeaveGroup from './ButtonLeaveGroup'
+import ButtonGroupGuest from './ButtonGroupGuest'
 
 export {
   ButtonAccount,
@@ -26,4 +28,6 @@ export {
   ButtonServiceType,
   ButtonSignUp,
   ButtonStartOver,
+  ButtonLeaveGroup,
+  ButtonGroupGuest,
 }

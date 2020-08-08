@@ -66,6 +66,22 @@
       &:first-child {
         margin: 0;
       }
+      &.ot-btn--highlight:last-child,
+      &.ot-btn--cancel:last-child {
+        margin-right: 1.1rem;
+      }
+    }
+  }
+
+  &__message {
+    position: relative;
+    top: -0.3rem;
+    display: inline-block;
+    margin: -0.2rem 0 0;
+    p {
+      line-height: 1;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
     }
   }
 }

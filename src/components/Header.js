@@ -7,6 +7,7 @@ import {
   selectAutoSelect,
   selectCustomer,
   selectRevenueCenterCount,
+  selectGroupOrder,
 } from '@open-tender/redux'
 
 import HeaderLogo from './HeaderLogo'
@@ -23,6 +24,8 @@ import {
   ButtonSignUp,
   ButtonStartOver,
   ButtonLocations,
+  ButtonLeaveGroup,
+  ButtonGroupGuest,
 } from './buttons'
 
 const accountSubPages = ['items', 'orders', 'favorites', 'addresses']
@@ -31,6 +34,7 @@ const Header = () => {
   const autoSelect = useSelector(selectAutoSelect)
   const count = useSelector(selectRevenueCenterCount)
   const { profile } = useSelector(selectCustomer)
+  const { cartGuest } = useSelector(selectGroupOrder)
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
   const isHome = pathname === '/'
@@ -40,9 +44,7 @@ const Header = () => {
   const isAccountSubpage = contains(pathname, accountSubPages)
   const showSignUp = true
   const className = isMobile ? `header ot-dark` : `header`
-  const btnClass = isMobile
-    ? 'ot-btn--mobile'
-    : 'ot-btn--header ot-btn--secondary'
+  const btnClass = isMobile ? 'ot-btn--mobile' : 'ot-btn--header'
   const btnCancelClass = isMobile
     ? 'ot-btn--mobile ot-btn--cancel'
     : 'ot-btn--header ot-btn--cancel'
@@ -56,6 +58,8 @@ const Header = () => {
               <div className="header__logo">
                 <HeaderLogo />
               </div>
+            ) : cartGuest ? (
+              <ButtonLeaveGroup classes={btnClass} />
             ) : isMenu && !autoSelect && count !== 1 ? (
               <ButtonLocations classes={btnClass} />
             ) : isCheckout ? (
@@ -67,17 +71,24 @@ const Header = () => {
             )}
           </div>
           <div className="header__actions">
-            {!isGroupOrder && <ButtonAccount classes={btnClass} />}
+            {!isGroupOrder && !cartGuest && (
+              <ButtonAccount classes={btnClass} />
+            )}
             {isHome && !profile && showSignUp && (
               <ButtonSignUp classes={btnClass} />
             )}
-            {!isCheckout && <ButtonRevenueCenter classes={btnClass} />}
-            {!isCheckout && <ButtonServiceType classes={btnClass} />}
-            {!isCheckout && <ButtonRequestedAt classes={btnClass} />}
+            {!isCheckout && !cartGuest && (
+              <>
+                <ButtonRevenueCenter classes={btnClass} />
+                <ButtonServiceType classes={btnClass} />
+                <ButtonRequestedAt classes={btnClass} />
+              </>
+            )}
             {isMenu && (
               <>
                 <ButtonAllergens classes={btnClass} />
                 <ButtonGroupOrder classes={btnClass} />
+                <ButtonGroupGuest />
               </>
             )}
             <ButtonCancelEdit classes={btnCancelClass} />
