@@ -34,13 +34,14 @@ const Header = () => {
   const autoSelect = useSelector(selectAutoSelect)
   const count = useSelector(selectRevenueCenterCount)
   const { profile } = useSelector(selectCustomer)
-  const { cartGuest } = useSelector(selectGroupOrder)
+  const { cartGuest, closed } = useSelector(selectGroupOrder)
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
   const isHome = pathname === '/'
   const isRevenueCenterPage = pathname.includes('locations/')
   const isMenu = pathname.includes('menu')
   const isGroupOrder = pathname.includes('join')
+  const isReview = pathname.includes('review')
   const isAccountSubpage = contains(pathname, accountSubPages)
   const showSignUp = true
   const className = isMobile ? `header ot-dark` : `header`
@@ -58,11 +59,11 @@ const Header = () => {
               <div className="header__logo">
                 <HeaderLogo />
               </div>
-            ) : cartGuest ? (
+            ) : isMenu && cartGuest ? (
               <ButtonLeaveGroup classes={btnClass} />
             ) : isMenu && !autoSelect && count !== 1 ? (
               <ButtonLocations classes={btnClass} />
-            ) : isCheckout ? (
+            ) : isCheckout || (isReview && !closed) ? (
               <ButtonMenu classes={btnClass} />
             ) : isAccountSubpage ? (
               <ButtonBackToAccount classes={btnClass} />

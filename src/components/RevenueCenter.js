@@ -1,5 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useSelector } from 'react-redux'
+import { selectGroupOrder } from '@open-tender/redux'
 import { stripTags } from '@open-tender/js'
 
 import RevenueCenterOrder from './RevenueCenterOrder'
@@ -13,6 +15,7 @@ const RevenueCenter = ({
   isMenu,
   isLanding,
 }) => {
+  const { cartGuest } = useSelector(selectGroupOrder)
   const { address, images, hours, is_outpost } = revenueCenter
   const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const largeImg = images.find((i) => i.type === 'SMALL_IMAGE')
@@ -85,11 +88,13 @@ const RevenueCenter = ({
               />
             )}
           </div>
-          <RevenueCenterOrder
-            revenueCenter={revenueCenter}
-            isMenu={isMenu}
-            isLanding={isLanding}
-          />
+          {!cartGuest && (
+            <RevenueCenterOrder
+              revenueCenter={revenueCenter}
+              isMenu={isMenu}
+              isLanding={isLanding}
+            />
+          )}
         </div>
       </div>
     </div>

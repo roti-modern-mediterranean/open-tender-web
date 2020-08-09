@@ -18,6 +18,7 @@ import ResetPasswordPage from './ResetPasswordPage'
 import NotFoundPage from './NotFoundPage'
 import RefundPolicyPage from './RefundPolicyPage'
 import GroupOrderGuestPage from './GroupOrderGuestPage'
+import GroupOrderReviewPage from './GroupOrderReviewPage'
 
 const Routes = () => {
   return (
@@ -45,6 +46,9 @@ const Routes = () => {
       </Route>
       <Route path="/join/:token">
         <GroupOrderGuestPage />
+      </Route>
+      <Route exact path="/review">
+        <GroupOrderReviewPage />
       </Route>
       <Route exact path="/checkout">
         <CheckoutPage />

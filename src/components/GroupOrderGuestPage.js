@@ -62,8 +62,6 @@ const GroupOrderGuestPage = () => {
     loading,
     error,
     cutoffAt,
-    requestedAt,
-    spendingLimit,
     guestLimit,
     guestCount,
   } = groupOrder
@@ -72,10 +70,7 @@ const GroupOrderGuestPage = () => {
     ? `${cartOwner.first_name} ${cartOwner.last_name}`
     : ''
   const { cartGuestId } = cartGuest || {}
-  const orderTime =
-    requestedAt && tz ? makeReadableDateStrFromIso(requestedAt, tz, true) : null
-  const cutoffTime =
-    cutoffAt && tz ? makeReadableDateStrFromIso(cutoffAt, tz, true) : null
+
   const cutoffDate = cutoffAt ? isoToDate(cutoffAt, tz) : null
   const pastCutoff = cutoffDate ? new Date() > cutoffDate : false
   const spotsRemaining = guestLimit ? guestLimit - guestCount : null
@@ -134,12 +129,7 @@ const GroupOrderGuestPage = () => {
                   />
                   {showForm && (
                     <>
-                      <GroupOrderInfo
-                        orderTime={orderTime}
-                        cutoffTime={cutoffTime}
-                        spendingLimit={spendingLimit}
-                        spotsRemaining={spotsRemaining}
-                      />
+                      <GroupOrderInfo isJoin={true} />
                       <CartGuestForm
                         cartId={cartId}
                         joinCart={joinCart}

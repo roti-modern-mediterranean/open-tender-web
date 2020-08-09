@@ -3,11 +3,7 @@ import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { makeRevenueCenterMsg } from '@open-tender/js'
-import {
-  selectOrder,
-  selectAutoSelect,
-  selectGroupOrder,
-} from '@open-tender/redux'
+import { selectOrder, selectAutoSelect } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
 import { selectConfig } from '../slices'
@@ -17,7 +13,7 @@ import iconMap from './iconMap'
 export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
   const history = useHistory()
   const { serviceType } = useSelector(selectOrder)
-  const { cartGuest } = useSelector(selectGroupOrder)
+
   const autoSelect = useSelector(selectAutoSelect)
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
@@ -37,7 +33,7 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
         </div>
       )}
       {isMenu ? (
-        !autoSelect && !cartGuest ? (
+        !autoSelect ? (
           <div className="rc__order__buttons">
             <Button
               text="Change Location"

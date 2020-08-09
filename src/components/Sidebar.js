@@ -6,6 +6,7 @@ import {
   selectCartTotal,
   selectMenuSlug,
   selectCanOrder,
+  selectGroupOrder,
   selectOrder,
   selectOrderLimits,
 } from '@open-tender/redux'
@@ -23,21 +24,37 @@ const Sidebar = () => {
   const { pathname } = useLocation()
   const { isOpen } = useSelector(selectSidebar)
   const { orderId } = useSelector(selectOrder)
+  const { cartGuest, isCartOwner, spendingLimit } = useSelector(
+    selectGroupOrder
+  )
   const cartCount = useSelector(selectCartQuantity)
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
   const canOrder = useSelector(selectCanOrder)
-  const { orderMinimum } = useSelector(selectOrderLimits)
+  const { orderMinimum, orderMaximum } = useSelector(selectOrderLimits)
   const classes = `sidebar ot-bg-color-primary ${isOpen ? 'is-open' : ''}`
   const isMenu = pathname.includes('menu')
   const isCheckout = pathname.includes('checkout')
+  const isReview = pathname.includes('review')
   const belowMinimum = orderMinimum && cartTotal < orderMinimum
-  const canCheckout = canOrder && !belowMinimum && cartCount !== 0
+  const aboveMaximum = orderMaximum && cartTotal > orderMaximum
+  const canCheckout =
+    canOrder && !belowMinimum && !aboveMaximum && cartCount !== 0
+  const showReview = cartGuest || (isMenu && isCartOwner)
+  const orderMaxType =
+    cartGuest && spendingLimit ? 'spending limit' : 'order maximum'
 
   const handleBack = (evt) => {
     evt.preventDefault()
     dispatch(toggleSidebar())
     if (!isMenu) history.push(menuSlug)
+    evt.target.blur()
+  }
+
+  const handleReview = (evt) => {
+    evt.preventDefault()
+    dispatch(toggleSidebar())
+    if (!isReview) history.push(`/review`)
     evt.target.blur()
   }
 
@@ -88,6 +105,15 @@ const Sidebar = () => {
                 </p>
               </div>
             )}
+            {aboveMaximum && (
+              <div className="sidebar__header__message">
+                <p className="ot-font-size-small ot-color-alert">
+                  Your cart total is above the {orderMaxType} of $
+                  {displayPrice(orderMaximum)}. Please edit or remove one or
+                  more items before submitting your order.
+                </p>
+              </div>
+            )}
           </div>
           <div className="sidebar__content">
             <Cart />
@@ -104,13 +130,23 @@ const Sidebar = () => {
                 </Button>
               </div>
               <div className="sidebar__checkout">
-                <Button
-                  onClick={handleCheckout}
-                  classes="ot-btn ot-btn--big ot-btn--highlight"
-                  disabled={!canCheckout}
-                >
-                  {isCheckout ? 'Checkout' : 'Checkout'}
-                </Button>
+                {showReview ? (
+                  <Button
+                    onClick={handleReview}
+                    classes="ot-btn ot-btn--big ot-btn--highlight"
+                    disabled={!canCheckout}
+                  >
+                    {isReview ? 'Close' : 'Submit Order'}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleCheckout}
+                    classes="ot-btn ot-btn--big ot-btn--highlight"
+                    disabled={!canCheckout}
+                  >
+                    {isCheckout ? 'Checkout' : 'Checkout'}
+                  </Button>
+                )}
               </div>
             </div>
             <div className="sidebar__footer__cancel">
