@@ -55,7 +55,7 @@ const GroupOrderGuestPage = () => {
   const { slug } = revenueCenter || {}
   const tz = useSelector(selectTimezone)
   const {
-    cartOwnerName,
+    cartOwner,
     cartGuest,
     cartId,
     closed,
@@ -68,6 +68,9 @@ const GroupOrderGuestPage = () => {
     guestCount,
   } = groupOrder
   const isLoading = loading === 'pending'
+  const cartOwnerName = cartOwner
+    ? `${cartOwner.first_name} ${cartOwner.last_name}`
+    : ''
   const { cartGuestId } = cartGuest || {}
   const orderTime =
     requestedAt && tz ? makeReadableDateStrFromIso(requestedAt, tz, true) : null
