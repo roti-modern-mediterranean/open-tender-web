@@ -77,37 +77,45 @@ const GroupOrderStart = () => {
           {orderTime && (
             <>
               {orderTime.prepTime ? (
-                <p className="ot-color-headings ot-bold">
-                  The current wait time for group orders is {orderTime.prepTime}{' '}
-                  minutes from the time the order is submitted.
-                </p>
+                <>
+                  <p className="ot-color-headings ot-bold">
+                    The current wait time for group orders is{' '}
+                    {orderTime.prepTime} minutes from the time the order is
+                    submitted.{' '}
+                    <Button
+                      text="Choose a specific order time."
+                      classes="ot-btn-link"
+                      onClick={adjust}
+                    />
+                  </p>
+                </>
               ) : (
-                <p className="ot-color-headings ot-bold">
-                  {orderTime.isAdjusted
-                    ? 'The first available group order time is'
-                    : 'Your currently selected group order time is'}{' '}
-                  {formatOrderTime(orderTime.dateStr)}, which means that{' '}
-                  <span className="ot-color-alert">
-                    all orders must be submitted by{' '}
-                    {formatOrderTime(orderTime.cutoffDateStr)}
-                  </span>
-                  .
-                </p>
+                <>
+                  <p className="ot-color-headings ot-bold">
+                    {orderTime.isAdjusted
+                      ? 'The first available group order time is'
+                      : 'Your currently selected group order time is'}{' '}
+                    {formatOrderTime(orderTime.dateStr)}, which means that{' '}
+                    <span className="ot-color-alert">
+                      all orders must be submitted by{' '}
+                      {formatOrderTime(orderTime.cutoffDateStr)}
+                    </span>
+                    .{' '}
+                    <Button
+                      text="Choose a different time."
+                      classes="ot-btn-link"
+                      onClick={adjust}
+                    />
+                  </p>
+                </>
               )}
             </>
           )}
-          <p>
-            <Button
-              text="Click here to choose a different time"
-              classes="ot-btn-link"
-              onClick={adjust}
-            />{' '}
-            or set a spending limit below.
-          </p>
+
           <form className="form" noValidate>
             <div className="form__inputs">
               <Input
-                label="Spending Limit (optional)"
+                label="Set a spending Limit (optional)"
                 name="spending_limit"
                 type="number"
                 value={spendingLimit || ''}

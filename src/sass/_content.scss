@@ -23,7 +23,21 @@
   }
 
   &__body {
-    padding: 0 0 5rem;
+    padding: 0 0 4rem;
+  }
+
+  &__section {
+    margin: 0 0 4rem;
+    &:first-child {
+      margin-top: -2rem;
+    }
+    &:last-child {
+      margin: 0;
+    }
+
+    &__header {
+      margin: 0 0 1.5rem;
+    }
   }
 
   &__text {

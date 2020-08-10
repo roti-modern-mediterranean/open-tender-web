@@ -37,7 +37,11 @@ const ButtonGroupGuest = () => {
 
   const onClick = (evt) => {
     evt.preventDefault()
-    if (aboveLimit) {
+    if (cartTotal === 0) {
+      const msg = `Your cart is currently empty. Please add some items to your order.`
+      const current = messages.find((i) => i.message === msg)
+      if (!current) dispatch(addMessage(msg))
+    } else if (aboveLimit) {
       const msg = `Above spending limit of $${spendingLimit}`
       const current = messages.find((i) => i.message === msg)
       if (!current) dispatch(addMessage(msg))
@@ -54,7 +58,6 @@ const ButtonGroupGuest = () => {
       icon={iconMap['ShoppingBag']}
       classes={classes}
       onClick={onClick}
-      // disabled={aboveLimit}
     />
   ) : null
 }

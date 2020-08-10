@@ -27,9 +27,11 @@ const GroupOrderInfo = ({ isJoin }) => {
     <div className="join__info">
       <p>
         This order is current scheduled for {formatTime(orderTime)}, and{' '}
-        <span className="">
-          orders must be submitted by {formatTime(cutoffTime)}
-        </span>
+        {cutoffTime && (
+          <span className="">
+            orders must be submitted by {formatTime(cutoffTime)}
+          </span>
+        )}
         .
       </p>
       {spendingLimit && (

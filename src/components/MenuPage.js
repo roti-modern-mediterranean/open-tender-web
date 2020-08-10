@@ -4,11 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   selectRevenueCenter,
   selectMenuVars,
-  fetchRevenueCenter,
-  resetRevenueCenter,
-  fetchMenu,
+  selectGroupOrderClosed,
   selectMenu,
   selectSelectedAllergenNames,
+  resetRevenueCenter,
+  fetchRevenueCenter,
+  fetchMenu,
   fetchAllergens,
 } from '@open-tender/redux'
 
@@ -30,6 +31,7 @@ const MenuPage = () => {
     selectMenu
   )
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
+  const groupOrderClosed = useSelector(selectGroupOrderClosed)
   const isLoading = loading === 'pending'
 
   useEffect(() => {
@@ -39,12 +41,21 @@ const MenuPage = () => {
   useEffect(() => {
     if (!revenueCenterId) {
       return history.push('/locations')
+    } else if (groupOrderClosed) {
+      return history.push('/review')
     } else {
       dispatch(fetchRevenueCenter(revenueCenterId))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
       dispatch(fetchAllergens())
     }
-  }, [revenueCenterId, serviceType, requestedAt, dispatch, history])
+  }, [
+    revenueCenterId,
+    serviceType,
+    requestedAt,
+    dispatch,
+    history,
+    groupOrderClosed,
+  ])
 
   const changeRevenueCenter = (evt) => {
     evt.preventDefault()
