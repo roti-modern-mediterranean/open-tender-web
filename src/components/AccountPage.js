@@ -6,6 +6,8 @@ import { selectCustomer, fetchCustomer } from '@open-tender/redux'
 
 import { selectConfig, selectSettings } from '../slices'
 import StickyNav from './StickyNav'
+import Background from './Background'
+import PageTitle from './PageTitle'
 import AccountGreeting from './AccountGreeting'
 import AccountOrders from './AccountOrders'
 import AccountProfile from './AccountProfile'
@@ -16,12 +18,12 @@ import AccountCreditCards from './AccountCreditCards'
 import AccountItems from './AccountItems'
 import AccountFavorites from './AccountFavorites'
 import AccountHouseAccounts from './AccountHouseAccounts'
-import Background from './Background'
-import PageTitle from './PageTitle'
+import AccountGroupOrders from './AccountGroupOrders'
 
 const sections = {
   favorites: <AccountFavorites />,
   recentOrders: <AccountOrders />,
+  groupOrders: <AccountGroupOrders />,
   recentItems: <AccountItems />,
   profile: <AccountProfile />,
   allergens: <AccountAllergens />,
@@ -39,9 +41,9 @@ const AccountPage = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const { background, title, subtitle } = accountConfig
   const { accountSections } = useSelector(selectSettings)
-  const navItems = Object.values(accountSections).map(
-    (section) => accountConfig[section].title
-  )
+  const navItems = Object.values(accountSections)
+    .filter((i) => i !== 'groupOrders')
+    .map((i) => accountConfig[i].title)
   const { auth, profile } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
