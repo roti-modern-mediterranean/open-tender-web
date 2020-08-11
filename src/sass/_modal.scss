@@ -59,6 +59,14 @@
       // &:last-child {
       //   margin: 0;
       // }
+      p {
+        button {
+          margin: 0 1rem 0 0;
+          &:last-child {
+            margin: 0;
+          }
+        }
+      }
     }
 
     &.-message {

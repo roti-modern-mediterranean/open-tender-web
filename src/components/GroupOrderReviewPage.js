@@ -55,6 +55,7 @@ const GroupOrderReviewPage = () => {
     loading,
     error,
     cartId,
+    isCartOwner,
     cartOwner,
     cart: groupCart,
     cartGuest,
@@ -68,8 +69,14 @@ const GroupOrderReviewPage = () => {
 
   useEffect(() => {
     window.scroll(0, 0)
-    !cartId ? history.push(`/`) : dispatch(updateGroupOrder())
-  }, [cartId, history, dispatch])
+    if (!cartId) {
+      history.push(`/`)
+    } else if (cartGuestId) {
+      dispatch(updateGroupOrder())
+    } else if (isCartOwner) {
+      dispatch(updateGroupOrder())
+    }
+  }, [cartId, history, dispatch, cartGuestId, isCartOwner])
 
   useEffect(() => {
     if (error && cartGuestId) dispatch(reloadGuestOrder())

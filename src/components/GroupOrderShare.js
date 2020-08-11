@@ -35,6 +35,12 @@ const GroupOrderShare = () => {
     evt.target.blur()
   }
 
+  const backToMenu = (evt) => {
+    evt.preventDefault()
+    dispatch(closeModal())
+    evt.target.blur()
+  }
+
   const save = (evt) => {
     evt.preventDefault()
     dispatch(resetGroupOrder())
@@ -91,6 +97,12 @@ const GroupOrderShare = () => {
               icon={iconMap['ShoppingBag']}
               onClick={proceed}
             />
+            <Button
+              text="Back To Menu"
+              classes="ot-btn ot-btn--secondary"
+              icon={iconMap['Map']}
+              onClick={backToMenu}
+            />
           </p>
         </div>
       </div>
@@ -107,7 +119,7 @@ const GroupOrderShare = () => {
           />
           <Button
             text="Delete Forever"
-            classes="ot-btn ot-btn--small"
+            classes="ot-btn ot-btn--small ot-btn--cancel"
             icon={iconMap['Trash2']}
             onClick={cancel}
           />

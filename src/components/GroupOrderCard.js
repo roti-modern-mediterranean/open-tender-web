@@ -3,12 +3,10 @@ import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  resetOrder,
-  setOrderServiceType,
-  setAddress,
   reopenGroupOrder,
   removeCustomerGroupOrder,
   selectMenuSlug,
+  updateOrder,
 } from '@open-tender/redux'
 import {
   timezoneMap,
@@ -56,9 +54,8 @@ const GroupOrderCard = ({ groupOrder, menuItems }) => {
   const handleReopen = (evt) => {
     evt.preventDefault()
     evt.target.blur()
-    dispatch(resetOrder())
-    dispatch(setOrderServiceType(orderType, serviceType, isOutpost))
-    dispatch(setAddress(address || null))
+    const data = { orderId: null, orderType, serviceType, isOutpost, address }
+    dispatch(updateOrder(data))
     dispatch(reopenGroupOrder(groupOrder)).then(() => history.push(menuSlug))
   }
 
