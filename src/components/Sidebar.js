@@ -38,8 +38,8 @@ const Sidebar = () => {
   const isReview = pathname.includes('review')
   const belowMinimum = orderMinimum && cartTotal < orderMinimum
   const aboveMaximum = orderMaximum && cartTotal > orderMaximum
-  const isEmpty = cartCount === 0 && !isCartOwner && !isMenu
-  const canCheckout = canOrder && !belowMinimum && !aboveMaximum && !isEmpty
+  const notEmpty = cartCount !== 0 || (isCartOwner && isMenu)
+  const canCheckout = canOrder && !belowMinimum && !aboveMaximum && notEmpty
   const showReview = cartGuest || (isMenu && isCartOwner)
   const orderMaxType =
     cartGuest && spendingLimit ? 'spending limit' : 'order maximum'
@@ -81,7 +81,7 @@ const Sidebar = () => {
             <h2 className="sidebar__title ot-font-size-h3">
               {orderId ? `Editing Order ${orderId}` : 'Your Order'}
             </h2>
-            {isEmpty ? (
+            {!notEmpty ? (
               <p className="ot-font-size-small ot-color-alert">
                 Your cart is currently empty. Please add some items.
               </p>

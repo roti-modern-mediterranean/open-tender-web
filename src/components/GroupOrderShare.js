@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {
   selectGroupOrder,
   resetGroupOrder,
-  removeGroupOrder,
+  removeCustomerGroupOrder,
 } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
@@ -14,8 +14,8 @@ import iconMap from './iconMap'
 
 const GroupOrderShare = () => {
   const [copied, setCopied] = useState(false)
-  const dispatch = useDispatch()
   const history = useHistory()
+  const dispatch = useDispatch()
   const { token, cartId } = useSelector(selectGroupOrder)
   const origin = window.location.origin
   const url = `${origin}/join/${token}`
@@ -32,6 +32,7 @@ const GroupOrderShare = () => {
   const proceed = (evt) => {
     evt.preventDefault()
     history.push('/review')
+    dispatch(closeModal())
     evt.target.blur()
   }
 
@@ -50,7 +51,7 @@ const GroupOrderShare = () => {
 
   const cancel = (evt) => {
     evt.preventDefault()
-    dispatch(removeGroupOrder(cartId))
+    dispatch(removeCustomerGroupOrder(cartId))
     dispatch(closeModal())
     evt.target.blur()
   }

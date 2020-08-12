@@ -12,7 +12,7 @@ import {
   timezoneMap,
   isoToDateStr,
   // isoToDate,
-  // makeOrderAddress,
+  makeOrderAddress,
   makeOrderTypeName,
 } from '@open-tender/js'
 import { Button } from '@open-tender/components'
@@ -73,7 +73,7 @@ const GroupOrderCard = ({ groupOrder, menuItems }) => {
         <div className="order-card__content">
           <div className="order-card__details ot-font-size-small">
             <p>{requestedAt}</p>
-            {address && <p>{address}</p>}
+            {address && <p>{makeOrderAddress(address)}</p>}
             {guest_limit && <p>Guest limit: {guest_limit}</p>}
             {spending_limit && <p>Spending limit: ${spending_limit}</p>}
           </div>

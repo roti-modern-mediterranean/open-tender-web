@@ -90,7 +90,7 @@ const GroupOrderGuestPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { token } = useParams()
-  const config = useSelector(selectConfig)
+  const { groupOrders: config } = useSelector(selectConfig)
   const groupOrder = useSelector(selectGroupOrder)
   const {
     revenueCenterId,
@@ -169,7 +169,7 @@ const GroupOrderGuestPage = () => {
 
   return (
     <>
-      {isBrowser && <Background imageUrl={config.refunds.background} />}
+      {isBrowser && <Background imageUrl={config.background} />}
       <div className="content">
         {isLoading ? (
           <Loader

@@ -10,27 +10,18 @@ import {
   reloadGuestOrder,
   resetOrder,
   selectMenuSlug,
+  updateCustomerGroupOrder,
 } from '@open-tender/redux'
 import { CartItem, Button } from '@open-tender/components'
 
-import { selectDisplaySettings } from '../slices'
+import { selectConfig, selectDisplaySettings } from '../slices'
 import PageTitle from './PageTitle'
 import Background from './Background'
 import Loader from './Loader'
 import OrderQuantity from './OrderQuantity'
 import iconMap from './iconMap'
 
-const placeholderConfig = {
-  background:
-    'https://s3.amazonaws.com/betterboh/u/img/prod/2/1597004038_group-lake_1800x1013.jpg',
-  title: "You're in!",
-  subtitle:
-    'Please review your order below and return to the menu if you need to make any updates.',
-}
-
 const makeSubtitle = (error, cart, cartOwnerName, config) => {
-  // const isError = error || closed || pastCutoff
-
   if (!error) {
     return config.subtitle
   } else {
@@ -45,8 +36,7 @@ const makeSubtitle = (error, cart, cartOwnerName, config) => {
 const GroupOrderReviewPage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  // const { groupOrder: config } = useSelector(selectConfig)
-  const config = placeholderConfig
+  const { groupOrders: config } = useSelector(selectConfig)
   const menuSlug = useSelector(selectMenuSlug)
   const { cart } = useSelector(selectOrder)
   const displaySettings = useSelector(selectDisplaySettings)
@@ -74,7 +64,7 @@ const GroupOrderReviewPage = () => {
     } else if (cartGuestId) {
       dispatch(updateGroupOrder())
     } else if (isCartOwner) {
-      dispatch(updateGroupOrder())
+      dispatch(updateCustomerGroupOrder(cartId))
     }
   }, [cartId, history, dispatch, cartGuestId, isCartOwner])
 

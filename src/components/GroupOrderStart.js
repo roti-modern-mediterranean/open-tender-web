@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   selectOrder,
   selectGroupOrder,
-  startGroupOrder,
+  addCustomerGroupOrder,
 } from '@open-tender/redux'
 import { makeGroupOrderTime } from '@open-tender/js'
 import { Button, Input } from '@open-tender/components'
@@ -47,7 +47,8 @@ const GroupOrderStart = () => {
     const limit = isNaN(spendingLimit)
       ? null
       : parseFloat(spendingLimit).toFixed(2)
-    dispatch(startGroupOrder(limit))
+    const data = { spendingLimit: limit }
+    dispatch(addCustomerGroupOrder(data))
     evt.target.blur()
   }
 

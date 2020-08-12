@@ -47,8 +47,8 @@ class App extends React.Component {
               )}
               <link href="" rel="stylesheet" />
             </Helmet>
-            <Modal />
             <Router>
+              <Modal />
               <Main>
                 <Header />
                 <Messages />

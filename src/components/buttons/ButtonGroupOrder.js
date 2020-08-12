@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder, selectGroupOrder } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
@@ -13,6 +14,7 @@ const ButtonGroupOrder = ({
   icon = iconMap['Users'],
 }) => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { isCartOwner, cartGuest } = useSelector(selectGroupOrder)
   const { revenueCenter } = useSelector(selectOrder)
   const hasGroupOrdering =
@@ -21,7 +23,8 @@ const ButtonGroupOrder = ({
 
   const onClick = (evt) => {
     evt.preventDefault()
-    dispatch(openModal({ type: 'groupOrder' }))
+    const reviewOrders = () => history.push(`/review`)
+    dispatch(openModal({ type: 'groupOrder', args: { reviewOrders } }))
     evt.target.blur()
   }
 
