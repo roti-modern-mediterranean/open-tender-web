@@ -86,7 +86,7 @@ const Sidebar = () => {
   return (
     <>
       <SidebarOverlay />
-      <div className={classes}>
+      <aside className={classes}>
         <div className="sidebar__container">
           {isOpen && <SidebarClose />}
           <div className="sidebar__header ot-bg-color-primary">
@@ -183,7 +183,7 @@ const Sidebar = () => {
             </div>
           </div>
         </div>
-      </div>
+      </aside>
     </>
   )
 }
