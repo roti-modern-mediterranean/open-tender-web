@@ -10,7 +10,6 @@ import {
   reloadGuestOrder,
   resetOrder,
   selectMenuSlug,
-  updateCustomerGroupOrder,
 } from '@open-tender/redux'
 import { CartItem, Button } from '@open-tender/components'
 
@@ -33,7 +32,7 @@ const makeSubtitle = (error, cart, firstName, config) => {
   }
 }
 
-const GroupOrderReviewPage = () => {
+const GroupOrderReviewGuest = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { groupOrders: config } = useSelector(selectConfig)
@@ -78,7 +77,8 @@ const GroupOrderReviewPage = () => {
                   {!error && (
                     <p>
                       <Link to={menuSlug}>
-                        Click here to head back to the menu.
+                        Click here to head back to the menu and make changes to
+                        your order.
                       </Link>
                     </p>
                   )}
@@ -126,5 +126,5 @@ const GroupOrderReviewPage = () => {
   )
 }
 
-GroupOrderReviewPage.displayName = 'GroupOrderReviewPage'
-export default GroupOrderReviewPage
+GroupOrderReviewGuest.displayName = 'GroupOrderReviewGuest'
+export default GroupOrderReviewGuest

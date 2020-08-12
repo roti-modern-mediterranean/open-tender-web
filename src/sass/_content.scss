@@ -37,12 +37,22 @@
 
     &__header {
       margin: 0 0 1.5rem;
+
+      &__subtitle {
+        margin: 1rem 0 0;
+      }
     }
   }
 
   &__text {
     p {
       margin: 1em 0;
+    }
+    button {
+      margin: 0 1rem 0 0;
+      &:last-child {
+        margin: 0;
+      }
     }
   }
 
