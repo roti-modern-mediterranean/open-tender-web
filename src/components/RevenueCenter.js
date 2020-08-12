@@ -15,7 +15,7 @@ const RevenueCenter = ({
   isMenu,
   isLanding,
 }) => {
-  const { cartGuest } = useSelector(selectGroupOrder)
+  const { cartId } = useSelector(selectGroupOrder)
   const { address, images, hours, is_outpost } = revenueCenter
   const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const largeImg = images.find((i) => i.type === 'SMALL_IMAGE')
@@ -88,7 +88,7 @@ const RevenueCenter = ({
               />
             )}
           </div>
-          {!cartGuest && (
+          {!cartId && (
             <RevenueCenterOrder
               revenueCenter={revenueCenter}
               isMenu={isMenu}

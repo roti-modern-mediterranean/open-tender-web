@@ -21,14 +21,14 @@ import Loader from './Loader'
 import OrderQuantity from './OrderQuantity'
 import iconMap from './iconMap'
 
-const makeSubtitle = (error, cart, cartOwnerName, config) => {
+const makeSubtitle = (error, cart, firstName, config) => {
   if (!error) {
     return config.subtitle
   } else {
     if (cart.length) {
       return 'This group order is now closed for editing, but the items below have been added.'
     } else {
-      return `We're sorry, but this group order is already closed. Please contact ${cartOwnerName} to see if they can reopen it.`
+      return `We're sorry, but this group order is already closed. Please contact ${firstName} to see if they can reopen it.`
     }
   }
 }
@@ -41,36 +41,16 @@ const GroupOrderReviewPage = () => {
   const { cart } = useSelector(selectOrder)
   const displaySettings = useSelector(selectDisplaySettings)
   const groupOrder = useSelector(selectGroupOrder)
-  const {
-    loading,
-    error,
-    cartId,
-    isCartOwner,
-    cartOwner,
-    cart: groupCart,
-    cartGuest,
-  } = groupOrder
+  const { loading, error, cartOwner, cart: groupCart, cartGuest } = groupOrder
   const { cartGuestId } = cartGuest || {}
-  const cartOwnerName = cartOwner
-    ? `${cartOwner.first_name} ${cartOwner.last_name}`
-    : ''
+  const firstName = cartOwner ? cartOwner.first_name : ''
   const isLoading = loading === 'pending'
-  const subtitle = makeSubtitle(error, groupCart, cartOwnerName, config)
+  const subtitle = makeSubtitle(error, groupCart, firstName, config)
 
   useEffect(() => {
     window.scroll(0, 0)
-    if (!cartId) {
-      history.push(`/`)
-    } else if (cartGuestId) {
-      dispatch(updateGroupOrder())
-    } else if (isCartOwner) {
-      dispatch(updateCustomerGroupOrder(cartId))
-    }
-  }, [cartId, history, dispatch, cartGuestId, isCartOwner])
-
-  useEffect(() => {
-    if (error && cartGuestId) dispatch(reloadGuestOrder())
-  }, [error, cartGuestId, dispatch])
+    error ? dispatch(reloadGuestOrder()) : dispatch(updateGroupOrder())
+  }, [dispatch, error, cartGuestId])
 
   const startOver = (evt) => {
     evt.preventDefault()
@@ -116,7 +96,7 @@ const GroupOrderReviewPage = () => {
                 <div className="content__section">
                   <div className="content__section__header">
                     <p className="ot-heading ot-font-size-h4">
-                      Items submitted to {cartOwnerName}'s group order
+                      Items submitted to {firstName}'s group order
                     </p>
                   </div>
                   <div className="section__content ot-bg-color-primary ot-border-radius">
