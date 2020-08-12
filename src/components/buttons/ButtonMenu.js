@@ -26,6 +26,7 @@ ButtonMenu.displayName = 'ButtonMenu'
 ButtonMenu.propTypes = {
   onClick: propTypes.func,
   classes: propTypes.string,
+  icon: propTypes.element,
 }
 
 export default ButtonMenu

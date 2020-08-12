@@ -9,6 +9,8 @@ import {
   selectGroupOrder,
   selectOrder,
   selectOrderLimits,
+  setCart,
+  closeGroupOrder,
 } from '@open-tender/redux'
 import { displayPrice } from '@open-tender/js'
 import { Button } from '@open-tender/components'
@@ -23,10 +25,9 @@ const Sidebar = () => {
   const history = useHistory()
   const { pathname } = useLocation()
   const { isOpen } = useSelector(selectSidebar)
-  const { orderId } = useSelector(selectOrder)
-  const { cartGuest, isCartOwner, spendingLimit } = useSelector(
-    selectGroupOrder
-  )
+  const { orderId, cart } = useSelector(selectOrder)
+  const groupOrder = useSelector(selectGroupOrder)
+  const { cartId, cartGuest, isCartOwner, spendingLimit } = groupOrder
   const cartCount = useSelector(selectCartQuantity)
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
@@ -68,6 +69,17 @@ const Sidebar = () => {
   const handleClose = (evt) => {
     evt.preventDefault()
     dispatch(toggleSidebar())
+    evt.target.blur()
+  }
+
+  const handleReopen = (evt) => {
+    evt.preventDefault()
+    const customerCart = cart.filter((i) => i.customer_id)
+    dispatch(setCart(customerCart))
+    dispatch(toggleSidebar())
+    dispatch(closeGroupOrder(cartId, false)).then(() => {
+      history.push('/review')
+    })
     evt.target.blur()
   }
 
@@ -121,13 +133,19 @@ const Sidebar = () => {
           <div className="sidebar__footer ot-bg-color-primary">
             <div className="sidebar__footer__container">
               <div className="sidebar__back">
-                <Button
-                  onClick={handleBack}
-                  classes="ot-btn ot-btn--big"
-                  disabled={!canOrder}
-                >
-                  Menu
-                </Button>
+                {isCheckout && cartId ? (
+                  <Button onClick={handleReopen} classes="ot-btn ot-btn--big">
+                    Reopen
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleBack}
+                    classes="ot-btn ot-btn--big"
+                    disabled={!canOrder}
+                  >
+                    Menu
+                  </Button>
+                )}
               </div>
               <div className="sidebar__checkout">
                 {showReview ? (
@@ -148,7 +166,7 @@ const Sidebar = () => {
                     classes="ot-btn ot-btn--big ot-btn--highlight"
                     disabled={!canCheckout}
                   >
-                    {isCheckout ? 'Checkout' : 'Checkout'}
+                    {isCheckout ? 'Close' : 'Checkout'}
                   </Button>
                 )}
               </div>

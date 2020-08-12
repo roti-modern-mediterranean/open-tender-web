@@ -44,6 +44,20 @@
     }
   }
 
+  &__subsection {
+    margin: 0 0 2rem;
+  }
+
+  &__list {
+    // list-style: disc inside;
+    li {
+      margin: 0 0 0.5rem;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+
   &__text {
     p {
       margin: 1em 0;

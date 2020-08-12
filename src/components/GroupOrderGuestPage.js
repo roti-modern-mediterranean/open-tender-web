@@ -60,23 +60,34 @@ const makeTitle = (
   cartOwnerName,
   tz,
   requestedAt,
-  cutoffAt
+  cutoffAt,
+  atCapacity
 ) => {
   if (isLoading) return {}
   if (error) {
-    return {
-      title: 'Group Order Not Found',
-      subtitle: "Sorry, but we couldn't find the group order you requested.",
+    if (error.includes('does not exist')) {
+      return {
+        title: 'Group order not found',
+        subtitle:
+          'Please double check the link you were sent and contact the group owner if necessary.',
+      }
     }
+    return { title: 'Group order closed', subtitle: error }
   } else if (closed) {
     return {
-      title: 'Group Order Closed',
+      title: 'Group order closed',
       subtitle: 'Sorry, but this group order has already been closed.',
     }
   } else if (pastCutoff) {
     return {
       title: 'Order cutoff time has passed',
       subtitle: 'Sorry, but this group order is no longer open to new guests.',
+    }
+  } else if (atCapacity) {
+    return {
+      title: 'Group order oversubscribed',
+      subtitle:
+        'Sorry, but the guest limit has already been reached for this group order.',
     }
   } else {
     return {
@@ -128,7 +139,8 @@ const GroupOrderGuestPage = () => {
     cartOwnerName,
     tz,
     requestedAt,
-    cutoffAt
+    cutoffAt,
+    atCapacity
   )
   const showForm = cartId && !error && !closed && !pastCutoff && !atCapacity
 

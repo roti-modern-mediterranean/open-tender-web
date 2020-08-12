@@ -11,23 +11,13 @@ import { Button } from '@open-tender/components'
 
 import { closeModal } from '../slices'
 import iconMap from './iconMap'
+import GroupOrderLink from './GroupOrderLink'
+import GroupOrderTime from './GroupOrderTime'
 
 const GroupOrderShare = () => {
-  const [copied, setCopied] = useState(false)
   const history = useHistory()
   const dispatch = useDispatch()
   const { token, cartId } = useSelector(selectGroupOrder)
-  const origin = window.location.origin
-  const url = `${origin}/join/${token}`
-
-  useEffect(() => {
-    setCopied(false)
-  }, [])
-
-  const copy = (evt) => {
-    evt.preventDefault()
-    evt.target.blur()
-  }
 
   const proceed = (evt) => {
     evt.preventDefault()
@@ -63,33 +53,16 @@ const GroupOrderShare = () => {
           Spread the love!
         </p>
         <p className="modal__subtitle">
-          Share the link below with your friends so they can add their items to
-          your group order
+          Share the link below with your friends so they can add their orders
         </p>
       </div>
       <div className="modal__body -message ot-line-height">
         <div className="modal__body__section">
-          <CopyToClipboard text={url} onCopy={() => setCopied(true)}>
-            <Button
-              text={url}
-              classes="ot-btn ot-btn--small ot-btn--highlight"
-              icon={iconMap['Clipboard']}
-              onClick={copy}
-            />
-          </CopyToClipboard>
-          {copied ? (
-            <p className="copied ot-font-size-small ot-color-success">
-              Copied to clipboard!
-            </p>
-          ) : (
-            <p className="copied ot-font-size-small">
-              Click button above to copy the link to your clipboard
-            </p>
-          )}
+          <GroupOrderLink token={token} />
+          <GroupOrderTime />
           <p>
             Once you've added your own items, proceed to the next page to review
-            the orders that have been submitted before you proceed to the
-            checkout page.
+            the orders that have been submitted by others.
           </p>
           <p>
             <Button

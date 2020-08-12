@@ -1,66 +1,103 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { isBrowser } from 'react-device-detect'
+import isEqual from 'lodash/isEqual'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, Link } from 'react-router-dom'
 import {
   selectOrder,
   selectGroupOrder,
   resetGroupOrder,
-  resetOrder,
   selectMenuSlug,
   updateCustomerGroupOrder,
+  closeGroupOrder,
   removeCustomerGroupOrder,
-  selectTimezone,
-  selectGroupOrderPrepTimes,
+  selectMenuItems,
+  showNotification,
+  setCart,
+  fetchMenuItems,
 } from '@open-tender/redux'
-import { makeGroupOrderTimeStr } from '@open-tender/js'
+import { rehydrateCart, isEmpty, combineCarts } from '@open-tender/js'
 import { CartItem, Button } from '@open-tender/components'
 
-import { selectConfig, selectDisplaySettings, openModal } from '../slices'
+import { selectConfig, selectDisplaySettings } from '../slices'
 import PageTitle from './PageTitle'
 import Background from './Background'
-import Loader from './Loader'
 import OrderQuantity from './OrderQuantity'
 import iconMap from './iconMap'
+import GroupOrderLink from './GroupOrderLink'
+import GroupOrderTime from './GroupOrderTime'
+
+const usePrevious = (value) => {
+  const ref = useRef()
+  useEffect(() => {
+    ref.current = value
+  })
+  return ref.current
+}
 
 const GroupOrderReviewOwner = () => {
+  const [showGuestItems, setShowGuestItems] = useState(true)
+  const [guestCart, setGuestCart] = useState([])
+  const [guestCartLookup, setGuestCartLookup] = useState({})
   const dispatch = useDispatch()
   const history = useHistory()
   const { groupOrders: config } = useSelector(selectConfig)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
+  const { entities: menuItems } = useSelector(selectMenuItems)
   const displaySettings = useSelector(selectDisplaySettings)
-  const tz = useSelector(selectTimezone)
-  const { prepTime } = useSelector(selectGroupOrderPrepTimes)
   const groupOrder = useSelector(selectGroupOrder)
   const {
-    loading,
-    error,
     cartId,
+    token,
     cart: groupCart,
-    requestedAt,
-    cutoffAt,
-    spendingLimit,
     guestLimit,
     guestCount,
+    cartGuests,
+    cartOwner,
+    revenueCenterId,
+    serviceType,
   } = groupOrder
-  const orderTime = makeGroupOrderTimeStr(requestedAt, tz)
-  const cutoffTime = makeGroupOrderTimeStr(cutoffAt, tz)
-  const isLoading = loading === 'pending'
+  const prevGroupCart = usePrevious(groupCart)
 
   useEffect(() => {
     window.scroll(0, 0)
+    dispatch(fetchMenuItems({ revenueCenterId, serviceType }))
     dispatch(updateCustomerGroupOrder(cartId))
-  }, [dispatch, cartId, order.requestedAt])
+  }, [dispatch, cartId, order.requestedAt, revenueCenterId, serviceType])
 
-  const adjustTime = (evt, type) => {
-    evt.preventDefault()
-    dispatch(openModal({ type: 'requestedAt' }))
-    evt.target.blur()
-  }
+  useEffect(() => {
+    const update = setInterval(
+      () => dispatch(updateCustomerGroupOrder(cartId)),
+      15000
+    )
+    return () => clearInterval(update)
+  }, [dispatch, cartId])
+
+  useEffect(() => {
+    if (!isEqual(groupCart, prevGroupCart)) {
+      const items = groupCart.filter((i) => !i.customer_id)
+      const { cart } = rehydrateCart(menuItems, items)
+      setGuestCart(cart)
+      const cartLookup = cart.reduce((obj, i) => {
+        const items = [...(obj[i.cart_guest_id] || []), i]
+        return { ...obj, [i.cart_guest_id]: items }
+      }, {})
+      setGuestCartLookup(cartLookup)
+      if (prevGroupCart) dispatch(showNotification('New order added!'))
+    }
+  }, [dispatch, groupCart, prevGroupCart, menuItems])
 
   const checkout = (evt) => {
     evt.preventDefault()
+    const combinedCart = combineCarts(
+      order.cart,
+      guestCart,
+      cartOwner,
+      cartGuests
+    )
+    dispatch(setCart(combinedCart))
+    dispatch(closeGroupOrder(cartId, true))
     history.push('/checkout')
     evt.target.blur()
   }
@@ -77,115 +114,165 @@ const GroupOrderReviewOwner = () => {
     evt.target.blur()
   }
 
+  const toggleGuestItems = (evt) => {
+    evt.preventDefault()
+    setShowGuestItems(!showGuestItems)
+    evt.target.blur()
+  }
+
   return (
     <>
       {isBrowser && <Background imageUrl={config.background} />}
       <div className="content">
-        {isLoading ? (
-          <Loader
-            text="Retrieving your group order..."
-            className="loading--left"
-          />
-        ) : (
-          <>
-            <PageTitle
-              title="Review your group order"
-              subtitle="Use this page to review the orders that have been submitted before checking out."
-            />
-            <div className="content__body ot-line-height slide-up">
-              <div className="container">
-                <div className="content__section content__text">
-                  <p className="ot-color-headings ot-bold ot-font-size-big">
-                    This group order will remain open for editing until you to
-                    proceed to the checkout page.
-                  </p>
-                  <p>
-                    Orders will be appear below as they're added by your
-                    friends. {guestCount} orders have been submitted so far
-                    {guestLimit &&
-                      `, and there is a limit of ${guestLimit} orders in total (not including your own)`}
-                    .
-                  </p>
-                  {orderTime === 'ASAP' ? (
-                    <p>
-                      Please note that this order is currently scheduled for
-                      ASAP and will be ready about {prepTime} minutes from the
-                      time it gets submitted.
-                    </p>
-                  ) : (
-                    <p>
-                      Please note that this order must be submitted by{' '}
-                      {cutoffTime} in order to be ready by the scheduled time of{' '}
-                      {orderTime}.{' '}
-                      <Button
-                        text="Click here if you need to choose a different time."
-                        classes="ot-btn-link"
-                        onClick={adjustTime}
-                      />
-                    </p>
-                  )}
-                  <p>Ready to submit your order?</p>
-                  <p>
-                    <Button
-                      text="Proceed To Checkout"
-                      classes="ot-btn"
-                      // icon={iconMap['DollarSign']}
-                      onClick={checkout}
-                    />
-                  </p>
-                  <p>
-                    Change your mind? Save this group order for another day or
-                    delete it altogether.
-                  </p>
-                  <p>
-                    <Button
-                      text="Save for Later"
-                      classes="ot-btn ot-btn--small"
-                      icon={iconMap['Save']}
-                      onClick={save}
-                    />
-                    <Button
-                      text="Delete Forever"
-                      classes="ot-btn ot-btn--small ot-btn--cancel"
-                      icon={iconMap['Trash2']}
-                      onClick={cancel}
-                    />
-                  </p>
-                </div>
-                <div className="content__section">
-                  <div className="content__section__header">
-                    <p className="content__section__header__title ot-heading ot-font-size-h4">
-                      Your items
-                    </p>
-                    <p className="content__section__header__subtitle ot-font-size-small">
-                      <Link to={menuSlug}>
-                        Click here to get back to the menu if you need to make
-                        any changes to your own order.
-                      </Link>
-                    </p>
-                  </div>
-                  <div className="section__content ot-bg-color-primary ot-border-radius">
-                    <ul className="cart">
-                      {order.cart.map((item, index) => {
-                        return (
-                          <li key={`${item.id}-${index}`}>
-                            <CartItem
-                              item={item}
-                              showModifiers={true}
-                              displaySettings={displaySettings}
-                            >
-                              <OrderQuantity item={item} show={false} />
-                            </CartItem>
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  </div>
-                </div>
+        <PageTitle
+          title="Review your group order"
+          subtitle="Use this page to review the orders that have been submitted before checking out."
+        />
+        <div className="content__body ot-line-height slide-up">
+          <div className="container">
+            <div className="content__section content__text">
+              <p className="ot-color-headings ot-heading ot-font-size-h5">
+                This group order will remain open for editing until you to
+                proceed to the checkout page.
+              </p>
+              <p>
+                Orders will be appear below as they're added by your friends.{' '}
+                {guestCount} orders have been submitted so far
+                {guestLimit &&
+                  `, and there is a limit of ${guestLimit} orders in total (not including your own)`}
+                .
+              </p>
+              <GroupOrderTime />
+              <p>Need to share this group order with orders?</p>
+              <p>
+                <GroupOrderLink
+                  token={token}
+                  className="ot-btn ot-btn--small"
+                  instructions={null}
+                />
+              </p>
+              <p className="ot-color-headings ot-heading ot-font-size-h5">
+                Ready to submit your order?
+              </p>
+              <p>
+                <Button
+                  text="Proceed To Checkout"
+                  classes="ot-btn"
+                  // icon={iconMap['DollarSign']}
+                  onClick={checkout}
+                />
+              </p>
+              <p>
+                Change your mind? Save this group order for another day or
+                delete it altogether.
+              </p>
+              <p>
+                <Button
+                  text="Save for Later"
+                  classes="ot-btn ot-btn--small"
+                  icon={iconMap['Save']}
+                  onClick={save}
+                />
+                <Button
+                  text="Delete Forever"
+                  classes="ot-btn ot-btn--small ot-btn--cancel"
+                  icon={iconMap['Trash2']}
+                  onClick={cancel}
+                />
+              </p>
+            </div>
+            <div className="content__section">
+              <div className="content__section__header">
+                <p className="content__section__header__title ot-heading ot-font-size-h5">
+                  Your items
+                </p>
+                <p className="content__section__header__subtitle ot-font-size-small">
+                  <Link to={menuSlug}>
+                    Click here to get back to the menu if you need to make any
+                    changes to your own order.
+                  </Link>
+                </p>
+              </div>
+              <div className="ot-bg-color-primary ot-border-radius">
+                <ul className="cart">
+                  {order.cart.map((item, index) => {
+                    return (
+                      <li key={`${item.id}-${index}`}>
+                        <CartItem
+                          item={item}
+                          showModifiers={true}
+                          displaySettings={displaySettings}
+                        >
+                          <OrderQuantity item={item} show={false} />
+                        </CartItem>
+                      </li>
+                    )
+                  })}
+                </ul>
               </div>
             </div>
-          </>
-        )}
+            <div className="content__section">
+              <div className="content__section__header">
+                <p className="content__section__header__title ot-heading ot-font-size-h5">
+                  Items added by your guests
+                </p>
+                <p className="content__section__header__subtitle ot-font-size-small">
+                  <Button
+                    text={
+                      showGuestItems
+                        ? 'Show guest names only'
+                        : 'Show guest names & items'
+                    }
+                    classes="ot-btn-link"
+                    onClick={toggleGuestItems}
+                  />
+                </p>
+              </div>
+              {!isEmpty(guestCartLookup) ? (
+                showGuestItems ? (
+                  cartGuests.map((guest) => (
+                    <div className="content__subsection ot-bg-color-primary ot-border-radius">
+                      <div className="content__subsection__header">
+                        <p className="content__subsection__header__title ot-color-headings ot-bold ot-font-size">
+                          {guest.first_name} {guest.last_name}
+                        </p>
+                      </div>
+                      <ul className="cart">
+                        {guestCartLookup[guest.cart_guest_id].map(
+                          (item, index) => {
+                            return (
+                              <li key={`${item.id}-${index}`}>
+                                <CartItem
+                                  item={item}
+                                  showModifiers={true}
+                                  displaySettings={displaySettings}
+                                >
+                                  <OrderQuantity item={item} show={false} />
+                                </CartItem>
+                              </li>
+                            )
+                          }
+                        )}
+                      </ul>
+                    </div>
+                  ))
+                ) : (
+                  <div className="ot-bg-color-primary ot-border-radius">
+                    <ul className="content__list">
+                      {cartGuests.map((guest) => (
+                        <li className="ot-color-headings ot-bold ot-font-size">
+                          {guest.first_name} {guest.last_name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              ) : (
+                <p>Your guests haven't added any orders yet.</p>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )

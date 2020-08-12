@@ -27,6 +27,7 @@ import {
   ButtonLeaveGroup,
   ButtonGroupGuest,
 } from './buttons'
+import ButtonReopen from './buttons/ButtonReopen'
 
 const accountSubPages = ['items', 'orders', 'favorites', 'addresses']
 
@@ -34,13 +35,13 @@ const Header = () => {
   const autoSelect = useSelector(selectAutoSelect)
   const count = useSelector(selectRevenueCenterCount)
   const { profile } = useSelector(selectCustomer)
-  const { cartGuest, closed } = useSelector(selectGroupOrder)
+  const { cartId, cartGuest, closed } = useSelector(selectGroupOrder)
   const { pathname } = useLocation()
   const isCheckout = pathname.includes('checkout')
   const isHome = pathname === '/'
   const isRevenueCenterPage = pathname.includes('locations/')
   const isMenu = pathname.includes('menu')
-  const isGroupOrder = pathname.includes('join')
+  const isJoinGroup = pathname.includes('join')
   const isReview = pathname.includes('review')
   const isAccountSubpage = contains(pathname, accountSubPages)
   const showSignUp = true
@@ -55,7 +56,7 @@ const Header = () => {
       <div className="container">
         <div className="header__container">
           <div className="header__nav">
-            {isHome || isRevenueCenterPage || isGroupOrder ? (
+            {isHome || isRevenueCenterPage || isJoinGroup ? (
               <div className="header__logo">
                 <HeaderLogo />
               </div>
@@ -63,7 +64,11 @@ const Header = () => {
               <ButtonLeaveGroup classes={btnClass} />
             ) : isMenu && !autoSelect && count !== 1 ? (
               <ButtonLocations classes={btnClass} />
-            ) : isCheckout || (isReview && !closed) ? (
+            ) : isReview && !closed ? (
+              <ButtonMenu classes={btnClass} />
+            ) : isCheckout && cartId ? (
+              <ButtonReopen classes={btnClass} />
+            ) : isCheckout ? (
               <ButtonMenu classes={btnClass} />
             ) : isAccountSubpage ? (
               <ButtonBackToAccount classes={btnClass} />
@@ -72,9 +77,7 @@ const Header = () => {
             )}
           </div>
           <div className="header__actions">
-            {!isGroupOrder && !cartGuest && (
-              <ButtonAccount classes={btnClass} />
-            )}
+            {!isJoinGroup && !cartGuest && <ButtonAccount classes={btnClass} />}
             {isHome && !profile && showSignUp && (
               <ButtonSignUp classes={btnClass} />
             )}

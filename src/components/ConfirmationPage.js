@@ -7,6 +7,7 @@ import {
   selectConfirmationOrder,
   resetConfirmation,
   resetCustomerOrder,
+  resetGroupOrder,
 } from '@open-tender/redux'
 
 import { selectConfig, selectBrand } from '../slices'
@@ -25,6 +26,7 @@ const ConfirmationPage = () => {
   useEffect(() => {
     if (!order) history.push(auth ? '/account' : '/')
     window.scroll(0, 0)
+    dispatch(resetGroupOrder())
     return () => {
       dispatch(resetConfirmation())
     }

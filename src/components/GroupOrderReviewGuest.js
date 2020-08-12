@@ -74,14 +74,23 @@ const GroupOrderReviewGuest = () => {
             <div className="content__body ot-line-height slide-up">
               <div className="container">
                 <div className="content__section content__text">
-                  {!error && (
+                  {!error ? (
                     <p>
                       <Link to={menuSlug}>
                         Click here to head back to the menu and make changes to
                         your order.
                       </Link>
                     </p>
-                  )}
+                  ) : cart.length ? (
+                    <p>
+                      <span className="ot-color-alert ot-bold">
+                        This group order was closed while you were making
+                        updates on the menu page, but the items you previously
+                        submitted are listed below. Please contact {firstName}{' '}
+                        if you need to make any changes.
+                      </span>
+                    </p>
+                  ) : null}
                   <p>
                     Want to start a new order just for you? Use the button
                     below.
