@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {
   selectGroupOrder,
   resetGroupOrder,
