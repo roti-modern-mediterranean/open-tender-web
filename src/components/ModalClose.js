@@ -22,7 +22,11 @@ const ModalClose = ({ classes = 'ot-btn-link', onClick }) => {
   }, [handleEscape])
 
   return (
-    <button className={`modal__close ${classes}`} onClick={handleClose}>
+    <button
+      className={`modal__close ${classes}`}
+      onClick={handleClose}
+      aria-label="Close dialog"
+    >
       <X size={20} />
     </button>
   )

@@ -10,6 +10,7 @@ import { Button, Input } from '@open-tender/components'
 
 import { openModal, closeModal } from '../slices'
 import GroupOrderSteps from './GroupOrderSteps'
+import ModalTitle from './ModalTitle'
 import iconMap from './iconMap'
 
 const formatOrderTime = (s) =>
@@ -66,9 +67,7 @@ const GroupOrderStart = () => {
   return (
     <div className="modal__content">
       <div className="modal__header">
-        <p className="modal__title ot-heading ot-font-size-h3">
-          Start a group order
-        </p>
+        <ModalTitle title="Start a group order" />
         <p className="modal__subtitle">
           Please confirm your order date & time before you share your cart
         </p>

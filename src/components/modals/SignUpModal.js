@@ -6,6 +6,7 @@ import { SignUpForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
+import ModalTitle from '../ModalTitle'
 
 const SignUpModal = ({ windowRef }) => {
   const dispatch = useDispatch()
@@ -31,9 +32,7 @@ const SignUpModal = ({ windowRef }) => {
       <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title ot-heading ot-font-size-h3">
-            Sign up for an account
-          </p>
+          <ModalTitle title="Sign up for an account" />
           <p className="modal__subtitle">
             Please provide the info below, and you'll be off to the races!
           </p>

@@ -5,6 +5,7 @@ import { resetRevenueCenter, resetOrderType } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
 import { selectConfig, closeModal } from '../../slices'
+import ModalTitle from '../ModalTitle'
 
 const defaultText = {
   title: 'Location currently closed',
@@ -41,9 +42,7 @@ const ClosedModal = ({ status, isCancel }) => {
     <>
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title ot-heading ot-font-size-h3">
-            {statusMsg.title}
-          </p>
+          <ModalTitle title={statusMsg.title} />
         </div>
         <div className="modal__body">
           <p>{statusMsg.msg}</p>

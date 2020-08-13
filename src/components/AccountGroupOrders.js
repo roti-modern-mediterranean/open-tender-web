@@ -20,9 +20,8 @@ const AccountGroupOrders = () => {
   const limit = 9
   const [groupOrders, setGroupOrders] = useState([])
   const [count, setCount] = useState(isBrowser ? 3 : limit)
-  const {
-    groupOrders: { title, subtitle },
-  } = useSelector(selectAccountConfig)
+  const { groupOrders: groupOrdersConfig } = useSelector(selectAccountConfig)
+  const { title, subtitle } = groupOrdersConfig || {}
   const orders = useSelector(selectCustomerGroupOrders)
   const { entities, loading, error } = orders
   const isLoading = loading === 'pending'

@@ -12,6 +12,7 @@ import { LoginForm, SendResetForm, Button } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
+import ModalTitle from '../ModalTitle'
 
 const messaging = {
   login: {
@@ -73,7 +74,7 @@ const LoginModal = ({ callback }) => {
       <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title ot-heading ot-font-size-h3">{msg.title}</p>
+          <ModalTitle title={msg.title} />
           <p className="modal__subtitle">{msg.subtitle}</p>
         </div>
         <div className="modal__body">

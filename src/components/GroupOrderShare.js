@@ -12,6 +12,7 @@ import { closeModal } from '../slices'
 import iconMap from './iconMap'
 import GroupOrderLink from './GroupOrderLink'
 import GroupOrderTime from './GroupOrderTime'
+import ModalTitle from './ModalTitle'
 
 const GroupOrderShare = () => {
   const history = useHistory()
@@ -48,9 +49,7 @@ const GroupOrderShare = () => {
   return (
     <div className="modal__content">
       <div className="modal__header">
-        <p className="modal__title ot-heading ot-font-size-h3">
-          Spread the love!
-        </p>
+        <ModalTitle title="Spread the love!" />
         <p className="modal__subtitle">
           Share the link below with your friends so they can add their orders
         </p>

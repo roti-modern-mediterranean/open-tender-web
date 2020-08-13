@@ -16,6 +16,7 @@ import {
 import { Button } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
+import ModalTitle from '../ModalTitle'
 
 const AdjustRequestedAtModal = ({ firstTimes, revenueCenter }) => {
   const dispatch = useDispatch()
@@ -52,9 +53,7 @@ const AdjustRequestedAtModal = ({ firstTimes, revenueCenter }) => {
     <>
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title ot-heading ot-font-size-h3">
-            Order time not currently available
-          </p>
+          <ModalTitle title="Order time not currently available" />
         </div>
         <div className="modal__body">
           <p>

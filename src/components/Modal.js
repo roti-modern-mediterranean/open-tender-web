@@ -121,7 +121,11 @@ const Modal = () => {
               className={classes}
               onClick={handleClose}
             >
-              <div className="modal ot-bg-color-primary ot-border-radius">
+              <div
+                className="modal ot-bg-color-primary ot-border-radius"
+                role="dialog"
+                aria-labelledby="dialogTitle"
+              >
                 {modal}
               </div>
             </div>

@@ -29,7 +29,11 @@ const ButtonFavorite = ({ item, favoriteId, classes = '' }) => {
   const handler = favoriteId ? handleRemove : handleAdd
 
   return (
-    <button className={klass} onClick={handler}>
+    <button
+      className={klass}
+      onClick={handler}
+      aria-label={favoriteId ? 'Remove favorite' : 'Add favorite'}
+    >
       <span className="favorite__icon">{iconMap['Heart']}</span>
     </button>
   )

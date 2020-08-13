@@ -26,7 +26,11 @@ const SidebarClose = ({ classes = 'ot-btn-link' }) => {
   }, [handleEscape])
 
   return (
-    <button className={`sidebar__close ${classes}`} onClick={handleClose}>
+    <button
+      className={`sidebar__close ${classes}`}
+      onClick={handleClose}
+      aria-label="Close cart & return to current page"
+    >
       <X size={20} />
     </button>
   )

@@ -10,6 +10,7 @@ import { CreditCardForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
+import ModalTitle from '../ModalTitle'
 
 const CreditCardModal = ({ windowRef }) => {
   const dispatch = useDispatch()
@@ -33,9 +34,7 @@ const CreditCardModal = ({ windowRef }) => {
       <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title ot-heading ot-font-size-h3">
-            Add a new credit card
-          </p>
+          <ModalTitle title="Add a new credit card" />
         </div>
         <div className="modal__body">
           <CreditCardForm

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@open-tender/components'
 
 import { openModal, closeModal } from '../slices'
+import ModalTitle from './ModalTitle'
 import iconMap from './iconMap'
 
 const GroupOrderGuest = () => {
@@ -26,9 +27,7 @@ const GroupOrderGuest = () => {
   return (
     <div className="modal__content">
       <div className="modal__header">
-        <p className="modal__title ot-heading ot-font-size-h3">
-          Start a group order
-        </p>
+        <ModalTitle title="Start a group order" />
       </div>
       <div className="modal__body -message">
         <div className="modal__body__section">

@@ -20,6 +20,7 @@ const Message = ({ message, id }) => {
         <button
           className="message__close ot-color-light"
           onClick={handleRemove}
+          aria-label="Remove message"
         >
           <X size={14} />
         </button>

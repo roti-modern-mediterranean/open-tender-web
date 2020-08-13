@@ -9,6 +9,7 @@ import { AllergenForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
+import ModalTitle from '../ModalTitle'
 
 const AllergensModal = () => {
   const dispatch = useDispatch()
@@ -28,9 +29,7 @@ const AllergensModal = () => {
       <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title ot-heading ot-font-size-h3">
-            Allergen Alerts
-          </p>
+          <ModalTitle title="Allergen Alerts" />
           <p className="modal__subtitle">
             Selected allergens will be highlighted on the menu
           </p>

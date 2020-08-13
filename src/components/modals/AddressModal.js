@@ -10,6 +10,7 @@ import { AddressForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
+import ModalTitle from '../ModalTitle'
 
 const AddressModal = ({ windowRef, address }) => {
   const dispatch = useDispatch()
@@ -33,9 +34,7 @@ const AddressModal = ({ windowRef, address }) => {
       <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title ot-heading ot-font-size-h3">
-            Update this address
-          </p>
+          <ModalTitle title="Update this address" />
         </div>
         <div className="modal__body">
           <AddressForm

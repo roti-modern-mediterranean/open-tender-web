@@ -37,6 +37,7 @@ const CartButton = () => {
         <Button
           onClick={handleClick}
           classes="cart-button__button ot-btn--highlight"
+          ariaLabel="Open cart to review order"
         >
           <div className="cart-button__icon">
             <ShoppingBag size={null} />

@@ -6,6 +6,7 @@ import { serviceTypeNamesMap } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
+import ModalTitle from '../ModalTitle'
 
 const OrderTypeModal = ({ startOver }) => {
   const dispatch = useDispatch()
@@ -30,9 +31,7 @@ const OrderTypeModal = ({ startOver }) => {
     <>
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title ot-heading ot-font-size-h3">
-            Change your order type
-          </p>
+          <ModalTitle title="Change your order type" />
         </div>
         <div className="modal__body -message">
           <p>Are you sure you want to change your order type?</p>

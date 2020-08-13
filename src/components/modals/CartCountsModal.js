@@ -5,6 +5,7 @@ import { CartCounts } from '@open-tender/components'
 
 import { closeModal, selectConfig } from '../../slices'
 import ModalClose from '../ModalClose'
+import ModalTitle from '../ModalTitle'
 
 const CartCountsModal = ({ errors }) => {
   const dispatch = useDispatch()
@@ -22,9 +23,7 @@ const CartCountsModal = ({ errors }) => {
       <ModalClose classes="" onClick={handleClose} />
       <div className="modal__content">
         <div className="modal__header">
-          <p className="modal__title ot-heading ot-font-size-h3">
-            {menu.cartErrors.title}
-          </p>
+          <ModalTitle title={menu.cartErrors.title} />
           <p className="modal__subtitle">{menu.cartErrors.subtitle}</p>
         </div>
         <div className="modal__body">
