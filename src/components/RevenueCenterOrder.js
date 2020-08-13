@@ -12,12 +12,16 @@ import iconMap from './iconMap'
 
 export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
   const history = useHistory()
-  const { serviceType } = useSelector(selectOrder)
-
+  const { serviceType, requestedAt } = useSelector(selectOrder)
   const autoSelect = useSelector(selectAutoSelect)
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
-  const msg = makeRevenueCenterMsg(revenueCenter, serviceType, statusMessages)
+  const msg = makeRevenueCenterMsg(
+    revenueCenter,
+    serviceType,
+    requestedAt,
+    statusMessages
+  )
 
   const handleChange = (evt) => {
     evt.preventDefault()
