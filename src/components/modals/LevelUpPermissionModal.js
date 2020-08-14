@@ -13,7 +13,7 @@ import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
 import ModalTitle from '../ModalTitle'
 
-const LevelUpModal = ({ windowRef, validate }) => {
+const LevelUpModal = ({ windowRef }) => {
   const dispatch = useDispatch()
   const { profile } = useSelector(selectCustomer)
   const email = profile ? profile.email || '' : ''
@@ -22,10 +22,7 @@ const LevelUpModal = ({ windowRef, validate }) => {
     (data, callback) => dispatch(addCustomerLevelUp(data, callback)),
     [dispatch]
   )
-  const callback = useCallback(() => {
-    if (validate) validate()
-    dispatch(closeModal())
-  }, [dispatch, validate])
+  const callback = useCallback(() => dispatch(closeModal()), [dispatch])
 
   useEffect(() => {
     return () => dispatch(resetCustomerLevelUpError())
@@ -42,12 +39,17 @@ const LevelUpModal = ({ windowRef, validate }) => {
         <div className="modal__header">
           <ModalTitle title="Connect your LevelUp account" />
           <p className="modal__subtitle">
-            Enter the email address and password associated with your LevelUp
-            account
+            Enter the email address associated with your LevelUp account and
+            submit a connection request to LevelUp
           </p>
         </div>
         <div className="modal__body -message ot-line-height">
           <div className="">
+            <p className="ot-font-size-small">
+              Soon after you click Submit, you'll receive an email from LevelUp
+              at the email address you submit below asking you to accept the
+              connection request.
+            </p>
             <p className="ot-font-size-small">
               Don't have a LevelUp account?{' '}
               <a

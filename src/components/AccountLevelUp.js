@@ -59,7 +59,7 @@ const AccountLevelUp = () => {
     <div id={slugify(title)} className="section">
       <div className="container">
         <div className="section__container">
-          <SectionHeader title={title} subtitle={subtitle} />
+          <SectionHeader title={title} subtitle={levelup ? subtitle : empty} />
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
           {levelup ? (
@@ -140,13 +140,24 @@ const AccountLevelUp = () => {
             </div>
           ) : (
             <>
-              {empty && empty.length > 0 && <SectionEmpty message={empty} />}
+              <Button
+                text="Connect your LevelUp account"
+                icon={iconMap['Link']}
+                onClick={handleConnect}
+                classes="ot-btn-link"
+              />
               <SectionFooter>
-                <Button
-                  text="Click here to connect your LevelUp account"
-                  onClick={handleConnect}
-                  classes="ot-btn-link"
-                />
+                <p>
+                  Don't have a LevelUp account?{' '}
+                  <a
+                    className="no-link"
+                    href="https://www.thelevelup.com/users/new"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Click here to create one.
+                  </a>
+                </p>
               </SectionFooter>
             </>
           )}

@@ -46,6 +46,7 @@ import {
   Info,
   Save,
   Clipboard,
+  Link,
 } from 'react-feather'
 
 const iconMap = {
@@ -75,6 +76,7 @@ const iconMap = {
   Heart: <Heart size={null} />,
   Home: <Home size={null} />,
   Info: <Info size={null} />,
+  Link: <Link size={null} />,
   Phone: <Phone size={null} />,
   Plus: <Plus size={null} />,
   PlusCircle: <PlusCircle size={null} />,
