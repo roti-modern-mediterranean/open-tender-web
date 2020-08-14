@@ -15,6 +15,7 @@ import {
   RequestedAtModal,
   CartErrorsModal,
   CreditCardModal,
+  GiftCardModal,
   WorkingModal,
   ClosedModal,
   AdjustRequestedAtModal,
@@ -37,6 +38,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <CreditCardModal windowRef={windowRef} {...args} />
     case 'levelup':
       return <LevelUpModal windowRef={windowRef} {...args} />
+    case 'giftCard':
+      return <GiftCardModal windowRef={windowRef} {...args} />
     case 'allergens':
       return <AllergensModal {...args} />
     case 'item':

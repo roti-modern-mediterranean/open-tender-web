@@ -1,10 +1,10 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomerGiftCards } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 import { slugify, formatDateStr, dateStrToDate } from '@open-tender/js'
 
-import { selectAccountConfig } from '../slices'
+import { selectAccountConfig, openModal } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
@@ -14,6 +14,7 @@ import iconMap from './iconMap'
 import SectionEmpty from './SectionEmpty'
 
 const AccountGiftCards = () => {
+  const dispatch = useDispatch()
   const {
     giftCards: { title, subtitle, empty },
   } = useSelector(selectAccountConfig)
@@ -21,11 +22,13 @@ const AccountGiftCards = () => {
 
   const handleAddValue = (evt, giftCard) => {
     evt.preventDefault()
+    dispatch(openModal({ type: 'giftCard', args: { giftCard } }))
     evt.target.blur()
   }
 
   const handlePurchase = (evt) => {
     evt.preventDefault()
+    dispatch(openModal({ type: 'giftCard' }))
     evt.target.blur()
   }
 
