@@ -71,7 +71,7 @@ const AccountLevelUp = () => {
                   }
                 >
                   {levelup.status === 'ACCEPTED' ? (
-                    <div className="section__row__container">
+                    <div className="section__row__container ot-line-height">
                       <div className="section__row__container__content">
                         <p className="ot-color-success">Account connected!</p>
                         <p className="ot-font-size-small">
@@ -94,7 +94,7 @@ const AccountLevelUp = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="section__row__container">
+                    <div className="section__row__container ot-line-height">
                       <div className="section__row__container__content">
                         <p className="ot-color-headings">
                           Account Connection Pending
@@ -105,7 +105,9 @@ const AccountLevelUp = () => {
                             {levelup.email}
                           </span>{' '}
                           email address. Please check your inbox and accept the
-                          connection request, and then come back here.{' '}
+                          connection request, and then come back here (sometimes
+                          it can take a few minutes to receive an email from
+                          LevelUp).{' '}
                           <span className="ot-color-alert">
                             If you didn't receive an email from LevelUp or if
                             the connection request expired, please use the
