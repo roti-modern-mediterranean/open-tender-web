@@ -25,7 +25,7 @@ const AccountHouseAccounts = () => {
   const houseAccounts = useSelector(selectCustomerHouseAccounts)
   const isLoading = houseAccounts.loading === 'pending'
   const error = houseAccounts.error
-  const showGiftCards = houseAccounts.entities.length
+  const showHouseAccounts = houseAccounts.entities.length
 
   useEffect(() => {
     dispatch(fetchCustomerHouseAccounts())
@@ -38,7 +38,7 @@ const AccountHouseAccounts = () => {
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
-          {showGiftCards ? (
+          {showHouseAccounts ? (
             <div className="section__content ot-bg-color-primary ot-border-radius">
               <div className="section__rows">
                 {houseAccounts.entities.map((houseAccount) => {

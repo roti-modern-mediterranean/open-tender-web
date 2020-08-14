@@ -19,6 +19,7 @@ import AccountItems from './AccountItems'
 import AccountFavorites from './AccountFavorites'
 import AccountHouseAccounts from './AccountHouseAccounts'
 import AccountGroupOrders from './AccountGroupOrders'
+import AccountLevelUp from './AccountLevelUp'
 
 const sections = {
   favorites: <AccountFavorites />,
@@ -31,6 +32,7 @@ const sections = {
   giftCards: <AccountGiftCards />,
   creditCards: <AccountCreditCards />,
   houseAccounts: <AccountHouseAccounts />,
+  levelup: <AccountLevelUp />,
 }
 
 const AccountSection = ({ section }) => sections[section]

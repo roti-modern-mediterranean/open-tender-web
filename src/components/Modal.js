@@ -22,6 +22,7 @@ import {
   OrderTypeModal,
   CartCountsModal,
   GroupOrderModal,
+  LevelUpModal,
 } from './modals'
 
 const makeModal = (type, windowRef, args = {}) => {
@@ -34,6 +35,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <AddressModal windowRef={windowRef} {...args} />
     case 'creditCard':
       return <CreditCardModal windowRef={windowRef} {...args} />
+    case 'levelup':
+      return <LevelUpModal windowRef={windowRef} {...args} />
     case 'allergens':
       return <AllergensModal {...args} />
     case 'item':
