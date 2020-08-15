@@ -15,7 +15,6 @@ import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionRow from './SectionRow'
-import SectionEmpty from './SectionEmpty'
 import SectionFooter from './SectionFooter'
 
 const AccountLevelUp = () => {
