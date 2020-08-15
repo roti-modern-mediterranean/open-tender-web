@@ -31,7 +31,7 @@ const Cart = () => {
 
   const removeItem = (evt, item) => {
     evt.preventDefault()
-    dispatch(removeItemFromCart(item.index))
+    dispatch(removeItemFromCart(item))
     evt.target.blur()
   }
 
@@ -50,8 +50,8 @@ const Cart = () => {
               <BuilderQuantity
                 item={item}
                 adjust={null}
-                increment={() => dispatch(incrementItemInCart(index))}
-                decrement={() => dispatch(decrementItemInCart(index))}
+                increment={() => dispatch(incrementItemInCart(item))}
+                decrement={() => dispatch(decrementItemInCart(item))}
                 incrementDisabled={item.quantity === item.max}
                 decrementDisabled={false}
                 classes={null}

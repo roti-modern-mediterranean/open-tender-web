@@ -5,6 +5,7 @@ import {
 } from '@reduxjs/toolkit'
 import throttle from 'lodash/throttle'
 import { loadState, saveState } from './localStorage'
+import { analytics } from './analytics'
 import configReducer from '../slices/configSlice'
 import geolocationReducer from '../slices/geolocationSlice'
 import modalReducer from '../slices/modalSlice'
@@ -29,7 +30,7 @@ const customizedMiddleware = getDefaultMiddleware({
 const store = configureStore({
   reducer: rootReducer,
   preloadedState: persistedState,
-  middleware: customizedMiddleware,
+  middleware: customizedMiddleware.concat(analytics),
 })
 
 store.subscribe(

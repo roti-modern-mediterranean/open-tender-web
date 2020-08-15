@@ -1,9 +1,9 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-scroll'
-import { selectCartTotal } from '@open-tender/redux'
+import { selectCartTotal, checkout } from '@open-tender/redux'
 import {
   timezoneMap,
   isoToDateStr,
@@ -20,6 +20,7 @@ import iconMap from './iconMap'
 
 const CurrentOrder = ({ order }) => {
   const history = useHistory()
+  const dispatch = useDispatch()
   const {
     orderType,
     serviceType,
@@ -39,8 +40,9 @@ const CurrentOrder = ({ order }) => {
   const orderTypeStr = orderType === 'OLO' ? serviceType : orderType
   const streetAddress = makeOrderAddress(address)
 
-  const checkout = (evt) => {
+  const handleCheckout = (evt) => {
     evt.preventDefault()
+    dispatch(checkout())
     history.push('/checkout')
     evt.target.blur()
   }
@@ -102,7 +104,7 @@ const CurrentOrder = ({ order }) => {
             <Button
               text="Checkout"
               icon={iconMap['DollarSign']}
-              onClick={checkout}
+              onClick={handleCheckout}
               classes="ot-btn--small ot-font-size-small"
             />
             <Button

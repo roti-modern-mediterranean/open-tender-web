@@ -15,6 +15,7 @@ import {
   showNotification,
   setCart,
   fetchMenuItems,
+  checkout,
 } from '@open-tender/redux'
 import { rehydrateCart, isEmpty, combineCarts } from '@open-tender/js'
 import { CartItem, Button } from '@open-tender/components'
@@ -88,7 +89,7 @@ const GroupOrderReviewOwner = () => {
     }
   }, [dispatch, groupCart, prevGroupCart, menuItems])
 
-  const checkout = (evt) => {
+  const handleCheckout = (evt) => {
     evt.preventDefault()
     const combinedCart = combineCarts(
       order.cart,
@@ -98,6 +99,7 @@ const GroupOrderReviewOwner = () => {
     )
     dispatch(setCart(combinedCart))
     dispatch(closeGroupOrder(cartId, true))
+    dispatch(checkout())
     history.push('/checkout')
     evt.target.blur()
   }
@@ -158,8 +160,7 @@ const GroupOrderReviewOwner = () => {
                 <Button
                   text="Proceed To Checkout"
                   classes="ot-btn"
-                  // icon={iconMap['DollarSign']}
-                  onClick={checkout}
+                  onClick={handleCheckout}
                 />
               </p>
               <p>

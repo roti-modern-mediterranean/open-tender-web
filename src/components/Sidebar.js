@@ -11,6 +11,7 @@ import {
   selectOrderLimits,
   setCart,
   closeGroupOrder,
+  checkout,
 } from '@open-tender/redux'
 import { displayPrice } from '@open-tender/js'
 import { Button } from '@open-tender/components'
@@ -62,7 +63,10 @@ const Sidebar = () => {
   const handleCheckout = (evt) => {
     evt.preventDefault()
     dispatch(toggleSidebar())
-    if (!isCheckout) history.push(`/checkout`)
+    if (!isCheckout) {
+      dispatch(checkout())
+      history.push(`/checkout`)
+    }
     evt.target.blur()
   }
 
