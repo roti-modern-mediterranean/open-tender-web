@@ -5,9 +5,9 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
-    "@open-tender/components": "^1.0.16",
-    "@open-tender/js": "^1.0.7",
-    "@open-tender/redux": "^1.0.9",
+    "@open-tender/components": "^1.0.17",
+    "@open-tender/js": "^1.0.8",
+    "@open-tender/redux": "^1.0.10",
     "@reduxjs/toolkit": "^1.1.0",
     "@sentry/react": "^5.19.2",
     "@testing-library/jest-dom": "^4.2.4",
