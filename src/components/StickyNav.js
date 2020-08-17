@@ -69,10 +69,7 @@ const StickyNav = ({
                 {items.map((item, index) => {
                   const sectionId = slugify(item)
                   return (
-                    <li
-                      key={`${sectionId}-${index}`}
-                      className="ot-preface ot-font-size-small"
-                    >
+                    <li key={`${sectionId}-${index}`} className="ot-preface">
                       <Link
                         activeClass="active"
                         className="ot-link-light"

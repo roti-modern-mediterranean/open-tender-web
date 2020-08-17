@@ -96,8 +96,8 @@ const makeGlobalStyles = (theme) => css`
     letter-spacing: ${theme.fonts.preface.letterSpacing};
     text-transform: ${theme.fonts.preface.textTransform};
     -webkit-font-smoothing: ${theme.fonts.preface.fontSmoothing};
+    font-size: ${theme.fonts.preface.fontSize};
     color: ${theme.fonts.body.color};
-    font-size: ${theme.fonts.sizes.small};
   }
   .ot-dark .ot-preface {
     color: ${theme.colors.light};
@@ -287,6 +287,7 @@ const makeGlobalStyles = (theme) => css`
     -webkit-font-smoothing: ${theme.buttons.sizes.default.fontSmoothing};
     font-size: ${theme.buttons.sizes.default.fontSize};
     padding: ${theme.buttons.sizes.default.padding};
+    border-style: solid;
     border-width: ${theme.buttons.sizes.default.borderWidth};
     border-radius: ${theme.buttons.sizes.default.borderRadius};
     color: ${theme.buttons.colors.primary.color};
@@ -416,22 +417,22 @@ const makeGlobalStyles = (theme) => css`
   }
 
   .ot-btn--highlight {
-    color: ${theme.buttons.colors.primaryHover.color};
-    background-color: ${theme.buttons.colors.primaryHover.bgColor};
-    border-color: ${theme.buttons.colors.primaryHover.borderColor};
+    color: ${theme.buttons.colors.cart.color};
+    background-color: ${theme.buttons.colors.cart.bgColor};
+    border-color: ${theme.buttons.colors.cart.borderColor};
 
     &:hover,
     &:active,
     &:focus {
-      color: ${theme.buttons.colors.primary.color};
-      background-color: ${theme.buttons.colors.primary.bgColor};
-      border-color: ${theme.buttons.colors.primary.borderColor};
+      color: ${theme.buttons.colors.cartHover.color};
+      background-color: ${theme.buttons.colors.cartHover.bgColor};
+      border-color: ${theme.buttons.colors.cartHover.borderColor};
     }
 
     &:disabled {
-      color: ${theme.buttons.colors.primaryHover.color};
-      background-color: ${theme.buttons.colors.primaryHover.bgColor};
-      border-color: ${theme.buttons.colors.primaryHover.borderColor};
+      color: ${theme.buttons.colors.cart.color};
+      background-color: ${theme.buttons.colors.cart.bgColor};
+      border-color: ${theme.buttons.colors.cart.borderColor};
     }
   }
 

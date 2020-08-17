@@ -19,6 +19,7 @@ import NotFoundPage from './NotFoundPage'
 import RefundPolicyPage from './RefundPolicyPage'
 import GroupOrderGuestPage from './GroupOrderGuestPage'
 import GroupOrderReviewPage from './GroupOrderReviewPage'
+import AccessibilityPolicyPage from './AccessibilityPolicyPage'
 
 const Routes = () => {
   return (
@@ -73,6 +74,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/confirmation">
         <ConfirmationPage />
+      </Route>
+      <Route exact path="/accessibility">
+        <AccessibilityPolicyPage />
       </Route>
       <Route exact path="/refunds">
         <RefundPolicyPage />

@@ -7,9 +7,7 @@ const MenuRevenueCenters = ({ revenueCenters, selected, change }) => {
     <div className="menu__rcs">
       <div className="menu__rcs__header ot-dark">
         <div className="container">
-          <p className="menu__rcs__title ot-preface ot-font-size-small">
-            Please select a vendor
-          </p>
+          <p className="menu__rcs__title ot-preface">Please select a vendor</p>
         </div>
       </div>
       <div className="menu__rcs__items slide-up">

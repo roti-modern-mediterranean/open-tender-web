@@ -30,15 +30,22 @@ const Footer = ({ hasRouter = true }) => {
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  Privacy Policy
+                  Privacy
                 </a>
               </li>
               {hasRouter && (
-                <li>
-                  <Link to="/refunds" className="no-link ot-link-light">
-                    Refund Policy
-                  </Link>
-                </li>
+                <>
+                  <li>
+                    <Link to="/accessibility" className="no-link ot-link-light">
+                      Accessibility
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/refunds" className="no-link ot-link-light">
+                      Refunds
+                    </Link>
+                  </li>
+                </>
               )}
             </ul>
           </nav>
