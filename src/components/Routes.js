@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import HomePage from './HomePage'
 import MenuPage from './MenuPage'
 import CheckoutPage from './CheckoutPage'
@@ -26,6 +26,12 @@ const Routes = () => {
     <Switch>
       <Route exact path="/">
         <HomePage />
+      </Route>
+      <Route exact path="/order">
+        <Redirect to="/" />
+      </Route>
+      <Route exact path="/order/catering">
+        <Redirect to="/" />
       </Route>
       <Route exact path="/signup">
         <SignUpPage />
