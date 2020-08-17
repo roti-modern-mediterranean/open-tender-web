@@ -33,7 +33,7 @@ const ButtonGroupGuest = () => {
   const minutes = minutesLeft(cutoffDate, new Date())
   const alertClass = minutes < 5 ? 'ot-btn--cancel' : 'ot-btn--highlight'
   const classes = `ot-btn--header ${alertClass}`
-  const text = `Submit by ${cutoffTime}`
+  const text = cutoffTime ? `Submit by ${cutoffTime}` : 'Submit'
 
   const onClick = (evt) => {
     evt.preventDefault()
