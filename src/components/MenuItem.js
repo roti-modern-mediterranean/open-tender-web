@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 import { setCurrentItem, selectCartCounts } from '@open-tender/redux'
-import { convertStringToArray } from '@open-tender/js'
+import { convertStringToArray, makeDisplayPrice } from '@open-tender/js'
 
 import { selectDisplaySettings, openModal } from '../slices'
 import { MenuContext } from './MenuPage'
@@ -26,6 +26,7 @@ const MenuItem = ({ item }) => {
   const smallImg =
     item.small_image_url || item.app_image_url || item.big_image_url
   const bgStyle = smallImg ? { backgroundImage: `url(${smallImg}` } : null
+  const price = makeDisplayPrice(item)
   const cals =
     showCals && item.nutritional_info
       ? parseInt(item.nutritional_info.calories) || null
@@ -98,9 +99,11 @@ const MenuItem = ({ item }) => {
               </p>
             )}
             <p className="menu__item__details">
-              <span className="menu__item__price ot-bold ot-color-headings">
-                ${item.price}
-              </span>
+              {price && (
+                <span className="menu__item__price ot-bold ot-color-headings">
+                  {price}
+                </span>
+              )}
               {cals && (
                 <span className="menu__item__cals ot-bold ot-color-body">
                   {cals} cals
