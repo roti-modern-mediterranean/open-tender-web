@@ -10,6 +10,7 @@ import {
   setGeoLatLng,
   setGeoError,
   setGeoLoading,
+  selectSettings,
 } from '../slices'
 import OrderType from './OrderType'
 import PageTitle from './PageTitle'
@@ -20,8 +21,9 @@ const HomePage = () => {
   const dispatch = useDispatch()
   const { geoLatLng, geoError } = useGeolocation()
   const config = useSelector(selectConfig)
-  // const bgStyle = { backgroundImage: `url(${home.background}` }
   const order = useSelector(selectOrder)
+  const { orderTypes } = useSelector(selectSettings)
+  const hasOrderTypes = orderTypes && orderTypes.length > 0
   const hasTypes = order.orderType && order.serviceType
   const path = order.orderType === 'CATERING' ? '/catering' : '/locations'
 
@@ -46,12 +48,21 @@ const HomePage = () => {
     <>
       {isBrowser && <Background imageUrl={config.home.background} />}
       <div className="content">
-        <PageTitle {...config.home} />
-        <div className="content__body">
-          <div className="container">
-            <OrderType />
-          </div>
-        </div>
+        {hasOrderTypes ? (
+          <>
+            <PageTitle {...config.home} />
+            <div className="content__body">
+              <div className="container">
+                <OrderType />
+              </div>
+            </div>
+          </>
+        ) : (
+          <PageTitle
+            title="Online ordering is currently closed"
+            subtitle="We're very sorry for the inconvenience. Please try back at a later time."
+          />
+        )}
         {config.home.content && config.home.content.length > 0 && (
           <div className="content__footer ot-line-height slide-up">
             <div className="container">
