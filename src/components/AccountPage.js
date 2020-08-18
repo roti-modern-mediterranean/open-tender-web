@@ -59,21 +59,25 @@ const AccountPage = () => {
     dispatch(fetchCustomer({ token }))
   }, [token, dispatch, history])
 
-  return profile ? (
+  return (
     <>
       {isBrowser && <Background imageUrl={background} />}
       <div className="content">
-        <PageTitle title={pageTitle} subtitle={subtitle} />
-        <AccountGreeting />
-        <StickyNav items={navItems} offset={-90} />
-        <div className="sections">
-          {accountSections.map((section) => (
-            <AccountSection key={section} section={section} />
-          ))}
-        </div>
+        {profile && (
+          <>
+            <PageTitle title={pageTitle} subtitle={subtitle} />
+            <AccountGreeting />
+            <StickyNav items={navItems} offset={-90} />
+            <div className="sections">
+              {accountSections.map((section) => (
+                <AccountSection key={section} section={section} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </>
-  ) : null
+  )
 }
 
 AccountPage.displayName = 'AccountPage'

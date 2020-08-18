@@ -20,6 +20,7 @@ import RefundPolicyPage from './RefundPolicyPage'
 import GroupOrderGuestPage from './GroupOrderGuestPage'
 import GroupOrderReviewPage from './GroupOrderReviewPage'
 import AccessibilityPolicyPage from './AccessibilityPolicyPage'
+import LevelUpPage from './LevelUpPage'
 
 const Routes = () => {
   return (
@@ -32,6 +33,12 @@ const Routes = () => {
       </Route>
       <Route exact path="/order/catering">
         <Redirect to="/" />
+      </Route>
+      <Route exact path="/levelup">
+        <LevelUpPage />
+      </Route>
+      <Route exact path="/levelup/:token">
+        <LevelUpPage />
       </Route>
       <Route exact path="/signup">
         <SignUpPage />
