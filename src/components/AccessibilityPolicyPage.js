@@ -8,7 +8,6 @@ import Background from './Background'
 
 const AccessibilityPolicyPage = () => {
   const config = useSelector(selectConfig)
-  console.log(config.accessibility.content)
 
   useEffect(() => {
     window.scroll(0, 0)

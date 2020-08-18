@@ -4,7 +4,6 @@ import MenuCategory from './MenuCategory'
 
 const MenuCategories = ({ categories }) => {
   if (!categories || !categories.length) return null
-  console.log(categories)
   return (
     <div className="menu slide-up">
       {categories.map((category) => (
