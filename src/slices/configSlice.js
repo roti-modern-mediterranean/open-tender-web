@@ -109,5 +109,7 @@ export const selectDisplaySettings = (state) => {
   return state.config.settings.displaySettings[orderType]
 }
 export const selectConfigRetries = (state) => state.config.retries
+export const selectLightColor = (state) =>
+  state.theme ? state.theme.colors.light : '#ffffff'
 
 export default configSlice.reducer
