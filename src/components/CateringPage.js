@@ -21,6 +21,7 @@ import {
   makeLocalDate,
   makeLocalDateStr,
   todayDate,
+  makeWeekdayIndices,
 } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
@@ -62,21 +63,36 @@ const CateringPage = () => {
     const requestedAtDate =
       !requestedAt || requestedAt === 'asap' ? null : isoToDate(requestedAt, tz)
     if (validTimes) {
-      const { first_time, holidays, hours, interval } = validTimes
-      const firstDate = isoToDate(first_time.utc, tz)
-      const newDate =
-        !requestedAtDate || firstDate > requestedAtDate
-          ? firstDate
-          : requestedAtDate
-      setDate(newDate)
-      const newSettings = {
-        minDate: firstDate,
-        minTime: time24ToDate(hours.open),
-        maxTime: time24ToDate(hours.close),
-        excludeDates: holidays.map((i) => makeLocalDate(i)),
-        interval: interval,
+      const {
+        first_time,
+        holidays,
+        hours,
+        interval,
+        closed_weekdays,
+      } = validTimes
+      if (!first_time) {
+        setDate(requestedAtDate)
+      } else {
+        const firstDate = isoToDate(first_time.utc, tz)
+        const newDate =
+          !requestedAtDate || firstDate > requestedAtDate
+            ? firstDate
+            : requestedAtDate
+        setDate(newDate)
+        const closedWeekdays = makeWeekdayIndices(closed_weekdays)
+        const isClosed = (date) => {
+          return !closedWeekdays.includes(date.getDay())
+        }
+        const newSettings = {
+          minDate: firstDate,
+          minTime: time24ToDate(hours.open),
+          maxTime: time24ToDate(hours.close),
+          excludeDates: holidays.map((i) => makeLocalDate(i)),
+          interval: interval,
+          isClosed: isClosed,
+        }
+        setSettings(newSettings)
       }
-      setSettings(newSettings)
     } else {
       setDate(requestedAtDate)
     }
@@ -138,7 +154,7 @@ const CateringPage = () => {
                       maxTime={settings.maxTime}
                       excludeDates={settings.excludeDates}
                       // excludeTimes={excludeTimes}
-                      // filterDate={isClosed}
+                      filterDate={settings.isClosed}
                       selected={date}
                       onChange={(date) => setDate(date)}
                       inline

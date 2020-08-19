@@ -663,9 +663,13 @@ const makeGlobalStyles = (theme) => css`
   .react-datepicker__day--today {
     background-color: ${theme.bgColors.secondary};
   }
+
   .react-datepicker__day--disabled,
-  .react-datepicker__time-list-item--disabled {
-    color: ${theme.colors.secondary};
+  .react-datepicker__time-list-item--disabled,
+  .react-datepicker__day--disabled:hover,
+  .react-datepicker__time-list-item--disabled:hover {
+    color: ${theme.fonts.body.color} !important;
+    background-color: transparent !important;
   }
 
   .circle-loader {
