@@ -1472,10 +1472,10 @@
   resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.0.11.tgz#ebcb912183d5bab178fc9e18dd1febec49819d5b"
   integrity sha512-A/IGggRQhd/kjzX7EFsTY+2SmMospAZcGKbm13nB/oU2esQEsd9qOrzPNhEsQuWqbGXOUn+oGO23t2qhnvIv9g==
 
-"@open-tender/redux@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.0.11.tgz#6cf5030d023440f9ab1bb336433a0ab1ccda1ca3"
-  integrity sha512-xjgrza64R2in5q9YF+0xWLC+HSXbfmuIiLcuHIMt3ndvOPnvcb8uOjsOD1HBX1lpysk33Z/0I/bOZPs90P0Q0w==
+"@open-tender/redux@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.0.12.tgz#aa9eee9752abb81f0c0bf7a55616041ec08e1a35"
+  integrity sha512-zyrSt7LHwRI0VS+4dpy1L79QUxBbQFsx5ZbJ+3S2lfdywsGvfG2KVzocnCUJGPLkMllat6cuy8ACo5AtGzXlYA==
 
 "@reach/router@^1.2.1":
   version "1.3.4"
