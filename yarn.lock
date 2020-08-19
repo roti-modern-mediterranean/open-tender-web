@@ -1462,20 +1462,20 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@open-tender/components@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-1.0.18.tgz#647e647f0b52164a4cd1a081834e89eb22852463"
-  integrity sha512-n+Sk/UU8O/zToqCbDPoypLgf2V9v/v1129Za0SoEjN3C5qonFsqin+qyP8sR+LMn+U4+DlyuBoWl+iEtOaTrvA==
+"@open-tender/components@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-1.0.19.tgz#8ac7358cb7c88c5a44788f2f74035f362f3ee8ba"
+  integrity sha512-aGTNlob00r9a11tPfViwBEydC/9b24gAb3dql/8Z3jNbBzn2WI8zhxkMLz9zL1iTcq6JKfB4BipdbXPYyprsyw==
 
 "@open-tender/js@^1.0.11":
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.0.11.tgz#ebcb912183d5bab178fc9e18dd1febec49819d5b"
   integrity sha512-A/IGggRQhd/kjzX7EFsTY+2SmMospAZcGKbm13nB/oU2esQEsd9qOrzPNhEsQuWqbGXOUn+oGO23t2qhnvIv9g==
 
-"@open-tender/redux@^1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.0.12.tgz#aa9eee9752abb81f0c0bf7a55616041ec08e1a35"
-  integrity sha512-zyrSt7LHwRI0VS+4dpy1L79QUxBbQFsx5ZbJ+3S2lfdywsGvfG2KVzocnCUJGPLkMllat6cuy8ACo5AtGzXlYA==
+"@open-tender/redux@^1.0.13":
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.0.13.tgz#a4140afe65d6d04a5e4e6f127a230ec9910ebfac"
+  integrity sha512-TNoKfHFnN/Yz8WtVU54j3FGkv6ea/FMyTyPi6gRgL1DNtjR6O/auyVPqRB9C4TFI4aJmlBebO2z46831HGVJ1A==
 
 "@reach/router@^1.2.1":
   version "1.3.4"
