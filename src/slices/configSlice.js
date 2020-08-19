@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { capitalize } from '@open-tender/js'
 import { OpenTenderAPI } from '@open-tender/redux'
 
+// for testing
+// const baseUrl = 'http://httpstat.us'
 const baseUrl = process.env.REACT_APP_API_URL
 const authUrl = process.env.REACT_APP_AUTH_URL
 
@@ -13,6 +15,7 @@ const initialState = {
   settings: null,
   loading: 'idle',
   error: null,
+  retries: 0,
 }
 
 // fetch config via origin
@@ -22,6 +25,8 @@ export const fetchConfig = createAsyncThunk(
     try {
       const options = { baseUrl, authUrl }
       const api = new OpenTenderAPI(options)
+      // for testing
+      // const response = await api.getHttpResponse(503)
       const response = await api.getConfig()
       const brandId = response.brand.brandId
       const clientId = response.clientId
@@ -54,7 +59,15 @@ export const fetchConfig = createAsyncThunk(
 const configSlice = createSlice({
   name: 'config',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    resetConfig: () => initialState,
+    resetRetries: (state) => {
+      state.retries = 0
+    },
+    incrementRetries: (state) => {
+      state.retries = state.retries + 1
+    },
+  },
   extraReducers: {
     [fetchConfig.fulfilled]: (state, action) => {
       const { app, brand, content, theme, settings } = action.payload
@@ -65,6 +78,7 @@ const configSlice = createSlice({
       state.settings = settings
       state.loading = 'idle'
       state.api = new OpenTenderAPI(app)
+      state.retries = 0
     },
     [fetchConfig.pending]: (state) => {
       state.loading = 'pending'
@@ -75,6 +89,12 @@ const configSlice = createSlice({
     },
   },
 })
+
+export const {
+  resetConfig,
+  resetRetries,
+  incrementRetries,
+} = configSlice.actions
 
 export const selectBrand = (state) => state.config.brand
 export const selectTheme = (state) => state.config.theme
@@ -88,5 +108,6 @@ export const selectDisplaySettings = (state) => {
   const orderType = state.data.order.orderType || 'OLO'
   return state.config.settings.displaySettings[orderType]
 }
+export const selectConfigRetries = (state) => state.config.retries
 
 export default configSlice.reducer
