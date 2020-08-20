@@ -210,7 +210,7 @@ const CateringPage = () => {
               )}
               {catering.policy.subtitle.length > 0 && (
                 <p className="catering__fine-print__subtitle ot-heading ot-font-size-big">
-                  {catering.policy.title}
+                  {catering.policy.subtitle}
                 </p>
               )}
               {catering.policy.content.length > 0 && (
