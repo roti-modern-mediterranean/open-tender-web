@@ -505,18 +505,6 @@ const makeGlobalStyles = (theme) => css`
 
   .ot-input-quantity.ot-input-quantity-order {
     line-height: ${theme.favorite.size};
-    color: ${theme.fonts.body.color};
-    background-color: ${theme.bgColors.secondary};
-    border-color: ${theme.bgColors.secondary};
-
-    &:active,
-    &:focus,
-    &:disabled,
-    &:read-only {
-      color: ${theme.fonts.body.color};
-      background-color: ${theme.bgColors.secondary};
-      border-color: ${theme.bgColors.secondary};
-    }
   }
 
   .ot-btn.favorite .favorite__icon {
