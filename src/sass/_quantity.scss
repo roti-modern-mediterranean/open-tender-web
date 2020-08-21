@@ -13,6 +13,9 @@
 
   button {
     transition: none;
+    &:disabled {
+      opacity: 0.25;
+    }
   }
 
   input[type='number'],
@@ -31,6 +34,7 @@
     padding: 0.4rem;
     border-width: 0.2rem;
     border-style: solid;
+    line-height: 1;
   }
 
   &__increase,
