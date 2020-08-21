@@ -1467,10 +1467,10 @@
   resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-1.0.22.tgz#a4555e3c395038481e55989bc3970e7ed3261861"
   integrity sha512-qHi2cd+h6obgyfFWg/25sQuwvQuHJvMIuCH2UA84kMRtlWuoesdL2QNsg7DD/wG3zaPTiE4YvnMfE0L/p4X51g==
 
-"@open-tender/js@^1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.0.12.tgz#1769e33b8b8228c94449ca78ca969dae87316df2"
-  integrity sha512-O55IgfyjO6Fp2VVkAHwVvbNpKyLiqA3Vu6ubkx1BdZOJtHc39RW8o24xoMaUOyvZLt8SJMJSgFIMq4aj9IbMmg==
+"@open-tender/js@^1.0.13":
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.0.13.tgz#2eef4bb379d493db724f8a9b6098bc1bb224e8ec"
+  integrity sha512-pPT22DIR70695/4vPztDuPP5susUsNNETHhLww8qzpFuXsTIuOL1ojcJqHrz5YkqL2uVcUoNYFxs/9LhBiySEw==
 
 "@open-tender/redux@^1.0.14":
   version "1.0.14"
