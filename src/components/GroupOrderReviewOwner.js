@@ -231,32 +231,35 @@ const GroupOrderReviewOwner = () => {
               </div>
               {!isEmpty(guestCartLookup) ? (
                 showGuestItems ? (
-                  cartGuests.map((guest) => (
-                    <div className="content__subsection ot-bg-color-primary ot-border-radius">
-                      <div className="content__subsection__header">
-                        <p className="content__subsection__header__title ot-color-headings ot-bold ot-font-size">
-                          {guest.first_name} {guest.last_name}
-                        </p>
-                      </div>
-                      <ul className="cart">
-                        {guestCartLookup[guest.cart_guest_id].map(
-                          (item, index) => {
-                            return (
-                              <li key={`${item.id}-${index}`}>
-                                <CartItem
-                                  item={item}
-                                  showModifiers={true}
-                                  displaySettings={displaySettings}
-                                >
-                                  <OrderQuantity item={item} show={false} />
-                                </CartItem>
-                              </li>
-                            )
-                          }
-                        )}
-                      </ul>
-                    </div>
-                  ))
+                  cartGuests.map((guest) => {
+                    const guestItems = guestCartLookup[guest.cart_guest_id]
+                    return (
+                      guestItems && (
+                        <div className="content__subsection ot-bg-color-primary ot-border-radius">
+                          <div className="content__subsection__header">
+                            <p className="content__subsection__header__title ot-color-headings ot-bold ot-font-size">
+                              {guest.first_name} {guest.last_name}
+                            </p>
+                          </div>
+                          <ul className="cart">
+                            {guestItems.map((item, index) => {
+                              return (
+                                <li key={`${item.id}-${index}`}>
+                                  <CartItem
+                                    item={item}
+                                    showModifiers={true}
+                                    displaySettings={displaySettings}
+                                  >
+                                    <OrderQuantity item={item} show={false} />
+                                  </CartItem>
+                                </li>
+                              )
+                            })}
+                          </ul>
+                        </div>
+                      )
+                    )
+                  })
                 ) : (
                   <div className="ot-bg-color-primary ot-border-radius">
                     <ul className="content__list">

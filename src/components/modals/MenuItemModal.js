@@ -9,6 +9,7 @@ import {
   selectSoldOut,
   selectSelectedAllergenNames,
   showNotification,
+  selectGroupOrder,
 } from '@open-tender/redux'
 import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
 
@@ -26,6 +27,7 @@ const MenuItemModal = () => {
   const soldOut = useSelector(selectSoldOut)
   const allergens = useSelector(selectSelectedAllergenNames)
   const displaySettings = useSelector(selectDisplaySettings)
+  const { cartId } = useSelector(selectGroupOrder)
 
   const handleClose = () => {
     dispatch(closeModal())
@@ -59,6 +61,7 @@ const MenuItemModal = () => {
             displaySettings={displaySettings}
             iconMap={iconMap}
             closeModal={handleClose}
+            cartId={cartId}
           />
         )}
       </div>
