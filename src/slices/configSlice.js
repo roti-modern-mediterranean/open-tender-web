@@ -78,6 +78,7 @@ const configSlice = createSlice({
       state.settings = settings
       state.loading = 'idle'
       state.api = new OpenTenderAPI(app)
+      state.error = null
       state.retries = 0
     },
     [fetchConfig.pending]: (state) => {
