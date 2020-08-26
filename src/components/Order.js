@@ -38,6 +38,7 @@ const Order = ({ order, loading, error }) => {
     revenue_center,
     is_asap,
     requested_at,
+    requested_time,
     estimated_at,
     timezone,
     delivery,
@@ -143,6 +144,7 @@ const Order = ({ order, loading, error }) => {
                     <SectionRow title="Requested Time">
                       <OrderRequestedAt
                         estimated_at={estimated_at || requested_at}
+                        requested_time={requested_time}
                         timezone={timezone}
                         is_asap={is_asap}
                         status={status}
