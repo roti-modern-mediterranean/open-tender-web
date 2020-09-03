@@ -48,17 +48,22 @@ const ErrorFatalPage = ({ error, loading }) => {
   ) : error ? (
     <div className="fatal-error">
       <div className="fatal-error__body">
-        <h1 className="fatal-error__title">Unknown Error</h1>
+        <h1 className="fatal-error__title">Unsupported Browser</h1>
         <div className="fatal-error__content">
           <p>
-            We're really sorry about this, but our development team has already
-            been alerted about this issue.
+            Hi, there. Unfortunately it looks like you're using an outdated,
+            unsupported browser.
           </p>
           <p>
-            <strong>Please try refreshing the page.</strong>
+            <strong>
+              Please try ordering on your phone, updating your browser to the
+              latest version, or downloading the latest version of Google
+              Chrome.
+            </strong>
           </p>
           <p>
-            If the issue persists, please contact Open Tender support at{' '}
+            If you've updated your browser and the issue persists, please
+            contact Open Tender support at{' '}
             <a
               className="no-link"
               href="mailto:help@opentender.io"
