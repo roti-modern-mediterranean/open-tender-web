@@ -15,7 +15,7 @@ import {
   resetCompletedOrder,
   setConfirmationOrder,
 } from '@open-tender/redux'
-import { CheckoutForm } from '@open-tender/components'
+import { CheckoutForm, Error } from '@open-tender/components'
 
 import { selectConfig } from '../slices'
 import Loader from './Loader'
@@ -51,7 +51,7 @@ const CheckoutPage = () => {
   const autoSelect = useSelector(selectAutoSelect)
   const customer = useSelector(selectCustomer)
   const checkout = useSelector(selectCheckout)
-  const { check, completedOrder } = checkout
+  const { check, completedOrder, errors } = checkout
   const { serviceType, revenueCenter } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const iconMap = {
@@ -111,12 +111,16 @@ const CheckoutPage = () => {
           <div className="container">
             <CheckoutCancelEdit />
             <div ref={formRef} className="checkout__form slide-up">
-              {!check && (
-                <Loader
-                  text={'Retrieving your order...'}
-                  className="loading--left"
-                />
-              )}
+              {!check ? (
+                errors.form ? (
+                  <Error error={errors.form} />
+                ) : (
+                  <Loader
+                    text={'Retrieving your order...'}
+                    className="loading--left"
+                  />
+                )
+              ) : null}
               <CheckoutForm
                 dispatch={dispatch}
                 history={history}
