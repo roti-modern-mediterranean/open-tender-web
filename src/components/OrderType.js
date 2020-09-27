@@ -5,45 +5,53 @@ import { setOrderServiceType } from '@open-tender/redux'
 import { selectConfig, selectSettings } from '../slices'
 import OrderTypeButton from './OrderTypeButton'
 import { Flag, ShoppingBag, Truck, Users, Gift, Coffee } from 'react-feather'
+import { useHistory } from 'react-router-dom'
 
 const OrderType = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { orderTypes } = useSelector(selectSettings)
   const { home } = useSelector(selectConfig)
 
   const handleOutpost = (evt) => {
     evt.preventDefault()
     dispatch(setOrderServiceType('OLO', 'PICKUP', true))
+    history.push('/locations')
     evt.target.blur()
   }
 
   const handleWalkin = (evt) => {
     evt.preventDefault()
     dispatch(setOrderServiceType('OLO', 'WALKIN'))
+    history.push('/locations')
     evt.target.blur()
   }
 
   const handlePickup = (evt) => {
     evt.preventDefault()
     dispatch(setOrderServiceType('OLO', 'PICKUP'))
+    history.push('/locations')
     evt.target.blur()
   }
 
   const handleDelivery = (evt) => {
     evt.preventDefault()
     dispatch(setOrderServiceType('OLO', 'DELIVERY'))
+    history.push('/locations')
     evt.target.blur()
   }
 
   const handleCatering = (evt) => {
     evt.preventDefault()
     dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
+    history.push('/catering')
     evt.target.blur()
   }
 
   const handleMerch = (evt) => {
     evt.preventDefault()
     dispatch(setOrderServiceType('MERCH', 'DELIVERY'))
+    history.push('/locations')
     evt.target.blur()
   }
 

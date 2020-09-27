@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
-import { selectOrder, resetRevenueCenters } from '@open-tender/redux'
+import { resetRevenueCenters, resetOrderType } from '@open-tender/redux'
 import { useGeolocation } from '@open-tender/components'
 
 import {
@@ -17,24 +16,18 @@ import PageTitle from './PageTitle'
 import Background from './Background'
 
 const HomePage = () => {
-  const history = useHistory()
   const dispatch = useDispatch()
   const { geoLatLng, geoError } = useGeolocation()
   const config = useSelector(selectConfig)
-  const order = useSelector(selectOrder)
   const { orderTypes } = useSelector(selectSettings)
   const hasOrderTypes = orderTypes && orderTypes.length > 0
-  const hasTypes = order.orderType && order.serviceType
-  const path = order.orderType === 'CATERING' ? '/catering' : '/locations'
 
   useEffect(() => {
     window.scroll(0, 0)
     dispatch(setGeoLoading())
+    dispatch(resetRevenueCenters())
+    dispatch(resetOrderType())
   }, [dispatch])
-
-  useEffect(() => {
-    hasTypes ? history.push(path) : dispatch(resetRevenueCenters())
-  }, [hasTypes, path, history, dispatch])
 
   useEffect(() => {
     if (geoLatLng) {
