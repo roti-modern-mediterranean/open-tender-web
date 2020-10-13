@@ -12,12 +12,15 @@ const CheckoutHeader = ({ checkout = {} }) => {
   const updating = submitting ? false : loading === 'pending'
   const total =
     check && check.totals ? `${formatDollars(check.totals.total)}` : null
+  const hasTip = check && check.config ? check.config.gratuity.has_tip : false
   return total ? (
     <div className="checkout__header ot-dark">
       <div className="container">
         <div className="checkout__header__container">
           <div className="checkout__header__label">
-            <p className="ot-preface ot-font-size">Order Total w/ Tax & Tip</p>
+            <p className="ot-preface ot-font-size">
+              Order Total w/ Tax{hasTip && ' & Tip'}
+            </p>
           </div>
           <div className="checkout__header__value">
             <p>
