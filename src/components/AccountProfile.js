@@ -4,7 +4,7 @@ import { selectCustomer, updateCustomer } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
 import { ProfileForm } from '@open-tender/components'
 
-import { selectAccountConfig } from '../slices'
+import { selectAccountConfig, selectOptIns } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionError from './SectionError'
 import SectionLoading from './SectionLoading'
@@ -20,6 +20,7 @@ const AccountProfile = () => {
   const update = useCallback((data) => dispatch(updateCustomer(data)), [
     dispatch,
   ])
+  const optIns = useSelector(selectOptIns)
 
   return (
     <div id={slugify(title)} className="section">
@@ -34,6 +35,7 @@ const AccountProfile = () => {
               loading={loading}
               error={error}
               update={update}
+              optIns={optIns}
             />
           </div>
         </div>

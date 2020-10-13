@@ -112,5 +112,9 @@ export const selectDisplaySettings = (state) => {
 export const selectConfigRetries = (state) => state.config.retries
 export const selectLightColor = (state) =>
   state.theme ? state.theme.colors.light : '#ffffff'
+export const selectOptIns = (state) => {
+  const { accepts_marketing, order_notifications } = state.config.brand
+  return { accepts_marketing, order_notifications }
+}
 
 export default configSlice.reducer

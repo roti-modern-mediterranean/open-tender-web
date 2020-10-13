@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectSignUp, signUpCustomer, resetSignUp } from '@open-tender/redux'
 import { SignUpForm } from '@open-tender/components'
 
-import { closeModal } from '../../slices'
+import { closeModal, selectOptIns } from '../../slices'
 import ModalClose from '../ModalClose'
 import ModalTitle from '../ModalTitle'
 
@@ -16,6 +16,7 @@ const SignUpModal = ({ windowRef }) => {
     [dispatch]
   )
   const close = useCallback(() => dispatch(closeModal()), [dispatch])
+  const optIns = useSelector(selectOptIns)
 
   useEffect(() => {
     return () => dispatch(resetSignUp())
@@ -43,6 +44,7 @@ const SignUpModal = ({ windowRef }) => {
             error={error}
             signUp={signUp}
             callback={close}
+            optIns={optIns}
           />
         </div>
       </div>
