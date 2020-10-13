@@ -10,7 +10,7 @@ import {
 } from '@open-tender/redux'
 import { SignUpForm } from '@open-tender/components'
 
-import { selectConfig } from '../slices'
+import { selectBrand, selectConfig } from '../slices'
 import PageTitle from './PageTitle'
 import Background from './Background'
 import SectionFooter from './SectionFooter'
@@ -25,6 +25,11 @@ const SignUpPage = () => {
     (data, callback) => dispatch(signUpCustomer(data, callback)),
     [dispatch]
   )
+  const brand = useSelector(selectBrand)
+  let initialState = {}
+  if (brand && brand.accepts_marketing) initialState.accepts_marketing = true
+  if (brand && brand.order_notifications)
+    initialState.order_notifications = 'NONE'
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -49,7 +54,12 @@ const SignUpPage = () => {
             <div className="section__container">
               <div className="section__content">
                 <div className="signup__form">
-                  <SignUpForm loading={loading} error={error} signUp={signUp} />
+                  <SignUpForm
+                    loading={loading}
+                    error={error}
+                    signUp={signUp}
+                    initialState={initialState}
+                  />
                 </div>
               </div>
               <SectionFooter>
