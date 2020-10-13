@@ -26,10 +26,8 @@ const SignUpPage = () => {
     [dispatch]
   )
   const brand = useSelector(selectBrand)
-  let initialState = {}
-  if (brand && brand.accepts_marketing) initialState.accepts_marketing = true
-  if (brand && brand.order_notifications)
-    initialState.order_notifications = 'NONE'
+  const { accepts_marketing, order_notifications } = brand
+  const optIns = { accepts_marketing, order_notifications }
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -58,7 +56,7 @@ const SignUpPage = () => {
                     loading={loading}
                     error={error}
                     signUp={signUp}
-                    initialState={initialState}
+                    optIns={optIns}
                   />
                 </div>
               </div>
