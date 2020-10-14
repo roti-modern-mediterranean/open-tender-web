@@ -453,6 +453,10 @@ label.radio {
   align-items: center;
   flex-wrap: wrap;
 
+  &__label span.label {
+    margin-bottom: 1rem;
+  }
+
   &__wrapper {
     display: flex;
     flex-direction: column;

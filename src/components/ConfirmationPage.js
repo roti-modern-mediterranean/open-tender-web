@@ -10,10 +10,11 @@ import {
   resetGroupOrder,
 } from '@open-tender/redux'
 
-import { selectConfig, selectBrand } from '../slices'
+import { selectConfig, selectBrand, selectOptIns } from '../slices'
 import Order from './Order'
 import Background from './Background'
 import PageTitle from './PageTitle'
+import ConfirmationProfile from './ConfirmationProfile'
 
 const ConfirmationPage = () => {
   const history = useHistory()
@@ -21,7 +22,11 @@ const ConfirmationPage = () => {
   const config = useSelector(selectConfig)
   const brand = useSelector(selectBrand)
   const order = useSelector(selectConfirmationOrder)
-  const { auth } = useSelector(selectCustomer)
+  const { auth, profile } = useSelector(selectCustomer)
+  const isNew = auth && profile && profile.order_notifications === 'NEW'
+  const optIns = useSelector(selectOptIns)
+  const { accepts_marketing, order_notifications } = optIns
+  const showOptIns = isNew && (accepts_marketing || order_notifications)
 
   useEffect(() => {
     if (!order) history.push(auth ? '/account' : '/')
@@ -50,6 +55,7 @@ const ConfirmationPage = () => {
       {isBrowser && <Background imageUrl={config.confirmation.background} />}
       <div className="content">
         <PageTitle {...config.confirmation} />
+        {showOptIns && <ConfirmationProfile />}
         <div className="slide-up">
           <div className="container">
             {auth ? (
