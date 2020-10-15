@@ -611,7 +611,7 @@ const makeGlobalStyles = (theme) => css`
   }
 
   span.switch__toggle {
-    background-color: ${theme.bgColors.secondary};
+    background-color: ${theme.fonts.body.color};
   }
 
   span.switch__toggle:before {

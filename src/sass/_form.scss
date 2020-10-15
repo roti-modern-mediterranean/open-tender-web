@@ -1,4 +1,9 @@
 .form {
+  &__subsection {
+    width: 100%;
+    padding: 2rem 2rem;
+  }
+
   &__fieldset {
     margin: 0 0 4rem;
   }
