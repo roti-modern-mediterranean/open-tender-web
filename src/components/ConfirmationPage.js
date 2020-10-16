@@ -15,6 +15,7 @@ import Order from './Order'
 import Background from './Background'
 import PageTitle from './PageTitle'
 import ConfirmationProfile from './ConfirmationProfile'
+import ConfirmationFulfillment from './ConfirmationFulfillment'
 
 const ConfirmationPage = () => {
   const history = useHistory()
@@ -56,6 +57,7 @@ const ConfirmationPage = () => {
       <div className="content">
         <PageTitle {...config.confirmation} />
         {showOptIns && <ConfirmationProfile />}
+        {brand.fulfillment && <ConfirmationFulfillment />}
         <div className="slide-up">
           <div className="container">
             {auth ? (

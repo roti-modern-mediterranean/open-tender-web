@@ -116,5 +116,6 @@ export const selectOptIns = (state) => {
   const { accepts_marketing, order_notifications } = state.config.brand
   return { accepts_marketing, order_notifications }
 }
+export const selectFulfillment = (state) => state.config.brand.fulfillment
 
 export default configSlice.reducer

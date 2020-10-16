@@ -1,26 +1,34 @@
 import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectCustomer, updateCustomer } from '@open-tender/redux'
+import {
+  selectConfirmationOrder,
+  selectOrderFulfillment,
+  updateOrderFulfillment,
+} from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
-import { ProfileForm } from '@open-tender/components'
+import { OrderFulfillmentForm } from '@open-tender/components'
 
-import { selectOptIns } from '../slices'
 import SectionHeader from './SectionHeader'
 import SectionError from './SectionError'
 import SectionLoading from './SectionLoading'
+import { selectFulfillment } from '../slices'
 
-const title = 'Update your communication preferences'
+const title = 'Set your communication preferences'
 const subtitle = "Please let us know how you'd like to hear from us"
 
-const ConfirmationProfile = () => {
+const ConfirmationFulfillment = () => {
   const dispatch = useDispatch()
-  const optIns = useSelector(selectOptIns)
-  const { profile, loading, error } = useSelector(selectCustomer)
+  const fulfillmentSettings = useSelector(selectFulfillment)
+  const { order_fulfillment, order_id } = useSelector(selectConfirmationOrder)
+  const { orderFulfillment, loading, error } = useSelector(
+    selectOrderFulfillment
+  )
   const isLoading = loading === 'pending'
   const errMsg = error ? error.message || null : null
-  const update = useCallback((data) => dispatch(updateCustomer(data)), [
-    dispatch,
-  ])
+  const update = useCallback(
+    (orderId, data) => dispatch(updateOrderFulfillment(orderId, data)),
+    [dispatch]
+  )
 
   return (
     <div id={slugify(title)} className="section">
@@ -30,15 +38,13 @@ const ConfirmationProfile = () => {
           <SectionLoading loading={isLoading} />
           <SectionError error={errMsg} />
           <div className="section__content ot-bg-color-primary ot-border-radius">
-            <ProfileForm
-              profile={profile}
+            <OrderFulfillmentForm
+              orderId={order_id}
+              fulfillment={orderFulfillment || order_fulfillment}
               loading={loading}
               error={error}
               update={update}
-              optIns={optIns}
-              showFields={false}
-              id="comms-form"
-              buttonText="Set Preferences"
+              settings={fulfillmentSettings}
             />
           </div>
         </div>
@@ -47,5 +53,5 @@ const ConfirmationProfile = () => {
   )
 }
 
-ConfirmationProfile.displayName = 'ConfirmationProfile'
-export default ConfirmationProfile
+ConfirmationFulfillment.displayName = 'ConfirmationFulfillment'
+export default ConfirmationFulfillment
