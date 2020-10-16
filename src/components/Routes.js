@@ -21,6 +21,7 @@ import GroupOrderGuestPage from './GroupOrderGuestPage'
 import GroupOrderReviewPage from './GroupOrderReviewPage'
 import AccessibilityPolicyPage from './AccessibilityPolicyPage'
 import LevelUpPage from './LevelUpPage'
+import FulfillmentPage from './FulfillmentPage'
 
 const Routes = () => {
   return (
@@ -87,6 +88,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/confirmation">
         <ConfirmationPage />
+      </Route>
+      <Route exact path="/curbside/:id">
+        <FulfillmentPage />
       </Route>
       <Route exact path="/accessibility">
         <AccessibilityPolicyPage />

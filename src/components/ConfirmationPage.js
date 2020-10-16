@@ -15,7 +15,7 @@ import Order from './Order'
 import Background from './Background'
 import PageTitle from './PageTitle'
 import ConfirmationProfile from './ConfirmationProfile'
-import ConfirmationFulfillment from './ConfirmationFulfillment'
+import OrderFulfillment from './OrderFulfillment'
 
 const ConfirmationPage = () => {
   const history = useHistory()
@@ -23,6 +23,7 @@ const ConfirmationPage = () => {
   const config = useSelector(selectConfig)
   const brand = useSelector(selectBrand)
   const order = useSelector(selectConfirmationOrder)
+  const { order_fulfillment, order_id } = order
   const { auth, profile } = useSelector(selectCustomer)
   const isNew = auth && profile && profile.order_notifications === 'NEW'
   const optIns = useSelector(selectOptIns)
@@ -57,7 +58,12 @@ const ConfirmationPage = () => {
       <div className="content">
         <PageTitle {...config.confirmation} />
         {showOptIns && <ConfirmationProfile />}
-        {brand.fulfillment && <ConfirmationFulfillment />}
+        {brand.fulfillment && (
+          <OrderFulfillment
+            orderId={order_id}
+            order_fulfillment={order_fulfillment}
+          />
+        )}
         <div className="slide-up">
           <div className="container">
             {auth ? (
