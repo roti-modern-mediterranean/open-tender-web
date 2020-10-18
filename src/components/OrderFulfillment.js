@@ -21,10 +21,14 @@ const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
   )
   const fulfillment = orderFulfillment || order_fulfillment || {}
   const empty = Object.values(fulfillment).every((i) => !i)
-  const subtitle = !empty
-    ? // ? `Please let us know when you arrive`
-      null
-    : fulfillmentSettings.description
+  const arrivalInfo = fulfillmentSettings.fields.find(
+    (i) => i.name === 'arrival_info'
+  )
+  const subtitle = empty
+    ? fulfillmentSettings.description
+    : arrivalInfo
+    ? `Please submit your ${arrivalInfo.label.toLowerCase()} below to let us know when you've arrived`
+    : 'Please let us know when you arrive'
   const isLoading = loading === 'pending'
   const errMsg = error ? error.message || null : null
   const update = useCallback(
