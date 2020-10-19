@@ -23,18 +23,16 @@ const CheckoutHeader = ({ checkout = {} }) => {
             </p>
           </div>
           <div className="checkout__header__value">
-            <p>
-              {updating ? (
-                <BarLoader
-                  width={50}
-                  height={4}
-                  color={colorLight}
-                  loading={true}
-                />
-              ) : (
-                total
-              )}
-            </p>
+            {updating ? (
+              <BarLoader
+                width={50}
+                height={4}
+                color={colorLight}
+                loading={true}
+              />
+            ) : (
+              <p>{total}</p>
+            )}
           </div>
         </div>
       </div>

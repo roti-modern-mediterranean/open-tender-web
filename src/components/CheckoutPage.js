@@ -37,6 +37,7 @@ import {
   CreditCard,
   Home,
   Coffee,
+  Smartphone,
 } from 'react-feather'
 import CheckoutCancelEdit from './CheckoutCancelEdit'
 
@@ -70,6 +71,8 @@ const CheckoutPage = () => {
     credit: <CreditCard size={null} />,
     levelup: <Grid size={null} />,
     house_account: <Home size={null} />,
+    apple_pay: <Smartphone size={null} />,
+    google_pay: <Smartphone size={null} />,
   }
 
   useEffect(() => {
