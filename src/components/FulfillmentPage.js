@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { isBrowser } from 'react-device-detect'
 import { fetchOrderFulfillment } from '@open-tender/redux'
 
-import { selectFulfillment } from '../slices'
-import AccountBackground from './AccountBackground'
+import { selectConfig, selectFulfillment } from '../slices'
+import Background from './Background'
 import OrderFulfillment from './OrderFulfillment'
 
 const FulfillmentPage = () => {
@@ -12,6 +13,7 @@ const FulfillmentPage = () => {
   const history = useHistory()
   const { id: orderId } = useParams()
   const fulfillment = useSelector(selectFulfillment)
+  const { fulfillment: config } = useSelector(selectConfig)
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -27,7 +29,7 @@ const FulfillmentPage = () => {
 
   return (
     <>
-      <AccountBackground />
+      {isBrowser && <Background imageUrl={config.background} />}
       <div className="content">
         <OrderFulfillment orderId={orderId} />
       </div>

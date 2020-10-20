@@ -8,6 +8,7 @@ import {
   resetConfirmation,
   resetCustomerOrder,
   resetGroupOrder,
+  resetOrderFulfillment,
 } from '@open-tender/redux'
 
 import { selectConfig, selectBrand, selectOptIns } from '../slices'
@@ -23,12 +24,16 @@ const ConfirmationPage = () => {
   const config = useSelector(selectConfig)
   const brand = useSelector(selectBrand)
   const order = useSelector(selectConfirmationOrder)
-  const { order_fulfillment, order_id } = order
+  const { order_fulfillment, order_id, revenue_center, service_type } = order
   const { auth, profile } = useSelector(selectCustomer)
   const isNew = auth && profile && profile.order_notifications === 'NEW'
   const optIns = useSelector(selectOptIns)
   const { accepts_marketing, order_notifications } = optIns
   const showOptIns = isNew && (accepts_marketing || order_notifications)
+  const hasFulfillment =
+    brand.fulfillment &&
+    revenue_center.has_order_fulfillment &&
+    service_type === 'PICKUP'
 
   useEffect(() => {
     if (!order) history.push(auth ? '/account' : '/')
@@ -38,6 +43,10 @@ const ConfirmationPage = () => {
       dispatch(resetConfirmation())
     }
   }, [order, auth, dispatch, history])
+
+  useEffect(() => {
+    if (!hasFulfillment) dispatch(resetOrderFulfillment())
+  }, [hasFulfillment, dispatch])
 
   const reviewAccount = (evt) => {
     evt.preventDefault()
@@ -58,7 +67,7 @@ const ConfirmationPage = () => {
       <div className="content">
         <PageTitle {...config.confirmation} />
         {showOptIns && <ConfirmationProfile />}
-        {brand.fulfillment && (
+        {hasFulfillment && (
           <OrderFulfillment
             orderId={order_id}
             order_fulfillment={order_fulfillment}
