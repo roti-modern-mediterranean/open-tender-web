@@ -29,7 +29,7 @@ const FulfillmentPage = () => {
 
   return (
     <>
-      {isBrowser && <Background imageUrl={config.background} />}
+      {isBrowser && config && <Background imageUrl={config.background} />}
       <div className="content">
         <OrderFulfillment orderId={orderId} />
       </div>
