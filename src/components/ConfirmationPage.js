@@ -24,7 +24,8 @@ const ConfirmationPage = () => {
   const config = useSelector(selectConfig)
   const brand = useSelector(selectBrand)
   const order = useSelector(selectConfirmationOrder)
-  const { order_fulfillment, order_id, revenue_center, service_type } = order
+  const { order_fulfillment, order_id, revenue_center, service_type } =
+    order || {}
   const { auth, profile } = useSelector(selectCustomer)
   const isNew = auth && profile && profile.order_notifications === 'NEW'
   const optIns = useSelector(selectOptIns)
