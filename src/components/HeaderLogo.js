@@ -9,7 +9,11 @@ const HeaderLogo = () => {
   const logoUrl = isMobile ? brand.logoLight : brand.logo
 
   return (
-    <a className="no-link" href={brand.url} rel="noopener noreferrer">
+    <a
+      className="no-link link-header"
+      href={brand.url}
+      rel="noopener noreferrer"
+    >
       <img src={logoUrl} className="logo" alt="logo" />
     </a>
   )
