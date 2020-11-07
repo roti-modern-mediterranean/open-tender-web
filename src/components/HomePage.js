@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
-import { resetRevenueCenters, resetOrderType } from '@open-tender/redux'
+import {
+  resetRevenueCenters,
+  resetOrderType,
+  selectGroupOrder,
+  resetGroupOrder,
+} from '@open-tender/redux'
 import { useGeolocation } from '@open-tender/components'
 
 import {
@@ -21,6 +26,8 @@ const HomePage = () => {
   const config = useSelector(selectConfig)
   const { orderTypes } = useSelector(selectSettings)
   const hasOrderTypes = orderTypes && orderTypes.length > 0
+  const { cartGuest } = useSelector(selectGroupOrder)
+  const { cartGuestId } = cartGuest || {}
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -28,6 +35,10 @@ const HomePage = () => {
     dispatch(resetRevenueCenters())
     dispatch(resetOrderType())
   }, [dispatch])
+
+  useEffect(() => {
+    if (cartGuestId) dispatch(resetGroupOrder())
+  }, [dispatch, cartGuestId])
 
   useEffect(() => {
     if (geoLatLng) {
