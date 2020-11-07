@@ -24,14 +24,16 @@ const GroupOrderLink = ({
 
   return (
     <>
-      <CopyToClipboard text={url} onCopy={() => setCopied(true)}>
-        <Button
-          text={url}
-          classes={className}
-          icon={iconMap['Clipboard']}
-          onClick={copy}
-        />
-      </CopyToClipboard>
+      <p>
+        <CopyToClipboard text={url} onCopy={() => setCopied(true)}>
+          <Button
+            text={url}
+            classes={className}
+            icon={iconMap['Clipboard']}
+            onClick={copy}
+          />
+        </CopyToClipboard>
+      </p>
       {copied ? (
         <p className="copied ot-font-size-small ot-color-success">
           Copied to clipboard!

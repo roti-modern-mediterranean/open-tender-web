@@ -116,6 +116,13 @@ const GroupOrderReviewOwner = () => {
     evt.target.blur()
   }
 
+  const refresh = (evt) => {
+    evt.preventDefault()
+    dispatch(updateCustomerGroupOrder(cartId))
+    dispatch(showNotification('Guest items refreshed'))
+    evt.target.blur()
+  }
+
   const toggleGuestItems = (evt) => {
     evt.preventDefault()
     setShowGuestItems(!showGuestItems)
@@ -146,13 +153,11 @@ const GroupOrderReviewOwner = () => {
               </p>
               <GroupOrderTime />
               <p>Need to share this group order with orders?</p>
-              <p>
-                <GroupOrderLink
-                  token={token}
-                  className="ot-btn ot-btn--small"
-                  instructions={null}
-                />
-              </p>
+              <GroupOrderLink
+                token={token}
+                className="ot-btn ot-btn--small"
+                instructions={null}
+              />
               <p className="ot-color-headings ot-heading ot-font-size-h5">
                 Ready to submit your order?
               </p>
@@ -219,10 +224,16 @@ const GroupOrderReviewOwner = () => {
                 </p>
                 <p className="content__section__header__subtitle ot-font-size-small">
                   <Button
+                    text="Click here to refresh"
+                    classes="ot-btn-link"
+                    onClick={refresh}
+                  />
+                  |
+                  <Button
                     text={
                       showGuestItems
-                        ? 'Show guest names only'
-                        : 'Show guest names & items'
+                        ? 'show guest names only'
+                        : 'show guest names & items'
                     }
                     classes="ot-btn-link"
                     onClick={toggleGuestItems}
@@ -235,7 +246,10 @@ const GroupOrderReviewOwner = () => {
                     const guestItems = guestCartLookup[guest.cart_guest_id]
                     return (
                       guestItems && (
-                        <div className="content__subsection ot-bg-color-primary ot-border-radius">
+                        <div
+                          key={guest.cart_guest_id}
+                          className="content__subsection ot-bg-color-primary ot-border-radius"
+                        >
                           <div className="content__subsection__header">
                             <p className="content__subsection__header__title ot-color-headings ot-bold ot-font-size">
                               {guest.first_name} {guest.last_name}

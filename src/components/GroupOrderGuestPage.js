@@ -117,6 +117,7 @@ const GroupOrderGuestPage = () => {
     spendingLimit,
     guestLimit,
     guestCount,
+    token: currentToken,
   } = groupOrder
   const isLoading = loading === 'pending'
   const cartOwnerName = cartOwner
@@ -151,24 +152,31 @@ const GroupOrderGuestPage = () => {
 
   useEffect(() => {
     window.scroll(0, 0)
-    // return () => {
-    //   if (!cartGuestId) dispatch(resetGroupOrder())
-    // }
   }, [dispatch, cartGuestId])
 
   useEffect(() => {
     if (isCartOwner) {
       history.push(`/menu/${slug}`)
-    } else if (cartGuestId) {
+    } else if (cartGuestId && currentToken === token) {
       if (slug) history.push(`/menu/${slug}`)
-    } else {
+    } else if (currentToken !== token) {
       if (profile) dispatch(logoutCustomer())
+      dispatch(resetGroupOrder())
       dispatch(fetchGroupOrder(token))
     }
-  }, [dispatch, history, token, cartGuestId, slug, isCartOwner, profile])
+  }, [
+    dispatch,
+    history,
+    token,
+    currentToken,
+    cartGuestId,
+    slug,
+    isCartOwner,
+    profile,
+  ])
 
   useEffect(() => {
-    dispatch(fetchRevenueCenter(revenueCenterId))
+    if (revenueCenterId) dispatch(fetchRevenueCenter(revenueCenterId))
   }, [dispatch, revenueCenterId])
 
   const startOver = (evt) => {
