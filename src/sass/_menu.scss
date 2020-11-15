@@ -92,6 +92,8 @@
     position: relative;
     width: 100%;
     padding: 30%;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
   }
 
   &__count {

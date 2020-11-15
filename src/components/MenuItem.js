@@ -62,7 +62,7 @@ const MenuItem = ({ item }) => {
 
   return (
     <div className={`menu__item ${isSoldOut ? '-sold-out' : ''}`}>
-      <div className="menu__item__container ot-border-color">
+      <div className="menu__item__container ot-border-color ot-border-radius">
         {cartCount > 0 && (
           <div
             className={`menu__item__count ot-warning ot-bold ${countFontSize}`}
