@@ -1,6 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCustomerGiftCards } from '@open-tender/redux'
+import {
+  selectCustomerGiftCards,
+  removeCustomerGiftCard,
+} from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 import { slugify, formatDateStr, dateStrToDate } from '@open-tender/js'
 
@@ -23,6 +26,13 @@ const AccountGiftCards = () => {
   const handleAddValue = (evt, giftCard) => {
     evt.preventDefault()
     dispatch(openModal({ type: 'giftCard', args: { giftCard } }))
+    evt.target.blur()
+  }
+
+  const handleDelete = (evt, giftCard) => {
+    evt.preventDefault()
+    const giftCardId = giftCard.gift_card_id
+    dispatch(removeCustomerGiftCard(giftCardId))
     evt.target.blur()
   }
 
@@ -49,6 +59,7 @@ const AccountGiftCards = () => {
                 {giftCards.entities.map((giftCard) => {
                   const expired =
                     dateStrToDate(giftCard.expiration) < new Date()
+                  const removeable = expired || giftCard.balance === '0.00'
                   return (
                     <SectionRow
                       key={giftCard.card_number}
@@ -76,6 +87,14 @@ const AccountGiftCards = () => {
                               )}
                             </p>
                           )}
+                          <p className="ot-font-size-small">
+                            <Button
+                              text="remove"
+                              classes="ot-btn-link"
+                              onClick={(evt) => handleDelete(evt, giftCard)}
+                              disabled={isLoading || !removeable}
+                            />
+                          </p>
                         </div>
                         {!expired && (
                           <div className="section__row__container__buttons">

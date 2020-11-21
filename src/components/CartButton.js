@@ -15,8 +15,9 @@ const CartButton = () => {
   const cartQuantity = useSelector(selectCartQuantity)
   const countFontSize = isMobile ? 'ot-font-size-x-small' : 'ot-font-size-small'
   const showEmptyCart = contains(pathname, ['menu', 'checkout'])
-  const isReview = pathname.includes('review')
-  const hideCart = (cartQuantity === 0 && !showEmptyCart) || isReview
+  const hideCart =
+    (cartQuantity === 0 && !showEmptyCart) ||
+    contains(pathname, ['review', 'gift-cards'])
 
   const handleClick = (evt) => {
     evt.preventDefault()

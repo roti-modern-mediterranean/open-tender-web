@@ -289,6 +289,13 @@ select {
   @include transform(1, 45deg);
 }
 
+.select__wrapper {
+  position: relative;
+  // .select__arrow {
+  //   bottom: 0.5rem;
+  // }
+}
+
 label {
   position: relative;
 
