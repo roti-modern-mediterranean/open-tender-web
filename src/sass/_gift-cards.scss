@@ -18,7 +18,7 @@
   &__input {
     display: flex;
     justify-content: space-between;
-    align-items: vertical;
+    align-items: center;
     padding: 1.25rem 0;
     // border-bottom-width: 0.1rem;
     // border-bottom-style: solid;
@@ -40,5 +40,13 @@
 
   &__add-another {
     padding: 1.25rem 0;
+  }
+
+  &__submit {
+    margin: $padding 0 0;
+  }
+
+  &__table {
+    margin: 0 0 $padding;
   }
 }

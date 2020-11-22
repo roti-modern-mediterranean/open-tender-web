@@ -291,9 +291,7 @@ select {
 
 .select__wrapper {
   position: relative;
-  // .select__arrow {
-  //   bottom: 0.5rem;
-  // }
+  display: block;
 }
 
 label {

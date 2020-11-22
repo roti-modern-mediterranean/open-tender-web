@@ -6,6 +6,8 @@ import {
   selectGiftCards,
   resetGiftCards,
   purchaseGiftCards,
+  selectCustomer,
+  selectCustomerCreditCards,
 } from '@open-tender/redux'
 
 import { selectConfig } from '../slices'
@@ -21,11 +23,18 @@ const iconMap = {
 const GiftCardsPage = () => {
   const dispatch = useDispatch()
   const config = useSelector(selectConfig)
-  const { success, loading, error } = useSelector(selectGiftCards)
+  const { profile: customer } = useSelector(selectCustomer) || {}
+  const { entities: creditCards } = useSelector(selectCustomerCreditCards) || {}
+  const { success, loading, error, giftCards } = useSelector(selectGiftCards)
   const purchase = useCallback(
     (data, callback) => dispatch(purchaseGiftCards(data, callback)),
     [dispatch]
   )
+  const reset = useCallback(() => dispatch(resetGiftCards()), [dispatch])
+
+  useEffect(() => {
+    window.scroll(0, 0)
+  }, [])
 
   useEffect(() => {
     if (success || error) window.scroll(0, 0)
@@ -49,8 +58,12 @@ const GiftCardsPage = () => {
                 ))}
             </div> */}
             <GiftCardsForm
+              customer={customer}
+              creditCards={creditCards}
               purchase={purchase}
+              reset={reset}
               success={success}
+              purchasedCards={giftCards}
               loading={loading}
               error={error}
               iconMap={iconMap}

@@ -15,6 +15,7 @@ import SectionRow from './SectionRow'
 import SectionFooter from './SectionFooter'
 import iconMap from './iconMap'
 import SectionEmpty from './SectionEmpty'
+import { Link } from 'react-router-dom'
 
 const AccountGiftCards = () => {
   const dispatch = useDispatch()
@@ -119,10 +120,11 @@ const AccountGiftCards = () => {
 
           <SectionFooter>
             <Button
-              text="Purchase a new gift card"
+              text="Purchase a new gift card for yourself"
               onClick={handlePurchase}
               classes="ot-btn-link"
-            />
+            />{' '}
+            or <Link to="/gift-cards">purchase gift cards for others</Link>
           </SectionFooter>
         </div>
       </div>

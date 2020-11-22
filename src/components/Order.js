@@ -44,6 +44,7 @@ const Order = ({ order, loading, error }) => {
     delivery,
     address,
     cart,
+    gift_cards,
     surcharges,
     discounts,
     taxes,
@@ -61,7 +62,7 @@ const Order = ({ order, loading, error }) => {
   const { lookup = {} } = useSelector(selectCustomerFavorites)
   const { auth } = useSelector(selectCustomer)
   const displaySettings = useSelector(selectDisplaySettings)
-  const check = { surcharges, discounts, taxes, totals, details }
+  const check = { gift_cards, surcharges, discounts, taxes, totals, details }
   const {
     eating_utensils,
     serving_utensils,

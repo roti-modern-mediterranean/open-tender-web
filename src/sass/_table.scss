@@ -1,0 +1,30 @@
+table {
+  width: 100%;
+
+  tr {
+    border-bottom-width: 0.1rem;
+    border-bottom-style: solid;
+  }
+
+  th,
+  td {
+    text-align: center;
+    padding: 1rem 0;
+
+    &:first-child {
+      text-align: left;
+    }
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+
+  thead th {
+    font-weight: normal;
+  }
+
+  tbody tr:last-child {
+    border-bottom: 0;
+  }
+}
