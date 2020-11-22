@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react'
 import { isBrowser } from 'react-device-detect'
 import { useSelector } from 'react-redux'
+import { Helmet } from 'react-helmet'
 
-import { selectConfig } from '../slices'
+import { selectBrand, selectConfig } from '../slices'
 import PageTitle from './PageTitle'
 import Background from './Background'
 
 const RefundPolicyPage = () => {
   const config = useSelector(selectConfig)
+  const { title } = useSelector(selectBrand)
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -15,6 +17,11 @@ const RefundPolicyPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          {config.refunds.title} | {title}
+        </title>
+      </Helmet>
       {isBrowser && <Background imageUrl={config.refunds.background} />}
       <div className="content">
         <PageTitle {...config.refunds} />

@@ -4,7 +4,16 @@ import { setOrderServiceType } from '@open-tender/redux'
 
 import { selectConfig, selectSettings } from '../slices'
 import OrderTypeButton from './OrderTypeButton'
-import { Flag, ShoppingBag, Truck, Users, Gift, Coffee } from 'react-feather'
+import {
+  Flag,
+  ShoppingBag,
+  Truck,
+  Users,
+  Gift,
+  Coffee,
+  ShoppingCart,
+  DollarSign,
+} from 'react-feather'
 import { useHistory } from 'react-router-dom'
 
 const OrderType = () => {
@@ -55,6 +64,18 @@ const OrderType = () => {
     evt.target.blur()
   }
 
+  const handleGiftCards = (evt) => {
+    evt.preventDefault()
+    history.push('/gift-cards')
+    evt.target.blur()
+  }
+
+  const handleDonations = (evt) => {
+    evt.preventDefault()
+    history.push('/donations')
+    evt.target.blur()
+  }
+
   const handlers = {
     OUTPOST: handleOutpost,
     WALKIN: handleWalkin,
@@ -62,6 +83,8 @@ const OrderType = () => {
     DELIVERY: handleDelivery,
     CATERING: handleCatering,
     MERCH: handleMerch,
+    GIFT_CARDS: handleGiftCards,
+    DONATIONS: handleDonations,
   }
 
   const icons = {
@@ -70,7 +93,9 @@ const OrderType = () => {
     PICKUP: <ShoppingBag size={null} />,
     DELIVERY: <Truck size={null} />,
     CATERING: <Users size={null} />,
-    MERCH: <Gift size={null} />,
+    MERCH: <ShoppingCart size={null} />,
+    GIFT_CARDS: <Gift size={null} />,
+    DONATIONS: <DollarSign size={null} />,
   }
 
   return (

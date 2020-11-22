@@ -51,7 +51,16 @@ const AccountGiftCards = () => {
     <div id={slugify(title)} className="section">
       <div className="container">
         <div className="section__container">
-          <SectionHeader title={title} subtitle={subtitle} />
+          <SectionHeader title={title} subtitle={subtitle}>
+            <p style={{ margin: '2.5rem 0 0' }}>
+              <Button
+                text="Purchase a new gift card for yourself"
+                onClick={handlePurchase}
+                classes="ot-btn-link"
+              />{' '}
+              or <Link to="/gift-cards">purchase gift cards for others</Link>
+            </p>
+          </SectionHeader>
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
           {showGiftCards ? (
@@ -117,7 +126,6 @@ const AccountGiftCards = () => {
           ) : (
             <SectionEmpty message={empty} />
           )}
-
           <SectionFooter>
             <Button
               text="Purchase a new gift card for yourself"

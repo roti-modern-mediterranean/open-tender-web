@@ -201,37 +201,39 @@ const Order = ({ order, loading, error }) => {
               </div>
             </div>
           </div>
-          <div className="section slide-up">
-            <div className="container">
-              <div className="section__container">
-                <SectionHeader title="Items in Your Order" />
-                <div className="section__content ot-bg-color-primary ot-border-radius">
-                  <ul className="cart">
-                    {displayedItems.map((item, index) => {
-                      const favoriteId = lookup
-                        ? lookup[item.signature] || null
-                        : null
-                      return (
-                        <li key={`${item.id}-${index}`}>
-                          <CartItem
-                            item={item}
-                            showModifiers={true}
-                            displaySettings={displaySettings}
-                          >
-                            <OrderQuantity
+          {displayedItems.length > 0 && (
+            <div className="section slide-up">
+              <div className="container">
+                <div className="section__container">
+                  <SectionHeader title="Items in Your Order" />
+                  <div className="section__content ot-bg-color-primary ot-border-radius">
+                    <ul className="cart">
+                      {displayedItems.map((item, index) => {
+                        const favoriteId = lookup
+                          ? lookup[item.signature] || null
+                          : null
+                        return (
+                          <li key={`${item.id}-${index}`}>
+                            <CartItem
                               item={item}
-                              show={auth && lookup ? true : false}
-                              favoriteId={favoriteId}
-                            />
-                          </CartItem>
-                        </li>
-                      )
-                    })}
-                  </ul>
+                              showModifiers={true}
+                              displaySettings={displaySettings}
+                            >
+                              <OrderQuantity
+                                item={item}
+                                show={auth && lookup ? true : false}
+                                favoriteId={favoriteId}
+                              />
+                            </CartItem>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
           <div className="section slide-up">
             <div className="container">
               <div className="section__container">

@@ -38,6 +38,7 @@ const OrderCard = ({ order, isLast }) => {
     delivery,
   } = order
   const isOpen = status === 'OPEN'
+  const isMerch = order_type === 'MERCH'
   const orderTypeName = makeOrderTypeName(order_type, service_type)
   const tz = timezoneMap[timezone]
   const requestedAt = isoToDateStr(requested_at, tz, 'MMMM d, yyyy @ h:mma')
@@ -112,14 +113,16 @@ const OrderCard = ({ order, isLast }) => {
                 classes="ot-btn--small ot-font-size-small"
               />
             )}
-            <Button
-              text="Reorder"
-              icon={iconMap['RefreshCw']}
-              onClick={handleReorder}
-              classes={`ot-btn--small ot-font-size-small ${
-                order.is_editable ? 'ot-btn--secondary' : ''
-              }`}
-            />
+            {!isMerch && (
+              <Button
+                text="Reorder"
+                icon={iconMap['RefreshCw']}
+                onClick={handleReorder}
+                classes={`ot-btn--small ot-font-size-small ${
+                  order.is_editable ? 'ot-btn--secondary' : ''
+                }`}
+              />
+            )}
             <Button
               // text={`Details ${!isUpcoming ? '/ Rate' : ''}`}
               text="Details"
