@@ -1439,20 +1439,20 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@open-tender/components@^1.0.32":
-  version "1.0.32"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-1.0.32.tgz#920d8659605e54e142d08e2ecbdc48398ecbf62f"
-  integrity sha512-Bfa+8WajqUeumD7uMy+GOKwmk8sDgxNjc5a9F24jR2+AnDZXa+qSXDF2h+mS7EP9a+3QKW7A12C0LR9Mr8UI3A==
+"@open-tender/components@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-1.1.0.tgz#a0e1b5af19983c24c6e72ad3ba0aa0e090b789ab"
+  integrity sha512-Ltt6//OGxjwuznJ1LHvoYrwTehtrJhw7FqcJDWjEvaFRakMXbK+GmjVN6MTrP2bJRS6FtcBEnEOslaZOvYrvRw==
 
-"@open-tender/js@^1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.2.4.tgz#7a53e84e41bafa72c409abcf9880cf9580f16e1b"
-  integrity sha512-ThJWo8YUTysEWzqQ2S7lezmmftMPiP6RDHY7DWxlpgEvjUGOa5Y3u0vuCNs70b8BVp3yVuvN4c5KbeE52iM5sQ==
+"@open-tender/js@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.2.5.tgz#398f233997918d8841cb25c4be974424878bcaf6"
+  integrity sha512-q/91lVEPTyQazyv8ZDSOXoTLg6pFdY2PdHyUT7PBertoJAkKrkdLNLwHPbaQkFcVRN60z5HHPrfW+WUc+Mw5YQ==
 
-"@open-tender/redux@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.3.2.tgz#6c139ca3f933eb49408c4c9faa343a1ca92d27e7"
-  integrity sha512-Qcqdvg9Pgh8+Hi/XhLwcz4HPCe3EA1CZvcqrxlI9pQHR/MnB2IrOCmv/zzW5f8yiuQXyFEHz+czDmoW6CUCKvw==
+"@open-tender/redux@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.4.0.tgz#a647bcf5bef88bc85224870df904bdd95faa3a96"
+  integrity sha512-ETAWjW6NP2S05UfnpegKHuQpllnJoSjFcw8yfEqXIa8GlH09d57m2gr768fl43ab43wEmtWiXB2awtCNBnSPvQ==
 
 "@reduxjs/toolkit@^1.1.0":
   version "1.4.0"
