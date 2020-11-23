@@ -23,6 +23,7 @@ import AccessibilityPolicyPage from './AccessibilityPolicyPage'
 import LevelUpPage from './LevelUpPage'
 import FulfillmentPage from './FulfillmentPage'
 import GiftCardsPage from './GiftCardsPage'
+import DonationPage from './DonationPage'
 
 const Routes = () => {
   return (
@@ -101,6 +102,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/gift-cards">
         <GiftCardsPage />
+      </Route>
+      <Route exact path="/donations">
+        <DonationPage />
       </Route>
       <Route>
         <NotFoundPage />
