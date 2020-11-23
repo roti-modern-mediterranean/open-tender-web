@@ -52,6 +52,15 @@
     line-height: 1.5;
   }
 
+  &__buttons {
+    button {
+      margin: 0 0.5rem 0.5rem 0;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+
   &__loading {
     display: flex;
     justify-content: flex-start;

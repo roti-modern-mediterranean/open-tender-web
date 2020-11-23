@@ -9,6 +9,8 @@ import CartErrorsModal from './CartErrorsModal'
 import CartCountsModal from './CartCountsModal'
 import CreditCardModal from './CreditCardModal'
 import GiftCardModal from './GiftCardModal'
+import GiftCardAssignModal from './GiftCardAssignModal'
+import GiftCardAssignOtherModal from './GiftCardAssignOtherModal'
 import WorkingModal from './WorkingModal'
 import ClosedModal from './ClosedModal'
 import OrderRatingModal from './OrderRatingModal'
@@ -28,6 +30,8 @@ export {
   CartCountsModal,
   CreditCardModal,
   GiftCardModal,
+  GiftCardAssignModal,
+  GiftCardAssignOtherModal,
   WorkingModal,
   ClosedModal,
   OrderRatingModal,

@@ -75,13 +75,15 @@ const GiftCardsPage = () => {
               error={error}
               iconMap={iconMap}
             />
-            {success && customer ? (
+            {success && (
               <p>
-                <Link to="/account">Head back to your account page</Link>
-              </p>
-            ) : (
-              <p>
-                <Link to="/">Head back to the home page to start an order</Link>
+                {customer ? (
+                  <Link to="/account">Head back to your account page</Link>
+                ) : (
+                  <Link to="/">
+                    Head back to the home page to start an order
+                  </Link>
+                )}
               </p>
             )}
           </div>

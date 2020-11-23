@@ -12,13 +12,30 @@ import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import SectionRow from './SectionRow'
-import SectionFooter from './SectionFooter'
+// import SectionFooter from './SectionFooter'
 import iconMap from './iconMap'
 import SectionEmpty from './SectionEmpty'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+
+const GiftCardButtons = ({ purchase, purchaseOthers, addToAccount }) => (
+  <div className="section__buttons">
+    <Button text="Buy A New Gift Card" onClick={purchase} classes="ot-btn" />{' '}
+    <Button
+      text="Buy Gift Cards For Others"
+      onClick={purchaseOthers}
+      classes="ot-btn"
+    />{' '}
+    <Button
+      text="Add Gift Card To Account"
+      onClick={addToAccount}
+      classes="ot-btn"
+    />
+  </div>
+)
 
 const AccountGiftCards = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const {
     giftCards: { title, subtitle, empty },
   } = useSelector(selectAccountConfig)
@@ -30,6 +47,12 @@ const AccountGiftCards = () => {
     evt.target.blur()
   }
 
+  const handleAssign = (evt, giftCardId) => {
+    evt.preventDefault()
+    dispatch(openModal({ type: 'giftCardAssignOther', args: { giftCardId } }))
+    evt.target.blur()
+  }
+
   const handleDelete = (evt, giftCard) => {
     evt.preventDefault()
     const giftCardId = giftCard.gift_card_id
@@ -37,9 +60,21 @@ const AccountGiftCards = () => {
     evt.target.blur()
   }
 
-  const handlePurchase = (evt) => {
+  const purchase = (evt) => {
     evt.preventDefault()
     dispatch(openModal({ type: 'giftCard' }))
+    evt.target.blur()
+  }
+
+  const purchaseOthers = (evt) => {
+    evt.preventDefault()
+    evt.target.blur()
+    history.push('/gift-cards')
+  }
+
+  const addToAccount = (evt) => {
+    evt.preventDefault()
+    dispatch(openModal({ type: 'giftCardAssign' }))
     evt.target.blur()
   }
 
@@ -53,12 +88,11 @@ const AccountGiftCards = () => {
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle}>
             <p style={{ margin: '2.5rem 0 0' }}>
-              <Button
-                text="Purchase a new gift card for yourself"
-                onClick={handlePurchase}
-                classes="ot-btn-link"
-              />{' '}
-              or <Link to="/gift-cards">purchase gift cards for others</Link>
+              <GiftCardButtons
+                purchase={purchase}
+                purchaseOthers={purchaseOthers}
+                addToAccount={addToAccount}
+              />
             </p>
           </SectionHeader>
           <SectionLoading loading={isLoading} />
@@ -99,11 +133,21 @@ const AccountGiftCards = () => {
                           )}
                           <p className="ot-font-size-small">
                             <Button
-                              text="remove"
+                              text="Assign to someone else"
                               classes="ot-btn-link"
-                              onClick={(evt) => handleDelete(evt, giftCard)}
-                              disabled={isLoading || !removeable}
+                              onClick={(evt) =>
+                                handleAssign(evt, giftCard.gift_card_id)
+                              }
+                              disabled={isLoading}
                             />
+                            {removeable && (
+                              <Button
+                                text="remove"
+                                classes="ot-btn-link"
+                                onClick={(evt) => handleDelete(evt, giftCard)}
+                                disabled={isLoading}
+                              />
+                            )}
                           </p>
                         </div>
                         {!expired && (
@@ -126,14 +170,13 @@ const AccountGiftCards = () => {
           ) : (
             <SectionEmpty message={empty} />
           )}
-          <SectionFooter>
-            <Button
-              text="Purchase a new gift card for yourself"
-              onClick={handlePurchase}
-              classes="ot-btn-link"
-            />{' '}
-            or <Link to="/gift-cards">purchase gift cards for others</Link>
-          </SectionFooter>
+          {/* <SectionFooter>
+            <GiftCardButtons
+              purchase={purchase}
+              purchaseOthers={purchaseOthers}
+              addToAccount={addToAccount}
+            />
+          </SectionFooter> */}
         </div>
       </div>
     </div>
