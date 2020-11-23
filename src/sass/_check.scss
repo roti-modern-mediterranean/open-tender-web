@@ -74,7 +74,7 @@
   }
 
   &__item--grand-total {
-    & + li .check__item,
+    & + li .check__item:first-child,
     & + li .check__items__section {
       margin-top: 2rem;
     }

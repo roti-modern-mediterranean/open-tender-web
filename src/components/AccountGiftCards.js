@@ -141,12 +141,15 @@ const AccountGiftCards = () => {
                               disabled={isLoading}
                             />
                             {removeable && (
-                              <Button
-                                text="remove"
-                                classes="ot-btn-link"
-                                onClick={(evt) => handleDelete(evt, giftCard)}
-                                disabled={isLoading}
-                              />
+                              <>
+                                <span className="link-separator">|</span>
+                                <Button
+                                  text="remove"
+                                  classes="ot-btn-link"
+                                  onClick={(evt) => handleDelete(evt, giftCard)}
+                                  disabled={isLoading}
+                                />
+                              </>
                             )}
                           </p>
                         </div>

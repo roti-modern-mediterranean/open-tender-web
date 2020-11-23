@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { selectCustomer, fetchCustomer } from '@open-tender/redux'
 
-import { selectConfig, selectSettings } from '../slices'
+import { selectBrand, selectConfig, selectSettings } from '../slices'
 import StickyNav from './StickyNav'
 import Background from './Background'
 import PageTitle from './PageTitle'
@@ -41,6 +42,7 @@ const AccountPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { account: accountConfig } = useSelector(selectConfig)
+  const { title: siteTitle } = useSelector(selectBrand)
   const { background, title, subtitle } = accountConfig
   const { accountSections } = useSelector(selectSettings)
   const navItems = Object.values(accountSections)
@@ -61,6 +63,9 @@ const AccountPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Account | {siteTitle}</title>
+      </Helmet>
       {isBrowser && <Background imageUrl={background} />}
       <div className="content">
         {profile && (

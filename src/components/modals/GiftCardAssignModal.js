@@ -12,10 +12,13 @@ import { closeModal } from '../../slices'
 import ModalClose from '../ModalClose'
 import ModalTitle from '../ModalTitle'
 
-const GiftCardAssignModal = ({ windowRef }) => {
+const GiftCardAssignModal = ({ windowRef, validate }) => {
   const dispatch = useDispatch()
   const { loading, error } = useSelector(selectCustomerGiftCards)
-  const callback = useCallback(() => dispatch(closeModal()), [dispatch])
+  const callback = useCallback(() => {
+    if (validate) validate()
+    dispatch(closeModal())
+  }, [dispatch, validate])
   const assign = useCallback(
     (cardNumber, callback) =>
       dispatch(assignCustomerGiftCard(cardNumber, callback)),
