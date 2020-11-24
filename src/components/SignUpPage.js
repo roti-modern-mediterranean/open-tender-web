@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
+import { Helmet } from 'react-helmet'
 import {
   selectCustomer,
   selectSignUp,
@@ -10,7 +11,7 @@ import {
 } from '@open-tender/redux'
 import { SignUpForm } from '@open-tender/components'
 
-import { selectConfig, selectOptIns } from '../slices'
+import { selectBrand, selectConfig, selectOptIns } from '../slices'
 import PageTitle from './PageTitle'
 import Background from './Background'
 import SectionFooter from './SectionFooter'
@@ -19,6 +20,7 @@ const SignUpPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const config = useSelector(selectConfig)
+  const { title, has_thanx } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const { loading, error } = useSelector(selectSignUp)
   const signUp = useCallback(
@@ -42,6 +44,11 @@ const SignUpPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          {config.signUp.title} | {title}
+        </title>
+      </Helmet>
       {isBrowser && <Background imageUrl={config.signUp.background} />}
       <div className="content">
         <PageTitle {...config.signUp} />
@@ -55,6 +62,7 @@ const SignUpPage = () => {
                     error={error}
                     signUp={signUp}
                     optIns={optIns}
+                    hasThanx={has_thanx}
                   />
                 </div>
               </div>
