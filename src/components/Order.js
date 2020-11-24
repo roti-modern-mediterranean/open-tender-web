@@ -55,6 +55,7 @@ const Order = ({ order, loading, error }) => {
   } = order || {}
   const dispatch = useDispatch()
   const isLoading = loading === 'pending'
+  const isMerch = order_type === 'MERCH'
   const showOrder = !isLoading && !error && !isEmpty(order)
   const orderTypeName = makeOrderTypeName(order_type, service_type)
   const isUpcoming = isoToDate(requested_at) > new Date()
@@ -110,27 +111,29 @@ const Order = ({ order, loading, error }) => {
               <h1>
                 {orderTypeName} from {revenue_center.name}
               </h1>
-              <div className="order__buttons">
-                {auth && order.is_editable && (
+              {!isMerch && (
+                <div className="order__buttons">
+                  {auth && order.is_editable && (
+                    <Button
+                      text="Edit"
+                      icon={iconMap['Edit']}
+                      onClick={handleEdit}
+                    />
+                  )}
                   <Button
-                    text="Edit"
-                    icon={iconMap['Edit']}
-                    onClick={handleEdit}
+                    text="Reorder"
+                    icon={iconMap['RefreshCw']}
+                    onClick={handleReorder}
                   />
-                )}
-                <Button
-                  text="Reorder"
-                  icon={iconMap['RefreshCw']}
-                  onClick={handleReorder}
-                />
-                {!isUpcoming && (
-                  <Button
-                    text={rating ? 'Update Rating' : 'Add Rating'}
-                    icon={iconMap['Star']}
-                    onClick={updateRating}
-                  />
-                )}
-              </div>
+                  {!isUpcoming && (
+                    <Button
+                      text={rating ? 'Update Rating' : 'Add Rating'}
+                      icon={iconMap['Star']}
+                      onClick={updateRating}
+                    />
+                  )}
+                </div>
+              )}
             </div>
           </div>
           <div className="section slide-up">
