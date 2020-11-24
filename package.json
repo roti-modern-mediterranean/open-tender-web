@@ -6,7 +6,7 @@
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@open-tender/components": "^1.1.0",
-    "@open-tender/js": "^1.2.5",
+    "@open-tender/js": "^1.2.6",
     "@open-tender/redux": "^1.4.0",
     "@reduxjs/toolkit": "^1.1.0",
     "@sentry/react": "^5.19.2",
