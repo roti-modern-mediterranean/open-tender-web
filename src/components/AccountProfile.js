@@ -23,21 +23,21 @@ const AccountProfile = () => {
   const optIns = useSelector(selectOptIns)
 
   return (
-    <div id={slugify(title)} className="section">
+    <div id={slugify(title)} className="section ot-bg-color-secondary">
       <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />
           <SectionError error={errMsg} />
-          <div className="section__content ot-bg-color-primary ot-border-radius">
-            <ProfileForm
-              profile={profile}
-              loading={loading}
-              error={error}
-              update={update}
-              optIns={optIns}
-            />
-          </div>
+        </div>
+        <div className="section__content -max ot-bg-color-primary ot-border-radius">
+          <ProfileForm
+            profile={profile}
+            loading={loading}
+            error={error}
+            update={update}
+            optIns={optIns}
+          />
         </div>
       </div>
     </div>

@@ -21,7 +21,10 @@ body.has-modal {
   max-width: $width;
 
   &--menu,
-  &--account {
+  &--account,
+  &--favorites,
+  &--orders,
+  &--items {
     max-width: 100%;
   }
 }

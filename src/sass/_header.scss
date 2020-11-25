@@ -11,7 +11,10 @@
   }
 
   .main--menu &,
-  .main--account & {
+  .main--account &,
+  .main--favorites &,
+  .main--orders &,
+  .main--items & {
     width: 100%;
   }
 

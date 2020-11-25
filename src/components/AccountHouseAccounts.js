@@ -32,14 +32,14 @@ const AccountHouseAccounts = () => {
   }, [dispatch])
 
   return (
-    <div id={slugify(title)} className="section">
+    <div id={slugify(title)} className="section ot-bg-color-secondary">
       <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
           {showHouseAccounts ? (
-            <div className="section__content ot-bg-color-primary ot-border-radius">
+            <div className="section__content -max ot-bg-color-primary ot-border-radius">
               <div className="section__rows">
                 {houseAccounts.entities.map((houseAccount) => {
                   const orderType =

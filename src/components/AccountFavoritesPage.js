@@ -53,7 +53,7 @@ const AccountFavoritesPage = () => {
   return auth ? (
     <>
       <AccountBackground />
-      <div ref={sectionRef} className="content">
+      <div ref={sectionRef} className="content ot-bg-color-secondary">
         <PageTitle title={title} subtitle={subtitle} />
         <div className="section">
           <div className="container">
@@ -62,12 +62,12 @@ const AccountFavoritesPage = () => {
               <SectionError error={error} />
               <div className="section__content">
                 {favorites.length ? (
-                  <div className="section__items">
+                  <div className="section__items-all">
                     {favorites.map((favorite) => {
                       return (
                         <div
                           key={favorite.favorite_id}
-                          className="section__item"
+                          className="section__item-all"
                         >
                           <OrderItemCard item={favorite.item} />
                         </div>

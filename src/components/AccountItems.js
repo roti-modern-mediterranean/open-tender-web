@@ -41,7 +41,7 @@ const AccountItems = () => {
   }
 
   return (
-    <div id={slugify(title)} className="section">
+    <div id={slugify(title)} className="section ot-bg-color-secondary">
       <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle} />

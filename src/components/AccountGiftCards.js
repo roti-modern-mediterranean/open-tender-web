@@ -83,7 +83,7 @@ const AccountGiftCards = () => {
   const showGiftCards = giftCards.entities.length > 0
 
   return (
-    <div id={slugify(title)} className="section">
+    <div id={slugify(title)} className="section ot-bg-color-secondary">
       <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle}>
@@ -98,7 +98,7 @@ const AccountGiftCards = () => {
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
           {showGiftCards ? (
-            <div className="section__content ot-bg-color-primary ot-border-radius">
+            <div className="section__content -max ot-bg-color-primary ot-border-radius">
               <div className="section__rows">
                 {giftCards.entities.map((giftCard) => {
                   const expired =
@@ -173,13 +173,6 @@ const AccountGiftCards = () => {
           ) : (
             <SectionEmpty message={empty} />
           )}
-          {/* <SectionFooter>
-            <GiftCardButtons
-              purchase={purchase}
-              purchaseOthers={purchaseOthers}
-              addToAccount={addToAccount}
-            />
-          </SectionFooter> */}
         </div>
       </div>
     </div>

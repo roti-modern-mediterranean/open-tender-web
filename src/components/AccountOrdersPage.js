@@ -22,7 +22,7 @@ const AccountOrdersPage = () => {
   const sectionRef = useRef()
   const dispatch = useDispatch()
   const history = useHistory()
-  const increment = 12
+  const increment = 20
   const limit = 60
   const [recentOrders, setRecentOrders] = useState([])
   const [count, setCount] = useState(isBrowser ? increment : limit)
@@ -65,7 +65,7 @@ const AccountOrdersPage = () => {
   return auth ? (
     <>
       <AccountBackground />
-      <div ref={sectionRef} className="content">
+      <div ref={sectionRef} className="content ot-bg-color-secondary">
         <PageTitle title={title} subtitle={subtitle} />
         <div className="section">
           <div className="container">
@@ -75,10 +75,13 @@ const AccountOrdersPage = () => {
               <div className="section__content">
                 {showOrders &&
                   (recentOrders.length ? (
-                    <div className="section__items">
+                    <div className="section__items-all">
                       {recentOrders.map((order) => {
                         return (
-                          <div key={order.order_id} className="section__item">
+                          <div
+                            key={order.order_id}
+                            className="section__item-all"
+                          >
                             <OrderCard order={order} />
                           </div>
                         )

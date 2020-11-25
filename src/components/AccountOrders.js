@@ -66,7 +66,7 @@ const AccountOrders = () => {
   }
 
   return (
-    <div id={slugify(title)} className="section">
+    <div id={slugify(title)} className="section ot-bg-color-secondary">
       <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle} />
@@ -79,10 +79,7 @@ const AccountOrders = () => {
                   {recentOrders.map((order) => {
                     return (
                       <div key={order.order_id} className="section__item">
-                        <OrderCard
-                          order={order}
-                          className="ot-bg-color-secondary"
-                        />
+                        <OrderCard order={order} />
                       </div>
                     )
                   })}

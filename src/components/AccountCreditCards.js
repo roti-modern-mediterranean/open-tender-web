@@ -13,7 +13,6 @@ import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import CreditCards from './CreditCards'
 import SectionEmpty from './SectionEmpty'
-import SectionFooter from './SectionFooter'
 
 const AccountCreditCards = () => {
   const dispatch = useDispatch()
@@ -39,27 +38,30 @@ const AccountCreditCards = () => {
     : false
 
   return (
-    <div id={slugify(title)} className="section">
+    <div id={slugify(title)} className="section ot-bg-color-secondary">
       <div className="container">
         <div className="section__container">
-          <SectionHeader title={title} subtitle={subtitle} />
+          <SectionHeader title={title} subtitle={subtitle}>
+            <p style={{ margin: '2.5rem 0 0' }}>
+              <Button
+                text="Add a new card to your account"
+                onClick={handleAddNew}
+                classes="ot-btn"
+              />
+            </p>
+          </SectionHeader>
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
-          {showCreditCards ? (
-            <CreditCards
-              creditCards={creditCards.entities}
-              isLoading={isLoading}
-            />
-          ) : (
-            <SectionEmpty message={empty} />
-          )}
-          <SectionFooter>
-            <Button
-              text="Add a new card to your account"
-              onClick={handleAddNew}
-              classes="ot-btn-link"
-            />
-          </SectionFooter>
+          <div className="section__content -max ot-bg-color-primary ot-border-radius">
+            {showCreditCards ? (
+              <CreditCards
+                creditCards={creditCards.entities}
+                isLoading={isLoading}
+              />
+            ) : (
+              <SectionEmpty message={empty} />
+            )}
+          </div>
         </div>
       </div>
     </div>

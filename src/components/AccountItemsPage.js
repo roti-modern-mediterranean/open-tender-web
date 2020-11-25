@@ -56,7 +56,7 @@ const AccountItemsPage = () => {
   return auth ? (
     <>
       <AccountBackground />
-      <div ref={sectionRef} className="content">
+      <div ref={sectionRef} className="content ot-bg-color-secondary">
         <PageTitle title={title} subtitle={subtitle} />
         <div className="section">
           <div className="container">
@@ -66,10 +66,13 @@ const AccountItemsPage = () => {
               <div className="section__content">
                 {showItems &&
                   (items.length ? (
-                    <div className="section__items">
+                    <div className="section__items-all">
                       {items.map((item) => {
                         return (
-                          <div key={item.signature} className="section__item">
+                          <div
+                            key={item.signature}
+                            className="section__item-all"
+                          >
                             <OrderItemCard item={item} />
                           </div>
                         )
