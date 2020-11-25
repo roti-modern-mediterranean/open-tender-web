@@ -41,14 +41,14 @@ const AccountAllergens = () => {
   }, [dispatch])
 
   return (
-    <div id={slugify(title)} className="section ot-bg-color-secondary">
+    <div id={slugify(title)} className="section">
       <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
           {showAllergens && (
-            <div className="section__content -max ot-bg-color-primary ot-border-radius">
+            <div className="section__content -max ot-bg-color-primary ot-border ot-border-radius">
               <div className="section__intro">
                 <p className="ot-font-size-small">I'm allergic to...</p>
               </div>

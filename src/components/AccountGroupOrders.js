@@ -48,7 +48,7 @@ const AccountGroupOrders = () => {
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
-          <div className="section__content -wide">
+          <div className="section__content">
             <div className="section__items">
               {groupOrders.map((order) => {
                 return (

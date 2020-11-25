@@ -83,7 +83,7 @@ const AccountGiftCards = () => {
   const showGiftCards = giftCards.entities.length > 0
 
   return (
-    <div id={slugify(title)} className="section ot-bg-color-secondary">
+    <div id={slugify(title)} className="section">
       <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle}>

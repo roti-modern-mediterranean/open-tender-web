@@ -29,54 +29,52 @@ const CreditCards = ({ creditCards, isLoading }) => {
   }
 
   return (
-    <div className="section__content ot-bg-color-primary ot-border-radius">
-      <div className="section__rows">
-        {creditCards.map((creditCard) => (
-          <SectionRow
-            key={creditCard.customer_card_id}
-            title={
-              <span className="cards__card__image">
-                <img
-                  src={cardIconMap[creditCard.card_type]}
-                  alt={creditCard.card_type_name}
-                />
-              </span>
-            }
-          >
-            <div className="section__row__container">
-              <div className="section__row__container__content">
+    <div className="section__rows">
+      {creditCards.map((creditCard) => (
+        <SectionRow
+          key={creditCard.customer_card_id}
+          title={
+            <span className="cards__card__image">
+              <img
+                src={cardIconMap[creditCard.card_type]}
+                alt={creditCard.card_type_name}
+              />
+            </span>
+          }
+        >
+          <div className="section__row__container">
+            <div className="section__row__container__content">
+              {creditCard.is_default && (
+                <p className="ot-preface ot-font-size-x-small">Default</p>
+              )}
+              <p className="section__row__relative ot-color-headings">
+                {creditCard.card_type_name} ending in {creditCard.last4}
                 {creditCard.is_default && (
-                  <p className="ot-preface ot-font-size-x-small">Default</p>
+                  <span className="section__row__default">
+                    <CircleLoader complete={true} />
+                  </span>
                 )}
-                <p className="section__row__relative ot-color-headings">
-                  {creditCard.card_type_name} ending in {creditCard.last4}
-                  {creditCard.is_default && (
-                    <span className="section__row__default">
-                      <CircleLoader complete={true} />
-                    </span>
-                  )}
-                </p>
-                <p className="ot-font-size-small">{creditCard.masked}</p>
-                <p className="ot-font-size-small">
-                  <Button
-                    text="make default"
-                    classes="ot-btn-link"
-                    onClick={(evt) => handleDefault(evt, creditCard)}
-                    disabled={creditCard.is_default || isLoading}
-                  />
-                  <span className="link-separator">|</span>
-                  <Button
-                    text="remove"
-                    classes="ot-btn-link"
-                    onClick={(evt) => handleDelete(evt, creditCard)}
-                    disabled={isLoading}
-                  />
-                </p>
-              </div>
+              </p>
+              <p className="ot-font-size-small">{creditCard.masked}</p>
+              <p className="ot-font-size-small">
+                <Button
+                  text="make default"
+                  classes="ot-btn-link"
+                  onClick={(evt) => handleDefault(evt, creditCard)}
+                  disabled={creditCard.is_default || isLoading}
+                />
+                <span className="link-separator">|</span>
+                <Button
+                  text="remove"
+                  classes="ot-btn-link"
+                  onClick={(evt) => handleDelete(evt, creditCard)}
+                  disabled={isLoading}
+                />
+              </p>
             </div>
-          </SectionRow>
-        ))}
-      </div>
+          </div>
+        </SectionRow>
+      ))}
     </div>
   )
 }

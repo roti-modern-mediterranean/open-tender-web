@@ -66,13 +66,13 @@ const AccountOrders = () => {
   }
 
   return (
-    <div id={slugify(title)} className="section ot-bg-color-secondary">
+    <div id={slugify(title)} className="section">
       <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
-          <div className="section__content -wide">
+          <div className="section__content">
             {showOrders &&
               (recentOrders.length ? (
                 <div className="section__items">

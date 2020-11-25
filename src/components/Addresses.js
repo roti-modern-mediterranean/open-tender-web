@@ -50,56 +50,54 @@ const Addresses = ({ addresses, isLoading }) => {
   }
 
   return (
-    <div className="section__content ot-bg-color-primary ot-border-radius">
-      <div className="section__rows">
-        {addresses.map((address) => (
-          <SectionRow
-            key={address.customer_address_id}
-            title={address.description || 'Address'}
-          >
-            <div className="section__row__container">
-              <div className="section__row__container__content">
-                {address.is_default && (
-                  <p className="ot-preface ot-font-size-x-small">Default</p>
-                )}
-                <OrderAddress address={address} isDefault={address.is_default}>
-                  <p className="ot-font-size-small">
-                    <Button
-                      text="edit"
-                      classes="ot-btn-link"
-                      onClick={(evt) => handleEdit(evt, address)}
-                      disabled={isLoading}
-                    />
-                    <span className="link-separator">|</span>
-                    <Button
-                      text="make default"
-                      classes="ot-btn-link"
-                      onClick={(evt) => handleDefault(evt, address)}
-                      disabled={address.is_default || isLoading}
-                    />
-                    <span className="link-separator">|</span>
-                    <Button
-                      text="remove"
-                      classes="ot-btn-link"
-                      onClick={(evt) => handleDelete(evt, address)}
-                      disabled={isLoading}
-                    />
-                  </p>
-                </OrderAddress>
-              </div>
-              <div className="section__row__container__buttons">
-                <Button
-                  text="Order from here"
-                  icon={iconMap['RefreshCw']}
-                  onClick={(evt) => handleReorder(evt, address)}
-                  classes="ot-btn--small ot-font-size-small"
-                  disabled={isLoading}
-                />
-              </div>
+    <div className="section__rows">
+      {addresses.map((address) => (
+        <SectionRow
+          key={address.customer_address_id}
+          title={address.description || 'Address'}
+        >
+          <div className="section__row__container">
+            <div className="section__row__container__content">
+              {address.is_default && (
+                <p className="ot-preface ot-font-size-x-small">Default</p>
+              )}
+              <OrderAddress address={address} isDefault={address.is_default}>
+                <p className="ot-font-size-small">
+                  <Button
+                    text="edit"
+                    classes="ot-btn-link"
+                    onClick={(evt) => handleEdit(evt, address)}
+                    disabled={isLoading}
+                  />
+                  <span className="link-separator">|</span>
+                  <Button
+                    text="make default"
+                    classes="ot-btn-link"
+                    onClick={(evt) => handleDefault(evt, address)}
+                    disabled={address.is_default || isLoading}
+                  />
+                  <span className="link-separator">|</span>
+                  <Button
+                    text="remove"
+                    classes="ot-btn-link"
+                    onClick={(evt) => handleDelete(evt, address)}
+                    disabled={isLoading}
+                  />
+                </p>
+              </OrderAddress>
             </div>
-          </SectionRow>
-        ))}
-      </div>
+            <div className="section__row__container__buttons">
+              <Button
+                text="Order from here"
+                icon={iconMap['RefreshCw']}
+                onClick={(evt) => handleReorder(evt, address)}
+                classes="ot-btn--small ot-font-size-small"
+                disabled={isLoading}
+              />
+            </div>
+          </div>
+        </SectionRow>
+      ))}
     </div>
   )
 }

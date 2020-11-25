@@ -62,7 +62,7 @@ const AccountLevelUp = () => {
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
           {levelup ? (
-            <div className="section__content ot-bg-color-primary ot-border-radius">
+            <div className="section__content -max ot-bg-color-primary ot-border-radius">
               <div className="section__rows">
                 <SectionRow
                   title={

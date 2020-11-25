@@ -73,7 +73,7 @@ const AccountPage = () => {
               <AccountGreeting />
             </Hero>
             <StickyNav items={navItems} offset={-90} />
-            <div className="sections">
+            <div className="sections ot-bg-color-secondary">
               {accountSections.map((section) => (
                 <AccountSection key={section} section={section} />
               ))}

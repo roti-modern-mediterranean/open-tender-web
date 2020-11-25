@@ -38,7 +38,7 @@ const AccountCreditCards = () => {
     : false
 
   return (
-    <div id={slugify(title)} className="section ot-bg-color-secondary">
+    <div id={slugify(title)} className="section">
       <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle}>
@@ -52,7 +52,7 @@ const AccountCreditCards = () => {
           </SectionHeader>
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
-          <div className="section__content -max ot-bg-color-primary ot-border-radius">
+          <div className="section__content -max ot-bg-color-primary ot-border ot-border-radius">
             {showCreditCards ? (
               <CreditCards
                 creditCards={creditCards.entities}

@@ -40,18 +40,14 @@ const AccountAddresses = () => {
   }
 
   return (
-    <div
-      id={slugify(title)}
-      ref={sectionRef}
-      className="section ot-bg-color-secondary"
-    >
+    <div id={slugify(title)} ref={sectionRef} className="section">
       <div className="container">
         <div className="section__container">
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={loading === 'pending'} />
           <SectionError error={error} />
           {entities.length > 0 && (
-            <div className="section__content -max ot-bg-color-primary ot-border-radius">
+            <div className="section__content -max ot-bg-color-primary ot-border ot-border-radius">
               <Addresses
                 addresses={entities}
                 isLoading={loading === 'pending'}
