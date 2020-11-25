@@ -24,6 +24,7 @@ import LevelUpPage from './LevelUpPage'
 import FulfillmentPage from './FulfillmentPage'
 import GiftCardsPage from './GiftCardsPage'
 import DonationPage from './DonationPage'
+import ThanxPage from './ThanxPage'
 
 const Routes = () => {
   return (
@@ -42,6 +43,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/levelup/:token">
         <LevelUpPage />
+      </Route>
+      <Route exact path="/thanx/callback">
+        <ThanxPage />
       </Route>
       <Route exact path="/signup">
         <SignUpPage />

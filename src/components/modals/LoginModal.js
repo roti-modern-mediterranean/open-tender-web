@@ -5,12 +5,14 @@ import {
   selectCustomer,
   selectResetPassword,
   loginCustomer,
+  loginCustomerThanx,
   sendPasswordResetEmail,
   resetPasswordReset,
+  resetLoginError,
 } from '@open-tender/redux'
 import { LoginForm, SendResetForm, Button } from '@open-tender/components'
 
-import { closeModal } from '../../slices'
+import { closeModal, selectBrand } from '../../slices'
 import ModalClose from '../ModalClose'
 import ModalTitle from '../ModalTitle'
 
@@ -19,6 +21,11 @@ const messaging = {
     title: 'Log into your account',
     subtitle: 'Please enter your email address and password',
     reset: 'Forget your password?',
+  },
+  thanx: {
+    title: 'Log into your account',
+    subtitle:
+      "Please enter your email address, and we'll send you an email with a magic link that logs you into your account automatically.",
   },
   reset: {
     title: 'Reset your password',
@@ -36,11 +43,18 @@ const messaging = {
 const LoginModal = ({ callback }) => {
   const [isReset, setIsReset] = useState(false)
   const dispatch = useDispatch()
+  const { has_thanx } = useSelector(selectBrand)
   const customer = useSelector(selectCustomer)
   const { profile } = customer
   const resetPassword = useSelector(selectResetPassword)
   const { resetSent } = resetPassword
-  const mode = resetSent ? 'resetSent' : isReset ? 'reset' : 'login'
+  const mode = has_thanx
+    ? 'thanx'
+    : resetSent
+    ? 'resetSent'
+    : isReset
+    ? 'reset'
+    : 'login'
   const msg = messaging[mode]
   const login = useCallback(
     (email, password) => dispatch(loginCustomer(email, password)),
@@ -50,10 +64,17 @@ const LoginModal = ({ callback }) => {
     (email, linkUrl) => dispatch(sendPasswordResetEmail(email, linkUrl)),
     [dispatch]
   )
+  const loginThanx = useCallback(
+    (email) => dispatch(loginCustomerThanx(email)),
+    [dispatch]
+  )
 
   useEffect(() => {
     if (profile) dispatch(closeModal())
-    return () => dispatch(resetPasswordReset())
+    return () => {
+      dispatch(resetPasswordReset())
+      dispatch(resetLoginError())
+    }
   }, [profile, dispatch])
 
   const toggleReset = (evt) => {
@@ -91,16 +112,23 @@ const LoginModal = ({ callback }) => {
               callback={callback}
             />
           ) : (
-            <LoginForm {...customer} login={login} callback={callback} />
+            <LoginForm
+              {...customer}
+              login={has_thanx ? loginThanx : login}
+              callback={callback}
+              hasThanx={has_thanx}
+            />
           )}
         </div>
-        <div className="modal__footer ot-font-size-small">
-          <Button
-            classes="ot-btn-link"
-            onClick={resetSent ? toggleResetSent : toggleReset}
-            text={msg.reset}
-          />
-        </div>
+        {!has_thanx && (
+          <div className="modal__footer ot-font-size-small">
+            <Button
+              classes="ot-btn-link"
+              onClick={resetSent ? toggleResetSent : toggleReset}
+              text={msg.reset}
+            />
+          </div>
+        )}
       </div>
     </>
   )

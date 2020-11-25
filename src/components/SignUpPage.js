@@ -55,6 +55,27 @@ const SignUpPage = () => {
         <div className="section slide-up">
           <div className="container">
             <div className="section__container">
+              {has_thanx && (
+                <p style={{ margin: '-1rem 0 3rem' }}>
+                  By signing up you agree to our{' '}
+                  <a
+                    href="https://app.thanx.com/privacy"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    privacy policy
+                  </a>{' '}
+                  and our{' '}
+                  <a
+                    href="https://app.thanx.com/terms"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    terms of service
+                  </a>
+                  .
+                </p>
+              )}
               <div className="section__content">
                 <div className="signup__form">
                   <SignUpForm
