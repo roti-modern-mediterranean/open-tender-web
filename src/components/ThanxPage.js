@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useHistory } from 'react-router-dom'
 import {
   selectCustomer,
-  resetCustomer,
+  // resetCustomer,
   authCustomerThanx,
 } from '@open-tender/redux'
 
@@ -35,9 +35,9 @@ const ThanxPage = () => {
     }
   }, [auth, code, history, dispatch])
 
-  useEffect(() => {
-    return () => dispatch(resetCustomer())
-  }, [dispatch])
+  // useEffect(() => {
+  //   return () => dispatch(resetCustomer())
+  // }, [dispatch])
 
   return (
     <>
