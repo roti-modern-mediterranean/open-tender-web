@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
+import { useHistory } from 'react-router-dom'
 import {
   fetchMenuItems,
   fetchRevenueCenter,
@@ -24,9 +23,8 @@ import SectionFooter from './SectionFooter'
 
 const AccountOrders = () => {
   const dispatch = useDispatch()
-  const limit = 9
+  const history = useHistory()
   const [recentOrders, setRecentOrders] = useState([])
-  const [count, setCount] = useState(isBrowser ? 3 : limit)
   const {
     recentOrders: { title, subtitle, empty },
   } = useSelector(selectAccountConfig)
@@ -35,15 +33,16 @@ const AccountOrders = () => {
   const { entities, loading, error } = orders
   const isLoading = loading === 'pending'
   const showOrders = !isLoading && !error
+  const limit = 5
 
   useEffect(() => {
-    dispatch(fetchCustomerOrders(limit + 1))
+    dispatch(fetchCustomerOrders(20))
   }, [dispatch])
 
   useEffect(() => {
-    const recent = entities.length ? entities.slice(0, count) : []
+    const recent = entities.length ? entities.slice(0, limit) : []
     setRecentOrders(recent)
-  }, [entities, count])
+  }, [entities, limit])
 
   useEffect(() => {
     const lastOrder = getLastOrder(entities)
@@ -60,6 +59,12 @@ const AccountOrders = () => {
     }
   }, [entities, cartQuantity, dispatch])
 
+  const seeAll = (evt) => {
+    evt.preventDefault()
+    evt.target.blur()
+    history.push('/orders')
+  }
+
   return (
     <div id={slugify(title)} className="section">
       <div className="container">
@@ -74,7 +79,10 @@ const AccountOrders = () => {
                   {recentOrders.map((order) => {
                     return (
                       <div key={order.order_id} className="section__item">
-                        <OrderCard order={order} />
+                        <OrderCard
+                          order={order}
+                          className="ot-bg-color-secondary"
+                        />
                       </div>
                     )
                   })}
@@ -83,15 +91,11 @@ const AccountOrders = () => {
                 <SectionEmpty message={empty} />
               ))}
           </div>
-          {entities.length > count ? (
+          {entities.length > limit ? (
             <SectionFooter>
-              {count === limit ? (
-                <Link to="/orders">See all recent orders</Link>
-              ) : (
-                <Button classes="ot-btn-link" onClick={() => setCount(limit)}>
-                  Load more recent orders
-                </Button>
-              )}
+              <Button classes="ot-btn" onClick={seeAll}>
+                See all recent orders
+              </Button>
             </SectionFooter>
           ) : null}
         </div>

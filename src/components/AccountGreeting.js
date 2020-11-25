@@ -1,41 +1,29 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Link } from 'react-scroll'
 import {
+  selectCustomer,
   selectOrder,
   selectCustomerOrders,
   resetOrderType,
   resetOrder,
-  resetRevenueCenter,
 } from '@open-tender/redux'
-import { slugify, getLastOrder, makeOrderTypeName } from '@open-tender/js'
+import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
 import { selectAccountConfig } from '../slices'
 import CurrentOrder from './CurrentOrder'
 import OrderCard from './OrderCard'
-import AccountLoyalty from './AccountLoyalty'
 import Loader from './Loader'
 import iconMap from './iconMap'
-
-const GreetingLink = ({ sectionTitle, text }) => (
-  <Link
-    activeClass="active"
-    className="link"
-    to={slugify(sectionTitle)}
-    spy={true}
-    smooth={true}
-    offset={-90}
-  >
-    {text}
-  </Link>
-)
 
 const AccountGreeting = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const config = useSelector(selectAccountConfig)
+  const { title, subtitle } = config
+  const { profile } = useSelector(selectCustomer)
+  const pageTitle = profile ? `${title}, ${profile.first_name}!` : ''
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectCustomerOrders)
@@ -68,13 +56,6 @@ const AccountGreeting = () => {
     evt.target.blur()
   }
 
-  const changeRevenueCenter = (evt) => {
-    evt.preventDefault()
-    dispatch(resetRevenueCenter())
-    history.push(`/locations`)
-    evt.target.blur()
-  }
-
   const switchOrderType = (evt) => {
     evt.preventDefault()
     dispatch(resetOrderType())
@@ -91,141 +72,67 @@ const AccountGreeting = () => {
     </>
   ) : (
     <div className={greetingClass}>
-      <div className="container">
-        <div className="greeting__content">
-          <div className="greeting__summary">
-            <div className="greeting__summary__order">
-              {isCurrentOrder ? (
-                <>
-                  <Button
-                    text="Continue Current Order"
-                    icon={iconMap['ShoppingBag']}
-                    onClick={continueCurrent}
-                  />
-                  <p className="ot-font-size-small">
-                    <Button
-                      text="Or start a new order from scratch"
-                      classes="ot-btn-link"
-                      onClick={startNewOrder}
-                    />
-                  </p>
-                </>
-              ) : lastOrder ? (
-                <>
-                  <Button
-                    text={`Order ${orderTypeName} Again`}
-                    icon={iconMap['ShoppingBag']}
-                    onClick={continueCurrent}
-                  />
-                  <p className="ot-font-size-small">
-                    <Button
-                      text="Or switch to a different order type"
-                      classes="ot-btn-link"
-                      onClick={switchOrderType}
-                    />
-                  </p>
-                </>
-              ) : (
-                <Button
-                  text="Start a New Order"
-                  icon={iconMap['ShoppingBag']}
-                  onClick={startNewOrder}
-                />
-              )}
-            </div>
-            <AccountLoyalty />
-            <div className="greeting__summary__options">
-              <p className="ot-font-size-small ot-bold ot-color-headings">
-                Other things you can do from here...
-              </p>
-              <ul className="ot-font-size-small">
-                <li>
-                  <span>
-                    Reorder from your{' '}
-                    <GreetingLink
-                      sectionTitle={config.favorites.title}
-                      text="favorites"
-                    />{' '}
-                    or{' '}
-                    <GreetingLink
-                      sectionTitle={config.recentItems.title}
-                      text="recently ordered items"
-                    />
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    Update your{' '}
-                    <GreetingLink
-                      sectionTitle={config.profile.title}
-                      text="profile"
-                    />
-                    ,{' '}
-                    <GreetingLink
-                      sectionTitle={config.allergens.title}
-                      text="allergens"
-                    />{' '}
-                    or{' '}
-                    <GreetingLink
-                      sectionTitle={config.creditCards.title}
-                      text="cards on file"
-                    />
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    Manage your{' '}
-                    <GreetingLink
-                      sectionTitle={config.addresses.title}
-                      text="addresses"
-                    />{' '}
-                    and{' '}
-                    <GreetingLink
-                      sectionTitle={config.giftCards.title}
-                      text="gift cards"
-                    />
-                  </span>
-                </li>
-              </ul>
-            </div>
+      <div className="greeting__content">
+        <div className="greeting__summary">
+          <div className="greeting__header">
+            <h1 className="greeting__header__title ot-title ot-color-light">
+              {pageTitle}
+            </h1>
+            <p className="greeting__header__subtitle ot-subtitle ot-color-light ot-font-size-big">
+              {subtitle}
+            </p>
           </div>
-          {(isCurrentOrder || lastOrder) && (
-            <div className="greeting__order">
-              {isCurrentOrder ? (
-                <>
-                  <CurrentOrder order={currentOrder} />
-                  <div className="greeting__order__footer">
-                    <p className="ot-font-size-small">
-                      <Button
-                        text="Change location"
-                        classes="ot-btn-link"
-                        onClick={changeRevenueCenter}
-                      />{' '}
-                      or{' '}
-                      <Button
-                        text="switch order type"
-                        classes="ot-btn-link"
-                        onClick={switchOrderType}
-                      />
-                    </p>
-                  </div>
-                </>
-              ) : lastOrder ? (
-                <>
-                  <OrderCard order={lastOrder} isLast={true} />
-                  <div className="greeting__order__footer">
-                    <p className="ot-font-size-small">
-                      <GreetingLink
-                        sectionTitle={config.recentOrders.title}
-                        text="See other recent orders..."
-                      />
-                    </p>
-                  </div>
-                </>
-              ) : null}
-            </div>
-          )}
+          <div className="greeting__summary__order">
+            {isCurrentOrder ? (
+              <>
+                <Button
+                  text="Continue Current Order"
+                  icon={iconMap['ShoppingBag']}
+                  onClick={continueCurrent}
+                  classes="ot-btn--highlight ot-btn--big"
+                />
+                <div className="greeting__summary__secondary">
+                  <Button
+                    text="Or start a new order from scratch"
+                    classes="ot-btn ot-btn--small"
+                    onClick={startNewOrder}
+                  />
+                </div>
+              </>
+            ) : lastOrder ? (
+              <>
+                <Button
+                  text={`Order ${orderTypeName} Again`}
+                  icon={iconMap['ShoppingBag']}
+                  onClick={continueCurrent}
+                  classes="ot-btn--highlight ot-btn--big"
+                />
+                <div className="greeting__summary__secondary">
+                  <Button
+                    text="Or switch to a different order type"
+                    classes="ot-btn ot-btn--small"
+                    onClick={switchOrderType}
+                  />
+                </div>
+              </>
+            ) : (
+              <Button
+                text="Start a New Order"
+                icon={iconMap['ShoppingBag']}
+                onClick={startNewOrder}
+              />
+            )}
+          </div>
         </div>
+        {(isCurrentOrder || lastOrder) && (
+          <div className="greeting__order">
+            {isCurrentOrder ? (
+              <CurrentOrder order={currentOrder} />
+            ) : lastOrder ? (
+              <OrderCard order={lastOrder} isLast={true} />
+            ) : null}
+          </div>
+        )}
       </div>
     </div>
   )

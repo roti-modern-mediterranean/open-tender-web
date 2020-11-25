@@ -20,22 +20,22 @@
       }
     }
 
-    .main--account & {
-      @include breakpoint(mobile_both) {
-        position: fixed;
-        z-index: 10;
-        top: $nav-height-mobile;
-        left: 0;
-        right: 0;
-        height: $nav-height-mobile;
-      }
-    }
+    // .main--account & {
+    //   @include breakpoint(mobile_both) {
+    //     position: fixed;
+    //     z-index: 10;
+    //     top: $nav-height-mobile;
+    //     left: 0;
+    //     right: 0;
+    //     height: $nav-height-mobile;
+    //   }
+    // }
 
-    .main--account .ot-stuck & {
-      left: auto;
-      width: 100%;
-      max-width: $width;
-    }
+    // .main--account .ot-stuck & {
+    //   left: auto;
+    //   width: 100%;
+    //   max-width: $width;
+    // }
   }
 
   &__container {

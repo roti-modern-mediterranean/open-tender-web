@@ -73,7 +73,7 @@ const Menu = () => {
         </Hero>
       )}
       {!selected && revenueCenter && showHero && (
-        <Hero imageUrl={menuConfig.background} classes="hero--right hero--top">
+        <Hero imageUrl={menuConfig.background} classes="hero--right">
           <RevenueCenter
             revenueCenter={revenueCenter}
             classes="rc--hero slide-up"

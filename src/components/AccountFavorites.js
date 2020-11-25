@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomerFavorites,
   fetchCustomerFavorites,
@@ -19,14 +18,14 @@ import SectionFooter from './SectionFooter'
 
 const AccountFavorites = () => {
   const dispatch = useDispatch()
-  const limit = 9
+  const history = useHistory()
   const [favorites, setFavorites] = useState([])
-  const [count, setCount] = useState(isBrowser ? 3 : limit)
   const {
     favorites: { title, subtitle, empty },
   } = useSelector(selectAccountConfig)
   const { entities, loading, error } = useSelector(selectCustomerFavorites)
   const isLoading = loading === 'pending'
+  const limit = 5
 
   useEffect(() => {
     dispatch(fetchCustomerFavorites())
@@ -35,9 +34,15 @@ const AccountFavorites = () => {
   useEffect(() => {
     const items = entities
       .map((i) => ({ ...i, item: makeDisplayItem(i.item) }))
-      .slice(0, count)
+      .slice(0, limit)
     setFavorites(items)
-  }, [entities, count])
+  }, [entities, limit])
+
+  const seeAll = (evt) => {
+    evt.preventDefault()
+    evt.target.blur()
+    history.push('/favorites')
+  }
 
   return (
     <div id={slugify(title)} className="section">
@@ -61,15 +66,11 @@ const AccountFavorites = () => {
               <SectionEmpty message={empty} />
             )}
           </div>
-          {entities.length > count ? (
+          {entities.length > limit ? (
             <SectionFooter>
-              {count === limit ? (
-                <Link to="/favorites">See all favorites</Link>
-              ) : (
-                <Button classes="ot-btn-link" onClick={() => setCount(limit)}>
-                  Load more favorites
-                </Button>
-              )}
+              <Button classes="ot-btn" onClick={seeAll}>
+                See all favorites
+              </Button>
             </SectionFooter>
           ) : null}
         </div>

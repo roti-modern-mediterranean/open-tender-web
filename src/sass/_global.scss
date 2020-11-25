@@ -20,7 +20,8 @@ body.has-modal {
   width: 100%;
   max-width: $width;
 
-  &--menu {
+  &--menu,
+  &--account {
     max-width: 100%;
   }
 }

@@ -71,7 +71,8 @@ const makeGlobalStyles = (theme) => css`
       color: ${theme.links.primary.hover};
     }
   }
-  a.ot-link-light {
+  a.ot-link-light,
+  button.ot-link-light {
     color: ${theme.links.light.color};
     &:hover,
     &:active,
@@ -80,7 +81,8 @@ const makeGlobalStyles = (theme) => css`
       color: ${theme.links.light.hover};
     }
   }
-  a.ot-link-dark {
+  a.ot-link-dark,
+  button.ot-link-dark {
     color: ${theme.links.dark.color};
     &:hover,
     &:active,

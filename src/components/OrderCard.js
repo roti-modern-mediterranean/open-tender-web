@@ -21,7 +21,7 @@ import OrderImages from './OrderImages'
 import OrderTag from './OrderTag'
 import iconMap from './iconMap'
 
-const OrderCard = ({ order, isLast }) => {
+const OrderCard = ({ order, isLast, className }) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const {
@@ -46,6 +46,7 @@ const OrderCard = ({ order, isLast }) => {
   const streetAddress = makeOrderAddress(address)
   const trackingUrl = isOpen && delivery && delivery.tracking_url
   const itemNames = cart.map((i) => i.name).join(', ')
+  const klass = `order-card ot-bg-color-primary ot-border ot-border-radius ot-box-shadow slide-up ${className}`
 
   const handleEdit = (evt) => {
     evt.preventDefault()
@@ -70,7 +71,7 @@ const OrderCard = ({ order, isLast }) => {
   }
 
   return (
-    <div className="order-card ot-bg-color-primary ot-border ot-border-radius ot-box-shadow slide-up">
+    <div className={klass}>
       <OrderTag isUpcoming={isUpcoming} status={status} />
       <div className="order-card__container">
         <div className="order-card__header">

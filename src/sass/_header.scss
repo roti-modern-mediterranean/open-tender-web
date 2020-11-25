@@ -10,7 +10,8 @@
     height: $nav-height-mobile;
   }
 
-  .main--menu & {
+  .main--menu &,
+  .main--account & {
     width: 100%;
   }
 

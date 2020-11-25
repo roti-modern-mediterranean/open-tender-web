@@ -1,7 +1,8 @@
 .greeting {
-  margin: 0 0 4rem;
+  width: 100%;
+  margin: 4rem 0;
   @include breakpoint(mobile_both) {
-    margin: 0;
+    margin: 3rem 0;
   }
 
   &.-no-order {
@@ -15,6 +16,7 @@
   &__content {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     @include breakpoint(mobile) {
       flex-direction: column;
     }
@@ -45,6 +47,10 @@
       }
     }
 
+    &__secondary {
+      margin: 2rem 0 0;
+    }
+
     &__options {
       margin: 3rem 0 0;
       @include breakpoint(mobile) {
@@ -67,11 +73,23 @@
     }
   }
 
+  &__header {
+    margin: 0 0 $padding;
+    @include breakpoint(mobile) {
+      margin: 0 0 $padding;
+    }
+
+    &__subtitle {
+      margin: 1rem 0 0;
+    }
+  }
+
   &__order {
-    width: 31rem;
-    flex-grow: 0;
-    flex-shrink: 0;
-    padding: 0 0 1rem;
+    width: 100%;
+    max-width: 32rem;
+    @include breakpoint(mobile) {
+      max-width: 100%;
+    }
 
     .order-card {
       height: auto;

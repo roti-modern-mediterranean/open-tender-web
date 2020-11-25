@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
+import { useHistory } from 'react-router-dom'
 import { selectCustomerOrders } from '@open-tender/redux'
 import { slugify, makeUniqueDisplayItems } from '@open-tender/js'
 import { Button } from '@open-tender/components'
@@ -15,15 +14,15 @@ import OrderItemCard from './OrderItemCard'
 import SectionFooter from './SectionFooter'
 
 const AccountItems = () => {
-  const limit = 9
+  const history = useHistory()
   const [items, setItems] = useState([])
   const [allItems, setAllItems] = useState([])
-  const [count, setCount] = useState(isBrowser ? 3 : limit)
   const {
     recentItems: { title, subtitle, empty },
   } = useSelector(selectAccountConfig)
   const orders = useSelector(selectCustomerOrders)
   const { entities, loading, error } = orders
+  const limit = 5
 
   const isLoading = loading === 'pending'
   const showItems = !isLoading && !error
@@ -31,9 +30,15 @@ const AccountItems = () => {
   useEffect(() => {
     const displayItems = makeUniqueDisplayItems(entities)
     setAllItems(displayItems)
-    const recentItems = displayItems.slice(0, count)
+    const recentItems = displayItems.slice(0, limit)
     setItems(recentItems)
-  }, [entities, count])
+  }, [entities, limit])
+
+  const seeAll = (evt) => {
+    evt.preventDefault()
+    evt.target.blur()
+    history.push('/items')
+  }
 
   return (
     <div id={slugify(title)} className="section">
@@ -58,22 +63,11 @@ const AccountItems = () => {
                 <SectionEmpty message={empty} />
               ))}
           </div>
-          {/* <div className="section__footer">
-            <p className="ot-font-size-small">
-              <Link to="/items" className="">
-                See more recently ordered items
-              </Link>
-            </p>
-          </div> */}
-          {allItems.length > count ? (
+          {allItems.length > limit ? (
             <SectionFooter>
-              {count === limit ? (
-                <Link to="/items">See all recent items</Link>
-              ) : (
-                <Button classes="ot-btn-link" onClick={() => setCount(limit)}>
-                  Load more recent items
-                </Button>
-              )}
+              <Button classes="ot-btn" onClick={seeAll}>
+                See all recent items
+              </Button>
             </SectionFooter>
           ) : null}
         </div>
