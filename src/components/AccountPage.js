@@ -21,6 +21,7 @@ import AccountHouseAccounts from './AccountHouseAccounts'
 import AccountGroupOrders from './AccountGroupOrders'
 import AccountLevelUp from './AccountLevelUp'
 import Hero from './Hero'
+import AccountThanx from './AccountThanx'
 
 const sections = {
   favorites: <AccountFavorites />,
@@ -41,13 +42,14 @@ const AccountSection = ({ section }) => sections[section]
 const AccountPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { title: siteTitle, has_thanx } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const { background, title } = accountConfig
   const { accountSections } = useSelector(selectSettings)
-  const navItems = Object.values(accountSections)
+  let navItems = Object.values(accountSections)
     .filter((i) => i !== 'groupOrders')
     .map((i) => accountConfig[i].title)
+  if (has_thanx) navItems = ['Rewards', ...navItems]
   const { auth, profile } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
 
@@ -72,8 +74,9 @@ const AccountPage = () => {
             <Hero imageUrl={background} classes="hero--auto" overlay={true}>
               <AccountGreeting />
             </Hero>
-            <StickyNav items={navItems} offset={-90} />
+            <StickyNav items={navItems} offset={-110} />
             <div className="sections ot-bg-color-secondary">
+              {has_thanx && <AccountThanx />}
               {accountSections.map((section) => (
                 <AccountSection key={section} section={section} />
               ))}
