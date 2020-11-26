@@ -12,12 +12,11 @@ import SectionHeader from './SectionHeader'
 import SectionLoading from './SectionLoading'
 import SectionError from './SectionError'
 import CreditCards from './CreditCards'
-import SectionEmpty from './SectionEmpty'
 
 const AccountCreditCards = () => {
   const dispatch = useDispatch()
   const {
-    creditCards: { title, subtitle, empty },
+    creditCards: { title, subtitle },
   } = useSelector(selectAccountConfig)
   const creditCards = useSelector(selectCustomerCreditCards) || {}
 
