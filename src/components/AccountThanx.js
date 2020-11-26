@@ -25,6 +25,8 @@ const AccountThanx = () => {
   const { title, subtitle, empty } = thanxConfig || defaultConfig
   const { thanx, loading, error } = useSelector(selectCustomerThanx)
   const { progress, rewards } = thanx || {}
+  const hasProgress = progress && progress.percentage
+  const hasRewards = rewards && rewards.length > 0
 
   useEffect(() => {
     dispatch(fetchCustomerThanx())
@@ -38,14 +40,16 @@ const AccountThanx = () => {
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={loading === 'pending'} />
           <SectionError error={error} />
-          {thanx ? (
+          {hasProgress || hasRewards ? (
             <div className="section__content -max ot-bg-color-primary ot-border-radius">
               <div className="loyalty__program">
-                <div className="loyalty__program__header">
-                  <p className="ot-heading ot-font-size-h5">Current Progress</p>
-                </div>
-                {progress && progress.percentage && (
+                {hasProgress && (
                   <>
+                    <div className="loyalty__program__header">
+                      <p className="ot-heading ot-font-size-h5">
+                        Current Progress
+                      </p>
+                    </div>
                     <ProgressBar progress={parseInt(progress.percentage)} />
                     <p
                       className="ot-font-size-small"
@@ -57,7 +61,7 @@ const AccountThanx = () => {
                   </>
                 )}
               </div>
-              {rewards && rewards.length && (
+              {hasRewards && (
                 <>
                   <div
                     className="loyalty__program__header"
