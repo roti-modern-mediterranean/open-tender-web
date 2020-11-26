@@ -1449,10 +1449,10 @@
   resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.2.6.tgz#0389b1c0d000310b857f251930ed8e1a651e07be"
   integrity sha512-8VDi+yLBmcs6Gic07G3gijIxfrloU4YVToC4DqgDwvSA8y/EShP1+s4MvuBNcqxarilNQKbyurnKz0ACefXz0A==
 
-"@open-tender/redux@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.5.0.tgz#665129c8821d6ffe53577852e2ed00ebb959e3b8"
-  integrity sha512-LSBEa2l8e4DCKZD4mtHZ83bi1kPYXxX6qiIoyJ+k0DHVU63R162uPh1cFo2OaZQUdb8t1OmLVjCbfNCVogggyg==
+"@open-tender/redux@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.5.1.tgz#a8013eeee8d258f73a4798f34f44fd4c2205a1b2"
+  integrity sha512-uQysNjzAapGwewud0+bxiD2Bthm2hbD6RjYznjADtFBUDJ5l1MTTylt0gBYA2HkNpzlgu/7g9Byp8FAb9QV1Iw==
 
 "@reduxjs/toolkit@^1.1.0":
   version "1.4.0"
