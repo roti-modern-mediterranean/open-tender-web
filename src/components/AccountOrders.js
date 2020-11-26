@@ -32,7 +32,7 @@ const AccountOrders = () => {
   const cartQuantity = useSelector(selectCartQuantity)
   const { entities, loading, error } = orders
   const isLoading = loading === 'pending'
-  const showOrders = !isLoading && !error
+  const showOrders = !isLoading && !error && recentOrders.length
   const limit = 5
 
   useEffect(() => {
@@ -72,22 +72,21 @@ const AccountOrders = () => {
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
-          <div className="section__content">
-            {showOrders &&
-              (recentOrders.length ? (
-                <div className="section__items">
-                  {recentOrders.map((order) => {
-                    return (
-                      <div key={order.order_id} className="section__item">
-                        <OrderCard order={order} />
-                      </div>
-                    )
-                  })}
-                </div>
-              ) : (
-                <SectionEmpty message={empty} />
-              ))}
-          </div>
+          {showOrders ? (
+            <div className="section__content">
+              <div className="section__items">
+                {recentOrders.map((order) => {
+                  return (
+                    <div key={order.order_id} className="section__item">
+                      <OrderCard order={order} />
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          ) : (
+            <SectionEmpty message={empty} />
+          )}
           {entities.length > limit ? (
             <SectionFooter>
               <Button classes="ot-btn" onClick={seeAll}>

@@ -25,7 +25,7 @@ const AccountItems = () => {
   const limit = 5
 
   const isLoading = loading === 'pending'
-  const showItems = !isLoading && !error
+  const showItems = !isLoading && !error && items.length
 
   useEffect(() => {
     const displayItems = makeUniqueDisplayItems(entities)
@@ -47,22 +47,21 @@ const AccountItems = () => {
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
-          <div className="section__content">
-            {showItems &&
-              (items.length ? (
-                <div className="section__items">
-                  {items.map((item) => {
-                    return (
-                      <div key={item.signature} className="section__item">
-                        <OrderItemCard item={item} />
-                      </div>
-                    )
-                  })}
-                </div>
-              ) : (
-                <SectionEmpty message={empty} />
-              ))}
-          </div>
+          {showItems ? (
+            <div className="section__content">
+              <div className="section__items">
+                {items.map((item) => {
+                  return (
+                    <div key={item.signature} className="section__item">
+                      <OrderItemCard item={item} />
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          ) : (
+            <SectionEmpty message={empty} />
+          )}
           {allItems.length > limit ? (
             <SectionFooter>
               <Button classes="ot-btn" onClick={seeAll}>

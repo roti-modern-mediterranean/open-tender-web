@@ -51,8 +51,8 @@ const AccountFavorites = () => {
           <SectionHeader title={title} subtitle={subtitle} />
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
-          <div className="section__content">
-            {favorites.length ? (
+          {favorites.length ? (
+            <div className="section__content">
               <div className="section__items">
                 {favorites.map((favorite) => {
                   return (
@@ -62,10 +62,10 @@ const AccountFavorites = () => {
                   )
                 })}
               </div>
-            ) : (
-              <SectionEmpty message={empty} />
-            )}
-          </div>
+            </div>
+          ) : (
+            <SectionEmpty message={empty} />
+          )}
           {entities.length > limit ? (
             <SectionFooter>
               <Button classes="ot-btn" onClick={seeAll}>
