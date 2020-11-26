@@ -24,7 +24,7 @@ const AccountThanx = () => {
   const { thanx: thanxConfig } = useSelector(selectAccountConfig)
   const { title, subtitle, empty } = thanxConfig || defaultConfig
   const { thanx, loading, error } = useSelector(selectCustomerThanx)
-  const { progress, rewards } = thanx
+  const { progress, rewards } = thanx || {}
 
   useEffect(() => {
     dispatch(fetchCustomerThanx())
