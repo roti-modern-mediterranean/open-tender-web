@@ -4,6 +4,8 @@ import {
   fetchCustomerThanx,
   resetCustomerThanx,
   selectCustomerThanx,
+  logoutCustomer,
+  addMessage,
 } from '@open-tender/redux'
 
 import { selectAccountConfig } from '../slices'
@@ -32,6 +34,14 @@ const AccountThanx = () => {
     dispatch(fetchCustomerThanx())
     return () => dispatch(resetCustomerThanx())
   }, [dispatch])
+
+  useEffect(() => {
+    if (error === 'This customer does not have a connected Thanx account') {
+      dispatch(logoutCustomer())
+      dispatch(resetCustomerThanx())
+      dispatch(addMessage('Please login to reauthenticate your account'))
+    }
+  }, [error, dispatch])
 
   return (
     <div id="rewards" className="section">

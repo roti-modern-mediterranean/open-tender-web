@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
@@ -14,10 +15,11 @@ import {
   resetTip,
   resetCompletedOrder,
   setConfirmationOrder,
+  logoutCustomer,
 } from '@open-tender/redux'
 import { CheckoutForm, Error } from '@open-tender/components'
 
-import { selectConfig } from '../slices'
+import { selectBrand, selectConfig } from '../slices'
 import Loader from './Loader'
 import { cardIconMap } from '../assets/cardIcons'
 import Background from './Background'
@@ -45,14 +47,17 @@ const CheckoutPage = () => {
   const formRef = useRef()
   const history = useHistory()
   const dispatch = useDispatch()
+  const { title, has_thanx } = useSelector(selectBrand)
   const { checkout: checkoutConfig } = useSelector(selectConfig)
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
   const autoSelect = useSelector(selectAutoSelect)
   const customer = useSelector(selectCustomer)
+  const loggedIn = customer.auth ? true : false
   const checkout = useSelector(selectCheckout)
   const { check, completedOrder, errors } = checkout
+  const { sso } = check ? check.customer || {} : {}
   const { serviceType, revenueCenter } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const iconMap = {
@@ -104,8 +109,17 @@ const CheckoutPage = () => {
     completedOrder,
   ])
 
+  useEffect(() => {
+    if (has_thanx && loggedIn && sso && !sso.connected) {
+      dispatch(logoutCustomer())
+    }
+  }, [has_thanx, loggedIn, sso, dispatch])
+
   return (
     <>
+      <Helmet>
+        <title>Checkout | {title}</title>
+      </Helmet>
       {isBrowser && <Background imageUrl={checkoutConfig.background} />}
       <div className="content">
         <CheckoutHeader checkout={checkout} />
@@ -134,6 +148,7 @@ const CheckoutPage = () => {
                 order={order}
                 customer={customer}
                 autoSelect={autoSelect}
+                hasThanx={has_thanx}
               />
             </div>
           </div>
