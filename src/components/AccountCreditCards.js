@@ -51,14 +51,14 @@ const AccountCreditCards = () => {
           </SectionHeader>
           <SectionLoading loading={isLoading} />
           <SectionError error={error} />
-          {showCreditCards && (
+          {showCreditCards ? (
             <div className="section__content -max ot-bg-color-primary ot-border ot-border-radius">
               <CreditCards
                 creditCards={creditCards.entities}
                 isLoading={isLoading}
               />
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </div>
