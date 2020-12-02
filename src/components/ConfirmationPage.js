@@ -33,6 +33,7 @@ const ConfirmationPage = () => {
   const showOptIns = isNew && (accepts_marketing || order_notifications)
   const hasFulfillment =
     brand.fulfillment &&
+    revenue_center &&
     revenue_center.has_order_fulfillment &&
     service_type === 'PICKUP'
 
