@@ -56,7 +56,10 @@ const AccountFavorites = () => {
               <div className="section__items">
                 {favorites.map((favorite) => {
                   return (
-                    <div key={favorite.favorite_id} className="section__item">
+                    <div
+                      key={favorite.favorite_id}
+                      className="section__item -favorite"
+                    >
                       <OrderItemCard item={favorite.item} />
                     </div>
                   )

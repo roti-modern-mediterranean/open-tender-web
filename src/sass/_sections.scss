@@ -107,38 +107,44 @@
     }
   }
 
-  &__items {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: scroll;
-    margin: -1rem (-$padding) 0;
-    padding: 1rem 0 0;
-    @include breakpoint(mobile_both) {
-      margin: -1rem (-$padding-mobile) 0;
-    }
-  }
+  // &__items {
+  //   display: flex;
+  //   flex-wrap: nowrap;
+  //   overflow-x: scroll;
+  //   margin: -1rem (-$padding) 0;
+  //   padding: 1rem 0 0;
+  //   @include breakpoint(mobile_both) {
+  //     margin: -1rem (-$padding-mobile) 0;
+  //   }
+  // }
 
-  &__item {
-    width: 20%;
-    min-width: 28rem;
-    flex-shrink: 0;
-    padding: 0 1rem;
+  // &__item {
+  //   width: 20%;
+  //   min-width: 28rem;
+  //   flex-shrink: 0;
+  //   padding: 0 1rem;
 
-    &:first-child {
-      padding-left: $padding;
-      @include breakpoint(mobile_both) {
-        padding-left: $padding-mobile;
-      }
-    }
+  //   &:first-child {
+  //     padding-left: $padding;
+  //     @include breakpoint(mobile_both) {
+  //       padding-left: $padding-mobile;
+  //     }
+  //   }
 
-    &:last-child:not(:first-child) {
-      padding-right: $padding;
-      @include breakpoint(mobile_both) {
-        padding-right: $padding-mobile;
-      }
-    }
-  }
+  //   &:last-child:not(:first-child) {
+  //     padding-right: $padding;
+  //     @include breakpoint(mobile_both) {
+  //       padding-right: $padding-mobile;
+  //     }
+  //   }
 
+  //   &.-favorite {
+  //     width: 12.5%;
+  //     min-width: 18rem;
+  //   }
+  // }
+
+  &__items,
   &__items-all {
     display: flex;
     flex-wrap: wrap;
@@ -149,6 +155,7 @@
     }
   }
 
+  &__item,
   &__item-all {
     width: 20%;
     padding: 0 1rem;

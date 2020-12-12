@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomer,
@@ -9,6 +9,16 @@ import {
 
 import Order from './Order'
 import AccountBackground from './AccountBackground'
+
+const OrdersPageBack = () => (
+  <div className="section">
+    <div className="container">
+      <div className="section__container align-center">
+        <Link to="/orders">Back to all recent orders</Link>
+      </div>
+    </div>
+  </div>
+)
 
 const OrderPage = () => {
   const dispatch = useDispatch()
@@ -32,8 +42,14 @@ const OrderPage = () => {
   return (
     <>
       <AccountBackground />
-      <div className="content">
-        <Order {...customerOrder} />
+      <div className="content ot-bg-color-secondary">
+        <div className="order__container">
+          <OrdersPageBack />
+          <div className="order__wrapper ot-bg-color-primary">
+            <Order {...customerOrder} />
+          </div>
+          <OrdersPageBack />
+        </div>
       </div>
     </>
   )

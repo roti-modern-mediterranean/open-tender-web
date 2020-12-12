@@ -1,6 +1,16 @@
 .order {
   margin: 0 0 4rem;
 
+  &__container {
+    max-width: 76.8rem;
+    // padding: 4rem 0;
+    margin: 0 auto;
+  }
+
+  &__wrapper {
+    padding: 0.1rem 0;
+  }
+
   &__header {
     margin: 4rem 0 0;
 
