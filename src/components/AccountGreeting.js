@@ -124,7 +124,7 @@ const AccountGreeting = () => {
             )}
           </div>
         </div>
-        {/* {(isCurrentOrder || lastOrder) && (
+        {(isCurrentOrder || lastOrder) && (
           <div className="greeting__order">
             {isCurrentOrder ? (
               <CurrentOrder order={currentOrder} />
@@ -132,7 +132,7 @@ const AccountGreeting = () => {
               <OrderCard order={lastOrder} isLast={true} />
             ) : null}
           </div>
-        )} */}
+        )}
       </div>
     </div>
   )

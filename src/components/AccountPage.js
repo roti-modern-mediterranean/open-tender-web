@@ -23,6 +23,7 @@ import AccountLevelUp from './AccountLevelUp'
 import Hero from './Hero'
 import AccountThanx from './AccountThanx'
 import AccountButtons from './AccountButtons'
+import AccountWelcome from './AccountWelcome'
 
 const sections = {
   favorites: <AccountFavorites />,
@@ -72,11 +73,11 @@ const AccountPage = () => {
       <div className="content">
         {profile && (
           <>
-            <Hero imageUrl={background} overlay={true}>
-              <AccountGreeting />
-            </Hero>
             {isBrowser ? (
               <>
+                <Hero imageUrl={background} overlay={true}>
+                  <AccountGreeting />
+                </Hero>
                 <StickyNav items={navItems} offset={-110} />
                 <div className="sections ot-bg-color-secondary">
                   {has_thanx && <AccountThanx />}
@@ -86,7 +87,11 @@ const AccountPage = () => {
                 </div>
               </>
             ) : (
-              <AccountButtons />
+              <>
+                <AccountWelcome>
+                  <AccountButtons />
+                </AccountWelcome>
+              </>
             )}
           </>
         )}
