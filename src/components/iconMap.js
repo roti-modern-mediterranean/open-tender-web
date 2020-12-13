@@ -47,6 +47,7 @@ import {
   Save,
   Clipboard,
   Link,
+  Menu,
 } from 'react-feather'
 
 const iconMap = {
@@ -82,6 +83,7 @@ const iconMap = {
   PlusCircle: <PlusCircle size={null} />,
   Map: <Map size={null} />,
   MapPin: <MapPin size={null} />,
+  Menu: <Menu size={null} />,
   Minus: <Minus size={null} />,
   Navigation: <Navigation size={null} />,
   RefreshCw: <RefreshCw size={null} />,

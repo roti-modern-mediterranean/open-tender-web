@@ -22,6 +22,7 @@ import AccountGroupOrders from './AccountGroupOrders'
 import AccountLevelUp from './AccountLevelUp'
 import Hero from './Hero'
 import AccountThanx from './AccountThanx'
+import AccountButtons from './AccountButtons'
 
 const sections = {
   favorites: <AccountFavorites />,
@@ -71,16 +72,22 @@ const AccountPage = () => {
       <div className="content">
         {profile && (
           <>
-            <Hero imageUrl={background} classes="hero--auto" overlay={true}>
+            <Hero imageUrl={background} overlay={true}>
               <AccountGreeting />
             </Hero>
-            <StickyNav items={navItems} offset={-110} />
-            <div className="sections ot-bg-color-secondary">
-              {has_thanx && <AccountThanx />}
-              {accountSections.map((section) => (
-                <AccountSection key={section} section={section} />
-              ))}
-            </div>
+            {isBrowser ? (
+              <>
+                <StickyNav items={navItems} offset={-110} />
+                <div className="sections ot-bg-color-secondary">
+                  {has_thanx && <AccountThanx />}
+                  {accountSections.map((section) => (
+                    <AccountSection key={section} section={section} />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <AccountButtons />
+            )}
           </>
         )}
       </div>

@@ -2,10 +2,11 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { ClipLoader } from 'react-spinners'
 
-const Background = ({ imageUrl, children }) => {
+const Background = ({ imageUrl, classes = '', children }) => {
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
+  const className = `background bg-image ot-bg-color-secondary ${classes}`
   return (
-    <div className="background bg-image ot-bg-color-secondary" style={bgStyle}>
+    <div className={className} style={bgStyle}>
       {imageUrl && !bgStyle && (
         <div className="map__loading">
           <ClipLoader size={30} loading={true} />

@@ -37,6 +37,22 @@ body.has-modal {
   left: 0;
   // right: 0;
   right: $width;
+
+  // @include breakpoint(mobile_both) {
+  //   z-index: 0;
+  //   top: 0;
+  //   right: 0;
+  //   bottom: auto;
+  //   height: 30rem;
+  // }
+
+  // &.-hero {
+  //   z-index: 0;
+  //   top: $nav-height;
+  //   right: 0;
+  //   bottom: auto;
+  //   height: 60rem;
+  // }
 }
 
 .bg-image {

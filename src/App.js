@@ -2,12 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import { isMobile } from 'react-device-detect'
 import { ThemeProvider } from 'emotion-theming'
 import TagManager from 'react-gtm-module'
 import GlobalStyles from './GlobalStyles'
 import Routes from './components/Routes'
 import Modal from './components/Modal'
 import Header from './components/Header'
+import HeaderMobile from './components/HeaderMobile'
 import Main from './components/Main'
 import Footer from './components/Footer'
 import Messages from './components/Messages'
@@ -64,7 +66,7 @@ class App extends React.Component {
                 <Router>
                   <Modal />
                   <Main>
-                    <Header />
+                    {isMobile ? <HeaderMobile /> : <Header />}
                     <Messages />
                     <Routes />
                     <Notifications />
@@ -72,6 +74,7 @@ class App extends React.Component {
                     <Footer />
                   </Main>
                   <Sidebar />
+                  {/* {isMobile && <SidebarMobile />} */}
                 </Router>
               </div>
             </ErrorBoundary>

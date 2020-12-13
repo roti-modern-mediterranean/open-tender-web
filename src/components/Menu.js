@@ -62,10 +62,7 @@ const Menu = () => {
   return (
     <>
       {selected && showHeroChild && (
-        <Hero
-          imageUrl={selected.large_image_url}
-          classes="hero--right hero--top"
-        >
+        <Hero imageUrl={selected.large_image_url} classes="hero--right">
           <RevenueCenterChild
             revenueCenter={selected}
             classes="rc--hero slide-up"

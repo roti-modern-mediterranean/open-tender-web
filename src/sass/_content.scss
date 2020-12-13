@@ -2,9 +2,17 @@
   position: relative;
   z-index: 1;
   min-height: 100vh;
+  padding: 0;
   padding: $nav-height 0 0;
   @include breakpoint(mobile_both) {
     padding: $nav-height-mobile 0 0;
+  }
+
+  .main--account & {
+    @include breakpoint(mobile_both) {
+      padding: 0;
+      min-height: auto;
+    }
   }
 
   &__container {

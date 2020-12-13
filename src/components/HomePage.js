@@ -50,7 +50,7 @@ const HomePage = () => {
 
   return (
     <>
-      {isBrowser && <Background imageUrl={config.home.background} />}
+      <Background imageUrl={config.home.background} />
       <div className="content">
         {hasOrderTypes ? (
           <>

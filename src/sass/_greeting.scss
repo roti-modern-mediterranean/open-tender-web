@@ -2,7 +2,7 @@
   width: 100%;
   margin: 4rem 0;
   @include breakpoint(mobile_both) {
-    margin: 3rem 0;
+    margin: ($nav-height-mobile + 3rem) 0 3rem;
   }
 
   &.-no-order {

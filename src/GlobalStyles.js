@@ -207,6 +207,10 @@ const makeGlobalStyles = (theme) => css`
     color: ${theme.colors.light};
     background-color: ${theme.links.primary.color};
   }
+  .ot-transparent {
+    // color: ${theme.colors.light};
+    background-color: transparent;
+  }
 
   .ot-opacity-light {
     background-color: ${theme.overlay.light};
