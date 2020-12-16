@@ -20,9 +20,9 @@ const AccountWelcomeContainer = styled('div')`
   width: 100%;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  flex-direction: column;
 `
 
 const AccountWelcomeGreeting = styled('div')`
@@ -30,6 +30,10 @@ const AccountWelcomeGreeting = styled('div')`
   flex: 1 0 100%;
   background-color: ${(props) => props.theme.bgColors.secondary};
   padding: 8rem 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
 `
 
 const AccountWelcomeHeader = styled('div')`
