@@ -4,16 +4,12 @@ import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { selectCustomer, fetchCustomer } from '@open-tender/redux'
+import { Menu } from 'react-feather'
 
 import { selectBrand, selectConfig } from '../../../slices'
-import Background from '../../Background'
+import { Background, Content, HeaderButton, HeaderMobile, Main } from '../..'
 import AccountButtons from './AccountButtons'
 import AccountWelcome from './AccountWelcome'
-import Content from '../../Content'
-import Main from '../../Main'
-import HeaderMobile from '../../HeaderMobile'
-import HeaderButton from '../../HeaderButton'
-import { Menu } from 'react-feather'
 
 // const AccountSection = ({ section }) => sections[section]
 

@@ -6,6 +6,8 @@ import HeaderMobile from './HeaderMobile'
 import Main from './Main'
 import NavButton from './NavButton'
 import NavButtons from './NavButtons'
+import PageTitle from './PageTitle'
+import Welcome from './Welcome'
 
 export {
   AccountBackground,
@@ -16,4 +18,6 @@ export {
   Main,
   NavButton,
   NavButtons,
+  PageTitle,
+  Welcome,
 }

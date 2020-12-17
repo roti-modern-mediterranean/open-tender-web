@@ -641,6 +641,17 @@ const makeGlobalStyles = (theme) => css`
     background-color: ${theme.fonts.headings.color};
   }
 
+  @keyframes slide-up {
+    0% {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .react-datepicker__navigation--previous {
     border-right-color: ${theme.links.primary.color};
   }

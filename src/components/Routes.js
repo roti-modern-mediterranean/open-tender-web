@@ -25,14 +25,13 @@ import FulfillmentPage from './FulfillmentPage'
 import GiftCardsPage from './GiftCardsPage'
 import DonationPage from './DonationPage'
 import ThanxPage from './ThanxPage'
-import AccountLoyaltyPage from './pages/Rewards/Rewards'
-import { Account, Rewards } from './pages'
+import { Account, Home, Rewards } from './pages'
 
 const Routes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <HomePage />
+        <Home />
       </Route>
       <Route exact path="/order">
         <Redirect to="/" />
