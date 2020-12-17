@@ -51,7 +51,7 @@ const Account = () => {
             </HeaderButton>
           }
         />
-        <Main bgColor="secondary">
+        <Main>
           <AccountWelcome>
             <AccountButtons />
           </AccountWelcome>

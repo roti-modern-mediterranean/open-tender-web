@@ -8,13 +8,29 @@ const NavButtonContainer = styled('button')`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  line-height: 1;
   padding: 2rem 2rem 2rem 2.5rem;
-  font-size: ${(props) => props.theme.fonts.sizes.main};
+  margin: 0 0 1rem;
+  font-family: ${(props) => props.theme.fonts.headings.family};
+  font-weight: ${(props) => props.theme.fonts.headings.weight};
+  letter-spacing: ${(props) => props.theme.fonts.headings.letterSpacing};
+  text-transform: ${(props) => props.theme.fonts.headings.textTransform};
+  -webkit-font-smoothing: ${(props) =>
+    props.theme.fonts.headings.fontSmoothing};
+  color: ${(props) => props.theme.fonts.headings.color};
+  font-size: ${(props) => props.theme.fonts.sizes.big};
   background-color: ${(props) => props.theme.bgColors.primary};
-  border-bottom: 0.1rem solid ${(props) => props.theme.border.color};
+  border: 0.1rem solid ${(props) => props.theme.border.color};
+  transition: ${(props) => props.theme.links.transition};
 
   &:last-of-type {
-    border-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  &:hover,
+  &:active {
+    background-color: ${(props) => props.theme.bgColors.secondary};
+    border: 0.1rem solid ${(props) => props.theme.bgColors.secondary};
   }
 `
 
@@ -28,7 +44,7 @@ const NavButtonIcon = styled('span')`
 const NavButtonTitle = styled('span')`
   flex-grow: 1;
   padding: 0 2.5rem;
-  line-height: 1;
+  line-height: 1.2;
   text-align: left;
 `
 
@@ -37,9 +53,16 @@ const NavButtonArrow = styled('span')`
   // top: -0.1rem;
   width: 1.8rem;
   height: 1.8rem;
+  transition: ${(props) => props.theme.links.transition};
+  transform: translateX(0);
+
+  button:hover &,
+  button:active & {
+    transform: translateX(1rem);
+  }
 `
 
-const NavButton = ({ title, onClick, icon }) => (
+const NavButton = ({ title, icon, onClick }) => (
   <NavButtonContainer onClick={onClick}>
     <NavButtonIcon>{icon}</NavButtonIcon>
     <NavButtonTitle>{title}</NavButtonTitle>

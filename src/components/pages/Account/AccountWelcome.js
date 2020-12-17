@@ -56,7 +56,7 @@ const Continue = ({ current, startNew }) => {
       <div style={{ margin: '1.5rem 0 0' }}>
         <Button
           text="Or start a new order from scratch"
-          classes="ot-btn ot-btn--small"
+          classes="ot-btn ot-btn--small ot-btn--secondary"
           onClick={startNew}
         />
       </div>
@@ -76,7 +76,7 @@ const Reorder = ({ orderTypeName, reorder, switchType }) => {
       <div style={{ margin: '1.5rem 0 0' }}>
         <Button
           text="Or switch to a different order type"
-          classes="ot-btn ot-btn--small"
+          classes="ot-btn ot-btn--small ot-btn--secondary"
           onClick={switchType}
         />
       </div>

@@ -1,8 +1,12 @@
+import styled from '@emotion/styled'
 import React from 'react'
 import { ShoppingBag, Gift, Heart, Award, Settings } from 'react-feather'
 import { useHistory } from 'react-router-dom'
+import { NavButtons } from '../..'
 
-import NavButton from '../../NavButton'
+const AccountButtonsContainer = styled('div')`
+  // padding: 0 2.5rem 2.5rem;
+`
 
 const navButtons = [
   {
@@ -17,7 +21,7 @@ const navButtons = [
   },
   {
     icon: <ShoppingBag size={null} />,
-    title: 'Recent Orders & Items',
+    title: 'Order History',
     path: '/orders',
   },
   {
@@ -34,17 +38,15 @@ const navButtons = [
 
 const AccountButtons = () => {
   const history = useHistory()
+  const buttons = navButtons.map((i) => ({
+    ...i,
+    onClick: () => history.push(i.path),
+  }))
 
   return (
-    <div>
-      {navButtons.map((button) => (
-        <NavButton
-          key={button.title}
-          {...button}
-          onClick={() => history.push(button.path)}
-        />
-      ))}
-    </div>
+    <AccountButtonsContainer>
+      <NavButtons buttons={buttons} />
+    </AccountButtonsContainer>
   )
 }
 
