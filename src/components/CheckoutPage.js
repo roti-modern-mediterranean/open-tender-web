@@ -54,10 +54,9 @@ const CheckoutPage = () => {
   const order = useSelector(selectOrder)
   const autoSelect = useSelector(selectAutoSelect)
   const customer = useSelector(selectCustomer)
-  const loggedIn = customer.auth ? true : false
   const checkout = useSelector(selectCheckout)
   const { check, completedOrder, errors } = checkout
-  const { sso } = check ? check.customer || {} : {}
+  const { sso, customer_id } = check ? check.customer || {} : {}
   const { serviceType, revenueCenter } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
   const iconMap = {
@@ -110,10 +109,10 @@ const CheckoutPage = () => {
   ])
 
   useEffect(() => {
-    if (has_thanx && loggedIn && sso && !sso.connected) {
+    if (has_thanx && customer_id && sso && !sso.connected) {
       dispatch(logoutCustomer())
     }
-  }, [has_thanx, loggedIn, sso, dispatch])
+  }, [has_thanx, customer_id, sso, dispatch])
 
   return (
     <>
