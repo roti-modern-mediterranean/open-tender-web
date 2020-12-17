@@ -2,7 +2,7 @@ import React from 'react'
 import { ShoppingBag, Gift, Heart, Award, Settings } from 'react-feather'
 import { useHistory } from 'react-router-dom'
 
-import NavButton from './NavButton'
+import NavButton from '../../NavButton'
 
 const navButtons = [
   {
@@ -27,7 +27,7 @@ const navButtons = [
   },
   {
     icon: <Settings size={null} />,
-    title: 'Account Stuff',
+    title: 'Account',
     path: '/account/settings',
   },
 ]

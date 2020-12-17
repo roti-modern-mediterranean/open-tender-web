@@ -20,6 +20,12 @@ import ErrorFatalPage from './components/ErrorFatalPage'
 import ErrorBoundary from './components/ErrorBoundary'
 import { fetchConfig } from './slices/configSlice'
 import './App.scss'
+import styled from '@emotion/styled'
+
+const AppContainer = styled('div')`
+  display: flex;
+  justify-content: flex-end;
+`
 
 class App extends React.Component {
   constructor(props) {
@@ -52,7 +58,7 @@ class App extends React.Component {
           <ThemeProvider theme={this.props.theme}>
             <GlobalStyles />
             <ErrorBoundary>
-              <div className="app">
+              <AppContainer>
                 <Helmet>
                   <title>{brand.title}</title>
                   <meta name="description" content={brand.description} />
@@ -65,18 +71,14 @@ class App extends React.Component {
                 </Helmet>
                 <Router>
                   <Modal />
-                  <Main>
-                    {isMobile ? <HeaderMobile /> : <Header />}
-                    <Messages />
-                    <Routes />
-                    <Notifications />
-                    <CartButton />
-                    <Footer />
-                  </Main>
+                  {/* {isMobile ? <HeaderMobile /> : <Header />} */}
+                  <Messages />
+                  <Routes />
+                  <Notifications />
+                  <CartButton />
                   <Sidebar />
-                  {/* {isMobile && <SidebarMobile />} */}
                 </Router>
-              </div>
+              </AppContainer>
             </ErrorBoundary>
           </ThemeProvider>
         )}

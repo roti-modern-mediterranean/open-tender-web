@@ -11,25 +11,15 @@ import {
 import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
-import { selectAccountConfig } from '../slices'
-import Loader from './Loader'
-import iconMap from './iconMap'
+import { selectAccountConfig } from '../../../slices'
+import Loader from '../../Loader'
+import iconMap from '../../iconMap'
 import styled from '@emotion/styled'
-
-const AccountWelcomeContainer = styled('div')`
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-`
 
 const AccountWelcomeGreeting = styled('div')`
   width: 100%;
   flex: 1 0 100%;
-  background-color: ${(props) => props.theme.bgColors.secondary};
-  padding: 8rem 2.5rem 3rem;
+  padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -142,7 +132,7 @@ const AccountWelcome = ({ children }) => {
       />
     </>
   ) : (
-    <AccountWelcomeContainer>
+    <>
       <AccountWelcomeGreeting>
         <AccountWelcomeHeader>
           <h1>{pageTitle}</h1>
@@ -167,7 +157,7 @@ const AccountWelcome = ({ children }) => {
         </AccountWelcomeContent>
       </AccountWelcomeGreeting>
       <AccountWelcomeButtons>{children}</AccountWelcomeButtons>
-    </AccountWelcomeContainer>
+    </>
   )
 }
 

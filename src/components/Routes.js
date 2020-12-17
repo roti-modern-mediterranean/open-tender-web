@@ -25,7 +25,8 @@ import FulfillmentPage from './FulfillmentPage'
 import GiftCardsPage from './GiftCardsPage'
 import DonationPage from './DonationPage'
 import ThanxPage from './ThanxPage'
-import AccountLoyaltyPage from './AccountLoyaltyPage'
+import AccountLoyaltyPage from './pages/Rewards/Rewards'
+import { Account, Rewards } from './pages'
 
 const Routes = () => {
   return (
@@ -76,10 +77,10 @@ const Routes = () => {
         <CheckoutPage />
       </Route>
       <Route exact path="/account">
-        <AccountPage />
+        <Account />
       </Route>
       <Route exact path="/rewards">
-        <AccountLoyaltyPage />
+        <Rewards />
       </Route>
       <Route exact path="/addresses">
         <AccountAddressesPage />

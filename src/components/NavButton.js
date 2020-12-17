@@ -10,15 +10,12 @@ const NavButtonContainer = styled('button')`
   align-items: center;
   padding: 2rem 2rem 2rem 2.5rem;
   font-size: ${(props) => props.theme.fonts.sizes.main};
-  // font-weight: ${(props) => props.theme.boldWeight};
-  // font-family: ${(props) => props.theme.fonts.preface.family};
-  // font-weight: ${(props) => props.theme.fonts.preface.weight};
-  // letter-spacing: ${(props) => props.theme.fonts.preface.letterSpacing};
-  // text-transform: ${(props) => props.theme.fonts.preface.textTransform};
-  // -webkit-font-smoothing: ${(props) =>
-    props.theme.fonts.preface.fontSmoothing};
-  // font-size: ${(props) => props.theme.fonts.preface.fontSize};
+  background-color: ${(props) => props.theme.bgColors.primary};
   border-bottom: 0.1rem solid ${(props) => props.theme.border.color};
+
+  &:last-of-type {
+    border-bottom: 0;
+  }
 `
 
 const NavButtonIcon = styled('span')`

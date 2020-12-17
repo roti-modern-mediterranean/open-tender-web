@@ -4,7 +4,7 @@ import logo from '../assets/logo_footer.png'
 
 const Footer = ({ hasRouter = true }) => {
   return (
-    <footer className="footer ot-dark">
+    <footer className="footer ot-dark" role="contentinfo">
       <div className="container">
         <div className="footer__container">
           <div className="footer__logo">
