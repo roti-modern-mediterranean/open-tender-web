@@ -6,8 +6,8 @@ import Preface from './Preface'
 
 const PageTitleContainer = styled('div')`
   padding: 4rem 0;
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.125s;
+  // opacity: 0;
+  // animation: slide-up 0.25s ease-in-out 0.125s;
 `
 
 const PageTitlePreface = styled('p')`
@@ -24,7 +24,7 @@ const PageTitleSubtitle = styled('p')`
   color: ${(props) =>
     props.isError ? props.theme.colors.error : props.theme.fonts.body.color};
   line-height: ${(props) => props.theme.lineHeight};
-  margin: ${(props) => props.margin || '1rem 0 0'};
+  margin: 1rem 0 0;
 `
 
 const PageTitle = ({ title, subtitle, preface, error, link }) => {
@@ -42,7 +42,9 @@ const PageTitle = ({ title, subtitle, preface, error, link }) => {
           <PageTitleSubtitle isError={true}>{error}</PageTitleSubtitle>
         )}
         {!!link && (
-          <PageTitleSubtitle margin="4rem 0 0">{link}</PageTitleSubtitle>
+          <PageTitleSubtitle style={{ margin: '4rem 0 0' }}>
+            {link}
+          </PageTitleSubtitle>
         )}
       </Container>
     </PageTitleContainer>

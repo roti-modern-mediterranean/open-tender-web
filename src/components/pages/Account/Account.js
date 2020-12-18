@@ -7,9 +7,17 @@ import { selectCustomer, fetchCustomer } from '@open-tender/redux'
 import { Menu } from 'react-feather'
 
 import { selectBrand, selectConfig } from '../../../slices'
-import { Background, Content, HeaderButton, HeaderMobile, Main } from '../..'
+import {
+  Background,
+  Content,
+  HeaderButton,
+  HeaderLogo,
+  HeaderMobile,
+  Main,
+  Welcome,
+} from '../..'
+import AccountActions from './AccountActions'
 import AccountButtons from './AccountButtons'
-import AccountWelcome from './AccountWelcome'
 
 // const AccountSection = ({ section }) => sections[section]
 
@@ -18,8 +26,9 @@ const Account = () => {
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
-  const { background, title } = accountConfig
+  const { background, title, subtitle } = accountConfig
   const { auth, profile } = useSelector(selectCustomer)
+  const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
   const token = auth ? auth.access_token : null
 
   useEffect(() => {
@@ -42,15 +51,25 @@ const Account = () => {
           bgColor="transparent"
           maxWidth="76.8rem"
           left={
-            <HeaderButton onClick={() => console.log('clicked')}>
+            <HeaderButton color="light" onClick={() => console.log('clicked')}>
               <Menu size={20} />
             </HeaderButton>
           }
+          right={<HeaderLogo />}
         />
-        <Main>
-          <AccountWelcome>
+        <Main padding="0" imageUrl={background}>
+          <Welcome
+            // imageUrl={background}
+            header={
+              <>
+                <h1>{pageTitle}</h1>
+                <p>{subtitle}</p>
+              </>
+            }
+            content={<AccountActions />}
+          >
             <AccountButtons />
-          </AccountWelcome>
+          </Welcome>
         </Main>
       </Content>
     </>

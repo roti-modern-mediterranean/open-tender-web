@@ -3,26 +3,54 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const WelcomeGreeting = styled('div')`
+  position: relative;
   width: 100%;
   flex: 1 0 100%;
-  padding: 3rem 2.5rem;
+  // padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    background-image: ${(props) => `url(${props.imageUrl})`};
+  }
 `
 
 const WelcomeHeader = styled('div')`
-  margin: 0 0 2rem;
+  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  //   background-color: rgba(0, 0, 0, 0.15);
+  // }
+
+  h1 {
+    line-height: 1;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.colors.light};
+    }
+  }
 
   p {
-    color: ${(props) => props.theme.fonts.headings.color};
-    margin: 0.5rem 0 0;
+    line-height: ${(props) => props.theme.lineHeight};
+    margin: 1rem 0 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      color: ${(props) => props.theme.colors.light};
+    }
   }
 `
 
 const WelcomeContent = styled('div')`
-  margin: 0;
+  width: 100%;
+  padding: 0 2.5rem 2.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 -2.5rem 2.5rem 0rem rgba(0, 0, 0, 0.3);
+  }
+`
+
+const WelcomeActions = styled('div')`
+  margin: 2rem 0 0;
 `
 
 const WelcomeButtons = styled('div')`
@@ -30,12 +58,15 @@ const WelcomeButtons = styled('div')`
   flex: 0 0 auto;
 `
 
-const Welcome = ({ header, content, children }) => {
+const Welcome = ({ imageUrl, header, content, children }) => {
+  console.log(content)
   return (
     <>
-      <WelcomeGreeting>
-        {header && <WelcomeHeader>{header}</WelcomeHeader>}
-        {content && <WelcomeContent>{content}</WelcomeContent>}
+      <WelcomeGreeting imageUrl={imageUrl}>
+        <WelcomeContent>
+          {header && <WelcomeHeader>{header}</WelcomeHeader>}
+          {content && <WelcomeActions>{content}</WelcomeActions>}
+        </WelcomeContent>
       </WelcomeGreeting>
       <WelcomeButtons>{children}</WelcomeButtons>
     </>

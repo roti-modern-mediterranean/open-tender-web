@@ -10,6 +10,8 @@ const HeaderMobileContainer = styled('nav')`
   max-width: ${(props) => props.maxWidth};
   height: 6rem;
   background-color: ${(props) => props.bgColor || props.theme.bgColors.primary};
+  // background-color: rgba(0, 0, 0, 0.3);
+  // box-shadow: 0 1rem 1rem 1rem rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -45,7 +47,14 @@ const HeaderMobileNav = styled('div')`
   z-index: 2;
 `
 
-const HeaderMobile = ({ left, title, right, bgColor, maxWidth = '100%' }) => {
+const HeaderMobile = ({
+  left,
+  title,
+  right,
+  color,
+  bgColor,
+  maxWidth = '100%',
+}) => {
   return (
     <HeaderMobileContainer bgColor={bgColor} maxWidth={maxWidth}>
       <HeaderMobileNav>{left}</HeaderMobileNav>

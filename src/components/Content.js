@@ -3,10 +3,21 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import Footer from './Footer'
 
+// const ContentContainer = styled('div')`
+//   position: relative;
+//   z-index: 1;
+//   width: 100%;
+//   max-width: ${(props) => props.maxWidth};
+//   background-color: ${(props) => props.theme.bgColors.primary};
+// `
+
 const ContentContainer = styled('div')`
-  position: relative;
+  position: fixed;
   z-index: 1;
   width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   max-width: ${(props) => props.maxWidth};
   background-color: ${(props) => props.theme.bgColors.primary};
 `

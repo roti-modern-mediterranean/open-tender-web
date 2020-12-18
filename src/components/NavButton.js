@@ -23,14 +23,27 @@ const NavButtonContainer = styled('button')`
   border: 0.1rem solid ${(props) => props.theme.border.color};
   transition: ${(props) => props.theme.links.transition};
 
-  &:last-of-type {
-    margin-bottom: 0;
-  }
-
   &:hover,
   &:active {
     background-color: ${(props) => props.theme.bgColors.secondary};
     border: 0.1rem solid ${(props) => props.theme.bgColors.secondary};
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0;
+    border: 0;
+    // border-bottom: 0.1rem solid ${(props) => props.theme.border.color};
+    // border-top: 0.1rem solid ${(props) => props.theme.colors.light};
+    border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(0, 0, 0, 0.3);
+    color: ${(props) => props.theme.colors.light};
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      border-bottom: 0;
+    }
   }
 `
 

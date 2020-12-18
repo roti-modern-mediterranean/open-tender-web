@@ -27,11 +27,25 @@ import {
 } from '../..'
 // import OrderType from './OrderType'
 import { Menu } from 'react-feather'
+import HomeButtons from './HomeButtons'
+
+const makeContent = (content) => {
+  if (!content || !content.length || !content[0].length) return null
+  return (
+    <>
+      {content.map((i, index) => (
+        <p key={index}>{i}</p>
+      ))}
+    </>
+  )
+}
 
 const Home = () => {
   const dispatch = useDispatch()
   const { geoLatLng, geoError } = useGeolocation()
-  const config = useSelector(selectConfig)
+  // const config = useSelector(selectConfig)
+  const { home: homeConfig } = useSelector(selectConfig)
+  const { background, title, subtitle, content } = homeConfig
   const { orderTypes } = useSelector(selectSettings)
   const hasOrderTypes = orderTypes && orderTypes.length > 0
   const { cartGuest } = useSelector(selectGroupOrder)
@@ -56,49 +70,45 @@ const Home = () => {
     }
   }, [geoLatLng, geoError, dispatch])
 
+  console.log(content)
+
   return (
     <>
-      {isBrowser && <Background imageUrl={config.home.background} />}
+      {isBrowser && <Background imageUrl={background} />}
       <Content maxWidth="76.8rem">
         <HeaderMobile
           bgColor="transparent"
           maxWidth="76.8rem"
           left={
-            <HeaderButton onClick={() => console.log('clicked')}>
+            <HeaderButton color="light" onClick={() => console.log('clicked')}>
               <Menu size={20} />
             </HeaderButton>
           }
         />
-        <Main>
+        <Main padding="0" imageUrl={background}>
           {hasOrderTypes ? (
             <Welcome
-              header={<PageTitle {...config.home} />}
-              content={
-                config.home.content &&
-                config.home.content.length > 0 && (
-                  <div className="content__footer ot-line-height slide-up">
-                    <div className="container">
-                      <div className="content__text">
-                        {config.home.content.map((i, index) => (
-                          <p key={index}>{i}</p>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )
+              // imageUrl={background}
+              header={
+                <>
+                  <h1>{title}</h1>
+                  <p>{subtitle}</p>
+                </>
               }
+              content={makeContent(content)}
             >
-              <div className="content__body">
-                <div className="container">{/* <OrderType /> */}</div>
-              </div>
+              <HomeButtons />
             </Welcome>
           ) : (
             <Welcome
               header={
-                <PageTitle
-                  title="Online ordering is currently closed"
-                  subtitle="We're very sorry for the inconvenience. Please try back at a later time."
-                />
+                <>
+                  <h1>Online ordering is currently closed</h1>
+                  <p>
+                    We're very sorry for the inconvenience. Please try back at a
+                    later time.
+                  </p>
+                </>
               }
             />
           )}
