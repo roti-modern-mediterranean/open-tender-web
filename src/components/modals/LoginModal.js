@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import propTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomer,
@@ -19,7 +20,7 @@ import ModalTitle from '../ModalTitle'
 const messaging = {
   login: {
     title: 'Log into your account',
-    subtitle: 'Please enter your email address and password',
+    subtitle: "Don't have an account?",
     reset: 'Forget your password?',
   },
   thanx: {
@@ -43,6 +44,7 @@ const messaging = {
 const LoginModal = ({ callback }) => {
   const [isReset, setIsReset] = useState(false)
   const dispatch = useDispatch()
+  const history = useHistory()
   const { has_thanx } = useSelector(selectBrand)
   const customer = useSelector(selectCustomer)
   const { profile } = customer
@@ -90,13 +92,29 @@ const LoginModal = ({ callback }) => {
     evt.target.blur()
   }
 
+  const signUp = (evt) => {
+    evt.preventDefault()
+    dispatch(closeModal())
+    history.push(`/signup`)
+    evt.target.blur()
+  }
+
   return (
     <>
       <ModalClose />
       <div className="modal__content">
         <div className="modal__header">
           <ModalTitle title={msg.title} />
-          <p className="modal__subtitle">{msg.subtitle}</p>
+          <p className="modal__subtitle">
+            {msg.subtitle}{' '}
+            {mode === 'login' && (
+              <Button
+                classes="ot-btn-link"
+                onClick={signUp}
+                text="Sign up here."
+              />
+            )}
+          </p>
         </div>
         <div className="modal__body">
           {resetSent ? (

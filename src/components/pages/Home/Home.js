@@ -20,6 +20,8 @@ import {
   Background,
   Content,
   HeaderButton,
+  HeaderButtonMobile,
+  HeaderLogo,
   HeaderMobile,
   Main,
   PageTitle,
@@ -28,6 +30,7 @@ import {
 // import OrderType from './OrderType'
 import { Menu } from 'react-feather'
 import HomeButtons from './HomeButtons'
+import { ButtonAccount } from '../../buttons'
 
 const makeContent = (content) => {
   if (!content || !content.length || !content[0].length) return null
@@ -79,10 +82,18 @@ const Home = () => {
         <HeaderMobile
           bgColor="transparent"
           maxWidth="76.8rem"
-          left={
-            <HeaderButton color="light" onClick={() => console.log('clicked')}>
-              <Menu size={20} />
-            </HeaderButton>
+          left={<HeaderLogo />}
+          right={
+            isBrowser ? (
+              <ButtonAccount classes="ot-btn--header" />
+            ) : (
+              <HeaderButtonMobile
+                color="light"
+                onClick={() => console.log('clicked')}
+              >
+                <Menu size={20} />
+              </HeaderButtonMobile>
+            )
           }
         />
         <Main padding="0" imageUrl={background}>

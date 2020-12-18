@@ -7,7 +7,12 @@ import styled from '@emotion/styled'
 
 const HeaderLogoLink = styled('a')`
   display: block;
-  max-width: 16rem;
+  // max-width: 16rem;
+  max-width: 14rem;
+  margin: 0.4rem 0 0 1.2rem;
+  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  //   max-width: 14rem;
+  // }
 `
 
 const HeaderLogoImage = styled('img')`

@@ -22,6 +22,8 @@ const NavButtonContainer = styled('button')`
   background-color: ${(props) => props.theme.bgColors.primary};
   border: 0.1rem solid ${(props) => props.theme.border.color};
   transition: ${(props) => props.theme.links.transition};
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
 
   &:hover,
   &:active {
@@ -35,7 +37,8 @@ const NavButtonContainer = styled('button')`
     // border-bottom: 0.1rem solid ${(props) => props.theme.border.color};
     // border-top: 0.1rem solid ${(props) => props.theme.colors.light};
     border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
-    background-color: rgba(0, 0, 0, 0.3);
+    // background-color: rgba(0, 0, 0, 0.3);
+    background-color: transparent;
     color: ${(props) => props.theme.colors.light};
   }
 
@@ -50,8 +53,8 @@ const NavButtonContainer = styled('button')`
 const NavButtonIcon = styled('span')`
   position: relative;
   // top: -0.1rem;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.4rem;
+  height: 1.4rem;
 `
 
 const NavButtonTitle = styled('span')`
@@ -75,8 +78,8 @@ const NavButtonArrow = styled('span')`
   }
 `
 
-const NavButton = ({ title, icon, onClick }) => (
-  <NavButtonContainer onClick={onClick}>
+const NavButton = ({ title, icon, onClick, delay = '0.125s' }) => (
+  <NavButtonContainer onClick={onClick} delay={delay}>
     <NavButtonIcon>{icon}</NavButtonIcon>
     <NavButtonTitle>{title}</NavButtonTitle>
     <NavButtonArrow>

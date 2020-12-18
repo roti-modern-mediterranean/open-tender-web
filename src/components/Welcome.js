@@ -6,7 +6,7 @@ const WelcomeGreeting = styled('div')`
   position: relative;
   width: 100%;
   flex: 1 0 100%;
-  // padding: 3rem 2.5rem;
+  padding: 8.5rem 0 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -49,6 +49,11 @@ const WelcomeContent = styled('div')`
   }
 `
 
+const WelcomeContentText = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
+`
+
 const WelcomeActions = styled('div')`
   margin: 2rem 0 0;
 `
@@ -64,8 +69,10 @@ const Welcome = ({ imageUrl, header, content, children }) => {
     <>
       <WelcomeGreeting imageUrl={imageUrl}>
         <WelcomeContent>
-          {header && <WelcomeHeader>{header}</WelcomeHeader>}
-          {content && <WelcomeActions>{content}</WelcomeActions>}
+          <WelcomeContentText>
+            {header && <WelcomeHeader>{header}</WelcomeHeader>}
+            {content && <WelcomeActions>{content}</WelcomeActions>}
+          </WelcomeContentText>
         </WelcomeContent>
       </WelcomeGreeting>
       <WelcomeButtons>{children}</WelcomeButtons>

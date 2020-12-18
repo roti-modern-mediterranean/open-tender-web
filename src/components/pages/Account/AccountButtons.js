@@ -10,9 +10,9 @@ const AccountButtonsContainer = styled('div')`
 
 const navButtons = [
   {
-    icon: <Award size={null} />,
-    title: 'Rewards',
-    path: '/rewards',
+    icon: <ShoppingBag size={null} />,
+    title: 'Order History',
+    path: '/orders',
   },
   {
     icon: <Heart size={null} />,
@@ -20,9 +20,9 @@ const navButtons = [
     path: '/favorites',
   },
   {
-    icon: <ShoppingBag size={null} />,
-    title: 'Order History',
-    path: '/orders',
+    icon: <Award size={null} />,
+    title: 'Rewards',
+    path: '/rewards',
   },
   {
     icon: <Gift size={null} />,

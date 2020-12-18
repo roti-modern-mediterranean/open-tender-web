@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 
 const HeaderMobileContainer = styled('nav')`
@@ -55,8 +55,28 @@ const HeaderMobile = ({
   bgColor,
   maxWidth = '100%',
 }) => {
+  const header = useRef(null)
+  const [stuck, setStuck] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (header.current) {
+        setStuck(header.current.getBoundingClientRect().top < 0)
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', () => handleScroll)
+    }
+  }, [])
+
   return (
-    <HeaderMobileContainer bgColor={bgColor} maxWidth={maxWidth}>
+    <HeaderMobileContainer
+      ref={header}
+      stuck={stuck}
+      bgColor={bgColor}
+      maxWidth={maxWidth}
+    >
       <HeaderMobileNav>{left}</HeaderMobileNav>
       {title && (
         <HeaderMobileTitle>

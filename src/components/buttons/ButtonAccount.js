@@ -2,7 +2,11 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCustomer, logoutCustomer } from '@open-tender/redux'
+import {
+  selectCustomer,
+  logoutCustomer,
+  selectGroupOrder,
+} from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
 import { openModal } from '../../slices'
@@ -12,8 +16,10 @@ const ButtonAccount = ({ classes = 'ot-btn--secondary ot-btn--header' }) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
+  const { cartGuest } = useSelector(selectGroupOrder)
   const { pathname } = useLocation()
   const isAccount = pathname.includes('account')
+  const isJoinGroup = pathname.includes('join')
 
   const handleLogin = (evt) => {
     evt.preventDefault()
@@ -32,6 +38,8 @@ const ButtonAccount = ({ classes = 'ot-btn--secondary ot-btn--header' }) => {
     dispatch(logoutCustomer())
     evt.target.blur()
   }
+
+  if (cartGuest || isJoinGroup) return null
 
   return auth ? (
     isAccount ? (

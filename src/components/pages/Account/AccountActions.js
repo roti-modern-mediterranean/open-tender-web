@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import {
@@ -6,12 +6,14 @@ import {
   selectCustomerOrders,
   resetOrderType,
   resetOrder,
+  fetchCustomerOrders,
+  fetchCustomerFavorites,
 } from '@open-tender/redux'
 import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
-import Loader from '../../Loader'
 import iconMap from '../../iconMap'
+import { Loading } from '../..'
 
 const Continue = ({ current, startNew }) => {
   return (
@@ -59,7 +61,6 @@ const AccountActions = () => {
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectCustomerOrders)
-  const isLoading = loading === 'pending'
   const lastOrder = getLastOrder(orders)
   let orderTypeName = null
   if (lastOrder) {
@@ -67,7 +68,12 @@ const AccountActions = () => {
     orderTypeName = makeOrderTypeName(order_type, service_type)
   }
   const isCurrentOrder = revenueCenter && serviceType && cart.length
-  const accountLoading = isLoading && !isCurrentOrder && !lastOrder
+  const isLoading = loading === 'pending' && !isCurrentOrder && !lastOrder
+
+  useEffect(() => {
+    dispatch(fetchCustomerOrders(20))
+    dispatch(fetchCustomerFavorites())
+  }, [dispatch])
 
   const startNewOrder = (evt) => {
     evt.preventDefault()
@@ -89,7 +95,9 @@ const AccountActions = () => {
     evt.target.blur()
   }
 
-  return isCurrentOrder ? (
+  return isLoading ? (
+    <Loading text="Retrieving your account info..." />
+  ) : isCurrentOrder ? (
     <Continue current={continueCurrent} startNew={startNewOrder} />
   ) : lastOrder ? (
     <Reorder
@@ -102,7 +110,7 @@ const AccountActions = () => {
       text="Start a New Order"
       icon={iconMap['ShoppingBag']}
       onClick={startNewOrder}
-      classes="ot-btn ot-btn--big ot-btn--highlight"
+      classes="ot-btn ot-btn--big"
     />
   )
 }

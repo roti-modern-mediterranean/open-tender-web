@@ -18,6 +18,7 @@ import {
 } from '../..'
 import AccountActions from './AccountActions'
 import AccountButtons from './AccountButtons'
+import { ButtonAccount } from '../../buttons'
 
 // const AccountSection = ({ section }) => sections[section]
 
@@ -48,18 +49,24 @@ const Account = () => {
       {isBrowser && <Background imageUrl={background} />}
       <Content maxWidth="76.8rem">
         <HeaderMobile
-          bgColor="transparent"
+          bgColor={isBrowser ? null : 'transparent'}
           maxWidth="76.8rem"
-          left={
-            <HeaderButton color="light" onClick={() => console.log('clicked')}>
-              <Menu size={20} />
-            </HeaderButton>
+          left={<HeaderLogo />}
+          right={
+            isBrowser ? (
+              <ButtonAccount classes="ot-btn--header" />
+            ) : (
+              <HeaderButton
+                color="light"
+                onClick={() => console.log('clicked')}
+              >
+                <Menu size={20} />
+              </HeaderButton>
+            )
           }
-          right={<HeaderLogo />}
         />
         <Main padding="0" imageUrl={background}>
           <Welcome
-            // imageUrl={background}
             header={
               <>
                 <h1>{pageTitle}</h1>
