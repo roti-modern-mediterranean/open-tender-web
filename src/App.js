@@ -2,16 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
-import { isMobile } from 'react-device-detect'
 import { ThemeProvider } from 'emotion-theming'
 import TagManager from 'react-gtm-module'
 import GlobalStyles from './GlobalStyles'
 import Routes from './components/Routes'
 import Modal from './components/Modal'
-import Header from './components/Header'
-import HeaderMobile from './components/HeaderMobile'
-import Main from './components/Main'
-import Footer from './components/Footer'
 import Messages from './components/Messages'
 import Notifications from './components/Notifications'
 import CartButton from './components/CartButton'
@@ -21,6 +16,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 import { fetchConfig } from './slices/configSlice'
 import './App.scss'
 import styled from '@emotion/styled'
+import Nav from './components/Nav'
 
 const AppContainer = styled('div')`
   display: flex;
@@ -77,12 +73,12 @@ class App extends React.Component {
                 </Helmet>
                 <Router>
                   <Modal />
-                  {/* {isMobile ? <HeaderMobile /> : <Header />} */}
                   <Messages />
                   <Routes />
                   <Notifications />
                   <CartButton />
                   <Sidebar />
+                  <Nav />
                 </Router>
               </AppContainer>
             </ErrorBoundary>

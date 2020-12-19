@@ -6,7 +6,7 @@ import { isBrowser } from 'react-device-detect'
 import { selectCustomer, fetchCustomer } from '@open-tender/redux'
 import { Menu } from 'react-feather'
 
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectBrand, selectConfig, toggleNav } from '../../../slices'
 import {
   Background,
   Content,
@@ -56,10 +56,7 @@ const Account = () => {
             isBrowser ? (
               <ButtonAccount classes="ot-btn--header" />
             ) : (
-              <HeaderButton
-                color="light"
-                onClick={() => console.log('clicked')}
-              >
+              <HeaderButton color="light" onClick={() => dispatch(toggleNav())}>
                 <Menu size={20} />
               </HeaderButton>
             )

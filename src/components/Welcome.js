@@ -64,7 +64,6 @@ const WelcomeButtons = styled('div')`
 `
 
 const Welcome = ({ imageUrl, header, content, children }) => {
-  console.log(content)
   return (
     <>
       <WelcomeGreeting imageUrl={imageUrl}>

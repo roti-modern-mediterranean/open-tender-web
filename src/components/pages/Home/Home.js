@@ -73,8 +73,6 @@ const Home = () => {
     }
   }, [geoLatLng, geoError, dispatch])
 
-  console.log(content)
-
   return (
     <>
       {isBrowser && <Background imageUrl={background} />}

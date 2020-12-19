@@ -10,6 +10,7 @@ import configReducer from '../slices/configSlice'
 import geolocationReducer from '../slices/geolocationSlice'
 import modalReducer from '../slices/modalSlice'
 import sidebarReducer from '../slices/sidebarSlice'
+import navReducer from '../slices/navSlice'
 import { openTenderReducer } from '@open-tender/redux'
 
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   geolocation: geolocationReducer,
   modal: modalReducer,
   sidebar: sidebarReducer,
+  nav: navReducer,
   data: openTenderReducer,
 })
 

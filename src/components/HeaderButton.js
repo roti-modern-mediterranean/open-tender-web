@@ -34,6 +34,7 @@ const HeaderButton = ({
   style = null,
 }) => {
   const onUp = (evt) => {
+    console.log(onClick)
     evt.target.blur()
     evt.preventDefault()
     evt.stopPropagation()
