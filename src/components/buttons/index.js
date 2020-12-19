@@ -5,6 +5,7 @@ import ButtonCancelEdit from './ButtonCancelEdit'
 import ButtonFavorite from './ButtonFavorite'
 import ButtonGroupOrder from './ButtonGroupOrder'
 import ButtonLocations from './ButtonLocations'
+import ButtonLogout from './ButtonLogout'
 import ButtonMenu from './ButtonMenu'
 import ButtonRequestedAt from './ButtonRequestedAt'
 import ButtonRevenueCenter from './ButtonRevenueCenter'
@@ -23,6 +24,7 @@ export {
   ButtonGroupOrder,
   ButtonMenu,
   ButtonLocations,
+  ButtonLogout,
   ButtonRequestedAt,
   ButtonRevenueCenter,
   ButtonServiceType,

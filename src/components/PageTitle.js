@@ -1,13 +1,12 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import Container from './Container'
 import Preface from './Preface'
 
 const PageTitleContainer = styled('div')`
-  padding: 4rem 0;
-  // opacity: 0;
-  // animation: slide-up 0.25s ease-in-out 0.125s;
+  padding: 3rem 0;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
 `
 
 const PageTitlePreface = styled('p')`
@@ -17,7 +16,7 @@ const PageTitlePreface = styled('p')`
 const PageTitleTitle = styled('h1')`
   color: ${(props) => props.theme.colors.title};
   font-size: ${(props) => props.theme.fonts.sizes.h1};
-  margin: 0 0 0 -0.2rem;
+  margin: 0 0 0 -0.1rem;
 `
 
 const PageTitleSubtitle = styled('p')`
@@ -30,23 +29,19 @@ const PageTitleSubtitle = styled('p')`
 const PageTitle = ({ title, subtitle, preface, error, link }) => {
   return (
     <PageTitleContainer>
-      <Container>
-        {!!preface && (
-          <PageTitlePreface>
-            <Preface>{preface}</Preface>
-          </PageTitlePreface>
-        )}
-        <PageTitleTitle>{title}</PageTitleTitle>
-        {!!subtitle && <PageTitleSubtitle>{subtitle}</PageTitleSubtitle>}
-        {!!error && (
-          <PageTitleSubtitle isError={true}>{error}</PageTitleSubtitle>
-        )}
-        {!!link && (
-          <PageTitleSubtitle style={{ margin: '4rem 0 0' }}>
-            {link}
-          </PageTitleSubtitle>
-        )}
-      </Container>
+      {!!preface && (
+        <PageTitlePreface>
+          <Preface>{preface}</Preface>
+        </PageTitlePreface>
+      )}
+      <PageTitleTitle>{title}</PageTitleTitle>
+      {!!subtitle && <PageTitleSubtitle>{subtitle}</PageTitleSubtitle>}
+      {!!error && <PageTitleSubtitle isError={true}>{error}</PageTitleSubtitle>}
+      {!!link && (
+        <PageTitleSubtitle style={{ margin: '4rem 0 0' }}>
+          {link}
+        </PageTitleSubtitle>
+      )}
     </PageTitleContainer>
   )
 }

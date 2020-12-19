@@ -25,6 +25,12 @@ import styled from '@emotion/styled'
 const AppContainer = styled('div')`
   display: flex;
   justify-content: flex-end;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 `
 
 class App extends React.Component {

@@ -12,12 +12,7 @@ import Footer from './Footer'
 // `
 
 const ContentContainer = styled('div')`
-  position: fixed;
-  z-index: 1;
   width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
   max-width: ${(props) => props.maxWidth};
   background-color: ${(props) => props.theme.bgColors.primary};
 `

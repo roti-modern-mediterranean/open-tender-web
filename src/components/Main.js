@@ -13,8 +13,11 @@ const Main = styled('div')`
   background-color: ${(props) =>
     props.theme.bgColors[props.bgColor || 'primary']};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    background-image: ${(props) => `url(${props.imageUrl})`};
-    background-color: ${(props) => props.theme.bgColors.dark};
+    ${(props) =>
+      props.imageUrl
+        ? `background-image: url(${props.imageUrl});
+    background-color: ${props.theme.bgColors.dark};`
+        : null}
   }
 `
 

@@ -46,7 +46,9 @@ const OrderCard = ({ order, isLast, className }) => {
   const streetAddress = makeOrderAddress(address)
   const trackingUrl = isOpen && delivery && delivery.tracking_url
   const itemNames = cart.map((i) => i.name).join(', ')
-  const klass = `order-card ot-bg-color-primary ot-border ot-border-radius ot-box-shadow slide-up ${className}`
+  const klass = `order-card ot-bg-color-primary ot-border ot-border-radius ot-box-shadow ${
+    className || ''
+  }`
 
   const handleEdit = (evt) => {
     evt.preventDefault()

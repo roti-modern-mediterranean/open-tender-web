@@ -9,7 +9,7 @@ const HeaderMobileContainer = styled('nav')`
   width: 100%;
   max-width: ${(props) => props.maxWidth};
   height: 6rem;
-  background-color: ${(props) => props.bgColor || props.theme.bgColors.primary};
+  background-color: ${(props) => props.theme.bgColors[props.bgColor]};
   // background-color: rgba(0, 0, 0, 0.3);
   // box-shadow: 0 1rem 1rem 1rem rgba(0, 0, 0, 0.3);
   display: flex;
@@ -52,7 +52,7 @@ const HeaderMobile = ({
   title,
   right,
   color,
-  bgColor,
+  bgColor = 'primary',
   maxWidth = '100%',
 }) => {
   const header = useRef(null)

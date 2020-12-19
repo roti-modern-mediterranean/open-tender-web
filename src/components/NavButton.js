@@ -25,21 +25,24 @@ const NavButtonContainer = styled('button')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
 
-  &:hover,
-  &:active {
-    background-color: ${(props) => props.theme.bgColors.secondary};
-    border: 0.1rem solid ${(props) => props.theme.bgColors.secondary};
-  }
-
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0;
     border: 0;
-    // border-bottom: 0.1rem solid ${(props) => props.theme.border.color};
-    // border-top: 0.1rem solid ${(props) => props.theme.colors.light};
     border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
-    // background-color: rgba(0, 0, 0, 0.3);
     background-color: transparent;
     color: ${(props) => props.theme.colors.light};
+  }
+
+  &:hover {
+    background-color: ${(props) => props.theme.bgColors.secondary};
+    border: 0.1rem solid ${(props) => props.theme.bgColors.secondary};
+
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      border: 0;
+      border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
+      background-color: transparent;
+      color: ${(props) => props.theme.colors.light};
+    }
   }
 
   &:last-of-type {
