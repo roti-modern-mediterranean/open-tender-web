@@ -4,13 +4,11 @@ import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { selectCustomer, fetchCustomer } from '@open-tender/redux'
-import { Menu } from 'react-feather'
 
-import { selectBrand, selectConfig, toggleNav } from '../../../slices'
+import { selectBrand, selectConfig } from '../../../slices'
 import {
   Background,
   Content,
-  HeaderButton,
   HeaderLogo,
   HeaderMobile,
   Main,
@@ -19,8 +17,7 @@ import {
 import AccountActions from './AccountActions'
 import AccountButtons from './AccountButtons'
 import { ButtonAccount } from '../../buttons'
-
-// const AccountSection = ({ section }) => sections[section]
+import { HeaderButtonMenu } from '../../buttonsHeader'
 
 const Account = () => {
   const history = useHistory()
@@ -56,9 +53,7 @@ const Account = () => {
             isBrowser ? (
               <ButtonAccount classes="ot-btn--header" />
             ) : (
-              <HeaderButton color="light" onClick={() => dispatch(toggleNav())}>
-                <Menu size={20} />
-              </HeaderButton>
+              <HeaderButtonMenu color="light" />
             )
           }
         />

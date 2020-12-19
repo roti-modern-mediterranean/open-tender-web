@@ -5,6 +5,119 @@ import { withTheme } from 'emotion-theming'
 // https://stackoverflow.com/questions/51637950/enable-global-theming-with-emotion
 
 const makeGlobalStyles = (theme) => css`
+  html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    font-family: sans-serif;
+    min-height: 100%;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ol,
+  ul,
+  legend {
+    margin: 0;
+    padding: 0;
+  }
+
+  fieldset {
+    padding: 0;
+    border: 0;
+    margin: 0;
+  }
+
+  input,
+  textarea,
+  select {
+    -webkit-appearance: none;
+    // outline: 0;
+  }
+
+  input[type='search'] {
+    -webkit-appearance: none;
+
+    &::-webkit-search-decoration {
+      -webkit-appearance: none;
+    }
+
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      display: none;
+    }
+  }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  input[type='submit'] {
+    width: auto;
+    cursor: pointer;
+  }
+
+  select {
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  ol,
+  ul {
+    list-style: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  button {
+    cursor: pointer;
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-family: ${theme.fonts.body.family};
+    font-weight: ${theme.fonts.body.weight};
+    transition: ${theme.links.transition};
+    font-size: ${theme.fonts.sizes.main};
+    color: ${theme.fonts.body.color};
+  }
+
+  button:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  button > * {
+    pointer-events: none;
+  }
+
   body {
     font-family: ${theme.fonts.body.family};
     font-weight: ${theme.fonts.body.weight};
@@ -15,12 +128,14 @@ const makeGlobalStyles = (theme) => css`
     font-size: ${theme.fonts.sizes.main};
     background-color: ${theme.bgColors.primary};
   }
+
   header {
     background-color: ${theme.header.primary};
     &.stuck {
       background-color: ${theme.header.stuck};
     }
   }
+
   h1,
   h2,
   h3,
@@ -35,26 +150,32 @@ const makeGlobalStyles = (theme) => css`
     -webkit-font-smoothing: ${theme.fonts.headings.fontSmoothing};
     color: ${theme.fonts.headings.color};
   }
+
   h1,
   .ot-font-size-h1 {
     font-size: ${theme.fonts.sizes.h1};
   }
+
   h2,
   .ot-font-size-h2 {
     font-size: ${theme.fonts.sizes.h2};
   }
+
   h3,
   .ot-font-size-h3 {
     font-size: ${theme.fonts.sizes.h3};
   }
+
   h4,
   .ot-font-size-h4 {
     font-size: ${theme.fonts.sizes.h4};
   }
+
   h5,
   .ot-font-size-h5 {
     font-size: ${theme.fonts.sizes.h5};
   }
+
   h6,
   .ot-font-size-h6 {
     font-size: ${theme.fonts.sizes.h6};
@@ -71,6 +192,7 @@ const makeGlobalStyles = (theme) => css`
       color: ${theme.links.primary.hover};
     }
   }
+
   a.ot-link-light,
   button.ot-link-light {
     color: ${theme.links.light.color};
@@ -81,6 +203,7 @@ const makeGlobalStyles = (theme) => css`
       color: ${theme.links.light.hover};
     }
   }
+
   a.ot-link-dark,
   button.ot-link-dark {
     color: ${theme.links.dark.color};
@@ -240,16 +363,6 @@ const makeGlobalStyles = (theme) => css`
   }
   .ot-border-radius-small {
     border-radius: ${theme.border.radiusSmall};
-  }
-
-  button {
-    font-family: ${theme.fonts.body.family};
-    font-weight: ${theme.fonts.body.weight};
-    transition: ${theme.links.transition};
-  }
-
-  button:disabled {
-    opacity: 0.5;
   }
 
   .ot-btn-link {

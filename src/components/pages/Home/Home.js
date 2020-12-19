@@ -19,18 +19,14 @@ import {
 import {
   Background,
   Content,
-  HeaderButton,
-  HeaderButtonMobile,
   HeaderLogo,
   HeaderMobile,
   Main,
-  PageTitle,
   Welcome,
 } from '../..'
-// import OrderType from './OrderType'
-import { Menu } from 'react-feather'
-import HomeButtons from './HomeButtons'
 import { ButtonAccount } from '../../buttons'
+import { HeaderButtonMenu } from '../../buttonsHeader'
+import HomeButtons from './HomeButtons'
 
 const makeContent = (content) => {
   if (!content || !content.length || !content[0].length) return null
@@ -85,12 +81,7 @@ const Home = () => {
             isBrowser ? (
               <ButtonAccount classes="ot-btn--header" />
             ) : (
-              <HeaderButtonMobile
-                color="light"
-                onClick={() => console.log('clicked')}
-              >
-                <Menu size={20} />
-              </HeaderButtonMobile>
+              <HeaderButtonMenu color="light" />
             )
           }
         />

@@ -20,10 +20,11 @@ import {
   PageTitle,
   PageContent,
 } from '../..'
-import { ArrowLeft, Menu } from 'react-feather'
+import { ArrowLeft } from 'react-feather'
 import { ButtonBackToAccount, ButtonLogout } from '../../buttons'
 import { Container } from '../..'
 import OrdersList from './OrdersList'
+import { HeaderButtonMenu } from '../../buttonsHeader'
 
 const Orders = () => {
   const sectionRef = useRef()
@@ -85,15 +86,7 @@ const Orders = () => {
               </HeaderButton>
             )
           }
-          right={
-            isBrowser ? (
-              <ButtonLogout />
-            ) : (
-              <HeaderButton onClick={() => console.log('clicked')}>
-                <Menu size={20} />
-              </HeaderButton>
-            )
-          }
+          right={isBrowser ? <ButtonLogout /> : <HeaderButtonMenu />}
         />
         <Main bgColor="secondary">
           <Container>

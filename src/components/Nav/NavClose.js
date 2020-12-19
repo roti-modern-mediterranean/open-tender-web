@@ -7,18 +7,18 @@ import styled from '@emotion/styled'
 const NavCloseButton = styled('button')`
   position: absolute;
   z-index: 1;
-  top: 7px;
-  right: 7px;
-  color: ${(props) => props.theme.links.primary.color};
+  top: 10px;
+  right: 10px;
+  color: ${(props) => props.theme.fonts.headings.color};
 
   &:hover,
   &:active,
   &:focus {
-    color: ${(props) => props.theme.links.primary.hover};
+    color: ${(props) => props.theme.fonts.headings.color};
   }
 
   &:disabled {
-    color: ${(props) => props.theme.links.primary.color};
+    color: ${(props) => props.theme.fonts.headings.color};
     opacity: 0.5;
   }
 `

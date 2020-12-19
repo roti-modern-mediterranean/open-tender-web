@@ -75,9 +75,12 @@ const NavButtonArrow = styled('span')`
   transition: ${(props) => props.theme.links.transition};
   transform: translateX(0);
 
-  button:hover &,
-  button:active & {
+  button:hover & {
     transform: translateX(1rem);
+
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      transform: translateX(0);
+    }
   }
 `
 

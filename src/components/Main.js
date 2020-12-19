@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 
 const Main = styled('div')`
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   padding: ${(props) => props.padding || '6rem 0 0'};
   display: flex;
   flex-direction: column;
