@@ -1,21 +1,22 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { Menu } from 'react-feather'
 
 import { toggleNav } from '../../slices'
 import { HeaderButton } from '..'
+import iconMap from '../iconMap'
 
 const HeaderButtonMenu = ({ color }) => {
   const dispatch = useDispatch()
   return (
     <HeaderButton color={color} onClick={() => dispatch(toggleNav())}>
-      <Menu size={20} />
+      {iconMap['Menu']}
     </HeaderButton>
   )
 }
 
-HeaderButton.propTypes = {
+HeaderButtonMenu.displayName = 'HeaderButtonMenu'
+HeaderButtonMenu.propTypes = {
   color: propTypes.string,
 }
 

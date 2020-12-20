@@ -8,7 +8,6 @@ import OrderPage from './OrderPage'
 import RevenueCentersPage from './RevenueCentersPage'
 import RevenueCenterPage from './RevenueCenterPage'
 import AccountAddressesPage from './AccountAddressesPage'
-import AccountFavoritesPage from './AccountFavoritesPage'
 import AccountItemsPage from './AccountItemsPage'
 import CateringPage from './CateringPage'
 import SignUpPage from './SignUpPage'
@@ -23,7 +22,7 @@ import FulfillmentPage from './FulfillmentPage'
 import GiftCardsPage from './GiftCardsPage'
 import DonationPage from './DonationPage'
 import ThanxPage from './ThanxPage'
-import { Account, Home, Orders, Rewards } from './pages'
+import { Account, Favorites, Home, Orders, Rewards } from './pages'
 
 // <TransitionGroup component={null}>
 //   <CSSTransition timeout={10000} classNames="fade" key={location.key}>
@@ -91,7 +90,7 @@ const Routes = () => {
         <AccountAddressesPage />
       </Route>
       <Route exact path="/favorites">
-        <AccountFavoritesPage />
+        <Favorites />
       </Route>
       <Route exact path="/items">
         <AccountItemsPage />

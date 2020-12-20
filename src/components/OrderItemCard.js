@@ -67,7 +67,7 @@ const OrderItemCard = ({ item }) => {
         <div className="order-card__footer">
           <div className="order-card__footer__buttons">
             <Button
-              text="Add To Cart"
+              text="Add"
               icon={iconMap['PlusCircle']}
               onClick={(evt) => addToCart(evt, item)}
               classes="ot-btn--small ot-font-size-small"

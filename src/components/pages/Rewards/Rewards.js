@@ -1,17 +1,21 @@
 import React, { useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 
-import SectionFooter from '../../SectionFooter'
-import PageTitle from '../../PageTitle'
-import AccountLoyalty from '../../AccountLoyalty'
 import AccountThanx from '../../AccountThanx'
 import { selectBrand, selectConfig } from '../../../slices'
-import { Background, Content, HeaderButton, HeaderMobile, Main } from '../..'
-import { ChevronLeft } from 'react-feather'
+import {
+  Background,
+  Container,
+  Content,
+  HeaderAccount,
+  Main,
+  PageTitle,
+} from '../..'
+import RewardsPrograms from './RewardsProgams'
 
 const Rewards = () => {
   const history = useHistory()
@@ -34,27 +38,16 @@ const Rewards = () => {
         <title>Rewards | {siteTitle}</title>
       </Helmet>
       {isBrowser && <Background imageUrl={background} />}
-      {/* <AccountBackground /> */}
       <Content maxWidth="76.8rem">
-        <HeaderMobile
-          bgColor="transparent"
-          maxWidth="76.8rem"
-          left={
-            <HeaderButton onClick={() => history.push('/account')}>
-              <ChevronLeft size={20} />
-            </HeaderButton>
-          }
-          title="Rewards"
-        />
-        <Main>
-          <PageTitle
-            title="Your Rewards"
-            subtitle="Your current loyalty progress and any rewards you've earned"
-          />
-          {has_thanx ? <AccountThanx /> : <AccountLoyalty />}
-          <SectionFooter>
-            <Link to="/account">Head back to your account page</Link>
-          </SectionFooter>
+        <HeaderAccount maxWidth="76.8rem" />
+        <Main bgColor="secondary">
+          <Container>
+            <PageTitle
+              title="Rewards"
+              subtitle="A summary of your current rewards progress"
+            />
+            {has_thanx ? <AccountThanx /> : <RewardsPrograms />}
+          </Container>
         </Main>
       </Content>
     </>

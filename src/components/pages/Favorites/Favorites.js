@@ -1,39 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
+  selectCustomerFavorites,
+  fetchCustomerFavorites,
   selectCustomer,
-  selectCustomerOrders,
-  fetchCustomerOrders,
 } from '@open-tender/redux'
-import { Button } from '@open-tender/components'
+import { makeDisplayItem } from '@open-tender/js'
 
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import {
   Container,
   Content,
+  ItemCards,
   Loading,
   Main,
   PageTitle,
   PageContent,
   HeaderAccount,
 } from '../..'
-import OrdersList from './OrdersList'
 
-const Orders = () => {
+const Favorites = () => {
+  const sectionRef = useRef()
   const dispatch = useDispatch()
   const history = useHistory()
-  const increment = 20
-  const limit = 60
-  const orders = useSelector(selectCustomerOrders)
-  const { entities, loading, error } = orders
-  const [count, setCount] = useState(increment)
-  const [recentOrders, setRecentOrders] = useState(entities.slice(0, count))
+  const { entities, loading, error } = useSelector(selectCustomerFavorites)
+  const [favorites, setFavorites] = useState(entities)
   const { title: siteTitle } = useSelector(selectBrand)
   const config = useSelector(selectAccountConfig)
   const { auth } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
+  const items = favorites.map((i) => ({ ...i.item, id: i.favorite_id }))
 
   useEffect(() => {
     window.scroll(0, 0)
@@ -44,22 +42,19 @@ const Orders = () => {
   }, [auth, history])
 
   useEffect(() => {
-    dispatch(fetchCustomerOrders(limit + 1))
+    if (error) window.scrollTo(0, sectionRef.current.offsetTop)
+  }, [error])
+
+  useEffect(() => {
+    dispatch(fetchCustomerFavorites())
   }, [dispatch])
 
   useEffect(() => {
-    setRecentOrders(entities.slice(0, count))
-  }, [entities, count])
+    const items = entities.map((i) => ({ ...i, item: makeDisplayItem(i.item) }))
+    setFavorites(items)
+  }, [entities])
 
-  const handleClick = (evt) => {
-    evt.preventDefault()
-    setCount(Math.min(count + increment, limit))
-    evt.target.blur()
-  }
-
-  if (!auth) return null
-
-  return (
+  return auth ? (
     <>
       <Helmet>
         <title>Order History | {siteTitle}</title>
@@ -68,31 +63,27 @@ const Orders = () => {
         <HeaderAccount />
         <Main bgColor="secondary">
           <Container>
-            <PageTitle {...config.recentOrders} />
+            <PageTitle {...config.favorites} />
             <PageContent>
-              {recentOrders.length ? (
-                <>
-                  <OrdersList orders={recentOrders} />
-                  {entities.length - 1 > count && (
-                    <Button classes="ot-btn" onClick={handleClick}>
-                      Load more recent orders
-                    </Button>
-                  )}
-                </>
+              {items.length ? (
+                <ItemCards items={items} delay={0.25} />
               ) : isLoading ? (
                 <Loading text="Retrieving your order history..." />
               ) : error ? (
                 <p>{error}</p>
               ) : (
-                <p>Looks like you don't have any orders yet</p>
+                <p>
+                  Looks like you don't have any favorites yet. Visit your past
+                  orders to add some.
+                </p>
               )}
             </PageContent>
           </Container>
         </Main>
       </Content>
     </>
-  )
+  ) : null
 }
 
-Orders.displayName = 'Orders'
-export default Orders
+Favorites.displayName = 'Favorites'
+export default Favorites

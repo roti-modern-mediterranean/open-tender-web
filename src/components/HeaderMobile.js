@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 
-const HeaderMobileContainer = styled('nav')`
+const HeaderMobileView = styled('nav')`
   position: fixed;
   z-index: 10;
   top: 0;
@@ -9,13 +9,22 @@ const HeaderMobileContainer = styled('nav')`
   width: 100%;
   max-width: ${(props) => props.maxWidth};
   height: 6rem;
-  background-color: ${(props) => props.theme.bgColors[props.bgColor]};
-  // background-color: rgba(0, 0, 0, 0.3);
-  // box-shadow: 0 1rem 1rem 1rem rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: ${(props) => props.theme.bgColors[props.bgColor]};
+  box-shadow: ${(props) =>
+    props.stuck ? `0 1rem 1rem 1rem rgba(0, 0, 0, 0.3)` : 'none'};
   padding: 0 1.3rem;
+  border-bottom: 0.1rem solid
+    ${(props) =>
+      props.theme.bgColors[
+        props.bgColor === 'transparent' ? 'transparent' : 'secondary'
+      ]};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0;
+  }
 `
 
 const HeaderMobileTitle = styled('div')`
@@ -71,20 +80,22 @@ const HeaderMobile = ({
   }, [])
 
   return (
-    <HeaderMobileContainer
-      ref={header}
-      stuck={stuck}
-      bgColor={bgColor}
-      maxWidth={maxWidth}
-    >
-      <HeaderMobileNav>{left}</HeaderMobileNav>
-      {title && (
-        <HeaderMobileTitle>
-          <span>{title}</span>
-        </HeaderMobileTitle>
-      )}
-      <HeaderMobileNav>{right}</HeaderMobileNav>
-    </HeaderMobileContainer>
+    <div ref={header}>
+      <HeaderMobileView
+        stuck={stuck}
+        bgColor={bgColor}
+        // borderColor={bgColor === 'transparent' ? 'transparent' : 'secondary'}
+        maxWidth={maxWidth}
+      >
+        <HeaderMobileNav>{left}</HeaderMobileNav>
+        {title && (
+          <HeaderMobileTitle>
+            <span>{title}</span>
+          </HeaderMobileTitle>
+        )}
+        <HeaderMobileNav>{right}</HeaderMobileNav>
+      </HeaderMobileView>
+    </div>
   )
 }
 

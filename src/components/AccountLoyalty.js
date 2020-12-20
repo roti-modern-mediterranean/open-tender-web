@@ -19,7 +19,7 @@ const LoyaltyProgram = ({ program }) => {
       <div className="loyalty__program__header">
         <p className="ot-heading ot-font-size-h5">{name}</p>
         {currentCredit ? (
-          <p className="ot-font-size-small ot-color-success">
+          <p className="ot-font-size-small">
             You've got ${currentCredit.toFixed(2)} in credit to redeem!
           </p>
         ) : progress ? (

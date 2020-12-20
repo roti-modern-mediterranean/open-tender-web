@@ -23,7 +23,7 @@ const PageTitleSubtitle = styled('p')`
   color: ${(props) =>
     props.isError ? props.theme.colors.error : props.theme.fonts.body.color};
   line-height: ${(props) => props.theme.lineHeight};
-  margin: 1rem 0 0;
+  margin: 0.5rem 0 0;
 `
 
 const PageTitle = ({ title, subtitle, preface, error, link }) => {

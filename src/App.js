@@ -18,7 +18,7 @@ import './App.scss'
 import styled from '@emotion/styled'
 import Nav from './components/Nav'
 
-const AppContainer = styled('div')`
+const AppView = styled('div')`
   display: flex;
   justify-content: flex-end;
   position: fixed;
@@ -60,7 +60,7 @@ class App extends React.Component {
           <ThemeProvider theme={this.props.theme}>
             <GlobalStyles />
             <ErrorBoundary>
-              <AppContainer>
+              <AppView>
                 <Helmet>
                   <title>{brand.title}</title>
                   <meta name="description" content={brand.description} />
@@ -80,7 +80,7 @@ class App extends React.Component {
                   <Sidebar />
                   <Nav />
                 </Router>
-              </AppContainer>
+              </AppView>
             </ErrorBoundary>
           </ThemeProvider>
         )}

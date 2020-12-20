@@ -3,12 +3,12 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { OrderCard } from '../..'
 
-const OrdersListContainer = styled('div')`
+const OrdersListView = styled('div')`
   display: flex;
   flex-wrap: wrap;
   margin: 1rem -1rem;
 `
-const OrderListItem = styled('div')`
+const OrdersListItem = styled('div')`
     flex: 1 0 30rem;
     padding: 0 1rem;
     margin: 0 0 2rem;
@@ -19,25 +19,26 @@ const OrderListItem = styled('div')`
 
 const OrdersList = ({ orders, delay = 0.125 }) => {
   return (
-    <OrdersListContainer>
+    <OrdersListView>
       {orders.map((order, index) => {
         return (
-          <OrderListItem
+          <OrdersListItem
             key={order.order_id}
             delay={`${delay.toFixed(3)}s`}
             // delay={`${((index + 1) * 0.125 + delay).toFixed(3)}s`}
           >
             <OrderCard order={order} />
-          </OrderListItem>
+          </OrdersListItem>
         )
       })}
-    </OrdersListContainer>
+    </OrdersListView>
   )
 }
 
 OrdersList.displayName = 'OrdersList'
 OrdersList.propTypes = {
   orders: propTypes.array,
+  delay: propTypes.number,
 }
 
 export default OrdersList

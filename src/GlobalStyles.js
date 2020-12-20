@@ -765,6 +765,15 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
+  @keyframes fill-bar {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+
   .react-datepicker__navigation--previous {
     border-right-color: ${theme.links.primary.color};
   }

@@ -9,8 +9,8 @@ const HeaderButtonContainer = styled('button')`
   align-items: center;
   line-height: 1;
   text-align: center;
-  width: 4.4rem;
-  height: 4.4rem;
+  width: 5rem;
+  height: 5rem;
   border: 0;
   margin: 0;
   color: ${(props) =>
@@ -22,6 +22,8 @@ const HeaderButtonContainer = styled('button')`
 
   & > span {
     display: block;
+    width: 2rem;
+    height: 2rem;
   }
 `
 
