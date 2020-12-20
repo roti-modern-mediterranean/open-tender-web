@@ -3,7 +3,14 @@ import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
-import { selectCustomer, fetchCustomer } from '@open-tender/redux'
+import {
+  selectCustomer,
+  fetchCustomer,
+  resetCustomerThanx,
+  selectCustomerThanx,
+  logoutCustomer,
+  addMessage,
+} from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import {
@@ -24,6 +31,7 @@ const Account = () => {
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
+  const { error: thanxError } = useSelector(selectCustomerThanx)
   const { background, title, subtitle } = accountConfig
   const { auth, profile } = useSelector(selectCustomer)
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
@@ -37,6 +45,16 @@ const Account = () => {
     if (!token) return history.push('/')
     dispatch(fetchCustomer({ token }))
   }, [token, dispatch, history])
+
+  useEffect(() => {
+    if (
+      thanxError === 'This customer does not have a connected Thanx account'
+    ) {
+      dispatch(logoutCustomer())
+      dispatch(resetCustomerThanx())
+      dispatch(addMessage('Please login to reauthenticate your account'))
+    }
+  }, [thanxError, dispatch])
 
   return profile ? (
     <>

@@ -1,6 +1,5 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { loyaltyType } from '@open-tender/js'
 import styled from '@emotion/styled'
 import { Heading, ProgressBar } from '../..'
 
@@ -38,29 +37,22 @@ const RewardsProgramProgress = styled('p')`
 `
 
 const RewardsProgram = ({ program }) => {
-  const { name, description, loyalty_type, spend, redemption, credit } = program
-  const progress =
-    loyalty_type === loyaltyType.CREDIT
-      ? parseInt(
-          (parseFloat(spend.current) / parseFloat(redemption.threshold)) * 100
-        )
-      : null
-  const currentCredit = parseFloat(credit.current)
+  const { name, description, progress, credit, reward } = program
   return (
     <RewardsProgramView>
       <RewardsProgramHeader>
         <h2>{name}</h2>
-        <p>{description}</p>
+        {description && <p>{description}</p>}
       </RewardsProgramHeader>
-      {currentCredit && (
+      {credit && (
         <RewardsProgramCredit>
-          <Heading>Current credit: ${currentCredit.toFixed(2)}</Heading>
+          <Heading>Current credit: ${credit.toFixed(2)}</Heading>
         </RewardsProgramCredit>
       )}
       <ProgressBar progress={progress} />
       <RewardsProgramProgress>
         {progress
-          ? `You're ${progress}% of the way towards earning your next $${redemption.reward} off!`
+          ? `You're ${progress}% of the way towards earning your next $${reward} off!`
           : 'Make your first purchase to start earning rewards!'}
       </RewardsProgramProgress>
     </RewardsProgramView>

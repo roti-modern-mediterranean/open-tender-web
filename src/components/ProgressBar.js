@@ -17,13 +17,13 @@ const ProgressBarFill = styled('div')`
 
 const ProgressBar = ({ progress }) => {
   const style = { width: `${progress}%` }
-  return (
+  return progress ? (
     <ProgressView>
       <div style={style}>
         <ProgressBarFill />
       </div>
     </ProgressView>
-  )
+  ) : null
 }
 
 ProgressBar.displayName = 'ProgressBar'

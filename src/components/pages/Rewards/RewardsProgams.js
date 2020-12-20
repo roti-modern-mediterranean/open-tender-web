@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCustomerLoyalty, selectCustomerLoyalty } from '@open-tender/redux'
+import { loyaltyType } from '@open-tender/js'
 import { Loading } from '../..'
 import RewardsProgram from './RewardsProgam'
 
@@ -14,9 +15,32 @@ const RewardsPrograms = () => {
 
   return entities.length ? (
     <div>
-      {entities.map((program) => (
-        <RewardsProgram key={program.name} program={program} />
-      ))}
+      {entities.map((program) => {
+        const {
+          name,
+          description,
+          loyalty_type,
+          spend,
+          redemption,
+          credit,
+        } = program
+        const progress =
+          loyalty_type === loyaltyType.CREDIT
+            ? parseInt(
+                (parseFloat(spend.current) / parseFloat(redemption.threshold)) *
+                  100
+              )
+            : null
+        const currentCredit = parseFloat(credit.current)
+        const rewardsProgram = {
+          name,
+          description,
+          progress,
+          credit: currentCredit,
+          reward: redemption.reward,
+        }
+        return <RewardsProgram key={program.name} program={rewardsProgram} />
+      })}
     </div>
   ) : loading !== 'pending' ? (
     <Loading text="Retrieving your rewards..." />

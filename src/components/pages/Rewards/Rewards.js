@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 
-import AccountThanx from '../../AccountThanx'
 import { selectBrand, selectConfig } from '../../../slices'
 import {
   Background,
@@ -16,6 +15,7 @@ import {
   PageTitle,
 } from '../..'
 import RewardsPrograms from './RewardsProgams'
+import RewardsThanx from './RewardsThanx'
 
 const Rewards = () => {
   const history = useHistory()
@@ -46,7 +46,7 @@ const Rewards = () => {
               title="Rewards"
               subtitle="A summary of your current rewards progress"
             />
-            {has_thanx ? <AccountThanx /> : <RewardsPrograms />}
+            {has_thanx ? <RewardsThanx /> : <RewardsPrograms />}
           </Container>
         </Main>
       </Content>
