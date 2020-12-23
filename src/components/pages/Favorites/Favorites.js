@@ -60,7 +60,7 @@ const Favorites = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderAccount />
+        <HeaderAccount title="Favorites" />
         <Main bgColor="secondary">
           <Container>
             <PageTitle {...config.favorites} />

@@ -1,8 +1,10 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { ShoppingBag, Gift, Heart, Award, Settings } from 'react-feather'
+import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { NavButtons } from '../..'
+import { selectBrand } from '../../../slices'
+import iconMap from '../../iconMap'
 
 const AccountButtonsContainer = styled('div')`
   // padding: 0 2.5rem 2.5rem;
@@ -10,35 +12,40 @@ const AccountButtonsContainer = styled('div')`
 
 const navButtons = [
   {
-    icon: <ShoppingBag size={null} />,
+    icon: iconMap['ShoppingBag'],
     title: 'Order History',
     path: '/orders',
   },
   {
-    icon: <Heart size={null} />,
+    icon: iconMap['Heart'],
     title: 'Favorites',
     path: '/favorites',
   },
   {
-    icon: <Award size={null} />,
+    icon: iconMap['Award'],
     title: 'Rewards',
     path: '/rewards',
   },
   {
-    icon: <Gift size={null} />,
+    icon: iconMap['Gift'],
     title: 'Gift Cards',
     path: '/gift-cards',
   },
   {
-    icon: <Settings size={null} />,
-    title: 'Account',
+    icon: iconMap['Settings'],
+    title: 'Account Settings',
     path: '/account/settings',
   },
 ]
 
 const AccountButtons = () => {
   const history = useHistory()
-  const buttons = navButtons.map((i) => ({
+  const { has_rewards, has_thanx } = useSelector(selectBrand)
+  const filteredButtons =
+    has_rewards || has_thanx
+      ? navButtons
+      : navButtons.filter((i) => i.path !== '/rewards')
+  const buttons = filteredButtons.map((i) => ({
     ...i,
     onClick: () => history.push(i.path),
   }))

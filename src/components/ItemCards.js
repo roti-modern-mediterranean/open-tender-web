@@ -9,12 +9,25 @@ const ItemCardsView = styled('div')`
   margin: 0 -0.5rem;
 `
 const ItemCardsItem = styled('div')`
-    flex: 1 0 15rem;
-    max-width: 50%;
+    flex: 0 0 12.5%;
+    max-width: 30rem;
     padding: 0 0.5rem;
     margin: 0 0 1rem;
     opacity: 0;
     animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
+
+    @media (max-width: 1280px) {
+      flex: 0 0 16.66667%;
+    }
+    @media (max-width: 1024px) {
+      flex: 0 0 25%;
+    }
+    @media (max-width: 768px) {
+      flex: 0 0 33.33333%;
+    }
+    @media (max-width: 480px) {
+      flex: 0 0 50%;
+    }
   }
 `
 

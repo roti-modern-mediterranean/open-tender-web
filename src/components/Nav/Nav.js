@@ -4,45 +4,55 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
 import styled from '@emotion/styled'
 
-import { openModal, selectNav, toggleNav } from '../../slices'
-import { Button, Heading } from '..'
+import { openModal, selectBrand, selectNav, toggleNav } from '../../slices'
+import { Heading } from '..'
 import NavOverlay from './NavOverlay'
 import NavClose from './NavClose'
+import iconMap from '../iconMap'
 
-const navCustomer = [
+const navButtons = [
   {
+    icon: iconMap.ShoppingBag,
     title: 'Order History',
     path: '/orders',
   },
   {
+    icon: iconMap.Heart,
     title: 'Favorites',
     path: '/favorites',
   },
   {
+    icon: iconMap.Award,
     title: 'Rewards',
     path: '/rewards',
   },
   {
+    icon: iconMap.Gift,
     title: 'Gift Cards',
     path: '/gift-cards',
   },
   {
+    icon: iconMap.Sliders,
     title: 'Allergens',
     path: '/allergens',
   },
   {
+    icon: iconMap.MapPin,
     title: 'Addresses',
     path: '/addresses',
   },
   {
+    icon: iconMap.CreditCard,
     title: 'Credit Cards',
     path: '/credit-cards',
   },
   {
+    icon: iconMap.Home,
     title: 'House Accounts',
     path: '/house-accounts',
   },
   {
+    icon: iconMap.Settings,
     title: 'Profile & Preferences',
     path: '/profile',
   },
@@ -69,14 +79,11 @@ const NavContainer = styled('div')`
   height: 100%;
   display: flex;
   flex-direction: column;
-  // justify-content: space-between;
-  // align-items: center;
-  // text-align: left;
 `
 
 const NavHeader = styled('div')`
   width: 100%;
-  padding: 4rem 1rem 2rem 3.5rem;
+  padding: 2.5rem 0 1rem;
 
   button span {
     font-size: ${(props) => props.theme.fonts.sizes.h3};
@@ -88,35 +95,39 @@ const NavItems = styled('nav')`
   padding: 0 0 2rem;
 `
 
-const NavItem = styled('div')`
+const NavButton = styled('button')`
   width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  line-height: 1;
+  padding: 1.2rem 1rem 1.2rem 3.5rem;
+  color: ${(props) => props.theme.fonts.headings.color};
 
-  button {
-    width: 100%;
-    text-align: left;
-    justify-content: flex-start;
-    padding: 1.2rem 1rem 1.2rem 3.5rem;
+  span {
+    font-size: ${(props) => props.theme.fonts.sizes.big};
   }
+`
 
-  button span {
-    font-size: ${(props) => props.theme.fonts.sizes.h4};
-  }
+const NavIcon = styled('span')`
+  display: block;
+  line-height: 0;
+  position: relative;
+  top: -0.1rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin: 0 1.7rem 0 0;
+`
+
+const NavTitle = styled(Heading)`
+  flex-grow: 1;
+  font-size: ${(props) => props.theme.fonts.sizes.big};
 `
 
 const NavFooter = styled('div')`
   width: 100%;
   padding: 0 0 2rem;
-
-  button {
-    width: 100%;
-    text-align: left;
-    justify-content: flex-start;
-    padding: 0 1rem 0 3.5rem;
-  }
-
-  button span {
-    font-size: ${(props) => props.theme.fonts.sizes.h4};
-  }
 `
 
 const Nav = () => {
@@ -124,19 +135,32 @@ const Nav = () => {
   const history = useHistory()
   const { isOpen } = useSelector(selectNav)
   const { profile } = useSelector(selectCustomer)
-  // const { first_name, last_name } = profile || {}
+  const { has_rewards, has_thanx } = useSelector(selectBrand)
+  const filteredButtons =
+    has_rewards || has_thanx
+      ? navButtons
+      : navButtons.filter((i) => i.path !== '/rewards')
 
-  const closeGo = (path) => {
+  const closeGo = (evt, path) => {
+    evt.target.blur()
+    evt.preventDefault()
+    evt.stopPropagation()
     dispatch(toggleNav())
     history.push(path)
   }
 
-  const login = () => {
+  const login = (evt) => {
+    evt.target.blur()
+    evt.preventDefault()
+    evt.stopPropagation()
     dispatch(toggleNav())
     dispatch(openModal({ type: 'login' }))
   }
 
-  const logout = () => {
+  const logout = (evt) => {
+    evt.target.blur()
+    evt.preventDefault()
+    evt.stopPropagation()
     dispatch(toggleNav())
     dispatch(logoutCustomer())
   }
@@ -149,43 +173,44 @@ const Nav = () => {
           {isOpen && <NavClose />}
           <NavHeader>
             {profile && (
-              <Button onClick={() => closeGo('/account')}>
-                <Heading>
-                  Account
-                  {/* {first_name} {last_name} */}
-                </Heading>
-              </Button>
+              <>
+                {/* <Button onClick={() => closeGo('/account')}>
+                  <Heading>Account</Heading>
+                </Button> */}
+                <NavButton onClick={(evt) => closeGo(evt, '/account')}>
+                  <NavIcon>{iconMap.User}</NavIcon>
+                  <NavTitle>Account</NavTitle>
+                </NavButton>
+              </>
             )}
           </NavHeader>
           <NavItems>
             {profile ? (
-              navCustomer.map((i) => (
-                <NavItem key={i.path}>
-                  <Button onClick={() => closeGo(i.path)}>
-                    <Heading>{i.title}</Heading>
-                  </Button>
-                </NavItem>
+              filteredButtons.map((i) => (
+                <NavButton key={i.path} onClick={(evt) => closeGo(evt, i.path)}>
+                  <NavIcon>{i.icon}</NavIcon>
+                  <NavTitle>{i.title}</NavTitle>
+                </NavButton>
               ))
             ) : (
               <>
-                <NavItem>
-                  <Button onClick={login}>
-                    <Heading>Login</Heading>
-                  </Button>
-                </NavItem>
-                <NavItem>
-                  <Button onClick={() => closeGo('/signup')}>
-                    <Heading>Sign Up</Heading>
-                  </Button>
-                </NavItem>
+                <NavButton onClick={login}>
+                  <NavIcon>{iconMap.User}</NavIcon>
+                  <NavTitle>Login</NavTitle>
+                </NavButton>
+                <NavButton onClick={(evt) => closeGo(evt, '/signup')}>
+                  <NavIcon>{iconMap.PlusCircle}</NavIcon>
+                  <NavTitle>Sign Up</NavTitle>
+                </NavButton>
               </>
             )}
           </NavItems>
           {profile && (
             <NavFooter>
-              <Button onClick={logout}>
-                <Heading>Logout</Heading>
-              </Button>
+              <NavButton onClick={logout}>
+                <NavIcon>{iconMap.LogOut}</NavIcon>
+                <NavTitle>Logout</NavTitle>
+              </NavButton>
             </NavFooter>
           )}
         </NavContainer>

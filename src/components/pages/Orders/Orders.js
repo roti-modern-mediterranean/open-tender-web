@@ -65,7 +65,7 @@ const Orders = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderAccount />
+        <HeaderAccount title="Order History" />
         <Main bgColor="secondary">
           <Container>
             <PageTitle {...config.recentOrders} />

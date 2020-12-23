@@ -42,10 +42,10 @@ const RewardsPrograms = () => {
         return <RewardsProgram key={program.name} program={rewardsProgram} />
       })}
     </div>
-  ) : loading !== 'pending' ? (
+  ) : loading === 'pending' ? (
     <Loading text="Retrieving your rewards..." />
   ) : (
-    <p>Looks like you don't have any orders yet</p>
+    <p>Looks like you don't have any reward programs yet.</p>
   )
 }
 
