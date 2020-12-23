@@ -95,7 +95,7 @@ const NavItems = styled('nav')`
   padding: 0 0 2rem;
 `
 
-const NavButton = styled('button')`
+const NavItem = styled('button')`
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -174,43 +174,40 @@ const Nav = () => {
           <NavHeader>
             {profile && (
               <>
-                {/* <Button onClick={() => closeGo('/account')}>
-                  <Heading>Account</Heading>
-                </Button> */}
-                <NavButton onClick={(evt) => closeGo(evt, '/account')}>
+                <NavItem onClick={(evt) => closeGo(evt, '/account')}>
                   <NavIcon>{iconMap.User}</NavIcon>
                   <NavTitle>Account</NavTitle>
-                </NavButton>
+                </NavItem>
               </>
             )}
           </NavHeader>
           <NavItems>
             {profile ? (
               filteredButtons.map((i) => (
-                <NavButton key={i.path} onClick={(evt) => closeGo(evt, i.path)}>
+                <NavItem key={i.path} onClick={(evt) => closeGo(evt, i.path)}>
                   <NavIcon>{i.icon}</NavIcon>
                   <NavTitle>{i.title}</NavTitle>
-                </NavButton>
+                </NavItem>
               ))
             ) : (
               <>
-                <NavButton onClick={login}>
+                <NavItem onClick={login}>
                   <NavIcon>{iconMap.User}</NavIcon>
                   <NavTitle>Login</NavTitle>
-                </NavButton>
-                <NavButton onClick={(evt) => closeGo(evt, '/signup')}>
+                </NavItem>
+                <NavItem onClick={(evt) => closeGo(evt, '/signup')}>
                   <NavIcon>{iconMap.PlusCircle}</NavIcon>
                   <NavTitle>Sign Up</NavTitle>
-                </NavButton>
+                </NavItem>
               </>
             )}
           </NavItems>
           {profile && (
             <NavFooter>
-              <NavButton onClick={logout}>
+              <NavItem onClick={logout}>
                 <NavIcon>{iconMap.LogOut}</NavIcon>
                 <NavTitle>Logout</NavTitle>
-              </NavButton>
+              </NavItem>
             </NavFooter>
           )}
         </NavContainer>

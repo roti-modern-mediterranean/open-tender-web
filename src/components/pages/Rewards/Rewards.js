@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -12,10 +12,12 @@ import {
   Content,
   HeaderAccount,
   Main,
+  PageContent,
   PageTitle,
 } from '../..'
 import RewardsPrograms from './RewardsProgams'
 import RewardsThanx from './RewardsThanx'
+import { AppContext } from '../../../App'
 
 const Rewards = () => {
   const history = useHistory()
@@ -23,10 +25,11 @@ const Rewards = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const { background } = accountConfig
   const { auth } = useSelector(selectCustomer)
+  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    window.scroll(0, 0)
-  }, [])
+    windowRef.current.scroll(0, 0)
+  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')
@@ -39,14 +42,16 @@ const Rewards = () => {
       </Helmet>
       {isBrowser && <Background imageUrl={background} />}
       <Content maxWidth="76.8rem">
-        <HeaderAccount maxWidth="76.8rem" />
+        <HeaderAccount title="Rewards" maxWidth="76.8rem" />
         <Main bgColor="secondary">
           <Container>
             <PageTitle
               title="Rewards"
               subtitle="A summary of your current rewards progress"
             />
-            {has_thanx ? <RewardsThanx /> : <RewardsPrograms />}
+            <PageContent>
+              {has_thanx ? <RewardsThanx /> : <RewardsPrograms />}
+            </PageContent>
           </Container>
         </Main>
       </Content>

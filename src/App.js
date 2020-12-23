@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createContext, createRef } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -18,6 +18,8 @@ import './App.scss'
 import styled from '@emotion/styled'
 import Nav from './components/Nav'
 
+export const AppContext = createContext(null)
+
 const AppView = styled('div')`
   display: flex;
   justify-content: flex-end;
@@ -33,6 +35,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = { gtmId: false }
+    this.windowRef = createRef()
   }
 
   componentDidMount() {
@@ -60,7 +63,7 @@ class App extends React.Component {
           <ThemeProvider theme={this.props.theme}>
             <GlobalStyles />
             <ErrorBoundary>
-              <AppView>
+              <AppView ref={this.windowRef}>
                 <Helmet>
                   <title>{brand.title}</title>
                   <meta name="description" content={brand.description} />
@@ -71,15 +74,17 @@ class App extends React.Component {
                     <link href={headings.url} rel="stylesheet" />
                   )}
                 </Helmet>
-                <Router>
-                  <Modal />
-                  <Messages />
-                  <Routes />
-                  <Notifications />
-                  <CartButton />
-                  <Sidebar />
-                  <Nav />
-                </Router>
+                <AppContext.Provider value={{ windowRef: this.windowRef }}>
+                  <Router>
+                    <Modal />
+                    <Messages />
+                    <Routes />
+                    <Notifications />
+                    <CartButton />
+                    <Sidebar />
+                    <Nav />
+                  </Router>
+                </AppContext.Provider>
               </AppView>
             </ErrorBoundary>
           </ThemeProvider>

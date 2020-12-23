@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -25,6 +25,7 @@ import AccountActions from './AccountActions'
 import AccountButtons from './AccountButtons'
 import { ButtonAccount } from '../../buttons'
 import { HeaderButtonMenu } from '../../buttonsHeader'
+import { AppContext } from '../../../App'
 
 const Account = () => {
   const history = useHistory()
@@ -36,10 +37,11 @@ const Account = () => {
   const { auth, profile } = useSelector(selectCustomer)
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
   const token = auth ? auth.access_token : null
+  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    window.scroll(0, 0)
-  }, [])
+    windowRef.current.scroll(0, 0)
+  }, [windowRef])
 
   useEffect(() => {
     if (!token) return history.push('/')
