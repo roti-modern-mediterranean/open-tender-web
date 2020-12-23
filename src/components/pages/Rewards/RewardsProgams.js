@@ -37,7 +37,7 @@ const RewardsPrograms = () => {
           description,
           progress,
           credit: currentCredit,
-          reward: redemption.reward,
+          reward: `your next $${redemption.reward} off!`,
         }
         return <RewardsProgram key={program.name} program={rewardsProgram} />
       })}

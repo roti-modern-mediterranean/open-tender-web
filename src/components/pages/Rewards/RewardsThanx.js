@@ -8,14 +8,14 @@ import {
 
 import RewardsProgram from './RewardsProgam'
 import { Loading } from '../..'
+import RewardsRewards from './RewardsRewards'
 
 const RewardsThanx = () => {
   const dispatch = useDispatch()
   const { thanx, loading, error } = useSelector(selectCustomerThanx)
   const { progress, rewards } = thanx || {}
-  const hasRewards = rewards && rewards.length > 0
   const program = {
-    name: 'Rewards',
+    name: 'Your Progress',
     progress: progress ? parseInt(progress.percentage) : null,
     reward: progress ? progress.towards : null,
   }
@@ -30,39 +30,7 @@ const RewardsThanx = () => {
       {thanx ? (
         <>
           <RewardsProgram program={program} />
-          {hasRewards && (
-            <>
-              <div
-                className="loyalty__program__header"
-                style={{ margin: '3rem 0 0' }}
-              >
-                <p className="ot-heading ot-font-size-h5">Your Rewards</p>
-                <p className="ot-font-size-small">
-                  You'll have the opportunity to redeem these on the checkout
-                  page.
-                </p>
-              </div>
-              <div className="loyalty__program__rewards">
-                {rewards.map((reward) => {
-                  return (
-                    <div
-                      key={reward.ext_id}
-                      className="loyalty__program__reward"
-                    >
-                      <div className="loyalty__program__reward__container ot-bg-color-secondary">
-                        <p className="ot-color-headings">{reward.name}</p>
-                        {reward.description && (
-                          <p className="ot-font-size-small">
-                            {reward.description}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </>
-          )}
+          <RewardsRewards rewards={rewards} />
         </>
       ) : loading === 'pending' ? (
         <Loading text="Retrieving your rewards..." />

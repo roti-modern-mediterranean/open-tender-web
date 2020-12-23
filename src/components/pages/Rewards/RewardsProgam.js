@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Heading, ProgressBar } from '../..'
 
-const RewardsProgramView = styled('div')`
+export const RewardsProgramView = styled('div')`
   padding: 2rem 2rem;
   background-color: ${(props) => props.theme.bgColors.primary};
   border: ${(props) => props.theme.border.width} solid
@@ -14,7 +14,7 @@ const RewardsProgramView = styled('div')`
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
 `
 
-const RewardsProgramHeader = styled('div')`
+export const RewardsProgramHeader = styled('div')`
   margin: 0 0 1.5rem;
 
   h2 {
@@ -52,7 +52,7 @@ const RewardsProgram = ({ program }) => {
       <ProgressBar progress={progress} />
       <RewardsProgramProgress>
         {progress
-          ? `You're ${progress}% of the way towards earning your next $${reward} off!`
+          ? `You're ${progress}% of the way towards ${reward}!`
           : 'Make your first purchase to start earning rewards!'}
       </RewardsProgramProgress>
     </RewardsProgramView>
