@@ -25,7 +25,7 @@ const NavButtonContainer = styled('button')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0;
     border: 0;
     border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
@@ -37,7 +37,7 @@ const NavButtonContainer = styled('button')`
     background-color: ${(props) => props.theme.bgColors.secondary};
     border: 0.1rem solid ${(props) => props.theme.bgColors.secondary};
 
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       border: 0;
       border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
       background-color: transparent;
@@ -47,7 +47,7 @@ const NavButtonContainer = styled('button')`
 
   &:last-of-type {
     margin-bottom: 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       border-bottom: 0;
     }
   }
@@ -78,7 +78,7 @@ const NavButtonArrow = styled('span')`
   button:hover & {
     transform: translateX(1rem);
 
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       transform: translateX(0);
     }
   }

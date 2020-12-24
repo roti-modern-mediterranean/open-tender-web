@@ -22,7 +22,7 @@ const HeaderMobileView = styled('nav')`
         props.bgColor === 'transparent' ? 'transparent' : 'secondary'
       ]};
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0;
   }
 `

@@ -27,6 +27,7 @@ import {
   GroupOrderModal,
   LevelUpModal,
 } from './modals'
+import styled from '@emotion/styled'
 
 const makeModal = (type, windowRef, args = {}) => {
   switch (type) {
@@ -85,6 +86,26 @@ const classesMap = {
   working: 'modal--working',
   groupOrder: 'modal--big modal--guest',
 }
+
+const ModalContainer = styled('div')`
+  position: fixed;
+  z-index: 101;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: scroll;
+`
+
+const ModalView = styled('div')`
+  position: relative;
+  width: 48rem;
+  max-width: 90%;
+  overflow: hidden;
+`
 
 const Modal = () => {
   const windowRef = useRef()

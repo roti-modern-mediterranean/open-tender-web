@@ -12,7 +12,7 @@ const Main = styled('div')`
   background-repeat: no-repeat;
   background-color: ${(props) =>
     props.theme.bgColors[props.bgColor || 'primary']};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     ${(props) =>
       props.imageUrl
         ? `background-image: url(${props.imageUrl});

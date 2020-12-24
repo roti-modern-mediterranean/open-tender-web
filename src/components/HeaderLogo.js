@@ -9,7 +9,7 @@ const HeaderLogoLink = styled('a')`
   display: block;
   max-width: 14rem;
   margin: 0.4rem 0 0 1.2rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin-left: 2.5rem;
   }
 `

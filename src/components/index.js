@@ -19,6 +19,8 @@ import PageTitle from './PageTitle'
 import PageContent from './PageContent'
 import Preface from './Preface'
 import ProgressBar from './ProgressBar'
+import QRCode from './QRCode'
+import Row from './Row'
 import Welcome from './Welcome'
 
 export {
@@ -43,5 +45,7 @@ export {
   PageContent,
   Preface,
   ProgressBar,
+  QRCode,
+  Row,
   Welcome,
 }

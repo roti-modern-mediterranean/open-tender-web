@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 
 const NavButtonsContainer = styled('div')`
   padding: 2.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0;
     background-color: rgba(0, 0, 0, 0.3);
   }

@@ -14,19 +14,19 @@ const WelcomeGreeting = styled('div')`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     background-image: ${(props) => `url(${props.imageUrl})`};
   }
 `
 
 const WelcomeHeader = styled('div')`
-  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
   //   background-color: rgba(0, 0, 0, 0.15);
   // }
 
   h1 {
     line-height: 1;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       color: ${(props) => props.theme.colors.light};
     }
   }
@@ -34,7 +34,7 @@ const WelcomeHeader = styled('div')`
   p {
     line-height: ${(props) => props.theme.lineHeight};
     margin: 1rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       color: ${(props) => props.theme.colors.light};
     }
   }
@@ -43,7 +43,7 @@ const WelcomeHeader = styled('div')`
 const WelcomeContent = styled('div')`
   width: 100%;
   padding: 0 2.5rem 2.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0 -2.5rem 2.5rem 0rem rgba(0, 0, 0, 0.3);
   }
