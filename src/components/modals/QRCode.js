@@ -1,57 +1,40 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useDispatch, useSelector } from 'react-redux'
-import { resetOrderType, selectOrder } from '@open-tender/redux'
-import { serviceTypeNamesMap } from '@open-tender/js'
-import { Button } from '@open-tender/components'
+import { useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
+import { ButtonStyled } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import ModalTitle from '../ModalTitle'
 
-const OrderTypeModal = ({ startOver }) => {
+const QRCodeView = styled('button')`
+  display: inline-block;
+  width: 100%;
+  // max-width: 24rem;
+  border-style: solid;
+  border-width: ${(props) => props.theme.border.width};
+  border-color: ${(props) => props.theme.border.color};
+  border-radius: ${(props) => props.theme.border.radiusSmall};
+`
+
+const QRCode = ({ src, alt }) => {
   const dispatch = useDispatch()
-  const { serviceType } = useSelector(selectOrder)
-  const serviceTypeName = serviceTypeNamesMap[serviceType]
-
-  const changeOrderType = (evt) => {
-    evt.preventDefault()
-    dispatch(resetOrderType())
-    dispatch(closeModal())
-    startOver()
-    evt.target.blur()
-  }
-
-  const cancel = (evt) => {
-    evt.preventDefault()
-    dispatch(closeModal())
-    evt.target.blur()
-  }
 
   return (
     <>
       <div className="modal__content">
         <div className="modal__header">
-          <ModalTitle title="Change your order type" />
+          <ModalTitle title={alt} />
+          <p className="modal__subtitle">Scan to redeem</p>
         </div>
-        <div className="modal__body -message">
-          <p>Are you sure you want to change your order type?</p>
-          <p>
-            This will start you over at the beginning, but the items in your
-            cart will not be affected.
-          </p>
-        </div>
+        <QRCodeView>
+          <img src={src} alt={alt} />
+        </QRCodeView>
         <div className="modal__footer">
           <div className="modal__footer__buttons">
-            <Button
-              text={`Keep ${serviceTypeName}`}
-              classes="ot-btn ot-btn--highlight"
-              onClick={cancel}
-            />
-            <Button
-              text="Change Order Type"
-              classes="ot-btn"
-              onClick={changeOrderType}
-            />
+            <ButtonStyled color="cart" onClick={() => dispatch(closeModal())}>
+              Close
+            </ButtonStyled>
           </div>
         </div>
       </div>
@@ -59,9 +42,10 @@ const OrderTypeModal = ({ startOver }) => {
   )
 }
 
-OrderTypeModal.displayName = 'OrderTypeModal'
-OrderTypeModal.prototypes = {
-  startOver: propTypes.func,
+QRCode.displayName = 'QRCode'
+QRCode.prototypes = {
+  src: propTypes.stirng,
+  alt: propTypes.stirng,
 }
 
-export default OrderTypeModal
+export default QRCode

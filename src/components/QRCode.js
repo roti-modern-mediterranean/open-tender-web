@@ -19,12 +19,15 @@ const QRCodeView = styled('button')`
 const QRCode = ({ src = placeholder, alt = '' }) => {
   const dispatch = useDispatch()
 
-  const expand = (giftCard) => {
+  const expand = (evt) => {
+    evt.target.blur()
+    evt.preventDefault()
+    evt.stopPropagation()
     dispatch(openModal({ type: 'qrCode', args: { src, alt } }))
   }
 
   return (
-    <QRCodeView onClick={expand}>
+    <QRCodeView onPointerUp={expand}>
       <img src={src} alt={alt} />
     </QRCodeView>
   )

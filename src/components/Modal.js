@@ -26,6 +26,7 @@ import {
   CartCountsModal,
   GroupOrderModal,
   LevelUpModal,
+  QRCode,
 } from './modals'
 import styled from '@emotion/styled'
 
@@ -69,6 +70,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <OrderRatingModal {...args} />
     case 'groupOrder':
       return <GroupOrderModal {...args} />
+    case 'qrCode':
+      return <QRCode {...args} />
     default:
       return null
   }
@@ -87,25 +90,25 @@ const classesMap = {
   groupOrder: 'modal--big modal--guest',
 }
 
-const ModalContainer = styled('div')`
-  position: fixed;
-  z-index: 101;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow-y: scroll;
-`
+// const ModalContainer = styled('div')`
+//   position: fixed;
+//   z-index: 101;
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   overflow-y: scroll;
+// `
 
-const ModalView = styled('div')`
-  position: relative;
-  width: 48rem;
-  max-width: 90%;
-  overflow: hidden;
-`
+// const ModalView = styled('div')`
+//   position: relative;
+//   width: 48rem;
+//   max-width: 90%;
+//   overflow: hidden;
+// `
 
 const Modal = () => {
   const windowRef = useRef()
@@ -115,6 +118,7 @@ const Modal = () => {
   const preventClose = args && args.preventClose ? true : false
   const showModal = type ? true : false
   const modal = type ? makeModal(type, windowRef, args) : null
+  console.log(modal)
   const classes = `modal-container ${classesMap[type] || ''}`
 
   useEffect(() => {

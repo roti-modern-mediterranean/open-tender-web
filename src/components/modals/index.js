@@ -17,6 +17,7 @@ import OrderRatingModal from './OrderRatingModal'
 import OrderTypeModal from './OrderTypeModal'
 import GroupOrderModal from './GroupOrderModal'
 import LevelUpModal from './LevelUpModal'
+import QRCode from './QRCode'
 
 export {
   LoginModal,
@@ -38,4 +39,5 @@ export {
   OrderTypeModal,
   GroupOrderModal,
   LevelUpModal,
+  QRCode,
 }
