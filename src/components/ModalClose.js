@@ -1,5 +1,5 @@
+import React, { useEffect, useCallback, useMemo } from 'react'
 import propTypes from 'prop-types'
-import React, { useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { X } from 'react-feather'
 
@@ -7,7 +7,10 @@ import { closeModal } from '../slices'
 
 const ModalClose = ({ classes = 'ot-btn-link', onClick }) => {
   const dispatch = useDispatch()
-  const handleClose = onClick || (() => dispatch(closeModal()))
+  const handleClose = useMemo(() => onClick || (() => dispatch(closeModal())), [
+    onClick,
+    dispatch,
+  ])
 
   const handleEscape = useCallback(
     (evt) => {

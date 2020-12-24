@@ -1,6 +1,5 @@
 import React from 'react'
-import { css, Global } from '@emotion/core'
-import { withTheme } from 'emotion-theming'
+import { css, Global, withTheme } from '@emotion/react'
 
 // https://stackoverflow.com/questions/51637950/enable-global-theming-with-emotion
 
