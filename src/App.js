@@ -53,7 +53,7 @@ class App extends React.Component {
 
   render() {
     const { loading, theme, brand, error } = this.props
-    console.log(JSON.stringify(theme, null, 2))
+    // console.log(JSON.stringify(theme, null, 2))
     const { body, headings } = theme ? theme.fonts : {}
     const isLoading = loading === 'pending'
     const hasTheme = !isLoading && !error && theme
