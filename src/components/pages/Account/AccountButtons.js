@@ -29,7 +29,7 @@ const navButtons = [
   {
     icon: iconMap['Gift'],
     title: 'Gift Cards',
-    path: '/gift-cards',
+    path: '/account/gift-cards',
   },
   {
     icon: iconMap['Settings'],

@@ -22,7 +22,14 @@ import FulfillmentPage from './FulfillmentPage'
 import GiftCardsPage from './GiftCardsPage'
 import DonationPage from './DonationPage'
 import ThanxPage from './ThanxPage'
-import { Account, Favorites, Home, Orders, Rewards } from './pages'
+import {
+  Account,
+  AccountGiftCards,
+  Favorites,
+  Home,
+  Orders,
+  Rewards,
+} from './pages'
 
 // <TransitionGroup component={null}>
 //   <CSSTransition timeout={10000} classNames="fade" key={location.key}>
@@ -82,6 +89,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/account">
         <Account />
+      </Route>
+      <Route exact path="/account/gift-cards">
+        <AccountGiftCards />
       </Route>
       <Route exact path="/rewards">
         <Rewards />
