@@ -3,7 +3,6 @@ import Background from './Background'
 import Button from './Button'
 import Content from './Content'
 import Container from './Container'
-import HeaderButton from './HeaderButton'
 import HeaderLogo from './HeaderLogo'
 import HeaderMobile from './HeaderMobile'
 import HeaderAccount from './HeaderAccount'
@@ -30,7 +29,6 @@ export {
   Container,
   Content,
   HeaderAccount,
-  HeaderButton,
   HeaderLogo,
   HeaderMobile,
   Heading,

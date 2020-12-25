@@ -19,13 +19,13 @@ import GroupOrderReviewPage from './GroupOrderReviewPage'
 import AccessibilityPolicyPage from './AccessibilityPolicyPage'
 import LevelUpPage from './LevelUpPage'
 import FulfillmentPage from './FulfillmentPage'
-import GiftCardsPage from './GiftCardsPage'
 import DonationPage from './DonationPage'
 import ThanxPage from './ThanxPage'
 import {
   Account,
   AccountGiftCards,
   Favorites,
+  GiftCards,
   Home,
   Orders,
   Rewards,
@@ -124,7 +124,7 @@ const Routes = () => {
         <RefundPolicyPage />
       </Route>
       <Route exact path="/gift-cards">
-        <GiftCardsPage />
+        <GiftCards />
       </Route>
       <Route exact path="/donations">
         <DonationPage />

@@ -14,6 +14,8 @@ import ButtonSignUp from './ButtonSignUp'
 import ButtonStartOver from './ButtonStartOver'
 import ButtonLeaveGroup from './ButtonLeaveGroup'
 import ButtonGroupGuest from './ButtonGroupGuest'
+import Account from './Account'
+import StartOver from './StartOver'
 
 export {
   ButtonAccount,
@@ -32,4 +34,6 @@ export {
   ButtonStartOver,
   ButtonLeaveGroup,
   ButtonGroupGuest,
+  Account,
+  StartOver,
 }

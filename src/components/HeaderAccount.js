@@ -4,15 +4,15 @@ import { isBrowser } from 'react-device-detect'
 
 import { HeaderMobile } from '.'
 import { ButtonBackToAccount, ButtonLogout } from './buttons'
-import { HeaderButtonBack, HeaderButtonMenu } from './buttonsHeader'
+import { ButtonMobileBack, ButtonMobileNav } from './buttonsMobile'
 
 const HeaderAccount = ({ maxWidth = '100%', title }) => {
   return (
     <HeaderMobile
       title={title}
       maxWidth={maxWidth}
-      left={isBrowser ? <ButtonBackToAccount /> : <HeaderButtonBack />}
-      right={isBrowser ? <ButtonLogout /> : <HeaderButtonMenu />}
+      left={isBrowser ? <ButtonBackToAccount /> : <ButtonMobileBack />}
+      right={isBrowser ? <ButtonLogout /> : <ButtonMobileNav />}
     />
   )
 }

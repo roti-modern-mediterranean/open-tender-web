@@ -28,7 +28,7 @@ import {
   LevelUpModal,
   QRCode,
 } from './modals'
-import styled from '@emotion/styled'
+// import styled from '@emotion/styled'
 
 const makeModal = (type, windowRef, args = {}) => {
   switch (type) {

@@ -25,7 +25,7 @@ import {
   Welcome,
 } from '../..'
 import { ButtonAccount } from '../../buttons'
-import { HeaderButtonMenu } from '../../buttonsHeader'
+import { ButtonMobileNav } from '../../buttonsMobile'
 import HomeButtons from './HomeButtons'
 
 const makeContent = (content) => {
@@ -81,7 +81,7 @@ const Home = () => {
             isBrowser ? (
               <ButtonAccount classes="ot-btn--header" />
             ) : (
-              <HeaderButtonMenu color="light" />
+              <ButtonMobileNav color="light" />
             )
           }
         />

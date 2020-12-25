@@ -24,7 +24,7 @@ import {
 import AccountActions from './AccountActions'
 import AccountButtons from './AccountButtons'
 import { ButtonAccount } from '../../buttons'
-import { HeaderButtonMenu } from '../../buttonsHeader'
+import { ButtonMobileNav } from '../../buttonsMobile'
 import { AppContext } from '../../../App'
 
 const Account = () => {
@@ -73,7 +73,7 @@ const Account = () => {
             isBrowser ? (
               <ButtonAccount classes="ot-btn--header" />
             ) : (
-              <HeaderButtonMenu color="light" />
+              <ButtonMobileNav color="light" />
             )
           }
         />
