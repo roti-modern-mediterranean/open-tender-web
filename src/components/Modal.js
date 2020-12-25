@@ -118,7 +118,6 @@ const Modal = () => {
   const preventClose = args && args.preventClose ? true : false
   const showModal = type ? true : false
   const modal = type ? makeModal(type, windowRef, args) : null
-  console.log(modal)
   const classes = `modal-container ${classesMap[type] || ''}`
 
   useEffect(() => {

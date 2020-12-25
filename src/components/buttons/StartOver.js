@@ -13,7 +13,6 @@ const StartOver = ({ text = 'Start Over', icon = iconMap['ArrowLeft'] }) => {
   const dispatch = useDispatch()
 
   const startOver = () => {
-    console.log('this is happening')
     dispatch(resetOrderType())
     dispatch(resetCheckout())
     history.push(`/`)

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const HeaderMobileView = styled('nav')`
@@ -16,11 +17,9 @@ const HeaderMobileView = styled('nav')`
   box-shadow: ${(props) =>
     props.stuck ? `0 1rem 1rem 1rem rgba(0, 0, 0, 0.3)` : 'none'};
   padding: 0 1.3rem;
-  border-bottom: 0.1rem solid
-    ${(props) =>
-      props.theme.bgColors[
-        props.bgColor === 'transparent' ? 'transparent' : 'secondary'
-      ]};
+  border-width: 0.1rem;
+  border-style: solid;
+  border-color: ${(props) => props.theme.bgColors[props.borderColor]};
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0;
@@ -60,8 +59,8 @@ const HeaderMobile = ({
   left,
   title,
   right,
-  color,
   bgColor = 'primary',
+  borderColor = 'secondary',
   maxWidth = '100%',
 }) => {
   const header = useRef(null)
@@ -84,7 +83,7 @@ const HeaderMobile = ({
       <HeaderMobileView
         stuck={stuck}
         bgColor={bgColor}
-        // borderColor={bgColor === 'transparent' ? 'transparent' : 'secondary'}
+        borderColor={borderColor}
         maxWidth={maxWidth}
       >
         <HeaderMobileNav>{left}</HeaderMobileNav>
@@ -100,5 +99,13 @@ const HeaderMobile = ({
 }
 
 HeaderMobile.displayName = 'HeaderMobile'
+HeaderMobile.propTypes = {
+  left: propTypes.element,
+  title: propTypes.string,
+  right: propTypes.element,
+  bgColor: propTypes.string,
+  borderColor: propTypes.string,
+  maxWidth: propTypes.string,
+}
 
 export default HeaderMobile

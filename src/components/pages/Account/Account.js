@@ -6,6 +6,7 @@ import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   fetchCustomer,
+  fetchCustomerCreditCards,
   resetCustomerThanx,
   selectCustomerThanx,
   logoutCustomer,
@@ -46,6 +47,7 @@ const Account = () => {
   useEffect(() => {
     if (!token) return history.push('/')
     dispatch(fetchCustomer({ token }))
+    dispatch(fetchCustomerCreditCards())
   }, [token, dispatch, history])
 
   useEffect(() => {
@@ -66,7 +68,8 @@ const Account = () => {
       {isBrowser && <Background imageUrl={background} />}
       <Content maxWidth="76.8rem">
         <HeaderMobile
-          bgColor={isBrowser ? null : 'transparent'}
+          bgColor={isBrowser ? 'primary' : 'transparent'}
+          borderColor={isBrowser ? 'primary' : 'transparent'}
           maxWidth="76.8rem"
           left={<HeaderLogo />}
           right={

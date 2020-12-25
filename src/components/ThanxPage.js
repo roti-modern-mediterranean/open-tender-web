@@ -20,9 +20,7 @@ const ThanxPage = () => {
   const config = useSelector(selectConfig)
   const { auth, loading, error } = useSelector(selectCustomer)
   const query = new URLSearchParams(useLocation().search)
-  console.log(query)
   const code = query.get('code')
-  console.log(code)
 
   useEffect(() => {
     window.scroll(0, 0)
