@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -10,6 +10,7 @@ import {
 import { makeDisplayItem } from '@open-tender/js'
 
 import { selectAccountConfig, selectBrand } from '../../../slices'
+import { AppContext } from '../../../App'
 import {
   Container,
   Content,
@@ -32,10 +33,11 @@ const Favorites = () => {
   const { auth } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
   const items = favorites.map((i) => ({ ...i.item, id: i.favorite_id }))
+  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    window.scroll(0, 0)
-  }, [])
+    windowRef.current.scroll(0, 0)
+  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')
