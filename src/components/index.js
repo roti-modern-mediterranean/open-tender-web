@@ -3,6 +3,7 @@ import Background from './Background'
 import Button from './Button'
 import Content from './Content'
 import Container from './Container'
+import FormWrapper from './FormWrapper'
 import HeaderLogo from './HeaderLogo'
 import HeaderMobile from './HeaderMobile'
 import HeaderAccount from './HeaderAccount'
@@ -30,6 +31,7 @@ export {
   Button,
   Container,
   Content,
+  FormWrapper,
   HeaderAccount,
   HeaderLogo,
   HeaderMobile,

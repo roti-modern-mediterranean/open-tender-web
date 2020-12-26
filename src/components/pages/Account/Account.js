@@ -14,6 +14,7 @@ import {
 } from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
+import { AppContext } from '../../../App'
 import {
   Background,
   Content,
@@ -22,11 +23,9 @@ import {
   Main,
   Welcome,
 } from '../..'
+import { Logout } from '../../buttons'
 import AccountActions from './AccountActions'
 import AccountButtons from './AccountButtons'
-import { ButtonAccount } from '../../buttons'
-import { ButtonMobileNav } from '../../buttonsMobile'
-import { AppContext } from '../../../App'
 
 const Account = () => {
   const history = useHistory()
@@ -72,13 +71,7 @@ const Account = () => {
           borderColor={isBrowser ? 'primary' : 'transparent'}
           maxWidth="76.8rem"
           left={<HeaderLogo />}
-          right={
-            isBrowser ? (
-              <ButtonAccount classes="ot-btn--header" />
-            ) : (
-              <ButtonMobileNav color="light" />
-            )
-          }
+          right={<Logout color="light" />}
         />
         <Main padding="0" imageUrl={background}>
           <Welcome

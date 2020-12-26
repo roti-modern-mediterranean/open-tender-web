@@ -6,18 +6,18 @@ import { ButtonIcon } from '@open-tender/components'
 import { toggleNav } from '../../slices'
 import iconMap from '../iconMap'
 
-const ButtonMobileNav = ({ color }) => {
+const NavMenu = ({ color }) => {
   const dispatch = useDispatch()
   return (
     <ButtonIcon color={color} onClick={() => dispatch(toggleNav())}>
-      {iconMap['Menu']}
+      {iconMap.Menu}
     </ButtonIcon>
   )
 }
 
-ButtonMobileNav.displayName = 'ButtonMobileMenu'
-ButtonMobileNav.propTypes = {
+NavMenu.displayName = 'NavMenu'
+NavMenu.propTypes = {
   color: propTypes.string,
 }
 
-export default ButtonMobileNav
+export default NavMenu

@@ -15,6 +15,9 @@ import ButtonStartOver from './ButtonStartOver'
 import ButtonLeaveGroup from './ButtonLeaveGroup'
 import ButtonGroupGuest from './ButtonGroupGuest'
 import Account from './Account'
+import AccountBack from './AccountBack'
+import Logout from './Logout'
+import NavMenu from './NavMenu'
 import StartOver from './StartOver'
 
 export {
@@ -35,5 +38,8 @@ export {
   ButtonLeaveGroup,
   ButtonGroupGuest,
   Account,
+  AccountBack,
+  Logout,
+  NavMenu,
   StartOver,
 }

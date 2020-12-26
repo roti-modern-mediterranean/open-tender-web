@@ -24,8 +24,7 @@ import {
   Main,
   Welcome,
 } from '../..'
-import { ButtonAccount } from '../../buttons'
-import { ButtonMobileNav } from '../../buttonsMobile'
+import { Account } from '../../buttons'
 import HomeButtons from './HomeButtons'
 
 const makeContent = (content) => {
@@ -74,16 +73,11 @@ const Home = () => {
       {isBrowser && <Background imageUrl={background} />}
       <Content maxWidth="76.8rem">
         <HeaderMobile
-          bgColor="transparent"
+          bgColor={isBrowser ? 'primary' : 'transparent'}
+          borderColor={isBrowser ? 'primary' : 'transparent'}
           maxWidth="76.8rem"
           left={<HeaderLogo />}
-          right={
-            isBrowser ? (
-              <ButtonAccount classes="ot-btn--header" />
-            ) : (
-              <ButtonMobileNav color="light" />
-            )
-          }
+          right={<Account color="light" />}
         />
         <Main padding="0" imageUrl={background}>
           {hasOrderTypes ? (

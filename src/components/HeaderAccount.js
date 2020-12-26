@@ -1,20 +1,25 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { isBrowser } from 'react-device-detect'
 
 import { HeaderMobile } from '.'
-import { ButtonBackToAccount, ButtonLogout } from './buttons'
-import { ButtonMobileBack, ButtonMobileNav } from './buttonsMobile'
+import { AccountBack, Logout } from './buttons'
 
-const HeaderAccount = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
+const HeaderAccount = ({
+  maxWidth = '100%',
+  title,
+  bgColor,
+  borderColor,
+  text,
+  path,
+}) => {
   return (
     <HeaderMobile
       title={title}
       maxWidth={maxWidth}
       bgColor={bgColor}
       borderColor={borderColor}
-      left={isBrowser ? <ButtonBackToAccount /> : <ButtonMobileBack />}
-      right={isBrowser ? <ButtonLogout /> : <ButtonMobileNav />}
+      left={<AccountBack text={text} path={path} />}
+      right={<Logout />}
     />
   )
 }

@@ -8,12 +8,13 @@ import {
   logoutCustomer,
   selectGroupOrder,
 } from '@open-tender/redux'
-import { ButtonStyled, ButtonIcon } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
-import { openModal, toggleNav } from '../../slices'
+import { openModal } from '../../slices'
 import iconMap from '../iconMap'
+import { NavMenu } from '.'
 
-const Account = ({ color = 'header', size = 'header' }) => {
+const Account = ({ color }) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
@@ -25,16 +26,14 @@ const Account = ({ color = 'header', size = 'header' }) => {
   if (cartGuest || isJoinGroup) return null
 
   return isMobile ? (
-    <ButtonIcon color={color} onClick={() => dispatch(toggleNav())}>
-      {iconMap['Menu']}
-    </ButtonIcon>
+    <NavMenu color={color} />
   ) : auth ? (
     isAccount ? (
       <ButtonStyled
         onClick={() => dispatch(logoutCustomer())}
-        icon={iconMap['UserX']}
-        color={color}
-        size={size}
+        icon={iconMap.UserX}
+        color="header"
+        size="header"
       >
         Logout
       </ButtonStyled>
@@ -42,9 +41,9 @@ const Account = ({ color = 'header', size = 'header' }) => {
       <ButtonStyled
         onClick={() => history.push(`/account`)}
         label="Manage your account"
-        icon={iconMap['User']}
-        color={color}
-        size={size}
+        icon={iconMap.User}
+        color="header"
+        size="header"
       >
         Account
       </ButtonStyled>
@@ -53,9 +52,9 @@ const Account = ({ color = 'header', size = 'header' }) => {
     <ButtonStyled
       onClick={() => dispatch(openModal({ type: 'login' }))}
       label="Log into your account"
-      icon={iconMap['UserPlus']}
-      color={color}
-      size={size}
+      icon={iconMap.UserPlus}
+      color="header"
+      size="header"
     >
       Login
     </ButtonStyled>

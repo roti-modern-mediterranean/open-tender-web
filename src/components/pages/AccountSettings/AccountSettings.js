@@ -9,8 +9,7 @@ import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Background, Content, HeaderMobile, Main, Welcome } from '../..'
 import AccountSettingsButtons from './AccountSettingsButtons'
-import { ButtonBackToAccount, ButtonLogout } from '../../buttons'
-import { ButtonMobileBack, ButtonMobileNav } from '../../buttonsMobile'
+import { AccountBack, Logout } from '../../buttons'
 
 const AccountSettings = () => {
   const history = useHistory()
@@ -39,16 +38,8 @@ const AccountSettings = () => {
           maxWidth="76.8rem"
           bgColor={isBrowser ? 'primary' : 'transparent'}
           borderColor={isBrowser ? 'primary' : 'transparent'}
-          left={
-            isBrowser ? (
-              <ButtonBackToAccount />
-            ) : (
-              <ButtonMobileBack color="light" />
-            )
-          }
-          right={
-            isBrowser ? <ButtonLogout /> : <ButtonMobileNav color="light" />
-          }
+          left={<AccountBack color="light" />}
+          right={<Logout color="light" />}
         />
         <Main padding="0" imageUrl={background}>
           <Welcome header={<h1>Account Settings</h1>}>

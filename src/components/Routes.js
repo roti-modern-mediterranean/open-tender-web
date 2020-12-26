@@ -23,6 +23,7 @@ import ThanxPage from './ThanxPage'
 import {
   Account,
   AccountAddresses,
+  AccountAllergens,
   AccountGiftCards,
   AccountSettings,
   Favorites,
@@ -88,6 +89,12 @@ const Routes = () => {
       <Route exact path="/checkout">
         <CheckoutPage />
       </Route>
+      <Route exact path="/confirmation">
+        <ConfirmationPage />
+      </Route>
+      <Route exact path="/curbside/:id">
+        <FulfillmentPage />
+      </Route>
       <Route exact path="/account">
         <Account />
       </Route>
@@ -115,11 +122,8 @@ const Routes = () => {
       <Route exact path="/account/addresses">
         <AccountAddresses />
       </Route>
-      <Route exact path="/confirmation">
-        <ConfirmationPage />
-      </Route>
-      <Route exact path="/curbside/:id">
-        <FulfillmentPage />
+      <Route exact path="/account/allergens">
+        <AccountAllergens />
       </Route>
       <Route exact path="/accessibility">
         <AccessibilityPolicyPage />

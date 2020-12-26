@@ -27,8 +27,7 @@ const AccountAddresses = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { account, addresses } = useSelector(selectConfig)
-  // const { title, subtitle } = config.addresses
+  const config = useSelector(selectConfig)
   const { auth } = useSelector(selectCustomer)
   const { entities, loading, error } = useSelector(selectCustomerAddresses)
   const isLoading = loading === 'pending'
@@ -50,14 +49,19 @@ const AccountAddresses = () => {
   return auth ? (
     <>
       <Helmet>
-        {addresses.title} | {siteTitle}
+        {config.addresses.title} | {siteTitle}
       </Helmet>
-      {isBrowser && <Background imageUrl={account.background} />}
+      {isBrowser && <Background imageUrl={config.account.background} />}
       <Content maxWidth="76.8rem">
-        <HeaderAccount title={addresses.title} maxWidth="76.8rem" />
+        <HeaderAccount
+          title={config.addresses.title}
+          maxWidth="76.8rem"
+          text="Back to Settings"
+          path="/account/settings"
+        />
         <Main bgColor="secondary">
           <Container>
-            <PageTitle {...addresses} />
+            <PageTitle {...config.addresses} />
             <PageContent>
               {entities.length ? (
                 <Addresses addresses={entities} isLoading={isLoading} />

@@ -23,7 +23,9 @@ const StartOver = ({ text = 'Start Over', icon = iconMap['ArrowLeft'] }) => {
       {text}
     </ButtonStyled>
   ) : (
-    <ButtonIcon onClick={startOver}>{iconMap['ArrowLeft']}</ButtonIcon>
+    <ButtonIcon label={text} onClick={startOver}>
+      {icon}
+    </ButtonIcon>
   )
 }
 
