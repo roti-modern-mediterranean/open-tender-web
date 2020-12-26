@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
+  selectCustomer,
   fetchCustomerCreditCards,
   selectCustomerCreditCards,
 } from '@open-tender/redux'
@@ -21,10 +22,13 @@ import {
 } from '../..'
 import { AppContext } from '../../../App'
 import CreditCards from './CreditCards'
+import { useHistory } from 'react-router-dom'
 
 const AccountCreditCards = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { title: siteTitle } = useSelector(selectBrand)
+  const { auth } = useSelector(selectCustomer)
   const account = useSelector(selectAccountConfig)
   const { entities, loading, error } = useSelector(selectCustomerCreditCards)
   const isLoading = loading === 'pending'
@@ -33,6 +37,10 @@ const AccountCreditCards = () => {
   useEffect(() => {
     windowRef.current.scroll(0, 0)
   }, [windowRef])
+
+  useEffect(() => {
+    if (!auth) return history.push('/')
+  }, [auth, history])
 
   useEffect(() => {
     dispatch(fetchCustomerCreditCards())

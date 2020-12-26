@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   fetchAllergens,
   selectAllergens,
+  selectCustomer,
   selectCustomerAllergens,
   setSelectedAllergens,
   updateCustomerAllergens,
@@ -13,21 +14,24 @@ import { isBrowser } from 'react-device-detect'
 
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import {
+  Background,
   Container,
   Content,
+  FormWrapper,
+  HeaderAccount,
   Loading,
   Main,
   PageTitle,
   PageContent,
-  HeaderAccount,
-  Background,
-  FormWrapper,
 } from '../..'
 import { AppContext } from '../../../App'
+import { useHistory } from 'react-router-dom'
 
 const AccountAllergens = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { title: siteTitle } = useSelector(selectBrand)
+  const { auth } = useSelector(selectCustomer)
   const account = useSelector(selectAccountConfig)
   const brandAllergens = useSelector(selectAllergens)
   const customerAllergens = useSelector(selectCustomerAllergens)
@@ -48,6 +52,10 @@ const AccountAllergens = () => {
   useEffect(() => {
     windowRef.current.scroll(0, 0)
   }, [windowRef])
+
+  useEffect(() => {
+    if (!auth) return history.push('/')
+  }, [auth, history])
 
   useEffect(() => {
     dispatch(fetchAllergens())

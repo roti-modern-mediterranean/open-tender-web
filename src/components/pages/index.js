@@ -9,6 +9,7 @@ import GiftCards from './GiftCards'
 import Home from './Home'
 import HouseAccounts from './HouseAccounts'
 import Orders from './Orders'
+import Profile from './Profile'
 import Rewards from './Rewards'
 
 export {
@@ -23,5 +24,6 @@ export {
   Home,
   HouseAccounts,
   Orders,
+  Profile,
   Rewards,
 }

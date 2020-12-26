@@ -32,6 +32,7 @@ import {
   Home,
   HouseAccounts,
   Orders,
+  Profile,
   Rewards,
 } from './pages'
 
@@ -132,6 +133,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/account/house-accounts">
         <HouseAccounts />
+      </Route>
+      <Route exact path="/account/profile">
+        <Profile />
       </Route>
       <Route exact path="/accessibility">
         <AccessibilityPolicyPage />
