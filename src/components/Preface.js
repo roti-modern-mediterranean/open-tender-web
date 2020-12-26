@@ -6,7 +6,10 @@ const Preface = styled('span')`
   letter-spacing: ${(props) => props.theme.fonts.preface.letterSpacing};
   text-transform: ${(props) => props.theme.fonts.preface.textTransform};
   -webkit-font-smoothing: ${(props) => props.theme.fonts.preface.fontSmoothing};
-  font-size: ${(props) => props.theme.fonts.preface.fontSize};
+  font-size: ${(props) =>
+    props.size
+      ? props.theme.fonts.sizes[props.size]
+      : props.theme.fonts.preface.fontSize};
   color: ${(props) => props.theme.fonts.body.color};
 `
 

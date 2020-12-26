@@ -1,5 +1,7 @@
 import Account from './Account'
-import AccountGiftCards from './AccountGiftCards/AccountGiftCards'
+import AccountAddresses from './AccountAddresses'
+import AccountGiftCards from './AccountGiftCards'
+import AccountSettings from './AccountSettings'
 import Favorites from './Favorites'
 import GiftCards from './GiftCards'
 import Home from './Home'
@@ -8,7 +10,9 @@ import Rewards from './Rewards'
 
 export {
   Account,
+  AccountAddresses,
   AccountGiftCards,
+  AccountSettings,
   Favorites,
   GiftCards,
   Home,

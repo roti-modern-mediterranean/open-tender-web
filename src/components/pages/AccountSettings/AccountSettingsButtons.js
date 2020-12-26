@@ -12,33 +12,33 @@ const AccountButtonsContainer = styled('div')`
 
 const navButtons = [
   {
-    icon: iconMap.ShoppingBag,
-    title: 'Order History',
-    path: '/orders',
+    icon: iconMap.Sliders,
+    title: 'Dietary Preferences',
+    path: '/account/allergens',
   },
   {
-    icon: iconMap.Heart,
-    title: 'Favorites',
-    path: '/favorites',
+    icon: iconMap.CreditCard,
+    title: 'Credit Cards',
+    path: '/account/credit-cards',
   },
   {
-    icon: iconMap.Award,
-    title: 'Rewards',
-    path: '/rewards',
+    icon: iconMap.MapPin,
+    title: 'Addresses',
+    path: '/account/addresses',
   },
   {
-    icon: iconMap.Gift,
-    title: 'Gift Cards',
-    path: '/account/gift-cards',
+    icon: iconMap.Home,
+    title: 'House Accounts',
+    path: '/account/house-accounts',
   },
   {
-    icon: iconMap.Settings,
-    title: 'Account Settings',
-    path: '/account/settings',
+    icon: iconMap.User,
+    title: 'Profile & Preferences',
+    path: '/account/profile',
   },
 ]
 
-const AccountButtons = () => {
+const AccountSettingsButtons = () => {
   const history = useHistory()
   const { has_rewards, has_thanx } = useSelector(selectBrand)
   const filteredButtons =
@@ -57,5 +57,5 @@ const AccountButtons = () => {
   )
 }
 
-AccountButtons.displayName = 'AccountButtons'
-export default AccountButtons
+AccountSettingsButtons.displayName = 'AccountSettingsButtons'
+export default AccountSettingsButtons

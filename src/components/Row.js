@@ -20,10 +20,11 @@ const RowView = styled(Box)`
 
 const RowIcon = styled('div')`
   flex: 0 0 auto;
+  margin: 0 2rem 0 0;
 `
 
 const RowContent = styled('div')`
-  padding: 0 0 0 2rem;
+  padding: 0;
   flex: 1;
   display: flex;
   justify-content: space-between;
@@ -58,7 +59,7 @@ const RowActions = styled('div')`
 const Row = ({ icon, content, actions }) => {
   return (
     <RowView>
-      <RowIcon>{icon}</RowIcon>
+      {icon && <RowIcon>{icon}</RowIcon>}
       <RowContent>
         <RowText>{content}</RowText>
         {actions && <RowActions>{actions}</RowActions>}

@@ -29,32 +29,32 @@ const navButtons = [
   {
     icon: iconMap.Gift,
     title: 'Gift Cards',
-    path: '/gift-cards',
+    path: '/account/gift-cards',
   },
   {
     icon: iconMap.Sliders,
     title: 'Allergens',
-    path: '/allergens',
+    path: '/account/allergens',
   },
   {
     icon: iconMap.MapPin,
     title: 'Addresses',
-    path: '/addresses',
+    path: '/account/addresses',
   },
   {
     icon: iconMap.CreditCard,
     title: 'Credit Cards',
-    path: '/credit-cards',
+    path: '/account/credit-cards',
   },
   {
     icon: iconMap.Home,
     title: 'House Accounts',
-    path: '/house-accounts',
+    path: '/account/house-accounts',
   },
   {
     icon: iconMap.Settings,
     title: 'Profile & Preferences',
-    path: '/profile',
+    path: '/account/profile',
   },
 ]
 

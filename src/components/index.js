@@ -8,10 +8,12 @@ import HeaderMobile from './HeaderMobile'
 import HeaderAccount from './HeaderAccount'
 import Heading from './Heading'
 import ItemCards from './ItemCards'
+import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
 import Main from './Main'
 import NavButton from './NavButton'
 import NavButtons from './NavButtons'
+import OrderAddress from './OrderAddress'
 import OrderCard from './OrderCard'
 import OrderItemCard from './OrderItemCard'
 import PageTitle from './PageTitle'
@@ -33,10 +35,12 @@ export {
   HeaderMobile,
   Heading,
   ItemCards,
+  LinkSeparator,
   Loading,
   Main,
   NavButton,
   NavButtons,
+  OrderAddress,
   OrderCard,
   OrderItemCard,
   PageTitle,

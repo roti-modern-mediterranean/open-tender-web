@@ -6,7 +6,7 @@ import { ButtonLink, ButtonStyled } from '@open-tender/components'
 import { openModal } from '../../../slices'
 import iconMap from '../../iconMap'
 import { useDispatch } from 'react-redux'
-import { QRCode, Row } from '../..'
+import { LinkSeparator, QRCode, Row } from '../..'
 
 const GiftCardsList = ({ giftCards, isLoading }) => {
   const dispatch = useDispatch()
@@ -57,7 +57,7 @@ const GiftCardsList = ({ giftCards, isLoading }) => {
                   </ButtonLink>
                   {removeable && (
                     <>
-                      <span className="link-separator">|</span>
+                      <LinkSeparator />
                       <ButtonLink
                         onClick={() => handleDelete(giftCard)}
                         disabled={isLoading}

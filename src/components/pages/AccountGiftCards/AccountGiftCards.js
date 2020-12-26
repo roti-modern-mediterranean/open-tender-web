@@ -40,7 +40,9 @@ const AccountGiftCards = () => {
   return (
     <>
       <Helmet>
-        <title>Order History | {siteTitle}</title>
+        <title>
+          {config.giftCards.title} | {siteTitle}
+        </title>
       </Helmet>
       {isBrowser && <Background imageUrl={config.background} />}
       <Content maxWidth="76.8rem">

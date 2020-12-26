@@ -7,7 +7,6 @@ import ConfirmationPage from './ConfirmationPage'
 import OrderPage from './OrderPage'
 import RevenueCentersPage from './RevenueCentersPage'
 import RevenueCenterPage from './RevenueCenterPage'
-import AccountAddressesPage from './AccountAddressesPage'
 import AccountItemsPage from './AccountItemsPage'
 import CateringPage from './CateringPage'
 import SignUpPage from './SignUpPage'
@@ -23,7 +22,9 @@ import DonationPage from './DonationPage'
 import ThanxPage from './ThanxPage'
 import {
   Account,
+  AccountAddresses,
   AccountGiftCards,
+  AccountSettings,
   Favorites,
   GiftCards,
   Home,
@@ -90,14 +91,8 @@ const Routes = () => {
       <Route exact path="/account">
         <Account />
       </Route>
-      <Route exact path="/account/gift-cards">
-        <AccountGiftCards />
-      </Route>
       <Route exact path="/rewards">
         <Rewards />
-      </Route>
-      <Route exact path="/addresses">
-        <AccountAddressesPage />
       </Route>
       <Route exact path="/favorites">
         <Favorites />
@@ -110,6 +105,15 @@ const Routes = () => {
       </Route>
       <Route exact path="/orders/:id">
         <OrderPage />
+      </Route>
+      <Route exact path="/account/settings">
+        <AccountSettings />
+      </Route>
+      <Route exact path="/account/gift-cards">
+        <AccountGiftCards />
+      </Route>
+      <Route exact path="/account/addresses">
+        <AccountAddresses />
       </Route>
       <Route exact path="/confirmation">
         <ConfirmationPage />
