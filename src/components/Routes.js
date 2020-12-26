@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import MenuPage from './MenuPage'
 import CheckoutPage from './CheckoutPage'
 import ConfirmationPage from './ConfirmationPage'
-import OrderPage from './OrderPage'
 import RevenueCentersPage from './RevenueCentersPage'
 import RevenueCenterPage from './RevenueCenterPage'
 import AccountItemsPage from './AccountItemsPage'
@@ -32,6 +31,7 @@ import {
   Home,
   HouseAccounts,
   Orders,
+  Order,
   Profile,
   Rewards,
 } from './pages'
@@ -114,7 +114,7 @@ const Routes = () => {
         <Orders />
       </Route>
       <Route exact path="/orders/:id">
-        <OrderPage />
+        <Order />
       </Route>
       <Route exact path="/account/settings">
         <AccountSettings />

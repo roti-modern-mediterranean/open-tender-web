@@ -1,5 +1,6 @@
 import AccountBackground from './AccountBackground'
 import Background from './Background'
+import Box from './Box'
 import Button from './Button'
 import Content from './Content'
 import Container from './Container'
@@ -14,6 +15,7 @@ import Loading from './Loading'
 import Main from './Main'
 import NavButton from './NavButton'
 import NavButtons from './NavButtons'
+import Order from './Order'
 import OrderAddress from './OrderAddress'
 import OrderCard from './OrderCard'
 import OrderItemCard from './OrderItemCard'
@@ -28,6 +30,7 @@ import Welcome from './Welcome'
 export {
   AccountBackground,
   Background,
+  Box,
   Button,
   Container,
   Content,
@@ -42,6 +45,7 @@ export {
   Main,
   NavButton,
   NavButtons,
+  Order,
   OrderAddress,
   OrderCard,
   OrderItemCard,

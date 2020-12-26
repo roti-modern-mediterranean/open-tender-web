@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 
-import iconMap from './iconMap'
+import iconMap from '../iconMap'
 
 const OrderRating = ({ rating, comments }) => {
   const stars = []

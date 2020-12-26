@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import {
   fetchAllergens,
   selectAllergens,
@@ -13,6 +14,7 @@ import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
 
 import { selectAccountConfig, selectBrand } from '../../../slices'
+import { AppContext } from '../../../App'
 import {
   Background,
   Container,
@@ -24,8 +26,6 @@ import {
   PageTitle,
   PageContent,
 } from '../..'
-import { AppContext } from '../../../App'
-import { useHistory } from 'react-router-dom'
 
 const AccountAllergens = () => {
   const dispatch = useDispatch()

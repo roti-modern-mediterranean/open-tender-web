@@ -1,14 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-
-const Box = styled('div')`
-  border-style: solid;
-  border-width: ${(props) => props.theme.border.width};
-  border-color: ${(props) => props.theme.border.color};
-  border-radius: ${(props) => props.theme.border.radius};
-  background-color: ${(props) => props.theme.bgColors.primary};
-`
+import { Box } from '.'
 
 const RowView = styled(Box)`
   display: flex;
