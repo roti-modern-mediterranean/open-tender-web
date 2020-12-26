@@ -55,7 +55,7 @@ const AccountGiftCards = () => {
               {entities.length ? (
                 <GiftCardsList giftCards={entities} isLoading={isLoading} />
               ) : isLoading ? (
-                <Loading text="Retrieving your order history..." />
+                <Loading text="Retrieving your gift cards..." />
               ) : error ? (
                 <p>{error}</p>
               ) : (

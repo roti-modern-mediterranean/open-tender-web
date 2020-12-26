@@ -24,11 +24,13 @@ import {
   Account,
   AccountAddresses,
   AccountAllergens,
+  AccountCreditCards,
   AccountGiftCards,
   AccountSettings,
   Favorites,
   GiftCards,
   Home,
+  HouseAccounts,
   Orders,
   Rewards,
 } from './pages'
@@ -119,11 +121,17 @@ const Routes = () => {
       <Route exact path="/account/gift-cards">
         <AccountGiftCards />
       </Route>
+      <Route exact path="/account/allergens">
+        <AccountAllergens />
+      </Route>
+      <Route exact path="/account/credit-cards">
+        <AccountCreditCards />
+      </Route>
       <Route exact path="/account/addresses">
         <AccountAddresses />
       </Route>
-      <Route exact path="/account/allergens">
-        <AccountAllergens />
+      <Route exact path="/account/house-accounts">
+        <HouseAccounts />
       </Route>
       <Route exact path="/accessibility">
         <AccessibilityPolicyPage />
