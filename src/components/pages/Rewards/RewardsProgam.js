@@ -1,15 +1,11 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Heading } from '@open-tender/components'
+import { Box, Heading } from '@open-tender/components'
 import { ProgressBar } from '../..'
 
-export const RewardsProgramView = styled('div')`
+export const RewardsProgramView = styled(Box)`
   padding: 2rem 2rem;
-  background-color: ${(props) => props.theme.bgColors.primary};
-  border: ${(props) => props.theme.border.width} solid
-    ${(props) => props.theme.border.color};
-  border-radius: ${(props) => props.theme.border.radius};
   margin: 0 0 3rem;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
