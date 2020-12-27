@@ -12,7 +12,7 @@ const loader = (type, size) => {
   }
 }
 
-const LoadingContainer = styled('div')`
+const LoadingView = styled('div')`
   text-align: left;
 `
 
@@ -26,10 +26,10 @@ const LoadingMessage = styled('p')`
 `
 
 const Loading = ({ type, text, size = 100, style = null }) => (
-  <LoadingContainer style={style}>
+  <LoadingView style={style}>
     <LoadingLoader>{loader(type, size)}</LoadingLoader>
     {text && text.length > 0 && <LoadingMessage>{text}</LoadingMessage>}
-  </LoadingContainer>
+  </LoadingView>
 )
 
 Loading.displayName = 'Loading'

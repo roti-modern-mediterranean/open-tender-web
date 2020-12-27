@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { useParams, useHistory, Link } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectCustomer,
@@ -14,10 +14,8 @@ import {
   Container,
   Content,
   HeaderAccount,
-  Loading,
   Main,
   Order as OrderSummary,
-  PageTitle,
   PageContent,
 } from '../..'
 
@@ -28,7 +26,7 @@ const Order = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const customerOrder = useSelector(selectCustomerOrder)
-  const title = `Order ${orderId}`
+  const title = `Order #${orderId}`
   const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
@@ -52,7 +50,6 @@ const Order = () => {
         <HeaderAccount title={title} text="Back to Orders" path="/orders" />
         <Main bgColor="secondary">
           <Container>
-            {/* <PageTitle {...account.allergens} /> */}
             <PageContent>
               <OrderSummary {...customerOrder} />
             </PageContent>

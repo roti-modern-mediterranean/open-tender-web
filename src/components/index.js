@@ -1,14 +1,11 @@
 import AccountBackground from './AccountBackground'
 import Background from './Background'
-import Box from './Box'
-import Button from './Button'
 import Content from './Content'
 import Container from './Container'
 import FormWrapper from './FormWrapper'
 import HeaderLogo from './HeaderLogo'
 import HeaderMobile from './HeaderMobile'
 import HeaderAccount from './HeaderAccount'
-import Heading from './Heading'
 import ItemCards from './ItemCards'
 import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
@@ -19,6 +16,7 @@ import Order from './Order'
 import OrderAddress from './OrderAddress'
 import OrderCard from './OrderCard'
 import OrderItemCard from './OrderItemCard'
+import OrderQuantity from './OrderQuantity'
 import PageTitle from './PageTitle'
 import PageContent from './PageContent'
 import Preface from './Preface'
@@ -30,15 +28,12 @@ import Welcome from './Welcome'
 export {
   AccountBackground,
   Background,
-  Box,
-  Button,
   Container,
   Content,
   FormWrapper,
   HeaderAccount,
   HeaderLogo,
   HeaderMobile,
-  Heading,
   ItemCards,
   LinkSeparator,
   Loading,
@@ -49,6 +44,7 @@ export {
   OrderAddress,
   OrderCard,
   OrderItemCard,
+  OrderQuantity,
   PageTitle,
   PageContent,
   Preface,

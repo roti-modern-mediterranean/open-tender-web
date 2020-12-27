@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
 import React from 'react'
-import { Heading } from '../..'
+import styled from '@emotion/styled'
+import { Heading } from '@open-tender/components'
 import { RewardsProgramView, RewardsProgramHeader } from './RewardsProgam'
 
 const RewardsReward = styled('div')`

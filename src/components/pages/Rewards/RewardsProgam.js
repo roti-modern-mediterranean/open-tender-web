@@ -1,7 +1,8 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Heading, ProgressBar } from '../..'
+import { Heading } from '@open-tender/components'
+import { ProgressBar } from '../..'
 
 export const RewardsProgramView = styled('div')`
   padding: 2rem 2rem;

@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
 import {
   selectCustomer,
   selectCustomerFavorites,
@@ -15,21 +16,17 @@ import {
   isEmpty,
   isoToDate,
 } from '@open-tender/js'
-import { ButtonStyled, CartItem, Check } from '@open-tender/components'
+import { Box, ButtonStyled, CartItem, Check } from '@open-tender/components'
 
 import { openModal, selectDisplaySettings } from '../../slices'
-import SectionHeader from '../SectionHeader'
-import SectionRow from '../SectionRow'
+import iconMap from '../iconMap'
 import OrderAddress from '../OrderAddress'
+import OrderQuantity from '../OrderQuantity'
 import OrderRating from './OrderRating'
 import OrderRequestedAt from './OrderRequestedAt'
 import OrderRevenueCenter from './OrderRevenueCenter'
-import OrderError from './OrderError'
-import OrderQuantity from '../OrderQuantity'
-import Loader from '../Loader'
-import iconMap from '../iconMap'
-import styled from '@emotion/styled'
-import { Box, Preface } from '..'
+
+import { Loading, Preface } from '..'
 import OrderSection from './OrderSection'
 
 const OrderView = styled(Box)`
@@ -49,6 +46,27 @@ const OrderButtons = styled(`div`)`
     margin-left: 1rem;
   }
 `
+
+const OrderSectionHeader = styled('h2')`
+  margin: 4rem 0 2rem;
+`
+
+const OrderCentered = styled('div')`
+  display: flex;
+  justify-content: center;
+  max-width: ${(props) => props.theme.breakpoints.tablet};
+  margin: 4rem auto;
+  text-align: center;
+`
+
+const handleOrderError = (error) => {
+  switch (error) {
+    case 'The requested object does not exist.':
+      return "We couldn't find this order. Please double check your order ID and give it another try."
+    default:
+      return error
+  }
+}
 
 const Order = ({ order, loading, error }) => {
   const {
@@ -77,7 +95,7 @@ const Order = ({ order, loading, error }) => {
   const dispatch = useDispatch()
   const isLoading = loading === 'pending'
   const isMerch = order_type === 'MERCH'
-  const showOrder = !isLoading && !error && !isEmpty(order)
+  const errMsg = handleOrderError(error)
   const orderTypeName = makeOrderTypeName(order_type, service_type)
   const isUpcoming = isoToDate(requested_at) > new Date()
   const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
@@ -108,150 +126,121 @@ const Order = ({ order, loading, error }) => {
     dispatch(openModal({ type: 'rating', args }))
   }
 
-  return (
+  return !isEmpty(order) ? (
     <OrderView>
-      {isLoading && (
-        <Loader text={'Retrieving your order...'} className="loading--left" />
-      )}
-      <OrderError error={error} />
-      {showOrder && (
+      <div>
+        <Preface>Order #{order_id}</Preface>
+        <h1>
+          {orderTypeName} from {revenue_center.name}
+        </h1>
+        {!isMerch && (
+          <OrderButtons>
+            {auth && order.is_editable && (
+              <ButtonStyled
+                icon={iconMap.Edit}
+                onClick={() => dispatch(editOrder(order))}
+              >
+                Edit
+              </ButtonStyled>
+            )}
+            <ButtonStyled icon={iconMap.RefreshCw} onClick={handleReorder}>
+              Reorder
+            </ButtonStyled>
+            {!isUpcoming && (
+              <ButtonStyled icon={iconMap.Star} onClick={updateRating}>
+                {rating ? 'Update Rating' : 'Add Rating'}
+              </ButtonStyled>
+            )}
+          </OrderButtons>
+        )}
+      </div>
+      <div>
+        <OrderSection label="Location">
+          <OrderRevenueCenter revenueCenter={revenue_center} />
+        </OrderSection>
+        <OrderSection label="Requested Time">
+          <OrderRequestedAt
+            estimated_at={estimated_at || requested_at}
+            requested_time={requested_time}
+            timezone={timezone}
+            is_asap={is_asap}
+            status={status}
+          />
+        </OrderSection>
+        {service_type === 'DELIVERY' && address && (
+          <OrderSection label="Delivery Address">
+            <OrderAddress
+              address={address}
+              delivery={delivery}
+              status={status}
+            />
+          </OrderSection>
+        )}
+        {notes && notes.length ? (
+          <OrderSection label="Notes">
+            <p>{notes}</p>
+          </OrderSection>
+        ) : null}
+        {hasDetails && (
+          <OrderSection label="Other Details">
+            {eating_utensils ? (
+              <p>
+                Eating utensils included
+                {person_count && ` for ${person_count} people`}
+              </p>
+            ) : (
+              person_count && <p>30 people to be accommodated</p>
+            )}
+            {serving_utensils && <p>Serving utensils included</p>}
+            {tax_exempt_id && <p>Tax exempt ID of {tax_exempt_id}</p>}
+          </OrderSection>
+        )}
+        {rating ? (
+          <OrderSection label="Rating">
+            <OrderRating {...rating} />
+          </OrderSection>
+        ) : null}
+      </div>
+      {displayedItems.length > 0 && (
         <>
-          <div>
-            <Preface>Order #{order_id}</Preface>
-            <h1>
-              {orderTypeName} from {revenue_center.name}
-            </h1>
-            {!isMerch && (
-              <OrderButtons>
-                {auth && order.is_editable && (
-                  <ButtonStyled
-                    icon={iconMap.Edit}
-                    onClick={() => dispatch(editOrder(order))}
+          <OrderSectionHeader>Items in Your Order</OrderSectionHeader>
+          <ul className="cart">
+            {displayedItems.map((item, index) => {
+              const favoriteId = lookup ? lookup[item.signature] || null : null
+              return (
+                <li key={`${item.id}-${index}`}>
+                  <CartItem
+                    item={item}
+                    showModifiers={true}
+                    displaySettings={displaySettings}
                   >
-                    Edit
-                  </ButtonStyled>
-                )}
-                <ButtonStyled icon={iconMap.RefreshCw} onClick={handleReorder}>
-                  Reorder
-                </ButtonStyled>
-                {!isUpcoming && (
-                  <ButtonStyled icon={iconMap.Star} onClick={updateRating}>
-                    {rating ? 'Update Rating' : 'Add Rating'}
-                  </ButtonStyled>
-                )}
-              </OrderButtons>
-            )}
-          </div>
-          <div>
-            <OrderSection label="Location">
-              <OrderRevenueCenter revenueCenter={revenue_center} />
-            </OrderSection>
-            <OrderSection label="Requested Time">
-              <OrderRequestedAt
-                estimated_at={estimated_at || requested_at}
-                requested_time={requested_time}
-                timezone={timezone}
-                is_asap={is_asap}
-                status={status}
-              />
-            </OrderSection>
-            {service_type === 'DELIVERY' && address && (
-              <OrderSection label="Delivery Address">
-                <OrderAddress
-                  address={address}
-                  delivery={delivery}
-                  status={status}
-                />
-              </OrderSection>
-            )}
-            {notes && notes.length ? (
-              <SectionRow title="Notes">
-                <p className="ot-font-size-small">{notes}</p>
-              </SectionRow>
-            ) : null}
-            {hasDetails && (
-              <SectionRow title="Other Details">
-                {eating_utensils ? (
-                  <p className="ot-font-size-small">
-                    Eating utensils included
-                    {person_count && ` for ${person_count} people`}
-                  </p>
-                ) : (
-                  person_count && (
-                    <p className="ot-font-size-small">
-                      30 people to be accommodated
-                    </p>
-                  )
-                )}
-                {serving_utensils && (
-                  <p className="ot-font-size-small">
-                    Serving utensils included
-                  </p>
-                )}
-                {tax_exempt_id && (
-                  <p className="ot-font-size-small">
-                    Tax exempt ID of {tax_exempt_id}
-                  </p>
-                )}
-              </SectionRow>
-            )}
-            {rating ? (
-              <SectionRow title="Rating">
-                <OrderRating {...rating} />
-              </SectionRow>
-            ) : null}
-          </div>
-          {displayedItems.length > 0 && (
-            <div className="section slide-up">
-              <div className="container">
-                <div className="section__container">
-                  <SectionHeader title="Items in Your Order" />
-                  <div className="section__content ot-bg-color-primary ot-border-radius">
-                    <ul className="cart">
-                      {displayedItems.map((item, index) => {
-                        const favoriteId = lookup
-                          ? lookup[item.signature] || null
-                          : null
-                        return (
-                          <li key={`${item.id}-${index}`}>
-                            <CartItem
-                              item={item}
-                              showModifiers={true}
-                              displaySettings={displaySettings}
-                            >
-                              <OrderQuantity
-                                item={item}
-                                show={auth && lookup ? true : false}
-                                favoriteId={favoriteId}
-                              />
-                            </CartItem>
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          <div className="section slide-up">
-            <div className="container">
-              <div className="section__container">
-                <SectionHeader title="Your Receipt" />
-                <div className="section__content">
-                  <Check
-                    title="Order Summary"
-                    check={check}
-                    tenders={tenders}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+                    <OrderQuantity
+                      item={item}
+                      show={auth && lookup ? true : false}
+                      favoriteId={favoriteId}
+                    />
+                  </CartItem>
+                </li>
+              )
+            })}
+          </ul>
         </>
       )}
+      <OrderSectionHeader>Your Receipt</OrderSectionHeader>
+      <Check check={check} tenders={tenders} />
     </OrderView>
-  )
+  ) : isLoading ? (
+    <OrderCentered>
+      <Loading
+        text="Retrieving your order..."
+        style={{ textAlign: 'center' }}
+      />
+    </OrderCentered>
+  ) : error ? (
+    <OrderCentered>
+      <p>{errMsg}</p>
+    </OrderCentered>
+  ) : null
 }
 
 Order.displayName = 'Order'

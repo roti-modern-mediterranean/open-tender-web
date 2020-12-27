@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -10,6 +10,7 @@ import {
 import { Button } from '@open-tender/components'
 
 import { selectAccountConfig, selectBrand } from '../../../slices'
+import { AppContext } from '../../../App'
 import {
   Container,
   Content,
@@ -34,10 +35,11 @@ const Orders = () => {
   const config = useSelector(selectAccountConfig)
   const { auth } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
+  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    window.scroll(0, 0)
-  }, [])
+    windowRef.current.scroll(0, 0)
+  }, [windowRef])
 
   useEffect(() => {
     if (!auth) return history.push('/')

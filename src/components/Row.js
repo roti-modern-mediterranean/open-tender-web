@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Box } from '.'
+import { Box } from '@open-tender/components'
 
 const RowView = styled(Box)`
   display: flex;
