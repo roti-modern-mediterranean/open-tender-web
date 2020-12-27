@@ -1,19 +1,50 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import styled from '@emotion/styled'
+import Preface from './Preface'
 
-const Tag = ({
-  text,
-  icon,
-  bgClass = 'ot-bg-color-secondary',
-  textClass = '',
-}) => {
+const TagView = styled('span')`
+  display: inline-block;
+  padding: 0.5rem 1rem 0.5rem;
+  border-radius: 1.5rem;
+  line-height: 0;
+  color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors[props.bgColor]};
+`
+
+const TagContainer = styled('span')`
+  display: flex;
+  align-items: center;
+  line-height: 0;
+
+  span {
+    display: inline-block;
+    padding: 0.1rem 0 0;
+  }
+`
+
+const TagIcon = styled('span')`
+  position: relative;
+  top: -0.1rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  padding: 0;
+  margin-right: 0.5rem;
+`
+
+const TagText = styled(Preface)`
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  color: ${(props) => props.theme.colors.light};
+`
+
+const Tag = ({ text, icon, bgColor = 'secondary' }) => {
   return (
-    <span className={`tag ot-preface ${bgClass}`}>
-      <span className="tag__container">
-        {icon && <span className={`tag__icon ${textClass}`}>{icon}</span>}
-        <span className={`ot-font-size-x-small ${textClass}`}>{text}</span>
-      </span>
-    </span>
+    <TagView bgColor={bgColor}>
+      <TagContainer>
+        {icon && <TagIcon>{icon}</TagIcon>}
+        <TagText>{text}</TagText>
+      </TagContainer>
+    </TagView>
   )
 }
 
@@ -21,7 +52,6 @@ Tag.displayName = 'Tag'
 Tag.prototypes = {
   text: propTypes.string,
   icon: propTypes.string,
-  bgClass: propTypes.string,
-  textClass: propTypes.string,
+  bgColor: propTypes.string,
 }
 export default Tag

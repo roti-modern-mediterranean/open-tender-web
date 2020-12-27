@@ -15,13 +15,82 @@ import {
   makeOrderAddress,
   makeOrderTypeName,
 } from '@open-tender/js'
-import { Button, DeliveryLink } from '@open-tender/components'
+import { Box, ButtonStyled, DeliveryLink } from '@open-tender/components'
 
 import OrderImages from './OrderImages'
 import OrderTag from './OrderTag'
 import iconMap from './iconMap'
+import styled from '@emotion/styled'
+import { Preface } from '.'
 
-const OrderCard = ({ order, isLast, className }) => {
+const OrderCardView = styled(Box)`
+  position: relative;
+  height: 100%;
+  padding: 1.5rem 1.5rem 1rem;
+`
+
+const OrderCardContainer = styled('div')`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
+const OrderCardHeader = styled('div')`
+  flex-grow: 0;
+`
+
+const OrderCardNumber = styled('p')`
+  span {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+`
+
+const OrderCardTitle = styled('p')`
+  margin: 0.4rem 0;
+  color: ${(props) => props.theme.fonts.headings.color};
+`
+
+const OrderCardLink = styled('p')`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`
+
+const OrderCardContent = styled('div')`
+  margin: 1rem 0 0;
+  flex-grow: 1;
+
+  > p {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    line-height: ${(props) => props.theme.lineHeight};
+  }
+`
+
+const OrderCardImages = styled('div')`
+  margin: 1.5rem 0 0;
+
+  p {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+`
+
+const OrderCardFooter = styled('div')`
+  flex-grow: 0;
+  margin: 1.9rem 0 0;
+
+  > div {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    button {
+      margin: 0 0.5rem 0.5rem 0;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+`
+
+const OrderCard = ({ order, isLast }) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const {
@@ -46,19 +115,8 @@ const OrderCard = ({ order, isLast, className }) => {
   const streetAddress = makeOrderAddress(address)
   const trackingUrl = isOpen && delivery && delivery.tracking_url
   const itemNames = cart.map((i) => i.name).join(', ')
-  const klass = `order-card ot-bg-color-primary ot-border ot-border-radius ot-box-shadow ${
-    className || ''
-  }`
 
-  const handleEdit = (evt) => {
-    evt.preventDefault()
-    dispatch(editOrder(order))
-    evt.target.blur()
-  }
-
-  const handleReorder = (evt) => {
-    evt.preventDefault()
-    evt.target.blur()
+  const handleReorder = () => {
     const { revenue_center_id: revenueCenterId } = revenue_center
     const serviceType = service_type
     dispatch(setOrderServiceType(order_type, service_type))
@@ -66,77 +124,71 @@ const OrderCard = ({ order, isLast, className }) => {
     dispatch(reorderPastOrder({ revenueCenterId, serviceType, items: cart }))
   }
 
-  const handleDetails = (evt) => {
-    evt.preventDefault()
-    history.push(`/orders/${order_id}`)
-    evt.target.blur()
-  }
-
   return (
-    <div className={klass}>
+    <OrderCardView>
       <OrderTag isUpcoming={isUpcoming} status={status} />
-      <div className="order-card__container">
-        <div className="order-card__header">
-          <p className="order-card__number ot-preface ot-font-size-x-small">
-            {isLast ? 'Your Last Order' : `Order #${order_id}`}
-          </p>
-          <p className="order-card__title ot-color-headings">
+      <OrderCardContainer>
+        <OrderCardHeader>
+          <OrderCardNumber>
+            <Preface>
+              {isLast ? 'Your Last Order' : `Order #${order_id}`}
+            </Preface>
+          </OrderCardNumber>
+          <OrderCardTitle>
             {orderTypeName} from {revenue_center.name}
-          </p>
+          </OrderCardTitle>
           {isUpcoming && trackingUrl && (
-            <p className="ot-font-size-small">
+            <OrderCardLink>
               <DeliveryLink
                 text="Track your delivery"
                 trackingUrl={trackingUrl}
               />
-            </p>
+            </OrderCardLink>
           )}
-        </div>
-        <div className="order-card__content">
-          <div className="order-card__details ot-font-size-small">
-            <p>
-              {requestedAt} &nbsp;|&nbsp; ${totals.total}
-            </p>
-            <p>{streetAddress}</p>
-          </div>
-          <div className="order-card__items">
-            <div className="order-card__images">
-              <OrderImages items={cart} />
-            </div>
-            <p className="ot-font-size-x-small">{itemNames}</p>
-          </div>
-        </div>
-        <div className="order-card__footer">
-          <div className="order-card__footer__buttons">
+        </OrderCardHeader>
+        <OrderCardContent>
+          <p>
+            {requestedAt} &nbsp;|&nbsp; ${totals.total}
+          </p>
+          <p>{streetAddress}</p>
+          <OrderCardImages>
+            <OrderImages items={cart} />
+            <p>{itemNames}</p>
+          </OrderCardImages>
+        </OrderCardContent>
+        <OrderCardFooter>
+          <div>
             {order.is_editable && (
-              <Button
-                text="Edit"
-                icon={iconMap['Edit']}
-                onClick={handleEdit}
-                classes="ot-btn--small ot-font-size-small"
-              />
+              <ButtonStyled
+                icon={iconMap.Edit}
+                onClick={() => dispatch(editOrder(order))}
+                size="small"
+              >
+                Edit
+              </ButtonStyled>
             )}
             {!isMerch && (
-              <Button
-                text="Reorder"
-                icon={iconMap['RefreshCw']}
+              <ButtonStyled
+                icon={iconMap.RefreshCw}
                 onClick={handleReorder}
-                classes={`ot-btn--small ot-font-size-small ${
-                  order.is_editable ? 'ot-btn--secondary' : ''
-                }`}
-              />
+                size="small"
+                color={order.is_editable ? 'secondary' : 'primary'}
+              >
+                Reorder
+              </ButtonStyled>
             )}
-            <Button
-              // text={`Details ${!isUpcoming ? '/ Rate' : ''}`}
-              text="Details"
-              icon={iconMap['FileText']}
-              onClick={handleDetails}
-              classes="ot-btn--small ot-btn--secondary ot-font-size-small"
-            />
+            <ButtonStyled
+              icon={iconMap.FileText}
+              onClick={() => history.push(`/orders/${order_id}`)}
+              size="small"
+              color="secondary"
+            >
+              Details
+            </ButtonStyled>
           </div>
-        </div>
-      </div>
-    </div>
+        </OrderCardFooter>
+      </OrderCardContainer>
+    </OrderCardView>
   )
 }
 

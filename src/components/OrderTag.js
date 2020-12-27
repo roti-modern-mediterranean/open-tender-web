@@ -3,31 +3,35 @@ import propTypes from 'prop-types'
 import Tag from './Tag'
 
 import iconMap from './iconMap'
+import styled from '@emotion/styled'
+
+const OrderTagView = styled('div')`
+  position: absolute;
+  top: -1.1rem;
+  right: 1.5rem;
+`
 
 const OrderTag = ({ isUpcoming, status }) => {
   const tag = isUpcoming
     ? {
-        bgClass: '-upcoming ot-warning',
         text: status === 'IN_PROGRESS' ? 'In Progress' : 'Coming up',
-        icon: iconMap['AlertCircle'],
+        icon: iconMap.AlertCircle,
+        bgColor: 'error',
       }
     : status === 'REFUNDED'
     ? {
-        bgClass: '-refunded ot-dark',
         text: 'Refunded',
+        bgColor: 'alert',
       }
     : {
-        bgClass: '-completed ot-success',
         text: 'Completed',
-        icon: iconMap['CheckCircle'],
+        icon: iconMap.CheckCircle,
+        bgColor: 'success',
       }
   return (
-    <Tag
-      text={tag.text}
-      icon={tag.icon}
-      bgClass={`order-card__tag ${tag.bgClass}`}
-      textClass={tag.textClass}
-    />
+    <OrderTagView>
+      <Tag text={tag.text} icon={tag.icon} bgColor={tag.bgColor} />
+    </OrderTagView>
   )
 }
 

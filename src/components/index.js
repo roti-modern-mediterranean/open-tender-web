@@ -23,6 +23,7 @@ import Preface from './Preface'
 import ProgressBar from './ProgressBar'
 import QRCode from './QRCode'
 import Row from './Row'
+import Tag from './Tag'
 import Welcome from './Welcome'
 
 export {
@@ -51,5 +52,6 @@ export {
   ProgressBar,
   QRCode,
   Row,
+  Tag,
   Welcome,
 }

@@ -51,12 +51,12 @@ const MenuItem = ({ item }) => {
   }
 
   const itemTag = isSoldOut ? (
-    <Tag icon={iconMap['Slash']} text={soldOutMsg} bgClass="ot-dark" />
+    <Tag icon={iconMap.Slash} text={soldOutMsg} bgColor="alert" />
   ) : hasAllergens ? (
     <Tag
       icon={iconMap['AlertCircle']}
       text={`Contains ${allergenAlert.join(', ')}`}
-      bgClass="ot-warning"
+      bgColor="error"
     />
   ) : null
 
