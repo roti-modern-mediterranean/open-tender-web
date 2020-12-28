@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import ClipLoader from 'react-spinners/ClipLoader'
 import {
@@ -12,9 +12,20 @@ import {
 import { makeOrderTypeFromParam } from '@open-tender/js'
 import { GoogleMap, GoogleMapsMarker } from '@open-tender/components'
 
-import { selectBrand, selectSettings, selectGeoLatLng } from '../../../slices'
+import {
+  selectBrand,
+  selectSettings,
+  selectGeoLatLng,
+  selectConfig,
+} from '../../../slices'
 import { AppContext } from '../../../App'
-import { Content, HeaderMobile, Main } from '../..'
+import {
+  Content,
+  HeaderMobile,
+  Main,
+  MapsAutocomplete,
+  ScreenreaderTitle,
+} from '../..'
 import RevenueCentersSelect from './RevenueCentersSelect'
 import { Account, StartOver } from '../../buttons'
 
@@ -23,6 +34,7 @@ const RevenueCenters = () => {
   const dispatch = useDispatch()
   const [activeMarker, setActiveMarker] = useState(null)
   const { title: siteTitle } = useSelector(selectBrand)
+  const { revenueCenters: config } = useSelector(selectConfig)
   const { orderType, serviceType, address } = useSelector(selectOrder)
   const { googleMaps } = useSelector(selectSettings)
   const { apiKey, defaultCenter, zoom, styles, icons } = googleMaps
@@ -36,6 +48,8 @@ const RevenueCenters = () => {
   const query = new URLSearchParams(useLocation().search)
   const param = query.get('type')
   const { windowRef } = useContext(AppContext)
+  const navTitle =
+    config.title && config.title.length < 20 ? config.title : 'Find a Store'
 
   useEffect(() => {
     windowRef.current.scroll(0, 0)
@@ -61,10 +75,13 @@ const RevenueCenters = () => {
       <Content maxWidth="76.8rem">
         <HeaderMobile
           maxWidth="76.8rem"
+          borderColor="primary"
+          title={isMobile ? navTitle : null}
           left={<StartOver />}
           right={<Account />}
         />
         <Main>
+          <ScreenreaderTitle>Locations</ScreenreaderTitle>
           {apiKey && (
             <GoogleMap
               apiKey={apiKey}
@@ -74,7 +91,8 @@ const RevenueCenters = () => {
               loader={<ClipLoader size={30} loading={true} />}
               // events={null}
             >
-              <RevenueCentersSelect setCenter={setCenter} center={center} />
+              <MapsAutocomplete setCenter={setCenter} center={center} />
+              <RevenueCentersSelect />
               {revenueCenters.map((i) => {
                 const isActive = i.revenue_center_id === activeMarker
                 const icon = isActive ? icons.locationSelected : icons.location

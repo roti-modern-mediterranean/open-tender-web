@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import {
-  setAddress,
   selectOrder,
   setRevenueCenter,
   selectAutoSelect,
@@ -14,34 +13,37 @@ import {
   resetCheckout,
 } from '@open-tender/redux'
 import { makeDisplayedRevenueCenters, renameLocation } from '@open-tender/js'
-import { ButtonLink, GoogleMapsAutocomplete } from '@open-tender/components'
+import { ButtonLink } from '@open-tender/components'
 
 import { selectConfig, selectSettings, selectGeoLatLng } from '../../../slices'
-import iconMap from '../../iconMap'
-import {
-  Container,
-  Loading,
-  PageTitle,
-  PageContent,
-  RevenueCenter,
-} from '../..'
+import { Container, Loading, PageContent, RevenueCenter } from '../..'
 import styled from '@emotion/styled'
 
 const RevenueCentersSelectView = styled('div')`
   position: relative;
   z-index: 1;
-  margin: 4.5rem 0 0;
+  flex-grow: 1;
   background-color: ${(props) => props.theme.bgColors.primary};
+  // padding: ${(props) => props.theme.layout.padding} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 26rem 0 0;
+    padding: 2rem 0 1rem;
+  }
 `
 
-const RevenueCentersSelect = ({
-  setCenter,
-  center,
-  maps,
-  map,
-  sessionToken,
-  autocomplete,
-}) => {
+const RevenueCentersSelectHeader = styled('div')`
+  h2 {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h3};
+    }
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+  }
+`
+
+const RevenueCentersSelect = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
@@ -52,7 +54,6 @@ const RevenueCentersSelect = ({
     selectOrder
   )
   const coords = address || geoLatLng
-  const formattedAddress = address ? address.formatted_address : ''
   const autoSelect = useSelector(selectAutoSelect)
   const [title, setTitle] = useState(rcConfig.title)
   const [msg, setMsg] = useState(rcConfig.subtitle)
@@ -123,29 +124,16 @@ const RevenueCentersSelect = ({
   return (
     <RevenueCentersSelectView>
       <Container>
-        {isLoading && !hasCount ? (
+        {isLoading ? (
           <Loading text="Retrieving nearest locations..." />
         ) : (
           <>
-            <PageTitle
-              title={renamedTitle}
-              subtitle={!error ? renamedMsg : null}
-              error={error ? renamedError : null}
-            />
             <PageContent>
-              <GoogleMapsAutocomplete
-                maps={maps}
-                map={map}
-                sessionToken={sessionToken}
-                autocomplete={autocomplete}
-                formattedAddress={formattedAddress}
-                setAddress={(address) => dispatch(setAddress(address))}
-                setCenter={setCenter}
-                icon={iconMap.Navigation}
-              />
-              {isLoading ? (
-                <Loading text="Retrieving nearest locations..." />
-              ) : showRevenueCenters ? (
+              <RevenueCentersSelectHeader>
+                <h2>{renamedTitle}</h2>
+                <p>{renamedError || renamedMsg}</p>
+              </RevenueCentersSelectHeader>
+              {showRevenueCenters ? (
                 <ul>
                   {displayedRevenueCenters.map((revenueCenter) => (
                     <li key={revenueCenter.revenue_center_id}>

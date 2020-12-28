@@ -15,6 +15,7 @@ import {
 
 import { selectConfig } from '../slices'
 import Menu from './Menu'
+import { ScreenreaderTitle } from '.'
 
 export const MenuContext = createContext(null)
 
@@ -79,7 +80,7 @@ const MenuPage = () => {
           error,
         }}
       >
-        <h1 className="sr-only">Menu</h1>
+        <ScreenreaderTitle>Menu</ScreenreaderTitle>
         <Menu />
       </MenuContext.Provider>
     </div>
