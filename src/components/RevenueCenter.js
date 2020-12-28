@@ -12,8 +12,11 @@ import styled from '@emotion/styled'
 
 const RevenueCenterView = styled(Box)`
   position: relative;
-  margin: 3rem 0 0;
+  margin: ${(props) => props.theme.layout.padding} 0 0;
   overflow: hidden;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
 `
 
 const RevenueCenterImage = styled(BgImage)`
@@ -23,19 +26,19 @@ const RevenueCenterImage = styled(BgImage)`
   right: 0;
   width: 24rem;
   background-color: ${(props) => props.theme.bgColors.secondary};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: none;
   }
 `
 
 const RevenueCenterContent = styled('div')`
   padding: 0 24rem 0 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0;
   }
 
   > div {
-    padding: 2rem 3rem 2rem 2rem;
+    padding: 1.5rem 2rem;
   }
 `
 
@@ -50,8 +53,8 @@ const RevenueCenterHeader = styled('div')`
     display: block;
   }
 
-  h2 {
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
+  h3 {
+    font-size: ${(props) => props.theme.fonts.sizes.h4};
   }
 
   p {
@@ -93,7 +96,7 @@ const RevenueCenter = ({ revenueCenter, showImage, isMenu, isLanding }) => {
       <RevenueCenterContent>
         <div>
           <RevenueCenterHeader>
-            <h2>{revenueCenter.name}</h2>
+            <h3>{revenueCenter.name}</h3>
             {distance !== null && <p>{distance.toFixed(2)} miles away</p>}
           </RevenueCenterHeader>
           <RevenueCenterActions>

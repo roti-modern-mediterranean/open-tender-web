@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
+import { isMobileOnly } from 'react-device-detect'
 import {
   selectOrder,
   setRevenueCenter,
@@ -25,13 +25,23 @@ const RevenueCentersSelectView = styled('div')`
   flex-grow: 1;
   background-color: ${(props) => props.theme.bgColors.primary};
   // padding: ${(props) => props.theme.layout.padding} 0;
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 44rem 0 0;
+    padding: 3rem 0 0;
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 26rem 0 0;
-    padding: 2rem 0 1rem;
+    padding: 2rem 0 0;
   }
 `
 
 const RevenueCentersSelectHeader = styled('div')`
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 0 0 2rem;
+  }
+
   h2 {
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       font-size: ${(props) => props.theme.fonts.sizes.h3};
@@ -140,7 +150,7 @@ const RevenueCentersSelect = () => {
                       <RevenueCenter
                         revenueCenter={revenueCenter}
                         classes="rc--card"
-                        showImage={isBrowser}
+                        showImage={!isMobileOnly}
                       />
                     </li>
                   ))}

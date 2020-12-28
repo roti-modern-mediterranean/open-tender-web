@@ -9,7 +9,7 @@ import {
   resetRevenueCenter,
   setRevenueCenter,
 } from '@open-tender/redux'
-import { Button } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import iconMap from './iconMap'
 
@@ -37,27 +37,20 @@ export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
     ((ft && ft.DELIVERY) || (ot && ot.DELIVERY)) &&
     serviceTypes.includes('DELIVERY')
 
-  const handleWalkin = (evt) => {
-    evt.preventDefault()
-    // dispatch(setAddress(null))
+  const handleWalkin = () => {
     dispatch(setOrderServiceType(rcType, 'WALKIN', false))
     dispatch(setRevenueCenter(revenueCenter))
     history.push(menuSlug)
-    evt.target.blur()
   }
 
-  const handlePickup = (evt) => {
-    evt.preventDefault()
-    // dispatch(setAddress(null))
+  const handlePickup = () => {
     dispatch(setOrderServiceType(rcType, 'PICKUP', isOutpost))
     if (isOutpost) dispatch(setAddress(address))
     dispatch(setRevenueCenter(revenueCenter))
     history.push(menuSlug)
-    evt.target.blur()
   }
 
-  const handleDelivery = (evt) => {
-    evt.preventDefault()
+  const handleDelivery = () => {
     dispatch(setOrderServiceType(rcType, 'DELIVERY', isOutpost))
     if (isLanding) {
       dispatch(resetRevenueCenter())
@@ -67,42 +60,45 @@ export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
       dispatch(setRevenueCenter(revenueCenter))
       history.push(menuSlug)
     }
-    evt.target.blur()
   }
 
   return (
-    <div className="rc__order__buttons">
+    <>
       {hasWalkin && (
-        <Button
-          text={`Order ${hasDelivery ? 'Dine-in' : 'Here'}`}
-          ariaLabel={`Order Dine-in from ${name}`}
-          icon={iconMap['Coffee']}
+        <ButtonStyled
+          label={`Order Dine-in from ${name}`}
+          icon={iconMap.Coffee}
           onClick={handleWalkin}
-        />
+        >
+          Order {hasDelivery ? 'Dine-in' : 'Here'}
+        </ButtonStyled>
       )}
       {hasPickup && (
-        <Button
-          text={`Order ${hasDelivery ? 'Pickup' : 'Here'}`}
-          ariaLabel={`Order Pickup from ${name}`}
-          icon={iconMap['ShoppingBag']}
+        <ButtonStyled
+          label={`Order Pickup from ${name}`}
+          icon={iconMap.ShoppingBag}
           onClick={handlePickup}
-        />
+        >
+          Order {hasDelivery ? 'Pickup' : 'Here'}
+        </ButtonStyled>
       )}
       {hasDelivery && (
-        <Button
-          text="Order Delivery"
-          ariaLabel={`Order Delivery from ${name}`}
-          icon={iconMap['Truck']}
+        <ButtonStyled
+          label={`Order Delivery from ${name}`}
+          icon={iconMap.Truck}
           onClick={handleDelivery}
-        />
+        >
+          Order Delivery
+        </ButtonStyled>
       )}
-    </div>
+    </>
   )
 }
 
 RevenueCenterButtons.displayName = 'RevenueCenterButtons'
 RevenueCenterButtons.propTypes = {
   revenueCenter: propTypes.object,
+  isLanding: propTypes.bool,
 }
 
 export default RevenueCenterButtons

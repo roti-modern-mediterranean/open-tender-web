@@ -7,7 +7,7 @@ import styled from '@emotion/styled'
 const RevenueCenterActionView = styled('div')`
   display: flex;
   align-items: center;
-  margin: 1.5rem 0 0;
+  margin: 1rem 0 0;
 `
 
 const RevenueCenterActionIcon = styled('div')`
