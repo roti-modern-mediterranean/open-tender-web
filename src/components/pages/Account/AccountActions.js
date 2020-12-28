@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import {
@@ -8,11 +8,6 @@ import {
   fetchCustomerOrders,
   selectCustomerOrders,
   fetchCustomerFavorites,
-  fetchMenuItems,
-  fetchRevenueCenter,
-  setOrderServiceType,
-  setAddress,
-  selectCartQuantity,
 } from '@open-tender/redux'
 import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { Button } from '@open-tender/components'
@@ -66,34 +61,22 @@ const AccountActions = () => {
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectCustomerOrders)
-  const lastOrder = getLastOrder(orders)
+  const lastOrder = useMemo(
+    () => console.log('this is happening') || getLastOrder(orders),
+    [orders]
+  )
   let orderTypeName = null
   if (lastOrder) {
     const { order_type, service_type } = lastOrder
     orderTypeName = makeOrderTypeName(order_type, service_type)
   }
   const isCurrentOrder = revenueCenter && serviceType && cart.length
-  const cartQuantity = useSelector(selectCartQuantity)
   const isLoading = loading === 'pending' && !isCurrentOrder && !lastOrder
 
   useEffect(() => {
     dispatch(fetchCustomerOrders(20))
     dispatch(fetchCustomerFavorites())
   }, [dispatch])
-
-  // useEffect(() => {
-  //   if (lastOrder) {
-  //     const { revenue_center, service_type, order_type, address } = lastOrder
-  //     const { revenue_center_id: revenueCenterId } = revenue_center
-  //     dispatch(fetchMenuItems({ revenueCenterId, serviceType: service_type }))
-  //     if (!cartQuantity) {
-  //       const isOutpost = revenue_center.is_outpost
-  //       dispatch(fetchRevenueCenter(revenueCenterId))
-  //       dispatch(setOrderServiceType(order_type, service_type, isOutpost))
-  //       dispatch(setAddress(address || null))
-  //     }
-  //   }
-  // }, [lastOrder, cartQuantity, dispatch])
 
   const startNewOrder = (evt) => {
     evt.preventDefault()

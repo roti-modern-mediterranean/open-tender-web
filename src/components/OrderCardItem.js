@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
 import {
   selectCustomerFavorites,
   selectMenuItems,
@@ -10,10 +11,9 @@ import {
 import { displayPrice, rehydrateOrderItem } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
 
-import { ButtonFavorite, Favorite } from './buttons'
 import iconMap from './iconMap'
-import { Card, OrderTag } from '.'
-import styled from '@emotion/styled'
+import { Favorite } from './buttons'
+import { Card } from '.'
 
 const OrderCardItemImageView = styled('div')`
   div {
