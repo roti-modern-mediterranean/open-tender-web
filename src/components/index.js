@@ -26,6 +26,7 @@ import PageTitle from './PageTitle'
 import PageContent from './PageContent'
 import Preface from './Preface'
 import ProgressBar from './ProgressBar'
+import RevenueCenter from './RevenueCenter'
 import QRCode from './QRCode'
 import Row from './Row'
 import Tag from './Tag'
@@ -60,6 +61,7 @@ export {
   PageContent,
   Preface,
   ProgressBar,
+  RevenueCenter,
   QRCode,
   Row,
   Tag,

@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import MenuPage from './MenuPage'
 import CheckoutPage from './CheckoutPage'
 import ConfirmationPage from './ConfirmationPage'
-import RevenueCentersPage from './RevenueCentersPage'
 import RevenueCenterPage from './RevenueCenterPage'
 import AccountItemsPage from './AccountItemsPage'
 import CateringPage from './CateringPage'
@@ -33,6 +32,7 @@ import {
   Orders,
   Order,
   Profile,
+  RevenueCenters,
   Rewards,
 } from './pages'
 
@@ -75,7 +75,7 @@ const Routes = () => {
         <CateringPage />
       </Route>
       <Route exact path="/locations">
-        <RevenueCentersPage />
+        <RevenueCenters />
       </Route>
       <Route exact path="/locations/:slug">
         <RevenueCenterPage />

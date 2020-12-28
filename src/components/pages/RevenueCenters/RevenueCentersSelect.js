@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
 import {
   setAddress,
   selectOrder,
@@ -13,13 +14,25 @@ import {
   resetCheckout,
 } from '@open-tender/redux'
 import { makeDisplayedRevenueCenters, renameLocation } from '@open-tender/js'
-import { Button, GoogleMapsAutocomplete } from '@open-tender/components'
+import { ButtonLink, GoogleMapsAutocomplete } from '@open-tender/components'
 
-import { selectConfig, selectSettings, selectGeoLatLng } from '../slices'
-import iconMap from './iconMap'
-import RevenueCenter from './RevenueCenter'
-import PageTitle from './PageTitle'
-import Loader from './Loader'
+import { selectConfig, selectSettings, selectGeoLatLng } from '../../../slices'
+import iconMap from '../../iconMap'
+import {
+  Container,
+  Loading,
+  PageTitle,
+  PageContent,
+  RevenueCenter,
+} from '../..'
+import styled from '@emotion/styled'
+
+const RevenueCentersSelectView = styled('div')`
+  position: relative;
+  z-index: 1;
+  margin: 4.5rem 0 0;
+  background-color: ${(props) => props.theme.bgColors.primary};
+`
 
 const RevenueCentersSelect = ({
   setCenter,
@@ -47,8 +60,12 @@ const RevenueCentersSelect = ({
   const [displayedRevenueCenters, setDisplayedRevenueCenters] = useState([])
   const isLoading = loading === 'pending'
   const missingAddress = serviceType === 'DELIVERY' && !address
-  const count = displayedRevenueCenters && displayedRevenueCenters.length > 0
-  const showRevenueCenters = !isLoading && !error && count && !missingAddress
+  const hasCount = displayedRevenueCenters && displayedRevenueCenters.length > 0
+  const showRevenueCenters = hasCount && !isLoading && !error && !missingAddress
+  const names = locationName[isOutpost ? 'OUTPOST' : serviceType]
+  const renamedTitle = renameLocation(title, names)
+  const renamedError = renameLocation(error, names)
+  const renamedMsg = renameLocation(msg, names)
 
   useEffect(() => {
     if (orderType) {
@@ -95,11 +112,6 @@ const RevenueCentersSelect = ({
     missingAddress,
   ])
 
-  const names = locationName[isOutpost ? 'OUTPOST' : serviceType]
-  const renamedTitle = renameLocation(title, names)
-  const renamedError = renameLocation(error, names)
-  const renamedMsg = renameLocation(msg, names)
-
   const handleStartOver = (evt) => {
     evt.preventDefault()
     dispatch(resetOrderType())
@@ -109,23 +121,18 @@ const RevenueCentersSelect = ({
   }
 
   return (
-    <div className="map__content ot-bg-color-primary">
-      {isLoading ? (
-        <Loader
-          text="Retrieving nearest locations..."
-          className="loading--left"
-        />
-      ) : (
-        <PageTitle
-          title={renamedTitle}
-          subtitle={!error ? renamedMsg : null}
-          error={error ? renamedError : null}
-        />
-      )}
-      <div className="content__body ot-bg-color-primary">
-        <div className="container">
-          {!isLoading && (
-            <div className="">
+    <RevenueCentersSelectView>
+      <Container>
+        {isLoading && !hasCount ? (
+          <Loading text="Retrieving nearest locations..." />
+        ) : (
+          <>
+            <PageTitle
+              title={renamedTitle}
+              subtitle={!error ? renamedMsg : null}
+              error={error ? renamedError : null}
+            />
+            <PageContent>
               <GoogleMapsAutocomplete
                 maps={maps}
                 map={map}
@@ -134,39 +141,32 @@ const RevenueCentersSelect = ({
                 formattedAddress={formattedAddress}
                 setAddress={(address) => dispatch(setAddress(address))}
                 setCenter={setCenter}
-                icon={iconMap['Navigation']}
+                icon={iconMap.Navigation}
               />
-            </div>
-          )}
-          {showRevenueCenters && (
-            <div className="rcs">
-              <ul>
-                {displayedRevenueCenters.map((revenueCenter) => (
-                  <li key={revenueCenter.revenue_center_id}>
-                    <RevenueCenter
-                      revenueCenter={revenueCenter}
-                      classes="rc--card"
-                      showImage={true}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      </div>
-      {!isLoading && !showRevenueCenters && (
-        <div className="content__footer">
-          <div className="container">
-            <Button
-              text="Choose a different order type"
-              classes="ot-btn-link"
-              onClick={handleStartOver}
-            ></Button>
-          </div>
-        </div>
-      )}
-    </div>
+              {isLoading ? (
+                <Loading text="Retrieving nearest locations..." />
+              ) : showRevenueCenters ? (
+                <ul>
+                  {displayedRevenueCenters.map((revenueCenter) => (
+                    <li key={revenueCenter.revenue_center_id}>
+                      <RevenueCenter
+                        revenueCenter={revenueCenter}
+                        classes="rc--card"
+                        showImage={isBrowser}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <ButtonLink onClick={handleStartOver}>
+                  Choose a different order type
+                </ButtonLink>
+              )}
+            </PageContent>
+          </>
+        )}
+      </Container>
+    </RevenueCentersSelectView>
   )
 }
 

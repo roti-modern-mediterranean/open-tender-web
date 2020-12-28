@@ -16,14 +16,24 @@ const BackgroundContainer = styled('div')`
   background-color: ${(props) => props.theme.bgColors.secondary};
 `
 
+const BackgroundLoading = styled('div')`
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const Background = ({ imageUrl, children }) => {
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
   return (
     <BackgroundContainer style={bgStyle}>
       {imageUrl && !bgStyle && (
-        <div className="map__loading">
+        <BackgroundLoading>
           <ClipLoader size={30} loading={true} />
-        </div>
+        </BackgroundLoading>
       )}
       {children}
     </BackgroundContainer>

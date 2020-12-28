@@ -11,6 +11,7 @@ import HouseAccounts from './HouseAccounts'
 import Orders from './Orders'
 import Order from './Order'
 import Profile from './Profile'
+import RevenueCenters from './RevenueCenters'
 import Rewards from './Rewards'
 
 export {
@@ -27,5 +28,6 @@ export {
   Orders,
   Order,
   Profile,
+  RevenueCenters,
   Rewards,
 }

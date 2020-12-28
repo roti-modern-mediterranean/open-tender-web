@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react'
-import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
+import { Helmet } from 'react-helmet'
 import {
   selectCustomer,
   fetchCustomer,
