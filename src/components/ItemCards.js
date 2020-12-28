@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { OrderItemCard } from '.'
+import { OrderCardItem, OrderItemCard } from '.'
 
 const ItemCardsView = styled('div')`
   display: flex;
@@ -41,7 +41,7 @@ const ItemCards = ({ items, delay = 0.125 }) => {
             // delay={`${delay.toFixed(3)}s`}
             delay={`${((index + 1) * 0.125 + delay).toFixed(3)}s`}
           >
-            <OrderItemCard item={item} />
+            <OrderCardItem item={item} />
           </ItemCardsItem>
         )
       })}

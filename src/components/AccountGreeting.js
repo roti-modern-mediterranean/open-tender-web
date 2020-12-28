@@ -12,10 +12,9 @@ import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
 import { selectAccountConfig } from '../slices'
-import CurrentOrder from './CurrentOrder'
-import OrderCard from './OrderCard'
-import Loader from './Loader'
 import iconMap from './iconMap'
+import { OrderCard, OrderCardCurrent } from '.'
+import Loader from './Loader'
 
 const AccountGreeting = () => {
   const history = useHistory()
@@ -127,7 +126,7 @@ const AccountGreeting = () => {
         {(isCurrentOrder || lastOrder) && (
           <div className="greeting__order">
             {isCurrentOrder ? (
-              <CurrentOrder order={currentOrder} />
+              <OrderCardCurrent order={currentOrder} />
             ) : lastOrder ? (
               <OrderCard order={lastOrder} isLast={true} />
             ) : null}

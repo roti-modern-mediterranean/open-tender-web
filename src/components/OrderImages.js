@@ -3,7 +3,15 @@ import propTypes from 'prop-types'
 import OrderImage from './OrderImage'
 import styled from '@emotion/styled'
 
-const OrderCardImagesView = styled('div')`
+const OrderImagesView = styled('div')`
+  margin: 1.5rem 0 0;
+
+  p {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  }
+`
+
+const OrderImagesList = styled('div')`
   display: flex;
   justify-content: flex-start;
   align-items: top;
@@ -11,24 +19,21 @@ const OrderCardImagesView = styled('div')`
   overflow: hidden;
 `
 
-const OrderImages = ({ items }) => {
+const OrderImages = ({ images, names }) => {
   return (
-    <OrderCardImagesView>
-      {items.map((i) =>
-        i.images
-          .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
-          .map((image) => {
-            return (
-              <OrderImage
-                key={image.url}
-                imageUrl={image.url}
-                alt={i.name}
-                title={i.name}
-              />
-            )
-          })
-      )}
-    </OrderCardImagesView>
+    <OrderImagesView>
+      <OrderImagesList>
+        {images.map((i) => (
+          <OrderImage
+            key={i.imageUrl}
+            imageUrl={i.imageUrl}
+            alt={i.title}
+            title={i.title}
+          />
+        ))}
+      </OrderImagesList>
+      <p>{names}</p>
+    </OrderImagesView>
   )
 }
 

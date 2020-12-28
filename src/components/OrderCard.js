@@ -15,80 +15,10 @@ import {
   makeOrderAddress,
   makeOrderTypeName,
 } from '@open-tender/js'
-import { Box, ButtonStyled, DeliveryLink } from '@open-tender/components'
+import { ButtonStyled, DeliveryLink } from '@open-tender/components'
 
-import OrderImages from './OrderImages'
-import OrderTag from './OrderTag'
 import iconMap from './iconMap'
-import styled from '@emotion/styled'
-import { Preface } from '.'
-
-const OrderCardView = styled(Box)`
-  position: relative;
-  height: 100%;
-  padding: 1.5rem 1.5rem 1rem;
-`
-
-const OrderCardContainer = styled('div')`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`
-
-const OrderCardHeader = styled('div')`
-  flex-grow: 0;
-`
-
-const OrderCardNumber = styled('p')`
-  span {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  }
-`
-
-const OrderCardTitle = styled('p')`
-  margin: 0.4rem 0;
-  color: ${(props) => props.theme.fonts.headings.color};
-`
-
-const OrderCardLink = styled('p')`
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-`
-
-const OrderCardContent = styled('div')`
-  margin: 1rem 0 0;
-  flex-grow: 1;
-
-  > p {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
-  }
-`
-
-const OrderCardImages = styled('div')`
-  margin: 1.5rem 0 0;
-
-  p {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  }
-`
-
-const OrderCardFooter = styled('div')`
-  flex-grow: 0;
-  margin: 1.9rem 0 0;
-
-  > div {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-
-    button {
-      margin: 0 0.5rem 0.5rem 0;
-      &:last-child {
-        margin: 0;
-      }
-    }
-  }
-`
+import { Card, OrderImages, OrderTag } from '.'
 
 const OrderCard = ({ order, isLast }) => {
   const history = useHistory()
@@ -114,6 +44,13 @@ const OrderCard = ({ order, isLast }) => {
   const isUpcoming = isoToDate(requested_at) > new Date()
   const streetAddress = makeOrderAddress(address)
   const trackingUrl = isOpen && delivery && delivery.tracking_url
+  const itemImages = cart
+    .map((i) =>
+      i.images
+        .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
+        .map((image) => ({ title: image.name, imageUrl: image.url }))
+    )
+    .flat()
   const itemNames = cart.map((i) => i.name).join(', ')
 
   const handleReorder = () => {
@@ -125,70 +62,61 @@ const OrderCard = ({ order, isLast }) => {
   }
 
   return (
-    <OrderCardView>
-      <OrderTag isUpcoming={isUpcoming} status={status} />
-      <OrderCardContainer>
-        <OrderCardHeader>
-          <OrderCardNumber>
-            <Preface>
-              {isLast ? 'Your Last Order' : `Order #${order_id}`}
-            </Preface>
-          </OrderCardNumber>
-          <OrderCardTitle>
-            {orderTypeName} from {revenue_center.name}
-          </OrderCardTitle>
+    <Card
+      tag={<OrderTag isUpcoming={isUpcoming} status={status} />}
+      preface={isLast ? 'Your Last Order' : `Order #${order_id}`}
+      title={`${orderTypeName} from ${revenue_center.name}`}
+      subtitle={
+        <>
           {isUpcoming && trackingUrl && (
-            <OrderCardLink>
-              <DeliveryLink
-                text="Track your delivery"
-                trackingUrl={trackingUrl}
-              />
-            </OrderCardLink>
+            <DeliveryLink
+              text="Track your delivery"
+              trackingUrl={trackingUrl}
+            />
           )}
-        </OrderCardHeader>
-        <OrderCardContent>
+        </>
+      }
+      content={
+        <>
           <p>
             {requestedAt} &nbsp;|&nbsp; ${totals.total}
           </p>
           <p>{streetAddress}</p>
-          <OrderCardImages>
-            <OrderImages items={cart} />
-            <p>{itemNames}</p>
-          </OrderCardImages>
-        </OrderCardContent>
-        <OrderCardFooter>
-          <div>
-            {order.is_editable && (
-              <ButtonStyled
-                icon={iconMap.Edit}
-                onClick={() => dispatch(editOrder(order))}
-                size="small"
-              >
-                Edit
-              </ButtonStyled>
-            )}
-            {!isMerch && (
-              <ButtonStyled
-                icon={iconMap.RefreshCw}
-                onClick={handleReorder}
-                size="small"
-                color={order.is_editable ? 'secondary' : 'primary'}
-              >
-                Reorder
-              </ButtonStyled>
-            )}
+          <OrderImages images={itemImages} names={itemNames} />
+        </>
+      }
+      footer={
+        <>
+          {order.is_editable && (
             <ButtonStyled
-              icon={iconMap.FileText}
-              onClick={() => history.push(`/orders/${order_id}`)}
+              icon={iconMap.Edit}
+              onClick={() => dispatch(editOrder(order))}
               size="small"
-              color="secondary"
             >
-              Details
+              Edit
             </ButtonStyled>
-          </div>
-        </OrderCardFooter>
-      </OrderCardContainer>
-    </OrderCardView>
+          )}
+          {!isMerch && (
+            <ButtonStyled
+              icon={iconMap.RefreshCw}
+              onClick={handleReorder}
+              size="small"
+              color={order.is_editable ? 'secondary' : 'primary'}
+            >
+              Reorder
+            </ButtonStyled>
+          )}
+          <ButtonStyled
+            icon={iconMap.FileText}
+            onClick={() => history.push(`/orders/${order_id}`)}
+            size="small"
+            color="secondary"
+          >
+            Details
+          </ButtonStyled>
+        </>
+      }
+    />
   )
 }
 
