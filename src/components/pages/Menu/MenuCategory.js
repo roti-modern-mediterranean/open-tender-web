@@ -1,16 +1,11 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { slugify } from '@open-tender/js'
 import MenuItem from './MenuItem'
 
 const MenuCategory = ({ category, isChild }) => {
   const child = isChild ? '-child' : ''
   return (
-    <div
-      key={category.id}
-      id={slugify(category.name)}
-      className={`menu__category ${child}`}
-    >
+    <div key={category.id} className={`menu__category ${child}`}>
       <div className="menu__category__header">
         <div className="container">
           {isChild ? (
