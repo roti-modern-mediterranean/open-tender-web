@@ -11,6 +11,7 @@ import MenuLoading from './MenuLoading'
 import MenuError from './MenuError'
 import MenuHero from './MenuHero'
 import styled from '@emotion/styled'
+import NavSticky from '../../NavSticky'
 
 const MenuView = styled('div')`
   position: relative;
@@ -108,11 +109,11 @@ const MenuContent = () => {
             />
             {visible.length > 0 && (
               <>
-                <StickyNav
-                  revenueCenter={selected}
-                  change={change}
+                <NavSticky
                   items={navItems}
                   offset={heroHeight}
+                  revenueCenter={selected}
+                  change={change}
                 />
                 <MenuCategories categories={visible} />
               </>
