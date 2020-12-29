@@ -23,9 +23,9 @@ const OrderImages = ({ images, names }) => {
   return (
     <OrderImagesView>
       <OrderImagesList>
-        {images.map((i) => (
+        {images.map((i, index) => (
           <OrderImage
-            key={i.imageUrl}
+            key={`${i.imageUrl}-${index}`}
             imageUrl={i.imageUrl}
             alt={i.title}
             title={i.title}

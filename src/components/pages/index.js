@@ -7,6 +7,7 @@ import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
 import Favorites from './Favorites'
 import GiftCards from './GiftCards'
+import GroupOrders from './GroupOrders'
 import Home from './Home'
 import HouseAccounts from './HouseAccounts'
 import Orders from './Orders'
@@ -27,6 +28,7 @@ export {
   AccountSettings,
   Favorites,
   GiftCards,
+  GroupOrders,
   Home,
   HouseAccounts,
   Menu,

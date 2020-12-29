@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
   selectCustomer,
-  selectCustomerOrders,
-  fetchCustomerOrders,
+  selectCustomerGroupOrders,
+  fetchCustomerGroupOrders,
 } from '@open-tender/redux'
-import { ButtonStyled } from '@open-tender/components'
 
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
@@ -20,17 +19,13 @@ import {
   PageContent,
   HeaderAccount,
 } from '../..'
-import OrdersList from './OrdersList'
+import OrdersList from '../Orders/OrdersList'
 
-const Orders = () => {
+const GroupOrders = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const increment = 20
-  const limit = 60
-  const orders = useSelector(selectCustomerOrders)
-  const { entities, loading, error } = orders
-  const [count, setCount] = useState(increment)
-  const [recentOrders, setRecentOrders] = useState(entities.slice(0, count))
+  const orders = useSelector(selectCustomerGroupOrders)
+  const { entities: groupOrders, loading, error } = orders
   const { title: siteTitle } = useSelector(selectBrand)
   const config = useSelector(selectAccountConfig)
   const { auth } = useSelector(selectCustomer)
@@ -46,16 +41,8 @@ const Orders = () => {
   }, [auth, history])
 
   useEffect(() => {
-    dispatch(fetchCustomerOrders(limit + 1))
+    dispatch(fetchCustomerGroupOrders())
   }, [dispatch])
-
-  useEffect(() => {
-    setRecentOrders(entities.slice(0, count))
-  }, [entities, count])
-
-  const loadMore = () => {
-    setCount(Math.min(count + increment, limit))
-  }
 
   if (!auth) return null
 
@@ -65,26 +52,19 @@ const Orders = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderAccount title="Order History" />
+        <HeaderAccount title="Group Orders" />
         <Main bgColor="secondary">
           <Container>
-            <PageTitle {...config.recentOrders} />
+            <PageTitle {...config.groupOrders} />
             <PageContent>
-              {recentOrders.length ? (
-                <>
-                  <OrdersList orders={recentOrders} />
-                  {entities.length - 1 > count && (
-                    <ButtonStyled onClick={loadMore}>
-                      Load more recent orders
-                    </ButtonStyled>
-                  )}
-                </>
+              {groupOrders.length ? (
+                <OrdersList orders={groupOrders} isGroup={true} />
               ) : isLoading ? (
-                <Loading text="Retrieving your order history..." />
+                <Loading text="Retrieving your group orders..." />
               ) : error ? (
                 <p>{error}</p>
               ) : (
-                <p>Looks like you don't have any orders yet</p>
+                <p>Looks like you don't have any group orders yet</p>
               )}
             </PageContent>
           </Container>
@@ -94,5 +74,5 @@ const Orders = () => {
   )
 }
 
-Orders.displayName = 'Orders'
-export default Orders
+GroupOrders.displayName = 'GroupOrders'
+export default GroupOrders

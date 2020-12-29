@@ -25,6 +25,7 @@ import {
   AccountSettings,
   Favorites,
   GiftCards,
+  GroupOrders,
   Home,
   HouseAccounts,
   Menu,
@@ -115,6 +116,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/orders/:id">
         <Order />
+      </Route>
+      <Route exact path="/group-orders">
+        <GroupOrders />
       </Route>
       <Route exact path="/account/settings">
         <AccountSettings />

@@ -62,10 +62,7 @@ const AccountActions = () => {
   const currentOrder = useSelector(selectOrder)
   const { revenueCenter, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectCustomerOrders)
-  const lastOrder = useMemo(
-    () => console.log('this is happening') || getLastOrder(orders),
-    [orders]
-  )
+  const lastOrder = useMemo(() => getLastOrder(orders), [orders])
   let orderTypeName = null
   if (lastOrder) {
     const { order_type, service_type } = lastOrder

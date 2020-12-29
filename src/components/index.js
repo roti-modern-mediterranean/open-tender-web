@@ -21,6 +21,7 @@ import Order from './Order'
 import OrderAddress from './OrderAddress'
 import OrderCard from './OrderCard'
 import OrderCardCurrent from './OrderCardCurrent'
+import OrderCardGroup from './OrderCardGroup'
 import OrderCardItem from './OrderCardItem'
 import OrderImages from './OrderImages'
 import OrderItemCard from './OrderItemCard'
@@ -61,6 +62,7 @@ export {
   OrderAddress,
   OrderCard,
   OrderCardCurrent,
+  OrderCardGroup,
   OrderCardItem,
   OrderImages,
   OrderItemCard,
