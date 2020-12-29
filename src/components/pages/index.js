@@ -1,3 +1,4 @@
+import Accessibility from './Accessibility'
 import Account from './Account'
 import AccountAddresses from './AccountAddresses'
 import AccountAllergens from './AccountAllergens'
@@ -16,6 +17,7 @@ import RevenueCenters from './RevenueCenters'
 import Rewards from './Rewards'
 
 export {
+  Accessibility,
   Account,
   AccountAddresses,
   AccountAllergens,

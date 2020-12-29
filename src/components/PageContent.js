@@ -8,6 +8,7 @@ const PageContent = styled('div')`
 
   > p {
     line-height: ${(props) => props.theme.lineHeight};
+    margin: 1em 0;
   }
 `
 

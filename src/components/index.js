@@ -4,9 +4,10 @@ import Card from './Card'
 import Content from './Content'
 import Container from './Container'
 import FormWrapper from './FormWrapper'
+import HeaderAccount from './HeaderAccount'
+import HeaderDefault from './HeaderDefault'
 import HeaderLogo from './HeaderLogo'
 import HeaderMobile from './HeaderMobile'
-import HeaderAccount from './HeaderAccount'
 import ItemCards from './ItemCards'
 import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
@@ -44,6 +45,7 @@ export {
   Content,
   FormWrapper,
   HeaderAccount,
+  HeaderDefault,
   HeaderLogo,
   HeaderMobile,
   ItemCards,

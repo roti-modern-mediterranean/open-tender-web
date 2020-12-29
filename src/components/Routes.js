@@ -12,12 +12,12 @@ import NotFoundPage from './NotFoundPage'
 import RefundPolicyPage from './RefundPolicyPage'
 import GroupOrderGuestPage from './GroupOrderGuestPage'
 import GroupOrderReviewPage from './GroupOrderReviewPage'
-import AccessibilityPolicyPage from './AccessibilityPolicyPage'
 import LevelUpPage from './LevelUpPage'
 import FulfillmentPage from './FulfillmentPage'
 import DonationPage from './DonationPage'
 import ThanxPage from './ThanxPage'
 import {
+  Accessibility,
   Account,
   AccountAddresses,
   AccountAllergens,
@@ -138,7 +138,7 @@ const Routes = () => {
         <Profile />
       </Route>
       <Route exact path="/accessibility">
-        <AccessibilityPolicyPage />
+        <Accessibility />
       </Route>
       <Route exact path="/refunds">
         <RefundPolicyPage />

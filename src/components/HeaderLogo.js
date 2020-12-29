@@ -12,10 +12,10 @@ const HeaderLogoLink = styled('a')`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin-left: 2.5rem;
   }
-`
 
-const HeaderLogoImage = styled('img')`
-  pointer-events: none;
+  img {
+    pointer-events: none;
+  }
 `
 
 const HeaderLogo = () => {
@@ -24,7 +24,7 @@ const HeaderLogo = () => {
 
   return (
     <HeaderLogoLink href={brand.url} rel="noopener noreferrer">
-      <HeaderLogoImage src={logoUrl} alt="logo" />
+      <img src={logoUrl} alt="logo" />
     </HeaderLogoLink>
   )
 }

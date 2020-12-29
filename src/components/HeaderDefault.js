@@ -2,15 +2,13 @@ import React from 'react'
 import propTypes from 'prop-types'
 
 import { HeaderMobile } from '.'
-import { AccountBack, Logout } from './buttons'
+import { StartOver, Account } from './buttons'
 
-const HeaderAccount = ({
-  maxWidth = '100%',
+const HeaderDefault = ({
+  maxWidth = '76.8rem',
   title,
-  bgColor,
-  borderColor,
-  text,
-  path,
+  bgColor = 'primary',
+  borderColor = 'primary',
 }) => {
   return (
     <HeaderMobile
@@ -18,20 +16,18 @@ const HeaderAccount = ({
       maxWidth={maxWidth}
       bgColor={bgColor}
       borderColor={borderColor}
-      left={<AccountBack text={text} path={path} />}
-      right={<Logout />}
+      left={<StartOver isLogo={true} />}
+      right={<Account />}
     />
   )
 }
 
-HeaderAccount.displayName = 'HeaderAccount'
-HeaderAccount.propTypes = {
+HeaderDefault.displayName = 'HeaderDefault'
+HeaderDefault.propTypes = {
   maxWidth: propTypes.string,
   title: propTypes.string,
   bgColor: propTypes.string,
   borderColor: propTypes.string,
-  text: propTypes.string,
-  path: propTypes.string,
 }
 
-export default HeaderAccount
+export default HeaderDefault

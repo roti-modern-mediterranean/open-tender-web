@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import {
   selectCustomer,
   updateCustomer,
@@ -10,6 +11,7 @@ import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
 
 import { selectAccountConfig, selectBrand, selectOptIns } from '../../../slices'
+import { AppContext } from '../../../App'
 import {
   Background,
   Container,
@@ -21,8 +23,6 @@ import {
   PageTitle,
   PageContent,
 } from '../..'
-import { AppContext } from '../../../App'
-import { useHistory } from 'react-router-dom'
 
 const AccountProfile = () => {
   const dispatch = useDispatch()
