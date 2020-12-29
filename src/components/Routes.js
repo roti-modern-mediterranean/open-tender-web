@@ -6,7 +6,6 @@ import ConfirmationPage from './ConfirmationPage'
 import RevenueCenterPage from './RevenueCenterPage'
 import AccountItemsPage from './AccountItemsPage'
 import CateringPage from './CateringPage'
-import SignUpPage from './SignUpPage'
 import ResetPasswordPage from './ResetPasswordPage'
 import NotFoundPage from './NotFoundPage'
 import RefundPolicyPage from './RefundPolicyPage'
@@ -34,6 +33,7 @@ import {
   Profile,
   RevenueCenters,
   Rewards,
+  SignUp,
 } from './pages'
 
 // <TransitionGroup component={null}>
@@ -66,7 +66,7 @@ const Routes = () => {
         <ThanxPage />
       </Route>
       <Route exact path="/signup">
-        <SignUpPage />
+        <SignUp />
       </Route>
       <Route exact path="/reset-password">
         <ResetPasswordPage />

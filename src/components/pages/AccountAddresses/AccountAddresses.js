@@ -49,7 +49,9 @@ const AccountAddresses = () => {
   return auth ? (
     <>
       <Helmet>
-        {config.addresses.title} | {siteTitle}
+        <title>
+          {config.addresses.title} | {siteTitle}
+        </title>
       </Helmet>
       {isBrowser && <Background imageUrl={config.account.background} />}
       <Content maxWidth="76.8rem">

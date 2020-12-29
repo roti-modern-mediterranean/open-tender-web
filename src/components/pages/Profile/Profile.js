@@ -50,7 +50,9 @@ const AccountProfile = () => {
   return (
     <>
       <Helmet>
-        {account.profile.title} | {siteTitle}
+        <title>
+          {account.profile.title} | {siteTitle}
+        </title>
       </Helmet>
       {isBrowser && <Background imageUrl={account.background} />}
       <Content maxWidth="76.8rem">

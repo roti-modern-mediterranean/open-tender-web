@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectBrand, selectConfig, selectSettings } from '../../../slices'
 import {
   Background,
   Container,
@@ -18,11 +18,21 @@ import {
 import RewardsPrograms from './RewardsProgams'
 import RewardsThanx from './RewardsThanx'
 import { AppContext } from '../../../App'
+import RewardsLevelUp from './RewardsLevelUp'
+
+const defaultConfig = {
+  title: 'Rewards',
+  subtitle: 'A summary of your current rewards progress',
+}
 
 const Rewards = () => {
   const history = useHistory()
-  const { title: siteTitle, has_thanx } = useSelector(selectBrand)
+  const { title: siteTitle, has_thanx: hasThanx } = useSelector(selectBrand)
+  const { accountSections } = useSelector(selectSettings)
+  const hasLevelUp = accountSections.filter((i) => i === 'levelup').length > 0
   const { account: accountConfig } = useSelector(selectConfig)
+  const config = hasLevelUp ? accountConfig.levelup : defaultConfig
+  console.log(config)
   const { background } = accountConfig
   const { auth } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)
@@ -45,12 +55,15 @@ const Rewards = () => {
         <HeaderAccount title="Rewards" maxWidth="76.8rem" />
         <Main bgColor="secondary">
           <Container>
-            <PageTitle
-              title="Rewards"
-              subtitle="A summary of your current rewards progress"
-            />
+            <PageTitle {...config} />
             <PageContent>
-              {has_thanx ? <RewardsThanx /> : <RewardsPrograms />}
+              {hasLevelUp ? (
+                <RewardsLevelUp />
+              ) : hasThanx ? (
+                <RewardsThanx />
+              ) : (
+                <RewardsPrograms />
+              )}
             </PageContent>
           </Container>
         </Main>

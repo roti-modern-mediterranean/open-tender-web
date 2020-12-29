@@ -48,7 +48,9 @@ const AccountHouseAccounts = () => {
   return (
     <>
       <Helmet>
-        {account.houseAccounts.title} | {siteTitle}
+        <title>
+          {account.houseAccounts.title} | {siteTitle}
+        </title>
       </Helmet>
       {isBrowser && <Background imageUrl={account.background} />}
       <Content maxWidth="76.8rem">

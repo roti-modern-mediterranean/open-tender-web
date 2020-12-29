@@ -44,7 +44,9 @@ const Order = () => {
   return (
     <>
       <Helmet>
-        {title} | {siteTitle}
+        <title>
+          {title} | {siteTitle}
+        </title>
       </Helmet>
       <Content>
         <HeaderAccount title={title} text="Back to Orders" path="/orders" />

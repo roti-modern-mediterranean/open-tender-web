@@ -29,7 +29,9 @@ const Accessibility = () => {
   return (
     <>
       <Helmet>
-        {config.title} | {siteTitle}
+        <title>
+          {config.title} | {siteTitle}
+        </title>
       </Helmet>
       {isBrowser && <Background imageUrl={config.background} />}
       <Content maxWidth="76.8rem">

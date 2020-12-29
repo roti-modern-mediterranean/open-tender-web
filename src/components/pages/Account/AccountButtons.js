@@ -2,15 +2,22 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { NavButtons } from '../..'
-import { selectBrand } from '../../../slices'
+import { selectCustomerGroupOrders } from '@open-tender/redux'
+
+import { selectBrand, selectSettings } from '../../../slices'
 import iconMap from '../../iconMap'
+import { NavButtons } from '../..'
 
 const AccountButtonsContainer = styled('div')`
   // padding: 0 2.5rem 2.5rem;
 `
 
 const navButtons = [
+  {
+    icon: iconMap.Users,
+    title: 'Group Orders',
+    path: '/group-orders',
+  },
   {
     icon: iconMap.ShoppingBag,
     title: 'Order History',
@@ -41,10 +48,13 @@ const navButtons = [
 const AccountButtons = () => {
   const history = useHistory()
   const { has_rewards, has_thanx } = useSelector(selectBrand)
-  const filteredButtons =
-    has_rewards || has_thanx
-      ? navButtons
-      : navButtons.filter((i) => i.path !== '/rewards')
+  const { accountSections } = useSelector(selectSettings)
+  const hasLevelUp = accountSections.filter((i) => i === 'levelup').length > 0
+  const hasRewards = has_rewards || has_thanx || hasLevelUp
+  const { entities: groupOrders } = useSelector(selectCustomerGroupOrders)
+  let removed = !hasRewards ? ['/rewards'] : []
+  if (!groupOrders.length) removed.push('/group-orders')
+  const filteredButtons = navButtons.filter((i) => !removed.includes(i.path))
   const buttons = filteredButtons.map((i) => ({
     ...i,
     onClick: () => history.push(i.path),

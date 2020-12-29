@@ -15,6 +15,7 @@ import Menu from './Menu'
 import Profile from './Profile'
 import RevenueCenters from './RevenueCenters'
 import Rewards from './Rewards'
+import SignUp from './SignUp'
 
 export {
   Accessibility,
@@ -34,4 +35,5 @@ export {
   Profile,
   RevenueCenters,
   Rewards,
+  SignUp,
 }

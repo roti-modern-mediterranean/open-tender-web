@@ -49,7 +49,9 @@ const AccountCreditCards = () => {
   return (
     <>
       <Helmet>
-        {account.creditCards.title} | {siteTitle}
+        <title>
+          {account.creditCards.title} | {siteTitle}
+        </title>
       </Helmet>
       {isBrowser && <Background imageUrl={account.background} />}
       <Content maxWidth="76.8rem">

@@ -8,6 +8,7 @@ import {
   fetchCustomerOrders,
   selectCustomerOrders,
   fetchCustomerFavorites,
+  fetchCustomerGroupOrders,
 } from '@open-tender/redux'
 import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { Button } from '@open-tender/components'
@@ -76,6 +77,7 @@ const AccountActions = () => {
   useEffect(() => {
     dispatch(fetchCustomerOrders(20))
     dispatch(fetchCustomerFavorites())
+    dispatch(fetchCustomerGroupOrders())
   }, [dispatch])
 
   const startNewOrder = (evt) => {

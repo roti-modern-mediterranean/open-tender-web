@@ -64,7 +64,9 @@ const AccountAllergens = () => {
   return (
     <>
       <Helmet>
-        {account.allergens.title} | {siteTitle}
+        <title>
+          {account.allergens.title} | {siteTitle}
+        </title>
       </Helmet>
       {isBrowser && <Background imageUrl={account.background} />}
       <Content maxWidth="76.8rem">

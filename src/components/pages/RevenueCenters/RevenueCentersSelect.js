@@ -132,12 +132,10 @@ const RevenueCentersSelect = () => {
     missingAddress,
   ])
 
-  const handleStartOver = (evt) => {
-    evt.preventDefault()
+  const handleStartOver = () => {
     dispatch(resetOrderType())
     dispatch(resetCheckout())
     history.push(`/`)
-    evt.target.blur()
   }
 
   return (
