@@ -14,6 +14,8 @@ import Main from './Main'
 import MapsAutocomplete from './MapsAutocomplete'
 import NavButton from './NavButton'
 import NavButtons from './NavButtons'
+import NavScroll from './NavScroll'
+import NavSticky from './NavSticky'
 import Order from './Order'
 import OrderAddress from './OrderAddress'
 import OrderCard from './OrderCard'
@@ -31,7 +33,6 @@ import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
 import ScreenreaderTitle from './ScreenreaderTitle'
 import QRCode from './QRCode'
 import Row from './Row'
-import StickyNav from './StickyNav'
 import Tag from './Tag'
 import Welcome from './Welcome'
 
@@ -52,6 +53,8 @@ export {
   MapsAutocomplete,
   NavButton,
   NavButtons,
+  NavScroll,
+  NavSticky,
   Order,
   OrderAddress,
   OrderCard,
@@ -70,7 +73,6 @@ export {
   QRCode,
   Row,
   ScreenreaderTitle,
-  StickyNav,
   Tag,
   Welcome,
 }

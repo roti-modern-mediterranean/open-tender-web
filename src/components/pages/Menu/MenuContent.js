@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 
 import { selectDisplaySettings } from '../../../slices'
-import { RevenueCenter, RevenueCenterChild, StickyNav } from '../..'
+import { RevenueCenter, RevenueCenterChild, NavSticky } from '../..'
 import { MenuContext } from './Menu'
 import MenuRevenueCenters from './MenuRevenueCenters'
 import MenuCategories from './MenuCategories'
@@ -11,7 +11,6 @@ import MenuLoading from './MenuLoading'
 import MenuError from './MenuError'
 import MenuHero from './MenuHero'
 import styled from '@emotion/styled'
-import NavSticky from '../../NavSticky'
 
 const MenuView = styled('div')`
   position: relative;
