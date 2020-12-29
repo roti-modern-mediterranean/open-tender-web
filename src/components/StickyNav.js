@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import propTypes from 'prop-types'
 import { isMobile } from 'react-device-detect'
 import { Link } from 'react-scroll'
@@ -6,6 +6,7 @@ import { slugify } from '@open-tender/js'
 import { Button } from '@open-tender/components'
 
 import iconMap from './iconMap'
+import { AppContext } from '../App'
 
 const StickyNav = ({
   items,
@@ -16,6 +17,7 @@ const StickyNav = ({
 }) => {
   const [isSticky, setSticky] = useState(false)
   const stickyRef = useRef(null)
+  const { windowRef } = useContext(AppContext)
   const topOffset = isMobile ? 60 : 60
   const showNav = !(isMobile && revenueCenter)
   const stickyClass = `sticky ${isSticky ? 'ot-stuck' : ''}`
@@ -24,16 +26,17 @@ const StickyNav = ({
   }`
 
   useEffect(() => {
+    const winRef = windowRef.current
     const handleScroll = () => {
       if (stickyRef.current) {
         setSticky(stickyRef.current.getBoundingClientRect().top < topOffset)
       }
     }
-    window.addEventListener('scroll', handleScroll)
+    winRef.addEventListener('scroll', handleScroll)
     return () => {
-      window.removeEventListener('scroll', () => handleScroll)
+      winRef.removeEventListener('scroll', () => handleScroll)
     }
-  }, [topOffset])
+  }, [windowRef, topOffset])
 
   const handleChange = (evt) => {
     evt.preventDefault()
@@ -74,10 +77,12 @@ const StickyNav = ({
                         activeClass="active"
                         className="ot-link-light"
                         to={sectionId}
-                        spy={true}
+                        spy={false}
                         smooth={true}
                         offset={offset}
                         duration={duration}
+                        // containerId="app"
+                        container={windowRef.current}
                       >
                         {item}
                       </Link>

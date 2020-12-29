@@ -64,7 +64,7 @@ class App extends React.Component {
           <ThemeProvider theme={this.props.theme}>
             <GlobalStyles />
             <ErrorBoundary>
-              <AppView ref={this.windowRef}>
+              <AppView ref={this.windowRef} id="app">
                 <Helmet>
                   <title>{brand.title}</title>
                   <meta name="description" content={brand.description} />

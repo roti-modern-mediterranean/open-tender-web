@@ -10,6 +10,11 @@ import MenuCategories from './MenuCategories'
 import MenuLoading from './MenuLoading'
 import MenuError from './MenuError'
 import MenuHero from './MenuHero'
+import styled from '@emotion/styled'
+
+const MenuView = styled('div')`
+  position: relative;
+`
 
 const MenuContent = () => {
   const {
@@ -35,9 +40,13 @@ const MenuContent = () => {
       ? menuHeroChildMobile
       : menuHeroChild
   const topRef = useRef()
+  const heroRef = useRef()
   const [selected, setSelected] = useState(null)
   const [visible, setVisible] = useState([])
   const navItems = visible ? visible.map((i) => i.name) : []
+  const heroHeight = heroRef.current
+    ? heroRef.current.getBoundingClientRect().height
+    : 0
 
   useEffect(() => {
     if (revenueCenters) {
@@ -52,6 +61,14 @@ const MenuContent = () => {
     }
   }, [revenueCenters, categories, selected])
 
+  // useEffect(() => {
+  //   console.log(heroRef.current)
+  //   const heroHeight = heroRef.current
+  //     ? heroRef.current.getBoundingClientRect().height
+  //     : 0
+  //   console.log(heroHeight)
+  // }, [selected, revenueCenter, showHero, showHeroChild])
+
   const change = (revenueCenter) => {
     setSelected(revenueCenter)
     window.scrollTo(0, topRef.current.offsetTop)
@@ -60,24 +77,28 @@ const MenuContent = () => {
   return (
     <>
       {selected && showHeroChild && (
-        <MenuHero imageUrl={selected.large_image_url}>
-          <RevenueCenterChild
-            revenueCenter={selected}
-            style={{ maxWidth: '44rem' }}
-          />
-        </MenuHero>
+        <div ref={heroRef}>
+          <MenuHero imageUrl={selected.large_image_url}>
+            <RevenueCenterChild
+              revenueCenter={selected}
+              style={{ maxWidth: '44rem' }}
+            />
+          </MenuHero>
+        </div>
       )}
       {!selected && revenueCenter && showHero && (
-        <MenuHero imageUrl={menuConfig.background}>
-          <RevenueCenter
-            revenueCenter={revenueCenter}
-            isMenu={true}
-            style={{ maxWidth: '44rem' }}
-          />
-        </MenuHero>
+        <div ref={heroRef}>
+          <MenuHero imageUrl={menuConfig.background}>
+            <RevenueCenter
+              revenueCenter={revenueCenter}
+              isMenu={true}
+              style={{ maxWidth: '44rem' }}
+            />
+          </MenuHero>
+        </div>
       )}
       {!error ? (
-        <div className="menu__wrapper">
+        <MenuView>
           <MenuLoading />
           <div ref={topRef}>
             <MenuRevenueCenters
@@ -91,13 +112,13 @@ const MenuContent = () => {
                   revenueCenter={selected}
                   change={change}
                   items={navItems}
-                  offset={-90}
+                  offset={heroHeight}
                 />
                 <MenuCategories categories={visible} />
               </>
             )}
           </div>
-        </div>
+        </MenuView>
       ) : !isLoading ? (
         <MenuError />
       ) : null}
