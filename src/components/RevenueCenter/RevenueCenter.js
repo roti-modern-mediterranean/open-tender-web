@@ -1,14 +1,14 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
+import styled from '@emotion/styled'
 import { selectGroupOrder } from '@open-tender/redux'
 import { stripTags } from '@open-tender/js'
 import { BgImage, Box } from '@open-tender/components'
 
+import iconMap from '../iconMap'
 import RevenueCenterOrder from './RevenueCenterOrder'
 import RevenueCenterAction from './RevenueCenterAction'
-import iconMap from './iconMap'
-import styled from '@emotion/styled'
 
 const RevenueCenterView = styled(Box)`
   position: relative;
@@ -71,6 +71,52 @@ const RevenueCenterActions = styled('div')`
   }
 `
 
+const RevenueCenterDesc = styled('div')`
+  margin: 0.75rem 0 0;
+
+  p {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    line-height: ${(props) => props.theme.lineHeight};
+  }
+`
+
+export const RevenueCenterChild = ({ revenueCenter, style }) => {
+  const { hours_desc, description } = revenueCenter
+  const hoursDesc = hours_desc ? stripTags(hours_desc) : null
+  const desc = description ? stripTags(description) : null
+  return (
+    <RevenueCenterView style={style}>
+      <RevenueCenterContent>
+        <div>
+          <RevenueCenterHeader>
+            <h3>{revenueCenter.name}</h3>
+          </RevenueCenterHeader>
+          <RevenueCenterActions>
+            {desc && (
+              <RevenueCenterDesc>
+                <p>{desc}</p>
+              </RevenueCenterDesc>
+            )}
+            {hoursDesc && (
+              <RevenueCenterAction
+                icon={iconMap['Clock']}
+                text={hoursDesc}
+                arrow={null}
+              />
+            )}
+          </RevenueCenterActions>
+        </div>
+      </RevenueCenterContent>
+    </RevenueCenterView>
+  )
+}
+
+RevenueCenterChild.displayName = 'RevenueCenterChild'
+RevenueCenterChild.propTypes = {
+  revenueCenter: propTypes.object,
+  style: propTypes.object,
+}
+
 const RevenueCenter = ({
   revenueCenter,
   showImage,
@@ -111,14 +157,14 @@ const RevenueCenter = ({
               target="_blank"
             >
               <RevenueCenterAction
-                icon={iconMap['MapPin']}
+                icon={iconMap.MapPin}
                 text={address.street}
               />
             </a>
             {phoneUrl && (
               <a href={phoneUrl} rel="noopener noreferrer" target="_blank">
                 <RevenueCenterAction
-                  icon={iconMap['Phone']}
+                  icon={iconMap.Phone}
                   text={address.phone}
                 />
               </a>

@@ -2,14 +2,14 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import styled from '@emotion/styled'
 import { makeRevenueCenterMsg } from '@open-tender/js'
 import { selectOrder, selectAutoSelect } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
-import { selectConfig } from '../slices'
+import { selectConfig } from '../../slices'
+import iconMap from '../iconMap'
 import RevenueCenterButtons from './RevenueCenterButtons'
-import iconMap from './iconMap'
-import styled from '@emotion/styled'
 
 const RevenueCenterOrderView = styled('div')`
   margin: 1.5rem 0 0;
@@ -24,7 +24,10 @@ const RevenueCenterOrderView = styled('div')`
 
 const RevenueCenterOrderMessage = styled('div')`
   line-height: ${(props) => props.theme.lineHeight};
-  margin: 0 0 1.5rem;
+
+  + div {
+    margin-top: 1.5rem;
+  }
 
   p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
@@ -53,23 +56,26 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
           <p>{msg.message}</p>
         </RevenueCenterOrderMessage>
       )}
-      <div>
-        {isMenu ? (
-          !autoSelect ? (
+
+      {isMenu ? (
+        !autoSelect ? (
+          <div>
             <ButtonStyled
               icon={iconMap.RefreshCw}
               onClick={() => history.push(`/locations`)}
             >
               Change Location
             </ButtonStyled>
-          ) : null
-        ) : (
+          </div>
+        ) : null
+      ) : (
+        <div>
           <RevenueCenterButtons
             revenueCenter={revenueCenter}
             isLanding={isLanding}
           />
-        )}
-      </div>
+        </div>
+      )}
     </RevenueCenterOrderView>
   )
 }

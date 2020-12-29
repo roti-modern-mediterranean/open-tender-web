@@ -1,13 +1,13 @@
 import React from 'react'
 import propTypes from 'prop-types'
-
-import iconMap from './iconMap'
 import styled from '@emotion/styled'
+
+import iconMap from '../iconMap'
 
 const RevenueCenterActionView = styled('div')`
   display: flex;
   align-items: center;
-  margin: 1rem 0 0;
+  margin: 0.75rem 0 0;
 `
 
 const RevenueCenterActionIcon = styled('div')`
@@ -35,6 +35,7 @@ const RevenueCenterActionArrowText = styled('div')`
   p {
     color: ${(props) => props.theme.fonts.body.color};
     font-size: ${(props) => props.theme.fonts.sizes.small};
+    line-height: ${(props) => props.theme.lineHeight};
   }
 `
 

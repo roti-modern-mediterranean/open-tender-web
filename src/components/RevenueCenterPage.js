@@ -17,7 +17,7 @@ import {
   selectConfig,
 } from '../slices'
 import Background from './Background'
-import RevenueCenter from './RevenueCenter'
+import RevenueCenter from './RevenueCenter/RevenueCenter'
 import PageTitle from './PageTitle'
 
 const makeImageUrl = (images, defaultImageUrl) => {

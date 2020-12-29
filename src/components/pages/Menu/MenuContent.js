@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 
 import { selectDisplaySettings } from '../../../slices'
-import { RevenueCenter, StickyNav } from '../..'
+import { RevenueCenter, RevenueCenterChild, StickyNav } from '../..'
 import { MenuContext } from './Menu'
 import MenuRevenueCenters from './MenuRevenueCenters'
 import MenuCategories from './MenuCategories'
@@ -11,7 +11,7 @@ import MenuLoading from './MenuLoading'
 import MenuError from './MenuError'
 import MenuHero from './MenuHero'
 
-const Menu = () => {
+const MenuContent = () => {
   const {
     revenueCenter,
     categories,
@@ -61,7 +61,10 @@ const Menu = () => {
     <>
       {selected && showHeroChild && (
         <MenuHero imageUrl={selected.large_image_url}>
-          <RevenueCenter revenueCenter={selected} />
+          <RevenueCenterChild
+            revenueCenter={selected}
+            style={{ maxWidth: '44rem' }}
+          />
         </MenuHero>
       )}
       {!selected && revenueCenter && showHero && (
@@ -102,6 +105,6 @@ const Menu = () => {
   )
 }
 
-Menu.displayName = 'Menu'
+MenuContent.displayName = 'MenuContent'
 
-export default Menu
+export default MenuContent

@@ -27,7 +27,7 @@ import PageTitle from './PageTitle'
 import PageContent from './PageContent'
 import Preface from './Preface'
 import ProgressBar from './ProgressBar'
-import RevenueCenter from './RevenueCenter'
+import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
 import ScreenreaderTitle from './ScreenreaderTitle'
 import QRCode from './QRCode'
 import Row from './Row'
@@ -66,6 +66,7 @@ export {
   Preface,
   ProgressBar,
   RevenueCenter,
+  RevenueCenterChild,
   QRCode,
   Row,
   ScreenreaderTitle,

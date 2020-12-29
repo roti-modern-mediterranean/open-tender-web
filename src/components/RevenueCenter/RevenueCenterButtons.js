@@ -11,7 +11,7 @@ import {
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
-import iconMap from './iconMap'
+import iconMap from '../iconMap'
 
 export const RevenueCenterButtons = ({ revenueCenter, isLanding }) => {
   const dispatch = useDispatch()
