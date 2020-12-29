@@ -31,6 +31,7 @@ import RevenueCenter from './RevenueCenter'
 import ScreenreaderTitle from './ScreenreaderTitle'
 import QRCode from './QRCode'
 import Row from './Row'
+import StickyNav from './StickyNav'
 import Tag from './Tag'
 import Welcome from './Welcome'
 
@@ -68,6 +69,7 @@ export {
   QRCode,
   Row,
   ScreenreaderTitle,
+  StickyNav,
   Tag,
   Welcome,
 }

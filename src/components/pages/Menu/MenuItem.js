@@ -5,10 +5,10 @@ import { isMobile } from 'react-device-detect'
 import { setCurrentItem, selectCartCounts } from '@open-tender/redux'
 import { convertStringToArray, makeDisplayPrice } from '@open-tender/js'
 
-import { selectDisplaySettings, openModal } from '../slices'
-import { MenuContext } from './MenuPage'
-import Tag from './Tag'
-import iconMap from './iconMap'
+import { selectDisplaySettings, openModal } from '../../../slices'
+import iconMap from '../../iconMap'
+import { Tag } from '../..'
+import { MenuContext } from './Menu'
 
 const MenuItem = ({ item }) => {
   const dispatch = useDispatch()

@@ -17,7 +17,7 @@ const CartButton = () => {
   const showEmptyCart = contains(pathname, ['menu', 'checkout'])
   const hideCart =
     (cartQuantity === 0 && !showEmptyCart) ||
-    contains(pathname, ['review', 'gift-cards', 'locations'])
+    contains(pathname, ['review', 'gift-cards'])
 
   const handleClick = (evt) => {
     evt.preventDefault()

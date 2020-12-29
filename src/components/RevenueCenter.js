@@ -12,11 +12,8 @@ import styled from '@emotion/styled'
 
 const RevenueCenterView = styled(Box)`
   position: relative;
-  margin: ${(props) => props.theme.layout.padding} 0 0;
   overflow: hidden;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
-  }
+  width: 100%;
 `
 
 const RevenueCenterImage = styled(BgImage)`
@@ -26,13 +23,15 @@ const RevenueCenterImage = styled(BgImage)`
   right: 0;
   width: 24rem;
   background-color: ${(props) => props.theme.bgColors.secondary};
+
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: none;
   }
 `
 
 const RevenueCenterContent = styled('div')`
-  padding: 0 24rem 0 0;
+  padding: 0 ${(props) => (props.showImage ? `24rem` : null)} 0 0;
+
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0;
   }
@@ -72,7 +71,13 @@ const RevenueCenterActions = styled('div')`
   }
 `
 
-const RevenueCenter = ({ revenueCenter, showImage, isMenu, isLanding }) => {
+const RevenueCenter = ({
+  revenueCenter,
+  showImage,
+  isMenu,
+  isLanding,
+  style = null,
+}) => {
   const { cartId } = useSelector(selectGroupOrder)
   const { address, images, hours, is_outpost } = revenueCenter
   const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
@@ -89,11 +94,11 @@ const RevenueCenter = ({ revenueCenter, showImage, isMenu, isLanding }) => {
       : null
 
   return (
-    <RevenueCenterView>
+    <RevenueCenterView style={style}>
       {showImage && (
         <RevenueCenterImage style={bgStyle}>&nbsp;</RevenueCenterImage>
       )}
-      <RevenueCenterContent>
+      <RevenueCenterContent showImage={showImage}>
         <div>
           <RevenueCenterHeader>
             <h3>{revenueCenter.name}</h3>
@@ -145,6 +150,7 @@ RevenueCenter.propTypes = {
   showImage: propTypes.bool,
   isMenu: propTypes.bool,
   isLanding: propTypes.bool,
+  style: propTypes.object,
 }
 
 export default RevenueCenter

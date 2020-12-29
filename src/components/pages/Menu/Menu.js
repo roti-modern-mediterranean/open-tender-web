@@ -1,4 +1,4 @@
-import React, { useEffect, createContext } from 'react'
+import React, { useEffect, createContext, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -12,32 +12,39 @@ import {
   fetchMenu,
   fetchAllergens,
 } from '@open-tender/redux'
+import { Helmet } from 'react-helmet'
 
-import { selectConfig } from '../slices'
-import Menu from './Menu'
-import { ScreenreaderTitle } from '.'
+import { selectBrand, selectConfig } from '../../../slices'
+import { AppContext } from '../../../App'
+import { Content, Main, ScreenreaderTitle } from '../..'
+import MenuContent from './MenuContent'
+import MenuHeader from './MenuHeader'
 
 export const MenuContext = createContext(null)
 
 const MenuPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const { title: siteTitle } = useSelector(selectBrand)
   const { menu: menuConfig } = useSelector(selectConfig)
   const { loadingMessage } = menuConfig
   const revenueCenter = useSelector(selectRevenueCenter)
   const { revenueCenterId, serviceType, requestedAt } = useSelector(
     selectMenuVars
   )
-  const { revenueCenters, categories, soldOut, error, loading } = useSelector(
+  let { revenueCenters, categories, soldOut, error, loading } = useSelector(
     selectMenu
   )
+  // loading = 'pending'
+  // error = 'Something went wrong when retrieving this menu. Please try again.'
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const groupOrderClosed = useSelector(selectGroupOrderClosed)
   const isLoading = loading === 'pending'
+  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    window.scroll(0, 0)
-  }, [])
+    windowRef.current.scroll(0, 0)
+  }, [windowRef])
 
   useEffect(() => {
     if (!revenueCenterId) {
@@ -58,32 +65,38 @@ const MenuPage = () => {
     groupOrderClosed,
   ])
 
-  const changeRevenueCenter = (evt) => {
-    evt.preventDefault()
+  const changeRevenueCenter = () => {
     dispatch(resetRevenueCenter())
-    evt.target.blur()
   }
 
   return (
-    <div className="menu__page">
-      <MenuContext.Provider
-        value={{
-          menuConfig,
-          revenueCenter,
-          categories,
-          revenueCenters,
-          changeRevenueCenter,
-          soldOut,
-          allergenAlerts,
-          isLoading,
-          loadingMessage,
-          error,
-        }}
-      >
-        <ScreenreaderTitle>Menu</ScreenreaderTitle>
-        <Menu />
-      </MenuContext.Provider>
-    </div>
+    <>
+      <Helmet>
+        <title>Menu | {siteTitle}</title>
+      </Helmet>
+      <Content>
+        <MenuHeader />
+        <Main>
+          <MenuContext.Provider
+            value={{
+              menuConfig,
+              revenueCenter,
+              categories,
+              revenueCenters,
+              changeRevenueCenter,
+              soldOut,
+              allergenAlerts,
+              isLoading,
+              loadingMessage,
+              error,
+            }}
+          >
+            <ScreenreaderTitle>Menu</ScreenreaderTitle>
+            <MenuContent />
+          </MenuContext.Provider>
+        </Main>
+      </Content>
+    </>
   )
 }
 

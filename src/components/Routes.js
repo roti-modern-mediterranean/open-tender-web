@@ -1,7 +1,6 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 // import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import MenuPage from './MenuPage'
 import CheckoutPage from './CheckoutPage'
 import ConfirmationPage from './ConfirmationPage'
 import RevenueCenterPage from './RevenueCenterPage'
@@ -29,6 +28,7 @@ import {
   GiftCards,
   Home,
   HouseAccounts,
+  Menu,
   Orders,
   Order,
   Profile,
@@ -81,7 +81,7 @@ const Routes = () => {
         <RevenueCenterPage />
       </Route>
       <Route path="/menu/:slug">
-        <MenuPage />
+        <Menu />
       </Route>
       <Route path="/join/:token">
         <GroupOrderGuestPage />

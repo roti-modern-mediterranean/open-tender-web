@@ -53,6 +53,15 @@ const RevenueCentersSelectHeader = styled('div')`
   }
 `
 
+const RevenueCentersSelectList = styled('ul')`
+  > li {
+    margin: ${(props) => props.theme.layout.padding} 0 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
+    }
+  }
+`
+
 const RevenueCentersSelect = () => {
   const dispatch = useDispatch()
   const history = useHistory()
@@ -144,7 +153,7 @@ const RevenueCentersSelect = () => {
                 <p>{renamedError || renamedMsg}</p>
               </RevenueCentersSelectHeader>
               {showRevenueCenters ? (
-                <ul>
+                <RevenueCentersSelectList>
                   {displayedRevenueCenters.map((revenueCenter) => (
                     <li key={revenueCenter.revenue_center_id}>
                       <RevenueCenter
@@ -154,7 +163,7 @@ const RevenueCentersSelect = () => {
                       />
                     </li>
                   ))}
-                </ul>
+                </RevenueCentersSelectList>
               ) : (
                 <ButtonLink onClick={handleStartOver}>
                   Choose a different order type

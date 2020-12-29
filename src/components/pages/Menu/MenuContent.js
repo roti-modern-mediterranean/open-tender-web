@@ -2,16 +2,14 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 
-import { selectDisplaySettings } from '../slices'
-import StickyNav from './StickyNav'
-import { MenuContext } from './MenuPage'
+import { selectDisplaySettings } from '../../../slices'
+import { RevenueCenter, StickyNav } from '../..'
+import { MenuContext } from './Menu'
 import MenuRevenueCenters from './MenuRevenueCenters'
 import MenuCategories from './MenuCategories'
 import MenuLoading from './MenuLoading'
-import RevenueCenter from './RevenueCenter'
-import Hero from './Hero'
-import RevenueCenterChild from './RevenueCenterChild'
 import MenuError from './MenuError'
+import MenuHero from './MenuHero'
 
 const Menu = () => {
   const {
@@ -62,21 +60,18 @@ const Menu = () => {
   return (
     <>
       {selected && showHeroChild && (
-        <Hero imageUrl={selected.large_image_url} classes="hero--right">
-          <RevenueCenterChild
-            revenueCenter={selected}
-            classes="rc--hero slide-up"
-          />
-        </Hero>
+        <MenuHero imageUrl={selected.large_image_url}>
+          <RevenueCenter revenueCenter={selected} />
+        </MenuHero>
       )}
       {!selected && revenueCenter && showHero && (
-        <Hero imageUrl={menuConfig.background} classes="hero--right">
+        <MenuHero imageUrl={menuConfig.background}>
           <RevenueCenter
             revenueCenter={revenueCenter}
-            classes="rc--hero slide-up"
             isMenu={true}
+            style={{ maxWidth: '44rem' }}
           />
-        </Hero>
+        </MenuHero>
       )}
       {!error ? (
         <div className="menu__wrapper">

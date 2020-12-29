@@ -10,6 +10,7 @@ import Home from './Home'
 import HouseAccounts from './HouseAccounts'
 import Orders from './Orders'
 import Order from './Order'
+import Menu from './Menu'
 import Profile from './Profile'
 import RevenueCenters from './RevenueCenters'
 import Rewards from './Rewards'
@@ -25,6 +26,7 @@ export {
   GiftCards,
   Home,
   HouseAccounts,
+  Menu,
   Orders,
   Order,
   Profile,
