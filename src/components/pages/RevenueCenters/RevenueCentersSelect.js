@@ -13,11 +13,12 @@ import {
   resetCheckout,
 } from '@open-tender/redux'
 import { makeDisplayedRevenueCenters, renameLocation } from '@open-tender/js'
-import { ButtonLink } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { selectConfig, selectSettings, selectGeoLatLng } from '../../../slices'
 import { Container, Loading, PageContent, RevenueCenter } from '../..'
 import styled from '@emotion/styled'
+import iconMap from '../../iconMap'
 
 const RevenueCentersSelectView = styled('div')`
   position: relative;
@@ -163,9 +164,14 @@ const RevenueCentersSelect = () => {
                   ))}
                 </RevenueCentersSelectList>
               ) : (
-                <ButtonLink onClick={handleStartOver}>
-                  Choose a different order type
-                </ButtonLink>
+                <div style={{ margin: '3rem 0 0' }}>
+                  <ButtonStyled
+                    icon={iconMap.RefreshCw}
+                    onClick={handleStartOver}
+                  >
+                    Start Over
+                  </ButtonStyled>
+                </div>
               )}
             </PageContent>
           </>

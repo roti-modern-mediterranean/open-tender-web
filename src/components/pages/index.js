@@ -5,6 +5,7 @@ import AccountAllergens from './AccountAllergens'
 import AccountCreditCards from './AccountCreditCards'
 import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
+import Catering from './Catering'
 import Favorites from './Favorites'
 import GiftCards from './GiftCards'
 import GroupOrders from './GroupOrders'
@@ -26,6 +27,7 @@ export {
   AccountCreditCards,
   AccountGiftCards,
   AccountSettings,
+  Catering,
   Favorites,
   GiftCards,
   GroupOrders,

@@ -5,25 +5,23 @@ import styled from '@emotion/styled'
 const WelcomeGreeting = styled('div')`
   position: relative;
   width: 100%;
-  flex: 1 0 100%;
+  // flex: 1 0 100%;
   padding: 8.5rem 0 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: flex-start;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     background-image: ${(props) => `url(${props.imageUrl})`};
+    flex: 1 0 100%;
+    justify-content: flex-end;
   }
 `
 
 const WelcomeHeader = styled('div')`
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   background-color: rgba(0, 0, 0, 0.15);
-  // }
-
   h1 {
     line-height: 1;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {

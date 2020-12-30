@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
+import { Helmet } from 'react-helmet'
 import {
   selectOrder,
   setServiceType,
@@ -23,19 +24,69 @@ import {
   todayDate,
   makeWeekdayIndices,
 } from '@open-tender/js'
-import { Button } from '@open-tender/components'
+import {
+  Box,
+  ButtonLink,
+  ButtonStyled,
+  ErrorMessage,
+} from '@open-tender/components'
 
-import { selectConfig } from '../slices'
-import Background from './Background'
-import Loader from './Loader'
-import ErrorMessage from './ErrorMessage'
-import PageTitle from './PageTitle'
-import iconMap from './iconMap'
+import { selectBrand, selectConfig } from '../../../slices'
+import { AppContext } from '../../../App'
+import iconMap from '../../iconMap'
+import {
+  Background,
+  Container,
+  Content,
+  HeaderMobile,
+  Loading,
+  Main,
+  PageTitle,
+  PageContent,
+} from '../..'
+import { Account, StartOver } from '../../buttons'
+import styled from '@emotion/styled'
+
+const CateringDatepicker = styled(Box)`
+  max-width: 48rem;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+`
+
+const CateringButtons = styled('div')`
+  margin: 3rem 0 1.5rem;
+  button {
+    margin: 0 1rem 1rem 0;
+    &:last-child {
+      margin: 0;
+    }
+  }
+`
+
+const CateringPolicy = styled('div')`
+  margin: 3rem 0;
+
+  h2 {
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
+  }
+
+  h2 + p {
+    margin: 0.5rem 0 2rem;
+    font-size: ${(props) => props.theme.fonts.sizes.main};
+  }
+
+  div p {
+    margin: 1em 0;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    line-height: ${(props) => props.theme.lineHeight};
+  }
+`
 
 const CateringPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { catering } = useSelector(selectConfig)
+  const { title: siteTitle } = useSelector(selectBrand)
+  const { catering: config } = useSelector(selectConfig)
+  const { policy } = config
   const { orderType, serviceType, requestedAt, revenueCenter } = useSelector(
     selectOrder
   )
@@ -47,10 +98,11 @@ const CateringPage = () => {
   const [settings, setSettings] = useState(null)
   const { entity: validTimes, loading, error } = useSelector(selectValidTimes)
   const isLoading = loading === 'pending'
+  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    window.scroll(0, 0)
-  }, [])
+    windowRef.current.scroll(0, 0)
+  }, [windowRef])
 
   useEffect(() => {
     if (!hasTypes) {
@@ -113,35 +165,52 @@ const CateringPage = () => {
     }
   }, [date, settings])
 
-  const chooseServiceType = (evt, serviceType) => {
-    evt.preventDefault()
+  const chooseServiceType = (serviceType) => {
     dispatch(setServiceType(serviceType))
     const reqestedAtIso = date ? dateToIso(date, tz) : 'asap'
     dispatch(setRequestedAt(reqestedAtIso))
     history.push('/locations')
-    evt.target.blur()
   }
 
-  const startOver = (evt) => {
-    evt.preventDefault()
+  const startOver = () => {
     dispatch(resetOrder())
     history.push(`/`)
-    evt.target.blur()
   }
 
   return (
     <>
-      {isBrowser && <Background imageUrl={catering.background} />}
-      <div className="content">
-        <PageTitle {...catering} />
-        <div className="content__body">
-          <div className="container">
-            <div className="catering">
-              <div className="catering__datepicker">
-                {isLoading ? (
-                  <Loader type="Clip" text="Loading calendar..." size={28} />
-                ) : settings ? (
-                  <div className="datepicker-inline ot-font-size-small ot-border ot-border-radius-small ot-bg-color-primary">
+      <Helmet>
+        <title>
+          {config.title} | {siteTitle}
+        </title>
+      </Helmet>
+      {isBrowser && <Background imageUrl={config.background} />}
+      <Content maxWidth="76.8rem">
+        <HeaderMobile
+          maxWidth="76.8rem"
+          borderColor="primary"
+          title={isBrowser ? null : 'Catering'}
+          left={<StartOver />}
+          right={<Account />}
+        />
+        <Main>
+          <Container>
+            <PageTitle {...config} />
+            <PageContent>
+              {isLoading ? (
+                <Loading text="Loading calendar..." />
+              ) : error ? (
+                <>
+                  <ErrorMessage>{error}</ErrorMessage>
+                  <p>
+                    <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
+                      Start Over
+                    </ButtonStyled>
+                  </p>
+                </>
+              ) : settings ? (
+                <>
+                  <CateringDatepicker>
                     <DatePicker
                       showPopperArrow={false}
                       showTimeSelect
@@ -160,72 +229,49 @@ const CateringPage = () => {
                       inline
                       shouldCloseOnSelect={false}
                     />
+                  </CateringDatepicker>
+                  <CateringButtons>
+                    <ButtonStyled
+                      icon={iconMap.Truck}
+                      onClick={() => chooseServiceType('DELIVERY')}
+                      disabled={!date}
+                    >
+                      Order Delivery
+                    </ButtonStyled>
+                    <ButtonStyled
+                      icon={iconMap.ShoppingBag}
+                      onClick={() => chooseServiceType('PICKUP')}
+                      disabled={!date}
+                    >
+                      Order Pickup
+                    </ButtonStyled>
+                  </CateringButtons>
+                  <div>
+                    <ButtonLink onClick={startOver}>
+                      Or switch to a regular Pickup or Delivery order
+                    </ButtonLink>
                   </div>
-                ) : error ? (
-                  <ErrorMessage msg={error}>
-                    <Button
-                      text="Start Over"
-                      icon={iconMap['RefreshCw']}
-                      classes="ot-btn ot-btn--cancel"
-                      onClick={startOver}
-                    />
-                  </ErrorMessage>
-                ) : (
-                  <p className="ot-color-error">
-                    This order type isn't currently available
-                  </p>
-                )}
-              </div>
-              <div className="catering__buttons">
-                <Button
-                  text="Order Delivery"
-                  classes="ot-btn"
-                  onClick={(evt) => chooseServiceType(evt, 'DELIVERY')}
-                  disabled={!date}
-                />
-                <Button
-                  text="Order Pickup"
-                  classes="ot-btn"
-                  onClick={(evt) => chooseServiceType(evt, 'PICKUP')}
-                  disabled={!date}
-                />
-              </div>
-              <div className="catering__footer ot-font-size-small">
-                <Button
-                  text="Switch to a regular order Pickup or Delivery order"
-                  classes="ot-btn-link"
-                  onClick={startOver}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="content__footer">
-          <div className="container">
-            <div className="catering__fine-print">
-              {catering.policy.title.length > 0 && (
-                <p className="catering__fine-print__title ot-heading ot-font-size-h3">
-                  {catering.policy.title}
-                </p>
+                </>
+              ) : (
+                <ErrorMessage>
+                  This order type isn't currently available
+                </ErrorMessage>
               )}
-              {catering.policy.subtitle.length > 0 && (
-                <p className="catering__fine-print__subtitle ot-heading ot-font-size-big">
-                  {catering.policy.subtitle}
-                </p>
-              )}
-              {catering.policy.content.length > 0 && (
-                <div className="content__text">
-                  <div className="catering__fine-print__content ot-line-height">
-                    {catering.policy.content.map((i, index) => (
+              <CateringPolicy>
+                {policy.title && <h2>{policy.title}</h2>}
+                {policy.subtitle && <p>{policy.subtitle}</p>}
+                {policy.content.length > 0 && (
+                  <div>
+                    {policy.content.map((i, index) => (
                       <p key={index}>{i}</p>
                     ))}
                   </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+                )}
+              </CateringPolicy>
+            </PageContent>
+          </Container>
+        </Main>
+      </Content>
     </>
   )
 }

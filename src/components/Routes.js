@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import CheckoutPage from './CheckoutPage'
 import ConfirmationPage from './ConfirmationPage'
 import RevenueCenterPage from './RevenueCenterPage'
-import CateringPage from './CateringPage'
 import ResetPasswordPage from './ResetPasswordPage'
 import NotFoundPage from './NotFoundPage'
 import RefundPolicyPage from './RefundPolicyPage'
@@ -22,6 +21,7 @@ import {
   AccountCreditCards,
   AccountGiftCards,
   AccountSettings,
+  Catering,
   Favorites,
   GiftCards,
   GroupOrders,
@@ -72,7 +72,7 @@ const Routes = () => {
         <ResetPasswordPage />
       </Route>
       <Route exact path="/catering">
-        <CateringPage />
+        <Catering />
       </Route>
       <Route exact path="/locations">
         <RevenueCenters />
