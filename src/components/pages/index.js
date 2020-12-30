@@ -7,7 +7,8 @@ import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
 import Catering from './Catering'
 import Donations from './Donations'
-// import ErrorReport from './ErrorReport'
+import ErrorReport from './ErrorReport'
+import ErrorFatal from './ErrorFatal'
 import Favorites from './Favorites'
 import GiftCards from './GiftCards'
 import GroupOrders from './GroupOrders'
@@ -31,7 +32,8 @@ export {
   AccountSettings,
   Catering,
   Donations,
-  // ErrorReport,
+  ErrorReport,
+  ErrorFatal,
   Favorites,
   GiftCards,
   GroupOrders,

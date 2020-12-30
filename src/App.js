@@ -11,12 +11,13 @@ import Messages from './components/Messages'
 import Notifications from './components/Notifications'
 import CartButton from './components/CartButton'
 import Sidebar from './components/Sidebar'
-import ErrorFatalPage from './components/ErrorFatalPage'
+// import ErrorFatalPage from './components/ErrorFatalPage'
 import ErrorBoundary from './components/ErrorBoundary'
 import { fetchConfig } from './slices/configSlice'
 import './App.scss'
 import styled from '@emotion/styled'
 import Nav from './components/Nav'
+import { ErrorFatal } from './components/pages'
 
 export const AppContext = createContext(null)
 
@@ -52,14 +53,15 @@ class App extends React.Component {
   }
 
   render() {
-    const { loading, theme, brand, error } = this.props
+    let { loading, theme, brand, error } = this.props
+    // const loading = 'pending'
     // console.log(JSON.stringify(theme, null, 2))
     const { body, headings } = theme ? theme.fonts : {}
     const isLoading = loading === 'pending'
     const hasTheme = !isLoading && !error && theme
     return (
       <>
-        <ErrorFatalPage error={error} loading={loading} />
+        <ErrorFatal error={error} loading={loading} />
         {hasTheme && (
           <ThemeProvider theme={this.props.theme}>
             <GlobalStyles />
