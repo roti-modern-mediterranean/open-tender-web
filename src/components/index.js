@@ -1,4 +1,3 @@
-import AccountBackground from './AccountBackground'
 import Background from './Background'
 import Card from './Card'
 import Content from './Content'
@@ -39,7 +38,6 @@ import Tag from './Tag'
 import Welcome from './Welcome'
 
 export {
-  AccountBackground,
   Background,
   Card,
   Container,

@@ -7,7 +7,8 @@ import {
   selectCustomerOrders,
   fetchCustomerOrders,
 } from '@open-tender/redux'
-import { ButtonStyled } from '@open-tender/components'
+import { ButtonStyled, ButtonToggleGroup } from '@open-tender/components'
+import { makeUniqueDisplayItems } from '@open-tender/js'
 
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
@@ -19,17 +20,25 @@ import {
   PageTitle,
   PageContent,
   HeaderAccount,
+  ItemCards,
 } from '../..'
 import OrdersList from './OrdersList'
+import styled from '@emotion/styled'
+
+const ToggleView = styled('div')`
+  margin: -1rem 0 3rem;
+`
 
 const Orders = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const increment = 20
   const limit = 60
+  const [toggle, setToggle] = useState('orders')
+  const [count, setCount] = useState(increment)
+  const [items, setItems] = useState([])
   const orders = useSelector(selectCustomerOrders)
   const { entities, loading, error } = orders
-  const [count, setCount] = useState(increment)
   const [recentOrders, setRecentOrders] = useState(entities.slice(0, count))
   const { title: siteTitle } = useSelector(selectBrand)
   const config = useSelector(selectAccountConfig)
@@ -53,6 +62,12 @@ const Orders = () => {
     setRecentOrders(entities.slice(0, count))
   }, [entities, count])
 
+  useEffect(() => {
+    const displayItems = makeUniqueDisplayItems(entities)
+    const recentItems = displayItems.slice(0, 100)
+    setItems(recentItems)
+  }, [entities])
+
   const loadMore = () => {
     setCount(Math.min(count + increment, limit))
   }
@@ -72,11 +87,33 @@ const Orders = () => {
             <PageContent>
               {recentOrders.length ? (
                 <>
-                  <OrdersList orders={recentOrders} />
-                  {entities.length - 1 > count && (
-                    <ButtonStyled onClick={loadMore}>
-                      Load more recent orders
-                    </ButtonStyled>
+                  <ToggleView>
+                    <ButtonToggleGroup>
+                      <ButtonStyled
+                        onClick={() => setToggle('orders')}
+                        disabled={toggle === 'orders'}
+                      >
+                        Recent Orders
+                      </ButtonStyled>
+                      <ButtonStyled
+                        onClick={() => setToggle('items')}
+                        disabled={toggle === 'items'}
+                      >
+                        Recent Items
+                      </ButtonStyled>
+                    </ButtonToggleGroup>
+                  </ToggleView>
+                  {toggle === 'orders' ? (
+                    <>
+                      <OrdersList orders={recentOrders} delay={0} />
+                      {entities.length - 1 > count && (
+                        <ButtonStyled onClick={loadMore}>
+                          Load more recent orders
+                        </ButtonStyled>
+                      )}
+                    </>
+                  ) : (
+                    <ItemCards items={items} delay={0} />
                   )}
                 </>
               ) : isLoading ? (

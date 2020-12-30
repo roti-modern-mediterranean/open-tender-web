@@ -7,7 +7,6 @@ const OrdersListView = styled('div')`
   display: flex;
   flex-wrap: wrap;
   margin: 1rem -1rem;
-  // justify-content: center;
 `
 const OrdersListItem = styled('div')`
     flex: 0 0 36rem;
@@ -30,8 +29,8 @@ const OrdersListItem = styled('div')`
       max-width: 50%;
     }
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      flex: 0 0 50%;
-      max-width: 50%;
+      flex: 0 0 100%;
+      max-width: 100%;
     }
   }
 `

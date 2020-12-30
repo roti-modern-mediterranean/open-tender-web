@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import CheckoutPage from './CheckoutPage'
 import ConfirmationPage from './ConfirmationPage'
 import RevenueCenterPage from './RevenueCenterPage'
-import AccountItemsPage from './AccountItemsPage'
 import CateringPage from './CateringPage'
 import ResetPasswordPage from './ResetPasswordPage'
 import NotFoundPage from './NotFoundPage'
@@ -107,9 +106,6 @@ const Routes = () => {
       </Route>
       <Route exact path="/favorites">
         <Favorites />
-      </Route>
-      <Route exact path="/items">
-        <AccountItemsPage />
       </Route>
       <Route exact path="/orders">
         <Orders />
