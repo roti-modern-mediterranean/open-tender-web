@@ -6,12 +6,19 @@ import {
   updateOrderFulfillment,
   resetOrderFulfillment,
 } from '@open-tender/redux'
-import { OrderFulfillmentForm } from '@open-tender/components'
+import { ErrorMessage, OrderFulfillmentForm } from '@open-tender/components'
 
-import SectionHeader from './SectionHeader'
-import SectionError from './SectionError'
-import SectionLoading from './SectionLoading'
 import { selectFulfillment } from '../slices'
+import { Loading } from '.'
+import styled from '@emotion/styled'
+
+const OrderFulfillmentView = styled('div')`
+  margin: 4rem 0 2rem;
+
+  h2 + p {
+    margin: 0.5rem 0 0;
+  }
+`
 
 const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
   const dispatch = useDispatch()
@@ -41,28 +48,28 @@ const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
   }, [dispatch])
 
   return (
-    <div id="order-fulfillment" className="section slide-up">
-      <div className="container">
-        <div className="section__container">
-          <SectionHeader
-            title={fulfillmentSettings.title}
-            subtitle={subtitle}
-          />
-          <SectionLoading loading={isLoading} />
-          <SectionError error={errMsg} />
-          <div className="section__content ot-bg-color-primary ot-border-radius">
-            <OrderFulfillmentForm
-              orderId={orderId}
-              fulfillment={fulfillment}
-              loading={loading}
-              error={error}
-              update={update}
-              settings={fulfillmentSettings}
-            />
+    <OrderFulfillmentView id="order-fulfillment">
+      {isLoading ? (
+        <Loading text="Retrieving your order..." />
+      ) : errMsg ? (
+        <ErrorMessage>{errMsg}</ErrorMessage>
+      ) : (
+        <>
+          <div style={{ margin: '0 0 2rem' }}>
+            <h2>{fulfillmentSettings.title}</h2>
+            <p>{subtitle}</p>
           </div>
-        </div>
-      </div>
-    </div>
+          <OrderFulfillmentForm
+            orderId={orderId}
+            fulfillment={fulfillment}
+            loading={loading}
+            error={error}
+            update={update}
+            settings={fulfillmentSettings}
+          />
+        </>
+      )}
+    </OrderFulfillmentView>
   )
 }
 

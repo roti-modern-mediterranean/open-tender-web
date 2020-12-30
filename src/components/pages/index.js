@@ -10,6 +10,7 @@ import Donations from './Donations'
 import ErrorReport from './ErrorReport'
 import ErrorFatal from './ErrorFatal'
 import Favorites from './Favorites'
+import Fulfillment from './Fulfillment'
 import GiftCards from './GiftCards'
 import GroupOrders from './GroupOrders'
 import Home from './Home'
@@ -35,6 +36,7 @@ export {
   ErrorReport,
   ErrorFatal,
   Favorites,
+  Fulfillment,
   GiftCards,
   GroupOrders,
   Home,

@@ -10,7 +10,6 @@ import RefundPolicyPage from './RefundPolicyPage'
 import GroupOrderGuestPage from './GroupOrderGuestPage'
 import GroupOrderReviewPage from './GroupOrderReviewPage'
 import LevelUpPage from './LevelUpPage'
-import FulfillmentPage from './FulfillmentPage'
 import ThanxPage from './ThanxPage'
 import {
   Accessibility,
@@ -23,6 +22,7 @@ import {
   Catering,
   Donations,
   Favorites,
+  Fulfillment,
   GiftCards,
   GroupOrders,
   Home,
@@ -96,7 +96,7 @@ const Routes = () => {
         <ConfirmationPage />
       </Route>
       <Route exact path="/curbside/:id">
-        <FulfillmentPage />
+        <Fulfillment />
       </Route>
       <Route exact path="/account">
         <Account />
