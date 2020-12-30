@@ -6,10 +6,10 @@ import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 import * as Sentry from '@sentry/react'
 
-// Sentry.init({
-//   dsn: process.env.REACT_APP_SENTRY_DSN,
-//   environment: process.env.NODE_ENV,
-// })
+Sentry.init({
+  dsn: process.env.REACT_APP_SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+})
 
 ReactDOM.render(
   <React.StrictMode>

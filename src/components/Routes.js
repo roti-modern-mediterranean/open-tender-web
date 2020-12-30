@@ -11,7 +11,6 @@ import GroupOrderGuestPage from './GroupOrderGuestPage'
 import GroupOrderReviewPage from './GroupOrderReviewPage'
 import LevelUpPage from './LevelUpPage'
 import FulfillmentPage from './FulfillmentPage'
-import DonationPage from './DonationPage'
 import ThanxPage from './ThanxPage'
 import {
   Accessibility,
@@ -22,6 +21,7 @@ import {
   AccountGiftCards,
   AccountSettings,
   Catering,
+  Donations,
   Favorites,
   GiftCards,
   GroupOrders,
@@ -147,7 +147,7 @@ const Routes = () => {
         <GiftCards />
       </Route>
       <Route exact path="/donations">
-        <DonationPage />
+        <Donations />
       </Route>
       <Route>
         <NotFoundPage />

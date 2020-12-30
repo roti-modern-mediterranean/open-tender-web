@@ -17,12 +17,12 @@ const ContentContainer = styled('div')`
   background-color: ${(props) => props.theme.bgColors.primary};
 `
 
-const Content = ({ maxWidth = '100%', children }) => {
+const Content = ({ maxWidth = '100%', hasRouter = true, children }) => {
   return (
     <ContentContainer maxWidth={maxWidth}>
       <>
         {children}
-        <Footer />
+        <Footer hasRouter={hasRouter} />
       </>
     </ContentContainer>
   )

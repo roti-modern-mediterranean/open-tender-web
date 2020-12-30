@@ -20,7 +20,7 @@ import Nav from './components/Nav'
 
 export const AppContext = createContext(null)
 
-const AppView = styled('div')`
+export const AppView = styled('div')`
   display: flex;
   justify-content: flex-end;
   position: fixed;
@@ -63,19 +63,19 @@ class App extends React.Component {
         {hasTheme && (
           <ThemeProvider theme={this.props.theme}>
             <GlobalStyles />
-            <ErrorBoundary>
-              <AppView ref={this.windowRef} id="app">
-                <Helmet>
-                  <title>{brand.title}</title>
-                  <meta name="description" content={brand.description} />
-                  <link rel="icon" href={brand.favicon} />
-                  <link rel="apple-touch-icon" href={brand.appleTouchIcon} />
-                  <link href={body.url} rel="stylesheet" />
-                  {headings.url && body.url !== headings.url && (
-                    <link href={headings.url} rel="stylesheet" />
-                  )}
-                </Helmet>
-                <AppContext.Provider value={{ windowRef: this.windowRef }}>
+            <AppView ref={this.windowRef} id="app">
+              <Helmet>
+                <title>{brand.title}</title>
+                <meta name="description" content={brand.description} />
+                <link rel="icon" href={brand.favicon} />
+                <link rel="apple-touch-icon" href={brand.appleTouchIcon} />
+                <link href={body.url} rel="stylesheet" />
+                {headings.url && body.url !== headings.url && (
+                  <link href={headings.url} rel="stylesheet" />
+                )}
+              </Helmet>
+              <AppContext.Provider value={{ windowRef: this.windowRef }}>
+                <ErrorBoundary>
                   <Router>
                     <Modal />
                     <Messages />
@@ -85,9 +85,9 @@ class App extends React.Component {
                     <Sidebar />
                     <Nav />
                   </Router>
-                </AppContext.Provider>
-              </AppView>
-            </ErrorBoundary>
+                </ErrorBoundary>
+              </AppContext.Provider>
+            </AppView>
           </ThemeProvider>
         )}
       </>

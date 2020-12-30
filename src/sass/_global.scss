@@ -146,16 +146,6 @@ body.has-modal {
   }
 }
 
-pre {
-  font-family: Consolas, Menlo, Courier, monospace;
-  line-height: 1.8;
-  padding: $padding;
-  overflow-x: scroll;
-  @include breakpoint(mobile_both) {
-    padding: $padding-mobile;
-  }
-}
-
 ol {
   list-style: decimal outside;
   padding: 0 0 0 1.5rem;

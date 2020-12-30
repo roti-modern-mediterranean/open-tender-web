@@ -6,6 +6,8 @@ import AccountCreditCards from './AccountCreditCards'
 import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
 import Catering from './Catering'
+import Donations from './Donations'
+// import ErrorReport from './ErrorReport'
 import Favorites from './Favorites'
 import GiftCards from './GiftCards'
 import GroupOrders from './GroupOrders'
@@ -28,6 +30,8 @@ export {
   AccountGiftCards,
   AccountSettings,
   Catering,
+  Donations,
+  // ErrorReport,
   Favorites,
   GiftCards,
   GroupOrders,

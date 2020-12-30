@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { AppContext } from '../App'
 
 const HeaderMobileView = styled('nav')`
   position: fixed;
@@ -13,9 +14,10 @@ const HeaderMobileView = styled('nav')`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.25s ease;
   background-color: ${(props) => props.theme.bgColors[props.bgColor]};
   box-shadow: ${(props) =>
-    props.stuck ? `0 1rem 1rem 1rem rgba(0, 0, 0, 0.3)` : 'none'};
+    props.stuck ? props.theme.boxShadow.outer : 'none'};
   padding: 0 1.3rem;
   border-width: 0.1rem;
   border-style: solid;
@@ -65,25 +67,30 @@ const HeaderMobile = ({
 }) => {
   const header = useRef(null)
   const [stuck, setStuck] = useState(false)
+  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
+    const winRef = windowRef.current
     const handleScroll = () => {
       if (header.current) {
         setStuck(header.current.getBoundingClientRect().top < 0)
       }
     }
-    window.addEventListener('scroll', handleScroll)
+    winRef.addEventListener('scroll', handleScroll)
     return () => {
-      window.removeEventListener('scroll', () => handleScroll)
+      winRef.removeEventListener('scroll', () => handleScroll)
     }
-  }, [])
+  }, [windowRef])
+
+  const adjustedBorderColor =
+    borderColor === 'primary' && stuck ? 'secondary' : borderColor
 
   return (
     <div ref={header}>
       <HeaderMobileView
         stuck={stuck}
         bgColor={bgColor}
-        borderColor={borderColor}
+        borderColor={adjustedBorderColor}
         maxWidth={maxWidth}
       >
         <HeaderMobileNav>{left}</HeaderMobileNav>

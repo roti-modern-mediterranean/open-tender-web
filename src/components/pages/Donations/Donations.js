@@ -1,14 +1,13 @@
 import React, { useCallback, useContext, useEffect } from 'react'
 import { isBrowser } from 'react-device-detect'
 import { useDispatch, useSelector } from 'react-redux'
-import { Helmet } from 'react-helmet'
-import { Minus, Plus } from 'react-feather'
 import { Link } from 'react-router-dom'
-import { GiftCardsForm } from '@open-tender/components'
+import { Helmet } from 'react-helmet'
+import { DonationForm } from '@open-tender/components'
 import {
-  selectGiftCards,
-  resetGiftCards,
-  purchaseGiftCards,
+  selectDonation,
+  resetDonation,
+  purchaseDonation,
   selectCustomer,
   fetchCustomerCreditCards,
   selectCustomerCreditCards,
@@ -26,46 +25,40 @@ import {
   HeaderDefault,
 } from '../..'
 
-const iconMap = {
-  plus: <Plus size={null} />,
-  minus: <Minus size={null} />,
-}
-
-const GiftCards = () => {
+const Donations = () => {
   const dispatch = useDispatch()
-  const { giftCards: config } = useSelector(selectConfig)
-  const { title } = useSelector(selectBrand)
+  const { donations: config } = useSelector(selectConfig)
+  const { title: siteTitle } = useSelector(selectBrand)
   const { profile: customer } = useSelector(selectCustomer) || {}
   const { entities: creditCards } = useSelector(selectCustomerCreditCards) || {}
-  const { success, loading, error, giftCards } = useSelector(selectGiftCards)
+  const { success, loading, error, donation } = useSelector(selectDonation)
+  const { windowRef } = useContext(AppContext)
   const purchase = useCallback(
-    (data, callback) => dispatch(purchaseGiftCards(data, callback)),
+    (data, callback) => dispatch(purchaseDonation(data, callback)),
     [dispatch]
   )
-  const reset = useCallback(() => dispatch(resetGiftCards()), [dispatch])
-  const { windowRef } = useContext(AppContext)
+  const reset = useCallback(() => dispatch(resetDonation()), [dispatch])
 
   useEffect(() => {
     windowRef.current.scroll(0, 0)
-  }, [windowRef])
+    return () => dispatch(resetDonation())
+  }, [windowRef, dispatch])
 
   useEffect(() => {
-    if (success || error) window.scroll(0, 0)
-  }, [success, error])
+    if (success || error) windowRef.current.scroll(0, 0)
+  }, [success, error, windowRef])
 
   useEffect(() => {
     dispatch(fetchCustomerCreditCards())
   }, [dispatch, customer])
 
-  useEffect(() => {
-    return () => dispatch(resetGiftCards())
-  }, [dispatch])
+  const something = null
 
   return (
     <>
       <Helmet>
         <title>
-          {config.title} | {title}
+          {config.title} | {siteTitle}
         </title>
       </Helmet>
       {isBrowser && <Background imageUrl={config.background} />}
@@ -75,16 +68,16 @@ const GiftCards = () => {
           <Container>
             <PageTitle {...config} />
             <PageContent>
-              <GiftCardsForm
+              {something.that}
+              <DonationForm
                 customer={customer}
                 creditCards={creditCards}
                 purchase={purchase}
                 reset={reset}
                 success={success}
-                purchasedCards={giftCards}
+                donation={donation}
                 loading={loading}
                 error={error}
-                iconMap={iconMap}
               />
               {success && (
                 <p>
@@ -105,5 +98,5 @@ const GiftCards = () => {
   )
 }
 
-GiftCards.displayName = 'GiftCards'
-export default GiftCards
+Donations.displayName = 'Donations'
+export default Donations

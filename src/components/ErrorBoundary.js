@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as Sentry from '@sentry/react'
-import ErrorPage from './ErrorPage'
+import ErrorReport from './pages/ErrorReport'
 
 class ErrorBoundary extends React.Component {
   state = {
@@ -33,8 +33,9 @@ class ErrorBoundary extends React.Component {
 
   render() {
     const { hasError, error, errorInfo, eventId } = this.state
+    console.log(this.state)
     return hasError ? (
-      <ErrorPage error={error} errorInfo={errorInfo} eventId={eventId} />
+      <ErrorReport error={error} errorInfo={errorInfo} eventId={eventId} />
     ) : (
       this.props.children
     )
