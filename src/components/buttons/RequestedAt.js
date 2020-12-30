@@ -1,7 +1,11 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectOrder, selectTimezone } from '@open-tender/redux'
+import {
+  selectOrder,
+  selectTimezone,
+  // setRequestedAt
+} from '@open-tender/redux'
 import { makeRequestedAtStr } from '@open-tender/js'
 
 import { openModal } from '../../slices'
@@ -15,6 +19,10 @@ const RequestedAt = ({ icon = iconMap.Clock }) => {
   const requestedAtText = makeRequestedAtStr(requestedAt, tz)
 
   if (!revenueCenter || !requestedAt) return null
+
+  // useEffect(() => {
+  //   if (!requestedAt || !revenueCenter) setRequestedAt('asap')
+  // }, [requestedAt, revenueCenter])
 
   return (
     <ButtonBoth

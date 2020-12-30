@@ -27,7 +27,13 @@ import {
   ScreenreaderTitle,
 } from '../..'
 import RevenueCentersSelect from './RevenueCentersSelect'
-import { Account, StartOver } from '../../buttons'
+import {
+  Account,
+  RequestedAt,
+  RevenueCenter,
+  ServiceType,
+  StartOver,
+} from '../../buttons'
 
 const RevenueCenters = () => {
   const history = useHistory()
@@ -78,7 +84,14 @@ const RevenueCenters = () => {
           borderColor="primary"
           title={isMobile ? navTitle : null}
           left={<StartOver />}
-          right={<Account />}
+          right={
+            <>
+              <Account />
+              <RevenueCenter />
+              <ServiceType />
+              <RequestedAt />
+            </>
+          }
         />
         <Main>
           <ScreenreaderTitle>Locations</ScreenreaderTitle>

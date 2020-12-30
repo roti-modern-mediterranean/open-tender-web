@@ -31,8 +31,17 @@ const RevenueCenterOrderMessage = styled('div')`
 
   p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
-    // color: ${(props) => props.theme.fonts.headings.color};
-    // font-weight: ${(props) => props.theme.boldWeight};
+
+    span {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 0.3rem;
+      color: ${(props) => props.theme.colors.alert};
+      background-color: ${(props) => props.theme.bgColors.alert};
+      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+        display: inline-block;
+      }
+    }
   }
 `
 
@@ -53,7 +62,9 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
     <RevenueCenterOrderView>
       {msg.message && (
         <RevenueCenterOrderMessage>
-          <p>{msg.message}</p>
+          <p>
+            <span>{msg.message}</span>
+          </p>
         </RevenueCenterOrderMessage>
       )}
 
