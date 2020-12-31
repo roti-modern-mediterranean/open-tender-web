@@ -7,7 +7,6 @@ import RevenueCenterPage from './RevenueCenterPage'
 import ResetPasswordPage from './ResetPasswordPage'
 import NotFoundPage from './NotFoundPage'
 import RefundPolicyPage from './RefundPolicyPage'
-import LevelUpPage from './LevelUpPage'
 import ThanxPage from './ThanxPage'
 import {
   Accessibility,
@@ -27,6 +26,7 @@ import {
   GroupOrders,
   Home,
   HouseAccounts,
+  LevelUp,
   Menu,
   Orders,
   Order,
@@ -57,10 +57,10 @@ const Routes = () => {
         <Redirect to="/" />
       </Route>
       <Route exact path="/levelup">
-        <LevelUpPage />
+        <LevelUp />
       </Route>
       <Route exact path="/levelup/:token">
-        <LevelUpPage />
+        <LevelUp />
       </Route>
       <Route exact path="/thanx/callback">
         <ThanxPage />

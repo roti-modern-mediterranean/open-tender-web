@@ -1,9 +1,22 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import styled from '@emotion/styled'
 import { selectNotifications } from '@open-tender/redux'
 
 import Notification from './Notification'
+
+const NotificationsView = styled('div')`
+  position: fixed;
+  z-index: 15;
+  bottom: 12rem;
+  right: ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    left: ${(props) => props.theme.layout.paddingMobile};
+    right: auto;
+    bottom: 2rem;
+  }
+`
 
 const Notifications = () => {
   const messages = useSelector(selectNotifications)
@@ -13,7 +26,7 @@ const Notifications = () => {
   // ]
 
   return (
-    <div className="notifications">
+    <NotificationsView>
       <TransitionGroup component={'ul'}>
         {messages.map((message) => (
           <CSSTransition key={message.id} classNames="flash" timeout={500}>
@@ -21,7 +34,7 @@ const Notifications = () => {
           </CSSTransition>
         ))}
       </TransitionGroup>
-    </div>
+    </NotificationsView>
   )
 }
 

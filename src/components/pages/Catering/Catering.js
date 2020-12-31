@@ -24,12 +24,7 @@ import {
   todayDate,
   makeWeekdayIndices,
 } from '@open-tender/js'
-import {
-  Box,
-  ButtonLink,
-  ButtonStyled,
-  ErrorMessage,
-} from '@open-tender/components'
+import { Box, ButtonLink, ButtonStyled, Message } from '@open-tender/components'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
@@ -201,7 +196,9 @@ const CateringPage = () => {
                 <Loading text="Loading calendar..." />
               ) : error ? (
                 <>
-                  <ErrorMessage>{error}</ErrorMessage>
+                  <Message color="error" style={{ width: '100%' }}>
+                    {error}
+                  </Message>
                   <p>
                     <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
                       Start Over
@@ -253,9 +250,9 @@ const CateringPage = () => {
                   </div>
                 </>
               ) : (
-                <ErrorMessage>
+                <Message color="error" style={{ width: '100%' }}>
                   This order type isn't currently available
-                </ErrorMessage>
+                </Message>
               )}
               <CateringPolicy>
                 {policy.title && <h2>{policy.title}</h2>}

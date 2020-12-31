@@ -773,6 +773,38 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
+  .flash-enter {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+
+  .flash-enter-active,
+  .flash-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .flash-exit-active {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+
+  .flash-message-enter {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+
+  .flash-message-enter-active,
+  .flash-message-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .flash-message-exit-active {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+
   .react-datepicker__navigation--previous {
     border-right-color: ${theme.links.primary.color};
   }

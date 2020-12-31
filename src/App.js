@@ -3,19 +3,17 @@ import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { ThemeProvider } from '@emotion/react'
+import styled from '@emotion/styled'
 import TagManager from 'react-gtm-module'
+import { fetchConfig } from './slices/configSlice'
 import GlobalStyles from './GlobalStyles'
 import Routes from './components/Routes'
 import Modal from './components/Modal'
-import Messages from './components/Messages'
-import Notifications from './components/Notifications'
 import CartButton from './components/CartButton'
 import Sidebar from './components/Sidebar'
-// import ErrorFatalPage from './components/ErrorFatalPage'
-import ErrorBoundary from './components/ErrorBoundary'
-import { fetchConfig } from './slices/configSlice'
+import { Alerts, ErrorBoundary, Notifications } from './components'
 import './App.scss'
-import styled from '@emotion/styled'
+
 import Nav from './components/Nav'
 import { ErrorFatal } from './components/pages'
 
@@ -80,7 +78,7 @@ class App extends React.Component {
                 <ErrorBoundary>
                   <Router>
                     <Modal />
-                    <Messages />
+                    <Alerts />
                     <Routes />
                     <Notifications />
                     <CartButton />

@@ -1,7 +1,9 @@
+import Alerts from './Alerts'
 import Background from './Background'
 import Card from './Card'
 import Content from './Content'
 import Container from './Container'
+import ErrorBoundary from './ErrorBoundary'
 import FormWrapper from './FormWrapper'
 import GroupOrderLink from './GroupOrderLink'
 import GroupOrderTime from './GroupOrderTime'
@@ -18,6 +20,7 @@ import NavButton from './NavButton'
 import NavButtons from './NavButtons'
 import NavScroll from './NavScroll'
 import NavSticky from './NavSticky'
+import Notifications from './Notifications'
 import Order from './Order'
 import OrderAddress from './OrderAddress'
 import OrderCard from './OrderCard'
@@ -40,10 +43,12 @@ import Tag from './Tag'
 import Welcome from './Welcome'
 
 export {
+  Alerts,
   Background,
   Card,
   Container,
   Content,
+  ErrorBoundary,
   FormWrapper,
   GroupOrderLink,
   GroupOrderTime,
@@ -60,6 +65,7 @@ export {
   NavButtons,
   NavScroll,
   NavSticky,
+  Notifications,
   Order,
   OrderAddress,
   OrderCard,

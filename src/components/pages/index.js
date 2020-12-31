@@ -19,6 +19,7 @@ import Home from './Home'
 import HouseAccounts from './HouseAccounts'
 import Orders from './Orders'
 import Order from './Order'
+import LevelUp from './LevelUp'
 import Menu from './Menu'
 import Profile from './Profile'
 import RevenueCenters from './RevenueCenters'
@@ -45,6 +46,7 @@ export {
   GroupOrders,
   Home,
   HouseAccounts,
+  LevelUp,
   Menu,
   Orders,
   Order,

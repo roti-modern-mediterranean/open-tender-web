@@ -2,6 +2,22 @@ import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { hideNotification } from '@open-tender/redux'
+import styled from '@emotion/styled'
+
+const NotificationView = styled('li')`
+  display: block;
+  float: right;
+  clear: right;
+  margin: 1.5rem 0 0;
+  line-height: 1.2;
+  padding: 0.8rem 1.6rem;
+  transition: all 500ms ease;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.links.primary.color};
+`
 
 const Notification = ({ message, id }) => {
   const dispatch = useDispatch()
@@ -13,9 +29,7 @@ const Notification = ({ message, id }) => {
     return () => clearTimeout(timer)
   }, [dispatch, id])
 
-  return (
-    <li className="notification ot-highlight ot-font-size-small">{message}</li>
-  )
+  return <NotificationView>{message}</NotificationView>
 }
 
 Notification.displayName = 'Notification'

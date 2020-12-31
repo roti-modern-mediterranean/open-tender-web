@@ -6,7 +6,7 @@ import {
   updateOrderFulfillment,
   resetOrderFulfillment,
 } from '@open-tender/redux'
-import { ErrorMessage, OrderFulfillmentForm } from '@open-tender/components'
+import { Message, OrderFulfillmentForm } from '@open-tender/components'
 
 import { selectFulfillment } from '../slices'
 import { Loading } from '.'
@@ -52,7 +52,9 @@ const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
       {isLoading ? (
         <Loading text="Retrieving your order..." />
       ) : errMsg ? (
-        <ErrorMessage>{errMsg}</ErrorMessage>
+        <Message color="error" style={{ width: '100%' }}>
+          {errMsg}
+        </Message>
       ) : (
         <>
           <div style={{ margin: '0 0 2rem' }}>

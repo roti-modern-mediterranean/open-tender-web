@@ -1,11 +1,22 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import styled from '@emotion/styled'
 import { selectMessages } from '@open-tender/redux'
 
-import Message from './Message'
+import Alert from './Alert'
 
-const Messages = () => {
+const AlertsView = styled('div')`
+  position: fixed;
+  z-index: 15;
+  top: ${(props) => props.theme.layout.navHeight};
+  right: ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    right: ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const Alerts = () => {
   const messages = useSelector(selectMessages)
   // const messages = [
   //   { id: 1, message: 'Requested time updated' },
@@ -13,7 +24,7 @@ const Messages = () => {
   // ]
 
   return (
-    <div className="messages">
+    <AlertsView>
       <TransitionGroup component={'ul'}>
         {messages.map((message) => (
           <CSSTransition
@@ -21,14 +32,14 @@ const Messages = () => {
             classNames="flash-message"
             timeout={500}
           >
-            <Message {...message} />
+            <Alert {...message} />
           </CSSTransition>
         ))}
       </TransitionGroup>
-    </div>
+    </AlertsView>
   )
 }
 
-Messages.displayName = 'Messages'
+Alerts.displayName = 'Alerts'
 
-export default Messages
+export default Alerts
