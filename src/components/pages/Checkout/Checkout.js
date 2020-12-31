@@ -1,29 +1,8 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
-import {
-  selectCustomer,
-  selectCartTotal,
-  selectMenuSlug,
-  selectOrder,
-  resetOrder,
-  selectAutoSelect,
-  selectCheckout,
-  resetErrors,
-  resetTip,
-  resetCompletedOrder,
-  setConfirmationOrder,
-  logoutCustomer,
-} from '@open-tender/redux'
-import { CheckoutForm, Error } from '@open-tender/components'
-
-import { selectBrand, selectConfig } from '../slices'
-import { cardIconMap } from '../assets/cardIcons'
-import Background from './Background'
-import PageTitle from './PageTitle'
-import CheckoutHeader from './CheckoutHeader'
 import {
   User,
   ShoppingBag,
@@ -40,15 +19,44 @@ import {
   Coffee,
   Smartphone,
 } from 'react-feather'
-import CheckoutCancelEdit from './CheckoutCancelEdit'
-import { Loading } from '.'
+import {
+  selectCustomer,
+  selectCartTotal,
+  selectMenuSlug,
+  selectOrder,
+  resetOrder,
+  selectAutoSelect,
+  selectCheckout,
+  resetErrors,
+  resetTip,
+  resetCompletedOrder,
+  setConfirmationOrder,
+  logoutCustomer,
+} from '@open-tender/redux'
+import { CheckoutForm, Error } from '@open-tender/components'
 
-const CheckoutPage = () => {
+import { cardIconMap } from '../../../assets/cardIcons'
+import { selectBrand, selectConfig } from '../../../slices'
+import { AppContext } from '../../../App'
+import {
+  Background,
+  Container,
+  Content,
+  Loading,
+  Main,
+  PageTitle,
+  PageContent,
+} from '../..'
+import CheckoutHeader from './CheckoutHeader'
+import CheckoutTotal from './CheckoutTotal'
+import CheckoutCancelEdit from './CheckoutCancelEdit'
+
+const Checkout = () => {
   const formRef = useRef()
   const history = useHistory()
   const dispatch = useDispatch()
   const { title, has_thanx } = useSelector(selectBrand)
-  const { checkout: checkoutConfig } = useSelector(selectConfig)
+  const { checkout: config } = useSelector(selectConfig)
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
@@ -78,9 +86,13 @@ const CheckoutPage = () => {
     apple_pay: <Smartphone size={null} />,
     google_pay: <Smartphone size={null} />,
   }
+  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    window.scroll(0, 0)
+    windowRef.current.scroll(0, 0)
+  }, [windowRef])
+
+  useEffect(() => {
     return () => {
       dispatch(resetErrors())
       dispatch(resetTip())
@@ -119,40 +131,43 @@ const CheckoutPage = () => {
       <Helmet>
         <title>Checkout | {title}</title>
       </Helmet>
-      {isBrowser && <Background imageUrl={checkoutConfig.background} />}
-      <div className="content">
-        <CheckoutHeader checkout={checkout} />
-        <PageTitle {...checkoutConfig} />
-        <div className="checkout">
-          <div className="container">
-            <CheckoutCancelEdit />
-            <div ref={formRef} className="checkout__form slide-up">
-              {!check ? (
-                errors.form ? (
-                  <Error error={errors.form} />
-                ) : (
-                  <Loading text="Retrieving your order..." />
-                )
-              ) : null}
-              <CheckoutForm
-                dispatch={dispatch}
-                history={history}
-                iconMap={iconMap}
-                cardIconMap={cardIconMap}
-                config={checkoutConfig}
-                checkout={checkout}
-                order={order}
-                customer={customer}
-                autoSelect={autoSelect}
-                hasThanx={has_thanx}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      {isBrowser && <Background imageUrl={config.background} />}
+      <Content maxWidth="76.8rem">
+        <CheckoutHeader title={isBrowser ? null : 'Checkout'} />
+        <CheckoutTotal checkout={checkout} />
+        <Main style={{ padding: '12rem 0 0' }}>
+          <Container>
+            <PageTitle {...config} />
+            <PageContent>
+              <CheckoutCancelEdit />
+              <div ref={formRef} style={{ margin: '0 0 4rem' }}>
+                {!check ? (
+                  errors.form ? (
+                    <Error error={errors.form} />
+                  ) : (
+                    <Loading text="Calculating your check..." />
+                  )
+                ) : null}
+                <CheckoutForm
+                  dispatch={dispatch}
+                  history={history}
+                  iconMap={iconMap}
+                  cardIconMap={cardIconMap}
+                  config={config}
+                  checkout={checkout}
+                  order={order}
+                  customer={customer}
+                  autoSelect={autoSelect}
+                  hasThanx={has_thanx}
+                />
+              </div>
+            </PageContent>
+          </Container>
+        </Main>
+      </Content>
     </>
   )
 }
 
-CheckoutPage.displayName = 'CheckoutPage'
-export default CheckoutPage
+Checkout.displayName = 'Checkout'
+export default Checkout

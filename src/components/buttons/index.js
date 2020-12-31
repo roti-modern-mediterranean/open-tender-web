@@ -27,6 +27,7 @@ import Locations from './Locations'
 import Logout from './Logout'
 import Menu from './Menu'
 import NavMenu from './NavMenu'
+import Reopen from './Reopen'
 import RequestedAt from './RequestedAt'
 import RevenueCenter from './RevenueCenter'
 import ServiceType from './ServiceType'
@@ -62,6 +63,7 @@ export {
   Logout,
   Menu,
   NavMenu,
+  Reopen,
   RequestedAt,
   RevenueCenter,
   ServiceType,

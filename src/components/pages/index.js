@@ -6,6 +6,7 @@ import AccountCreditCards from './AccountCreditCards'
 import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
 import Catering from './Catering'
+import Checkout from './Checkout'
 import Donations from './Donations'
 import ErrorReport from './ErrorReport'
 import ErrorFatal from './ErrorFatal'
@@ -40,6 +41,7 @@ export {
   AccountGiftCards,
   AccountSettings,
   Catering,
+  Checkout,
   Donations,
   ErrorReport,
   ErrorFatal,

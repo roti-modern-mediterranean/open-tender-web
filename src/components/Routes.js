@@ -1,7 +1,6 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 // import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import CheckoutPage from './CheckoutPage'
 import ConfirmationPage from './ConfirmationPage'
 import {
   Accessibility,
@@ -12,6 +11,7 @@ import {
   AccountGiftCards,
   AccountSettings,
   Catering,
+  Checkout,
   Donations,
   Favorites,
   Fulfillment,
@@ -90,7 +90,7 @@ const Routes = () => {
         <GroupOrderReview />
       </Route>
       <Route exact path="/checkout">
-        <CheckoutPage />
+        <Checkout />
       </Route>
       <Route exact path="/confirmation">
         <ConfirmationPage />

@@ -9,7 +9,7 @@ const AlertView = styled('li')`
   display: block;
   float: right;
   clear: right;
-  margin: 1.5rem 0 0;
+  margin: 1.3rem 0 0;
   line-height: 1;
   padding: 0.8rem 1rem 0.8rem 1.6rem;
   border-radius: 0.5rem;

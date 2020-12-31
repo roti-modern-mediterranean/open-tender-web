@@ -1,42 +1,41 @@
 import React from 'react'
-import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from '@emotion/styled'
 import { selectOrder, resetOrder, resetCheckout } from '@open-tender/redux'
-import { Button } from '@open-tender/components'
+import { ButtonLink } from '@open-tender/components'
+
+const CheckoutCancelView = styled('div')`
+  margin: 0 0 4rem;
+
+  p {
+    line-height: ${(props) => props.theme.lineHeight};
+  }
+`
 
 const CheckoutCancelEdit = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { orderId } = useSelector(selectOrder)
 
-  const handleCancelEdit = (evt) => {
-    evt.preventDefault()
+  const handleCancelEdit = () => {
     dispatch(resetOrder())
     dispatch(resetCheckout())
     history.push(`/account`)
-    evt.target.blur()
   }
 
   return orderId ? (
-    <div className="checkout__cancel slide-up">
-      <p className="ot-line-height">
+    <CheckoutCancelView>
+      <p>
         You're currently editing order #{orderId}.{' '}
-        <Button
-          text="Click here to cancel this edit."
-          classes="ot-btn-link"
-          onClick={handleCancelEdit}
-        />
+        <ButtonLink onClick={handleCancelEdit}>
+          Click here to cancel this edit.
+        </ButtonLink>
       </p>
-    </div>
+    </CheckoutCancelView>
   ) : null
 }
 
 CheckoutCancelEdit.displayName = 'CheckoutCancelEdit'
-CheckoutCancelEdit.propTypes = {
-  text: propTypes.string,
-  classes: propTypes.string,
-  icon: propTypes.element,
-}
 
 export default CheckoutCancelEdit
