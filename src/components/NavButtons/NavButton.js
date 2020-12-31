@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { ChevronRight } from 'react-feather'
+import iconMap from '../iconMap'
 
 const NavButtonContainer = styled('button')`
   width: 100%;
@@ -88,9 +88,7 @@ const NavButton = ({ title, icon, onClick, delay = '0.125s' }) => (
   <NavButtonContainer onClick={onClick} delay={delay}>
     <NavButtonIcon>{icon}</NavButtonIcon>
     <NavButtonTitle>{title}</NavButtonTitle>
-    <NavButtonArrow>
-      <ChevronRight size={null} />
-    </NavButtonArrow>
+    <NavButtonArrow>{iconMap.ChevronRight}</NavButtonArrow>
   </NavButtonContainer>
 )
 

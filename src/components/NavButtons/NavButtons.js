@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { NavButton } from '.'
 import styled from '@emotion/styled'
+import NavButton from './NavButton'
 
 const NavButtonsContainer = styled('div')`
   padding: 2.5rem;

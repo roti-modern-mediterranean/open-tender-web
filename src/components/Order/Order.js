@@ -16,17 +16,22 @@ import {
   isEmpty,
   isoToDate,
 } from '@open-tender/js'
-import { Box, ButtonStyled, CartItem, Check } from '@open-tender/components'
+import {
+  Box,
+  ButtonStyled,
+  CartItem,
+  Check,
+  Preface,
+} from '@open-tender/components'
 
 import { openModal, selectDisplaySettings } from '../../slices'
 import iconMap from '../iconMap'
+import { Loading } from '..'
 import OrderAddress from '../OrderAddress'
 import OrderQuantity from '../OrderQuantity'
 import OrderRating from './OrderRating'
 import OrderRequestedAt from './OrderRequestedAt'
 import OrderRevenueCenter from './OrderRevenueCenter'
-
-import { Loading, Preface } from '..'
 import OrderSection from './OrderSection'
 
 const OrderView = styled(Box)`

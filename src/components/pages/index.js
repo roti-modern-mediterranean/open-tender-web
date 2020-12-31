@@ -21,6 +21,7 @@ import Orders from './Orders'
 import Order from './Order'
 import LevelUp from './LevelUp'
 import Menu from './Menu'
+import NotFound from './NotFound'
 import Profile from './Profile'
 import RevenueCenters from './RevenueCenters'
 import Rewards from './Rewards'
@@ -48,6 +49,7 @@ export {
   HouseAccounts,
   LevelUp,
   Menu,
+  NotFound,
   Orders,
   Order,
   Profile,

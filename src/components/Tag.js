@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import Preface from './Preface'
+import { Preface } from '@open-tender/components'
 
 const TagView = styled('span')`
   display: inline-block;

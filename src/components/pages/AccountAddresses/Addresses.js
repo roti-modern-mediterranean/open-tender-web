@@ -7,10 +7,10 @@ import {
   removeCustomerAddress,
   setAddress,
 } from '@open-tender/redux'
-import { ButtonLink, ButtonStyled } from '@open-tender/components'
+import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
 
 import { openModal } from '../../../slices'
-import { LinkSeparator, OrderAddress, Preface, Row } from '../..'
+import { LinkSeparator, OrderAddress, Row } from '../..'
 import iconMap from '../../iconMap'
 
 const Addresses = ({ addresses, isLoading }) => {

@@ -5,7 +5,6 @@ import CheckoutPage from './CheckoutPage'
 import ConfirmationPage from './ConfirmationPage'
 import RevenueCenterPage from './RevenueCenterPage'
 import ResetPasswordPage from './ResetPasswordPage'
-import NotFoundPage from './NotFoundPage'
 import RefundPolicyPage from './RefundPolicyPage'
 import ThanxPage from './ThanxPage'
 import {
@@ -28,6 +27,7 @@ import {
   HouseAccounts,
   LevelUp,
   Menu,
+  NotFound,
   Orders,
   Order,
   Profile,
@@ -150,7 +150,7 @@ const Routes = () => {
         <Donations />
       </Route>
       <Route>
-        <NotFoundPage />
+        <NotFound />
       </Route>
     </Switch>
   )

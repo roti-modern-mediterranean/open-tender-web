@@ -5,10 +5,10 @@ import {
   updateCustomerCreditCard,
   removeCustomerCreditCard,
 } from '@open-tender/redux'
-import { ButtonLink } from '@open-tender/components'
+import { ButtonLink, Preface } from '@open-tender/components'
 
 import { cardIconMap } from '../../../assets/cardIcons'
-import { LinkSeparator, Preface, Row } from '../..'
+import { LinkSeparator, Row } from '../..'
 import styled from '@emotion/styled'
 
 const CreditCardIcon = styled('span')`

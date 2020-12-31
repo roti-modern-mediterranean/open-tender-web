@@ -1,9 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Box } from '@open-tender/components'
-
-import { Preface } from '.'
+import { Box, Preface } from '@open-tender/components'
 
 const CardView = styled(Box)`
   position: relative;
