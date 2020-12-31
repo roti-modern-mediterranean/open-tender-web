@@ -773,6 +773,28 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
+  .md-enter,
+  .md-exit.md-exit-active {
+    transition: all 250ms ease;
+    opacity: 0;
+    visibility: hidden;
+
+    .modal {
+      transition: all 250ms ease;
+      transform: translateY(10%);
+    }
+  }
+
+  .md-enter.md-enter-active,
+  .md-exit {
+    opacity: 1;
+    visibility: visible;
+
+    .modal {
+      transform: translateY(0);
+    }
+  }
+
   .flash-enter {
     opacity: 0;
     transform: translateY(20%);

@@ -2,16 +2,19 @@ import propTypes from 'prop-types'
 import React, { useEffect, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { X } from 'react-feather'
-import { toggleSidebar } from '../slices'
+import { toggleSidebar } from '../../slices'
+import styled from '@emotion/styled'
+import { ButtonLink } from '@open-tender/components'
 
-const SidebarClose = ({ classes = 'ot-btn-link' }) => {
+const SidebarCloseView = styled('div')`
+  position: absolute;
+  z-index: 1;
+  top: 7px;
+  right: 7px;
+`
+
+const SidebarClose = () => {
   const dispatch = useDispatch()
-
-  const handleClose = (evt) => {
-    evt.preventDefault()
-    dispatch(toggleSidebar())
-    evt.target.blur()
-  }
 
   const handleEscape = useCallback(
     (evt) => {
@@ -26,13 +29,14 @@ const SidebarClose = ({ classes = 'ot-btn-link' }) => {
   }, [handleEscape])
 
   return (
-    <button
-      className={`sidebar__close ${classes}`}
-      onClick={handleClose}
-      aria-label="Close cart & return to current page"
-    >
-      <X size={20} />
-    </button>
+    <SidebarCloseView>
+      <ButtonLink
+        onClick={() => dispatch(toggleSidebar())}
+        aria-label="Close cart & return to current page"
+      >
+        <X size={20} />
+      </ButtonLink>
+    </SidebarCloseView>
   )
 }
 

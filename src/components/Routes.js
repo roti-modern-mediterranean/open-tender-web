@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 // import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import CheckoutPage from './CheckoutPage'
 import ConfirmationPage from './ConfirmationPage'
-import RevenueCenterPage from './RevenueCenterPage'
 import {
   Accessibility,
   Account,
@@ -31,6 +30,7 @@ import {
   Refunds,
   ResetPassword,
   RevenueCenters,
+  RevenueCenter,
   Rewards,
   SignUp,
   Thanx,
@@ -78,7 +78,7 @@ const Routes = () => {
         <RevenueCenters />
       </Route>
       <Route exact path="/locations/:slug">
-        <RevenueCenterPage />
+        <RevenueCenter />
       </Route>
       <Route path="/menu/:slug">
         <Menu />

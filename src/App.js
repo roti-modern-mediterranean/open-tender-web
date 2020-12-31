@@ -9,13 +9,16 @@ import { fetchConfig } from './slices/configSlice'
 import GlobalStyles from './GlobalStyles'
 import Routes from './components/Routes'
 import Modal from './components/Modal'
-import CartButton from './components/CartButton'
-import Sidebar from './components/Sidebar'
-import { Alerts, ErrorBoundary, Notifications } from './components'
-import './App.scss'
-
-import Nav from './components/Nav'
+import {
+  Alerts,
+  CartButton,
+  ErrorBoundary,
+  Nav,
+  Notifications,
+  Sidebar,
+} from './components'
 import { ErrorFatal } from './components/pages'
+import './App.scss'
 
 export const AppContext = createContext(null)
 

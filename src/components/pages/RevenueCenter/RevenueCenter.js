@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
+import { Helmet } from 'react-helmet'
 import {
   selectOrder,
   fetchRevenueCenter,
@@ -11,14 +12,24 @@ import {
 import { useGeolocation } from '@open-tender/components'
 
 import {
+  selectBrand,
+  selectConfig,
   setGeoLatLng,
   setGeoError,
   setGeoLoading,
-  selectConfig,
-} from '../slices'
-import Background from './Background'
-import RevenueCenter from './RevenueCenter/RevenueCenter'
-import PageTitle from './PageTitle'
+} from '../../../slices'
+import { AppContext } from '../../../App'
+import {
+  Background,
+  Container,
+  Content,
+  HeaderDefault,
+  Loading,
+  Main,
+  PageContent,
+  RevenueCenter as RevenueCenterCard,
+  ScreenreaderTitle,
+} from '../..'
 
 const makeImageUrl = (images, defaultImageUrl) => {
   if (!images) return defaultImageUrl || null
@@ -29,22 +40,25 @@ const makeImageUrl = (images, defaultImageUrl) => {
   return imageUrl || defaultImageUrl || null
 }
 
-const RevenueCenterPage = () => {
+const RevenueCenter = () => {
   const dispatch = useDispatch()
   const [imageUrl, setImageUrl] = useState(null)
   const { slug } = useParams()
   const { geoLatLng, geoError } = useGeolocation()
-  const { revenueCenters: rcConfig } = useSelector(selectConfig)
+  const { title: siteTitle } = useSelector(selectBrand)
+  const { revenueCenters: config } = useSelector(selectConfig)
   const order = useSelector(selectOrder)
   const { revenueCenter, loading } = order
   const isLoading = loading === 'pending'
+  const { windowRef } = useContext(AppContext)
+  const title = revenueCenter ? revenueCenter.name : config.title
 
   useEffect(() => {
-    window.scroll(0, 0)
+    windowRef.current.scroll(0, 0)
     dispatch(setGeoLoading())
     dispatch(resetOrderType())
     dispatch(fetchRevenueCenter(slug))
-  }, [dispatch, slug])
+  }, [dispatch, slug, windowRef])
 
   useEffect(() => {
     if (geoLatLng) {
@@ -57,7 +71,7 @@ const RevenueCenterPage = () => {
   useEffect(() => {
     if (revenueCenter) {
       const { images, settings, revenue_center_type } = revenueCenter
-      setImageUrl(makeImageUrl(images, rcConfig.Background))
+      setImageUrl(makeImageUrl(images, config.background))
       const { service_types } = settings
       let serviceType = service_types.length
         ? service_types.includes('PICKUP')
@@ -68,47 +82,45 @@ const RevenueCenterPage = () => {
         dispatch(setOrderServiceType(revenue_center_type, serviceType))
       }
     }
-  }, [revenueCenter, rcConfig.Background, dispatch])
+  }, [revenueCenter, config.background, dispatch])
 
   return (
     <>
-      {isBrowser && <Background imageUrl={imageUrl} />}
-      <div className="content">
-        {!isLoading &&
-          (revenueCenter ? (
-            <div className="map-content ot-bg-color-primary">
-              <h1 className="sr-only">{revenueCenter.name}</h1>
-              <div className="content__body">
-                <div className="container">
-                  <RevenueCenter
+      <Helmet>
+        <title>
+          {title} | {siteTitle}
+        </title>
+      </Helmet>
+      {isBrowser && <Background imageUrl={imageUrl || config.background} />}
+      <Content maxWidth="76.8rem">
+        <HeaderDefault title={isBrowser ? null : config.title} />
+        <Main>
+          <Container>
+            <ScreenreaderTitle>{title}</ScreenreaderTitle>
+            <PageContent>
+              <div style={{ margin: '4rem 0 0' }}>
+                {isLoading ? (
+                  <Loading text="Retrieving nearest locations..." />
+                ) : revenueCenter ? (
+                  <RevenueCenterCard
                     revenueCenter={revenueCenter}
-                    classes="rc--solo"
                     showImage={true}
                     isLanding={true}
                   />
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="map-content ot-bg-color-primary slide-up">
-              <PageTitle
-                title="Revenue center not found"
-                subtitle="Sorry, but we couldn't find a revenue center matching this URL"
-              />
-              <div className="content__body">
-                <div className="container">
+                ) : (
                   <p>
-                    Please try a different URL or{' '}
+                    Location not found. Please try a different URL or{' '}
                     <Link to="/">head back to our home page</Link>.
                   </p>
-                </div>
+                )}
               </div>
-            </div>
-          ))}
-      </div>
+            </PageContent>
+          </Container>
+        </Main>
+      </Content>
     </>
   )
 }
 
-RevenueCenterPage.displayName = 'RevenueCenterPage'
-export default RevenueCenterPage
+RevenueCenter.displayName = 'RevenueCenter'
+export default RevenueCenter

@@ -14,12 +14,118 @@ import {
   checkout,
 } from '@open-tender/redux'
 import { displayPrice } from '@open-tender/js'
-import { Button } from '@open-tender/components'
+import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
 
-import { selectSidebar, toggleSidebar } from '../slices'
+import { selectSidebar, toggleSidebar } from '../../slices'
+import Cart from '../Cart'
 import SidebarOverlay from './SidebarOverlay'
-import Cart from './Cart'
 import SidebarClose from './SidebarClose'
+import styled from '@emotion/styled'
+
+const SidebarView = styled('div')`
+  position: fixed;
+  z-index: 17;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 44rem;
+  max-width: 100%;
+  transition: all 0.25s ease;
+  transform: translateX(${(props) => (props.isOpen ? '0' : '100%')});
+  background-color: ${(props) => props.theme.bgColors.primary};
+
+  > div {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+`
+
+const SidebarHeader = styled('div')`
+  width: 100%;
+  padding: 2rem;
+  background-color: ${(props) => props.theme.bgColors.primary};
+
+  h2 {
+    margin: 0 0 1rem;
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
+  }
+
+  p {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+
+    span {
+      padding: 0 0.2rem;
+      color: ${(props) => props.theme.fonts.headings.color};
+      font-weight: ${(props) => props.theme.boldWeight};
+    }
+  }
+
+  div {
+    margin: 2rem auto 0;
+
+    p {
+      color: ${(props) => props.theme.colors.alert};
+    }
+  }
+`
+
+const SidebarContent = styled('div')`
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: scroll;
+  padding: 0rem 2rem 1rem;
+`
+
+const SidebarFooter = styled('div')`
+  flex-shrink: 0;
+  width: 100%;
+  height: 7rem;
+  background-color: ${(props) => props.theme.bgColors.primary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: 12.5rem;
+  }
+
+  button {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+`
+
+const SidebarButtons = styled('div')`
+  width: 100%;
+  height: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const SidebarCancel = styled('div')`
+  width: 100%;
+  height: 5.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  display: none;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    display: flex;
+  }
+`
+
+const SidebarBack = styled('div')`
+  width: 50%;
+  padding: 0 0.5rem 0 2rem;
+`
+
+const SidebarCheckout = styled('div')`
+  width: 50%;
+  padding: 0 2rem 0 0.5rem;
+`
 
 const Sidebar = () => {
   const dispatch = useDispatch()
@@ -34,7 +140,6 @@ const Sidebar = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const canOrder = useSelector(selectCanOrder)
   const { orderMinimum, orderMaximum } = useSelector(selectOrderLimits)
-  const classes = `sidebar ot-bg-color-primary ${isOpen ? 'is-open' : ''}`
   const isMenu = pathname.includes('menu')
   const isCheckout = pathname.includes('checkout')
   const isReview = pathname.includes('review')
@@ -46,116 +151,97 @@ const Sidebar = () => {
   const orderMaxType =
     cartGuest && spendingLimit ? 'spending limit' : 'order maximum'
 
-  const handleBack = (evt) => {
-    evt.preventDefault()
+  const handleBack = () => {
     dispatch(toggleSidebar())
     if (!isMenu) history.push(menuSlug)
-    evt.target.blur()
   }
 
-  const handleReview = (evt) => {
-    evt.preventDefault()
+  const handleReview = () => {
     dispatch(toggleSidebar())
     if (!isReview) history.push(`/review`)
-    evt.target.blur()
   }
 
-  const handleCheckout = (evt) => {
-    evt.preventDefault()
+  const handleCheckout = () => {
     dispatch(toggleSidebar())
     if (!isCheckout) {
       dispatch(checkout())
       history.push(`/checkout`)
     }
-    evt.target.blur()
   }
 
-  const handleClose = (evt) => {
-    evt.preventDefault()
+  const handleClose = () => {
     dispatch(toggleSidebar())
-    evt.target.blur()
   }
 
-  const handleReopen = (evt) => {
-    evt.preventDefault()
+  const handleReopen = () => {
     const customerCart = cart.filter((i) => i.customer_id)
     dispatch(setCart(customerCart))
     dispatch(toggleSidebar())
     dispatch(closeGroupOrder(cartId, false)).then(() => {
       history.push('/review')
     })
-    evt.target.blur()
   }
 
   return (
     <>
       <SidebarOverlay />
-      <aside className={classes}>
-        <div className="sidebar__container">
+      <SidebarView isOpen={isOpen}>
+        <div>
           {isOpen && <SidebarClose />}
-          <div className="sidebar__header ot-bg-color-primary">
-            <h2 className="sidebar__title ot-font-size-h3">
-              {orderId ? `Editing Order ${orderId}` : 'Your Order'}
-            </h2>
+          <SidebarHeader>
+            <h2>{orderId ? `Editing Order ${orderId}` : 'Your Order'}</h2>
             {!notEmpty ? (
-              <p className="ot-font-size-small ot-color-alert">
-                Your cart is currently empty. Please add some items.
-              </p>
+              <p>Your cart is currently empty. Please add some items.</p>
             ) : (
-              <p className="ot-font-size-small">
-                <span className="ot-bold ot-color-headings">
-                  {cartCount} items
-                </span>{' '}
-                for a total of{' '}
-                <span className="ot-bold ot-color-headings">
-                  ${cartTotal.toFixed(2)}
-                </span>{' '}
-                before tax
+              <p>
+                <span>{cartCount} items</span> for a total of{' '}
+                <span>${cartTotal.toFixed(2)}</span> before tax
               </p>
             )}
             {cartCount !== 0 && belowMinimum && (
-              <div className="sidebar__header__message">
-                <p className="ot-font-size-small ot-color-alert">
+              <div>
+                <p>
                   Your cart total is below the order minimum of $
                   {displayPrice(orderMinimum)}. Please add some items.
                 </p>
               </div>
             )}
             {aboveMaximum && (
-              <div className="sidebar__header__message">
-                <p className="ot-font-size-small ot-color-alert">
+              <div>
+                <p>
                   Your cart total is above the {orderMaxType} of $
                   {displayPrice(orderMaximum)}. Please edit or remove one or
                   more items before submitting your order.
                 </p>
               </div>
             )}
-          </div>
-          <div className="sidebar__content">
+          </SidebarHeader>
+          <SidebarContent>
             <Cart />
-          </div>
-          <div className="sidebar__footer ot-bg-color-primary">
-            <div className="sidebar__footer__container">
-              <div className="sidebar__back">
+          </SidebarContent>
+          <SidebarFooter>
+            <SidebarButtons>
+              <SidebarBack>
                 {isCheckout && cartId ? (
-                  <Button onClick={handleReopen} classes="ot-btn ot-btn--big">
+                  <ButtonStyled onClick={handleReopen} size="big">
                     Reopen
-                  </Button>
+                  </ButtonStyled>
                 ) : (
-                  <Button
+                  <ButtonStyled
                     onClick={handleBack}
-                    classes="ot-btn ot-btn--big"
+                    size="big"
                     disabled={!canOrder}
                   >
                     Menu
-                  </Button>
+                  </ButtonStyled>
                 )}
-              </div>
-              <div className="sidebar__checkout">
+              </SidebarBack>
+              <SidebarCheckout>
                 {showReview ? (
-                  <Button
+                  <ButtonStyled
                     onClick={handleReview}
-                    classes="ot-btn ot-btn--big ot-btn--highlight"
+                    size="big"
+                    color="cart"
                     disabled={!canCheckout}
                   >
                     {isReview
@@ -163,31 +249,32 @@ const Sidebar = () => {
                       : isCartOwner
                       ? 'Review All Orders'
                       : 'Submit Order'}
-                  </Button>
+                  </ButtonStyled>
                 ) : (
-                  <Button
+                  <ButtonStyled
                     onClick={handleCheckout}
-                    classes="ot-btn ot-btn--big ot-btn--highlight"
+                    size="big"
+                    color="cart"
                     disabled={!canCheckout}
                   >
                     {isCheckout ? 'Close' : 'Checkout'}
-                  </Button>
+                  </ButtonStyled>
                 )}
-              </div>
-            </div>
-            <div className="sidebar__footer__cancel">
-              <div className="sidebar__footer__cancel__button ot-font-size-small">
-                <Button
+              </SidebarCheckout>
+            </SidebarButtons>
+            <SidebarCancel>
+              <div>
+                <ButtonLink
                   onClick={handleClose}
                   classes="ot-btn-link-subtle ot-preface"
                 >
-                  Close Sidebar
-                </Button>
+                  <Preface>Close Sidebar</Preface>
+                </ButtonLink>
               </div>
-            </div>
-          </div>
+            </SidebarCancel>
+          </SidebarFooter>
         </div>
-      </aside>
+      </SidebarView>
     </>
   )
 }

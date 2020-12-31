@@ -43,29 +43,29 @@ $transition: $transition-duration $transition-easing;
 
 /* modals */
 
-$modal-speed: 250ms;
+// $modal-speed: 250ms;
 
-.md-enter,
-.md-exit.md-exit-active {
-  transition: all $modal-speed ease;
-  opacity: 0;
-  visibility: hidden;
+// .md-enter,
+// .md-exit.md-exit-active {
+//   transition: all $modal-speed ease;
+//   opacity: 0;
+//   visibility: hidden;
 
-  .modal {
-    transition: all $modal-speed ease;
-    transform: translateY(10%);
-  }
-}
+//   .modal {
+//     transition: all $modal-speed ease;
+//     transform: translateY(10%);
+//   }
+// }
 
-.md-enter.md-enter-active,
-.md-exit {
-  opacity: 1;
-  visibility: visible;
+// .md-enter.md-enter-active,
+// .md-exit {
+//   opacity: 1;
+//   visibility: visible;
 
-  .modal {
-    transform: translateY(0);
-  }
-}
+//   .modal {
+//     transform: translateY(0);
+//   }
+// }
 
 /* reveal */
 

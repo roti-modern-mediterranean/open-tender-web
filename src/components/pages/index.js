@@ -26,6 +26,7 @@ import Profile from './Profile'
 import Refunds from './Refunds'
 import ResetPassword from './ResetPassword'
 import RevenueCenters from './RevenueCenters'
+import RevenueCenter from './RevenueCenter'
 import Rewards from './Rewards'
 import SignUp from './SignUp'
 import Thanx from './Thanx'
@@ -59,6 +60,7 @@ export {
   Refunds,
   ResetPassword,
   RevenueCenters,
+  RevenueCenter,
   Rewards,
   SignUp,
   Thanx,
