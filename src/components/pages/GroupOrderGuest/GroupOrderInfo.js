@@ -24,7 +24,7 @@ const GroupOrderInfo = ({ isJoin }) => {
     cutoffAt && tz ? makeReadableDateStrFromIso(cutoffAt, tz, true) : null
   const spotsRemaining = guestLimit ? guestLimit - guestCount : null
   return (
-    <div className="join__info">
+    <>
       <p>
         This order is current scheduled for {formatTime(orderTime)}, and{' '}
         {cutoffTime && (
@@ -45,7 +45,7 @@ const GroupOrderInfo = ({ isJoin }) => {
           Please enter a first and last name to get started.
         </p>
       )}
-    </div>
+    </>
   )
 }
 

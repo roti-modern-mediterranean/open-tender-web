@@ -3,6 +3,8 @@ import Card from './Card'
 import Content from './Content'
 import Container from './Container'
 import FormWrapper from './FormWrapper'
+import GroupOrderLink from './GroupOrderLink'
+import GroupOrderTime from './GroupOrderTime'
 import HeaderAccount from './HeaderAccount'
 import HeaderDefault from './HeaderDefault'
 import HeaderLogo from './HeaderLogo'
@@ -43,6 +45,8 @@ export {
   Container,
   Content,
   FormWrapper,
+  GroupOrderLink,
+  GroupOrderTime,
   HeaderAccount,
   HeaderDefault,
   HeaderLogo,

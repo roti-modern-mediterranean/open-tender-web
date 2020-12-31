@@ -24,7 +24,7 @@ import {
   OrderRatingModal,
   OrderTypeModal,
   CartCountsModal,
-  GroupOrderModal,
+  GroupOrder,
   LevelUpModal,
   QRCode,
 } from './modals'
@@ -69,7 +69,7 @@ const makeModal = (type, windowRef, args = {}) => {
     case 'rating':
       return <OrderRatingModal {...args} />
     case 'groupOrder':
-      return <GroupOrderModal {...args} />
+      return <GroupOrder {...args} />
     case 'qrCode':
       return <QRCode {...args} />
     default:

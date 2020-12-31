@@ -8,11 +8,10 @@ import {
 } from '@open-tender/redux'
 import { Button } from '@open-tender/components'
 
-import { closeModal } from '../slices'
-import iconMap from './iconMap'
-import GroupOrderLink from './GroupOrderLink'
-import GroupOrderTime from './GroupOrderTime'
-import ModalTitle from './ModalTitle'
+import { closeModal } from '../../../slices'
+import iconMap from '../../iconMap'
+import ModalTitle from '../../ModalTitle'
+import { GroupOrderLink, GroupOrderTime } from '../..'
 
 const GroupOrderShare = () => {
   const history = useHistory()

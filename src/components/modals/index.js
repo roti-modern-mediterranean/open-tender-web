@@ -15,7 +15,7 @@ import WorkingModal from './WorkingModal'
 import ClosedModal from './ClosedModal'
 import OrderRatingModal from './OrderRatingModal'
 import OrderTypeModal from './OrderTypeModal'
-import GroupOrderModal from './GroupOrderModal'
+import GroupOrder from './GroupOrder'
 import LevelUpModal from './LevelUpModal'
 import QRCode from './QRCode'
 
@@ -37,7 +37,7 @@ export {
   ClosedModal,
   OrderRatingModal,
   OrderTypeModal,
-  GroupOrderModal,
+  GroupOrder,
   LevelUpModal,
   QRCode,
 }

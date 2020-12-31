@@ -20,7 +20,6 @@ import {
 import { CheckoutForm, Error } from '@open-tender/components'
 
 import { selectBrand, selectConfig } from '../slices'
-import Loader from './Loader'
 import { cardIconMap } from '../assets/cardIcons'
 import Background from './Background'
 import PageTitle from './PageTitle'
@@ -42,6 +41,7 @@ import {
   Smartphone,
 } from 'react-feather'
 import CheckoutCancelEdit from './CheckoutCancelEdit'
+import { Loading } from '.'
 
 const CheckoutPage = () => {
   const formRef = useRef()
@@ -131,10 +131,7 @@ const CheckoutPage = () => {
                 errors.form ? (
                   <Error error={errors.form} />
                 ) : (
-                  <Loader
-                    text={'Retrieving your order...'}
-                    className="loading--left"
-                  />
+                  <Loading text="Retrieving your order..." />
                 )
               ) : null}
               <CheckoutForm

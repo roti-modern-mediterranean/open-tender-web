@@ -2,12 +2,12 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectCustomer, selectGroupOrderToken } from '@open-tender/redux'
 
-import GroupOrderGuest from '../GroupOrderGuest'
-import GroupOrderStart from '../GroupOrderStart'
-import GroupOrderShare from '../GroupOrderShare'
-import ModalClose from '../ModalClose'
+import ModalClose from '../../ModalClose'
+import GroupOrderGuest from './GroupOrderGuest'
+import GroupOrderStart from './GroupOrderStart'
+import GroupOrderShare from './GroupOrderShare'
 
-const GroupOrderModal = () => {
+const GroupOrder = () => {
   const { auth } = useSelector(selectCustomer)
   const token = useSelector(selectGroupOrderToken)
 
@@ -25,6 +25,6 @@ const GroupOrderModal = () => {
   )
 }
 
-GroupOrderModal.displayName = 'GroupOrderModal'
+GroupOrder.displayName = 'GroupOrder'
 
-export default GroupOrderModal
+export default GroupOrder

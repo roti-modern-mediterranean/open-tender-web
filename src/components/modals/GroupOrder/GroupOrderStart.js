@@ -8,10 +8,10 @@ import {
 import { makeGroupOrderTime } from '@open-tender/js'
 import { Button, Input } from '@open-tender/components'
 
-import { openModal, closeModal } from '../slices'
+import { openModal, closeModal } from '../../../slices'
+import ModalTitle from '../../ModalTitle'
+import iconMap from '../../iconMap'
 import GroupOrderSteps from './GroupOrderSteps'
-import ModalTitle from './ModalTitle'
-import iconMap from './iconMap'
 
 const formatOrderTime = (s) =>
   s.replace('Today', 'today').replace('Tomorrow', 'tomorrow')
