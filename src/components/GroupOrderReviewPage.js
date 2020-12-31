@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { selectGroupOrder } from '@open-tender/redux'
 
-import GroupOrderReviewGuest from './GroupOrderReviewGuest'
-import GroupOrderReviewOwner from './GroupOrderReviewOwner'
+import GroupOrderReviewGuest from './pages/GroupOrderReview/GroupOrderReviewGuest'
+import GroupOrderReviewOwner from './pages/GroupOrderReview/GroupOrderReviewOwner'
 
 const GroupOrderReviewPage = () => {
   const history = useHistory()

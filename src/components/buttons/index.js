@@ -25,6 +25,7 @@ import GroupOrder from './GroupOrder'
 import LeaveGroup from './LeaveGroup'
 import Locations from './Locations'
 import Logout from './Logout'
+import Menu from './Menu'
 import NavMenu from './NavMenu'
 import RequestedAt from './RequestedAt'
 import RevenueCenter from './RevenueCenter'
@@ -59,6 +60,7 @@ export {
   LeaveGroup,
   Locations,
   Logout,
+  Menu,
   NavMenu,
   RequestedAt,
   RevenueCenter,

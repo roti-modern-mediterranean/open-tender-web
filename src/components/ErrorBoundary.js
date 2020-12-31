@@ -33,7 +33,6 @@ class ErrorBoundary extends React.Component {
 
   render() {
     const { hasError, error, errorInfo, eventId } = this.state
-    console.log(this.state)
     return hasError ? (
       <ErrorReport error={error} errorInfo={errorInfo} eventId={eventId} />
     ) : (

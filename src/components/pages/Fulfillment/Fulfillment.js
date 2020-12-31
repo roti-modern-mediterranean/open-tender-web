@@ -23,7 +23,6 @@ const Fulfillment = () => {
   const { id: orderId } = useParams()
   const { title: siteTitle } = useSelector(selectBrand)
   const { fulfillment: config } = useSelector(selectConfig)
-  console.log(config)
   const fulfillment = useSelector(selectFulfillment)
   const { windowRef } = useContext(AppContext)
 

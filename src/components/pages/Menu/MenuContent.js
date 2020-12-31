@@ -61,14 +61,6 @@ const MenuContent = () => {
     }
   }, [revenueCenters, categories, selected])
 
-  // useEffect(() => {
-  //   console.log(heroRef.current)
-  //   const heroHeight = heroRef.current
-  //     ? heroRef.current.getBoundingClientRect().height
-  //     : 0
-  //   console.log(heroHeight)
-  // }, [selected, revenueCenter, showHero, showHeroChild])
-
   const change = (revenueCenter) => {
     setSelected(revenueCenter)
     window.scrollTo(0, topRef.current.offsetTop)

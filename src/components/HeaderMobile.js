@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { AppContext } from '../App'
+import { isBrowser } from 'react-device-detect'
 
 const HeaderMobileView = styled('nav')`
   position: fixed;
@@ -55,6 +56,19 @@ const HeaderMobileTitle = styled('div')`
 const HeaderMobileNav = styled('div')`
   position: relative;
   z-index: 2;
+
+  ${(props) =>
+    props.isBrowser
+      ? `
+    button {
+    margin: 0 0 0 1rem;
+
+    &:first-of-type {
+      margin: 0
+    }
+    }
+  `
+      : null}
 `
 
 const HeaderMobile = ({
@@ -62,7 +76,7 @@ const HeaderMobile = ({
   title,
   right,
   bgColor = 'primary',
-  borderColor = 'secondary',
+  borderColor = 'primary',
   maxWidth = '100%',
 }) => {
   const header = useRef(null)
@@ -99,7 +113,7 @@ const HeaderMobile = ({
             <span>{title}</span>
           </HeaderMobileTitle>
         )}
-        <HeaderMobileNav>{right}</HeaderMobileNav>
+        <HeaderMobileNav isBrowser={isBrowser}>{right}</HeaderMobileNav>
       </HeaderMobileView>
     </div>
   )

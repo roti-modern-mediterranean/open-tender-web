@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,6 +20,7 @@ import iconMap from './iconMap'
 import { Card } from '.'
 
 const OrderCardGroup = ({ order }) => {
+  const [open, setOpen] = useState(false)
   const history = useHistory()
   const dispatch = useDispatch()
   const {
@@ -52,8 +53,15 @@ const OrderCardGroup = ({ order }) => {
   const handleReopen = () => {
     const data = { orderId: null, orderType, serviceType, isOutpost, address }
     dispatch(updateOrder(data))
-    dispatch(reopenGroupOrder(order)).then(() => history.push(menuSlug))
+    dispatch(reopenGroupOrder(order)).then(() => setOpen(true))
   }
+
+  useEffect(() => {
+    if (open && menuSlug && menuSlug !== '/') {
+      setOpen(false)
+      history.push(menuSlug)
+    }
+  }, [open, menuSlug, history])
 
   return (
     <Card

@@ -1,7 +1,8 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useContext } from 'react'
 import { isBrowser } from 'react-device-detect'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import { isoToDate, makeReadableDateStrFromIso } from '@open-tender/js'
 import {
   fetchGroupOrder,
@@ -15,14 +16,24 @@ import {
   selectCustomer,
   logoutCustomer,
 } from '@open-tender/redux'
-import { CartGuestForm, Button } from '@open-tender/components'
+import { CartGuestForm, ButtonStyled } from '@open-tender/components'
 
-import { selectConfig } from '../slices'
-import PageTitle from './PageTitle'
-import Background from './Background'
-import Loader from './Loader'
+import { selectBrand, selectConfig } from '../../../slices'
+import { AppContext } from '../../../App'
+import iconMap from '../../iconMap'
+import {
+  Background,
+  Container,
+  Content,
+  Loading,
+  Main,
+  PageTitle,
+  PageContent,
+  HeaderLogo,
+  HeaderMobile,
+} from '../..'
+
 import GroupOrderError from './GroupOrderError'
-import iconMap from './iconMap'
 
 const formatTime = (time) => {
   return time
@@ -97,10 +108,11 @@ const makeTitle = (
   }
 }
 
-const GroupOrderGuestPage = () => {
+const GroupOrderGuest = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { token } = useParams()
+  const { title: siteTitle } = useSelector(selectBrand)
   const { groupOrders: config } = useSelector(selectConfig)
   const groupOrder = useSelector(selectGroupOrder)
   const {
@@ -150,9 +162,11 @@ const GroupOrderGuestPage = () => {
     [dispatch]
   )
 
+  const { windowRef } = useContext(AppContext)
+
   useEffect(() => {
-    window.scroll(0, 0)
-  }, [dispatch, cartGuestId])
+    windowRef.current.scroll(0, 0)
+  }, [windowRef])
 
   useEffect(() => {
     if (isCartOwner) {
@@ -189,67 +203,66 @@ const GroupOrderGuestPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Join Group Order | {siteTitle}</title>
+      </Helmet>
       {isBrowser && <Background imageUrl={config.background} />}
-      <div className="content">
-        {isLoading ? (
-          <Loader
-            text="Retrieving group order info..."
-            className="loading--left"
-          />
-        ) : (
-          <>
+      <Content maxWidth="76.8rem">
+        <HeaderMobile
+          title={isBrowser ? null : 'Join Group Order'}
+          maxWidth="76.8rem"
+          left={<HeaderLogo />}
+          right={null}
+        />
+        <Main>
+          <Container>
             <PageTitle title={title} subtitle={subtitle} />
-            <div className="content__body ot-line-height slide-up">
-              <div className="container">
-                <div className="content__text">
-                  {showForm ? (
-                    <>
-                      <p>
-                        {spotsRemaining && (
-                          <span>Only {spotsRemaining} spots left! </span>
-                        )}{' '}
-                        {spendingLimit && (
-                          <span>
-                            There is a spending limit of ${spendingLimit} for
-                            this order.
-                          </span>
-                        )}
-                      </p>
-                      <p>Please enter a first and last name to get started.</p>
-                      <CartGuestForm
-                        cartId={cartId}
-                        joinCart={joinCart}
-                        loading={loading}
-                        error={error}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <GroupOrderError
-                        cartId={cartId}
-                        error={error}
-                        closed={closed}
-                        pastCutoff={pastCutoff}
-                        atCapacity={atCapacity}
-                        cartOwnerName={cartOwnerName}
-                      />
-                      <Button
-                        classes="ot-btn"
-                        icon={iconMap['RefreshCw']}
-                        text="Start A New Order"
-                        onClick={startOver}
-                      />
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+            <PageContent>
+              {isLoading ? (
+                <Loading text="Retrieving group order info..." />
+              ) : showForm ? (
+                <>
+                  <p>
+                    {spotsRemaining && (
+                      <span>Only {spotsRemaining} spots left! </span>
+                    )}{' '}
+                    {spendingLimit && (
+                      <span>
+                        There is a spending limit of ${spendingLimit} for this
+                        order.
+                      </span>
+                    )}
+                  </p>
+                  <p>Please enter a first and last name to get started.</p>
+                  <CartGuestForm
+                    cartId={cartId}
+                    joinCart={joinCart}
+                    loading={loading}
+                    error={error}
+                  />
+                </>
+              ) : (
+                <>
+                  <GroupOrderError
+                    cartId={cartId}
+                    error={error}
+                    closed={closed}
+                    pastCutoff={pastCutoff}
+                    atCapacity={atCapacity}
+                    cartOwnerName={cartOwnerName}
+                  />
+                  <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
+                    Start A New Order
+                  </ButtonStyled>
+                </>
+              )}
+            </PageContent>
+          </Container>
+        </Main>
+      </Content>
     </>
   )
 }
 
-GroupOrderGuestPage.displayName = 'GroupOrderGuestPage'
-export default GroupOrderGuestPage
+GroupOrderGuest.displayName = 'GroupOrderGuest'
+export default GroupOrderGuest

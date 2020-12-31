@@ -7,8 +7,6 @@ import RevenueCenterPage from './RevenueCenterPage'
 import ResetPasswordPage from './ResetPasswordPage'
 import NotFoundPage from './NotFoundPage'
 import RefundPolicyPage from './RefundPolicyPage'
-import GroupOrderGuestPage from './GroupOrderGuestPage'
-import GroupOrderReviewPage from './GroupOrderReviewPage'
 import LevelUpPage from './LevelUpPage'
 import ThanxPage from './ThanxPage'
 import {
@@ -24,6 +22,8 @@ import {
   Favorites,
   Fulfillment,
   GiftCards,
+  GroupOrderGuest,
+  GroupOrderReview,
   GroupOrders,
   Home,
   HouseAccounts,
@@ -84,10 +84,10 @@ const Routes = () => {
         <Menu />
       </Route>
       <Route path="/join/:token">
-        <GroupOrderGuestPage />
+        <GroupOrderGuest />
       </Route>
       <Route exact path="/review">
-        <GroupOrderReviewPage />
+        <GroupOrderReview />
       </Route>
       <Route exact path="/checkout">
         <CheckoutPage />

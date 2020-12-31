@@ -38,12 +38,11 @@ const OrdersListItem = styled('div')`
 const OrdersList = ({ orders, delay = 0.125, isGroup = false }) => {
   return (
     <OrdersListView>
-      {orders.map((order, index) => {
+      {orders.map((order) => {
         return (
           <OrdersListItem
-            key={order.order_id}
+            key={order.order_id || order.token}
             delay={`${delay.toFixed(3)}s`}
-            // delay={`${((index + 1) * 0.125 + delay).toFixed(3)}s`}
           >
             {isGroup ? (
               <OrderCardGroup order={order} />

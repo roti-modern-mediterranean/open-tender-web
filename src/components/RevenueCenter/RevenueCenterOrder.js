@@ -4,7 +4,11 @@ import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { makeRevenueCenterMsg } from '@open-tender/js'
-import { selectOrder, selectAutoSelect } from '@open-tender/redux'
+import {
+  selectOrder,
+  selectGroupOrder,
+  selectAutoSelect,
+} from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
 import { selectConfig } from '../../slices'
@@ -48,6 +52,9 @@ const RevenueCenterOrderMessage = styled('div')`
 export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
   const history = useHistory()
   const { serviceType, requestedAt } = useSelector(selectOrder)
+  const { cartId } = useSelector(selectGroupOrder)
+  const hasGroupOrdering =
+    revenueCenter && revenueCenter.settings.group_ordering
   const autoSelect = useSelector(selectAutoSelect)
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { statusMessages } = rcConfig || {}
@@ -60,32 +67,41 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
 
   return (
     <RevenueCenterOrderView>
-      {msg.message && (
+      {cartId && !hasGroupOrdering ? (
         <RevenueCenterOrderMessage>
           <p>
-            <span>{msg.message}</span>
+            <span>This location does not offer group ordering.</span>
           </p>
         </RevenueCenterOrderMessage>
-      )}
-
-      {isMenu ? (
-        !autoSelect ? (
-          <div>
-            <ButtonStyled
-              icon={iconMap.RefreshCw}
-              onClick={() => history.push(`/locations`)}
-            >
-              Change Location
-            </ButtonStyled>
-          </div>
-        ) : null
       ) : (
-        <div>
-          <RevenueCenterButtons
-            revenueCenter={revenueCenter}
-            isLanding={isLanding}
-          />
-        </div>
+        <>
+          {msg.message && (
+            <RevenueCenterOrderMessage>
+              <p>
+                <span>{msg.message}</span>
+              </p>
+            </RevenueCenterOrderMessage>
+          )}
+          {isMenu ? (
+            !autoSelect ? (
+              <div>
+                <ButtonStyled
+                  icon={iconMap.RefreshCw}
+                  onClick={() => history.push(`/locations`)}
+                >
+                  Change Location
+                </ButtonStyled>
+              </div>
+            ) : null
+          ) : (
+            <div>
+              <RevenueCenterButtons
+                revenueCenter={revenueCenter}
+                isLanding={isLanding}
+              />
+            </div>
+          )}
+        </>
       )}
     </RevenueCenterOrderView>
   )

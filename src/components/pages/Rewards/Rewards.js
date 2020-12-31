@@ -32,7 +32,6 @@ const Rewards = () => {
   const hasLevelUp = accountSections.filter((i) => i === 'levelup').length > 0
   const { account: accountConfig } = useSelector(selectConfig)
   const config = hasLevelUp ? accountConfig.levelup : defaultConfig
-  console.log(config)
   const { background } = accountConfig
   const { auth } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)

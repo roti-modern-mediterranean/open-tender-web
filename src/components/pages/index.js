@@ -12,6 +12,8 @@ import ErrorFatal from './ErrorFatal'
 import Favorites from './Favorites'
 import Fulfillment from './Fulfillment'
 import GiftCards from './GiftCards'
+import GroupOrderGuest from './GroupOrderGuest'
+import GroupOrderReview from './GroupOrderReview'
 import GroupOrders from './GroupOrders'
 import Home from './Home'
 import HouseAccounts from './HouseAccounts'
@@ -38,6 +40,8 @@ export {
   Favorites,
   Fulfillment,
   GiftCards,
+  GroupOrderGuest,
+  GroupOrderReview,
   GroupOrders,
   Home,
   HouseAccounts,

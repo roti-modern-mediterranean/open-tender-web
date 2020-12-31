@@ -48,14 +48,22 @@ const MenuHeader = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
         <>
           {isBrowser ? (
             <>
-              <Account />
-              <RevenueCenter />
-              <ServiceType />
-              <RequestedAt />
-              <Allergens />
-              <GroupOrder />
-              <GroupGuest />
-              <CancelEdit />
+              {cartGuest ? (
+                <>
+                  <Allergens />
+                  <GroupGuest />
+                </>
+              ) : (
+                <>
+                  <Account />
+                  <RevenueCenter />
+                  <ServiceType />
+                  <RequestedAt />
+                  <Allergens />
+                  <GroupOrder />
+                  <CancelEdit />
+                </>
+              )}
             </>
           ) : null}
         </>
