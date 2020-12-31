@@ -23,9 +23,12 @@ import LevelUp from './LevelUp'
 import Menu from './Menu'
 import NotFound from './NotFound'
 import Profile from './Profile'
+import Refunds from './Refunds'
+import ResetPassword from './ResetPassword'
 import RevenueCenters from './RevenueCenters'
 import Rewards from './Rewards'
 import SignUp from './SignUp'
+import Thanx from './Thanx'
 
 export {
   Accessibility,
@@ -53,7 +56,10 @@ export {
   Orders,
   Order,
   Profile,
+  Refunds,
+  ResetPassword,
   RevenueCenters,
   Rewards,
   SignUp,
+  Thanx,
 }

@@ -4,9 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import CheckoutPage from './CheckoutPage'
 import ConfirmationPage from './ConfirmationPage'
 import RevenueCenterPage from './RevenueCenterPage'
-import ResetPasswordPage from './ResetPasswordPage'
-import RefundPolicyPage from './RefundPolicyPage'
-import ThanxPage from './ThanxPage'
 import {
   Accessibility,
   Account,
@@ -31,9 +28,12 @@ import {
   Orders,
   Order,
   Profile,
+  Refunds,
+  ResetPassword,
   RevenueCenters,
   Rewards,
   SignUp,
+  Thanx,
 } from './pages'
 
 // <TransitionGroup component={null}>
@@ -63,13 +63,13 @@ const Routes = () => {
         <LevelUp />
       </Route>
       <Route exact path="/thanx/callback">
-        <ThanxPage />
+        <Thanx />
       </Route>
       <Route exact path="/signup">
         <SignUp />
       </Route>
       <Route exact path="/reset-password">
-        <ResetPasswordPage />
+        <ResetPassword />
       </Route>
       <Route exact path="/catering">
         <Catering />
@@ -141,7 +141,7 @@ const Routes = () => {
         <Accessibility />
       </Route>
       <Route exact path="/refunds">
-        <RefundPolicyPage />
+        <Refunds />
       </Route>
       <Route exact path="/gift-cards">
         <GiftCards />
