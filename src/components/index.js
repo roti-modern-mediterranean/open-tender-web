@@ -18,6 +18,7 @@ import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
 import Main from './Main'
 import MapsAutocomplete from './MapsAutocomplete'
+import Modal, { ModalClose, ModalContent } from './Modal'
 import Nav from './Nav'
 import NavButtons from './NavButtons'
 import NavScroll from './NavScroll'
@@ -37,6 +38,7 @@ import PageTitle from './PageTitle'
 import PageContent from './PageContent'
 import ProgressBar from './ProgressBar'
 import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
+import Routes from './Routes'
 import ScreenreaderTitle from './ScreenreaderTitle'
 import Sidebar from './Sidebar'
 import QRCode from './QRCode'
@@ -65,6 +67,9 @@ export {
   Loading,
   Main,
   MapsAutocomplete,
+  Modal,
+  ModalClose,
+  ModalContent,
   Nav,
   NavButtons,
   NavScroll,
@@ -85,6 +90,7 @@ export {
   ProgressBar,
   RevenueCenter,
   RevenueCenterChild,
+  Routes,
   QRCode,
   Row,
   ScreenreaderTitle,

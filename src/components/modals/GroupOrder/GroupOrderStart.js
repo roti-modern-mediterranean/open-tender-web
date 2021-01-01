@@ -9,7 +9,7 @@ import { makeGroupOrderTime } from '@open-tender/js'
 import { Button, Input } from '@open-tender/components'
 
 import { openModal, closeModal } from '../../../slices'
-import ModalTitle from '../../ModalTitle'
+import ModalTitle from '../../Modal/ModalTitle'
 import iconMap from '../../iconMap'
 import GroupOrderSteps from './GroupOrderSteps'
 

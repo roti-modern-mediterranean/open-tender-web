@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { X } from 'react-feather'
 
-import { closeModal } from '../slices'
+import { closeModal } from '../../slices'
 
 const ModalClose = ({ classes = 'ot-btn-link', onClick }) => {
   const dispatch = useDispatch()

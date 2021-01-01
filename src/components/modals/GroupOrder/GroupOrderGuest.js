@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@open-tender/components'
 
 import { openModal, closeModal } from '../../../slices'
-import ModalTitle from '../../ModalTitle'
+import ModalTitle from '../../Modal/ModalTitle'
 import iconMap from '../../iconMap'
 
 const GroupOrderGuest = () => {

@@ -779,7 +779,7 @@ const makeGlobalStyles = (theme) => css`
     opacity: 0;
     visibility: hidden;
 
-    .modal {
+    > div {
       transition: all 250ms ease;
       transform: translateY(10%);
     }
@@ -790,9 +790,22 @@ const makeGlobalStyles = (theme) => css`
     opacity: 1;
     visibility: visible;
 
-    .modal {
+    > div {
       transform: translateY(0);
     }
+  }
+
+  .overlay-enter,
+  .overlay-exit.overlay-exit-active {
+    transition: all 250ms ease;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .overlay-enter.overlay-enter-active,
+  .overlay-exit {
+    opacity: 1;
+    visibility: visible;
   }
 
   .flash-enter {

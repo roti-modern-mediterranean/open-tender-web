@@ -21,7 +21,7 @@ const SidebarOverlay = () => {
   return (
     <TransitionGroup component={null}>
       {isOpen ? (
-        <CSSTransition key="sidebar-overlay" classNames="md" timeout={250}>
+        <CSSTransition key="sidebar-overlay" classNames="overlay" timeout={250}>
           <SidebarOverlayView onClick={() => dispatch(toggleSidebar())} />
         </CSSTransition>
       ) : null}

@@ -15,15 +15,8 @@ import {
 
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
-import {
-  Background,
-  Content,
-  HeaderLogo,
-  HeaderMobile,
-  Main,
-  Welcome,
-} from '../..'
-import { Logout } from '../../buttons'
+import { Background, Content, HeaderMobile, Main, Welcome } from '../..'
+import { Logout, StartOver } from '../../buttons'
 import AccountActions from './AccountActions'
 import AccountButtons from './AccountButtons'
 
@@ -70,7 +63,7 @@ const Account = () => {
           bgColor={isBrowser ? 'primary' : 'transparent'}
           borderColor={isBrowser ? 'primary' : 'transparent'}
           maxWidth="76.8rem"
-          left={<HeaderLogo />}
+          left={<StartOver isLogo={true} />}
           right={<Logout color="light" />}
         />
         <Main padding="0" imageUrl={background}>

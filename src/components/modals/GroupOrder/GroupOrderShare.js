@@ -10,7 +10,7 @@ import { Button } from '@open-tender/components'
 
 import { closeModal } from '../../../slices'
 import iconMap from '../../iconMap'
-import ModalTitle from '../../ModalTitle'
+import ModalTitle from '../../Modal/ModalTitle'
 import { GroupOrderLink, GroupOrderTime } from '../..'
 
 const GroupOrderShare = () => {

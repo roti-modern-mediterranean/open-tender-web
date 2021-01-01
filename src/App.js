@@ -8,11 +8,11 @@ import TagManager from 'react-gtm-module'
 import { fetchConfig } from './slices/configSlice'
 import GlobalStyles from './GlobalStyles'
 import Routes from './components/Routes'
-import Modal from './components/Modal'
 import {
   Alerts,
   CartButton,
   ErrorBoundary,
+  Modal,
   Nav,
   Notifications,
   Sidebar,
