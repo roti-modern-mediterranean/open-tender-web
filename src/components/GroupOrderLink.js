@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import propTypes from 'prop-types'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { Button } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import iconMap from './iconMap'
+import styled from '@emotion/styled'
+
+const CopyResult = styled('p')`
+  margin: 1rem 0 0;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  ${(props) => (props.copied ? `color: ${props.theme.colors.success};` : null)}
+`
 
 const GroupOrderLink = ({
   token,
-  className = 'ot-btn ot-btn--small ot-btn--highlight',
   instructions = 'Click button above to copy the link to your clipboard',
 }) => {
   const [copied, setCopied] = useState(false)
@@ -17,29 +23,28 @@ const GroupOrderLink = ({
     setCopied(false)
   }, [])
 
-  const copy = (evt) => {
-    evt.preventDefault()
-    evt.target.blur()
+  const copy = () => {
+    return
   }
 
   return (
     <>
       <p>
         <CopyToClipboard text={url} onCopy={() => setCopied(true)}>
-          <Button
-            text={url}
-            classes={className}
-            icon={iconMap['Clipboard']}
+          <ButtonStyled
+            icon={iconMap.Clipboard}
             onClick={copy}
-          />
+            size="small"
+            color="cart"
+          >
+            {url}
+          </ButtonStyled>
         </CopyToClipboard>
       </p>
       {copied ? (
-        <p className="copied ot-font-size-small ot-color-success">
-          Copied to clipboard!
-        </p>
+        <CopyResult copied={copied}>Copied to clipboard!</CopyResult>
       ) : (
-        <p className="copied ot-font-size-small">{instructions || <br />}</p>
+        <CopyResult>{instructions || <br />}</CopyResult>
       )}
     </>
   )

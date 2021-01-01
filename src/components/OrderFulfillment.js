@@ -6,19 +6,10 @@ import {
   updateOrderFulfillment,
   resetOrderFulfillment,
 } from '@open-tender/redux'
-import { Message, OrderFulfillmentForm } from '@open-tender/components'
+import { Heading, Message, OrderFulfillmentForm } from '@open-tender/components'
 
 import { selectFulfillment } from '../slices'
-import { Loading } from '.'
-import styled from '@emotion/styled'
-
-const OrderFulfillmentView = styled('div')`
-  margin: 4rem 0 2rem;
-
-  h2 + p {
-    margin: 0.5rem 0 0;
-  }
-`
+import { FormHeader, FormWrapper, Loading } from '.'
 
 const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
   const dispatch = useDispatch()
@@ -48,30 +39,30 @@ const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
   }, [dispatch])
 
   return (
-    <OrderFulfillmentView id="order-fulfillment">
+    <FormWrapper style={{ margin: '0 0 4rem' }}>
+      <FormHeader>
+        <p>
+          <Heading>{fulfillmentSettings.title}</Heading>
+        </p>
+        <p>{subtitle}</p>
+      </FormHeader>
       {isLoading ? (
-        <Loading text="Retrieving your order..." />
+        <Loading text="Retrieving..." />
       ) : errMsg ? (
         <Message color="error" style={{ width: '100%' }}>
           {errMsg}
         </Message>
       ) : (
-        <>
-          <div style={{ margin: '0 0 2rem' }}>
-            <h2>{fulfillmentSettings.title}</h2>
-            <p>{subtitle}</p>
-          </div>
-          <OrderFulfillmentForm
-            orderId={orderId}
-            fulfillment={fulfillment}
-            loading={loading}
-            error={error}
-            update={update}
-            settings={fulfillmentSettings}
-          />
-        </>
+        <OrderFulfillmentForm
+          orderId={orderId}
+          fulfillment={fulfillment}
+          loading={loading}
+          error={error}
+          update={update}
+          settings={fulfillmentSettings}
+        />
       )}
-    </OrderFulfillmentView>
+    </FormWrapper>
   )
 }
 

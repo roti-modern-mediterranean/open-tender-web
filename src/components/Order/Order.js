@@ -42,10 +42,15 @@ const OrderView = styled(Box)`
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: ${(props) => props.theme.layout.paddingMobile};
   }
+
+  h1 {
+    line-height: 1;
+    margin: 0.5rem 0;
+  }
 `
 
 const OrderButtons = styled(`div`)`
-  margin: 2rem 0 3rem;
+  margin: 3rem 0;
 
   button + button {
     margin-left: 1rem;
@@ -53,7 +58,9 @@ const OrderButtons = styled(`div`)`
 `
 
 const OrderSectionHeader = styled('h2')`
-  margin: 4rem 0 2rem;
+  margin: 4rem 0 1rem -0.1rem;
+  line-height: 1;
+  font-size: ${(props) => props.theme.fonts.sizes.h3};
 `
 
 const OrderCentered = styled('div')`
@@ -73,7 +80,7 @@ const handleOrderError = (error) => {
   }
 }
 
-const Order = ({ order, loading, error }) => {
+const Order = ({ order, loading, error, isConfirmation }) => {
   const {
     order_id,
     status,
@@ -144,15 +151,27 @@ const Order = ({ order, loading, error }) => {
               <ButtonStyled
                 icon={iconMap.Edit}
                 onClick={() => dispatch(editOrder(order))}
+                size="small"
+                color={isConfirmation ? 'secondary' : 'primary'}
               >
                 Edit
               </ButtonStyled>
             )}
-            <ButtonStyled icon={iconMap.RefreshCw} onClick={handleReorder}>
+            <ButtonStyled
+              icon={iconMap.RefreshCw}
+              onClick={handleReorder}
+              size="small"
+              color={isConfirmation ? 'secondary' : 'primary'}
+            >
               Reorder
             </ButtonStyled>
             {!isUpcoming && (
-              <ButtonStyled icon={iconMap.Star} onClick={updateRating}>
+              <ButtonStyled
+                icon={iconMap.Star}
+                onClick={updateRating}
+                size="small"
+                color={isConfirmation ? 'secondary' : 'primary'}
+              >
                 {rating ? 'Update Rating' : 'Add Rating'}
               </ButtonStyled>
             )}

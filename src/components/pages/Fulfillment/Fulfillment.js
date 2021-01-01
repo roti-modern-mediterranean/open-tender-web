@@ -46,10 +46,12 @@ const Fulfillment = () => {
       {isBrowser && <Background imageUrl={config.background} />}
       <Content maxWidth="76.8rem">
         <HeaderDefault title={isBrowser ? null : 'Curbside Pickup'} />
-        <Main>
+        <Main bgColor="secondary">
           <Container>
             <PageContent>
-              <OrderFulfillment orderId={orderId} />
+              <div style={{ margin: '4rem 0 0' }}>
+                <OrderFulfillment orderId={orderId} />
+              </div>
             </PageContent>
           </Container>
         </Main>

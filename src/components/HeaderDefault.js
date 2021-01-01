@@ -9,6 +9,7 @@ const HeaderDefault = ({
   title,
   bgColor = 'primary',
   borderColor = 'primary',
+  isLogo = true,
 }) => {
   return (
     <HeaderMobile
@@ -16,7 +17,7 @@ const HeaderDefault = ({
       maxWidth={maxWidth}
       bgColor={bgColor}
       borderColor={borderColor}
-      left={<StartOver isLogo={true} />}
+      left={<StartOver isLogo={isLogo} />}
       right={<Account />}
     />
   )

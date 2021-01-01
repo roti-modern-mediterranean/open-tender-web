@@ -111,14 +111,16 @@ const NavScroll = ({ items, offset = 0 }) => {
   useEffect(() => {
     if (active) {
       const navActive = document.getElementById(`nav-${active.id}`)
-      const navOffset = navActive.getBoundingClientRect().x
-      const parentOffset = navActive.offsetParent.getBoundingClientRect().x
-      const offsetLeft = navOffset - parentOffset
-      navRef.current.scrollTo({
-        top: 0,
-        left: offsetLeft,
-        behavior: 'smooth',
-      })
+      if (navActive) {
+        const navOffset = navActive.getBoundingClientRect().x
+        const parentOffset = navActive.offsetParent.getBoundingClientRect().x
+        const offsetLeft = navOffset - parentOffset
+        navRef.current.scrollTo({
+          top: 0,
+          left: offsetLeft,
+          behavior: 'smooth',
+        })
+      }
     }
   }, [active])
 

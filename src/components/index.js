@@ -5,6 +5,7 @@ import CartButton from './CartButton'
 import Content from './Content'
 import Container from './Container'
 import ErrorBoundary from './ErrorBoundary'
+import FormHeader from './FormHeader'
 import FormWrapper from './FormWrapper'
 import GroupOrderLink from './GroupOrderLink'
 import GroupOrderTime from './GroupOrderTime'
@@ -51,6 +52,7 @@ export {
   Container,
   Content,
   ErrorBoundary,
+  FormHeader,
   FormWrapper,
   GroupOrderLink,
   GroupOrderTime,
