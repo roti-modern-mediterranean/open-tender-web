@@ -15,9 +15,10 @@
 // import ClosedModal from './ClosedModal'
 // import OrderRatingModal from './OrderRatingModal'
 // import OrderTypeModal from './OrderTypeModal'
-// import GroupOrder from './GroupOrder'
+
 // import LevelUpModal from './LevelUpModal'
 // import QRCode from './QRCode'
+import GroupOrder from './GroupOrder'
 import Login from './Login'
 
 export {
@@ -38,8 +39,9 @@ export {
   // ClosedModal,
   // OrderRatingModal,
   // OrderTypeModal,
-  // GroupOrder,
+
   // LevelUpModal,
   // QRCode,
+  GroupOrder,
   Login,
 }

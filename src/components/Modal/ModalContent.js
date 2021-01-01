@@ -29,8 +29,34 @@ const ModalSubtitle = styled('div')`
   }
 `
 
+const ModalBody = styled('div')`
+  > div {
+    p {
+      margin: 1em 0;
+      line-height: ${(props) => props.theme.lineHeight};
+
+      button {
+        margin: 0 1rem 1rem 0;
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  // > div + div {
+  //   margin: ${(props) => props.theme.layout.padding} 0 0;
+  // }
+`
+
 const ModalFooter = styled('div')`
   margin-top: 2rem;
+
+  > {
+    p {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
+  }
 
   > div {
     display: flex;
@@ -66,7 +92,7 @@ const ModalContent = ({ close = true, title, subtitle, footer, children }) => {
             {subtitle && <ModalSubtitle>{subtitle}</ModalSubtitle>}
           </ModalHeader>
         )}
-        <div>{children}</div>
+        <ModalBody>{children}</ModalBody>
         {footer && <ModalFooter>{footer}</ModalFooter>}
       </ModalContentView>
     </>

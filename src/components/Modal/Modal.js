@@ -9,7 +9,7 @@ import ModalOverlay from './ModalOverlay'
 import ModalLoading from './ModalLoading'
 import {
   Login,
-  // LoginModal,
+  GroupOrder,
   // SignUpModal,
   // AddressModal,
   // AllergensModal,
@@ -26,7 +26,7 @@ import {
   // OrderRatingModal,
   // OrderTypeModal,
   // CartCountsModal,
-  // GroupOrder,
+
   // LevelUpModal,
   // QRCode,
 } from '../modals'
@@ -69,13 +69,28 @@ const makeModal = (type, windowRef, args = {}) => {
     //   return <OrderTypeModal {...args} />
     // case 'rating':
     //   return <OrderRatingModal {...args} />
-    // case 'groupOrder':
-    //   return <GroupOrder {...args} />
+    case 'groupOrder':
+      return <GroupOrder {...args} />
     // case 'qrCode':
     //   return <QRCode {...args} />
     default:
       return null
   }
+}
+
+const containerStyleMap = {
+  address: { alignItems: 'flex-start' },
+  creditCard: { alignItems: 'flex-start' },
+  requestedAt: { alignItems: 'flex-start' },
+  allergens: { alignItems: 'flex-start' },
+  cartErrors: { alignItems: 'flex-start' },
+  cartCounts: { alignItems: 'flex-start' },
+  groupOrder: { alignItems: 'flex-start' },
+}
+
+const modalStyleMap = {
+  cartErrors: { width: '90%', maxWidth: '60rem' },
+  groupOrder: { margin: '2rem' },
 }
 
 const classesMap = {
@@ -121,6 +136,8 @@ const Modal = () => {
   const preventClose = args && args.preventClose ? true : false
   const showModal = type ? true : false
   const modal = type ? makeModal(type, modalRef, args) : null
+  const containerStyle = containerStyleMap[type] || null
+  const modalStyle = modalStyleMap[type] || null
   const classes = `modal-container ${classesMap[type] || ''}`
 
   useEffect(() => {
@@ -158,10 +175,16 @@ const Modal = () => {
               ref={modalRef}
               id="modal-container"
               onClick={handleClose}
+              style={containerStyle}
             >
-              <ModalView role="dialog" aria-labelledby="dialogTitle">
+              {modal}
+              {/* <ModalView
+                role="dialog"
+                aria-labelledby="dialogTitle"
+                style={modalStyle}
+              >
                 {modal}
-              </ModalView>
+              </ModalView> */}
             </ModalContainer>
           </CSSTransition>
         ) : null}

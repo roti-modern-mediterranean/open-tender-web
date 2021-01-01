@@ -19,7 +19,7 @@ import {
 } from '@open-tender/components'
 
 import { closeModal, selectBrand } from '../../slices'
-import { ModalContent } from '..'
+import { ModalContent, ModalView } from '..'
 
 const messaging = {
   login: {
@@ -98,7 +98,7 @@ const LoginModal = ({ callback }) => {
   }
 
   return (
-    <>
+    <ModalView>
       <ModalContent
         title={msg.title}
         subtitle={
@@ -138,7 +138,7 @@ const LoginModal = ({ callback }) => {
           />
         )}
       </ModalContent>
-    </>
+    </ModalView>
   )
 }
 

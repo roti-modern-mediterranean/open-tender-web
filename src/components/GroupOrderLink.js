@@ -36,6 +36,7 @@ const GroupOrderLink = ({
             onClick={copy}
             size="small"
             color="cart"
+            style={{ textAlign: 'left', padding: '1rem 1rem' }}
           >
             {url}
           </ButtonStyled>

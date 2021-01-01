@@ -6,97 +6,82 @@ import {
   resetGroupOrder,
   removeCustomerGroupOrder,
 } from '@open-tender/redux'
-import { Button } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { closeModal } from '../../../slices'
 import iconMap from '../../iconMap'
-import ModalTitle from '../../Modal/ModalTitle'
 import { GroupOrderLink, GroupOrderTime } from '../..'
+import { ModalContent } from '../../Modal'
 
 const GroupOrderShare = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { token, cartId } = useSelector(selectGroupOrder)
 
-  const proceed = (evt) => {
-    evt.preventDefault()
+  const proceed = () => {
     history.push('/review')
     dispatch(closeModal())
-    evt.target.blur()
   }
 
-  const backToMenu = (evt) => {
-    evt.preventDefault()
+  const backToMenu = () => {
     dispatch(closeModal())
-    evt.target.blur()
   }
 
-  const save = (evt) => {
-    evt.preventDefault()
+  const save = () => {
     dispatch(resetGroupOrder())
     dispatch(closeModal())
-    evt.target.blur()
   }
 
-  const cancel = (evt) => {
-    evt.preventDefault()
+  const cancel = () => {
     dispatch(removeCustomerGroupOrder(cartId))
     dispatch(closeModal())
-    evt.target.blur()
   }
 
   return (
-    <div className="modal__content">
-      <div className="modal__header">
-        <ModalTitle title="Spread the love!" />
-        <p className="modal__subtitle">
+    <ModalContent
+      title="Spread the love!"
+      subtitle={
+        <p>
           Share the link below with your friends so they can add their orders
         </p>
-      </div>
-      <div className="modal__body -message ot-line-height">
-        <div className="modal__body__section">
-          <GroupOrderLink token={token} />
-          <GroupOrderTime />
+      }
+      footer={
+        <>
           <p>
-            Once you've added your own items, proceed to the next page to review
-            the orders that have been submitted by others.
+            Change your mind? Save this order for later or cancel it altogether.
           </p>
-          <p>
-            <Button
-              text="Review All Orders"
-              classes="ot-btn"
-              icon={iconMap['ShoppingBag']}
-              onClick={proceed}
-            />
-            <Button
-              text="Back To Menu"
-              classes="ot-btn ot-btn--secondary"
-              icon={iconMap['Map']}
-              onClick={backToMenu}
-            />
-          </p>
-        </div>
-      </div>
-      <div className="modal__footer">
-        <p className="ot-font-size-small">
-          Change your mind? Save this order for later or cancel it altogether.
+          <div>
+            <ButtonStyled icon={iconMap.Save} onClick={save} size="small">
+              Save for Later
+            </ButtonStyled>
+            <ButtonStyled icon={iconMap.Trash2} onClick={cancel} size="small">
+              Delete Forever
+            </ButtonStyled>
+          </div>
+        </>
+      }
+    >
+      <div>
+        <GroupOrderLink token={token} />
+        <GroupOrderTime />
+        <p>
+          Once you've added your own items, proceed to the next page to review
+          the orders that have been submitted by others.
         </p>
-        <div className="modal__footer__buttons">
-          <Button
-            text="Save for Later"
-            classes="ot-btn ot-btn--small"
-            icon={iconMap['Save']}
-            onClick={save}
-          />
-          <Button
-            text="Delete Forever"
-            classes="ot-btn ot-btn--small ot-btn--cancel"
-            icon={iconMap['Trash2']}
-            onClick={cancel}
-          />
-        </div>
+        <p>
+          <ButtonStyled icon={iconMap.ShoppingBag} onClick={proceed}>
+            Review All Orders
+          </ButtonStyled>
+          <ButtonStyled
+            icon={iconMap.Map}
+            onClick={backToMenu}
+            color="secondary"
+          >
+            Back To Menu
+          </ButtonStyled>
+        </p>
       </div>
-    </div>
+    </ModalContent>
   )
 }
 

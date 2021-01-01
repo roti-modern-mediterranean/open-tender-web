@@ -6,15 +6,37 @@ import {
   addCustomerGroupOrder,
 } from '@open-tender/redux'
 import { makeGroupOrderTime } from '@open-tender/js'
-import { Button, Input } from '@open-tender/components'
+import { ButtonLink, ButtonStyled, Input, Text } from '@open-tender/components'
 
 import { openModal, closeModal } from '../../../slices'
-import ModalTitle from '../../Modal/ModalTitle'
 import iconMap from '../../iconMap'
 import GroupOrderSteps from './GroupOrderSteps'
+import { ModalContent } from '../../Modal'
+import styled from '@emotion/styled'
 
 const formatOrderTime = (s) =>
   s.replace('Today', 'today').replace('Tomorrow', 'tomorrow')
+
+const SpendingLimitForm = styled('form')`
+  margin: 0;
+
+  label {
+    padding: 0;
+
+    span span:first-of-type {
+      width: auto;
+      flex-grow: 1;
+    }
+
+    span span:last-of-type {
+      flex-grow: 0;
+      input {
+        width: 12rem;
+        text-align: right;
+      }
+    }
+  }
+`
 
 const GroupOrderStart = () => {
   const [orderTime, setOrderTime] = useState(null)
@@ -34,29 +56,23 @@ const GroupOrderStart = () => {
     setOrderTime(groupOrderTime)
   }, [revenueCenter, serviceType, requestedAt])
 
-  const adjust = (evt, type) => {
-    evt.preventDefault()
+  const adjust = (type) => {
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(openModal({ type: 'requestedAt' }))
     }, 300)
-    evt.target.blur()
   }
 
-  const start = (evt) => {
-    evt.preventDefault()
+  const start = () => {
     const limit = isNaN(spendingLimit)
       ? null
       : parseFloat(spendingLimit).toFixed(2)
     const data = { spendingLimit: limit }
     dispatch(addCustomerGroupOrder(data))
-    evt.target.blur()
   }
 
-  const cancel = (evt) => {
-    evt.preventDefault()
+  const cancel = () => {
     dispatch(closeModal())
-    evt.target.blur()
   }
 
   const handleSpendingLimit = (evt) => {
@@ -65,83 +81,71 @@ const GroupOrderStart = () => {
   }
 
   return (
-    <div className="modal__content">
-      <div className="modal__header">
-        <ModalTitle title="Start a group order" />
-        <p className="modal__subtitle">
-          Please confirm your order date & time before you share your cart
-        </p>
-      </div>
-      <div className="modal__body -message">
-        <div className="modal__body__section ot-line-height">
-          {orderTime && (
-            <>
-              {orderTime.prepTime ? (
-                <>
-                  <p className="ot-color-headings ot-bold">
-                    The current wait time for group orders is{' '}
-                    {orderTime.prepTime} minutes from the time the order is
-                    submitted.{' '}
-                    <Button
-                      text="Choose a specific order time."
-                      classes="ot-btn-link"
-                      onClick={adjust}
-                    />
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p className="ot-color-headings ot-bold">
-                    {orderTime.isAdjusted
-                      ? 'The first available group order time is'
-                      : 'Your currently selected group order time is'}{' '}
-                    {formatOrderTime(orderTime.dateStr)}, which means that{' '}
-                    <span className="ot-color-alert">
-                      all orders must be submitted by{' '}
-                      {formatOrderTime(orderTime.cutoffDateStr)}
-                    </span>
-                    .{' '}
-                    <Button
-                      text="Choose a different time."
-                      classes="ot-btn-link"
-                      onClick={adjust}
-                    />
-                  </p>
-                </>
-              )}
-            </>
-          )}
-
-          <form className="form" noValidate>
-            <div className="form__inputs">
-              <Input
-                label="Set a guest spending Limit (optional)"
-                name="spending_limit"
-                type="number"
-                value={spendingLimit || ''}
-                onChange={handleSpendingLimit}
-                error={null}
-              />
-            </div>
-          </form>
-          <div className="ot-font-size-small">
-            <GroupOrderSteps />
-          </div>
-        </div>
-      </div>
-      <div className="modal__footer">
-        <div className="modal__footer__buttons">
-          <Button
-            text={isLoading ? 'Starting Group Order...' : 'Start a Group Order'}
-            classes="ot-btn ot-btn--highlight"
-            icon={iconMap['Users']}
+    <ModalContent
+      title="Start a group order"
+      subtitle={
+        <p>Please confirm your order date & time before you share your cart</p>
+      }
+      footer={
+        <div>
+          <ButtonStyled
+            icon={iconMap.Users}
             onClick={start}
+            color="cart"
             disabled={isLoading}
-          />
-          <Button text="Nevermind" classes="ot-btn" onClick={cancel} />
+          >
+            {isLoading ? 'Starting Group Order...' : 'Start a Group Order'}
+          </ButtonStyled>
+          <ButtonStyled onClick={cancel}>Nevermind</ButtonStyled>
         </div>
-      </div>
-    </div>
+      }
+    >
+      {orderTime && (
+        <>
+          {orderTime.prepTime ? (
+            <div>
+              <Text as="p" color="primary" bold={true}>
+                The current wait time for group orders is {orderTime.prepTime}{' '}
+                minutes from the time the order is submitted.{' '}
+                <ButtonLink onClick={adjust}>
+                  Choose a specific order time.
+                </ButtonLink>
+              </Text>
+            </div>
+          ) : (
+            <div>
+              <Text as="p" color="primary" bold={true}>
+                {orderTime.isAdjusted
+                  ? 'The first available group order time is'
+                  : 'Your currently selected group order time is'}{' '}
+                {formatOrderTime(orderTime.dateStr)}, which means that{' '}
+                <Text color="alert">
+                  all orders must be submitted by{' '}
+                  {formatOrderTime(orderTime.cutoffDateStr)}
+                </Text>
+                .{' '}
+                <ButtonLink onClick={adjust}>
+                  Choose a different time.
+                </ButtonLink>
+              </Text>
+            </div>
+          )}
+        </>
+      )}
+      <SpendingLimitForm className="form" noValidate>
+        <Input
+          label="Set a guest spending Limit (optional)"
+          name="spending_limit"
+          type="number"
+          value={spendingLimit || ''}
+          onChange={handleSpendingLimit}
+          error={null}
+        />
+      </SpendingLimitForm>
+      <Text as="div" size="small">
+        <GroupOrderSteps />
+      </Text>
+    </ModalContent>
   )
 }
 

@@ -1,63 +1,53 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Button } from '@open-tender/components'
+import { ButtonLink, ButtonStyled } from '@open-tender/components'
 
 import { openModal, closeModal } from '../../../slices'
-import ModalTitle from '../../Modal/ModalTitle'
 import iconMap from '../../iconMap'
+import { ModalContent } from '../../Modal'
 
 const GroupOrderGuest = () => {
   const dispatch = useDispatch()
 
-  const login = (evt, type) => {
-    evt.preventDefault()
+  const login = (type) => {
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(openModal({ type }))
     }, 300)
-    evt.target.blur()
-  }
-
-  const cancel = (evt) => {
-    evt.preventDefault()
-    dispatch(closeModal())
-    evt.target.blur()
   }
 
   return (
-    <div className="modal__content">
-      <div className="modal__header">
-        <ModalTitle title="Start a group order" />
-      </div>
-      <div className="modal__body -message">
-        <div className="modal__body__section">
-          <p>You must be logged into your accout to start a group order.</p>
-          <p>
-            <Button
-              text="Click here to login"
-              classes="ot-btn ot-btn--highlight"
-              icon={iconMap['User']}
-              onClick={(evt) => login(evt, 'login')}
-            />
-          </p>
+    <ModalContent
+      title="Start a group order"
+      footer={
+        <div>
+          <ButtonStyled onClick={() => dispatch(closeModal())}>
+            Nevermind
+          </ButtonStyled>
         </div>
-        <div className="modal__body__section">
-          <p>
-            Don't have an account?{' '}
-            <Button
-              text="Click here to create one."
-              classes="ot-btn-link"
-              onClick={(evt) => login(evt, 'signUp')}
-            />
-          </p>
-        </div>
+      }
+    >
+      <div>
+        <p>You must be logged into your accout to start a group order.</p>
+        <p>
+          <ButtonStyled
+            icon={iconMap.User}
+            onClick={() => login('login')}
+            color="cart"
+          >
+            Click here to login
+          </ButtonStyled>
+        </p>
       </div>
-      <div className="modal__footer">
-        <div className="modal__footer__buttons">
-          <Button text="Nevermind" classes="ot-btn" onClick={cancel} />
-        </div>
+      <div style={{ margin: '3rem 0 0' }}>
+        <p>
+          Don't have an account?{' '}
+          <ButtonLink icon={iconMap.User} onClick={() => login('signUp')}>
+            Click here to create one.
+          </ButtonLink>
+        </p>
       </div>
-    </div>
+    </ModalContent>
   )
 }
 

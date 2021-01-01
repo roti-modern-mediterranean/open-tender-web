@@ -18,7 +18,7 @@ import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
 import Main from './Main'
 import MapsAutocomplete from './MapsAutocomplete'
-import Modal, { ModalClose, ModalContent } from './Modal'
+import Modal, { ModalClose, ModalContent, ModalView } from './Modal'
 import Nav from './Nav'
 import NavButtons from './NavButtons'
 import NavScroll from './NavScroll'
@@ -70,6 +70,7 @@ export {
   Modal,
   ModalClose,
   ModalContent,
+  ModalView,
   Nav,
   NavButtons,
   NavScroll,
