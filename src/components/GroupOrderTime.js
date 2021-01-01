@@ -6,7 +6,7 @@ import {
   selectTimezone,
   selectGroupOrderPrepTimes,
 } from '@open-tender/redux'
-import { Button } from '@open-tender/components'
+import { ButtonLink } from '@open-tender/components'
 
 import { openModal } from '../slices'
 
@@ -18,10 +18,8 @@ const GroupOrderTime = () => {
   const cutoffTime = makeGroupOrderTimeStr(cutoffAt, tz)
   const { prepTime } = useSelector(selectGroupOrderPrepTimes)
 
-  const adjustTime = (evt) => {
-    evt.preventDefault()
+  const adjustTime = () => {
     dispatch(openModal({ type: 'requestedAt' }))
-    evt.target.blur()
   }
 
   return (
@@ -30,11 +28,9 @@ const GroupOrderTime = () => {
         ? `Please note that this order is currently scheduled for ASAP and will be ready about ${prepTime} minutes from the time it gets submitted.`
         : `Please note that this order must be submitted by ${cutoffTime} in order to
       be ready by the scheduled time of ${orderTime}.`}{' '}
-      <Button
-        text="Choose a different time."
-        classes="ot-btn-link"
-        onClick={adjustTime}
-      />
+      <ButtonLink text="" onClick={adjustTime}>
+        Choose a different time.
+      </ButtonLink>
     </p>
   )
 }
