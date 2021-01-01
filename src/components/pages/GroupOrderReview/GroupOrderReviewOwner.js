@@ -252,7 +252,7 @@ const GroupOrderReviewOwner = () => {
                     changes to your own order.
                   </Link>
                 </p>
-                <ul className="cart">
+                <ul>
                   {order.cart.map((item, index) => {
                     return (
                       <li key={`${item.id}-${index}`}>
@@ -295,7 +295,7 @@ const GroupOrderReviewOwner = () => {
                                 {guest.first_name} {guest.last_name}
                               </Heading>
                             </p>
-                            <ul className="cart">
+                            <ul>
                               {guestItems.map((item, index) => {
                                 return (
                                   <li key={`${item.id}-${index}`}>

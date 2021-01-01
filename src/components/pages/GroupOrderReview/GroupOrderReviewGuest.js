@@ -124,7 +124,7 @@ const GroupOrderReviewGuest = () => {
                       <CartTitle>
                         Items submitted to {firstName}'s group order
                       </CartTitle>
-                      <ul className="cart">
+                      <ul>
                         {cart.map((item, index) => {
                           return (
                             <li key={`${item.id}-${index}`}>

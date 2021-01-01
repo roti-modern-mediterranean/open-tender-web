@@ -228,7 +228,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
       {displayedItems.length > 0 && (
         <>
           <OrderSectionHeader>Items in Your Order</OrderSectionHeader>
-          <ul className="cart">
+          <ul>
             {displayedItems.map((item, index) => {
               const favoriteId = lookup ? lookup[item.signature] || null : null
               return (
