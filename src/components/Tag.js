@@ -7,7 +7,7 @@ const TagView = styled('span')`
   display: inline-block;
   padding: 0.5rem 1rem 0.5rem;
   border-radius: 1.5rem;
-  line-height: 0;
+  // line-height: 0;
   color: ${(props) => props.theme.colors.light};
   background-color: ${(props) => props.theme.colors[props.bgColor]};
 `
@@ -15,7 +15,7 @@ const TagView = styled('span')`
 const TagContainer = styled('span')`
   display: flex;
   align-items: center;
-  line-height: 0;
+  // line-height: 0;
 
   span {
     display: inline-block;
@@ -30,6 +30,7 @@ const TagIcon = styled('span')`
   height: 1.2rem;
   padding: 0;
   margin-right: 0.5rem;
+  flex-shrink: 0;
 `
 
 const TagText = styled(Preface)`

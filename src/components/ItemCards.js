@@ -1,7 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { OrderCardItem } from '.'
 
 const ItemCardsView = styled('div')`
   display: flex;
@@ -35,17 +34,16 @@ const ItemCardsItem = styled('div')`
   }
 `
 
-const ItemCards = ({ items, delay = 0.125 }) => {
+const ItemCards = ({ items, delay = 0.125, sequential = true, renderItem }) => {
   return (
     <ItemCardsView>
       {items.map((item, index) => {
+        const itemDelay = sequential
+          ? `${((index + 1) * 0.125 + delay).toFixed(3)}s`
+          : `${delay.toFixed(3)}s`
         return (
-          <ItemCardsItem
-            key={`${item.id}-${index}`}
-            // delay={`${delay.toFixed(3)}s`}
-            delay={`${((index + 1) * 0.125 + delay).toFixed(3)}s`}
-          >
-            <OrderCardItem item={item} />
+          <ItemCardsItem key={`${item.id}-${index}`} delay={itemDelay}>
+            {renderItem({ item })}
           </ItemCardsItem>
         )
       })}
@@ -57,6 +55,8 @@ ItemCards.displayName = 'ItemCards'
 ItemCards.propTypes = {
   items: propTypes.array,
   delay: propTypes.number,
+  sequential: propTypes.bool,
+  renderItem: propTypes.func,
 }
 
 export default ItemCards

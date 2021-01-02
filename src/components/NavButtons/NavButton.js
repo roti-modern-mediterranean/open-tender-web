@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import iconMap from '../iconMap'
 
-const NavButtonContainer = styled('button')`
+const NavButtonView = styled('button')`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -85,11 +85,11 @@ const NavButtonArrow = styled('span')`
 `
 
 const NavButton = ({ title, icon, onClick, delay = '0.125s' }) => (
-  <NavButtonContainer onClick={onClick} delay={delay}>
+  <NavButtonView onClick={onClick} delay={delay}>
     <NavButtonIcon>{icon}</NavButtonIcon>
     <NavButtonTitle>{title}</NavButtonTitle>
     <NavButtonArrow>{iconMap.ChevronRight}</NavButtonArrow>
-  </NavButtonContainer>
+  </NavButtonView>
 )
 
 NavButton.displayName = 'NavButton'

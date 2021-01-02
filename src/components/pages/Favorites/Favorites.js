@@ -22,6 +22,7 @@ import {
   PageTitle,
   PageContent,
   HeaderAccount,
+  OrderCardItem,
 } from '../..'
 
 const Favorites = () => {
@@ -80,7 +81,11 @@ const Favorites = () => {
             <PageTitle {...config.favorites} />
             <PageContent>
               {items.length ? (
-                <ItemCards items={items} delay={0.25} />
+                <ItemCards
+                  items={items}
+                  delay={0.25}
+                  renderItem={(props) => <OrderCardItem {...props} />}
+                />
               ) : isLoading ? (
                 <Loading text="Retrieving your order history..." />
               ) : error ? (

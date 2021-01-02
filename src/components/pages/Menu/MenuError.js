@@ -38,7 +38,7 @@ const MenuError = () => {
         <Heading>Menu Not Found</Heading>
       </p>
       <div>
-        <p className="ot-font-size-small">{error}</p>
+        <p>{error}</p>
       </div>
       <ButtonStyled icon={iconMap.RefreshCw} onClick={changeRevenueCenter}>
         Change Location

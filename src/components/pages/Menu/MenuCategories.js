@@ -1,12 +1,23 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import styled from '@emotion/styled'
 import { slugify } from '@open-tender/js'
+
 import MenuCategory from './MenuCategory'
+
+const MenuCategoriesView = styled('div')`
+  margin: 0 0 6rem;
+  // opacity: 0;
+  // animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0 0 3rem;
+  }
+`
 
 const MenuCategories = ({ categories }) => {
   if (!categories || !categories.length) return null
   return (
-    <div className="menu slide-up">
+    <MenuCategoriesView>
       {categories.map((category) => (
         <div key={category.id} id={slugify(category.name)} name="section">
           <MenuCategory category={category} />
@@ -19,7 +30,7 @@ const MenuCategories = ({ categories }) => {
           ))}
         </div>
       ))}
-    </div>
+    </MenuCategoriesView>
   )
 }
 
