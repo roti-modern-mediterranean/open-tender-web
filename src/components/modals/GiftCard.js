@@ -11,9 +11,9 @@ import {
 import { GiftCardForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
-import ModalClose from '../ModalClose'
+import { ModalContent, ModalView } from '..'
 
-const GiftCardModal = ({ windowRef, giftCard }) => {
+const GiftCard = ({ windowRef, giftCard }) => {
   const dispatch = useDispatch()
   const { loading, error } = useSelector(selectCustomerGiftCards)
   const { entities: creditCards } = useSelector(selectCustomerCreditCards) || {}
@@ -37,43 +37,39 @@ const GiftCardModal = ({ windowRef, giftCard }) => {
   }, [error, windowRef])
 
   return (
-    <>
-      <ModalClose />
-      <div className="modal__content">
-        <div className="modal__header">
-          <p className="modal__title ot-heading ot-font-size-h3">
-            {giftCard
-              ? `Add value to gift card ${giftCard.card_number}`
-              : 'Purchase a new gift card'}
+    <ModalView>
+      <ModalContent
+        title={
+          giftCard
+            ? `Add value to gift card ${giftCard.card_number}`
+            : 'Purchase a new gift card'
+        }
+      >
+        {!creditCards || !creditCards.length ? (
+          <p>
+            Please save a credit card to your account before purchasing a gift
+            card.
           </p>
-        </div>
-        <div className="modal__body">
-          {!creditCards || !creditCards.length ? (
-            <p>
-              Please save a credit card to your account before purchasing a gift
-              card.
-            </p>
-          ) : (
-            <GiftCardForm
-              giftCard={giftCard}
-              creditCards={creditCards}
-              loading={loading}
-              error={error}
-              update={update}
-              add={add}
-              callback={callback}
-            />
-          )}
-        </div>
-      </div>
-    </>
+        ) : (
+          <GiftCardForm
+            giftCard={giftCard}
+            creditCards={creditCards}
+            loading={loading}
+            error={error}
+            update={update}
+            add={add}
+            callback={callback}
+          />
+        )}
+      </ModalContent>
+    </ModalView>
   )
 }
 
-GiftCardModal.displayName = 'GiftCardModal'
-GiftCardModal.propTypes = {
+GiftCard.displayName = 'GiftCard'
+GiftCard.propTypes = {
   giftCard: propTypes.object,
   windowRef: propTypes.shape({ current: propTypes.any }),
 }
 
-export default GiftCardModal
+export default GiftCard

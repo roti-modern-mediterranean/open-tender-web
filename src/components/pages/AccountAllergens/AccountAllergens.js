@@ -26,6 +26,18 @@ import {
   PageTitle,
   PageContent,
 } from '../..'
+import styled from '@emotion/styled'
+
+const AllergenFormView = styled('div')`
+  label {
+    padding: 1.25rem 0 1rem !important;
+
+    & > span > span:last-of-type {
+      text-align: right;
+      line-height: 1;
+    }
+  }
+`
 
 const AccountAllergens = () => {
   const dispatch = useDispatch()
@@ -82,14 +94,16 @@ const AccountAllergens = () => {
             <PageContent>
               {brandAllergens.entities.length ? (
                 <FormWrapper>
-                  <AllergenForm
-                    allergens={brandAllergens.entities}
-                    selectedAllergens={customerAllergens.entities}
-                    isLoading={isLoading}
-                    error={error}
-                    setAllergens={setAllergens}
-                    updateAllergens={updateAllergens}
-                  />
+                  <AllergenFormView>
+                    <AllergenForm
+                      allergens={brandAllergens.entities}
+                      selectedAllergens={customerAllergens.entities}
+                      isLoading={isLoading}
+                      error={error}
+                      setAllergens={setAllergens}
+                      updateAllergens={updateAllergens}
+                    />
+                  </AllergenFormView>
                 </FormWrapper>
               ) : isLoading ? (
                 <Loading text="Retrieving your order history..." />

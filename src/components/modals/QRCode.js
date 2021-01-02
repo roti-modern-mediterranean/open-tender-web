@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import { ButtonStyled } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
-import ModalTitle from '../ModalTitle'
+import { ModalContent, ModalView } from '..'
 
 const QRCodeView = styled('button')`
   display: inline-block;
@@ -21,24 +21,23 @@ const QRCode = ({ src, alt }) => {
   const dispatch = useDispatch()
 
   return (
-    <>
-      <div className="modal__content">
-        <div className="modal__header">
-          <ModalTitle title={alt} />
-          <p className="modal__subtitle">Scan to redeem</p>
-        </div>
-        <QRCodeView>
-          <img src={src} alt={alt} />
-        </QRCodeView>
-        <div className="modal__footer">
-          <div className="modal__footer__buttons">
+    <ModalView style={{ maxWidth: '36rem' }}>
+      <ModalContent
+        title={alt}
+        subtitle={<p>Scan to redeem</p>}
+        footer={
+          <div>
             <ButtonStyled color="cart" onClick={() => dispatch(closeModal())}>
               Close
             </ButtonStyled>
           </div>
-        </div>
-      </div>
-    </>
+        }
+      >
+        <QRCodeView>
+          <img src={src} alt={alt} />
+        </QRCodeView>
+      </ModalContent>
+    </ModalView>
   )
 }
 

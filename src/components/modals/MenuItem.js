@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { Plus, Minus } from 'react-feather'
+import styled from '@emotion/styled'
 import {
   selectCurrentItem,
   setCurrentItem,
@@ -14,14 +14,41 @@ import {
 import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
 
 import { closeModal, selectDisplaySettings } from '../../slices'
-import ModalClose from '../ModalClose'
+import iconMap from '../iconMap'
+import { ModalClose } from '..'
 
-const iconMap = {
-  plus: <Plus size={null} />,
-  minus: <Minus size={null} />,
+const menuItemsIconMap = {
+  plus: iconMap.Plus,
+  minus: iconMap.Minus,
 }
 
-const MenuItemModal = () => {
+const MenuItemModalView = styled('div')`
+  position: relative;
+  width: 90%;
+  max-width: 64rem;
+  height: 90%;
+  overflow: hidden;
+  background-color: ${(props) => props.theme.bgColors.primary};
+  border-radius: ${(props) => props.theme.border.radius};
+  margin: 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+`
+
+const MenuItemModalContent = styled('div')`
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0;
+  }
+`
+
+const MenuItem = () => {
   const dispatch = useDispatch()
   const item = useSelector(selectCurrentItem)
   const soldOut = useSelector(selectSoldOut)
@@ -46,9 +73,9 @@ const MenuItemModal = () => {
   }
 
   return (
-    <>
-      <ModalClose classes="ot-btn-link" onClick={handleClose} />
-      <div className="modal__content">
+    <MenuItemModalView>
+      <MenuItemModalContent>
+        <ModalClose onClick={handleClose} />
         {item && (
           <Builder
             menuItem={item}
@@ -59,19 +86,19 @@ const MenuItemModal = () => {
             renderOption={(props) => <BuilderOption {...props} />}
             showImage={true}
             displaySettings={displaySettings}
-            iconMap={iconMap}
+            iconMap={menuItemsIconMap}
             closeModal={handleClose}
             cartId={cartId}
           />
         )}
-      </div>
-    </>
+      </MenuItemModalContent>
+    </MenuItemModalView>
   )
 }
 
-MenuItemModal.displayName = 'MenuItemModal'
-MenuItemModal.propTypes = {
+MenuItem.displayName = 'MenuItem'
+MenuItem.propTypes = {
   close: propTypes.func,
 }
 
-export default MenuItemModal
+export default MenuItem

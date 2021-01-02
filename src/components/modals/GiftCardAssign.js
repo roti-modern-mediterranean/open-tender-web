@@ -9,10 +9,9 @@ import {
 import { GiftCardAssignForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
-import ModalClose from '../ModalClose'
-import ModalTitle from '../ModalTitle'
+import { ModalContent, ModalView } from '..'
 
-const GiftCardAssignModal = ({ windowRef, validate }) => {
+const GiftCardAssign = ({ windowRef, validate }) => {
   const dispatch = useDispatch()
   const { loading, error } = useSelector(selectCustomerGiftCards)
   const callback = useCallback(() => {
@@ -34,33 +33,31 @@ const GiftCardAssignModal = ({ windowRef, validate }) => {
   }, [error, windowRef])
 
   return (
-    <>
-      <ModalClose />
-      <div className="modal__content">
-        <div className="modal__header">
-          <ModalTitle title="Add a gift card to your account" />
-          <p className="modal__subtitle">
+    <ModalView>
+      <ModalContent
+        title="Add a gift card to your account"
+        subtitle={
+          <p>
             Have a gift card number from a physical gift card or gift card
             email? Enter it below to associate the card with your online
             account.
           </p>
-        </div>
-        <div className="modal__body">
-          <GiftCardAssignForm
-            loading={loading}
-            error={error}
-            assign={assign}
-            callback={callback}
-          />
-        </div>
-      </div>
-    </>
+        }
+      >
+        <GiftCardAssignForm
+          loading={loading}
+          error={error}
+          assign={assign}
+          callback={callback}
+        />
+      </ModalContent>
+    </ModalView>
   )
 }
 
-GiftCardAssignModal.displayName = 'GiftCardAssignModal'
-GiftCardAssignModal.propTypes = {
+GiftCardAssign.displayName = 'GiftCardAssign'
+GiftCardAssign.propTypes = {
   windowRef: propTypes.shape({ current: propTypes.any }),
 }
 
-export default GiftCardAssignModal
+export default GiftCardAssign

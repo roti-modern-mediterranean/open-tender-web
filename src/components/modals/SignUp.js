@@ -5,10 +5,9 @@ import { selectSignUp, signUpCustomer, resetSignUp } from '@open-tender/redux'
 import { SignUpForm } from '@open-tender/components'
 
 import { closeModal, selectBrand, selectOptIns } from '../../slices'
-import ModalClose from '../ModalClose'
-import ModalTitle from '../ModalTitle'
+import { ModalContent, ModalView } from '..'
 
-const SignUpModal = ({ windowRef }) => {
+const SignUp = ({ windowRef }) => {
   const dispatch = useDispatch()
   const { has_thanx } = useSelector(selectBrand)
   const { loading, error } = useSelector(selectSignUp)
@@ -30,33 +29,29 @@ const SignUpModal = ({ windowRef }) => {
   }, [error, windowRef])
 
   return (
-    <>
-      <ModalClose />
-      <div className="modal__content">
-        <div className="modal__header">
-          <ModalTitle title="Sign up for an account" />
-          <p className="modal__subtitle">
-            Please provide the info below, and you'll be off to the races!
-          </p>
-        </div>
-        <div className="modal__body">
-          <SignUpForm
-            loading={loading}
-            error={error}
-            signUp={signUp}
-            callback={close}
-            optIns={optIns}
-            hasThanx={has_thanx}
-          />
-        </div>
-      </div>
-    </>
+    <ModalView>
+      <ModalContent
+        title="Sign up for an account"
+        subtitle={
+          <p>Please provide the info below, and you'll be off to the races!</p>
+        }
+      >
+        <SignUpForm
+          loading={loading}
+          error={error}
+          signUp={signUp}
+          callback={close}
+          optIns={optIns}
+          hasThanx={has_thanx}
+        />
+      </ModalContent>
+    </ModalView>
   )
 }
 
-SignUpModal.displayName = 'SignUpModal'
-SignUpModal.propTypes = {
+SignUp.displayName = 'SignUp'
+SignUp.propTypes = {
   windowRef: propTypes.shape({ current: propTypes.any }),
 }
 
-export default SignUpModal
+export default SignUp

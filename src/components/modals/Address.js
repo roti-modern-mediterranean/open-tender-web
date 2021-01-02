@@ -9,10 +9,9 @@ import {
 import { AddressForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
-import ModalClose from '../ModalClose'
-import ModalTitle from '../ModalTitle'
+import { ModalContent, ModalView } from '..'
 
-const AddressModal = ({ windowRef, address }) => {
+const Address = ({ windowRef, address }) => {
   const dispatch = useDispatch()
   const { loading, error } = useSelector(selectCustomerAddresses)
   const update = useCallback(
@@ -30,30 +29,24 @@ const AddressModal = ({ windowRef, address }) => {
   }, [error, windowRef])
 
   return (
-    <>
-      <ModalClose />
-      <div className="modal__content">
-        <div className="modal__header">
-          <ModalTitle title="Update this address" />
-        </div>
-        <div className="modal__body">
-          <AddressForm
-            address={address}
-            loading={loading}
-            error={error}
-            update={update}
-            callback={callback}
-          />
-        </div>
-      </div>
-    </>
+    <ModalView>
+      <ModalContent title="Update this address">
+        <AddressForm
+          address={address}
+          loading={loading}
+          error={error}
+          update={update}
+          callback={callback}
+        />
+      </ModalContent>
+    </ModalView>
   )
 }
 
-AddressModal.displayName = 'AddressModal'
-AddressModal.propTypes = {
+Address.displayName = 'Address'
+Address.propTypes = {
   address: propTypes.object,
   windowRef: propTypes.shape({ current: propTypes.any }),
 }
 
-export default AddressModal
+export default Address

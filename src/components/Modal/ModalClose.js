@@ -4,6 +4,26 @@ import { useDispatch } from 'react-redux'
 import { X } from 'react-feather'
 
 import { closeModal } from '../../slices'
+import styled from '@emotion/styled'
+
+const ModalCloseView = styled('button')`
+  position: absolute;
+  z-index: 1;
+  top: 7px;
+  right: 7px;
+  display: inline;
+  font-size: inherit;
+  color: ${(props) => props.theme.links.primary.color};
+  &:hover,
+  &:active,
+  &:focus {
+    color: ${(props) => props.theme.links.primary.hover};
+  }
+  &:disabled {
+    color: ${(props) => props.theme.links.primary.color};
+    opacity: 0.5;
+  }
+`
 
 const ModalClose = ({ classes = 'ot-btn-link', onClick }) => {
   const dispatch = useDispatch()
@@ -25,13 +45,9 @@ const ModalClose = ({ classes = 'ot-btn-link', onClick }) => {
   }, [handleEscape])
 
   return (
-    <button
-      className={`modal__close ${classes}`}
-      onClick={handleClose}
-      aria-label="Close dialog"
-    >
+    <ModalCloseView onClick={handleClose} aria-label="Close dialog">
       <X size={20} />
-    </button>
+    </ModalCloseView>
   )
 }
 

@@ -75,13 +75,20 @@ const ModalFooter = styled('div')`
   }
 `
 
-const ModalContent = ({ close = true, title, subtitle, footer, children }) => {
+const ModalContent = ({
+  close = true,
+  title,
+  subtitle,
+  footer,
+  children,
+  style,
+}) => {
   const hasHeader = title || subtitle ? true : false
 
   return (
     <>
       {close && <ModalClose />}
-      <ModalContentView>
+      <ModalContentView style={style}>
         {hasHeader && (
           <ModalHeader>
             {title && (
@@ -109,6 +116,7 @@ ModalContent.propTypes = {
     propTypes.arrayOf(propTypes.node),
     propTypes.node,
   ]),
+  style: propTypes.object,
 }
 
 export default ModalContent

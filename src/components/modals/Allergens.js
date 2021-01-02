@@ -8,10 +8,21 @@ import {
 import { AllergenForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
-import ModalClose from '../ModalClose'
-import ModalTitle from '../ModalTitle'
+import { ModalContent, ModalView } from '..'
+import styled from '@emotion/styled'
 
-const AllergensModal = () => {
+const AllergenFormView = styled('div')`
+  label {
+    padding: 1.25rem 0;
+
+    & > span > span:last-of-type {
+      text-align: right;
+      line-height: 1;
+    }
+  }
+`
+
+const Allergens = () => {
   const dispatch = useDispatch()
   const brandAllergens = useSelector(selectAllergens)
   const setAllergens = useCallback(
@@ -25,16 +36,12 @@ const AllergensModal = () => {
   const callback = useCallback(() => dispatch(closeModal()), [dispatch])
 
   return (
-    <>
-      <ModalClose />
-      <div className="modal__content">
-        <div className="modal__header">
-          <ModalTitle title="Allergen Alerts" />
-          <p className="modal__subtitle">
-            Selected allergens will be highlighted on the menu
-          </p>
-        </div>
-        <div className="modal__body">
+    <ModalView>
+      <ModalContent
+        title="Allergen Alerts"
+        subtitle={<p>Selected allergens will be highlighted on the menu</p>}
+      >
+        <AllergenFormView>
           <AllergenForm
             allergens={brandAllergens.entities}
             selectedAllergens={brandAllergens.selectedAllergens}
@@ -44,12 +51,12 @@ const AllergensModal = () => {
             updateAllergens={updateAllergens}
             callback={callback}
           />
-        </div>
-      </div>
-    </>
+        </AllergenFormView>
+      </ModalContent>
+    </ModalView>
   )
 }
 
-AllergensModal.displayName = 'AllergensModal'
+Allergens.displayName = 'Allergens'
 
-export default AllergensModal
+export default Allergens

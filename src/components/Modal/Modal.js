@@ -8,71 +8,70 @@ import { selectModal, closeModal, openModal, toggleSidebar } from '../../slices'
 import ModalOverlay from './ModalOverlay'
 import ModalLoading from './ModalLoading'
 import {
-  Login,
+  Address,
+  AdjustRequestedAt,
+  Allergens,
+  CartCounts,
+  CartErrors,
+  Closed,
+  CreditCard,
+  GiftCard,
+  GiftCardAssign,
+  GiftCardAssignOther,
   GroupOrder,
-  // SignUpModal,
-  // AddressModal,
-  // AllergensModal,
-  // MenuItemModal,
-  // RequestedAtModal,
-  // CartErrorsModal,
-  // CreditCardModal,
-  // GiftCardModal,
-  // GiftCardAssignModal,
-  // GiftCardAssignOtherModal,
-  // WorkingModal,
-  // ClosedModal,
-  // AdjustRequestedAtModal,
-  // OrderRatingModal,
-  // OrderTypeModal,
-  // CartCountsModal,
-
-  // LevelUpModal,
-  // QRCode,
+  LevelUp,
+  Login,
+  MenuItem,
+  OrderRating,
+  OrderType,
+  QRCode,
+  RequestedAt,
+  SignUp,
+  Working,
 } from '../modals'
 
 const makeModal = (type, windowRef, args = {}) => {
   switch (type) {
-    case 'login':
-      return <Login {...args} />
-    // case 'signUp':
-    //   return <SignUpModal windowRef={windowRef} {...args} />
-    // case 'address':
-    //   return <AddressModal windowRef={windowRef} {...args} />
-    // case 'creditCard':
-    //   return <CreditCardModal windowRef={windowRef} {...args} />
-    // case 'levelup':
-    //   return <LevelUpModal windowRef={windowRef} {...args} />
-    // case 'giftCard':
-    //   return <GiftCardModal windowRef={windowRef} {...args} />
-    // case 'giftCardAssign':
-    //   return <GiftCardAssignModal windowRef={windowRef} {...args} />
-    // case 'giftCardAssignOther':
-    //   return <GiftCardAssignOtherModal windowRef={windowRef} {...args} />
-    // case 'allergens':
-    //   return <AllergensModal {...args} />
-    // case 'item':
-    //   return <MenuItemModal {...args} />
-    // case 'requestedAt':
-    //   return <RequestedAtModal {...args} />
-    // case 'adjustRequestedAt':
-    //   return <AdjustRequestedAtModal {...args} />
-    // case 'cartErrors':
-    //   return <CartErrorsModal {...args} />
-    // case 'cartCounts':
-    //   return <CartCountsModal {...args} />
-    // case 'working':
-    //   return <WorkingModal {...args} />
-    // case 'closed':
-    //   return <ClosedModal {...args} />
-    // case 'orderType':
-    //   return <OrderTypeModal {...args} />
-    // case 'rating':
-    //   return <OrderRatingModal {...args} />
+    case 'address':
+      return <Address windowRef={windowRef} {...args} />
+    case 'adjustRequestedAt':
+      return <AdjustRequestedAt {...args} />
+    case 'allergens':
+      return <Allergens {...args} />
+    case 'cartCounts':
+      return <CartCounts {...args} />
+    case 'cartErrors':
+      return <CartErrors {...args} />
+    case 'closed':
+      return <Closed {...args} />
+    case 'creditCard':
+      return <CreditCard windowRef={windowRef} {...args} />
+    case 'giftCard':
+      return <GiftCard windowRef={windowRef} {...args} />
+    case 'giftCardAssign':
+      return <GiftCardAssign windowRef={windowRef} {...args} />
+    case 'giftCardAssignOther':
+      return <GiftCardAssignOther windowRef={windowRef} {...args} />
     case 'groupOrder':
       return <GroupOrder {...args} />
-    // case 'qrCode':
-    //   return <QRCode {...args} />
+    case 'item':
+      return <MenuItem {...args} />
+    case 'levelup':
+      return <LevelUp windowRef={windowRef} {...args} />
+    case 'login':
+      return <Login {...args} />
+    case 'orderType':
+      return <OrderType {...args} />
+    case 'qrCode':
+      return <QRCode {...args} />
+    case 'rating':
+      return <OrderRating {...args} />
+    case 'requestedAt':
+      return <RequestedAt {...args} />
+    case 'signUp':
+      return <SignUp windowRef={windowRef} {...args} />
+    case 'working':
+      return <Working {...args} />
     default:
       return null
   }
@@ -88,27 +87,9 @@ const containerStyleMap = {
   groupOrder: { alignItems: 'flex-start' },
 }
 
-const modalStyleMap = {
-  cartErrors: { width: '90%', maxWidth: '60rem' },
-  groupOrder: { margin: '2rem' },
-}
-
-const classesMap = {
-  signUp: 'modal--big',
-  item: 'modal--item',
-  address: 'modal--big',
-  creditCard: 'modal--big',
-  requestedAt: 'modal--big modal--datepicker',
-  allergens: 'modal--big modal--allergens',
-  cartErrors: 'modal--big modal--cart-errors',
-  cartCounts: 'modal--big modal--cart-errors',
-  working: 'modal--working',
-  groupOrder: 'modal--big modal--guest',
-}
-
 const ModalContainer = styled('div')`
   position: fixed;
-  z-index: 101;
+  z-index: 102;
   top: 0;
   bottom: 0;
   left: 0;
@@ -117,15 +98,6 @@ const ModalContainer = styled('div')`
   align-items: center;
   justify-content: center;
   overflow-y: scroll;
-`
-
-const ModalView = styled('div')`
-  position: relative;
-  width: 48rem;
-  max-width: 90%;
-  overflow: hidden;
-  background-color: ${(props) => props.theme.bgColors.primary};
-  border-radius: ${(props) => props.theme.border.radius};
 `
 
 const Modal = () => {
@@ -137,8 +109,6 @@ const Modal = () => {
   const showModal = type ? true : false
   const modal = type ? makeModal(type, modalRef, args) : null
   const containerStyle = containerStyleMap[type] || null
-  const modalStyle = modalStyleMap[type] || null
-  const classes = `modal-container ${classesMap[type] || ''}`
 
   useEffect(() => {
     if (alert) {
@@ -178,13 +148,6 @@ const Modal = () => {
               style={containerStyle}
             >
               {modal}
-              {/* <ModalView
-                role="dialog"
-                aria-labelledby="dialogTitle"
-                style={modalStyle}
-              >
-                {modal}
-              </ModalView> */}
             </ModalContainer>
           </CSSTransition>
         ) : null}

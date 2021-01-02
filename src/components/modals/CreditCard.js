@@ -9,10 +9,9 @@ import {
 import { CreditCardForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
-import ModalClose from '../ModalClose'
-import ModalTitle from '../ModalTitle'
+import { ModalContent, ModalView } from '..'
 
-const CreditCardModal = ({ windowRef }) => {
+const CreditCard = ({ windowRef }) => {
   const dispatch = useDispatch()
   const { loading, error } = useSelector(selectCustomerCreditCards)
   const addCard = useCallback(
@@ -30,29 +29,23 @@ const CreditCardModal = ({ windowRef }) => {
   }, [error, windowRef])
 
   return (
-    <>
-      <ModalClose />
-      <div className="modal__content">
-        <div className="modal__header">
-          <ModalTitle title="Add a new credit card" />
-        </div>
-        <div className="modal__body">
-          <CreditCardForm
-            windowRef={windowRef}
-            loading={loading}
-            error={error}
-            addCard={addCard}
-            callback={callback}
-          />
-        </div>
-      </div>
-    </>
+    <ModalView>
+      <ModalContent title="Add a new credit card">
+        <CreditCardForm
+          windowRef={windowRef}
+          loading={loading}
+          error={error}
+          addCard={addCard}
+          callback={callback}
+        />
+      </ModalContent>
+    </ModalView>
   )
 }
 
-CreditCardModal.displayName = 'CreditCardModal'
-CreditCardModal.propTypes = {
+CreditCard.displayName = 'CreditCard'
+CreditCard.propTypes = {
   windowRef: propTypes.shape({ current: propTypes.any }),
 }
 
-export default CreditCardModal
+export default CreditCard
