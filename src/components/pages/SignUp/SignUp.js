@@ -99,9 +99,7 @@ const SignUp = () => {
               </FormWrapper>
               <div style={{ margin: '3rem 0' }}>
                 <p>
-                  <Link to="/" className="">
-                    {signupConfig.back}
-                  </Link>
+                  <Link to="/">{signupConfig.back}</Link>
                 </p>
               </div>
             </PageContent>

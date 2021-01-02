@@ -7,8 +7,6 @@ import MenuCategory from './MenuCategory'
 
 const MenuCategoriesView = styled('div')`
   margin: 0 0 6rem;
-  // opacity: 0;
-  // animation: slide-up 0.25s ease-in-out 0.125s forwards;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 0 3rem;
   }

@@ -36,11 +36,11 @@ const NavScrollButtonView = styled('button')`
 
 const NavScrollButton = ({ container, name, active, offset = 0 }) => {
   const id = slugify(name)
-  const element = document.getElementById(id)
 
   const onClick = (evt) => {
     evt.preventDefault()
     evt.target.blur()
+    const element = document.getElementById(id)
     container.scrollTo({
       top: element.offsetTop + offset,
       left: 0,
@@ -116,11 +116,13 @@ const NavScroll = ({ items, offset = 0 }) => {
         const navOffset = navActive.getBoundingClientRect().x
         const parentOffset = navActive.offsetParent.getBoundingClientRect().x
         const offsetLeft = navOffset - parentOffset
-        navRef.current.scrollTo({
-          top: 0,
-          left: offsetLeft,
-          behavior: 'smooth',
-        })
+        if (navRef.current) {
+          navRef.current.scrollTo({
+            top: 0,
+            left: offsetLeft,
+            behavior: 'smooth',
+          })
+        }
       }
     }
   }, [active])

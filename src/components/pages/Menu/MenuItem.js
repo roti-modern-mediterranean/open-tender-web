@@ -42,13 +42,13 @@ const MenuItemView = styled('div')`
   }
 `
 
-const MenuItemContainer = styled(Box)`
+export const MenuItemContainer = styled(Box)`
   position: relative;
   width: 100%;
   height: 100%;
 `
 
-const MenuItemImage = styled(BgImage)`
+export const MenuItemImage = styled(BgImage)`
   position: relative;
   padding: 30% 0;
   margin: 0 -${(props) => props.theme.border.width};
@@ -56,12 +56,9 @@ const MenuItemImage = styled(BgImage)`
   border-radius: ${(props) => props.theme.border.radius};
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
-  // border-style: solid;
-  // border-width: ${(props) => props.theme.border.width};
-  // border-color: ${(props) => props.theme.border.color};
 `
 
-const MenuItemOverlay = styled('div')`
+export const MenuItemOverlay = styled('div')`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -249,7 +246,7 @@ const MenuItem = ({ item }) => {
         {!showImage && itemTag ? (
           <MenuItemAlert>{itemTag}</MenuItemAlert>
         ) : null}
-        <MenuItemButton onClick={handleClick} isSoldOut={isSoldOut}>
+        <MenuItemButton onPointerUp={handleClick} isSoldOut={isSoldOut}>
           {showImage && (
             <MenuItemImage style={bgStyle}>
               {itemTag && (

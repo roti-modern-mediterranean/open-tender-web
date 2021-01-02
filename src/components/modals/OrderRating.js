@@ -21,9 +21,7 @@ const OrderRating = ({ orderId, orderRating }) => {
       <ModalContent
         title="Rate your order"
         subtitle={
-          <p className="modal__subtitle">
-            Please add a rating and an any additional comments below
-          </p>
+          <p>Please add a rating and an any additional comments below</p>
         }
       >
         <OrderRatingForm

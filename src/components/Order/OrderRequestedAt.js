@@ -19,13 +19,13 @@ const OrderRequestedAt = ({
   }
   return is_asap && status === 'OPEN' ? (
     <>
-      <p className="ot-color-headings">ASAP</p>
-      <p className="ot-font-size-small">
+      <p>ASAP</p>
+      <p>
         {estimatedAt} {msg}
       </p>
     </>
   ) : (
-    <p className="ot-color-headings">{estimatedAt}</p>
+    <p>{estimatedAt}</p>
   )
 }
 

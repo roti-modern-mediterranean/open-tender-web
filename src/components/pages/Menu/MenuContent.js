@@ -11,6 +11,7 @@ import MenuLoading from './MenuLoading'
 import MenuError from './MenuError'
 import MenuHero from './MenuHero'
 import styled from '@emotion/styled'
+import { AppContext } from '../../../App'
 
 const MenuView = styled('div')`
   position: relative;
@@ -47,6 +48,7 @@ const MenuContent = () => {
   const heroHeight = heroRef.current
     ? heroRef.current.getBoundingClientRect().height
     : 0
+  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
     if (revenueCenters) {
@@ -63,7 +65,11 @@ const MenuContent = () => {
 
   const change = (revenueCenter) => {
     setSelected(revenueCenter)
-    window.scrollTo(0, topRef.current.offsetTop)
+    if (!revenueCenter) {
+      windowRef.current.scrollTo(0, 0)
+    } else {
+      windowRef.current.scrollTo(0, 0)
+    }
   }
 
   return (

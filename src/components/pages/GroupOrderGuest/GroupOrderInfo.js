@@ -28,9 +28,7 @@ const GroupOrderInfo = ({ isJoin }) => {
       <p>
         This order is current scheduled for {formatTime(orderTime)}, and{' '}
         {cutoffTime && (
-          <span className="">
-            orders must be submitted by {formatTime(cutoffTime)}
-          </span>
+          <span>orders must be submitted by {formatTime(cutoffTime)}</span>
         )}
         .
       </p>
@@ -39,9 +37,7 @@ const GroupOrderInfo = ({ isJoin }) => {
       )}
       {isJoin && (
         <p>
-          {spotsRemaining && (
-            <span className="">Only {spotsRemaining} spots left! </span>
-          )}{' '}
+          {spotsRemaining && <span>Only {spotsRemaining} spots left! </span>}{' '}
           Please enter a first and last name to get started.
         </p>
       )}

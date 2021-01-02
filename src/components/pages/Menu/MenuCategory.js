@@ -5,6 +5,8 @@ import styled from '@emotion/styled'
 import { Container } from '../..'
 
 const MenuCategoryView = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
   padding: ${(props) => (props.isChild ? '2rem 0 0' : '6rem 0 0')};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: ${(props) => (props.isChild ? '1rem 0 0' : '4rem 0 0')};

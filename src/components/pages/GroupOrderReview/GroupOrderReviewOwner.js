@@ -205,11 +205,7 @@ const GroupOrderReviewOwner = () => {
               </p>
               <GroupOrderTime />
               <p>Need to share this group order with orders?</p>
-              <GroupOrderLink
-                token={token}
-                className="ot-btn ot-btn--small"
-                instructions={null}
-              />
+              <GroupOrderLink token={token} instructions={null} />
               <div>
                 <p>
                   <Heading size="h5">Ready to submit your order?</Heading>

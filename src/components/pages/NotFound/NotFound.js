@@ -46,9 +46,7 @@ const NotFound = () => {
           <Container>
             <PageTitle {...config} />
             <PageContent>
-              <Link to="/" className="">
-                {config.back}
-              </Link>
+              <Link to="/">{config.back}</Link>
             </PageContent>
           </Container>
         </Main>

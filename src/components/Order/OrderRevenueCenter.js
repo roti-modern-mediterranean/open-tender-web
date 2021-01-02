@@ -5,11 +5,11 @@ const OrderRevenueCenter = ({ revenueCenter }) => {
   const { address: rcAddr } = revenueCenter || {}
   return (
     <>
-      <p className="ot-color-headings">{revenueCenter.name}</p>
-      <p className="ot-font-size-small">
+      <p>{revenueCenter.name}</p>
+      <p>
         {rcAddr.street}, {rcAddr.city}, {rcAddr.state} {rcAddr.postal_code}
       </p>
-      <p className="ot-font-size-small">{rcAddr.phone}</p>
+      <p>{rcAddr.phone}</p>
     </>
   )
 }

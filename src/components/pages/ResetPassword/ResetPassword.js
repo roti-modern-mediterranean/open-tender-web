@@ -96,9 +96,7 @@ const ResetPassword = () => {
                   </FormWrapper>
                   <div style={{ margin: '3rem 0' }}>
                     <p>
-                      <Link to="/" className="">
-                        {config.back}
-                      </Link>
+                      <Link to="/">{config.back}</Link>
                     </p>
                   </div>
                 </PageContent>

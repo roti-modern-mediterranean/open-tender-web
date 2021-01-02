@@ -58,9 +58,10 @@ const NavStickyLogo = styled('div')`
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 
   img {
+    display: block;
     width: auto;
     max-width: none;
-    height: ${(props) => props.theme.layout.navHeight} - 2rem;
+    height: 4rem;
   }
 `
 
@@ -84,12 +85,6 @@ const NavSticky = ({ items, offset = 0, revenueCenter, change }) => {
     }
   }, [windowRef, topOffset])
 
-  const handleChange = (evt) => {
-    evt.preventDefault()
-    change(null)
-    evt.target.blur()
-  }
-
   return (
     <NavStickyView ref={stickyRef}>
       <NavStickyInner stuck={stuck}>
@@ -105,7 +100,7 @@ const NavSticky = ({ items, offset = 0, revenueCenter, change }) => {
               <div>
                 <ButtonStyled
                   icon={iconMap.RefreshCw}
-                  onClick={handleChange}
+                  onClick={() => change(null)}
                   size="small"
                   color="secondary"
                 >
