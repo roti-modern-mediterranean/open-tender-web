@@ -1,7 +1,8 @@
-import React, { useEffect, createContext, useContext } from 'react'
+import React, { useEffect, createContext, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
+  selectOrder,
   selectRevenueCenter,
   selectMenuVars,
   selectGroupOrderClosed,
@@ -19,15 +20,18 @@ import { AppContext } from '../../../App'
 import { Content, Main, ScreenreaderTitle } from '../..'
 import MenuContent from './MenuContent'
 import MenuHeader from './MenuHeader'
+import MenuMobileMenu from './MenuMobileMenu'
 
 export const MenuContext = createContext(null)
 
 const MenuPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const [showMenu, setShowMenu] = useState(false)
   const { title: siteTitle } = useSelector(selectBrand)
   const { menu: menuConfig } = useSelector(selectConfig)
   const { loadingMessage } = menuConfig
+  const order = useSelector(selectOrder)
   const revenueCenter = useSelector(selectRevenueCenter)
   const { revenueCenterId, serviceType, requestedAt } = useSelector(
     selectMenuVars
@@ -75,7 +79,7 @@ const MenuPage = () => {
         <title>Menu | {siteTitle}</title>
       </Helmet>
       <Content>
-        <MenuHeader />
+        <MenuHeader showMenu={showMenu} setShowMenu={setShowMenu} />
         <Main>
           <MenuContext.Provider
             value={{
@@ -91,6 +95,11 @@ const MenuPage = () => {
               error,
             }}
           >
+            <MenuMobileMenu
+              order={order}
+              showMenu={showMenu}
+              setShowMenu={setShowMenu}
+            />
             <ScreenreaderTitle>Menu</ScreenreaderTitle>
             <MenuContent />
           </MenuContext.Provider>

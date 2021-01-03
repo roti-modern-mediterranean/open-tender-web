@@ -23,58 +23,42 @@ const HomeButtons = () => {
   const { orderTypes } = useSelector(selectSettings)
   const { home } = useSelector(selectConfig)
 
-  const handleOutpost = (evt) => {
-    evt.preventDefault()
+  const handleOutpost = () => {
     dispatch(setOrderServiceType('OLO', 'PICKUP', true))
     history.push('/locations')
-    evt.target.blur()
   }
 
-  const handleWalkin = (evt) => {
-    evt.preventDefault()
+  const handleWalkin = () => {
     dispatch(setOrderServiceType('OLO', 'WALKIN'))
     history.push('/locations')
-    evt.target.blur()
   }
 
-  const handlePickup = (evt) => {
-    evt.preventDefault()
+  const handlePickup = () => {
     dispatch(setOrderServiceType('OLO', 'PICKUP'))
     history.push('/locations')
-    evt.target.blur()
   }
 
-  const handleDelivery = (evt) => {
-    evt.preventDefault()
+  const handleDelivery = () => {
     dispatch(setOrderServiceType('OLO', 'DELIVERY'))
     history.push('/locations')
-    evt.target.blur()
   }
 
-  const handleCatering = (evt) => {
-    evt.preventDefault()
+  const handleCatering = () => {
     dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
     history.push('/catering')
-    evt.target.blur()
   }
 
-  const handleMerch = (evt) => {
-    evt.preventDefault()
+  const handleMerch = () => {
     dispatch(setOrderServiceType('MERCH', 'DELIVERY'))
     history.push('/locations')
-    evt.target.blur()
   }
 
-  const handleGiftCards = (evt) => {
-    evt.preventDefault()
+  const handleGiftCards = () => {
     history.push('/gift-cards')
-    evt.target.blur()
   }
 
-  const handleDonations = (evt) => {
-    evt.preventDefault()
+  const handleDonations = () => {
     history.push('/donations')
-    evt.target.blur()
   }
 
   const handlers = {

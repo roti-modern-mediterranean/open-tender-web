@@ -6,7 +6,7 @@ import { isBrowser } from 'react-device-detect'
 
 const HeaderMobileView = styled('nav')`
   position: fixed;
-  z-index: 10;
+  z-index: 14;
   top: 0;
   right: 0;
   width: 100%;
@@ -20,7 +20,8 @@ const HeaderMobileView = styled('nav')`
   box-shadow: ${(props) =>
     props.stuck ? props.theme.boxShadow.outer : 'none'};
   padding: 0 1.3rem;
-  border-width: 0.1rem;
+  border: 0;
+  border-bottom-width: 0.1rem;
   border-style: solid;
   border-color: ${(props) => props.theme.bgColors[props.borderColor]};
 
@@ -123,7 +124,7 @@ const HeaderMobile = ({
 HeaderMobile.displayName = 'HeaderMobile'
 HeaderMobile.propTypes = {
   left: propTypes.element,
-  title: propTypes.string,
+  title: propTypes.oneOfType([propTypes.string, propTypes.element]),
   right: propTypes.element,
   bgColor: propTypes.string,
   borderColor: propTypes.string,

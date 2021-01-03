@@ -26,6 +26,7 @@ const StartOver = ({
   text = 'Start Over',
   icon = iconMap.ArrowLeft,
   isLogo = false,
+  color,
 }) => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -54,7 +55,7 @@ const StartOver = ({
       </ButtonStyled>
     )
   ) : (
-    <ButtonIcon label={text} onClick={startOver}>
+    <ButtonIcon label={text} color={color} onClick={startOver}>
       {icon}
     </ButtonIcon>
   )

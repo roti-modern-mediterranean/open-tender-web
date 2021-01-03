@@ -15,7 +15,7 @@ import {
   selectCartQuantity,
 } from '@open-tender/redux'
 import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
-import { Button, ButtonStyled } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import iconMap from '../../iconMap'
 import { Loading } from '../..'
@@ -107,12 +107,9 @@ const AccountActions = () => {
       switchType={switchOrderType}
     />
   ) : (
-    <Button
-      text="Start a New Order"
-      icon={iconMap['ShoppingBag']}
-      onClick={startNewOrder}
-      classes="ot-btn ot-btn--big"
-    />
+    <ButtonStyled icon={iconMap.ShoppingBag} onClick={startNewOrder} size="big">
+      Start a New Order
+    </ButtonStyled>
   )
 }
 

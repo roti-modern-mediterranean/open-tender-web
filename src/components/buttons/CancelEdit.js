@@ -7,7 +7,12 @@ import { selectOrder, resetOrder, resetCheckout } from '@open-tender/redux'
 import iconMap from '../iconMap'
 import { ButtonBoth } from '.'
 
-const CancelEdit = ({ text = 'Cancel Edit', icon = iconMap.XCircle }) => {
+const CancelEdit = ({
+  text = 'Cancel Edit',
+  icon = iconMap.XCircle,
+  style = null,
+  useButton = false,
+}) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { orderId } = useSelector(selectOrder)
@@ -26,6 +31,8 @@ const CancelEdit = ({ text = 'Cancel Edit', icon = iconMap.XCircle }) => {
       label={`Cancel editing order ${orderId}`}
       icon={icon}
       onClick={cancel}
+      style={style}
+      useButton={useButton}
     />
   )
 }
@@ -34,6 +41,8 @@ CancelEdit.displayName = 'CancelEdit'
 CancelEdit.propTypes = {
   text: propTypes.string,
   icon: propTypes.element,
+  style: propTypes.object,
+  useButton: propTypes.bool,
 }
 
 export default CancelEdit

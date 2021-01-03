@@ -14,7 +14,7 @@ import { openModal } from '../../slices'
 import iconMap from '../iconMap'
 import { NavMenu } from '.'
 
-const Account = ({ color }) => {
+const Account = ({ color, style = null, useButton = false }) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
@@ -25,7 +25,7 @@ const Account = ({ color }) => {
 
   if (cartGuest || isJoinGroup) return null
 
-  return isMobile ? (
+  return isMobile && !useButton ? (
     <NavMenu color={color} />
   ) : auth ? (
     isAccount ? (
@@ -34,6 +34,8 @@ const Account = ({ color }) => {
         icon={iconMap.UserX}
         color="header"
         size="header"
+        style={style}
+        useButton={useButton}
       >
         Logout
       </ButtonStyled>
@@ -44,6 +46,8 @@ const Account = ({ color }) => {
         icon={iconMap.User}
         color="header"
         size="header"
+        style={style}
+        useButton={useButton}
       >
         Account
       </ButtonStyled>
@@ -55,6 +59,8 @@ const Account = ({ color }) => {
       icon={iconMap.UserPlus}
       color="header"
       size="header"
+      style={style}
+      useButton={useButton}
     >
       Login
     </ButtonStyled>
@@ -65,6 +71,8 @@ Account.displayName = 'Account'
 Account.propTypes = {
   color: propTypes.string,
   size: propTypes.string,
+  style: propTypes.object,
+  useButton: propTypes.bool,
 }
 
 export default Account

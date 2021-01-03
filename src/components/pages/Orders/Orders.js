@@ -21,6 +21,7 @@ import {
   PageContent,
   HeaderAccount,
   ItemCards,
+  OrderCardItem,
 } from '../..'
 import OrdersList from './OrdersList'
 import styled from '@emotion/styled'
@@ -113,7 +114,11 @@ const Orders = () => {
                       )}
                     </>
                   ) : (
-                    <ItemCards items={items} delay={0} />
+                    <ItemCards
+                      items={items}
+                      delay={0}
+                      renderItem={(props) => <OrderCardItem {...props} />}
+                    />
                   )}
                 </>
               ) : isLoading ? (

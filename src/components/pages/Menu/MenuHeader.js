@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
@@ -42,19 +42,17 @@ const MenuHeaderTitleRevenueCenter = styled('button')`
   margin: 0.4rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.big};
 
-  span {
+  > span {
     display: inline-block;
 
     &:first-of-type {
-      max-width: 20rem;
-      height: ${(props) => props.theme.fonts.sizes.big};
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin: 0.3rem 0.4rem 0 0;
+      width: 1.6rem;
+      height: 1.6rem;
     }
 
     &:last-of-type {
-      margin: 0.3rem 0 0 0.5rem;
+      margin: 0.4rem 0 0 0.5rem;
       width: 1.6rem;
       height: 1.6rem;
       color: ${(props) => props.theme.fonts.headings.color};
@@ -62,43 +60,51 @@ const MenuHeaderTitleRevenueCenter = styled('button')`
   }
 `
 
-const MenuHeaderTitle = ({ serviceType, revenueCenter, show, setShow }) => {
+const MenuHeaderName = styled('span')`
+  max-width: 20rem;
+  height: ${(props) => props.theme.fonts.sizes.big};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
+const MenuHeaderTitle = ({
+  serviceType,
+  revenueCenter,
+  showMenu,
+  setShowMenu,
+}) => {
   const serviceTypeName = serviceTypeNamesMap[serviceType]
+
+  const toggle = (evt) => {
+    evt.preventDefault()
+    evt.target.blur()
+    setShowMenu(!showMenu)
+  }
+
   return (
     <>
       <MenuHeaderTitleServiceType>
         Ordering {serviceTypeName}
       </MenuHeaderTitleServiceType>
-      <MenuHeaderTitleRevenueCenter onClick={() => setShow(!show)}>
-        <Heading>{revenueCenter.name}</Heading>
-        <span>{iconMap.ChevronDown}</span>
+      <MenuHeaderTitleRevenueCenter onPointerUp={toggle}>
+        <span>&nbsp;</span>
+        <MenuHeaderName>
+          <Heading>{revenueCenter.name}</Heading>
+        </MenuHeaderName>
+        <span>{showMenu ? iconMap.ChevronUp : iconMap.ChevronDown}</span>
       </MenuHeaderTitleRevenueCenter>
     </>
   )
 }
 
-const MenuHeaderOrderView = styled('div')`
-  position: fixed;
-  z-index: 18;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 2rem;
-  transition: all 0.25s ease;
-  transform: translateY(${(props) => (props.show ? '6rem' : '-100%')});
-  background-color: ${(props) => props.theme.bgColors.primary};
-`
-
-const MenuHeaderOrder = ({ order, show }) => {
-  return (
-    <MenuHeaderOrderView show={show}>
-      <div>This is where the order content will go.</div>
-    </MenuHeaderOrderView>
-  )
-}
-
-const MenuHeader = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
-  const [show, setShow] = useState(false)
+const MenuHeader = ({
+  maxWidth = '100%',
+  bgColor,
+  borderColor,
+  showMenu,
+  setShowMenu,
+}) => {
   const autoSelect = useSelector(selectAutoSelect)
   const order = useSelector(selectOrder)
   const count = useSelector(selectRevenueCenterCount)
@@ -116,14 +122,17 @@ const MenuHeader = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
   return (
     <HeaderMobile
       title={
-        <>
-          <MenuHeaderTitle {...order} show={show} setShow={setShow} />
-          <MenuHeaderOrder order={order} show={show} />
-        </>
+        isBrowser ? null : (
+          <MenuHeaderTitle
+            {...order}
+            showMenu={showMenu}
+            setShowMenu={setShowMenu}
+          />
+        )
       }
       maxWidth={maxWidth}
       bgColor={bgColor}
-      borderColor={borderColor}
+      borderColor={showMenu ? 'secondary' : borderColor}
       left={left}
       right={
         <>
@@ -158,9 +167,10 @@ const MenuHeader = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
 MenuHeader.displayName = 'MenuHeader'
 MenuHeader.propTypes = {
   maxWidth: propTypes.string,
-  title: propTypes.string,
   bgColor: propTypes.string,
   borderColor: propTypes.string,
+  showMenu: propTypes.bool,
+  setShowMenu: propTypes.func,
 }
 
 export default MenuHeader

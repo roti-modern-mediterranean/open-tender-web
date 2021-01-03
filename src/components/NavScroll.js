@@ -75,7 +75,8 @@ const NavScrollView = styled('div')`
       padding: 0 0 0 ${(props) => props.theme.layout.padding};
       @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
         padding-left: ${(props) => props.theme.layout.paddingMobile};
-        padding-right: ${(props) => props.theme.layout.paddingMobile};
+        // padding-right: ${(props) => props.theme.layout.paddingMobile};
+        padding-right: 1rem;
       }
 
       &:last-child {

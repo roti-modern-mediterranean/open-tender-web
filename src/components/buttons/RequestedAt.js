@@ -12,7 +12,11 @@ import { openModal } from '../../slices'
 import iconMap from '../iconMap'
 import { ButtonBoth } from '.'
 
-const RequestedAt = ({ icon = iconMap.Clock }) => {
+const RequestedAt = ({
+  icon = iconMap.Clock,
+  style = null,
+  useButton = false,
+}) => {
   const dispatch = useDispatch()
   const { requestedAt, revenueCenter } = useSelector(selectOrder)
   const tz = useSelector(selectTimezone)
@@ -29,6 +33,8 @@ const RequestedAt = ({ icon = iconMap.Clock }) => {
       text={requestedAtText}
       icon={icon}
       onClick={() => dispatch(openModal({ type: 'requestedAt' }))}
+      style={style}
+      useButton={useButton}
     />
   )
 }
@@ -36,6 +42,8 @@ const RequestedAt = ({ icon = iconMap.Clock }) => {
 RequestedAt.displayName = 'RequestedAt'
 RequestedAt.propTypes = {
   icon: propTypes.element,
+  style: propTypes.object,
+  useButton: propTypes.bool,
 }
 
 export default RequestedAt

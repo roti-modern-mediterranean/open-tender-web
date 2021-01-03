@@ -1,4 +1,5 @@
 import React from 'react'
+import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder } from '@open-tender/redux'
@@ -8,7 +9,7 @@ import { openModal, selectOutpostName } from '../../slices'
 import iconMap from '../iconMap'
 import { ButtonBoth } from '.'
 
-const ServiceType = () => {
+const ServiceType = ({ style = null, useButton = false }) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { orderType, serviceType, isOutpost } = useSelector(selectOrder)
@@ -42,9 +43,21 @@ const ServiceType = () => {
 
   const change = isCatering ? handleCatering : handleServiceType
 
-  return <ButtonBoth text={serviceTypeName} icon={icon} onClick={change} />
+  return (
+    <ButtonBoth
+      text={serviceTypeName}
+      icon={icon}
+      onClick={change}
+      style={style}
+      useButton={useButton}
+    />
+  )
 }
 
 ServiceType.displayName = 'ServiceType'
+ServiceType.propTypes = {
+  style: propTypes.object,
+  useButton: propTypes.bool,
+}
 
 export default ServiceType

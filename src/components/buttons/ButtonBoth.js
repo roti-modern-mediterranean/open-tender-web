@@ -10,14 +10,17 @@ const ButtonBoth = ({
   onClick,
   color = 'header',
   size = 'header',
+  useButton = false,
+  style = null,
 }) => {
-  return isBrowser ? (
+  return isBrowser || useButton ? (
     <ButtonStyled
       onClick={onClick}
       label={label}
       icon={icon}
       color={color}
       size={size}
+      style={style}
     >
       {text}
     </ButtonStyled>
@@ -35,6 +38,7 @@ ButtonBoth.propTypes = {
   onClick: propTypes.func,
   color: propTypes.string,
   size: propTypes.string,
+  style: propTypes.object,
 }
 
 export default ButtonBoth

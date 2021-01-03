@@ -32,7 +32,8 @@ const MenuContent = () => {
     menuHeroChild,
     menuHeroChildMobile,
   } = useSelector(selectDisplaySettings)
-  const showHero = menuHero === undefined ? true : isMobile ? null : menuHero
+  const showHero =
+    menuHero === undefined ? true : isMobile ? menuHeroMobile : menuHero
   const showHeroChild =
     menuHeroChild === undefined
       ? true

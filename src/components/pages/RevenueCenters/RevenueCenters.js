@@ -85,12 +85,16 @@ const RevenueCenters = () => {
           title={isMobile ? navTitle : null}
           left={<StartOver />}
           right={
-            <>
+            isMobile ? (
               <Account />
-              <RevenueCenter />
-              <ServiceType />
-              <RequestedAt />
-            </>
+            ) : (
+              <>
+                <Account />
+                <RevenueCenter />
+                <ServiceType />
+                <RequestedAt />
+              </>
+            )
           }
         />
         <Main>

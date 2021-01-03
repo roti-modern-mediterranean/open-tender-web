@@ -8,7 +8,12 @@ import { openModal } from '../../slices'
 import iconMap from '../iconMap'
 import { ButtonBoth } from '.'
 
-const GroupOrder = ({ text = 'Group Order', icon = iconMap.Users }) => {
+const GroupOrder = ({
+  text = 'Group Order',
+  icon = iconMap.Users,
+  style = null,
+  useButton = false,
+}) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { isCartOwner, cartGuest } = useSelector(selectGroupOrder)
@@ -30,6 +35,8 @@ const GroupOrder = ({ text = 'Group Order', icon = iconMap.Users }) => {
       icon={icon}
       onClick={onClick}
       color={isCartOwner ? 'cart' : 'header'}
+      style={style}
+      useButton={useButton}
     />
   )
 }
@@ -38,6 +45,8 @@ GroupOrder.displayName = 'GroupOrder'
 GroupOrder.propTypes = {
   text: propTypes.string,
   icon: propTypes.element,
+  style: propTypes.object,
+  useButton: propTypes.bool,
 }
 
 export default GroupOrder

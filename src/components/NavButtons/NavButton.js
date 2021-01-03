@@ -84,13 +84,22 @@ const NavButtonArrow = styled('span')`
   }
 `
 
-const NavButton = ({ title, icon, onClick, delay = '0.125s' }) => (
-  <NavButtonView onClick={onClick} delay={delay}>
-    <NavButtonIcon>{icon}</NavButtonIcon>
-    <NavButtonTitle>{title}</NavButtonTitle>
-    <NavButtonArrow>{iconMap.ChevronRight}</NavButtonArrow>
-  </NavButtonView>
-)
+const NavButton = ({ title, icon, onClick, delay = '0.125s' }) => {
+  const onUp = (evt) => {
+    evt.target.blur()
+    evt.preventDefault()
+    evt.stopPropagation()
+    onClick()
+  }
+
+  return (
+    <NavButtonView onPointerUp={onUp} delay={delay}>
+      <NavButtonIcon>{icon}</NavButtonIcon>
+      <NavButtonTitle>{title}</NavButtonTitle>
+      <NavButtonArrow>{iconMap.ChevronRight}</NavButtonArrow>
+    </NavButtonView>
+  )
+}
 
 NavButton.displayName = 'NavButton'
 NavButton.propTypes = {
