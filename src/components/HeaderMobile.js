@@ -39,8 +39,9 @@ const HeaderMobileTitle = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 
-  span {
+  > span {
     display: block;
     font-family: ${(props) => props.theme.fonts.headings.family};
     font-weight: ${(props) => props.theme.fonts.headings.weight};
