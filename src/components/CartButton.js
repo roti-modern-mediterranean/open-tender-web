@@ -15,7 +15,7 @@ const CartButtonView = styled('div')`
   right: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     right: ${(props) => props.theme.layout.paddingMobile};
-    bottom: 6rem;
+    // bottom: 6rem;
   }
 `
 

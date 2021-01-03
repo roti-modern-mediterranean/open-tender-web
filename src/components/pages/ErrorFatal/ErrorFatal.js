@@ -56,6 +56,7 @@ const FatalErrorView = styled('div')`
   position: absolute;
   z-index: 1;
   width: 100%;
+  max-width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -67,7 +68,18 @@ const FatalErrorView = styled('div')`
   font-size: 1.6rem;
   text-align: center;
 
+  > div {
+    width: 100%;
+    max-width: 72rem;
+    padding: 2rem;
+  }
+
+  h1 {
+    line-height: 1;
+  }
+
   p {
+    font-size: 1.4rem;
     margin: 1em 0;
 
     strong {
@@ -84,6 +96,10 @@ const FatalErrorView = styled('div')`
         color: #000;
       }
     }
+  }
+
+  pre {
+    overflow-x: scroll;
   }
 `
 
@@ -131,7 +147,7 @@ const ErrorFatalPage = ({ error, loading }) => {
         </LoadingContainer>
       ) : error ? (
         <FatalErrorView>
-          <div style={{ maxWidth: '72rem' }}>
+          <div>
             <h1>Unsupported Browser</h1>
             <p>
               Hi, there. Unfortunately it looks like you're using an outdated,

@@ -29,7 +29,9 @@ const CheckoutHeader = ({
               <Account />
               <CancelEdit />
             </>
-          ) : null}
+          ) : (
+            <Account />
+          )}
         </>
       }
     />

@@ -14,7 +14,8 @@ import {
   checkout,
 } from '@open-tender/redux'
 import { displayPrice } from '@open-tender/js'
-import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
+// import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { selectSidebar, toggleSidebar } from '../../slices'
 import Cart from '../Cart'
@@ -86,9 +87,9 @@ const SidebarFooter = styled('div')`
   width: 100%;
   height: 7rem;
   background-color: ${(props) => props.theme.bgColors.primary};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    height: 12.5rem;
-  }
+  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  //   height: 12.5rem;
+  // }
 
   button {
     width: 100%;
@@ -105,17 +106,17 @@ const SidebarButtons = styled('div')`
   align-items: center;
 `
 
-const SidebarCancel = styled('div')`
-  width: 100%;
-  height: 5.5rem;
-  justify-content: center;
-  align-items: flex-start;
-  display: none;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    display: flex;
-  }
-`
+// const SidebarCancel = styled('div')`
+//   width: 100%;
+//   height: 5.5rem;
+//   justify-content: center;
+//   align-items: flex-start;
+//   display: none;
+//   font-size: ${(props) => props.theme.fonts.sizes.small};
+//   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+//     display: flex;
+//   }
+// `
 
 const SidebarBack = styled('div')`
   width: 50%;
@@ -169,9 +170,9 @@ const Sidebar = () => {
     }
   }
 
-  const handleClose = () => {
-    dispatch(toggleSidebar())
-  }
+  // const handleClose = () => {
+  //   dispatch(toggleSidebar())
+  // }
 
   const handleReopen = () => {
     const customerCart = cart.filter((i) => i.customer_id)
@@ -262,7 +263,7 @@ const Sidebar = () => {
                 )}
               </SidebarCheckout>
             </SidebarButtons>
-            <SidebarCancel>
+            {/* <SidebarCancel>
               <div>
                 <ButtonLink
                   onClick={handleClose}
@@ -271,7 +272,7 @@ const Sidebar = () => {
                   <Preface>Close Sidebar</Preface>
                 </ButtonLink>
               </div>
-            </SidebarCancel>
+            </SidebarCancel> */}
           </SidebarFooter>
         </div>
       </SidebarView>
