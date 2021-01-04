@@ -33,10 +33,12 @@ const GiftCardsList = ({ giftCards, isLoading }) => {
           <Row
             key={giftCard.card_number}
             icon={
-              <QRCode
-                src={giftCard.qr_code_url}
-                alt={`Gift Card ${giftCard.card_number}`}
-              />
+              giftCard.qr_code_url ? (
+                <QRCode
+                  src={giftCard.qr_code_url}
+                  alt={`Gift Card ${giftCard.card_number}`}
+                />
+              ) : null
             }
             content={
               <>
