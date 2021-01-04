@@ -70,9 +70,13 @@ const RevenueCentersSelect = () => {
   const { maxDistance, locationName } = useSelector(selectSettings)
   const geoLatLng = useSelector(selectGeoLatLng)
   const { revenueCenters, loading } = useSelector(selectRevenueCenters)
-  const { serviceType, orderType, isOutpost, address } = useSelector(
-    selectOrder
-  )
+  const {
+    serviceType,
+    orderType,
+    isOutpost,
+    address,
+    requestedAt,
+  } = useSelector(selectOrder)
   const coords = address || geoLatLng
   const autoSelect = useSelector(selectAutoSelect)
   const [title, setTitle] = useState(rcConfig.title)
@@ -93,9 +97,12 @@ const RevenueCentersSelect = () => {
       let params = { type: orderType }
       if (isOutpost) params = { ...params, is_outpost: true }
       if (coords) params = { ...params, lat: coords.lat, lng: coords.lng }
+      if (orderType === 'CATERING' && requestedAt) {
+        params = { ...params, requestedAt }
+      }
       dispatch(fetchRevenueCenters(params))
     }
-  }, [orderType, isOutpost, coords, dispatch])
+  }, [orderType, isOutpost, coords, requestedAt, dispatch])
 
   const autoRouteCallack = useCallback(
     (revenueCenter) => {
