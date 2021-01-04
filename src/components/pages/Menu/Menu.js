@@ -1,7 +1,6 @@
 import React, { useEffect, createContext, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isoToDateStr } from '@open-tender/js'
 import {
   selectOrder,
   selectMenuVars,
@@ -12,7 +11,6 @@ import {
   fetchRevenueCenter,
   fetchMenu,
   fetchAllergens,
-  selectTimezone,
 } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
 
@@ -37,16 +35,9 @@ const MenuPage = () => {
   const { revenueCenterId, serviceType, requestedAt } = useSelector(
     selectMenuVars
   )
-  const tz = useSelector(selectTimezone)
-  const requestedDateStr =
-    orderType === 'CATERING' && requestedAt && requestedAt !== 'asap'
-      ? isoToDateStr(requestedAt, tz, 'yyyy-MM-dd')
-      : null
   let { revenueCenters, categories, soldOut, error, loading } = useSelector(
     selectMenu
   )
-  // loading = 'pending'
-  // error = 'Something went wrong when retrieving this menu. Please try again.'
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const groupOrderClosed = useSelector(selectGroupOrderClosed)
   const isLoading = loading === 'pending'
@@ -62,15 +53,16 @@ const MenuPage = () => {
     } else if (groupOrderClosed) {
       return history.push('/review')
     } else {
-      dispatch(fetchRevenueCenter(revenueCenterId, requestedDateStr))
+      const requested = orderType === 'CATERING' ? requestedAt : null
+      dispatch(fetchRevenueCenter(revenueCenterId, requested))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
       dispatch(fetchAllergens())
     }
   }, [
     revenueCenterId,
+    orderType,
     serviceType,
     requestedAt,
-    requestedDateStr,
     dispatch,
     history,
     groupOrderClosed,
