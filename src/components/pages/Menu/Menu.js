@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   selectOrder,
-  selectRevenueCenter,
   selectMenuVars,
   selectGroupOrderClosed,
   selectMenu,
@@ -32,15 +31,13 @@ const MenuPage = () => {
   const { menu: menuConfig } = useSelector(selectConfig)
   const { loadingMessage } = menuConfig
   const order = useSelector(selectOrder)
-  const revenueCenter = useSelector(selectRevenueCenter)
+  const { orderType, revenueCenter } = order
   const { revenueCenterId, serviceType, requestedAt } = useSelector(
     selectMenuVars
   )
   let { revenueCenters, categories, soldOut, error, loading } = useSelector(
     selectMenu
   )
-  // loading = 'pending'
-  // error = 'Something went wrong when retrieving this menu. Please try again.'
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const groupOrderClosed = useSelector(selectGroupOrderClosed)
   const isLoading = loading === 'pending'
@@ -56,12 +53,14 @@ const MenuPage = () => {
     } else if (groupOrderClosed) {
       return history.push('/review')
     } else {
-      dispatch(fetchRevenueCenter(revenueCenterId))
+      const requested = orderType === 'CATERING' ? requestedAt : null
+      dispatch(fetchRevenueCenter(revenueCenterId, requested))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
       dispatch(fetchAllergens())
     }
   }, [
     revenueCenterId,
+    orderType,
     serviceType,
     requestedAt,
     dispatch,
