@@ -46,7 +46,10 @@ const AccountGiftCards = () => {
       </Helmet>
       {isBrowser && <Background imageUrl={config.background} />}
       <Content maxWidth="76.8rem">
-        <HeaderAccount title="Gift Cards" maxWidth="76.8rem" />
+        <HeaderAccount
+          title={isBrowser ? null : 'Gift Cards'}
+          maxWidth="76.8rem"
+        />
         <Main bgColor="secondary">
           <Container>
             <PageTitle {...config.giftCards} />

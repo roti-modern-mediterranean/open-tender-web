@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
 import { Helmet } from 'react-helmet'
+import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerOrders,
@@ -24,7 +26,6 @@ import {
   OrderCardItem,
 } from '../..'
 import OrdersList from './OrdersList'
-import styled from '@emotion/styled'
 
 const ToggleView = styled('div')`
   margin: -1rem 0 3rem;
@@ -81,7 +82,7 @@ const Orders = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderAccount title="Order History" />
+        <HeaderAccount title={isBrowser ? null : 'Order History'} />
         <Main bgColor="secondary">
           <Container>
             <PageTitle {...config.recentOrders} />

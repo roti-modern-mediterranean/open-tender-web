@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerGroupOrders,
@@ -52,7 +53,7 @@ const GroupOrders = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderAccount title="Group Orders" />
+        <HeaderAccount title={isBrowser ? null : 'Group Orders'} />
         <Main bgColor="secondary">
           <Container>
             <PageTitle {...config.groupOrders} />

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerFavorites,
@@ -75,7 +76,7 @@ const Favorites = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderAccount title="Favorites" />
+        <HeaderAccount title={isBrowser ? null : 'Favorites'} />
         <Main bgColor="secondary">
           <Container>
             <PageTitle {...config.favorites} />

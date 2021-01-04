@@ -51,7 +51,10 @@ const Rewards = () => {
       </Helmet>
       {isBrowser && <Background imageUrl={background} />}
       <Content maxWidth="76.8rem">
-        <HeaderAccount title="Rewards" maxWidth="76.8rem" />
+        <HeaderAccount
+          title={isBrowser ? null : 'Rewards'}
+          maxWidth="76.8rem"
+        />
         <Main bgColor="secondary">
           <Container>
             <PageTitle {...config} />
