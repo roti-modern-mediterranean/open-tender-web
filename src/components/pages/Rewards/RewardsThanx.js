@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { isEmpty } from '@open-tender/js'
 import {
   fetchCustomerThanx,
   resetCustomerThanx,
@@ -16,8 +17,8 @@ const RewardsThanx = () => {
   const { progress, rewards } = thanx || {}
   const program = {
     name: 'Your Progress',
-    progress: progress ? parseInt(progress.percentage) : null,
-    reward: progress ? progress.towards : null,
+    progress: !isEmpty(progress) ? parseInt(progress.percentage) : null,
+    reward: !isEmpty(progress) ? progress.towards : null,
   }
 
   useEffect(() => {

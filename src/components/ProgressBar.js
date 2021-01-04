@@ -16,7 +16,7 @@ const ProgressBarFill = styled('div')`
 `
 
 const ProgressBar = ({ progress }) => {
-  const style = { width: `${progress}%` }
+  const style = { width: `${progress || 0}%` }
   return (
     <ProgressView>
       <div style={style}>
