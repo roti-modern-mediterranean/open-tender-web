@@ -1565,15 +1565,15 @@
   resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-2.0.1.tgz#8c0f93ecb01933048103fa096f90d6523a10eefe"
   integrity sha512-1MqUr4JZFuD9h0VOsdseegQ5G5w6gvNB/QxA1MkEAGPqvGwgK1nMsVF2skg8KFf7IVYTmrqdSe4920w+33Vs5A==
 
-"@open-tender/js@^1.2.8":
-  version "1.2.8"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.2.8.tgz#bee9c1ec3a0bd9742958f9860a0a75fcf0ad37a5"
-  integrity sha512-qHA2cUzGpSkkln/wWTr6ENbReGJWgK3g70OuHF1QKqAfyEwqsKvGWSVc3GSNVJKrCLsIxVIAYyGzz+S4dVBe/Q==
+"@open-tender/js@^1.2.9":
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.2.9.tgz#a38c742d6bbdd36eebd8daf47ddc493008ff7bb2"
+  integrity sha512-9kV19FFFRgUbjexCvisBcnTPgbPNugHYnkUisJ2g2DIJ2f8VQ1eEzNH6AJ34ZyoYYuoU8V7gJtXXtpbjqN2Ivw==
 
-"@open-tender/redux@^1.5.5":
-  version "1.5.5"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.5.5.tgz#86c37801e7932eff80ccfead4032969c400c3112"
-  integrity sha512-58X1DYK5jT2hy55gdD3k0tB/lm1DVBKNGn2TvsfDdKhuGeSwIAHCYDVgQhQgU+ictbI6K5sbUx00KuJpgtkTsw==
+"@open-tender/redux@^1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.6.1.tgz#fe6ad7c10d76768ac437845b8ac9a44071c8362b"
+  integrity sha512-pllids+ekyp6VNjuKcE2sfJ2vRvggjtHCetoYFtzDR5exArWUhyYVSl+TVYThj40y2YYckCnzWgThNW0o0XnWw==
 
 "@pmmmwh/react-refresh-webpack-plugin@0.4.2":
   version "0.4.2"
