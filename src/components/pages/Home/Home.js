@@ -27,15 +27,41 @@ import {
 import { Account } from '../../buttons'
 import HomeButtons from './HomeButtons'
 import { AppContext } from '../../../App'
+import styled from '@emotion/styled'
+
+const HomeContent = styled('div')`
+  padding: 0 2.5rem 2.5rem;
+  line-height: ${(props) => props.theme.lineHeight};
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 2.5rem;
+    color: ${(props) => props.theme.colors.light};
+    background-color: rgba(0, 0, 0, 0.3);
+    border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
+  }
+
+  p {
+    margin: 0.5em 0;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+`
 
 const makeContent = (content) => {
   if (!content || !content.length || !content[0].length) return null
   return (
-    <>
+    <HomeContent>
       {content.map((i, index) => (
         <p key={index}>{i}</p>
       ))}
-    </>
+    </HomeContent>
   )
 }
 
@@ -44,7 +70,7 @@ const Home = () => {
   const { geoLatLng, geoError } = useGeolocation()
   // const config = useSelector(selectConfig)
   const { home: homeConfig } = useSelector(selectConfig)
-  const { background, title, subtitle, content } = homeConfig
+  const { background, mobile, title, subtitle, content } = homeConfig
   const { orderTypes } = useSelector(selectSettings)
   const hasOrderTypes = orderTypes && orderTypes.length > 0
   const { cartGuest } = useSelector(selectGroupOrder)
@@ -81,7 +107,7 @@ const Home = () => {
           left={<HeaderLogo />}
           right={<Account color="light" />}
         />
-        <Main padding="0" imageUrl={background}>
+        <Main padding="0" imageUrl={mobile || background}>
           {hasOrderTypes ? (
             <Welcome
               // imageUrl={background}
@@ -91,9 +117,8 @@ const Home = () => {
                   <p>{subtitle}</p>
                 </>
               }
-              content={makeContent(content)}
             >
-              <HomeButtons />
+              <HomeButtons content={makeContent(content)} />
             </Welcome>
           ) : (
             <Welcome

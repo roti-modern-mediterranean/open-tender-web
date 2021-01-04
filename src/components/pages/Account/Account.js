@@ -26,7 +26,7 @@ const Account = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
-  const { background, title, subtitle } = accountConfig
+  const { background, mobile, title, subtitle } = accountConfig
   const { auth, profile } = useSelector(selectCustomer)
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
   const token = auth ? auth.access_token : null
@@ -66,7 +66,7 @@ const Account = () => {
           left={<StartOver isLogo={true} color="light" />}
           right={<Logout color="light" />}
         />
-        <Main padding="0" imageUrl={background}>
+        <Main padding="0" imageUrl={mobile || background}>
           <Welcome
             header={
               <>

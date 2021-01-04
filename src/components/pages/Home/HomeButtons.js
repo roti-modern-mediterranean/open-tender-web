@@ -1,9 +1,9 @@
 import React from 'react'
+import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOrderServiceType } from '@open-tender/redux'
 
 import { selectConfig, selectSettings } from '../../../slices'
-// import OrderTypeButton from './OrderTypeButton'
 import { NavButtons } from '../..'
 import {
   Flag,
@@ -17,7 +17,7 @@ import {
 } from 'react-feather'
 import { useHistory } from 'react-router-dom'
 
-const HomeButtons = () => {
+const HomeButtons = ({ content }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { orderTypes } = useSelector(selectSettings)
@@ -89,8 +89,17 @@ const HomeButtons = () => {
     onClick: handlers[orderType],
   }))
 
-  return <NavButtons buttons={buttons} />
+  return (
+    <div>
+      <NavButtons buttons={buttons} />
+      {content}
+    </div>
+  )
 }
 
 HomeButtons.displayName = 'HomeButtons'
+HomeButtons.propTypes = {
+  content: propTypes.element,
+}
+
 export default HomeButtons
