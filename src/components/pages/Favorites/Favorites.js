@@ -49,8 +49,8 @@ const Favorites = () => {
   }, [auth, history])
 
   useEffect(() => {
-    if (error) window.scrollTo(0, sectionRef.current.offsetTop)
-  }, [error])
+    if (error) windowRef.current.scrollTo(0, sectionRef.current.offsetTop)
+  }, [error, windowRef])
 
   useEffect(() => {
     dispatch(fetchCustomerFavorites())

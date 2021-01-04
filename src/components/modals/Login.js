@@ -102,12 +102,20 @@ const LoginModal = ({ callback }) => {
       <ModalContent
         title={msg.title}
         subtitle={
-          <p>
-            {msg.subtitle}{' '}
-            {mode === 'login' && (
-              <ButtonLink onClick={signUp}>Sign up here.</ButtonLink>
+          <>
+            <p>
+              {msg.subtitle}{' '}
+              {mode === 'login' && (
+                <ButtonLink onClick={signUp}>Sign up here.</ButtonLink>
+              )}
+            </p>
+            {mode === 'thanx' && (
+              <p>
+                Don't have an account yet?{' '}
+                <ButtonLink onClick={signUp}>Sign up here.</ButtonLink>
+              </p>
             )}
-          </p>
+          </>
         }
         footer={
           !has_thanx && (

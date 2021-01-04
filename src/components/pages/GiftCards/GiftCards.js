@@ -50,8 +50,8 @@ const GiftCards = () => {
   }, [windowRef])
 
   useEffect(() => {
-    if (success || error) window.scroll(0, 0)
-  }, [success, error])
+    if (success || error) windowRef.current.scroll(0, 0)
+  }, [success, error, windowRef])
 
   useEffect(() => {
     dispatch(fetchCustomerCreditCards())

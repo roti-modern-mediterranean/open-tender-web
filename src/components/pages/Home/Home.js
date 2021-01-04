@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import {
@@ -26,6 +26,7 @@ import {
 } from '../..'
 import { Account } from '../../buttons'
 import HomeButtons from './HomeButtons'
+import { AppContext } from '../../../App'
 
 const makeContent = (content) => {
   if (!content || !content.length || !content[0].length) return null
@@ -48,13 +49,14 @@ const Home = () => {
   const hasOrderTypes = orderTypes && orderTypes.length > 0
   const { cartGuest } = useSelector(selectGroupOrder)
   const { cartGuestId } = cartGuest || {}
+  const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    window.scroll(0, 0)
+    windowRef.current.scroll(0, 0)
     dispatch(setGeoLoading())
     dispatch(resetRevenueCenters())
     dispatch(resetOrderType())
-  }, [dispatch])
+  }, [windowRef, dispatch])
 
   useEffect(() => {
     if (cartGuestId) dispatch(resetGroupOrder())

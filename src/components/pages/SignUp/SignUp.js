@@ -62,6 +62,7 @@ const SignUp = () => {
 
   useEffect(() => {
     windowRef.current.scroll(0, 0)
+    dispatch(resetSignUp())
     return () => dispatch(resetSignUp())
   }, [windowRef, dispatch])
 
@@ -70,8 +71,8 @@ const SignUp = () => {
   }, [auth, history])
 
   useEffect(() => {
-    if (error) window.scroll(0, 0)
-  }, [error])
+    if (error) windowRef.current.scroll(0, 0)
+  }, [error, windowRef])
 
   return (
     <>

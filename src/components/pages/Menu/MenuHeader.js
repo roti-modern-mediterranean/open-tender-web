@@ -31,6 +31,7 @@ import iconMap from '../../iconMap'
 const MenuHeaderTitleServiceType = styled(Preface)`
   display: block;
   line-height: 1;
+  margin: 0.5rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
@@ -52,7 +53,7 @@ const MenuHeaderTitleRevenueCenter = styled('button')`
     }
 
     &:last-of-type {
-      margin: 0.4rem 0 0 0.5rem;
+      margin: 0.2rem 0 0 0.5rem;
       width: 1.6rem;
       height: 1.6rem;
       color: ${(props) => props.theme.fonts.headings.color};
@@ -62,7 +63,6 @@ const MenuHeaderTitleRevenueCenter = styled('button')`
 
 const MenuHeaderName = styled('span')`
   max-width: 20rem;
-  height: ${(props) => props.theme.fonts.sizes.big};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
