@@ -51,7 +51,6 @@ export const MenuItemContainer = styled(Box)`
 export const MenuItemImage = styled(BgImage)`
   position: relative;
   padding: 30% 0;
-  margin: 0 -${(props) => props.theme.border.width};
   background-color: ${(props) => props.theme.bgColors.secondary};
   border-radius: ${(props) => props.theme.border.radius};
   border-bottom-left-radius: 0 !important;
