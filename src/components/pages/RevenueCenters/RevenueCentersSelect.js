@@ -13,7 +13,7 @@ import {
   resetCheckout,
 } from '@open-tender/redux'
 import { makeDisplayedRevenueCenters, renameLocation } from '@open-tender/js'
-import { ButtonStyled } from '@open-tender/components'
+import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
 
 import { selectConfig, selectSettings, selectGeoLatLng } from '../../../slices'
 import { Container, Loading, PageContent, RevenueCenter } from '../..'
@@ -33,8 +33,31 @@ const RevenueCentersSelectView = styled('div')`
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 26rem 0 0;
-    padding: 2rem 0 0;
+    margin: 6rem 0 0;
+    padding: 1rem 0 0;
+    transition: all 0.25s ease;
+    transform: translateY(${(props) => (props.showMap ? '20rem' : '0')});
+  }
+`
+
+const RevenueCentersSelectShowMap = styled('div')`
+  display: none;
+  margin: 0 0 0.75rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: block;
+  }
+
+  button {
+    display: block;
+    padding: 0.5rem 0;
+  }
+
+  span {
+    pointer-events: none;
+    display: block;
+    line-height: 1;
+    color: ${(props) => props.theme.links.primary.color};
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
 
@@ -44,13 +67,18 @@ const RevenueCentersSelectHeader = styled('div')`
   }
 
   h2 {
+    line-height: 1;
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       font-size: ${(props) => props.theme.fonts.sizes.h3};
     }
   }
 
   p {
-    margin: 0.5rem 0 0;
+    margin: 0.75rem 0 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      // margin: 0.25rem 0 0;
+    }
   }
 `
 
@@ -66,6 +94,7 @@ const RevenueCentersSelectList = styled('ul')`
 const RevenueCentersSelect = () => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const [showMap, setShowMap] = useState(false)
   const { revenueCenters: rcConfig } = useSelector(selectConfig)
   const { maxDistance, locationName } = useSelector(selectSettings)
   const geoLatLng = useSelector(selectGeoLatLng)
@@ -140,7 +169,7 @@ const RevenueCentersSelect = () => {
   }
 
   return (
-    <RevenueCentersSelectView>
+    <RevenueCentersSelectView showMap={showMap}>
       <Container>
         {isLoading ? (
           <Loading text="Retrieving nearest locations..." />
@@ -148,6 +177,11 @@ const RevenueCentersSelect = () => {
           <>
             <PageContent>
               <RevenueCentersSelectHeader>
+                <RevenueCentersSelectShowMap>
+                  <ButtonLink onClick={() => setShowMap(!showMap)}>
+                    <Preface>{showMap ? 'Hide Map' : 'Show Map'}</Preface>
+                  </ButtonLink>
+                </RevenueCentersSelectShowMap>
                 <h2>{renamedTitle}</h2>
                 <p>{renamedError || renamedMsg}</p>
               </RevenueCentersSelectHeader>

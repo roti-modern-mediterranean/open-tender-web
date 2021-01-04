@@ -81,7 +81,7 @@ const RevenueCenters = () => {
       <Content maxWidth="76.8rem">
         <HeaderMobile
           maxWidth="76.8rem"
-          borderColor="primary"
+          borderColor={isMobile ? 'transparent' : 'primary'}
           title={isMobile ? navTitle : null}
           left={<StartOver />}
           right={
