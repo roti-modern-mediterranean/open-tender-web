@@ -58,6 +58,7 @@ const NavButtonIcon = styled('span')`
   // top: -0.1rem;
   width: 1.4rem;
   height: 1.4rem;
+  flex-shrink: 0;
 `
 
 const NavButtonTitle = styled('span')`
@@ -72,6 +73,7 @@ const NavButtonArrow = styled('span')`
   // top: -0.1rem;
   width: 1.8rem;
   height: 1.8rem;
+  flex-shrink: 0;
   transition: ${(props) => props.theme.links.transition};
   transform: translateX(0);
 

@@ -54,6 +54,9 @@ const WelcomeContentText = styled('div')`
 
 const WelcomeActions = styled('div')`
   margin: 2rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    color: ${(props) => props.theme.colors.light};
+  }
 `
 
 const WelcomeButtons = styled('div')`
