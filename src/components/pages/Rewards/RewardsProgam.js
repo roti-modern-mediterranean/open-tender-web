@@ -41,11 +41,11 @@ const RewardsProgram = ({ program }) => {
         <h2>{name}</h2>
         {description && <p>{description}</p>}
       </RewardsProgramHeader>
-      {credit && (
+      {credit ? (
         <RewardsProgramCredit>
           <Heading>Current credit: ${credit.toFixed(2)}</Heading>
         </RewardsProgramCredit>
-      )}
+      ) : null}
       <ProgressBar progress={progress} />
       <RewardsProgramProgress>
         {progress
