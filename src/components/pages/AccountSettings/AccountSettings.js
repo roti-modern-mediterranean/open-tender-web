@@ -4,12 +4,14 @@ import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
+import { ButtonStyled } from '@open-tender/components'
 
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Background, Content, HeaderMobile, Main, Welcome } from '../..'
 import AccountSettingsButtons from './AccountSettingsButtons'
 import { AccountBack, Logout } from '../../buttons'
+import iconMap from '../../iconMap'
 
 const AccountSettings = () => {
   const history = useHistory()
@@ -42,7 +44,18 @@ const AccountSettings = () => {
           right={<Logout color="light" />}
         />
         <Main padding="0" imageUrl={background}>
-          <Welcome header={<h1>Account Settings</h1>}>
+          <Welcome
+            header={<h1>Account Settings</h1>}
+            content={
+              <ButtonStyled
+                icon={iconMap.ArrowLeft}
+                onClick={() => history.push('/account')}
+                size="small"
+              >
+                Back to Account page
+              </ButtonStyled>
+            }
+          >
             <AccountSettingsButtons />
           </Welcome>
         </Main>

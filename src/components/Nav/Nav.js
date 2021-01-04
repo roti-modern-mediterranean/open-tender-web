@@ -12,6 +12,11 @@ import iconMap from '../iconMap'
 
 const navButtons = [
   {
+    icon: iconMap.User,
+    title: 'Account',
+    path: '/account',
+  },
+  {
     icon: iconMap.ShoppingBag,
     title: 'Order History',
     path: '/orders',
@@ -175,8 +180,10 @@ const Nav = () => {
             {profile && (
               <>
                 <NavItem onClick={(evt) => closeGo(evt, '/account')}>
-                  <NavIcon>{iconMap.User}</NavIcon>
-                  <NavTitle>Account</NavTitle>
+                  <NavIcon>{iconMap.Smile}</NavIcon>
+                  <NavTitle style={{ marginLeft: '-0.2rem' }}>
+                    Hi, {profile.first_name}
+                  </NavTitle>
                 </NavItem>
               </>
             )}
