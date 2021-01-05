@@ -82,7 +82,7 @@ const MenuHeaderTitle = ({
     setShowMenu(!showMenu)
   }
 
-  return (
+  return revenueCenter ? (
     <>
       <MenuHeaderTitleServiceType>
         Ordering {serviceTypeName}
@@ -95,7 +95,7 @@ const MenuHeaderTitle = ({
         <span>{showMenu ? iconMap.ChevronUp : iconMap.ChevronDown}</span>
       </MenuHeaderTitleRevenueCenter>
     </>
-  )
+  ) : null
 }
 
 const MenuHeader = ({
