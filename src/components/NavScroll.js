@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import propTypes from 'prop-types'
-// import throttle from 'lodash/throttle'
+import { animateScroll as scroll } from 'react-scroll'
 import { slugify } from '@open-tender/js'
 
 import { AppContext } from '../App'
 import styled from '@emotion/styled'
+import { isMobile } from 'react-device-detect'
 
 const getActiveElement = (elements, topOffset) => {
   return elements
@@ -41,11 +42,18 @@ const NavScrollButton = ({ container, name, active, offset = 0 }) => {
     evt.preventDefault()
     evt.target.blur()
     const element = document.getElementById(id)
-    container.scrollTo({
-      top: element.offsetTop + offset,
-      left: 0,
-      behavior: 'smooth',
+    const position = element.offsetTop + offset
+    scroll.scrollTo(position, {
+      container,
+      duration: 500,
+      smooth: true,
+      offset: -30,
     })
+    // container.scrollTo({
+    //   top: element.offsetTop + offset,
+    //   left: 0,
+    //   behavior: 'smooth',
+    // })
   }
 
   return (
@@ -62,10 +70,9 @@ const NavScrollView = styled('div')`
 
   ul {
     position: relative;
-    display: flex;
+    display: inline-flex;
     justify-content: flex-start;
     align-items: center;
-    width: 100%;
     height: 6rem;
 
     li {
@@ -89,7 +96,21 @@ const NavScrollView = styled('div')`
   }
 `
 
-// const eventThrottler = (eventHandler) => throttle(eventHandler, 2000)
+// https://stackoverflow.com/questions/51229742/javascript-window-scroll-behavior-smooth-not-working-in-safari
+const smoothHorizontalScrolling = (container, time, amount, start) => {
+  let eAmt = amount / 100
+  let curTime = 0
+  let scrollCounter = 0
+  while (curTime <= time) {
+    window.setTimeout(shs, curTime, container, scrollCounter, eAmt, start)
+    curTime += time / 100
+    scrollCounter++
+  }
+}
+
+const shs = (e, sc, eAmt, start) => {
+  e.scrollLeft = eAmt * sc + start
+}
 
 const NavScroll = ({ items, offset = 0 }) => {
   const { windowRef } = useContext(AppContext)
@@ -98,17 +119,20 @@ const NavScroll = ({ items, offset = 0 }) => {
   const [active, setActive] = useState(null)
   const topOffset = 121
   const elements = Array.from(document.getElementsByName('section'))
+  const navOffset = offset + (isMobile ? -30 : -30)
 
   useEffect(() => {
     const winRef = windowRef.current
     const handleScroll = () => {
-      if (elements.length) setActive(getActiveElement(elements, topOffset))
+      if (elements.length) {
+        setActive(getActiveElement(elements, topOffset))
+      }
     }
     winRef.addEventListener('scroll', handleScroll)
     return () => {
       winRef.removeEventListener('scroll', () => handleScroll)
     }
-  }, [windowRef, topOffset, elements])
+  }, [windowRef, topOffset, elements, active])
 
   useEffect(() => {
     if (active) {
@@ -116,13 +140,20 @@ const NavScroll = ({ items, offset = 0 }) => {
       if (navActive) {
         const navOffset = navActive.getBoundingClientRect().x
         const parentOffset = navActive.offsetParent.getBoundingClientRect().x
-        const offsetLeft = navOffset - parentOffset
+        // const offsetLeft = navOffset - parentOffset
         if (navRef.current) {
-          navRef.current.scrollTo({
-            top: 0,
-            left: offsetLeft,
-            behavior: 'smooth',
-          })
+          smoothHorizontalScrolling(
+            navRef.current,
+            250,
+            navOffset,
+            -parentOffset
+          )
+          // navRef.current.scrollTo({
+          //   top: 0,
+          //   left: offsetLeft,
+          //   behavior: 'smooth',
+          // })
+          // navRef.current.scrollLeft = offsetLeft
         }
       }
     }
@@ -139,7 +170,7 @@ const NavScroll = ({ items, offset = 0 }) => {
               <NavScrollButton
                 container={windowRef.current}
                 name={name}
-                offset={offset}
+                offset={navOffset}
                 active={activeId === sectionId}
               />
             </li>

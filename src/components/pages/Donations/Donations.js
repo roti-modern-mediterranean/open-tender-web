@@ -40,12 +40,12 @@ const Donations = () => {
   const reset = useCallback(() => dispatch(resetDonation()), [dispatch])
 
   useEffect(() => {
-    windowRef.current.scroll(0, 0)
+    windowRef.current.scrollTop = 0
     return () => dispatch(resetDonation())
   }, [windowRef, dispatch])
 
   useEffect(() => {
-    if (success || error) windowRef.current.scroll(0, 0)
+    if (success || error) windowRef.current.scrollTop = 0
   }, [success, error, windowRef])
 
   useEffect(() => {

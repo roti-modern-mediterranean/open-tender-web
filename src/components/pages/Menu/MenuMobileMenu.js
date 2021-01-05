@@ -1,5 +1,7 @@
 import styled from '@emotion/styled'
 import { Box, FormRow, Preface } from '@open-tender/components'
+import { useSelector } from 'react-redux'
+import { selectAutoSelect } from '@open-tender/redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import {
@@ -56,6 +58,7 @@ const MenuMobileMenuButtons = styled('div')`
 
 const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
   const { revenueCenter, serviceType, requestedAt } = order
+  const autoSelect = useSelector(selectAutoSelect)
 
   return (
     <>
@@ -66,7 +69,7 @@ const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
           <CancelEdit useButton={true} />
         </MenuMobileMenuButtons>
         <MenuMobileMenuContainer>
-          {revenueCenter && (
+          {revenueCenter && !autoSelect && (
             <FormRow
               label={<Preface size="xSmall">Location</Preface>}
               input={

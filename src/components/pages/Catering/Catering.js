@@ -96,7 +96,7 @@ const CateringPage = () => {
   const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
-    windowRef.current.scroll(0, 0)
+    windowRef.current.scrollTop = 0
   }, [windowRef])
 
   useEffect(() => {
