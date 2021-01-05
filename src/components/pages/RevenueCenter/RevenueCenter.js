@@ -54,7 +54,7 @@ const RevenueCenter = () => {
   const title = revenueCenter ? revenueCenter.name : config.title
 
   useEffect(() => {
-    windowRef.current.scroll(0, 0)
+    windowRef.current.scrollTop = 0
     dispatch(setGeoLoading())
     dispatch(resetOrderType())
     dispatch(fetchRevenueCenter(slug))

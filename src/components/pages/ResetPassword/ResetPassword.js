@@ -42,7 +42,7 @@ const ResetPassword = () => {
   const resetForm = useCallback(() => dispatch(resetPasswordReset), [dispatch])
 
   useEffect(() => {
-    windowRef.current.scroll(0, 0)
+    windowRef.current.scrollTop = 0
   }, [windowRef])
 
   useEffect(() => {

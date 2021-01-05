@@ -58,7 +58,7 @@ const RevenueCenters = () => {
     config.title && config.title.length < 20 ? config.title : 'Find a Store'
 
   useEffect(() => {
-    windowRef.current.scroll(0, 0)
+    windowRef.current.scrollTop = 0
   }, [windowRef])
 
   useEffect(() => {
