@@ -30,7 +30,7 @@ const AccountCreditCards = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const account = useSelector(selectAccountConfig)
-  const { entities, loading, error } = useSelector(selectCustomerCreditCards)
+  const { entities, loading } = useSelector(selectCustomerCreditCards)
   const isLoading = loading === 'pending'
   const { windowRef } = useContext(AppContext)
 
@@ -74,8 +74,6 @@ const AccountCreditCards = () => {
                 <CreditCards creditCards={entities} isLoading={isLoading} />
               ) : isLoading ? (
                 <Loading text="Retrieving your cards on file..." />
-              ) : error ? (
-                <p>{error}</p>
               ) : (
                 <p>Looks like you haven't added any credit cards yet.</p>
               )}
