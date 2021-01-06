@@ -30,6 +30,7 @@ const RequestedAt = ({
   const st = serviceType === 'WALKIN' ? 'PICKUP' : serviceType
   const firstTimes = first_times ? first_times[st] : null
   const orderTimes = order_times ? order_times[st] : null
+  if (!revenueCenter) return null
   const tz = timezoneMap[revenueCenter.timezone]
   const estimatedTime = makeEstimatedTime(
     requestedAt,
