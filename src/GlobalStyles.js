@@ -840,6 +840,19 @@ const makeGlobalStyles = (theme) => css`
     transform: translateY(20%);
   }
 
+  .reveal-enter,
+  .reveal-exit.reveal-exit-active {
+    transition: all 250ms ease;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .reveal-enter.reveal-enter-active,
+  .reveal-exit {
+    opacity: 1;
+    visibility: visible;
+  }
+
   .react-datepicker__navigation--previous {
     border-right-color: ${theme.links.primary.color};
   }

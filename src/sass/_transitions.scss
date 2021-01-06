@@ -69,20 +69,20 @@ $transition: $transition-duration $transition-easing;
 
 /* reveal */
 
-$reveal-speed: 250ms;
+// $reveal-speed: 250ms;
 
-.reveal-enter,
-.reveal-exit.reveal-exit-active {
-  transition: all $reveal-speed ease;
-  opacity: 0;
-  visibility: hidden;
-}
+// .reveal-enter,
+// .reveal-exit.reveal-exit-active {
+//   transition: all $reveal-speed ease;
+//   opacity: 0;
+//   visibility: hidden;
+// }
 
-.reveal-enter.reveal-enter-active,
-.reveal-exit {
-  opacity: 1;
-  visibility: visible;
-}
+// .reveal-enter.reveal-enter-active,
+// .reveal-exit {
+//   opacity: 1;
+//   visibility: visible;
+// }
 
 /* slide-in-from-right */
 

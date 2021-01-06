@@ -22,17 +22,13 @@ const Cart = () => {
   const cart = useSelector(selectCart)
   const displaySettings = useSelector(selectDisplaySettings)
 
-  const editItem = (evt, item) => {
-    evt.preventDefault()
+  const editItem = (item) => {
     dispatch(setCurrentItem(item))
     dispatch(openModal({ type: 'item' }))
-    evt.target.blur()
   }
 
-  const removeItem = (evt, item) => {
-    evt.preventDefault()
+  const removeItem = (item) => {
     dispatch(removeItemFromCart(item))
-    evt.target.blur()
   }
 
   return cart && cart.length ? (
@@ -54,7 +50,6 @@ const Cart = () => {
                 decrement={() => dispatch(decrementItemInCart(item))}
                 incrementDisabled={item.quantity === item.max}
                 decrementDisabled={false}
-                classes={null}
                 iconMap={iconMap}
               />
             </CartItem>
