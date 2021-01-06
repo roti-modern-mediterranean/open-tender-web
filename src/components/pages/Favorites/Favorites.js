@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext, useMemo } from 'react'
+import React, { useState, useEffect, useContext, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -27,7 +27,6 @@ import {
 } from '../..'
 
 const Favorites = () => {
-  const sectionRef = useRef()
   const dispatch = useDispatch()
   const history = useHistory()
   const { entities, loading, error } = useSelector(selectCustomerFavorites)
@@ -50,7 +49,7 @@ const Favorites = () => {
   }, [auth, history])
 
   useEffect(() => {
-    if (error) windowRef.current.scrollTo(0, sectionRef.current.offsetTop)
+    if (error) windowRef.current.scrollTop = 0
   }, [error, windowRef])
 
   useEffect(() => {
