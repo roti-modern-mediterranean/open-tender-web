@@ -9,8 +9,8 @@ import {
   selectCustomerOrders,
   fetchCustomerOrders,
 } from '@open-tender/redux'
-import { ButtonStyled, ButtonToggleGroup } from '@open-tender/components'
 import { makeUniqueDisplayItems } from '@open-tender/js'
+import { ButtonStyled, ButtonToggleGroup } from '@open-tender/components'
 
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
@@ -24,6 +24,7 @@ import {
   HeaderAccount,
   ItemCards,
   OrderCardItem,
+  PageError,
 } from '../..'
 import OrdersList from './OrdersList'
 
@@ -87,6 +88,7 @@ const Orders = () => {
           <Container>
             <PageTitle {...config.recentOrders} />
             <PageContent>
+              <PageError error={error} />
               {recentOrders.length ? (
                 <>
                   <ToggleView>
@@ -124,8 +126,6 @@ const Orders = () => {
                 </>
               ) : isLoading ? (
                 <Loading text="Retrieving your order history..." />
-              ) : error ? (
-                <p>{error}</p>
               ) : (
                 <p>Looks like you don't have any orders yet</p>
               )}

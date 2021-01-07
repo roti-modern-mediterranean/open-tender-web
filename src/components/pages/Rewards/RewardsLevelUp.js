@@ -15,7 +15,7 @@ import { Loading, Row } from '../..'
 const RewardsLevelUp = () => {
   const [checking, setChecking] = useState(false)
   const dispatch = useDispatch()
-  const { levelup, loading, error } = useSelector(selectCustomerLevelUp)
+  const { levelup, loading } = useSelector(selectCustomerLevelUp)
   const isLoading = loading === 'pending'
   const status = levelup ? levelup.status : null
 
@@ -44,8 +44,6 @@ const RewardsLevelUp = () => {
     <>
       {isLoading ? (
         <Loading text="Retrieving your LevelUp account status..." />
-      ) : error ? (
-        <p>{error}</p>
       ) : levelup ? (
         levelup.status === 'ACCEPTED' ? (
           <Row

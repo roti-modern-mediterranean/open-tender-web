@@ -29,7 +29,7 @@ const AccountAddresses = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const config = useSelector(selectConfig)
   const { auth } = useSelector(selectCustomer)
-  const { entities, loading, error } = useSelector(selectCustomerAddresses)
+  const { entities, loading } = useSelector(selectCustomerAddresses)
   const isLoading = loading === 'pending'
   const limit = 50
   const { windowRef } = useContext(AppContext)
@@ -69,8 +69,6 @@ const AccountAddresses = () => {
                 <Addresses addresses={entities} isLoading={isLoading} />
               ) : isLoading ? (
                 <Loading text="Retrieving your order history..." />
-              ) : error ? (
-                <p>{error}</p>
               ) : (
                 <p>
                   Looks like you haven't added any addresses yet. Please place

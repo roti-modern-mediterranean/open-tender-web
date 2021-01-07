@@ -18,6 +18,7 @@ import {
   Main,
   PageTitle,
   PageContent,
+  PageError,
 } from '../..'
 import { AppContext } from '../../../App'
 import HouseAccountsList from './HouseAccountsList'
@@ -64,12 +65,11 @@ const AccountHouseAccounts = () => {
           <Container>
             <PageTitle {...account.houseAccounts} />
             <PageContent>
+              <PageError error={error} />
               {entities.length ? (
                 <HouseAccountsList houseAccounts={entities} />
               ) : isLoading ? (
                 <Loading text="Retrieving your house accounts..." />
-              ) : error ? (
-                <p>{error}</p>
               ) : (
                 <p>{account.houseAccounts.empty}</p>
               )}
