@@ -19,6 +19,7 @@ import {
   PageTitle,
   PageContent,
   HeaderAccount,
+  PageError,
 } from '../..'
 import OrdersList from '../Orders/OrdersList'
 
@@ -58,12 +59,11 @@ const GroupOrders = () => {
           <Container>
             <PageTitle {...config.groupOrders} />
             <PageContent>
+              <PageError error={error} />
               {groupOrders.length ? (
                 <OrdersList orders={groupOrders} isGroup={true} />
               ) : isLoading ? (
                 <Loading text="Retrieving your group orders..." />
-              ) : error ? (
-                <p>{error}</p>
               ) : (
                 <p>Looks like you don't have any group orders yet</p>
               )}

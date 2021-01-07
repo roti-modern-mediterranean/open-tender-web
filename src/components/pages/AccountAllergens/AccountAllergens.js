@@ -107,8 +107,6 @@ const AccountAllergens = () => {
                 </FormWrapper>
               ) : isLoading ? (
                 <Loading text="Retrieving your order history..." />
-              ) : error ? (
-                <p>{error}</p>
               ) : (
                 <p>Allergens aren't currently listed on our menu.</p>
               )}

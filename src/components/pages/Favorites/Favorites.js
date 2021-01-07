@@ -24,6 +24,7 @@ import {
   PageContent,
   HeaderAccount,
   OrderCardItem,
+  PageError,
 } from '../..'
 
 const Favorites = () => {
@@ -80,16 +81,16 @@ const Favorites = () => {
           <Container>
             <PageTitle {...config.favorites} />
             <PageContent>
+              <PageError error={error} />
               {items.length ? (
                 <ItemCards
                   items={items}
-                  delay={0.25}
+                  delay={0}
+                  sequential={false}
                   renderItem={(props) => <OrderCardItem {...props} />}
                 />
               ) : isLoading ? (
                 <Loading text="Retrieving your order history..." />
-              ) : error ? (
-                <p>{error}</p>
               ) : (
                 <p>
                   Looks like you don't have any favorites yet. Visit your past

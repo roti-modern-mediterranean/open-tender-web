@@ -24,7 +24,7 @@ const AccountGiftCards = () => {
   const history = useHistory()
   const { title: siteTitle } = useSelector(selectBrand)
   const config = useSelector(selectAccountConfig)
-  const { entities, loading, error } = useSelector(selectCustomerGiftCards)
+  const { entities, loading } = useSelector(selectCustomerGiftCards)
   const isLoading = loading === 'pending'
   const { auth } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)
@@ -59,8 +59,6 @@ const AccountGiftCards = () => {
                 <GiftCardsList giftCards={entities} isLoading={isLoading} />
               ) : isLoading ? (
                 <Loading text="Retrieving your gift cards..." />
-              ) : error ? (
-                <p>{error}</p>
               ) : (
                 <p>{config.giftCards.empty}</p>
               )}

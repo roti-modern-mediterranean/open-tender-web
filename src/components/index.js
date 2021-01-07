@@ -34,8 +34,9 @@ import OrderFulfillment from './OrderFulfillment'
 import OrderImages from './OrderImages'
 import OrderQuantity from './OrderQuantity'
 import OrderTag from './OrderTag'
-import PageTitle from './PageTitle'
 import PageContent from './PageContent'
+import PageError from './PageError'
+import PageTitle from './PageTitle'
 import ProgressBar from './ProgressBar'
 import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
 import Routes from './Routes'
@@ -86,8 +87,9 @@ export {
   OrderImages,
   OrderQuantity,
   OrderTag,
-  PageTitle,
   PageContent,
+  PageError,
+  PageTitle,
   ProgressBar,
   RevenueCenter,
   RevenueCenterChild,
