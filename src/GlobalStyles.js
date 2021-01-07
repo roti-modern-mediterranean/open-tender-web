@@ -862,6 +862,21 @@ const makeGlobalStyles = (theme) => css`
     visibility: visible;
   }
 
+  .slide-toggle-down-enter,
+  .slide-toggle-down-exit.slide-toggle-down-exit-active {
+    transition: all 250ms ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10%);
+  }
+
+  .slide-toggle-down-enter.slide-toggle-down-enter-active,
+  .slide-toggle-down-exit {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
   .react-datepicker__navigation--previous {
     border-right-color: ${theme.links.primary.color};
   }
