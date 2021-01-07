@@ -85,6 +85,7 @@ const containerStyleMap = {
   cartErrors: { alignItems: 'flex-start' },
   cartCounts: { alignItems: 'flex-start' },
   groupOrder: { alignItems: 'flex-start' },
+  signUp: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`

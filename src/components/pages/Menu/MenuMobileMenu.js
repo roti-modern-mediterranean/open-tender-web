@@ -71,7 +71,7 @@ const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
         <MenuMobileMenuContainer>
           {revenueCenter && !autoSelect && (
             <FormRow
-              type="div"
+              as="div"
               label={<Preface size="xSmall">Location</Preface>}
               input={
                 <RevenueCenter
@@ -83,7 +83,7 @@ const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
           )}
           {serviceType && (
             <FormRow
-              type="div"
+              as="div"
               label={<Preface size="xSmall">Service Type</Preface>}
               input={
                 <ServiceType
@@ -95,7 +95,7 @@ const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
           )}
           {requestedAt && (
             <FormRow
-              type="div"
+              as="div"
               label={<Preface size="xSmall">Requested Time</Preface>}
               input={
                 <RequestedAt

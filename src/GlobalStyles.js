@@ -38,11 +38,14 @@ const makeGlobalStyles = (theme) => css`
     margin: 0;
   }
 
+  label {
+    position: relative;
+  }
+
   input,
   textarea,
   select {
     -webkit-appearance: none;
-    // outline: 0;
   }
 
   input[type='search'] {
@@ -74,10 +77,19 @@ const makeGlobalStyles = (theme) => css`
   }
 
   select {
-    cursor: pointer;
+    position: relative;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    cursor: pointer;
+  }
+
+  select:read-only {
+    opacity: 1;
+  }
+
+  textarea {
+    height: 5em;
   }
 
   ol,
@@ -638,6 +650,7 @@ const makeGlobalStyles = (theme) => css`
   input,
   textarea,
   select {
+    width: 100%;
     line-height: ${theme.inputs.lineHeight};
     padding: ${theme.inputs.padding};
     border-radius: ${theme.border.radiusSmall};
@@ -673,10 +686,6 @@ const makeGlobalStyles = (theme) => css`
       background-color: ${theme.bgColors.secondary};
       border: ${theme.border.width} solid ${theme.bgColors.secondary};
     }
-  }
-
-  select:read-only {
-    opacity: 1;
   }
 
   input,

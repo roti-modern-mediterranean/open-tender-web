@@ -63,7 +63,7 @@ const Checkout = () => {
   const autoSelect = useSelector(selectAutoSelect)
   const customer = useSelector(selectCustomer)
   const checkout = useSelector(selectCheckout)
-  const { check, completedOrder, errors } = checkout
+  const { check, completedOrder, errors, submitting } = checkout
   const { sso, customer_id } = check ? check.customer || {} : {}
   const { serviceType, revenueCenter } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
@@ -91,6 +91,10 @@ const Checkout = () => {
   useEffect(() => {
     windowRef.current.scrollTop = 0
   }, [windowRef])
+
+  useEffect(() => {
+    if (!submitting && errors.form) windowRef.current.scrollTop = 0
+  }, [windowRef, errors.form, submitting])
 
   useEffect(() => {
     return () => {
