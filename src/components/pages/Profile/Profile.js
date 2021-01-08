@@ -42,6 +42,10 @@ const AccountProfile = () => {
   }, [windowRef])
 
   useEffect(() => {
+    if (error) windowRef.current.scrollTop = 0
+  }, [error, windowRef])
+
+  useEffect(() => {
     if (!auth) return history.push('/')
     return () => dispatch(resetLoginError())
   }, [auth, dispatch, history])
