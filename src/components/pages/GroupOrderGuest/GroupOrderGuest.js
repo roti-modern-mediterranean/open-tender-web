@@ -75,8 +75,14 @@ const makeTitle = (
   atCapacity
 ) => {
   if (isLoading) return {}
+  const defaultTitle = {
+    title: `Welcome to ${cartOwnerName}'s group order!`,
+    subtitle: makeSubtitle(tz, requestedAt, cutoffAt),
+  }
   if (error) {
-    if (error.includes('does not exist')) {
+    if (error.includes('The parameters of your request were invalid.')) {
+      return defaultTitle
+    } else if (error.includes('does not exist')) {
       return {
         title: 'Group order not found',
         subtitle:
@@ -101,10 +107,7 @@ const makeTitle = (
         'Sorry, but the guest limit has already been reached for this group order.',
     }
   } else {
-    return {
-      title: `Welcome to ${cartOwnerName}'s group order!`,
-      subtitle: makeSubtitle(tz, requestedAt, cutoffAt),
-    }
+    return defaultTitle
   }
 }
 
@@ -131,6 +134,7 @@ const GroupOrderGuest = () => {
     guestCount,
     token: currentToken,
   } = groupOrder
+  console.log(groupOrder)
   const isLoading = loading === 'pending'
   const cartOwnerName = cartOwner
     ? `${cartOwner.first_name} ${cartOwner.last_name}`
@@ -155,7 +159,12 @@ const GroupOrderGuest = () => {
     cutoffAt,
     atCapacity
   )
-  const showForm = cartId && !error && !closed && !pastCutoff && !atCapacity
+  const errMsg =
+    error && error.includes('The parameters of your request were invalid.')
+      ? 'Both a first name and last name are required'
+      : null
+  const showForm =
+    (cartId && !error && !closed && !pastCutoff && !atCapacity) || errMsg
 
   const joinCart = useCallback(
     (data, callback) => dispatch(joinGroupOrder(data, callback)),
@@ -193,9 +202,7 @@ const GroupOrderGuest = () => {
     if (revenueCenterId) dispatch(fetchRevenueCenter(revenueCenterId))
   }, [dispatch, revenueCenterId])
 
-  const startOver = (evt) => {
-    evt.preventDefault()
-    evt.target.blur()
+  const startOver = () => {
     dispatch(resetGroupOrder())
     dispatch(resetOrder())
     history.push('/')
@@ -238,7 +245,7 @@ const GroupOrderGuest = () => {
                     cartId={cartId}
                     joinCart={joinCart}
                     loading={loading}
-                    error={error}
+                    errMsg={errMsg}
                   />
                 </>
               ) : (

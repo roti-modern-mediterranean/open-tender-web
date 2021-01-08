@@ -286,7 +286,7 @@ const GroupOrderReviewOwner = () => {
                       return (
                         guestItems && (
                           <div key={guest.cart_guest_id}>
-                            <p>
+                            <p style={{ margin: '1.5rem 0 0' }}>
                               <Heading size="h6">
                                 {guest.first_name} {guest.last_name}
                               </Heading>
