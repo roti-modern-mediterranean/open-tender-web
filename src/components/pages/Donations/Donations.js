@@ -52,8 +52,6 @@ const Donations = () => {
     dispatch(fetchCustomerCreditCards())
   }, [dispatch, customer])
 
-  const something = null
-
   return (
     <>
       <Helmet>
@@ -68,7 +66,6 @@ const Donations = () => {
           <Container>
             <PageTitle {...config} />
             <PageContent>
-              {something.that}
               <DonationForm
                 customer={customer}
                 creditCards={creditCards}
