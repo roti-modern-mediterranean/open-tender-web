@@ -72,6 +72,7 @@ const OrderCard = ({ order, isLast }) => {
             <DeliveryLink
               text="Track your delivery"
               trackingUrl={trackingUrl}
+              newWindowIcon={iconMap.ExternalLink}
             />
           )}
         </>

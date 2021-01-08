@@ -2,6 +2,8 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { DeliveryLink } from '@open-tender/components'
 
+import iconMap from './iconMap'
+
 const OrderAddress = ({ address, delivery, status, isDefault, children }) => {
   const { street, unit, city, state, postal_code, company, contact, phone } =
     address || {}
@@ -30,6 +32,7 @@ const OrderAddress = ({ address, delivery, status, isDefault, children }) => {
           <DeliveryLink
             text="Check delivery status"
             trackingUrl={trackingUrl}
+            newWindowIcon={iconMap.ExternalLink}
           />
         </p>
       )}

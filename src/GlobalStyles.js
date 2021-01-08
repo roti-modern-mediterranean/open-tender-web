@@ -81,6 +81,20 @@ const makeGlobalStyles = (theme) => css`
     list-style: none;
   }
 
+  ol {
+    list-style: decimal outside;
+    padding: 0 0 0 1.5rem;
+
+    li {
+      margin: 1em 0 0;
+
+      span {
+        position: relative;
+        left: 0rem;
+      }
+    }
+  }
+
   img {
     max-width: 100%;
     height: auto;
@@ -152,6 +166,11 @@ const makeGlobalStyles = (theme) => css`
     color: ${theme.fonts.body.color};
     font-size: ${theme.fonts.sizes.main};
     background-color: ${theme.bgColors.primary};
+  }
+
+  body.has-modal {
+    height: 100%;
+    overflow: hidden;
   }
 
   header {

@@ -132,7 +132,7 @@ const GroupOrderStart = () => {
           )}
         </>
       )}
-      <SpendingLimitForm className="form" noValidate>
+      <SpendingLimitForm noValidate>
         <Input
           label="Set a guest spending Limit (optional)"
           name="spending_limit"
