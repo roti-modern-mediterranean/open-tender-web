@@ -30,9 +30,6 @@ const GroupGuest = ({ icon = iconMap.ShoppingBag }) => {
   const cutoffTime =
     cutoffAt && tz ? makeReadableDateStrFromIso(cutoffAt, tz) : null
   const text = cutoffTime ? `Submit by ${cutoffTime}` : 'Submit'
-  // const cutoffDate = cutoffAt ? isoToDate(cutoffAt, tz) : null
-  // const minutes = minutesLeft(cutoffDate, new Date())
-  // const alertClass = minutes < 5 ? 'ot-btn--cancel' : 'ot-btn--highlight'
 
   const onClick = () => {
     if (cartTotal === 0) {

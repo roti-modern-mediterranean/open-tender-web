@@ -76,22 +76,6 @@ const makeGlobalStyles = (theme) => css`
     cursor: pointer;
   }
 
-  select {
-    position: relative;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    cursor: pointer;
-  }
-
-  select:read-only {
-    opacity: 1;
-  }
-
-  textarea {
-    height: 5em;
-  }
-
   ol,
   ul {
     list-style: none;
@@ -105,6 +89,36 @@ const makeGlobalStyles = (theme) => css`
   table {
     border-collapse: collapse;
     border-spacing: 0;
+    width: 100%;
+
+    tr {
+      border-bottom-width: 0.1rem;
+      border-bottom-style: solid;
+      border-bottom-color: ${theme.border.color};
+    }
+
+    th,
+    td {
+      text-align: center;
+      padding: 1rem 0;
+
+      &:first-child {
+        text-align: left;
+      }
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+
+    thead th {
+      font-weight: normal;
+      color: ${theme.colors.primary};
+    }
+
+    tbody tr:last-child {
+      border-bottom: 0;
+    }
   }
 
   button {
@@ -696,6 +710,23 @@ const makeGlobalStyles = (theme) => css`
     &:focus {
       box-shadow: ${theme.inputs.boxShadow};
     }
+  }
+
+  textarea {
+    height: 5em;
+  }
+
+  select {
+    position: relative;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  select:read-only {
+    opacity: 1;
+    cursor: pointer;
   }
 
   .ot-input-quantity {

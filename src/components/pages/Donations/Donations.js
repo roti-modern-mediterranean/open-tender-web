@@ -11,6 +11,7 @@ import {
   selectCustomer,
   fetchCustomerCreditCards,
   selectCustomerCreditCards,
+  setAlert,
 } from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
@@ -38,6 +39,7 @@ const Donations = () => {
     [dispatch]
   )
   const reset = useCallback(() => dispatch(resetDonation()), [dispatch])
+  const showAlert = useCallback((obj) => dispatch(setAlert(obj)), [dispatch])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -71,6 +73,7 @@ const Donations = () => {
                 creditCards={creditCards}
                 purchase={purchase}
                 reset={reset}
+                setAlert={showAlert}
                 success={success}
                 donation={donation}
                 loading={loading}

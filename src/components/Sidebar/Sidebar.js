@@ -267,7 +267,6 @@ const Sidebar = () => {
               <div>
                 <ButtonLink
                   onClick={handleClose}
-                  classes="ot-btn-link-subtle ot-preface"
                 >
                   <Preface>Close Sidebar</Preface>
                 </ButtonLink>

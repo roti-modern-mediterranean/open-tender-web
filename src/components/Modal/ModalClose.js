@@ -25,7 +25,7 @@ const ModalCloseView = styled('button')`
   }
 `
 
-const ModalClose = ({ classes = 'ot-btn-link', onClick }) => {
+const ModalClose = ({ onClick }) => {
   const dispatch = useDispatch()
   const handleClose = useMemo(() => onClick || (() => dispatch(closeModal())), [
     onClick,

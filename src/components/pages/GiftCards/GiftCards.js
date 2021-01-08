@@ -12,6 +12,7 @@ import {
   selectCustomer,
   fetchCustomerCreditCards,
   selectCustomerCreditCards,
+  setAlert,
 } from '@open-tender/redux'
 
 import { selectBrand, selectConfig } from '../../../slices'
@@ -43,6 +44,7 @@ const GiftCards = () => {
     [dispatch]
   )
   const reset = useCallback(() => dispatch(resetGiftCards()), [dispatch])
+  const showAlert = useCallback((obj) => dispatch(setAlert(obj)), [dispatch])
   const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
@@ -79,6 +81,7 @@ const GiftCards = () => {
                 customer={customer}
                 creditCards={creditCards}
                 purchase={purchase}
+                setAlert={showAlert}
                 reset={reset}
                 success={success}
                 purchasedCards={giftCards}
