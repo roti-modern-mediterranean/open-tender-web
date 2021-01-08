@@ -68,7 +68,7 @@ const GiftCards = () => {
           {config.title} | {title}
         </title>
       </Helmet>
-      {isBrowser && <Background imageUrl={config.background} />}
+      <Background imageUrl={config.background} />
       <Content maxWidth="76.8rem">
         <HeaderDefault title={isBrowser ? null : config.title} />
         <Main>

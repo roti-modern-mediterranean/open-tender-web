@@ -91,7 +91,7 @@ const RevenueCenter = () => {
           {title} | {siteTitle}
         </title>
       </Helmet>
-      {isBrowser && <Background imageUrl={imageUrl || config.background} />}
+      <Background imageUrl={imageUrl || config.background} />
       <Content maxWidth="76.8rem">
         <HeaderDefault title={isBrowser ? null : config.title} />
         <Main>

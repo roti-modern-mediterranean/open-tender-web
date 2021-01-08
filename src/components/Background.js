@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { isMobileOnly } from 'react-device-detect'
 import { ClipLoader } from 'react-spinners'
 import styled from '@emotion/styled'
 
@@ -14,6 +15,9 @@ const BackgroundContainer = styled('div')`
   background-position: center;
   background-repeat: no-repeat;
   background-color: ${(props) => props.theme.bgColors.secondary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    display: none;
+  }
 `
 
 const BackgroundLoading = styled('div')`
@@ -27,7 +31,8 @@ const BackgroundLoading = styled('div')`
 `
 
 const Background = ({ imageUrl, children }) => {
-  const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
+  const bgStyle =
+    imageUrl && !isMobileOnly ? { backgroundImage: `url(${imageUrl}` } : null
   return (
     <BackgroundContainer style={bgStyle}>
       {imageUrl && !bgStyle && (

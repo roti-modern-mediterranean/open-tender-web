@@ -79,7 +79,7 @@ const GroupOrderReviewGuest = () => {
 
   return (
     <>
-      {isBrowser && <Background imageUrl={config.background} />}
+      <Background imageUrl={config.background} />
       <Content maxWidth="76.8rem">
         <HeaderMobile
           title={isBrowser ? null : 'Join Group Order'}

@@ -43,7 +43,7 @@ const Fulfillment = () => {
       <Helmet>
         <title>Curbside Pickup | {siteTitle}</title>
       </Helmet>
-      {isBrowser && <Background imageUrl={config.background} />}
+      <Background imageUrl={config.background} />
       <Content maxWidth="76.8rem">
         <HeaderDefault title={isBrowser ? null : 'Curbside Pickup'} />
         <Main bgColor="secondary">

@@ -11,7 +11,6 @@ import {
 } from '@open-tender/redux'
 import { AllergenForm } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
@@ -80,7 +79,7 @@ const AccountAllergens = () => {
           {account.allergens.title} | {siteTitle}
         </title>
       </Helmet>
-      {isBrowser && <Background imageUrl={account.background} />}
+      <Background imageUrl={account.background} />
       <Content maxWidth="76.8rem">
         <HeaderAccount
           title={account.allergens.title}

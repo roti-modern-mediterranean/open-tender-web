@@ -74,7 +74,7 @@ const LevelUp = () => {
       <Helmet>
         <title>LevelUp | {siteTitle}</title>
       </Helmet>
-      {isBrowser && <Background imageUrl={config.background} />}
+      <Background imageUrl={config.background} />
       <Content maxWidth="76.8rem">
         <HeaderDefault title={isBrowser ? null : 'LevelUp'} />
         <Main>

@@ -57,7 +57,7 @@ const Account = () => {
       <Helmet>
         <title>Welcome Back | {siteTitle}</title>
       </Helmet>
-      {isBrowser && <Background imageUrl={background} />}
+      <Background imageUrl={background} />
       <Content maxWidth="76.8rem">
         <HeaderMobile
           bgColor={isBrowser ? 'primary' : 'transparent'}

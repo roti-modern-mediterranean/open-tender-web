@@ -135,7 +135,7 @@ const Checkout = () => {
       <Helmet>
         <title>Checkout | {title}</title>
       </Helmet>
-      {isBrowser && <Background imageUrl={config.background} />}
+      <Background imageUrl={config.background} />
       <Content maxWidth="76.8rem">
         <CheckoutHeader title={isBrowser ? null : 'Checkout'} />
         <CheckoutTotal checkout={checkout} />

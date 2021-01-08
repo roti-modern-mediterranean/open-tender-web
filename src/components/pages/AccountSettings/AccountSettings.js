@@ -34,7 +34,7 @@ const AccountSettings = () => {
       <Helmet>
         <title>Account Settings | {siteTitle}</title>
       </Helmet>
-      {isBrowser && <Background imageUrl={background} />}
+      <Background imageUrl={background} />
       <Content maxWidth="76.8rem">
         <HeaderMobile
           maxWidth="76.8rem"

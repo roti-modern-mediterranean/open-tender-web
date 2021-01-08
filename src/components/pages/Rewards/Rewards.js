@@ -49,7 +49,7 @@ const Rewards = () => {
       <Helmet>
         <title>Rewards | {siteTitle}</title>
       </Helmet>
-      {isBrowser && <Background imageUrl={background} />}
+      <Background imageUrl={background} />
       <Content maxWidth="76.8rem">
         <HeaderAccount
           title={isBrowser ? null : 'Rewards'}

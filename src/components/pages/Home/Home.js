@@ -98,7 +98,7 @@ const Home = () => {
 
   return (
     <>
-      {isBrowser && <Background imageUrl={background} />}
+      <Background imageUrl={background} />
       <Content maxWidth="76.8rem">
         <HeaderMobile
           bgColor={isBrowser ? 'primary' : 'transparent'}
