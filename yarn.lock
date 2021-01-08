@@ -1560,20 +1560,20 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@open-tender/components@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-2.0.1.tgz#8c0f93ecb01933048103fa096f90d6523a10eefe"
-  integrity sha512-1MqUr4JZFuD9h0VOsdseegQ5G5w6gvNB/QxA1MkEAGPqvGwgK1nMsVF2skg8KFf7IVYTmrqdSe4920w+33Vs5A==
+"@open-tender/components@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-2.1.0.tgz#79f117eea29766a5e6625792b93cdb5dc528885d"
+  integrity sha512-TqosaZOSvINIfrYySyHZNGT2z5hLG641LDkd9dkaxNls6trRXCC4XiYqpKjO8lVzIXbCVLiSKMHXS4kgRoHzuA==
 
 "@open-tender/js@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.3.0.tgz#1e937d5a6f192299da68a8e8f9fb73530c8cd6ca"
   integrity sha512-o5SEGy+EzN6s8okQHDvXMfRqQkBdS3D39/8dQM+Iar6KQtM+r7RBLH5nHoNl2LXOYU1jby39MpzIVhCIGiaT/Q==
 
-"@open-tender/redux@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.6.1.tgz#fe6ad7c10d76768ac437845b8ac9a44071c8362b"
-  integrity sha512-pllids+ekyp6VNjuKcE2sfJ2vRvggjtHCetoYFtzDR5exArWUhyYVSl+TVYThj40y2YYckCnzWgThNW0o0XnWw==
+"@open-tender/redux@^1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@open-tender/redux/-/redux-1.6.2.tgz#25c9cd57a26e2be59edf48753b7012a0a4954e5a"
+  integrity sha512-dQXFvL1g7dzIurtnb0RQfNg5wvgAekoUiqY5IpOIQDDGylb+n+6GL2gF7EZ4Gk3dgTGzg30cctDU3Ho08JCRyg==
 
 "@pmmmwh/react-refresh-webpack-plugin@0.4.2":
   version "0.4.2"
