@@ -116,7 +116,7 @@ const makeGlobalStyles = (theme) => css`
       text-align: center;
       padding: 1rem 0;
 
-      &:first-child {
+      &:first-of-type {
         text-align: left;
       }
 

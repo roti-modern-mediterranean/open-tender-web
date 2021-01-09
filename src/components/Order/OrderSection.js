@@ -55,10 +55,13 @@ const OrderSection = ({ label, noTitle = false, children }) => {
   )
 }
 
-OrderSection.displayName = 'Row'
+OrderSection.displayName = 'OrderSection'
 OrderSection.propTypes = {
-  label: propTypes.element,
-  children: propTypes.element,
+  label: propTypes.string,
+  children: propTypes.oneOfType([
+    propTypes.arrayOf(propTypes.node),
+    propTypes.node,
+  ]),
 }
 
 export default OrderSection
