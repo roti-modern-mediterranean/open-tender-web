@@ -39,8 +39,8 @@ const Cart = () => {
             <CartItem
               item={item}
               showModifiers={true}
-              editItem={(evt) => editItem(evt, item)}
-              removeItem={(evt) => removeItem(evt, item)}
+              editItem={() => editItem(item)}
+              removeItem={() => removeItem(item)}
               displaySettings={displaySettings}
             >
               <BuilderQuantity
