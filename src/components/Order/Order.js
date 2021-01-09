@@ -201,12 +201,12 @@ const Order = ({ order, loading, error, isConfirmation }) => {
           </OrderSection>
         )}
         {notes && notes.length ? (
-          <OrderSection label="Notes">
+          <OrderSection label="Notes" noTitle={true}>
             <p>{notes}</p>
           </OrderSection>
         ) : null}
         {hasDetails && (
-          <OrderSection label="Other Details">
+          <OrderSection label="Other Details" noTitle={true}>
             {eating_utensils ? (
               <p>
                 Eating utensils included

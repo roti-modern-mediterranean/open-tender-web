@@ -36,19 +36,21 @@ const OrderSectionContent = styled('div')`
     line-height: ${(props) => props.theme.lineHeight};
 
     &:first-of-type {
-      font-size: ${(props) => props.theme.fonts.sizes.main};
-      color: ${(props) => props.theme.fonts.headings.color};
+      font-size: ${(props) =>
+        props.theme.fonts.sizes[props.noTitle ? 'small' : 'main']};
+      color: ${(props) =>
+        props.theme.fonts[props.noTitle ? 'body' : 'headings'].color};
     }
   }
 `
 
-const OrderSection = ({ label, children }) => {
+const OrderSection = ({ label, noTitle = false, children }) => {
   return (
     <OrderSectionView>
       <OrderSectionLabel>
         <Preface>{label}</Preface>
       </OrderSectionLabel>
-      <OrderSectionContent>{children}</OrderSectionContent>
+      <OrderSectionContent noTitle={noTitle}>{children}</OrderSectionContent>
     </OrderSectionView>
   )
 }
