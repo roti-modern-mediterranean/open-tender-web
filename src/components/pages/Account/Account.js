@@ -9,6 +9,7 @@ import {
   fetchCustomerCreditCards,
   resetCustomerThanx,
   selectCustomerThanx,
+  fetchCustomerThanx,
   logoutCustomer,
   addMessage,
 } from '@open-tender/redux'
@@ -23,7 +24,7 @@ import AccountButtons from './AccountButtons'
 const Account = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { title: siteTitle, has_thanx } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
   const { background, mobile, title, subtitle } = accountConfig
@@ -40,7 +41,8 @@ const Account = () => {
     if (!token) return history.push('/')
     dispatch(fetchCustomer({ token }))
     dispatch(fetchCustomerCreditCards())
-  }, [token, dispatch, history])
+    if (has_thanx) dispatch(fetchCustomerThanx())
+  }, [token, dispatch, history, has_thanx])
 
   useEffect(() => {
     if (
