@@ -1,4 +1,5 @@
 import React from 'react'
+import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import {
@@ -18,7 +19,7 @@ import {
 import iconMap from '../iconMap'
 import { ButtonBoth } from '.'
 
-const GroupGuest = ({ icon = iconMap.ShoppingBag }) => {
+const GroupGuest = ({ icon = iconMap.ShoppingBag, useButton = false }) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const tz = useSelector(selectTimezone)
@@ -48,8 +49,21 @@ const GroupGuest = ({ icon = iconMap.ShoppingBag }) => {
 
   if (!cartGuest) return null
 
-  return <ButtonBoth text={text} icon={icon} onClick={onClick} color="cart" />
+  return (
+    <ButtonBoth
+      text={text}
+      icon={icon}
+      onClick={onClick}
+      color="cart"
+      useButton={useButton}
+    />
+  )
 }
 
 GroupGuest.displayName = 'GroupGuest'
+GroupGuest.propTypes = {
+  icon: propTypes.element,
+  useButton: propTypes.bool,
+}
+
 export default GroupGuest

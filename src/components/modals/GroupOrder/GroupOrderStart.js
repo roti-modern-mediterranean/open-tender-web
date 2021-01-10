@@ -33,6 +33,10 @@ const SpendingLimitForm = styled('form')`
       input {
         width: 12rem;
         text-align: right;
+        @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+          width: 100%;
+          text-align: left;
+        }
       }
     }
   }

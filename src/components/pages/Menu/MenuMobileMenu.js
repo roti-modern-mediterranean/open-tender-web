@@ -1,13 +1,15 @@
 import styled from '@emotion/styled'
 import { Box, FormRow, Preface } from '@open-tender/components'
 import { useSelector } from 'react-redux'
-import { selectAutoSelect } from '@open-tender/redux'
+import { selectAutoSelect, selectGroupOrder } from '@open-tender/redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import {
   Account,
   CancelEdit,
+  GroupGuest,
   GroupOrder,
+  LeaveGroup,
   RequestedAt,
   RevenueCenter,
   ServiceType,
@@ -37,12 +39,11 @@ const MenuMobileMenuOverlay = styled('div')`
 
 const MenuMobileMenuContainer = styled(Box)`
   padding: 0 ${(props) => props.theme.layout.paddingMobile};
-  // background-color: ${(props) => props.theme.bgColors.primary};
+  margin-top: ${(props) => props.theme.layout.paddingMobile};
 `
 
 const MenuMobileMenuButtons = styled('div')`
-  padding: ${(props) => props.theme.layout.paddingMobile};
-  padding-top: 0;
+  padding: 0 ${(props) => props.theme.layout.paddingMobile};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,53 +60,65 @@ const MenuMobileMenuButtons = styled('div')`
 const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
   const { revenueCenter, serviceType, requestedAt } = order
   const autoSelect = useSelector(selectAutoSelect)
+  const { cartGuest } = useSelector(selectGroupOrder)
 
   return (
     <>
       <MenuMobileMenuView show={showMenu}>
         <MenuMobileMenuButtons>
-          <Account useButton={true} />
-          <GroupOrder useButton={true} />
-          <CancelEdit useButton={true} />
+          {cartGuest ? (
+            <>
+              <LeaveGroup useButton={true} />
+              <GroupGuest useButton={true} />
+            </>
+          ) : (
+            <>
+              <Account useButton={true} />
+              <GroupOrder useButton={true} />
+              <CancelEdit useButton={true} />
+            </>
+          )}
         </MenuMobileMenuButtons>
-        <MenuMobileMenuContainer>
-          {revenueCenter && !autoSelect && (
-            <FormRow
-              as="div"
-              label={<Preface size="xSmall">Location</Preface>}
-              input={
-                <RevenueCenter
-                  style={{ position: 'relative', right: '-1.3rem' }}
-                  useButton={true}
-                />
-              }
-            />
-          )}
-          {serviceType && (
-            <FormRow
-              as="div"
-              label={<Preface size="xSmall">Service Type</Preface>}
-              input={
-                <ServiceType
-                  style={{ position: 'relative', right: '-1.3rem' }}
-                  useButton={true}
-                />
-              }
-            />
-          )}
-          {requestedAt && (
-            <FormRow
-              as="div"
-              label={<Preface size="xSmall">Requested Time</Preface>}
-              input={
-                <RequestedAt
-                  style={{ position: 'relative', right: '-1.3rem' }}
-                  useButton={true}
-                />
-              }
-            />
-          )}
-        </MenuMobileMenuContainer>
+        {!cartGuest && (
+          <MenuMobileMenuContainer>
+            {revenueCenter && !autoSelect && (
+              <FormRow
+                as="div"
+                label={<Preface size="xSmall">Location</Preface>}
+                input={
+                  <RevenueCenter
+                    style={{ position: 'relative', right: '-1.3rem' }}
+                    useButton={true}
+                  />
+                }
+              />
+            )}
+            {serviceType && (
+              <FormRow
+                as="div"
+                label={<Preface size="xSmall">Service Type</Preface>}
+                input={
+                  <ServiceType
+                    style={{ position: 'relative', right: '-1.3rem' }}
+                    useButton={true}
+                  />
+                }
+              />
+            )}
+            {requestedAt && (
+              <FormRow
+                as="div"
+                label={<Preface size="xSmall">Requested Time</Preface>}
+                input={
+                  <RequestedAt
+                    style={{ position: 'relative', right: '-1.3rem' }}
+                    useButton={true}
+                  />
+                }
+              />
+            )}
+          </MenuMobileMenuContainer>
+        )}
       </MenuMobileMenuView>
       <TransitionGroup component={null}>
         {showMenu ? (
