@@ -15,7 +15,7 @@ import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
 
 import { closeModal, selectDisplaySettings } from '../../slices'
 import iconMap from '../iconMap'
-import { ModalClose } from '..'
+import { ModalClose, ImageSpinner } from '..'
 
 const menuItemsIconMap = {
   plus: iconMap.Plus,
@@ -89,6 +89,7 @@ const MenuItem = () => {
             iconMap={menuItemsIconMap}
             closeModal={handleClose}
             cartId={cartId}
+            spinner={<ImageSpinner />}
           />
         )}
       </MenuItemModalContent>

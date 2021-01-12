@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { setCurrentItem, selectCartCounts } from '@open-tender/redux'
 import { convertStringToArray, makeDisplayPrice } from '@open-tender/js'
-import { BgImage, Box, Heading } from '@open-tender/components'
+import { Box, Heading } from '@open-tender/components'
 
 import { selectDisplaySettings, openModal } from '../../../slices'
 import iconMap from '../../iconMap'
 import { Tag } from '../..'
 import { MenuContext } from './Menu'
-import { MenuItemButton } from '.'
+import { MenuItemButton, MenuItemImage } from '.'
 
 const MenuItemView = styled('div')`
   position: relative;
@@ -48,18 +48,9 @@ export const MenuItemContainer = styled(Box)`
   height: 100%;
 `
 
-export const MenuItemImage = styled(BgImage)`
-  position: relative;
-  padding: 30% 0;
-  background-color: ${(props) => props.theme.bgColors.secondary};
-  border-radius: ${(props) => props.theme.border.radius};
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-`
-
 export const MenuItemOverlay = styled('div')`
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   top: 0;
   bottom: 0;
   left: 0;
@@ -206,7 +197,7 @@ const MenuItem = ({ item }) => {
   const cartCount = cartCounts[item.id] || 0
   const smallImg =
     item.small_image_url || item.app_image_url || item.big_image_url
-  const bgStyle = smallImg ? { backgroundImage: `url(${smallImg}` } : null
+  const imageUrl = showImage ? smallImg : null
   const price = makeDisplayPrice(item)
   const cals =
     showCals && item.nutritional_info
@@ -247,7 +238,7 @@ const MenuItem = ({ item }) => {
         ) : null}
         <MenuItemButton onPointerUp={handleClick} isSoldOut={isSoldOut}>
           {showImage && (
-            <MenuItemImage style={bgStyle}>
+            <MenuItemImage imageUrl={imageUrl}>
               {itemTag && (
                 <MenuItemOverlay isSoldOut={isSoldOut}>
                   <div>{itemTag}</div>

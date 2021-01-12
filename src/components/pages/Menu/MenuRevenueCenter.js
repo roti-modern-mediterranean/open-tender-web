@@ -1,8 +1,9 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { BgImage } from '@open-tender/components'
 
-import { MenuItemContainer, MenuItemImage, MenuItemOverlay } from './MenuItem'
+import { MenuItemContainer, MenuItemOverlay } from './MenuItem'
 import { MenuItemButton } from '.'
 
 const MenuRevenueCenterView = styled('div')`
@@ -35,6 +36,13 @@ const MenuRevenueCenterView = styled('div')`
   }
 `
 
+const MenuRevenueCenterImage = styled(BgImage)`
+  position: relative;
+  padding: 30% 0;
+  background-color: ${(props) => props.theme.bgColors.secondary};
+  border-radius: ${(props) => props.theme.border.radius};
+`
+
 const MenuRevenueCenterLogo = styled('img')`
   display: block;
   width: 75%;
@@ -54,11 +62,11 @@ const MenuRevenueCenter = ({ revenueCenter, change }) => {
     <MenuRevenueCenterView>
       <MenuItemContainer>
         <MenuItemButton onPointerUp={handleClick}>
-          <MenuItemImage style={{ margin: '0' }}>
+          <MenuRevenueCenterImage style={{ margin: '0' }}>
             <MenuItemOverlay>
               <MenuRevenueCenterLogo src={logo} alt={revenueCenter.name} />
             </MenuItemOverlay>
-          </MenuItemImage>
+          </MenuRevenueCenterImage>
         </MenuItemButton>
       </MenuItemContainer>
     </MenuRevenueCenterView>

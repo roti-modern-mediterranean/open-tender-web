@@ -305,6 +305,15 @@ const makeGlobalStyles = (theme) => css`
     cursor: pointer;
   }
 
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
   @keyframes slide-up {
     0% {
       opacity: 0;

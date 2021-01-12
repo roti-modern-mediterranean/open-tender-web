@@ -13,6 +13,7 @@ import HeaderAccount from './HeaderAccount'
 import HeaderDefault from './HeaderDefault'
 import HeaderLogo from './HeaderLogo'
 import HeaderMobile from './HeaderMobile'
+import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
 import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
@@ -63,6 +64,7 @@ export {
   HeaderDefault,
   HeaderLogo,
   HeaderMobile,
+  ImageSpinner,
   ItemCards,
   LinkSeparator,
   Loading,

@@ -1,14 +1,15 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { BarLoader, ClipLoader } from 'react-spinners'
+import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
+import { BarLoader, ClipLoader } from 'react-spinners'
 
-const loader = (type, size) => {
+const loader = (type, props) => {
   switch (type) {
     case 'Clip':
-      return <ClipLoader size={size} loading={true} />
+      return <ClipLoader {...props} loading={true} />
     default:
-      return <BarLoader size={size} loading={true} />
+      return <BarLoader {...props} loading={true} />
   }
 }
 
@@ -25,12 +26,17 @@ const LoadingMessage = styled('p')`
   font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
-const Loading = ({ type, text, size = 100, style = null }) => (
-  <LoadingView style={style}>
-    <LoadingLoader>{loader(type, size)}</LoadingLoader>
-    {text && text.length > 0 && <LoadingMessage>{text}</LoadingMessage>}
-  </LoadingView>
-)
+const Loading = ({ type, text, color, size = 100, style = null }) => {
+  const theme = useTheme()
+  const themeColor = theme.colors ? theme.colors.primary : null
+  const props = { color: color || themeColor, size }
+  return (
+    <LoadingView style={style}>
+      <LoadingLoader>{loader(type, props)}</LoadingLoader>
+      {text && text.length > 0 && <LoadingMessage>{text}</LoadingMessage>}
+    </LoadingView>
+  )
+}
 
 Loading.displayName = 'Loading'
 Loading.propTypes = {

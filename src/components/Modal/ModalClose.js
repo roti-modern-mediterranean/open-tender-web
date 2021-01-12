@@ -8,7 +8,7 @@ import styled from '@emotion/styled'
 
 const ModalCloseView = styled('button')`
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: 7px;
   right: 7px;
   display: inline;
