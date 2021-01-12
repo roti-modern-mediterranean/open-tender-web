@@ -28,6 +28,7 @@ import { Account } from '../../buttons'
 import HomeButtons from './HomeButtons'
 import { AppContext } from '../../../App'
 import styled from '@emotion/styled'
+import { maybeRefreshVersion } from '../../../app/version'
 
 const HomeContent = styled('div')`
   padding: 0 2.5rem 2.5rem;
@@ -79,6 +80,7 @@ const Home = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
     dispatch(setGeoLoading())
     dispatch(resetRevenueCenters())
     dispatch(resetOrderType())

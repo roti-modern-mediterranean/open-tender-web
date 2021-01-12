@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Container } from '.'
 import logo from '../assets/logo_footer.png'
+import packageJson from '../../package.json'
 
 const FooterView = styled('div')`
   position: relative;
@@ -11,6 +12,7 @@ const FooterView = styled('div')`
   color: ${(props) => props.theme.colors.light};
   background-color: ${(props) => props.theme.bgColors.dark};
 `
+
 const FooterContainer = styled('div')`
   height: 18rem;
   display: flex;
@@ -23,7 +25,7 @@ const FooterLogo = styled('div')`
   max-width: 16rem;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 0 3rem;
+    margin: 0 0 2rem;
   }
 
   img {
@@ -53,6 +55,19 @@ const FooterNav = styled('nav')`
     a:focus {
       color: ${(props) => props.theme.links.light.hover};
     }
+  }
+`
+
+const FooterVersion = styled('div')`
+  position: absolute;
+  z-index: 2;
+  left: ${(props) => props.theme.layout.padding};
+  bottom: 1.5rem;
+  color: ${(props) => props.theme.colors.light};
+  opacity: 0.3;
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    left: ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
@@ -99,6 +114,7 @@ const Footer = ({ hasRouter = true }) => {
           </FooterNav>
         </FooterContainer>
       </Container>
+      <FooterVersion>v{packageJson.version}</FooterVersion>
     </FooterView>
   )
 }

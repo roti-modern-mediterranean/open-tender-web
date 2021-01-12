@@ -5,6 +5,9 @@ import store from './app/store'
 import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 import * as Sentry from '@sentry/react'
+import packageJson from '../package.json'
+
+global.appVersion = packageJson.version
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
