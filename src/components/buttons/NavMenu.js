@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCustomer } from '@open-tender/redux'
 import { ButtonIcon } from '@open-tender/components'
 
 import { toggleNav } from '../../slices'
@@ -8,9 +9,11 @@ import iconMap from '../iconMap'
 
 const NavMenu = ({ color }) => {
   const dispatch = useDispatch()
+  const { auth } = useSelector(selectCustomer)
+
   return (
     <ButtonIcon color={color} onClick={() => dispatch(toggleNav())}>
-      {iconMap.Menu}
+      {auth ? iconMap.Menu : iconMap.User}
     </ButtonIcon>
   )
 }
