@@ -263,9 +263,9 @@ const makeGlobalStyles = (theme) => css`
 
     &:active,
     &:focus {
-      color: ${theme.fonts.headings.color};
+      color: ${theme.colors.primary};
       background-color: ${theme.bgColors.primary};
-      border: ${theme.border.width} solid ${theme.bgColors.primary};
+      border: ${theme.border.width} solid ${theme.colors.primary};
     }
 
     &:disabled,
