@@ -25,7 +25,6 @@ export const maybeRefreshVersion = () => {
     .then((meta) => {
       const latest = meta.version
       const current = global.appVersion
-      console.log(latest, current)
       const shouldForceRefresh = semverGreaterThan(latest, current)
       if (shouldForceRefresh) {
         window.location.reload(true)
