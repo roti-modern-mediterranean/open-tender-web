@@ -12,6 +12,7 @@ import {
 import { makeOrderTypeFromParam } from '@open-tender/js'
 import { GoogleMap, GoogleMapsMarker } from '@open-tender/components'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import {
   selectBrand,
   selectSettings,
@@ -59,6 +60,7 @@ const RevenueCenters = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

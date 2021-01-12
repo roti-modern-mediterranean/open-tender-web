@@ -18,6 +18,7 @@ import {
 } from '@open-tender/redux'
 import { CartGuestForm, ButtonStyled } from '@open-tender/components'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
@@ -134,7 +135,6 @@ const GroupOrderGuest = () => {
     guestCount,
     token: currentToken,
   } = groupOrder
-  console.log(groupOrder)
   const isLoading = loading === 'pending'
   const cartOwnerName = cartOwner
     ? `${cartOwner.first_name} ${cartOwner.last_name}`
@@ -175,6 +175,7 @@ const GroupOrderGuest = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

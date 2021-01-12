@@ -9,6 +9,7 @@ import {
 } from '@open-tender/redux'
 import { useGeolocation } from '@open-tender/components'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import {
   selectConfig,
   setGeoLatLng,
@@ -28,7 +29,6 @@ import { Account } from '../../buttons'
 import HomeButtons from './HomeButtons'
 import { AppContext } from '../../../App'
 import styled from '@emotion/styled'
-import { maybeRefreshVersion } from '../../../app/version'
 
 const HomeContent = styled('div')`
   padding: 0 2.5rem 2.5rem;

@@ -11,6 +11,7 @@ import {
 } from '@open-tender/redux'
 import { SignUpForm } from '@open-tender/components'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -62,6 +63,7 @@ const SignUp = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
     dispatch(resetSignUp())
     return () => dispatch(resetSignUp())
   }, [windowRef, dispatch])

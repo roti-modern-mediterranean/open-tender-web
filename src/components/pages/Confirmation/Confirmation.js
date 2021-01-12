@@ -11,6 +11,7 @@ import {
   resetOrderFulfillment,
 } from '@open-tender/redux'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -49,6 +50,7 @@ const Confirmation = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

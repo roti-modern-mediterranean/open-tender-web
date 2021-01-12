@@ -14,6 +14,7 @@ import {
   addMessage,
 } from '@open-tender/redux'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Background, Content, HeaderMobile, Main, Welcome } from '../..'
@@ -35,6 +36,7 @@ const Account = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

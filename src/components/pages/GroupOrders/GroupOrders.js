@@ -9,6 +9,7 @@ import {
   fetchCustomerGroupOrders,
 } from '@open-tender/redux'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -36,6 +37,7 @@ const GroupOrders = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

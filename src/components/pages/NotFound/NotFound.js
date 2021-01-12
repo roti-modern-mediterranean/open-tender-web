@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 import { selectToken } from '@open-tender/redux'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -26,6 +27,7 @@ const NotFound = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

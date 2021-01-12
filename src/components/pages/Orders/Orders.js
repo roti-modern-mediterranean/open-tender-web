@@ -12,6 +12,7 @@ import {
 import { makeUniqueDisplayItems } from '@open-tender/js'
 import { ButtonStyled, ButtonToggleGroup } from '@open-tender/components'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -51,6 +52,7 @@ const Orders = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

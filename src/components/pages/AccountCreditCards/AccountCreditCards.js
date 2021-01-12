@@ -8,6 +8,7 @@ import {
 import { ButtonStyled } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand, openModal } from '../../../slices'
 import {
   Background,
@@ -35,6 +36,7 @@ const AccountCreditCards = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

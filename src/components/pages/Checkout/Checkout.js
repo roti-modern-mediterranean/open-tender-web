@@ -35,6 +35,7 @@ import {
 } from '@open-tender/redux'
 import { CheckoutForm, Error } from '@open-tender/components'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { cardIconMap } from '../../../assets/cardIcons'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
@@ -90,6 +91,7 @@ const Checkout = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

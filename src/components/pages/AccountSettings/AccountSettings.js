@@ -6,6 +6,7 @@ import { isBrowser } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Background, Content, HeaderMobile, Main, Welcome } from '../..'
@@ -23,6 +24,7 @@ const AccountSettings = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

@@ -8,6 +8,7 @@ import {
 } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -31,6 +32,7 @@ const Order = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

@@ -5,6 +5,7 @@ import { selectCustomer, selectCustomerGiftCards } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -31,6 +32,7 @@ const AccountGiftCards = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

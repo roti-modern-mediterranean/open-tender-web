@@ -12,6 +12,7 @@ import {
 import { AllergenForm } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -62,6 +63,7 @@ const AccountAllergens = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -24,6 +25,7 @@ const Accessibility = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   return (

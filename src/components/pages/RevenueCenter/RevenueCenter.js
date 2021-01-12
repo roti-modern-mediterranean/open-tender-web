@@ -11,6 +11,7 @@ import {
 } from '@open-tender/redux'
 import { useGeolocation } from '@open-tender/components'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import {
   selectBrand,
   selectConfig,
@@ -55,6 +56,7 @@ const RevenueCenter = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
     dispatch(setGeoLoading())
     dispatch(resetOrderType())
     dispatch(fetchRevenueCenter(slug))

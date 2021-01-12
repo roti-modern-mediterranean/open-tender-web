@@ -15,6 +15,7 @@ import {
   setAlert,
 } from '@open-tender/redux'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -49,6 +50,7 @@ const GiftCards = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

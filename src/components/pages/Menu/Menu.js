@@ -14,6 +14,7 @@ import {
 } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Content, Main, ScreenreaderTitle } from '../..'
@@ -45,6 +46,7 @@ const MenuPage = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

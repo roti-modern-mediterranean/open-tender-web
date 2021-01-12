@@ -8,6 +8,7 @@ import {
 } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import Addresses from './Addresses'
 import {
@@ -35,6 +36,7 @@ const AccountAddresses = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

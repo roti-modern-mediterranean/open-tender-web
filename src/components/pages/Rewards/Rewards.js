@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectSettings } from '../../../slices'
 import {
   Background,
@@ -38,6 +39,7 @@ const Rewards = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

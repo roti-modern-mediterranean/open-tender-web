@@ -5,6 +5,7 @@ import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import { fetchOrderFulfillment } from '@open-tender/redux'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectFulfillment } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -28,6 +29,7 @@ const Fulfillment = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

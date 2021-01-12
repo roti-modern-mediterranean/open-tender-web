@@ -12,6 +12,7 @@ import {
 } from '@open-tender/redux'
 import { getLastOrder, makeDisplayItem } from '@open-tender/js'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -43,6 +44,7 @@ const Favorites = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

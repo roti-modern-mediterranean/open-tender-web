@@ -7,6 +7,7 @@ import { selectCustomer, authCustomerThanx } from '@open-tender/redux'
 import { isObject } from '@open-tender/js'
 import { Message } from '@open-tender/components'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -42,6 +43,7 @@ const Thanx = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

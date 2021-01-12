@@ -11,6 +11,7 @@ import {
 } from '@open-tender/redux'
 import { ButtonLink, ResetPasswordForm } from '@open-tender/components'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, openModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -43,6 +44,7 @@ const ResetPassword = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

@@ -12,6 +12,7 @@ import {
 import { isObject } from '@open-tender/js'
 import { Message } from '@open-tender/components'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, setGeoLatLng } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -52,6 +53,7 @@ const LevelUp = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {

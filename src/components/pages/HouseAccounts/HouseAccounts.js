@@ -7,6 +7,7 @@ import {
 } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
 
+import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import {
   Background,
@@ -35,6 +36,7 @@ const AccountHouseAccounts = () => {
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
   }, [windowRef])
 
   useEffect(() => {
