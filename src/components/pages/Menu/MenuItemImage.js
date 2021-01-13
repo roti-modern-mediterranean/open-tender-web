@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { isBrowser } from 'react-device-detect'
 import { BgImage, useImage } from '@open-tender/components'
 import { ImageSpinner } from '../..'
 
@@ -45,9 +46,9 @@ const MenuItemImage = ({ imageUrl, children }) => {
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
   return (
     <MenuItemImageView>
-      {isLoading && (
+      {bgStyle && isLoading && (
         <MenuItemImageLoading>
-          <ImageSpinner size={20} />
+          <ImageSpinner size={isBrowser ? 24 : 16} />
         </MenuItemImageLoading>
       )}
       {hasLoaded && (
