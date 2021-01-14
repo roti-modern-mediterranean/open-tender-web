@@ -37,7 +37,7 @@ import { CheckoutForm, Error } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { cardIconMap } from '../../../assets/cardIcons'
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectAPI, selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Background,
@@ -58,6 +58,7 @@ const Checkout = () => {
   const dispatch = useDispatch()
   const { title, has_thanx } = useSelector(selectBrand)
   const { checkout: config } = useSelector(selectConfig)
+  const api = useSelector(selectAPI)
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
@@ -165,6 +166,7 @@ const Checkout = () => {
                   customer={customer}
                   autoSelect={autoSelect}
                   hasThanx={has_thanx}
+                  api={api}
                 />
               </div>
             </PageContent>
