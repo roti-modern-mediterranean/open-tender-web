@@ -66,6 +66,7 @@ const Checkout = () => {
   const customer = useSelector(selectCustomer)
   const checkout = useSelector(selectCheckout)
   const { check, completedOrder, errors, submitting } = checkout
+  const formErrors = errors ? errors.form || null : null
   const { sso, customer_id } = check ? check.customer || {} : {}
   const { serviceType, revenueCenter } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
@@ -96,8 +97,8 @@ const Checkout = () => {
   }, [windowRef])
 
   useEffect(() => {
-    if (!submitting && errors.form) windowRef.current.scrollTop = 0
-  }, [windowRef, errors.form, submitting])
+    if (!submitting && formErrors) windowRef.current.scrollTop = 0
+  }, [windowRef, formErrors, submitting])
 
   useEffect(() => {
     return () => {
