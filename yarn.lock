@@ -1560,10 +1560,10 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@open-tender/components@^2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-2.2.3.tgz#a0982269fa8ea0ded8f525f597fb90a4c4ef4cb6"
-  integrity sha512-xUSsT5jvEYWEJQZ1SkzsAuzSNvO/Dr7JaHeK4V1ElPlUMsjfFDFGNsleyJ6fYqa61qSOSV1KhxvpbmGKllB1sw==
+"@open-tender/components@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-2.2.4.tgz#fb8644cc7d4b63fdb0e84160300a6729f67f3500"
+  integrity sha512-UZQT4GR9ZFxQtWGVwDAy8E8fM/SHp7j3gg7aWOAVQiJOp8P7Is0ktnJBDYOHm2fbtjS5l/y4MZOBruS4Yg1iDw==
 
 "@open-tender/js@^1.3.0":
   version "1.3.0"
