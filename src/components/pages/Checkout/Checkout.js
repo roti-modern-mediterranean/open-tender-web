@@ -56,7 +56,8 @@ const Checkout = () => {
   const formRef = useRef()
   const history = useHistory()
   const dispatch = useDispatch()
-  const { title, has_thanx } = useSelector(selectBrand)
+  const brand = useSelector(selectBrand)
+  const { title, has_thanx } = brand
   const { checkout: config } = useSelector(selectConfig)
   const api = useSelector(selectAPI)
   const cartTotal = useSelector(selectCartTotal)
@@ -168,6 +169,8 @@ const Checkout = () => {
                   autoSelect={autoSelect}
                   hasThanx={has_thanx}
                   api={api}
+                  spinner={<Loading />}
+                  brand={brand}
                 />
               </div>
             </PageContent>
