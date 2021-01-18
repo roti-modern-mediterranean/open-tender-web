@@ -3,6 +3,7 @@ import propTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as Sentry from '@sentry/react'
 import ErrorReport from './pages/ErrorReport'
+import packageJson from '../../package.json'
 
 class ErrorBoundary extends React.Component {
   state = {
@@ -24,7 +25,8 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     this.setState({ errorInfo })
     Sentry.withScope((scope) => {
-      scope.setExtras(errorInfo)
+      const extras = { version: packageJson.version, ...errorInfo }
+      scope.setExtras(extras)
       if (this.props.user) scope.setUser(this.props.user)
       const eventId = Sentry.captureException(error)
       this.setState({ eventId })
