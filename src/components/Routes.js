@@ -27,6 +27,7 @@ import {
   Orders,
   Order,
   Profile,
+  Rating,
   Refunds,
   ResetPassword,
   RevenueCenters,
@@ -97,6 +98,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/curbside/:id">
         <Fulfillment />
+      </Route>
+      <Route exact path="/ratings/:id">
+        <Rating />
       </Route>
       <Route exact path="/account">
         <Account />

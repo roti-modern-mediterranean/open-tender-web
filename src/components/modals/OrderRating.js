@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { updateOrderRating } from '@open-tender/redux'
+import { updateCustomerOrderRating } from '@open-tender/redux'
 import { OrderRatingForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
@@ -11,7 +11,7 @@ import iconMap from '../iconMap'
 const OrderRating = ({ orderId, orderRating }) => {
   const dispatch = useDispatch()
   const updateRating = useCallback(
-    (orderId, data) => dispatch(updateOrderRating(orderId, data)),
+    (orderId, data) => dispatch(updateCustomerOrderRating(orderId, data)),
     [dispatch]
   )
   const callback = useCallback(() => dispatch(closeModal()), [dispatch])

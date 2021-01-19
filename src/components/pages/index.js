@@ -25,6 +25,7 @@ import LevelUp from './LevelUp'
 import Menu from './Menu'
 import NotFound from './NotFound'
 import Profile from './Profile'
+import Rating from './Rating'
 import Refunds from './Refunds'
 import ResetPassword from './ResetPassword'
 import RevenueCenters from './RevenueCenters'
@@ -61,6 +62,7 @@ export {
   Orders,
   Order,
   Profile,
+  Rating,
   Refunds,
   ResetPassword,
   RevenueCenters,
