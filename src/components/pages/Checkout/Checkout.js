@@ -33,7 +33,7 @@ import {
   setConfirmationOrder,
   logoutCustomer,
 } from '@open-tender/redux'
-import { CheckoutForm, Error } from '@open-tender/components'
+import { CheckoutForm, FormError } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { cardIconMap } from '../../../assets/cardIcons'
@@ -67,7 +67,7 @@ const Checkout = () => {
   const customer = useSelector(selectCustomer)
   const checkout = useSelector(selectCheckout)
   const { check, completedOrder, errors, submitting } = checkout
-  const formErrors = errors ? errors.form || null : null
+  const formError = errors ? errors.form || null : null
   const { sso, customer_id } = check ? check.customer || {} : {}
   const { serviceType, revenueCenter } = order
   const { revenue_center_id: revenueCenterId } = revenueCenter || {}
@@ -98,8 +98,8 @@ const Checkout = () => {
   }, [windowRef])
 
   useEffect(() => {
-    if (!submitting && formErrors) windowRef.current.scrollTop = 0
-  }, [windowRef, formErrors, submitting])
+    if (!submitting && formError) windowRef.current.scrollTop = 0
+  }, [windowRef, formError, submitting])
 
   useEffect(() => {
     return () => {
@@ -151,8 +151,8 @@ const Checkout = () => {
               <CheckoutCancelEdit />
               <div ref={formRef} style={{ margin: '0 0 4rem' }}>
                 {!check ? (
-                  errors.form ? (
-                    <Error error={errors.form} />
+                  formError ? (
+                    <FormError errMsg={formError} />
                   ) : (
                     <Loading text="Calculating your check..." />
                   )
