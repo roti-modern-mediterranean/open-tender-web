@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
@@ -28,8 +28,8 @@ import iconMap from '../../iconMap'
 const makePageTitles = (orderRating) => {
   if (orderRating && orderRating.order_id) {
     return {
-      title: `Thanks for rating order #${orderRating.order_id}!`,
-      subtitle: 'Please add your rating and any comments (optionally) below',
+      title: `Almost done!`,
+      subtitle: `Please verify your rating and add any comments (optionally) for order #${orderRating.order_id}, and then click Submit.`,
     }
   } else {
     return {
@@ -39,23 +39,36 @@ const makePageTitles = (orderRating) => {
   }
 }
 
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search)
+}
+
 const Rating = () => {
   const dispatch = useDispatch()
+  const query = useQuery()
+  const queryRating = query.get('rating')
+  const [submitted, setSubmitted] = useState(false)
   const { id: ratingUuid } = useParams()
   const { title: siteTitle } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const { orderRating, loading, error } = useSelector(selectOrderRating)
   const errMsg = error ? error.message || null : null
   const title = orderRating
-    ? `Rating #${orderRating.order_id}`
+    ? `Rating Order #${orderRating.order_id}`
     : 'Rating Not Found'
   const { windowRef } = useContext(AppContext)
   const pageTitles = makePageTitles(orderRating)
+  const adjustedRating =
+    queryRating && !submitted
+      ? { ...orderRating, rating: parseInt(queryRating) }
+      : orderRating
 
   const updateRating = useCallback(
     (ratingUuid, data) => dispatch(updateOrderRating(ratingUuid, data)),
     [dispatch]
   )
+
+  const callback = useCallback(() => setSubmitted(true), [setSubmitted])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -89,9 +102,10 @@ const Rating = () => {
               ) : orderRating ? (
                 <OrderRatingForm
                   orderId={ratingUuid}
-                  orderRating={orderRating}
+                  orderRating={adjustedRating}
                   icon={iconMap.Star}
                   updateRating={updateRating}
+                  callback={callback}
                 />
               ) : null}
             </PageContent>
