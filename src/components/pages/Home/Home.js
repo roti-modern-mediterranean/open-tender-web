@@ -16,6 +16,7 @@ import {
   setGeoError,
   setGeoLoading,
   selectSettings,
+  closeModal,
 } from '../../../slices'
 import {
   Background,
@@ -69,7 +70,6 @@ const makeContent = (content) => {
 const Home = () => {
   const dispatch = useDispatch()
   const { geoLatLng, geoError } = useGeolocation()
-  // const config = useSelector(selectConfig)
   const { home: homeConfig } = useSelector(selectConfig)
   const { background, mobile, title, subtitle, content } = homeConfig
   const { orderTypes } = useSelector(selectSettings)
@@ -84,6 +84,7 @@ const Home = () => {
     dispatch(setGeoLoading())
     dispatch(resetRevenueCenters())
     dispatch(resetOrderType())
+    dispatch(closeModal())
   }, [windowRef, dispatch])
 
   useEffect(() => {
@@ -112,7 +113,6 @@ const Home = () => {
         <Main padding="0" imageUrl={mobile || background}>
           {hasOrderTypes ? (
             <Welcome
-              // imageUrl={background}
               header={
                 <>
                   <h1>{title}</h1>
