@@ -9,9 +9,15 @@ import packageJson from '../package.json'
 
 global.appVersion = packageJson.version
 
+// https://stackoverflow.com/questions/55738408/javascript-typeerror-cancelled-error-when-calling-fetch-on-ios
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
   environment: process.env.NODE_ENV,
+  ignoreErrors: [
+    'TypeError: Failed to fetch',
+    'TypeError: NetworkError when attempting to fetch resource.',
+    'TypeError: Cancelled',
+  ],
 })
 
 ReactDOM.render(
