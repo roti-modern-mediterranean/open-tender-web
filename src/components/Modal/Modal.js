@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectAlert, resetAlert } from '@open-tender/redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
@@ -130,6 +130,31 @@ const Modal = () => {
       dispatch(closeModal())
     }
   }
+
+  const handleTabKey = useCallback((evt) => {
+    if (evt.keyCode === 9 && modalRef.current) {
+      const focusable = modalRef.current.querySelectorAll(
+        'a[href], button, textarea, input, select'
+      )
+      const firstElement = focusable[0]
+      const lastElement = focusable[focusable.length - 1]
+
+      if (!evt.shiftKey && document.activeElement === lastElement) {
+        firstElement.focus()
+        evt.preventDefault()
+      }
+
+      if (evt.shiftKey && document.activeElement === firstElement) {
+        lastElement.focus()
+        evt.preventDefault()
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleTabKey, false)
+    return () => document.removeEventListener('keydown', handleTabKey, false)
+  }, [handleTabKey])
 
   return (
     <>
