@@ -84,8 +84,8 @@ const ModalClose = ({ onClick, isButton = false }) => {
 
 ModalClose.displayName = 'ModalClose'
 ModalClose.propTypes = {
-  type: propTypes.string,
-  handleClose: propTypes.func,
+  onClick: propTypes.func,
+  isButton: propTypes.bool,
 }
 
 export default ModalClose
