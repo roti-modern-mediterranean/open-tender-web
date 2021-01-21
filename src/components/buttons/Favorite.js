@@ -47,7 +47,7 @@ const Favorite = ({ item, favoriteId }) => {
 
   return (
     <FavoriteView
-      onPointerUp={favoriteId ? handleRemove : handleAdd}
+      onClick={favoriteId ? handleRemove : handleAdd}
       bgColor={favoriteId ? 'cart' : 'primary'}
       aria-label={favoriteId ? 'Remove favorite' : 'Add favorite'}
     >

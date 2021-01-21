@@ -127,7 +127,7 @@ const MenuMobileMenu = ({ order, showMenu, setShowMenu }) => {
             classNames="overlay"
             timeout={250}
           >
-            <MenuMobileMenuOverlay onPointerUp={() => setShowMenu(false)} />
+            <MenuMobileMenuOverlay onClick={() => setShowMenu(false)} />
           </CSSTransition>
         ) : null}
       </TransitionGroup>

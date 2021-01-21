@@ -87,7 +87,7 @@ const MenuHeaderTitle = ({
       <MenuHeaderTitleServiceType>
         Ordering {serviceTypeName}
       </MenuHeaderTitleServiceType>
-      <MenuHeaderTitleRevenueCenter onPointerUp={toggle}>
+      <MenuHeaderTitleRevenueCenter onClick={toggle}>
         <span>&nbsp;</span>
         <MenuHeaderName>
           <Heading>{revenueCenter.name}</Heading>

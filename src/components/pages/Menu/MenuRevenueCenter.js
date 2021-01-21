@@ -61,7 +61,7 @@ const MenuRevenueCenter = ({ revenueCenter, change }) => {
   return (
     <MenuRevenueCenterView>
       <MenuItemContainer>
-        <MenuItemButton onPointerUp={handleClick}>
+        <MenuItemButton onClick={handleClick}>
           <MenuRevenueCenterImage style={{ margin: '0' }}>
             <MenuItemOverlay>
               <MenuRevenueCenterLogo src={logo} alt={revenueCenter.name} />

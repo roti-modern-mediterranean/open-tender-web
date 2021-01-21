@@ -119,7 +119,7 @@ const CartButton = () => {
       <CartButtonContainer>
         {cartQuantity > 0 && <CartButtonCount>{cartQuantity}</CartButtonCount>}
         <CartButtonButton
-          onPointerUp={toggle}
+          onClick={toggle}
           aria-label="Open cart to review order"
         >
           <CartButtonIcon>

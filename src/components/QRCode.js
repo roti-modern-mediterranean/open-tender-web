@@ -26,7 +26,7 @@ const QRCode = ({ src, alt = '' }) => {
   }
 
   return (
-    <QRCodeView onPointerUp={expand} padding={!src ? '50% 0' : '0'}>
+    <QRCodeView onClick={expand} padding={!src ? '50% 0' : '0'}>
       {src && <img src={src} alt={alt} />}
     </QRCodeView>
   )

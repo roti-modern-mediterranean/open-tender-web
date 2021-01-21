@@ -236,7 +236,7 @@ const MenuItem = ({ item }) => {
         {!showImage && itemTag ? (
           <MenuItemAlert>{itemTag}</MenuItemAlert>
         ) : null}
-        <MenuItemButton onPointerUp={handleClick} isSoldOut={isSoldOut}>
+        <MenuItemButton onClick={handleClick} isSoldOut={isSoldOut}>
           {showImage && (
             <MenuItemImage imageUrl={imageUrl}>
               {itemTag && (
