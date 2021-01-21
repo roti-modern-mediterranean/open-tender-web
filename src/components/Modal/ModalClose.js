@@ -30,8 +30,8 @@ const ModalCloseX = styled('button')`
 const ModalCloseButton = styled('div')`
   position: absolute;
   z-index: 2;
-  top: 11px;
-  right: 9px;
+  top: 1.5rem;
+  right: 1.5rem;
 
   button {
     padding: 0.7rem 1.2rem 0.7rem 1rem;
