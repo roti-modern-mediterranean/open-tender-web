@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
+import { isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
   selectCurrentItem,
@@ -75,7 +76,7 @@ const MenuItem = () => {
   return (
     <MenuItemModalView>
       <MenuItemModalContent>
-        <ModalClose onClick={handleClose} />
+        <ModalClose onClick={handleClose} isButton={isMobile} />
         {item && (
           <Builder
             menuItem={item}

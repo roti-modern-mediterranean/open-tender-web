@@ -53,6 +53,7 @@ import {
   UserPlus,
   UserX,
   XCircle,
+  X,
 } from 'react-feather'
 
 const iconMap = {
@@ -109,6 +110,7 @@ const iconMap = {
   UserX: <UserX size={null} />,
   Users: <Users size={null} />,
   XCircle: <XCircle size={null} />,
+  X: <X size={null} />,
 }
 
 export default iconMap
