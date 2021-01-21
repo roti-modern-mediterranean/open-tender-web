@@ -95,7 +95,7 @@ const NavButton = ({ title, icon, onClick, delay = '0.125s' }) => {
   }
 
   return (
-    <NavButtonView onPointerUp={onUp} delay={delay}>
+    <NavButtonView onClick={onUp} delay={delay}>
       <NavButtonIcon>{icon}</NavButtonIcon>
       <NavButtonTitle>{title}</NavButtonTitle>
       <NavButtonArrow>{iconMap.ChevronRight}</NavButtonArrow>
