@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -129,6 +129,9 @@ const SidebarCheckout = styled('div')`
 `
 
 const Sidebar = () => {
+  const sidebarRef = useRef()
+  const [active, setActive] = useState(null)
+  const [elements, setElements] = useState([])
   const dispatch = useDispatch()
   const history = useHistory()
   const { pathname } = useLocation()
@@ -151,6 +154,7 @@ const Sidebar = () => {
   const showReview = cartGuest || (isMenu && isCartOwner)
   const orderMaxType =
     cartGuest && spendingLimit ? 'spending limit' : 'order maximum'
+  console.log(active)
 
   const handleBack = () => {
     dispatch(toggleSidebar())
@@ -170,10 +174,6 @@ const Sidebar = () => {
     }
   }
 
-  // const handleClose = () => {
-  //   dispatch(toggleSidebar())
-  // }
-
   const handleReopen = () => {
     const customerCart = cart.filter((i) => i.customer_id)
     dispatch(setCart(customerCart))
@@ -183,10 +183,51 @@ const Sidebar = () => {
     })
   }
 
+  useEffect(() => {
+    if (isOpen) {
+      setActive(document.activeElement)
+      const allElements = sidebarRef.current.querySelectorAll(
+        'a[href], button, input, select, textarea'
+      )
+      setElements(allElements)
+      const firstElement = allElements ? allElements[0] : null
+      if (firstElement) firstElement.focus()
+    } else {
+      console.log('sidebar closing...')
+      if (active) active.focus()
+    }
+  }, [isOpen, active])
+
+  const handleTabKey = useCallback(
+    (evt) => {
+      if (evt.keyCode === 9 && sidebarRef.current && elements.length) {
+        const activeElements = Array.from(elements).filter((i) => !i.disabled)
+        const firstElement = activeElements[0]
+        const lastElement = activeElements[activeElements.length - 1]
+
+        if (!evt.shiftKey && document.activeElement === lastElement) {
+          firstElement.focus()
+          evt.preventDefault()
+        }
+
+        if (evt.shiftKey && document.activeElement === firstElement) {
+          lastElement.focus()
+          evt.preventDefault()
+        }
+      }
+    },
+    [elements]
+  )
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleTabKey, false)
+    return () => document.removeEventListener('keydown', handleTabKey, false)
+  }, [handleTabKey])
+
   return (
     <>
       <SidebarOverlay />
-      <SidebarView isOpen={isOpen}>
+      <SidebarView ref={sidebarRef} isOpen={isOpen}>
         <div>
           {isOpen && <SidebarClose />}
           <SidebarHeader>
