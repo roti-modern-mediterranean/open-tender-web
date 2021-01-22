@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react'
+import React, { useRef, useEffect, useCallback, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectAlert, resetAlert } from '@open-tender/redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
@@ -103,6 +103,8 @@ const ModalContainer = styled('div')`
 
 const Modal = () => {
   const modalRef = useRef()
+  const [elements, setElements] = useState([])
+  const [, setInputs] = useState([])
   const dispatch = useDispatch()
   const alert = useSelector(selectAlert)
   const { loading, type, args } = useSelector(selectModal)
@@ -131,25 +133,42 @@ const Modal = () => {
     }
   }
 
-  const handleTabKey = useCallback((evt) => {
-    if (evt.keyCode === 9 && modalRef.current) {
-      const focusable = modalRef.current.querySelectorAll(
-        'a[href], button, textarea, input, select'
-      )
-      const firstElement = focusable[0]
-      const lastElement = focusable[focusable.length - 1]
+  const handleFocus = () => {
+    const allElements = modalRef.current.querySelectorAll(
+      'a[href], button, input, select, textarea'
+    )
+    setElements(allElements)
+    const allInputs = modalRef.current.querySelectorAll(
+      'input, select, textarea'
+    )
+    setInputs(allInputs)
+    const firstElement = allInputs.length
+      ? allInputs[0]
+      : allElements
+      ? allElements[0]
+      : null
+    if (firstElement) firstElement.focus()
+  }
 
-      if (!evt.shiftKey && document.activeElement === lastElement) {
-        firstElement.focus()
-        evt.preventDefault()
-      }
+  const handleTabKey = useCallback(
+    (evt) => {
+      if (evt.keyCode === 9 && modalRef.current && elements.length) {
+        const firstElement = elements[0]
+        const lastElement = elements[elements.length - 1]
 
-      if (evt.shiftKey && document.activeElement === firstElement) {
-        lastElement.focus()
-        evt.preventDefault()
+        if (!evt.shiftKey && document.activeElement === lastElement) {
+          firstElement.focus()
+          evt.preventDefault()
+        }
+
+        if (evt.shiftKey && document.activeElement === firstElement) {
+          lastElement.focus()
+          evt.preventDefault()
+        }
       }
-    }
-  }, [])
+    },
+    [elements]
+  )
 
   useEffect(() => {
     document.addEventListener('keydown', handleTabKey, false)
@@ -166,6 +185,7 @@ const Modal = () => {
             key="modal"
             classNames="md"
             timeout={{ enter: 250, exit: 250 }}
+            onEntered={handleFocus}
           >
             <ModalContainer
               ref={modalRef}
