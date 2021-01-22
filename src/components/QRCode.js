@@ -18,7 +18,6 @@ const QRCode = ({ src, alt = '' }) => {
   const dispatch = useDispatch()
 
   const expand = (evt) => {
-    evt.target.blur()
     evt.preventDefault()
     evt.stopPropagation()
     if (!src) return

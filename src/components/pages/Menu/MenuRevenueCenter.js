@@ -55,7 +55,6 @@ const MenuRevenueCenter = ({ revenueCenter, change }) => {
   const handleClick = (evt) => {
     evt.preventDefault()
     change(revenueCenter)
-    evt.target.blur()
   }
 
   return (

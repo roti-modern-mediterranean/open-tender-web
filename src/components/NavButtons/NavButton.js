@@ -88,7 +88,6 @@ const NavButtonArrow = styled('span')`
 
 const NavButton = ({ title, icon, onClick, delay = '0.125s' }) => {
   const onUp = (evt) => {
-    evt.target.blur()
     evt.preventDefault()
     evt.stopPropagation()
     onClick()

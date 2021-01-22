@@ -111,7 +111,6 @@ const CartButton = () => {
   const toggle = (evt) => {
     evt.preventDefault()
     dispatch(toggleSidebar())
-    evt.target.blur()
   }
 
   return !hideCart ? (

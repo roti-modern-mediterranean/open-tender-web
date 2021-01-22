@@ -36,13 +36,11 @@ const Favorite = ({ item, favoriteId }) => {
     delete cart.quantity
     const data = { cart }
     dispatch(addCustomerFavorite(data))
-    evt.target.blur()
   }
 
   const handleRemove = (evt) => {
     evt.preventDefault()
     dispatch(removeCustomerFavorite(favoriteId))
-    evt.target.blur()
   }
 
   return (

@@ -49,11 +49,9 @@ const NavScrollButton = ({ container, name, active, offset = 0 }) => {
       smooth: true,
       offset: -30,
     })
-    // container.scrollTo({
-    //   top: element.offsetTop + offset,
-    //   left: 0,
-    //   behavior: 'smooth',
-    // })
+    const items = element.querySelectorAll('button')
+    const firstItem = items.length ? items[0] : null
+    if (firstItem) firstItem.focus()
   }
 
   return (

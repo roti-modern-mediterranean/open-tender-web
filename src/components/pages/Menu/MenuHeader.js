@@ -78,7 +78,6 @@ const MenuHeaderTitle = ({
 
   const toggle = (evt) => {
     evt.preventDefault()
-    evt.target.blur()
     setShowMenu(!showMenu)
   }
 
