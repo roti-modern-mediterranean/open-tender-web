@@ -214,9 +214,8 @@ const MenuItem = ({ item }) => {
     evt.preventDefault()
     if (!isSoldOut) {
       dispatch(setCurrentItem(item))
-      dispatch(openModal({ type: 'item' }))
+      dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
     }
-    evt.target.blur()
   }
 
   const itemTag = isSoldOut ? (

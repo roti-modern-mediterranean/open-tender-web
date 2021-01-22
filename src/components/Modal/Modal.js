@@ -103,11 +103,13 @@ const ModalContainer = styled('div')`
 
 const Modal = () => {
   const modalRef = useRef()
+  const [active, setActive] = useState(null)
   const [elements, setElements] = useState([])
   const [, setInputs] = useState([])
   const dispatch = useDispatch()
   const alert = useSelector(selectAlert)
   const { loading, type, args } = useSelector(selectModal)
+  const focusFirst = args && args.focusFirst ? true : false
   const preventClose = args && args.preventClose ? true : false
   const showModal = type ? true : false
   const modal = type ? makeModal(type, modalRef, args) : null
@@ -133,7 +135,12 @@ const Modal = () => {
     }
   }
 
+  const handleExit = () => {
+    if (active) active.focus()
+  }
+
   const handleFocus = () => {
+    setActive(document.activeElement)
     const allElements = modalRef.current.querySelectorAll(
       'a[href], button, input, select, textarea'
     )
@@ -142,19 +149,21 @@ const Modal = () => {
       'input, select, textarea'
     )
     setInputs(allInputs)
-    const firstElement = allInputs.length
-      ? allInputs[0]
-      : allElements
-      ? allElements[0]
-      : null
+    const firstElement =
+      !focusFirst && allInputs.length
+        ? allInputs[0]
+        : allElements
+        ? allElements[0]
+        : null
     if (firstElement) firstElement.focus()
   }
 
   const handleTabKey = useCallback(
     (evt) => {
       if (evt.keyCode === 9 && modalRef.current && elements.length) {
-        const firstElement = elements[0]
-        const lastElement = elements[elements.length - 1]
+        const activeElements = Array.from(elements).filter((i) => !i.disabled)
+        const firstElement = activeElements[0]
+        const lastElement = activeElements[activeElements.length - 1]
 
         if (!evt.shiftKey && document.activeElement === lastElement) {
           firstElement.focus()
@@ -186,6 +195,7 @@ const Modal = () => {
             classNames="md"
             timeout={{ enter: 250, exit: 250 }}
             onEntered={handleFocus}
+            onExited={handleExit}
           >
             <ModalContainer
               ref={modalRef}

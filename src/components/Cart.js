@@ -24,7 +24,7 @@ const Cart = () => {
 
   const editItem = (item) => {
     dispatch(setCurrentItem(item))
-    dispatch(openModal({ type: 'item' }))
+    dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
   }
 
   const removeItem = (item) => {
