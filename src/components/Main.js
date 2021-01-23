@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-const Main = styled('div')`
+const Main = styled('main')`
   width: 100%;
   min-height: 100%;
   padding: ${(props) => props.padding || '6rem 0 0'};

@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { AppContext } from '../App'
 import { isBrowser } from 'react-device-detect'
 
-const HeaderMobileView = styled('nav')`
+const HeaderMobileView = styled('div')`
   position: fixed;
   z-index: 14;
   top: 0;
@@ -102,7 +102,7 @@ const HeaderMobile = ({
     borderColor === 'primary' && stuck ? 'secondary' : borderColor
 
   return (
-    <div ref={header}>
+    <nav ref={header} role="navigation" aria-label="Primary Navigation">
       <HeaderMobileView
         stuck={stuck}
         bgColor={bgColor}
@@ -117,7 +117,7 @@ const HeaderMobile = ({
         )}
         <HeaderMobileNav isBrowser={isBrowser}>{right}</HeaderMobileNav>
       </HeaderMobileView>
-    </div>
+    </nav>
   )
 }
 

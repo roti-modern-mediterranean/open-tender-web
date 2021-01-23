@@ -5,7 +5,7 @@ import { Container } from '.'
 import logo from '../assets/logo_footer.png'
 import packageJson from '../../package.json'
 
-const FooterView = styled('div')`
+const FooterView = styled('footer')`
   position: relative;
   z-index: 1;
   width: 100%;
@@ -80,7 +80,7 @@ const Footer = ({ hasRouter = true }) => {
             <span>Powered by</span>
             <img src={logo} alt="Open Tender Logo" />
           </FooterLogo>
-          <FooterNav>
+          <FooterNav aria-label="Legal Policies Navigation">
             <ul>
               <li>
                 <a

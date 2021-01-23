@@ -154,7 +154,6 @@ const Sidebar = () => {
   const showReview = cartGuest || (isMenu && isCartOwner)
   const orderMaxType =
     cartGuest && spendingLimit ? 'spending limit' : 'order maximum'
-  console.log(active)
 
   const handleBack = () => {
     dispatch(toggleSidebar())
