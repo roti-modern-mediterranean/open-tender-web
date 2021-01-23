@@ -114,6 +114,7 @@ const Modal = () => {
   const showModal = type ? true : false
   const modal = type ? makeModal(type, modalRef, args) : null
   const containerStyle = containerStyleMap[type] || null
+  const isWorking = type === 'working'
 
   useEffect(() => {
     if (alert) {
@@ -174,9 +175,11 @@ const Modal = () => {
           lastElement.focus()
           evt.preventDefault()
         }
+      } else if (evt.keyCode === 9 && isWorking) {
+        evt.preventDefault()
       }
     },
-    [elements]
+    [elements, isWorking]
   )
 
   useEffect(() => {
@@ -194,8 +197,8 @@ const Modal = () => {
             key="modal"
             classNames="md"
             timeout={{ enter: 250, exit: 250 }}
-            onEntered={handleFocus}
-            onExited={handleExit}
+            onEntered={!isWorking ? handleFocus : null}
+            onExited={!isWorking ? handleExit : null}
           >
             <ModalContainer
               ref={modalRef}

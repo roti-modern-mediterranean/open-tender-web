@@ -6,6 +6,7 @@ import { SignUpForm } from '@open-tender/components'
 
 import { closeModal, selectBrand, selectOptIns } from '../../slices'
 import { ModalContent, ModalView } from '..'
+import { ThanxTerms } from '../pages/SignUp/SignUp'
 
 const SignUp = ({ windowRef }) => {
   const dispatch = useDispatch()
@@ -36,6 +37,7 @@ const SignUp = ({ windowRef }) => {
           <p>Please provide the info below, and you'll be off to the races!</p>
         }
       >
+        {has_thanx && <ThanxTerms />}
         <SignUpForm
           loading={loading}
           error={error}

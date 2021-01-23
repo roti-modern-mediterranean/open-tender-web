@@ -25,7 +25,7 @@ import {
   HeaderDefault,
 } from '../..'
 
-const ThanxTerms = () => (
+export const ThanxTerms = () => (
   <p>
     By signing up you agree to our{' '}
     <a

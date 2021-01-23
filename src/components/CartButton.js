@@ -119,7 +119,6 @@ const CartButton = () => {
   const handleEscape = useCallback(
     (evt) => {
       if (evt.keyCode === 27 && canToggle) {
-        console.log('cartButton...')
         dispatch(toggleSidebar())
       }
     },

@@ -54,10 +54,6 @@ const GiftCards = () => {
   }, [windowRef])
 
   useEffect(() => {
-    if (success || error) windowRef.current.scrollTop = 0
-  }, [success, error, windowRef])
-
-  useEffect(() => {
     dispatch(fetchCustomerCreditCards())
   }, [dispatch, customer])
 
@@ -90,6 +86,7 @@ const GiftCards = () => {
                 loading={loading}
                 error={error}
                 iconMap={iconMap}
+                windowRef={windowRef}
               />
               {success && (
                 <p>

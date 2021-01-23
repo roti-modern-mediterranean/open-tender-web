@@ -192,7 +192,6 @@ const Sidebar = () => {
       const firstElement = allElements ? allElements[0] : null
       if (firstElement) firstElement.focus()
     } else {
-      console.log('sidebar closing...')
       if (active) active.focus()
     }
   }, [isOpen, active])

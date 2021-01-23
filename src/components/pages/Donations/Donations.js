@@ -49,10 +49,6 @@ const Donations = () => {
   }, [windowRef, dispatch])
 
   useEffect(() => {
-    if (success || error) windowRef.current.scrollTop = 0
-  }, [success, error, windowRef])
-
-  useEffect(() => {
     dispatch(fetchCustomerCreditCards())
   }, [dispatch, customer])
 
@@ -80,6 +76,7 @@ const Donations = () => {
                 donation={donation}
                 loading={loading}
                 error={error}
+                windowRef={windowRef}
               />
               {success && (
                 <p>
