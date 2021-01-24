@@ -1567,10 +1567,10 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@open-tender/components@^2.3.5-beta.0":
-  version "2.3.5-beta.0"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-2.3.5-beta.0.tgz#f8b135850b7c99edd1624f777b6e2c803fc85134"
-  integrity sha512-FTGAGVoiuAqOFmUtzckvnKnh2SVfStOrjvAWhW4cL5h+b/GEUu8UzxX2kwxKeo0KNgaRlJ7RHcy12iOnyxEP8Q==
+"@open-tender/components@^2.3.5-beta.1":
+  version "2.3.5-beta.1"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-2.3.5-beta.1.tgz#556b9de0c6c50268f9e649b90f58493e11d2cb5e"
+  integrity sha512-0ryGwYhbnQbWXYOypSO2ANtb9ojtWvGCOrk+uabI0+7O20tIPkEyPEfnWT7DoYRqB9oS7OXrQjDT0/9WXokk/Q==
   dependencies:
     "@google-pay/button-react" "^2.1.5"
 
