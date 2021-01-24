@@ -356,6 +356,21 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
+  .sidebar-enter,
+  .sidebar-exit.sidebar-exit-active {
+    transition: all 250ms ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+  }
+
+  .sidebar-enter.sidebar-enter-active,
+  .sidebar-exit {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+
   .overlay-enter,
   .overlay-exit.overlay-exit-active {
     transition: all 250ms ease;

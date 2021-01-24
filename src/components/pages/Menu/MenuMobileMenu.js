@@ -23,6 +23,7 @@ const MenuMobileMenuView = styled('div')`
   right: 0;
   padding: ${(props) => props.theme.layout.paddingMobile};
   transition: all 0.125s ease;
+  visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
   transform: translateY(${(props) => (props.show ? '0' : '-100%')});
   background-color: ${(props) => props.theme.bgColors.secondary};
 `

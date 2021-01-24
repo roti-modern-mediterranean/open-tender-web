@@ -80,9 +80,9 @@ class App extends React.Component {
                   <Router>
                     <Modal />
                     <Alerts />
-                    <Routes />
                     <Notifications />
                     <CartButton />
+                    <Routes />
                     <Sidebar />
                     <Nav />
                   </Router>

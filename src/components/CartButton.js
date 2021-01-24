@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { ShoppingBag } from 'react-feather'
@@ -6,7 +6,7 @@ import styled from '@emotion/styled'
 import { contains } from '@open-tender/js'
 import { selectCartQuantity } from '@open-tender/redux'
 
-import { toggleSidebar, selectModal, selectSidebar } from '../slices'
+import { toggleSidebar } from '../slices'
 
 const CartButtonView = styled('div')`
   position: fixed;
@@ -52,6 +52,11 @@ const CartButtonButton = styled('button')`
     border-color: ${(props) =>
       props.theme.buttons.colors.cartHover.borderColor};
   }
+
+  // &:focus {
+  //   outline: none;
+  //   box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 1);
+  // }
 
   &:disabled {
     color: ${(props) => props.theme.buttons.colors.cart.color};
@@ -102,9 +107,6 @@ const CartButtonCount = styled('div')`
 const CartButton = () => {
   const dispatch = useDispatch()
   const { pathname } = useLocation()
-  const { type } = useSelector(selectModal)
-  const { isOpen } = useSelector(selectSidebar)
-  const canToggle = !type && !isOpen
   const cartQuantity = useSelector(selectCartQuantity)
   const showEmptyCart = contains(pathname, ['menu', 'checkout'])
   const hideCart =
@@ -115,20 +117,6 @@ const CartButton = () => {
     evt.preventDefault()
     dispatch(toggleSidebar())
   }
-
-  const handleEscape = useCallback(
-    (evt) => {
-      if (evt.keyCode === 27 && canToggle) {
-        dispatch(toggleSidebar())
-      }
-    },
-    [dispatch, canToggle]
-  )
-
-  useEffect(() => {
-    document.addEventListener('keydown', handleEscape, false)
-    return () => document.removeEventListener('keydown', handleEscape, false)
-  }, [handleEscape])
 
   return !hideCart ? (
     <CartButtonView>

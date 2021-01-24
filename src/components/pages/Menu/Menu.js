@@ -21,6 +21,7 @@ import { Content, Main, ScreenreaderTitle } from '../..'
 import MenuContent from './MenuContent'
 import MenuHeader from './MenuHeader'
 import MenuMobileMenu from './MenuMobileMenu'
+import { isMobile } from 'react-device-detect'
 
 export const MenuContext = createContext(null)
 
@@ -96,11 +97,13 @@ const MenuPage = () => {
               error,
             }}
           >
-            <MenuMobileMenu
-              order={order}
-              showMenu={showMenu}
-              setShowMenu={setShowMenu}
-            />
+            {isMobile && (
+              <MenuMobileMenu
+                order={order}
+                showMenu={showMenu}
+                setShowMenu={setShowMenu}
+              />
+            )}
             <ScreenreaderTitle>Menu</ScreenreaderTitle>
             <MenuContent />
           </MenuContext.Provider>
