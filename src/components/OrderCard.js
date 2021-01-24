@@ -48,7 +48,7 @@ const OrderCard = ({ order, isLast }) => {
     .map((i) =>
       i.images
         .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
-        .map((image) => ({ title: image.name, imageUrl: image.url }))
+        .map((image) => ({ title: i.name, imageUrl: image.url }))
     )
     .flat()
   const itemNames = cart.map((i) => i.name).join(', ')

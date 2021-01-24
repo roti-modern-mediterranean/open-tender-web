@@ -87,8 +87,12 @@ const ModalContent = ({
 
   return (
     <>
-      {close && <ModalClose />}
-      <ModalContentView style={style}>
+      <ModalContentView
+        role="dialog"
+        aria-labelledby="dialogTitle"
+        style={style}
+      >
+        {close && <ModalClose />}
         {hasHeader && (
           <ModalHeader>
             {title && (

@@ -58,7 +58,7 @@ const RevenueCenterHeader = styled('div')`
     display: block;
   }
 
-  h3 {
+  h2 {
     font-size: ${(props) => props.theme.fonts.sizes.h4};
   }
 
@@ -95,7 +95,7 @@ export const RevenueCenterChild = ({ revenueCenter, style }) => {
       <RevenueCenterContent>
         <div>
           <RevenueCenterHeader>
-            <h3>{revenueCenter.name}</h3>
+            <h2>{revenueCenter.name}</h2>
           </RevenueCenterHeader>
           <RevenueCenterActions>
             {desc && (
@@ -153,7 +153,7 @@ const RevenueCenter = ({
       <RevenueCenterContent showImage={showImage}>
         <div>
           <RevenueCenterHeader>
-            <h3>{revenueCenter.name}</h3>
+            <h2>{revenueCenter.name}</h2>
             {distance !== null && <p>{distance.toFixed(2)} miles away</p>}
           </RevenueCenterHeader>
           <RevenueCenterActions>

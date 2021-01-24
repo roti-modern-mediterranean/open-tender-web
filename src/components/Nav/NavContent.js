@@ -62,7 +62,7 @@ const navButtons = [
   },
 ]
 
-const NavView = styled('aside')`
+const NavView = styled('nav')`
   position: fixed;
   z-index: 17;
   top: 0;

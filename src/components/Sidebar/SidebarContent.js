@@ -21,7 +21,7 @@ import Cart from '../Cart'
 import SidebarClose from './SidebarClose'
 import styled from '@emotion/styled'
 
-const SidebarView = styled('div')`
+const SidebarView = styled('aside')`
   position: fixed;
   z-index: 17;
   top: 0;

@@ -75,7 +75,7 @@ const MenuItem = () => {
 
   return (
     <MenuItemModalView>
-      <MenuItemModalContent>
+      <MenuItemModalContent role="dialog" aria-labelledby="dialogTitle">
         <ModalClose onClick={handleClose} isButton={isMobile} />
         {item && (
           <Builder

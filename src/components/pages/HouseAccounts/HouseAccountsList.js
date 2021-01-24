@@ -17,10 +17,12 @@ const HouseAccountsList = ({ houseAccounts }) => {
           <Row
             key={houseAccount.house_account_id}
             icon={
-              <QRCode
-                src={houseAccount.qr_code_url}
-                alt={`House Account ${houseAccount.pin}`}
-              />
+              houseAccount.qr_code_url ? (
+                <QRCode
+                  src={houseAccount.qr_code_url}
+                  alt={`House Account ${houseAccount.pin}`}
+                />
+              ) : null
             }
             content={
               <>

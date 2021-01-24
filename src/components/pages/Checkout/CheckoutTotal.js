@@ -9,7 +9,7 @@ import { Preface } from '@open-tender/components'
 import { selectLightColor } from '../../../slices'
 import { Container } from '../..'
 
-const CheckoutTotalView = styled('div')`
+const CheckoutTotalView = styled('header')`
   position: fixed;
   z-index: 10;
   right: 0;
@@ -41,7 +41,7 @@ const CheckoutTotal = ({ checkout = {} }) => {
     check && check.totals ? `${formatDollars(check.totals.total)}` : null
   const hasTip = check && check.config ? check.config.gratuity.has_tip : false
   return total ? (
-    <CheckoutTotalView>
+    <CheckoutTotalView role="banner">
       <Container>
         <CheckoutTotalContainer>
           <div>

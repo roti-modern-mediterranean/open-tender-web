@@ -21,7 +21,7 @@ const SidebarClose = () => {
     <SidebarCloseView>
       <ButtonLink
         onClick={() => dispatch(toggleSidebar())}
-        aria-label="Close cart & return to current page"
+        label="Close cart & return to current page"
       >
         <X size={20} />
       </ButtonLink>

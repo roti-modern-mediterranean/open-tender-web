@@ -33,7 +33,9 @@ const OrderCardCurrent = ({ order }) => {
       : isoToDateStr(requestedAt, tz, 'MMMM d, yyyy @ h:mma')
   const orderTypeStr = orderType === 'OLO' ? serviceType : orderType
   const streetAddress = makeOrderAddress(address)
-  const itemImages = cart.filter((i) => i.imageUrl)
+  const itemImages = cart
+    .filter((i) => i.imageUrl)
+    .map((i) => ({ title: i.name, ...i }))
   const itemNames = cart.map((i) => i.name).join(', ')
 
   const handleCheckout = () => {

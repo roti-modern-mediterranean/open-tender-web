@@ -27,7 +27,6 @@ const OrderImages = ({ images, names }) => {
           <OrderImage
             key={`${i.imageUrl}-${index}`}
             imageUrl={i.imageUrl}
-            alt={i.title}
             title={i.title}
           />
         ))}

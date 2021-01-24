@@ -114,7 +114,7 @@ const Footer = ({ hasRouter = true }) => {
           </FooterNav>
         </FooterContainer>
       </Container>
-      <FooterVersion>v{packageJson.version}</FooterVersion>
+      <FooterVersion aria-hidden="true">v{packageJson.version}</FooterVersion>
     </FooterView>
   )
 }

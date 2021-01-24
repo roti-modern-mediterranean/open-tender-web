@@ -8,7 +8,7 @@ import { selectCartQuantity } from '@open-tender/redux'
 
 import { toggleSidebar } from '../slices'
 
-const CartButtonView = styled('div')`
+const CartButtonView = styled('region')`
   position: fixed;
   z-index: 10;
   bottom: 2rem;
@@ -119,7 +119,7 @@ const CartButton = () => {
   }
 
   return !hideCart ? (
-    <CartButtonView>
+    <CartButtonView role="region">
       <CartButtonContainer>
         {cartQuantity > 0 && <CartButtonCount>{cartQuantity}</CartButtonCount>}
         <CartButtonButton
