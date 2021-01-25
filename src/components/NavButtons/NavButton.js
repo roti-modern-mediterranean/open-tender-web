@@ -21,6 +21,7 @@ const NavButtonView = styled('button')`
   font-size: ${(props) => props.theme.fonts.sizes.big};
   background-color: ${(props) => props.theme.bgColors.primary};
   border: 0.1rem solid ${(props) => props.theme.border.color};
+  border-radius: ${(props) => props.theme.border.radiusSmall};
   transition: ${(props) => props.theme.links.transition};
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
@@ -29,6 +30,7 @@ const NavButtonView = styled('button')`
     margin: 0;
     border: 0;
     border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
+    border-radius: 0;
     background-color: transparent;
     color: ${(props) => props.theme.colors.light};
   }
