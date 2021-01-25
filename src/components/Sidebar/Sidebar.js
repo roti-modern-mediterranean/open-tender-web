@@ -34,8 +34,11 @@ const Sidebar = () => {
       'a[href], button, input, select, textarea'
     )
     setElements(allElements)
-    const firstElement = allElements ? allElements[0] : null
-    if (firstElement) firstElement.focus()
+    const activeElements = Array.from(allElements).filter((i) => !i.disabled)
+    const lastElement = activeElements
+      ? activeElements[activeElements.length - 1]
+      : null
+    if (lastElement) lastElement.focus()
   }
 
   const handleKeys = useCallback(

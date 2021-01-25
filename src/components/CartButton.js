@@ -124,7 +124,7 @@ const CartButton = () => {
         {cartQuantity > 0 && <CartButtonCount>{cartQuantity}</CartButtonCount>}
         <CartButtonButton
           onClick={toggle}
-          aria-label="Open cart to review order"
+          aria-label="Open cart to review order, press escape key to access at any time"
         >
           <CartButtonIcon>
             <ShoppingBag size={null} />

@@ -5,6 +5,7 @@ import CartButton from './CartButton'
 import Content from './Content'
 import Container from './Container'
 import ErrorBoundary from './ErrorBoundary'
+import Footer from './Footer'
 import FormHeader from './FormHeader'
 import FormWrapper from './FormWrapper'
 import GroupOrderLink from './GroupOrderLink'
@@ -39,12 +40,13 @@ import PageContent from './PageContent'
 import PageError from './PageError'
 import PageTitle from './PageTitle'
 import ProgressBar from './ProgressBar'
+import QRCode from './QRCode'
 import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
 import Routes from './Routes'
+import Row from './Row'
 import ScreenreaderTitle from './ScreenreaderTitle'
 import Sidebar from './Sidebar'
-import QRCode from './QRCode'
-import Row from './Row'
+import SkipLink from './SkipLink'
 import Tag from './Tag'
 import Welcome from './Welcome'
 
@@ -56,6 +58,7 @@ export {
   Container,
   Content,
   ErrorBoundary,
+  Footer,
   FormHeader,
   FormWrapper,
   GroupOrderLink,
@@ -93,13 +96,14 @@ export {
   PageError,
   PageTitle,
   ProgressBar,
+  QRCode,
   RevenueCenter,
   RevenueCenterChild,
   Routes,
-  QRCode,
   Row,
   ScreenreaderTitle,
   Sidebar,
+  SkipLink,
   Tag,
   Welcome,
 }

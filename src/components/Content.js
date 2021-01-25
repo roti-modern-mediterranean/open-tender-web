@@ -1,15 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import Footer from './Footer'
-
-// const ContentContainer = styled('div')`
-//   position: relative;
-//   z-index: 1;
-//   width: 100%;
-//   max-width: ${(props) => props.maxWidth};
-//   background-color: ${(props) => props.theme.bgColors.primary};
-// `
+import { SkipLink, Footer } from '.'
 
 const ContentContainer = styled('div')`
   width: 100%;
@@ -21,6 +13,7 @@ const Content = ({ maxWidth = '100%', hasRouter = true, children }) => {
   return (
     <ContentContainer maxWidth={maxWidth}>
       <>
+        <SkipLink />
         {children}
         <Footer hasRouter={hasRouter} />
       </>

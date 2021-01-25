@@ -1,17 +1,16 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-const Main = styled('main')`
+const MainView = styled('main')`
   width: 100%;
   min-height: 100%;
-  padding: ${(props) => props.padding || '6rem 0 0'};
+  padding: ${(props) => props.padding};
   display: flex;
   flex-direction: column;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: ${(props) =>
-    props.theme.bgColors[props.bgColor || 'primary']};
+  background-color: ${(props) => props.theme.bgColors[props.bgColor]};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     ${(props) =>
       props.imageUrl
@@ -21,9 +20,31 @@ const Main = styled('main')`
   }
 `
 
+const Main = ({
+  padding = '6rem 0 0',
+  bgColor = 'primary',
+  imageUrl,
+  style,
+  children,
+}) => (
+  <MainView
+    role="main"
+    id="main"
+    padding={padding}
+    bgColor={bgColor}
+    imageUrl={imageUrl}
+    style={style}
+  >
+    {children}
+  </MainView>
+)
+
 Main.displayName = 'Main'
 Main.propTypes = {
+  padding: propTypes.string,
   bgColor: propTypes.string,
+  imageUrl: propTypes.string,
+  style: propTypes.object,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node,

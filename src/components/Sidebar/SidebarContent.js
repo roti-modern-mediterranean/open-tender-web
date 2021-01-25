@@ -206,6 +206,11 @@ const Sidebar = React.forwardRef((props, ref) => {
                   onClick={handleBack}
                   size="big"
                   disabled={!canOrder}
+                  label={
+                    !notEmpty
+                      ? 'Your cart is currently empty. Please add some items.'
+                      : null
+                  }
                 >
                   Menu
                 </ButtonStyled>
