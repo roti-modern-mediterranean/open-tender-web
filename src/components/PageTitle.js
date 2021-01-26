@@ -17,6 +17,7 @@ const PageTitleTitle = styled('h1')`
   color: ${(props) => props.theme.colors.title};
   font-size: ${(props) => props.theme.fonts.sizes.h1};
   margin: 0 0 0 -0.1rem;
+  line-height: 1.1;
 `
 
 const PageTitleSubtitle = styled('p')`

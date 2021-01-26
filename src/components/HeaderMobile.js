@@ -44,6 +44,10 @@ const HeaderMobileTitle = styled('div')`
 
   > span {
     display: block;
+    max-width: 26rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-family: ${(props) => props.theme.fonts.headings.family};
     font-weight: ${(props) => props.theme.fonts.headings.weight};
     letter-spacing: ${(props) => props.theme.fonts.headings.letterSpacing};
