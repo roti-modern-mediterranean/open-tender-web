@@ -8,8 +8,18 @@ const makeGlobalStyles = (theme) => css`
     box-sizing: border-box;
     font-size: 62.5%;
     font-family: sans-serif;
-    min-height: 100%;
+    height: 100%;
   }
+
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  // body.has-modal {
+  //   height: 100%;
+  //   overflow: hidden;
+  // }
 
   *,
   *:before,
@@ -173,11 +183,6 @@ const makeGlobalStyles = (theme) => css`
     color: ${theme.fonts.body.color};
     font-size: ${theme.fonts.sizes.main};
     background-color: ${theme.bgColors.primary};
-  }
-
-  body.has-modal {
-    height: 100%;
-    overflow: hidden;
   }
 
   header {
