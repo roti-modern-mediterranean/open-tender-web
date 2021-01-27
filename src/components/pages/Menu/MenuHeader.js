@@ -75,6 +75,10 @@ const MenuHeaderTitle = ({
   setShowMenu,
 }) => {
   const serviceTypeName = serviceTypeNamesMap[serviceType]
+  const orderTypeName =
+    revenueCenter && revenueCenter.revenue_center_type === 'CATERING'
+      ? ' Catering '
+      : ''
 
   const toggle = (evt) => {
     evt.preventDefault()
@@ -84,7 +88,8 @@ const MenuHeaderTitle = ({
   return revenueCenter ? (
     <>
       <MenuHeaderTitleServiceType>
-        Ordering {serviceTypeName}
+        Ordering {orderTypeName}
+        {serviceTypeName}
       </MenuHeaderTitleServiceType>
       <MenuHeaderTitleRevenueCenter onClick={toggle}>
         <span>&nbsp;</span>

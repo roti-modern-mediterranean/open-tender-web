@@ -12,7 +12,11 @@ const NavMenu = ({ color }) => {
   const { auth } = useSelector(selectCustomer)
 
   return (
-    <ButtonIcon color={color} onClick={() => dispatch(toggleNav())}>
+    <ButtonIcon
+      label={auth ? 'Account Navigation' : 'Login'}
+      color={color}
+      onClick={() => dispatch(toggleNav())}
+    >
       {auth ? iconMap.Menu : iconMap.User}
     </ButtonIcon>
   )
