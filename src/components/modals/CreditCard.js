@@ -41,7 +41,7 @@ const CreditCard = ({ windowRef }) => {
             api={api}
             brand={brand}
             customerId={customer_id}
-            amount="0.01"
+            amount="1.00"
             spinner={<Loading />}
             callback={callback}
           />
