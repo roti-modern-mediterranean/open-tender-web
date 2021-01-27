@@ -39,8 +39,12 @@ const MapsAutocomplete = ({
   autocomplete,
 }) => {
   const dispatch = useDispatch()
-  const { address } = useSelector(selectOrder)
+  const { address, serviceType } = useSelector(selectOrder)
   const formattedAddress = address ? address.formatted_address : ''
+  const placeholder =
+    serviceType === 'DELIVERY'
+      ? 'enter a delivery address'
+      : 'enter an address or zip code'
 
   return (
     <MapsAutocompleteView>
@@ -54,6 +58,7 @@ const MapsAutocomplete = ({
           setAddress={(address) => dispatch(setAddress(address))}
           setCenter={setCenter}
           icon={iconMap.Navigation}
+          placeholder={placeholder}
         />
       </Container>
     </MapsAutocompleteView>
