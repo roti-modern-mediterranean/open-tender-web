@@ -5,14 +5,19 @@ import {
   addCustomerCreditCard,
   resetCustomerCreditCardsError,
   selectCustomerCreditCards,
+  selectCustomer,
 } from '@open-tender/redux'
-import { CreditCardForm } from '@open-tender/components'
+import { AuthApplePay, CreditCardForm } from '@open-tender/components'
 
-import { closeModal } from '../../slices'
-import { ModalContent, ModalView } from '..'
+import { closeModal, selectAPI, selectBrand } from '../../slices'
+import { Loading, ModalContent, ModalView } from '..'
 
 const CreditCard = ({ windowRef }) => {
   const dispatch = useDispatch()
+  const brand = useSelector(selectBrand)
+  const api = useSelector(selectAPI)
+  const { profile } = useSelector(selectCustomer)
+  const { customer_id } = profile || {}
   const { loading, error } = useSelector(selectCustomerCreditCards)
   const addCard = useCallback(
     (data, callback) => dispatch(addCustomerCreditCard(data, callback)),
@@ -31,6 +36,15 @@ const CreditCard = ({ windowRef }) => {
   return (
     <ModalView>
       <ModalContent title="Add a new credit card">
+        {!!brand.applePayMerchantId && (
+          <AuthApplePay
+            api={api}
+            brand={brand}
+            customerId={customer_id}
+            spinner={<Loading />}
+            callback={callback}
+          />
+        )}
         <CreditCardForm
           windowRef={windowRef}
           loading={loading}

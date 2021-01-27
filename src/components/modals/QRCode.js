@@ -15,6 +15,7 @@ const QRCodeView = styled('button')`
   border-width: ${(props) => props.theme.border.width};
   border-color: ${(props) => props.theme.border.color};
   border-radius: ${(props) => props.theme.border.radiusSmall};
+  background-color: white;
 `
 
 const QRCode = ({ src, alt }) => {
