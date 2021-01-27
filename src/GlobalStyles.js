@@ -40,7 +40,8 @@ const makeGlobalStyles = (theme) => css`
   legend {
     margin: 0;
     padding: 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+
+    @media (max-width: ${theme.breakpoints.tablet}) {
       -webkit-text-size-adjust: none;
       text-size-adjust: none;
     }
