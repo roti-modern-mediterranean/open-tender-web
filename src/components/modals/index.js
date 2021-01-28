@@ -5,6 +5,7 @@ import CartCounts from './CartCounts'
 import CartErrors from './CartErrors'
 import Closed from './Closed'
 import CreditCard from './CreditCard'
+import CreditCardLinked from './CreditCardLinked'
 import GiftCard from './GiftCard'
 import GiftCardAssign from './GiftCardAssign'
 import GiftCardAssignOther from './GiftCardAssignOther'
@@ -27,6 +28,7 @@ export {
   CartErrors,
   Closed,
   CreditCard,
+  CreditCardLinked,
   GiftCard,
   GiftCardAssign,
   GiftCardAssignOther,

@@ -45,6 +45,7 @@ import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
 import Routes from './Routes'
 import Row from './Row'
 import ScreenreaderTitle from './ScreenreaderTitle'
+import SectionTitle from './SectionTitle'
 import Sidebar from './Sidebar'
 import SkipLink from './SkipLink'
 import Tag from './Tag'
@@ -102,6 +103,7 @@ export {
   Routes,
   Row,
   ScreenreaderTitle,
+  SectionTitle,
   Sidebar,
   SkipLink,
   Tag,

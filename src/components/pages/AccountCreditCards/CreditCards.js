@@ -18,7 +18,12 @@ const CreditCardIcon = styled('span')`
   // height: auto;
 `
 
-const CreditCards = ({ creditCards, isLoading }) => {
+const CreditCards = ({
+  creditCards,
+  isLoading,
+  style = { margin: '4rem 0 0' },
+  showDefault = true,
+}) => {
   const dispatch = useDispatch()
 
   const handleDefault = (creditCard) => {
@@ -33,7 +38,7 @@ const CreditCards = ({ creditCards, isLoading }) => {
   }
 
   return (
-    <div style={{ margin: '4rem 0 0' }}>
+    <div style={style}>
       {creditCards.map((creditCard) => (
         <Row
           key={creditCard.customer_card_id}
@@ -60,13 +65,18 @@ const CreditCards = ({ creditCards, isLoading }) => {
               </p>
               <p>{creditCard.masked}</p>
               <p>
-                <ButtonLink
-                  onClick={() => handleDefault(creditCard)}
-                  disabled={creditCard.is_default || isLoading}
-                >
-                  make default
-                </ButtonLink>
-                <LinkSeparator />
+                {showDefault && (
+                  <>
+                    <ButtonLink
+                      onClick={() => handleDefault(creditCard)}
+                      disabled={creditCard.is_default || isLoading}
+                    >
+                      make default
+                    </ButtonLink>
+                    <LinkSeparator />
+                  </>
+                )}
+
                 <ButtonLink
                   onClick={() => handleDelete(creditCard)}
                   disabled={isLoading}
@@ -86,6 +96,8 @@ CreditCards.displayName = 'CreditCards'
 CreditCards.prototypes = {
   creditCards: propTypes.array,
   isLoading: propTypes.bool,
+  style: propTypes.object,
+  showDefault: propTypes.bool,
 }
 
 export default CreditCards

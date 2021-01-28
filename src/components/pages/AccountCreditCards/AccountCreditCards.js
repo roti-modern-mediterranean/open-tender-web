@@ -5,7 +5,7 @@ import {
   fetchCustomerCreditCards,
   selectCustomerCreditCards,
 } from '@open-tender/redux'
-import { ButtonStyled } from '@open-tender/components'
+import { ButtonStyled, Message } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
 import { maybeRefreshVersion } from '../../../app/version'
@@ -23,16 +23,20 @@ import {
 import { AppContext } from '../../../App'
 import CreditCards from './CreditCards'
 import { useHistory } from 'react-router-dom'
+import SectionTitle from '../../SectionTitle'
 
 const AccountCreditCards = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { windowRef } = useContext(AppContext)
+  const { title: siteTitle, applePayMerchantId } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const account = useSelector(selectAccountConfig)
   const { entities, loading } = useSelector(selectCustomerCreditCards)
   const isLoading = loading === 'pending'
-  const { windowRef } = useContext(AppContext)
+  const savedCards = entities.filter((i) => i.has_profile)
+  const linkedCards = entities.filter((i) => !i.has_profile)
+  const hasLinkedCards = !!applePayMerchantId || linkedCards.length > 0
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -44,7 +48,8 @@ const AccountCreditCards = () => {
   }, [auth, history])
 
   useEffect(() => {
-    dispatch(fetchCustomerCreditCards(true))
+    const includeLinked = true
+    dispatch(fetchCustomerCreditCards(includeLinked))
   }, [dispatch])
 
   return (
@@ -71,12 +76,51 @@ const AccountCreditCards = () => {
               >
                 Add a New Credit Card
               </ButtonStyled>
-              {entities.length ? (
-                <CreditCards creditCards={entities} isLoading={isLoading} />
-              ) : isLoading ? (
-                <Loading text="Retrieving your cards on file..." />
-              ) : (
-                <p>Looks like you haven't added any credit cards yet.</p>
+              {savedCards.length > 0 && (
+                <CreditCards creditCards={savedCards} isLoading={isLoading} />
+              )}
+              {hasLinkedCards && (
+                <>
+                  <SectionTitle
+                    title="Linked Cards"
+                    subtitle="These are cards you have saved in either Apple Pay or
+                        Google Pay that have been linked with your account for
+                        loyalty recognition at the point of sale in our
+                        restaurants."
+                  />
+                  <ButtonStyled
+                    onClick={() =>
+                      dispatch(openModal({ type: 'creditCardLinked' }))
+                    }
+                  >
+                    Add a New Linked Card
+                  </ButtonStyled>
+                  {linkedCards.length > 0 && (
+                    <Message
+                      color="alert"
+                      size="small"
+                      style={{ width: '100%', margin: '3rem 0' }}
+                    >
+                      PLEASE NOTE: To pay with these cards ONLINE, use the Apple
+                      Pay or Google Pay option on the checkout page.
+                    </Message>
+                  )}
+                  <CreditCards
+                    creditCards={linkedCards}
+                    isLoading={isLoading}
+                    style={{ margin: '0' }}
+                    showDefault={false}
+                  />
+                </>
+              )}
+              {entities.length === 0 && (
+                <>
+                  {isLoading ? (
+                    <Loading text="Retrieving your cards on file..." />
+                  ) : (
+                    <p>Looks like you haven't added any credit cards yet.</p>
+                  )}
+                </>
               )}
             </PageContent>
           </Container>

@@ -15,6 +15,7 @@ import {
   CartErrors,
   Closed,
   CreditCard,
+  CreditCardLinked,
   GiftCard,
   GiftCardAssign,
   GiftCardAssignOther,
@@ -46,6 +47,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <Closed {...args} />
     case 'creditCard':
       return <CreditCard windowRef={windowRef} {...args} />
+    case 'creditCardLinked':
+      return <CreditCardLinked {...args} />
     case 'giftCard':
       return <GiftCard windowRef={windowRef} {...args} />
     case 'giftCardAssign':
