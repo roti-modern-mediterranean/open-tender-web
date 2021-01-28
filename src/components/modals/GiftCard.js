@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import {
-  selectCustomerCreditCards,
+  selectCustomerCreditCardsForPayment,
   selectCustomerGiftCards,
   updateCustomerGiftCard,
   addCustomerGiftCard,
@@ -16,7 +16,7 @@ import { ModalContent, ModalView } from '..'
 const GiftCard = ({ windowRef, giftCard }) => {
   const dispatch = useDispatch()
   const { loading, error } = useSelector(selectCustomerGiftCards)
-  const { entities: creditCards } = useSelector(selectCustomerCreditCards) || {}
+  const creditCards = useSelector(selectCustomerCreditCardsForPayment)
   const update = useCallback(
     (id, data, callback) =>
       dispatch(updateCustomerGiftCard(id, data, callback)),

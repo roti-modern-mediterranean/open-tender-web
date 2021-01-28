@@ -11,7 +11,7 @@ import {
   purchaseGiftCards,
   selectCustomer,
   fetchCustomerCreditCards,
-  selectCustomerCreditCards,
+  selectCustomerCreditCardsForPayment,
   setAlert,
 } from '@open-tender/redux'
 
@@ -38,7 +38,7 @@ const GiftCards = () => {
   const { giftCards: config } = useSelector(selectConfig)
   const { title } = useSelector(selectBrand)
   const { profile: customer } = useSelector(selectCustomer) || {}
-  const { entities: creditCards } = useSelector(selectCustomerCreditCards) || {}
+  const creditCards = useSelector(selectCustomerCreditCardsForPayment)
   const { success, loading, error, giftCards } = useSelector(selectGiftCards)
   const purchase = useCallback(
     (data, callback) => dispatch(purchaseGiftCards(data, callback)),

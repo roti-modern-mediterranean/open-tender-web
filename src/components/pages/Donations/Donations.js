@@ -10,7 +10,7 @@ import {
   purchaseDonation,
   selectCustomer,
   fetchCustomerCreditCards,
-  selectCustomerCreditCards,
+  selectCustomerCreditCardsForPayment,
   setAlert,
 } from '@open-tender/redux'
 
@@ -32,7 +32,7 @@ const Donations = () => {
   const { donations: config } = useSelector(selectConfig)
   const { title: siteTitle } = useSelector(selectBrand)
   const { profile: customer } = useSelector(selectCustomer) || {}
-  const { entities: creditCards } = useSelector(selectCustomerCreditCards) || {}
+  const creditCards = useSelector(selectCustomerCreditCardsForPayment)
   const { success, loading, error, donation } = useSelector(selectDonation)
   const { windowRef } = useContext(AppContext)
   const purchase = useCallback(

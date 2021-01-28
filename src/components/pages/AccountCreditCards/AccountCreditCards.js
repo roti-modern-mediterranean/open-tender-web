@@ -44,7 +44,7 @@ const AccountCreditCards = () => {
   }, [auth, history])
 
   useEffect(() => {
-    dispatch(fetchCustomerCreditCards())
+    dispatch(fetchCustomerCreditCards(true))
   }, [dispatch])
 
   return (

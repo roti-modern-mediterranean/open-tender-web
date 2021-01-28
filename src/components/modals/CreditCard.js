@@ -6,6 +6,7 @@ import {
   resetCustomerCreditCardsError,
   selectCustomerCreditCards,
   selectCustomer,
+  fetchCustomerCreditCards,
 } from '@open-tender/redux'
 import { AuthApplePay, CreditCardForm } from '@open-tender/components'
 
@@ -24,6 +25,11 @@ const CreditCard = ({ windowRef }) => {
     [dispatch]
   )
   const callback = useCallback(() => dispatch(closeModal()), [dispatch])
+  const applePayCallback = useCallback(() => {
+    const includeLinked = true
+    dispatch(fetchCustomerCreditCards(includeLinked))
+    dispatch(closeModal())
+  }, [dispatch])
 
   useEffect(() => {
     return () => dispatch(resetCustomerCreditCardsError())
@@ -43,7 +49,7 @@ const CreditCard = ({ windowRef }) => {
             customerId={customer_id}
             amount="1.00"
             spinner={<Loading />}
-            callback={callback}
+            callback={applePayCallback}
           />
         )}
         <CreditCardForm
