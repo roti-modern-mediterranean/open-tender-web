@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   updateCustomer,
@@ -62,7 +63,7 @@ const AccountProfile = () => {
       <Background imageUrl={account.background} />
       <Content maxWidth="76.8rem">
         <HeaderAccount
-          title={account.profile.title}
+          title={isBrowser ? null : account.profile.title}
           maxWidth="76.8rem"
           text="Back to Settings"
           path="/account/settings"

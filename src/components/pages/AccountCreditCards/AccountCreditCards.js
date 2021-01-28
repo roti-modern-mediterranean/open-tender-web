@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   fetchCustomerCreditCards,
@@ -19,11 +21,10 @@ import {
   Main,
   PageTitle,
   PageContent,
+  SectionTitle,
 } from '../..'
 import { AppContext } from '../../../App'
 import CreditCards from './CreditCards'
-import { useHistory } from 'react-router-dom'
-import SectionTitle from '../../SectionTitle'
 
 const AccountCreditCards = () => {
   const dispatch = useDispatch()
@@ -62,7 +63,7 @@ const AccountCreditCards = () => {
       <Background imageUrl={account.background} />
       <Content maxWidth="76.8rem">
         <HeaderAccount
-          title={account.creditCards.title}
+          title={isBrowser ? null : account.creditCards.title}
           maxWidth="76.8rem"
           text="Back to Settings"
           path="/account/settings"

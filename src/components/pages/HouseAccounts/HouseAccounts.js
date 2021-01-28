@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerHouseAccounts,
@@ -22,7 +24,6 @@ import {
 } from '../..'
 import { AppContext } from '../../../App'
 import HouseAccountsList from './HouseAccountsList'
-import { useHistory } from 'react-router-dom'
 
 const AccountHouseAccounts = () => {
   const dispatch = useDispatch()
@@ -57,7 +58,7 @@ const AccountHouseAccounts = () => {
       <Background imageUrl={account.background} />
       <Content maxWidth="76.8rem">
         <HeaderAccount
-          title={account.houseAccounts.title}
+          title={isBrowser ? null : account.houseAccounts.title}
           maxWidth="76.8rem"
           text="Back to Settings"
           path="/account/settings"

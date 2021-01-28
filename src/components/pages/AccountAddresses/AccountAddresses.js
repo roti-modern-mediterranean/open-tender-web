@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   fetchCustomerAddresses,
@@ -57,7 +58,7 @@ const AccountAddresses = () => {
       <Background imageUrl={config.account.background} />
       <Content maxWidth="76.8rem">
         <HeaderAccount
-          title={config.addresses.title}
+          title={isBrowser ? null : config.account.addresses.title}
           maxWidth="76.8rem"
           text="Back to Settings"
           path="/account/settings"

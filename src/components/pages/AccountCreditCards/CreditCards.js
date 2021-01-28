@@ -5,7 +5,7 @@ import {
   updateCustomerCreditCard,
   removeCustomerCreditCard,
 } from '@open-tender/redux'
-import { ButtonLink, Preface } from '@open-tender/components'
+import { Checkmark, ButtonLink, Preface } from '@open-tender/components'
 
 import { cardIconMap } from '../../../assets/cardIcons'
 import { LinkSeparator, Row } from '../..'
@@ -55,13 +55,21 @@ const CreditCards = ({
               {creditCard.is_default && (
                 <Preface
                   size="xSmall"
-                  style={{ display: 'inline-block', margin: '0 0 0.3rem' }}
+                  style={{
+                    display: 'inline-block',
+                    margin: '0 1.0rem 0.3rem 0',
+                  }}
                 >
-                  Default
+                  Primary
                 </Preface>
               )}
               <p>
                 {creditCard.card_type_name} ending in {creditCard.last4}
+                {creditCard.is_default && (
+                  <span style={{ paddingLeft: '0.5rem' }}>
+                    <Checkmark />
+                  </span>
+                )}
               </p>
               <p>{creditCard.masked}</p>
               <p>
@@ -71,7 +79,7 @@ const CreditCards = ({
                       onClick={() => handleDefault(creditCard)}
                       disabled={creditCard.is_default || isLoading}
                     >
-                      make default
+                      make primary
                     </ButtonLink>
                     <LinkSeparator />
                   </>

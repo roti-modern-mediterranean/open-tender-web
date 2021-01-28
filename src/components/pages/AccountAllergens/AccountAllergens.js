@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
 import {
   fetchAllergens,
   selectAllergens,
@@ -84,7 +85,7 @@ const AccountAllergens = () => {
       <Background imageUrl={account.background} />
       <Content maxWidth="76.8rem">
         <HeaderAccount
-          title={account.allergens.title}
+          title={isBrowser ? null : account.allergens.title}
           maxWidth="76.8rem"
           text="Back to Settings"
           path="/account/settings"

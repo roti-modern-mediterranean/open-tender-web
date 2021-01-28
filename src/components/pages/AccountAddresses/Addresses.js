@@ -52,7 +52,7 @@ const Addresses = ({ addresses, isLoading }) => {
                   size="xSmall"
                   style={{ display: 'inline-block', margin: '0 0 0.3rem' }}
                 >
-                  Default
+                  Primary
                 </Preface>
               )}
               <OrderAddress address={address}>
@@ -68,7 +68,7 @@ const Addresses = ({ addresses, isLoading }) => {
                     onClick={() => handleDefault(address)}
                     disabled={address.is_default || isLoading}
                   >
-                    make default
+                    make primay
                   </ButtonLink>
                   <LinkSeparator />
                   <ButtonLink
