@@ -45,7 +45,7 @@ const messaging = {
   },
 }
 
-const LoginModal = ({ callback }) => {
+const LoginModal = ({ callback, posToken }) => {
   const [isReset, setIsReset] = useState(false)
   const dispatch = useDispatch()
   const history = useHistory()
@@ -63,7 +63,8 @@ const LoginModal = ({ callback }) => {
     : 'login'
   const msg = messaging[mode]
   const login = useCallback(
-    (email, password) => dispatch(loginCustomer(email, password)),
+    (email, password, posToken) =>
+      dispatch(loginCustomer(email, password, posToken)),
     [dispatch]
   )
   const sendReset = useCallback(
@@ -143,6 +144,7 @@ const LoginModal = ({ callback }) => {
             login={has_thanx ? loginThanx : login}
             callback={callback}
             hasThanx={has_thanx}
+            posToken={posToken}
           />
         )}
       </ModalContent>

@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useContext } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory, useLocation, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
@@ -8,11 +8,19 @@ import {
   selectSignUp,
   signUpCustomer,
   resetSignUp,
+  addMessage,
+  showNotification,
 } from '@open-tender/redux'
-import { SignUpForm } from '@open-tender/components'
+import { ButtonLink, SignUpForm } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
+import {
+  openModal,
+  selectAPI,
+  selectBrand,
+  selectConfig,
+  selectOptIns,
+} from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Background,
@@ -47,12 +55,19 @@ export const ThanxTerms = () => (
   </p>
 )
 
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search)
+}
+
 const SignUp = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const posToken = useQuery().get('pos-token')
+  const api = useSelector(selectAPI)
   const { signUp: signupConfig } = useSelector(selectConfig)
   const { title: siteTitle, has_thanx } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
+  const token = auth ? auth.access_token : null
   const { loading, error } = useSelector(selectSignUp)
   const optIns = useSelector(selectOptIns)
   const { windowRef } = useContext(AppContext)
@@ -69,12 +84,28 @@ const SignUp = () => {
   }, [windowRef, dispatch])
 
   useEffect(() => {
-    if (auth) return history.push('/account')
-  }, [auth, history])
+    if (auth) {
+      if (posToken) {
+        api
+          .postCustomerPosToken(token, posToken)
+          .then(() => dispatch(showNotification('Order successfully linked!')))
+          .catch((err) => {
+            dispatch(addMessage(err.detail || err.message))
+          })
+          .finally(history.push('/account'))
+      } else {
+        return history.push('/account')
+      }
+    }
+  }, [auth, history, posToken, token, api, dispatch])
 
   useEffect(() => {
     if (error) windowRef.current.scrollTop = 0
   }, [error, windowRef])
+
+  const login = () => {
+    dispatch(openModal({ type: 'login', args: { posToken } }))
+  }
 
   return (
     <>
@@ -90,6 +121,12 @@ const SignUp = () => {
           <Container>
             <PageTitle {...signupConfig} />
             <PageContent>
+              {posToken && (
+                <p style={{ margin: '0 0 4rem' }}>
+                  Already have an account?{' '}
+                  <ButtonLink onClick={login}>Click here to log in.</ButtonLink>
+                </p>
+              )}
               {has_thanx && <ThanxTerms />}
               <FormWrapper>
                 <SignUpForm
@@ -98,6 +135,7 @@ const SignUp = () => {
                   signUp={signUp}
                   optIns={optIns}
                   hasThanx={has_thanx}
+                  posToken={posToken}
                 />
               </FormWrapper>
               <div style={{ margin: '3rem 0' }}>

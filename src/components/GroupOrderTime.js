@@ -28,9 +28,7 @@ const GroupOrderTime = () => {
         ? `Please note that this order is currently scheduled for ASAP and will be ready about ${prepTime} minutes from the time it gets submitted.`
         : `Please note that this order must be submitted by ${cutoffTime} in order to
       be ready by the scheduled time of ${orderTime}.`}{' '}
-      <ButtonLink text="" onClick={adjustTime}>
-        Choose a different time.
-      </ButtonLink>
+      <ButtonLink onClick={adjustTime}>Choose a different time.</ButtonLink>
     </p>
   )
 }

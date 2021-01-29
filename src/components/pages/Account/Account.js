@@ -41,7 +41,7 @@ const Account = () => {
 
   useEffect(() => {
     if (!token) return history.push('/')
-    dispatch(fetchCustomer({ token }))
+    dispatch(fetchCustomer())
     dispatch(fetchCustomerCreditCards(true))
     if (has_thanx) dispatch(fetchCustomerThanx())
   }, [token, dispatch, history, has_thanx])
