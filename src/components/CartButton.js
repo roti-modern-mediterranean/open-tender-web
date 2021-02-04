@@ -8,7 +8,7 @@ import { selectCartQuantity } from '@open-tender/redux'
 
 import { toggleSidebar } from '../slices'
 
-const CartButtonView = styled('region')`
+const CartButtonView = styled('div')`
   position: fixed;
   z-index: 10;
   bottom: 2rem;
