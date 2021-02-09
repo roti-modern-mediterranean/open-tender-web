@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Message } from '@open-tender/components'
 import { fetchCustomerLoyalty, selectCustomerLoyalty } from '@open-tender/redux'
 import { loyaltyType } from '@open-tender/js'
 import { Loading } from '../..'
@@ -7,13 +8,17 @@ import RewardsProgram from './RewardsProgam'
 
 const RewardsPrograms = () => {
   const dispatch = useDispatch()
-  const { entities, loading } = useSelector(selectCustomerLoyalty)
+  const { entities, loading, error } = useSelector(selectCustomerLoyalty)
 
   useEffect(() => {
     dispatch(fetchCustomerLoyalty())
   }, [dispatch])
 
-  return entities.length ? (
+  return error ? (
+    <Message color="error" style={{ width: '100%' }}>
+      {error}
+    </Message>
+  ) : entities.length ? (
     <div>
       {entities.map((program) => {
         const {
