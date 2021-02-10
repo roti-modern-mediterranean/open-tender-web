@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
@@ -7,6 +7,7 @@ import {
   selectOrderRating,
   fetchOrderRating,
   updateOrderRating,
+  selectCustomer,
 } from '@open-tender/redux'
 import { Message, OrderRatingForm } from '@open-tender/components'
 
@@ -25,8 +26,14 @@ import {
 } from '../..'
 import iconMap from '../../iconMap'
 
-const makePageTitles = (orderRating) => {
-  if (orderRating && orderRating.order_id) {
+const makePageTitles = (orderRating, isSubmitted) => {
+  if (isSubmitted) {
+    return {
+      title: 'Thanks for rating your order!',
+      subtitle:
+        'You can update your rating from your Order History if you need to make any adjustments.',
+    }
+  } else if (orderRating && orderRating.order_id) {
     return {
       title: `Almost done!`,
       subtitle: `Please verify your rating and add any comments (optionally) for order #${orderRating.order_id}, and then click Submit.`,
@@ -52,12 +59,14 @@ const Rating = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const { orderRating, loading, error } = useSelector(selectOrderRating)
+  const { auth } = useSelector(selectCustomer)
   const errMsg = error ? error.message || null : null
   const title = orderRating
     ? `Rating Order #${orderRating.order_id}`
     : 'Rating Not Found'
   const { windowRef } = useContext(AppContext)
-  const pageTitles = makePageTitles(orderRating)
+  const isSubmitted = submitted && !error && loading !== 'pending'
+  const pageTitles = makePageTitles(orderRating, isSubmitted)
   const adjustedRating =
     queryRating && !submitted
       ? { ...orderRating, rating: parseInt(queryRating) }
@@ -99,6 +108,14 @@ const Rating = () => {
                 <Message color="error" style={{ width: '100%' }}>
                   {errMsg}
                 </Message>
+              ) : submitted ? (
+                <p>
+                  {auth ? (
+                    <Link to="/account">Head back to your account page</Link>
+                  ) : (
+                    <Link to="/">Head back to the home page</Link>
+                  )}
+                </p>
               ) : orderRating ? (
                 <OrderRatingForm
                   orderId={ratingUuid}
