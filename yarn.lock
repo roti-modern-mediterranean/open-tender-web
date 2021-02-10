@@ -1567,17 +1567,17 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@open-tender/components@^2.4.2":
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-2.4.2.tgz#c151be195adf508530836dadfc74a220a56ebc09"
-  integrity sha512-OvbBYnP6szTKQoDS5AvjDzQ2pOHaVEeF49aD29epz0P4rZUizOydXd3hN93kEABd1VqOhH7SrBAPdUwgrJsqTA==
+"@open-tender/components@^2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@open-tender/components/-/components-2.4.3.tgz#dc4171f4d6aae8455f26e9af6c1d25649d9f8312"
+  integrity sha512-gWNp4joG6DnRbhZCcmsEu33fIqmFzmIxSVunGqZ4ebceZWSVBCRQgq+CQkp6LUB+rJR7g0zrMARu5UgAS5m75w==
   dependencies:
     "@google-pay/button-react" "^2.1.5"
 
-"@open-tender/js@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.3.2.tgz#3f1a22f8b44bce0b83f3fcbaae8ca18c1959cd86"
-  integrity sha512-BkWsiaJhTIzQt+0EOWp+02NufsNRK02mq7DcnvUeta06jr/JP7IaaZ9iT6/YrzH2XTXWRUWHbSLMVFpKsX3Wog==
+"@open-tender/js@^1.3.4":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@open-tender/js/-/js-1.3.4.tgz#83026653462ba9fb2fde237ca3035b1f9e3ba768"
+  integrity sha512-+xMJZJJ5IqvEz6xZyXRrmCOH/2A7K9ILmOjQcGFAy82lwBsyzKyMiqIz3vrekRNe/gvFExKSKIpj3/seoh4lkg==
 
 "@open-tender/redux@^1.9.0":
   version "1.9.0"
