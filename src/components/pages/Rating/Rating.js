@@ -7,6 +7,8 @@ import {
   selectOrderRating,
   fetchOrderRating,
   updateOrderRating,
+  unsubscribeOrderRating,
+  resetOrderRating,
   selectCustomer,
 } from '@open-tender/redux'
 import { Message, OrderRatingForm } from '@open-tender/components'
@@ -26,8 +28,13 @@ import {
 } from '../..'
 import iconMap from '../../iconMap'
 
-const makePageTitles = (orderRating, isSubmitted) => {
-  if (isSubmitted) {
+const makePageTitles = (orderRating, isSubmitted, unsubscribe) => {
+  if (unsubscribe) {
+    return {
+      title: "You've been unsubscribed",
+      subtitle: 'You will not receive future order rating emails.',
+    }
+  } else if (isSubmitted) {
     return {
       title: 'Thanks for rating your order!',
       subtitle:
@@ -54,6 +61,7 @@ const Rating = () => {
   const dispatch = useDispatch()
   const query = useQuery()
   const queryRating = query.get('rating')
+  const unsubscribe = query.get('unsubscribe')
   const [submitted, setSubmitted] = useState(false)
   const { id: ratingUuid } = useParams()
   const { title: siteTitle } = useSelector(selectBrand)
@@ -66,7 +74,7 @@ const Rating = () => {
     : 'Rating Not Found'
   const { windowRef } = useContext(AppContext)
   const isSubmitted = submitted && !error && loading !== 'pending'
-  const pageTitles = makePageTitles(orderRating, isSubmitted)
+  const pageTitles = makePageTitles(orderRating, isSubmitted, unsubscribe)
   const adjustedRating =
     queryRating && !submitted
       ? { ...orderRating, rating: parseInt(queryRating) }
@@ -85,8 +93,13 @@ const Rating = () => {
   }, [windowRef])
 
   useEffect(() => {
-    dispatch(fetchOrderRating(ratingUuid))
-  }, [dispatch, ratingUuid])
+    if (unsubscribe) {
+      dispatch(unsubscribeOrderRating(ratingUuid))
+    } else {
+      dispatch(fetchOrderRating(ratingUuid))
+    }
+    return () => dispatch(resetOrderRating())
+  }, [dispatch, ratingUuid, unsubscribe])
 
   return (
     <>
