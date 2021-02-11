@@ -9,7 +9,7 @@ import {
   selectGroupOrder,
   selectAutoSelect,
 } from '@open-tender/redux'
-import { ButtonStyled, Message, Text } from '@open-tender/components'
+import { ButtonStyled, Message } from '@open-tender/components'
 
 import { selectConfig } from '../../slices'
 import iconMap from '../iconMap'
@@ -85,9 +85,13 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
           {msg.message && (
             <RevenueCenterOrderMessage>
               <p>
-                <Text color="success" size="small">
+                <Message
+                  color={msg.color}
+                  size="small"
+                  style={{ borderRadius: '0.3rem' }}
+                >
                   {msg.message}
-                </Text>
+                </Message>
               </p>
             </RevenueCenterOrderMessage>
           )}
