@@ -74,9 +74,9 @@ const MenuItemCount = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 2.2em;
-  height: 2.2em;
-  border-radius: 1.1em;
+  min-width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 1.3em;
   padding-bottom: 0.1rem;
   border-width: 0.2rem;
   border-style: solid;

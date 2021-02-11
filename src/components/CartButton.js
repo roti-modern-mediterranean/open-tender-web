@@ -44,8 +44,7 @@ const CartButtonButton = styled('button')`
   border-color: ${(props) => props.theme.buttons.colors.cart.borderColor};
 
   &:hover,
-  &:active,
-  &:focus {
+  &:active {
     color: ${(props) => props.theme.buttons.colors.cartHover.color};
     background-color: ${(props) =>
       props.theme.buttons.colors.cartHover.bgColor};
@@ -53,10 +52,16 @@ const CartButtonButton = styled('button')`
       props.theme.buttons.colors.cartHover.borderColor};
   }
 
-  // &:focus {
-  //   outline: none;
-  //   box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 1);
-  // }
+  &:focus {
+    outline: none;
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 1);
+    // border: 0.2rem solid
+    //   ${(props) => props.theme.buttons.colors.cartHover.color};
+    // box-shadow: 0 5px 15px 0
+    //   ${(props) => props.theme.buttons.colors.cart.bgColor};
+    // box-shadow: 0 0 0 2px
+    //   ${(props) => props.theme.buttons.colors.cartHover.bgColor};
+  }
 
   &:disabled {
     color: ${(props) => props.theme.buttons.colors.cart.color};
@@ -82,13 +87,13 @@ const CartButtonIcon = styled('div')`
 const CartButtonCount = styled('div')`
   position: absolute;
   top: -0.3rem;
-  right: -0.3rem;
+  right: -0.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 2.2em;
-  height: 2.2em;
-  border-radius: 1.1em;
+  min-width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 1.3rem;
   padding-bottom: 0.1rem;
   border-width: 0.2rem;
   border-style: solid;
