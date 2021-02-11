@@ -28,7 +28,7 @@ import {
 } from '../..'
 import iconMap from '../../iconMap'
 
-const makePageTitles = (orderRating, isSubmitted, unsubscribe) => {
+const makePageTitles = (orderRating, isSubmitted, unsubscribe, isCancelled) => {
   if (unsubscribe) {
     return {
       title: "You've been unsubscribed",
@@ -44,6 +44,10 @@ const makePageTitles = (orderRating, isSubmitted, unsubscribe) => {
     return {
       title: `Almost done!`,
       subtitle: `Please verify your rating and add any comments (optionally) for order #${orderRating.order_id}, and then click Submit.`,
+    }
+  } else if (isCancelled) {
+    return {
+      title: 'This order has been cancelled',
     }
   } else {
     return {
@@ -68,13 +72,19 @@ const Rating = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const { orderRating, loading, error } = useSelector(selectOrderRating)
   const { auth } = useSelector(selectCustomer)
-  const errMsg = error ? error.message || null : null
+  const errMsg = error ? error || error.message : null
+  const isCancelled = errMsg && errMsg.includes('cancelled')
   const title = orderRating
     ? `Rating Order #${orderRating.order_id}`
     : 'Rating Not Found'
   const { windowRef } = useContext(AppContext)
   const isSubmitted = submitted && !error && loading !== 'pending'
-  const pageTitles = makePageTitles(orderRating, isSubmitted, unsubscribe)
+  const pageTitles = makePageTitles(
+    orderRating,
+    isSubmitted,
+    unsubscribe,
+    isCancelled
+  )
   const adjustedRating =
     queryRating && !submitted
       ? { ...orderRating, rating: parseInt(queryRating) }
