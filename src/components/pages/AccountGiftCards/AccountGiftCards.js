@@ -1,7 +1,11 @@
 import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { selectCustomer, selectCustomerGiftCards } from '@open-tender/redux'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  selectCustomer,
+  selectCustomerGiftCards,
+  fetchCustomerGiftCards,
+} from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
 
@@ -23,6 +27,7 @@ import GiftCardButtons from './GiftCardsButtons'
 
 const AccountGiftCards = () => {
   const history = useHistory()
+  const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const config = useSelector(selectAccountConfig)
   const { entities, loading } = useSelector(selectCustomerGiftCards)
@@ -38,6 +43,10 @@ const AccountGiftCards = () => {
   useEffect(() => {
     if (!auth) return history.push('/')
   }, [auth, history])
+
+  useEffect(() => {
+    dispatch(fetchCustomerGiftCards())
+  }, [dispatch])
 
   return (
     <>
