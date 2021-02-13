@@ -21,6 +21,7 @@ import { Background, Content, HeaderMobile, Main, Welcome } from '../..'
 import { Logout, StartOver } from '../../buttons'
 import AccountActions from './AccountActions'
 import AccountButtons from './AccountButtons'
+import AccountScan from './AccountScan'
 
 const Account = () => {
   const history = useHistory()
@@ -67,6 +68,7 @@ const Account = () => {
           bgColor={isBrowser ? 'primary' : 'transparent'}
           borderColor={isBrowser ? 'primary' : 'transparent'}
           maxWidth="76.8rem"
+          title={<AccountScan />}
           left={<StartOver isLogo={true} color="light" />}
           right={<Logout color="light" />}
         />

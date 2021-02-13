@@ -7,6 +7,7 @@ const QRCodeView = styled('button')`
   display: block;
   width: 100%;
   min-width: 8rem;
+  line-height: 0.1;
   padding: ${(props) => props.padding};
   border-style: solid;
   border-width: ${(props) => props.theme.border.width};
