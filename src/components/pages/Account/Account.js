@@ -68,7 +68,7 @@ const Account = () => {
           bgColor={isBrowser ? 'primary' : 'transparent'}
           borderColor={isBrowser ? 'primary' : 'transparent'}
           maxWidth="76.8rem"
-          title={<AccountScan />}
+          title={!isBrowser && <AccountScan />}
           left={<StartOver isLogo={true} color="light" />}
           right={<Logout color="light" />}
         />
