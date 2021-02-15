@@ -23,6 +23,10 @@ const OrderSectionLabel = styled('div')`
   flex: 0 0 15rem;
   margin: 0 2rem 0 0;
 
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex: 0 0 8rem;
+  }
+
   span {
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }

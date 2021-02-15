@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { ShoppingBag } from 'react-feather'
 import styled from '@emotion/styled'
 import { contains } from '@open-tender/js'
-import { selectCartQuantity } from '@open-tender/redux'
+import { selectCanOrder, selectCartQuantity } from '@open-tender/redux'
 
 import { toggleSidebar } from '../slices'
 
@@ -112,11 +112,13 @@ const CartButtonCount = styled('div')`
 const CartButton = () => {
   const dispatch = useDispatch()
   const { pathname } = useLocation()
+  const canOrder = useSelector(selectCanOrder)
   const cartQuantity = useSelector(selectCartQuantity)
   const showEmptyCart = contains(pathname, ['menu', 'checkout'])
   const hideCart =
     (cartQuantity === 0 && !showEmptyCart) ||
-    contains(pathname, ['review', 'gift-cards'])
+    contains(pathname, ['review', 'gift-cards']) ||
+    !canOrder
 
   const toggle = (evt) => {
     evt.preventDefault()
