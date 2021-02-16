@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import { selectCustomer } from '@open-tender/redux'
 import { ButtonIcon } from '@open-tender/components'
 
@@ -10,6 +11,8 @@ import iconMap from '../iconMap'
 const NavMenu = ({ color }) => {
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
 
   return (
     <ButtonIcon
@@ -17,7 +20,7 @@ const NavMenu = ({ color }) => {
       color={color}
       onClick={() => dispatch(toggleNav())}
     >
-      {auth ? iconMap.Menu : iconMap.User}
+      {!auth || isHome ? iconMap.User : iconMap.Menu}
     </ButtonIcon>
   )
 }

@@ -8,6 +8,9 @@ import { openModal, selectBrand } from '../../../slices'
 import iconMap from '../../iconMap'
 
 const AccountScanView = styled('div')`
+  opacity: 0;
+  animation: slide-down 0.25s ease-in-out 0.125s forwards;
+
   button {
     padding: 0.8rem 1.5rem 0.8rem 1.3rem;
     border-width: ${(props) => props.theme.border.width};
