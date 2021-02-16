@@ -8,8 +8,10 @@ import {
   fetchCustomer,
   fetchCustomerCreditCards,
   resetCustomerThanx,
+  // fetchCustomerThanx,
+  fetchCustomerRewards,
+  selectCustomerRewards,
   selectCustomerThanx,
-  fetchCustomerThanx,
   logoutCustomer,
   addMessage,
 } from '@open-tender/redux'
@@ -22,6 +24,7 @@ import { Logout, StartOver } from '../../buttons'
 import AccountActions from './AccountActions'
 import AccountButtons from './AccountButtons'
 import AccountScan from './AccountScan'
+import AccountTabs from './AccountTabs'
 
 const Account = () => {
   const history = useHistory()
@@ -29,6 +32,8 @@ const Account = () => {
   const { title: siteTitle, has_thanx } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
+  const rewards = useSelector(selectCustomerRewards)
+  console.log(rewards)
   const { background, mobile, title, subtitle } = accountConfig
   const { auth, profile } = useSelector(selectCustomer)
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
@@ -44,7 +49,8 @@ const Account = () => {
     if (!token) return history.push('/')
     dispatch(fetchCustomer())
     dispatch(fetchCustomerCreditCards(true))
-    if (has_thanx) dispatch(fetchCustomerThanx())
+    // if (has_thanx) dispatch(fetchCustomerThanx())
+    dispatch(fetchCustomerRewards())
   }, [token, dispatch, history, has_thanx])
 
   useEffect(() => {
@@ -82,7 +88,7 @@ const Account = () => {
             }
             content={<AccountActions />}
           >
-            <AccountButtons />
+            {isBrowser ? <AccountButtons /> : <AccountTabs />}
           </Welcome>
         </Main>
       </Content>
