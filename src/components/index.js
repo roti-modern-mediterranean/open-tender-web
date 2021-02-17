@@ -40,6 +40,7 @@ import PageContent from './PageContent'
 import PageError from './PageError'
 import PageTitle from './PageTitle'
 import ProgressBar from './ProgressBar'
+import ProgressCircle from './ProgressCircle'
 import QRCode from './QRCode'
 import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
 import Routes from './Routes'
@@ -50,6 +51,8 @@ import Sidebar from './Sidebar'
 import SkipLink from './SkipLink'
 import Tag from './Tag'
 import Welcome from './Welcome'
+import WelcomeContent from './WelcomeContent'
+import WelcomeHeader from './WelcomeHeader'
 
 export {
   Alerts,
@@ -97,6 +100,7 @@ export {
   PageError,
   PageTitle,
   ProgressBar,
+  ProgressCircle,
   QRCode,
   RevenueCenter,
   RevenueCenterChild,
@@ -108,4 +112,6 @@ export {
   SkipLink,
   Tag,
   Welcome,
+  WelcomeContent,
+  WelcomeHeader,
 }

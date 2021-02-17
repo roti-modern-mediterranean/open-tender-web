@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
+import styled from '@emotion/styled'
 import { Helmet } from 'react-helmet'
 import {
   selectCustomer,
@@ -11,6 +12,7 @@ import {
   // fetchCustomerThanx,
   fetchCustomerRewards,
   selectCustomerRewards,
+  // selectCustomerRewardsLoading,
   selectCustomerThanx,
   logoutCustomer,
   addMessage,
@@ -19,12 +21,35 @@ import {
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Background, Content, HeaderMobile, Main, Welcome } from '../..'
-import { Logout, StartOver } from '../../buttons'
+import {
+  Background,
+  Content,
+  HeaderLogo,
+  HeaderMobile,
+  Main,
+  Welcome,
+  WelcomeHeader,
+} from '../..'
+import { Logout } from '../../buttons'
 import AccountActions from './AccountActions'
 import AccountButtons from './AccountButtons'
 import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
+import AccountRewards from './AccountRewards'
+
+const AccountContent = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 2.5rem 2.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+  }
+`
 
 const Account = () => {
   const history = useHistory()
@@ -33,7 +58,8 @@ const Account = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
   const rewards = useSelector(selectCustomerRewards)
-  console.log(rewards)
+  // const rewardsLoading = useSelector(selectCustomerRewardsLoading)
+  // const hasRewards = rewards && !rewardsLoading
   const { background, mobile, title, subtitle } = accountConfig
   const { auth, profile } = useSelector(selectCustomer)
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
@@ -74,21 +100,25 @@ const Account = () => {
           bgColor={isBrowser ? 'primary' : 'transparent'}
           borderColor={isBrowser ? 'primary' : 'transparent'}
           maxWidth="76.8rem"
-          title={!isBrowser && <AccountScan />}
-          left={<StartOver isLogo={true} color="light" />}
-          right={<Logout color="light" />}
+          // title={}
+          // left={<StartOver isLogo={true} color="light" />}
+          left={<HeaderLogo />}
+          right={
+            <>
+              {!isBrowser && <AccountScan />}
+              <Logout color="light" />
+            </>
+          }
         />
         <Main padding="0" imageUrl={mobile || background}>
-          <Welcome
-            header={
-              <>
-                <h1>{pageTitle}</h1>
-                <p>{subtitle}</p>
-              </>
-            }
-            content={<AccountActions />}
-          >
-            {isBrowser ? <AccountButtons /> : <AccountTabs />}
+          <Welcome footer={isBrowser ? <AccountButtons /> : <AccountTabs />}>
+            <AccountContent>
+              <div>
+                <WelcomeHeader title={pageTitle} subtitle={subtitle} />
+                <AccountActions />
+              </div>
+              {rewards && <AccountRewards rewards={rewards} />}
+            </AccountContent>
           </Welcome>
         </Main>
       </Content>

@@ -74,7 +74,7 @@ const HeaderMobileNav = styled('div')`
     }
     }
   `
-      : null}
+      : `display: flex; align-items: center;`}
 `
 
 const HeaderMobile = ({

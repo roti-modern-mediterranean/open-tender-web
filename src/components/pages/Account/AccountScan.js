@@ -8,6 +8,7 @@ import { openModal, selectBrand } from '../../../slices'
 import iconMap from '../../iconMap'
 
 const AccountScanView = styled('div')`
+  display: inline-block;
   opacity: 0;
   animation: slide-down 0.25s ease-in-out 0.125s forwards;
 
@@ -51,7 +52,7 @@ const AccountScan = () => {
           )
         }
       >
-        Scan In-store
+        Scan
       </ButtonStyled>
     </AccountScanView>
   ) : null

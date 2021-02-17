@@ -19,6 +19,7 @@ import { ButtonStyled } from '@open-tender/components'
 
 import iconMap from '../../iconMap'
 import { Loading } from '../..'
+import styled from '@emotion/styled'
 
 const Continue = ({ current, startNew }) => {
   return (
@@ -49,6 +50,12 @@ const Reorder = ({ orderTypeName, reorder, switchType }) => {
     </>
   )
 }
+
+const AccountActionsView = styled('div')`
+  margin: 2rem 0 0;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+`
 
 const AccountActions = () => {
   const history = useHistory()
@@ -96,20 +103,28 @@ const AccountActions = () => {
     history.push(revenueCenter ? `/menu/${revenueCenter.slug}` : '/')
   }
 
-  return isLoading ? (
-    <Loading text="Retrieving your account info..." />
-  ) : isCurrentOrder ? (
-    <Continue current={continueCurrent} startNew={startNewOrder} />
-  ) : lastOrder ? (
-    <Reorder
-      orderTypeName={orderTypeName}
-      reorder={continueCurrent}
-      switchType={switchOrderType}
-    />
-  ) : (
-    <ButtonStyled icon={iconMap.ShoppingBag} onClick={startNewOrder} size="big">
-      Start a New Order
-    </ButtonStyled>
+  return (
+    <AccountActionsView>
+      {isLoading ? (
+        <Loading text="Retrieving your account info..." />
+      ) : isCurrentOrder ? (
+        <Continue current={continueCurrent} startNew={startNewOrder} />
+      ) : lastOrder ? (
+        <Reorder
+          orderTypeName={orderTypeName}
+          reorder={continueCurrent}
+          switchType={switchOrderType}
+        />
+      ) : (
+        <ButtonStyled
+          icon={iconMap.ShoppingBag}
+          onClick={startNewOrder}
+          size="big"
+        >
+          Start a New Order
+        </ButtonStyled>
+      )}
+    </AccountActionsView>
   )
 }
 

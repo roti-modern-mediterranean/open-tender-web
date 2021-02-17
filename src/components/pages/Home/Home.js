@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
+import styled from '@emotion/styled'
 import {
   resetRevenueCenters,
   resetOrderType,
@@ -25,11 +26,15 @@ import {
   HeaderMobile,
   Main,
   Welcome,
+  WelcomeHeader,
 } from '../..'
 import { Account } from '../../buttons'
 import HomeButtons from './HomeButtons'
 import { AppContext } from '../../../App'
-import styled from '@emotion/styled'
+
+const HomeHeader = styled('div')`
+  padding: 0 2.5rem 2.5rem;
+`
 
 const HomeContent = styled('div')`
   padding: 0 2.5rem 2.5rem;
@@ -112,28 +117,21 @@ const Home = () => {
         />
         <Main padding="0" imageUrl={mobile || background}>
           {hasOrderTypes ? (
-            <Welcome
-              header={
-                <>
-                  <h1>{title}</h1>
-                  <p>{subtitle}</p>
-                </>
-              }
-            >
-              <HomeButtons content={makeContent(content)} />
+            <Welcome footer={<HomeButtons content={makeContent(content)} />}>
+              <HomeHeader>
+                <WelcomeHeader title={title} subtitle={subtitle} />
+              </HomeHeader>
             </Welcome>
           ) : (
-            <Welcome
-              header={
-                <>
-                  <h1>Online ordering is currently closed</h1>
-                  <p>
-                    We're very sorry for the inconvenience. Please try back at a
-                    later time.
-                  </p>
-                </>
-              }
-            />
+            <Welcome>
+              <HomeHeader>
+                <WelcomeHeader
+                  title="Online ordering is currently closed"
+                  subtitle="We're very sorry for the inconvenience. Please try back at a
+                    later time."
+                />
+              </HomeHeader>
+            </Welcome>
           )}
         </Main>
       </Content>

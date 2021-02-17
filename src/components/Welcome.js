@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-const WelcomeGreeting = styled('div')`
+const WelcomeMain = styled('div')`
   position: relative;
   width: 100%;
   // flex: 1 0 100%;
@@ -19,63 +19,28 @@ const WelcomeGreeting = styled('div')`
     flex: 1 0 100%;
     justify-content: flex-end;
   }
-`
 
-const WelcomeHeader = styled('div')`
-  h1 {
-    line-height: 1;
+  > div {
+    width: 100%;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      color: ${(props) => props.theme.colors.light};
-    }
-  }
-
-  p {
-    line-height: ${(props) => props.theme.lineHeight};
-    margin: 1rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      color: ${(props) => props.theme.colors.light};
+      background-color: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 -2.5rem 2.5rem 0rem rgba(0, 0, 0, 0.3);
     }
   }
 `
 
-const WelcomeContent = styled('div')`
-  width: 100%;
-  padding: 0 2.5rem 2.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    background-color: rgba(0, 0, 0, 0.3);
-    box-shadow: 0 -2.5rem 2.5rem 0rem rgba(0, 0, 0, 0.3);
-  }
-`
-
-const WelcomeContentText = styled('div')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.125s forwards;
-`
-
-const WelcomeActions = styled('div')`
-  margin: 2rem 0 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    color: ${(props) => props.theme.colors.light};
-  }
-`
-
-const WelcomeButtons = styled('div')`
+const WelcomeFooter = styled('div')`
   width: 100%;
   flex: 0 0 auto;
 `
 
-const Welcome = ({ imageUrl, header, content, children }) => {
+const Welcome = ({ children, footer }) => {
   return (
     <>
-      <WelcomeGreeting imageUrl={imageUrl}>
-        <WelcomeContent>
-          <WelcomeContentText>
-            {header && <WelcomeHeader>{header}</WelcomeHeader>}
-            {content && <WelcomeActions>{content}</WelcomeActions>}
-          </WelcomeContentText>
-        </WelcomeContent>
-      </WelcomeGreeting>
-      <WelcomeButtons>{children}</WelcomeButtons>
+      <WelcomeMain>
+        <div>{children}</div>
+      </WelcomeMain>
+      <WelcomeFooter>{footer}</WelcomeFooter>
     </>
   )
 }
