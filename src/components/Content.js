@@ -9,13 +9,18 @@ const ContentContainer = styled('div')`
   background-color: ${(props) => props.theme.bgColors.primary};
 `
 
-const Content = ({ maxWidth = '100%', hasRouter = true, children }) => {
+const Content = ({
+  maxWidth = '100%',
+  hasRouter = true,
+  hasFooter = true,
+  children,
+}) => {
   return (
     <ContentContainer maxWidth={maxWidth}>
       <>
         <SkipLink />
         {children}
-        <Footer hasRouter={hasRouter} />
+        {hasFooter && <Footer hasRouter={hasRouter} />}
       </>
     </ContentContainer>
   )

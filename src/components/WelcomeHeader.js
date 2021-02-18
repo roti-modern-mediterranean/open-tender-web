@@ -11,6 +11,7 @@ const WelcomeHeaderView = styled('div')`
     line-height: 1;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       color: ${(props) => props.theme.colors.light};
+      font-size: ${(props) => props.theme.fonts.sizes.h2};
     }
   }
 
@@ -19,6 +20,7 @@ const WelcomeHeaderView = styled('div')`
     margin: 1rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       color: ${(props) => props.theme.colors.light};
+      font-size: ${(props) => props.theme.fonts.sizes.small};
     }
   }
 `

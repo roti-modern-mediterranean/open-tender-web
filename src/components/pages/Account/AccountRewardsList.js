@@ -1,12 +1,13 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
-import { ButtonLink, Heading, Preface } from '@open-tender/components'
-
-import { OrderImage } from '../..'
-import { openModal } from '../../../slices'
 import { useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
+import { ButtonLink, Heading, Preface, Text } from '@open-tender/components'
+import { makeLocalDateStr } from '@open-tender/js'
+
+import { openModal } from '../../../slices'
 import iconMap from '../../iconMap'
+import AccountRewardsImage from './AccountRewardsImage'
 
 const AccountRewardsListView = styled('div')`
   width: 100%;
@@ -29,11 +30,11 @@ const AccountRewardsListView = styled('div')`
 `
 
 const AccountRewardsItem = styled('div')`
-  flex: 0 0 22rem;
+  flex: 0 0 25rem;
   padding: 0 1rem 0 0;
 
   &:last-of-type {
-    flex: 0 0 23rem;
+    flex: 0 0 26rem;
     padding: 0 2rem 0 0;
   }
 
@@ -49,52 +50,20 @@ const AccountRewardsItem = styled('div')`
   }
 `
 
-// const AccountRewardsItemImageView = styled('div')`
-//   width: 4.5rem;
-//   height: 4.5rem;
-//   flex-shrink: 0;
-//   margin-right: 1rem;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   overflow: hidden;
-//   border-radius: 0.5rem;
-
-//   img {
-//     height: 4.5rem;
-//     width: auto;
-//     max-width: none;
-//   }
-// `
-
-// const AccountRewardsItemImage = ({ imageUrl, title }) => {
-//   return (
-//     <AccountRewardsItemImageView>
-//       <img src={imageUrl} title={title} alt={title} />
-//     </AccountRewardsItemImageView>
-//   )
-// }
-
-// AccountRewardsItemImage.displayName = 'AccountRewardsItemImage'
-// AccountRewardsItemImage.propTypes = {
-//   imageUrl: propTypes.string,
-//   title: propTypes.string,
-// }
-
 const AccountRewardsItemDetails = styled('div')`
   flex: 1 1 auto;
+  height: 4.5rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
   text-align: left;
 
-  & > p {
+  & > div > p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
-    // width: 100%;
-    // white-space: nowrap;
-    // overflow: hidden;
-    // text-overflow: ellipsis;
   }
 
-  & > p + p {
-    margin: 0.3rem 0 0;
+  & > div > p + p {
+    margin: 0.2rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   }
 `
@@ -110,10 +79,13 @@ const AccountRewardsItemAction = styled('div')`
 
 const AccountRewardsList = ({ rewards }) => {
   const dispatch = useDispatch()
+  const today = makeLocalDateStr(new Date(), 0, 'MM/dd/yyyy')
+  console.log(today)
+
   if (!rewards.length) return null
 
-  const redeem = () => {
-    dispatch(openModal({ type: 'reward' }))
+  const redeem = (reward) => {
+    dispatch(openModal({ type: 'reward', args: { reward } }))
   }
 
   return (
@@ -127,21 +99,34 @@ const AccountRewardsList = ({ rewards }) => {
         {rewards.map((reward) => (
           <AccountRewardsItem key={reward.id}>
             <div>
-              {/* <AccountRewardsItemImage
+              <AccountRewardsImage
                 imageUrl={reward.image_url}
                 title={reward.name}
-              /> */}
-              <OrderImage imageUrl={reward.image_url} title={reward.name} />
+              />
               <AccountRewardsItemDetails>
-                <Heading as="p">{reward.name}</Heading>
-                <p>Use by {reward.expiration}</p>
+                <div>
+                  <Heading as="p">{reward.title}</Heading>
+                  {reward.expiration === today ? (
+                    <Text
+                      color="alert"
+                      size="xSmall"
+                      bold={true}
+                      as="p"
+                      style={{
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.03em',
+                      }}
+                    >
+                      Today only!
+                    </Text>
+                  ) : (
+                    <p>Use by {reward.expiration}</p>
+                  )}
+                </div>
               </AccountRewardsItemDetails>
               <AccountRewardsItemAction>
-                {/* <ButtonStyled onClick={redeem} size="small">
-                  Redeem
-                </ButtonStyled> */}
                 <ButtonLink
-                  onClick={redeem}
+                  onClick={() => redeem(reward)}
                   disabled={false}
                   label={`Apply ${reward.name}`}
                 >

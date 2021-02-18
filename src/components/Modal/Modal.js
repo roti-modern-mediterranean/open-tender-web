@@ -27,6 +27,7 @@ import {
   OrderType,
   QRCode,
   RequestedAt,
+  Reward,
   SignUp,
   Working,
 } from '../modals'
@@ -71,6 +72,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <OrderRating {...args} />
     case 'requestedAt':
       return <RequestedAt {...args} />
+    case 'reward':
+      return <Reward {...args} />
     case 'signUp':
       return <SignUp windowRef={windowRef} {...args} />
     case 'working':

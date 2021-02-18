@@ -40,21 +40,49 @@ export const AccountRewardsFooter = styled('div')`
 const testRewards = [
   {
     id: 1,
-    name: 'Buy One, Get One',
+    title: 'Buy One Entree, Get Second for half price',
     description: 'Get two entrees for the price of one. Today only!',
     image_url:
       'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
-    expiration: '02/28/2021',
+    qr_code_url:
+      'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
+    expiration: '02/18/2021',
     discount_type: 'DOLLAR',
     amount: '15.00',
   },
   {
     id: 2,
-    name: 'Buy One, Get One',
+    title: 'Free Drink with purchase of $20 or more',
     description: 'Get two entrees for the price of one. Today only!',
     image_url:
       'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
+    // qr_code_url:
+    //   'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
     expiration: '02/28/2021',
+    discount_type: 'DOLLAR',
+    amount: '15.00',
+  },
+  {
+    id: 3,
+    title: 'Free Drink!',
+    description: 'Get two entrees for the price of one. Today only!',
+    // image_url:
+    //   'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
+    // qr_code_url:
+    //   'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
+    expiration: '02/18/2021',
+    discount_type: 'DOLLAR',
+    amount: '15.00',
+  },
+  {
+    id: 4,
+    title: 'Get two entrees for the price of one. Today only!',
+    description: 'Get two entrees for the price of one. Today only!',
+    image_url:
+      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
+    qr_code_url:
+      'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
+    expiration: '02/18/2021',
     discount_type: 'DOLLAR',
     amount: '15.00',
   },
@@ -83,7 +111,7 @@ const AccountRewards = ({ rewards }) => {
   )
 }
 
-AccountRewards.displayName = 'RewardsProgram'
+AccountRewards.displayName = 'AccountRewards'
 AccountRewards.propTypes = {
   rewards: propTypes.object,
 }

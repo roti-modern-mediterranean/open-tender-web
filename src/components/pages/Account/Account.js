@@ -95,7 +95,7 @@ const Account = () => {
         <title>Welcome Back | {siteTitle}</title>
       </Helmet>
       <Background imageUrl={background} />
-      <Content maxWidth="76.8rem">
+      <Content maxWidth="76.8rem" hasFooter={isBrowser ? true : false}>
         <HeaderMobile
           bgColor={isBrowser ? 'primary' : 'transparent'}
           borderColor={isBrowser ? 'primary' : 'transparent'}

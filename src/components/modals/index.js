@@ -17,6 +17,7 @@ import OrderRating from './OrderRating'
 import OrderType from './OrderType'
 import QRCode from './QRCode'
 import RequestedAt from './RequestedAt'
+import Reward from './Reward'
 import SignUp from './SignUp'
 import Working from './Working'
 
@@ -40,6 +41,7 @@ export {
   OrderType,
   QRCode,
   RequestedAt,
+  Reward,
   SignUp,
   Working,
 }
