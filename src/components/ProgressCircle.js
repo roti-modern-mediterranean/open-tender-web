@@ -15,14 +15,14 @@ const ProgressCirlceView = styled('div')`
 
   path:last-of-type {
     stroke: ${(props) => props.theme.links.primary.color};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       stroke: #ffffff;
     }
   }
 
   path:first-of-type {
     stroke: ${(props) => props.theme.bgColors.secondary};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       stroke: rgba(255, 255, 255, 0.2);
     }
   }
@@ -45,7 +45,7 @@ const ProgressPercentage = styled('div')`
     span {
       display: block;
       line-height: 1;
-      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
         color: ${(props) => props.theme.colors.light};
       }
     }
@@ -105,15 +105,15 @@ const ProgressCirlce = ({ strokeWidth = 12, progress = 35 }) => {
           ref={progressRef}
           d={dimensions}
           // stroke="rgba(255, 255, 255, 0.2)"
-          stroke-width={`${strokeWidth}`}
-          fill-opacity="0"
+          strokeWidth={`${strokeWidth}`}
+          fillOpacity="0"
         ></path>
         {offset && (
           <path
             d={dimensions}
             // stroke="#ffffff"
-            stroke-width={`${strokeWidth}`}
-            fill-opacity="0"
+            strokeWidth={`${strokeWidth}`}
+            fillOpacity="0"
             style={style}
             // style={{
             //   strokeDasharray: '295.416 295.416',

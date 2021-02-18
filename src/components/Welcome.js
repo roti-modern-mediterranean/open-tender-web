@@ -6,7 +6,8 @@ const WelcomeMain = styled('div')`
   position: relative;
   width: 100%;
   // flex: 1 0 100%;
-  padding: 8.5rem 0 0;
+  // padding: 8.5rem 0 0;
+  padding: 6rem 0 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

@@ -1,35 +1,99 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { ButtonLink, Heading, Preface, Text } from '@open-tender/components'
-import { makeLocalDateStr } from '@open-tender/js'
+import { Preface } from '@open-tender/components'
 
-import { openModal } from '../../../slices'
-import iconMap from '../../iconMap'
-import AccountRewardsImage from './AccountRewardsImage'
+import AccountRewardsListItem from './AccountRewardsListItem'
+import { isBrowser } from 'react-device-detect'
+
+const testRewards = [
+  {
+    id: 1,
+    title: 'Buy One Entree, Get Second for half price',
+    description: 'Get two entrees for the price of one. Today only!',
+    image_url:
+      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
+    qr_code_url:
+      'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
+    expiration: '02/18/2021',
+    discount_type: 'DOLLAR',
+    amount: '15.00',
+  },
+  {
+    id: 2,
+    title: 'Free Drink with purchase of $20 or more',
+    description: 'Get two entrees for the price of one. Today only!',
+    image_url:
+      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
+    // qr_code_url:
+    //   'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
+    expiration: '02/28/2021',
+    discount_type: 'DOLLAR',
+    amount: '15.00',
+  },
+  {
+    id: 3,
+    title: 'Free Drink!',
+    description: 'Get two entrees for the price of one. Today only!',
+    // image_url:
+    //   'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
+    // qr_code_url:
+    //   'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
+    expiration: '02/18/2021',
+    discount_type: 'DOLLAR',
+    amount: '15.00',
+  },
+  {
+    id: 4,
+    title: 'Get two entrees for the price of one. Today only!',
+    description: 'Get two entrees for the price of one. Today only!',
+    image_url:
+      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
+    qr_code_url:
+      'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
+    expiration: '02/18/2021',
+    discount_type: 'DOLLAR',
+    amount: '15.00',
+  },
+]
 
 const AccountRewardsListView = styled('div')`
   width: 100%;
-  margin: 2rem 0 0;
+  padding: 2rem 0 0;
+  margin: 2.5rem 0 0;
+  background-color: ${(props) => props.theme.bgColors.secondary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0;
+    margin: 3rem 0 1rem;
+    border: 0;
+    background-color: transparent;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 1rem 0;
+  }
 
   & > div {
     width: 100%;
     overflow-x: scroll;
-    padding: 1rem 0 1rem 2rem;
+    padding: 1.5rem 0 2.5rem 2.5rem;
     display: flex;
+    justify-content: ${(props) => props.justify};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      padding: 1rem 0 1rem 2rem;
+    }
   }
 
   > p {
+    text-align: center;
     text-transform: uppercase;
     font-weight: ${(props) => props.theme.boldWeight};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       color: ${(props) => props.theme.colors.light};
     }
   }
 `
 
-const AccountRewardsItem = styled('div')`
+const AccountRewardsListItemContainer = styled('div')`
   flex: 0 0 25rem;
   padding: 0 1rem 0 0;
 
@@ -37,111 +101,34 @@ const AccountRewardsItem = styled('div')`
     flex: 0 0 26rem;
     padding: 0 2rem 0 0;
   }
-
-  & > div {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 1rem 0.5rem 0.5rem;
-    background-color: ${(props) => props.theme.bgColors.primary};
-    // border-radius: ${(props) => props.theme.border.radiusSmall};
-    // box-shadow: ${(props) => props.theme.boxShadow.outer};
-    border-radius: 0.5rem;
-    box-shadow: 0 0 1rem 0rem rgba(0, 0, 0, 0.6);
-  }
-`
-
-const AccountRewardsItemDetails = styled('div')`
-  flex: 1 1 auto;
-  height: 4.5rem;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  text-align: left;
-
-  & > div > p {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-  }
-
-  & > div > p + p {
-    margin: 0.2rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  }
-`
-
-const AccountRewardsItemAction = styled('div')`
-  margin: 0 0 0 0.5rem;
-
-  button {
-    width: 2.4rem;
-    height: 2.4rem;
-  }
 `
 
 const AccountRewardsList = ({ rewards }) => {
-  const dispatch = useDispatch()
-  const today = makeLocalDateStr(new Date(), 0, 'MM/dd/yyyy')
-  console.log(today)
-
+  rewards = testRewards
+  const count = isBrowser ? 2 : 1
   if (!rewards.length) return null
 
-  const redeem = (reward) => {
-    dispatch(openModal({ type: 'reward', args: { reward } }))
-  }
-
   return (
-    <AccountRewardsListView>
-      <Preface as="p">
+    <AccountRewardsListView
+      justify={rewards.length <= count ? 'center' : 'flex-start'}
+    >
+      <Preface as="p" color="primary">
         {rewards.length > 1
           ? `You have ${rewards.length} rewards!`
           : 'You have a reward'}
       </Preface>
       <div>
         {rewards.map((reward) => (
-          <AccountRewardsItem key={reward.id}>
-            <div>
-              <AccountRewardsImage
-                imageUrl={reward.image_url}
-                title={reward.name}
-              />
-              <AccountRewardsItemDetails>
-                <div>
-                  <Heading as="p">{reward.title}</Heading>
-                  {reward.expiration === today ? (
-                    <Text
-                      color="alert"
-                      size="xSmall"
-                      bold={true}
-                      as="p"
-                      style={{
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.03em',
-                      }}
-                    >
-                      Today only!
-                    </Text>
-                  ) : (
-                    <p>Use by {reward.expiration}</p>
-                  )}
-                </div>
-              </AccountRewardsItemDetails>
-              <AccountRewardsItemAction>
-                <ButtonLink
-                  onClick={() => redeem(reward)}
-                  disabled={false}
-                  label={`Apply ${reward.name}`}
-                >
-                  {iconMap.PlusCircle}
-                </ButtonLink>
-              </AccountRewardsItemAction>
-            </div>
-          </AccountRewardsItem>
+          <AccountRewardsListItemContainer key={reward.id}>
+            <AccountRewardsListItem reward={reward} />
+          </AccountRewardsListItemContainer>
         ))}
       </div>
     </AccountRewardsListView>
   )
 }
 
-AccountRewardsList.displayName = 'RewardsProgram'
+AccountRewardsList.displayName = 'AccountRewardsList'
 AccountRewardsList.propTypes = {
   rewards: propTypes.object,
 }

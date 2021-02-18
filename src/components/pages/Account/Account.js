@@ -36,17 +36,25 @@ import AccountButtons from './AccountButtons'
 import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
 import AccountRewards from './AccountRewards'
+import AccountRewardsList from './AccountRewardsList'
 
 const AccountContent = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 0 2.5rem 2.5rem;
+  margin: 2rem 0 0;
+  padding: 0 2.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
+  }
+`
+
+const AccountHeader = styled('div')`
+  flex: 1 0 auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex: 1 1 auto;
     text-align: center;
   }
 `
@@ -57,7 +65,7 @@ const Account = () => {
   const { title: siteTitle, has_thanx } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
-  const rewards = useSelector(selectCustomerRewards)
+  const loyalty = useSelector(selectCustomerRewards)
   // const rewardsLoading = useSelector(selectCustomerRewardsLoading)
   // const hasRewards = rewards && !rewardsLoading
   const { background, mobile, title, subtitle } = accountConfig
@@ -100,8 +108,6 @@ const Account = () => {
           bgColor={isBrowser ? 'primary' : 'transparent'}
           borderColor={isBrowser ? 'primary' : 'transparent'}
           maxWidth="76.8rem"
-          // title={}
-          // left={<StartOver isLogo={true} color="light" />}
           left={<HeaderLogo />}
           right={
             <>
@@ -113,12 +119,13 @@ const Account = () => {
         <Main padding="0" imageUrl={mobile || background}>
           <Welcome footer={isBrowser ? <AccountButtons /> : <AccountTabs />}>
             <AccountContent>
-              <div>
+              <AccountHeader>
                 <WelcomeHeader title={pageTitle} subtitle={subtitle} />
                 <AccountActions />
-              </div>
-              {rewards && <AccountRewards rewards={rewards} />}
+              </AccountHeader>
+              {loyalty && <AccountRewards loyalty={loyalty} />}
             </AccountContent>
+            <AccountRewardsList rewards={loyalty.rewards} />
           </Welcome>
         </Main>
       </Content>
