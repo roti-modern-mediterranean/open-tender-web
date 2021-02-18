@@ -3,6 +3,10 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Heading, Preface } from '@open-tender/components'
 
+// https://kimmobrunfeldt.github.io/progressbar.js/
+// https://github.com/kimmobrunfeldt/progressbar.js/tree/master/src
+// https://dev.to/vaibhavkhulbe/let-s-make-and-wear-those-css-3-progress-rings-2ngf
+
 const ProgressCirlceView = styled('div')`
   position: relative;
   width: 12rem;

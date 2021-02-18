@@ -34,6 +34,7 @@ import OrderCardGroup from './OrderCardGroup'
 import OrderCardItem from './OrderCardItem'
 import OrderFulfillment from './OrderFulfillment'
 import OrderImages from './OrderImages'
+import OrderImage from './OrderImage'
 import OrderQuantity from './OrderQuantity'
 import OrderTag from './OrderTag'
 import PageContent from './PageContent'
@@ -94,6 +95,7 @@ export {
   OrderCardItem,
   OrderFulfillment,
   OrderImages,
+  OrderImage,
   OrderQuantity,
   OrderTag,
   PageContent,

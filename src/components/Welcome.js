@@ -15,6 +15,7 @@ const WelcomeMain = styled('div')`
   background-position: center;
   background-repeat: no-repeat;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 6rem 0 0;
     background-image: ${(props) => `url(${props.imageUrl})`};
     flex: 1 0 100%;
     justify-content: flex-end;
