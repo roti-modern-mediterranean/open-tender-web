@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Preface } from '@open-tender/components'
+import { Heading } from '@open-tender/components'
 
 import AccountRewardsListItem from './AccountRewardsListItem'
 import { isBrowser } from 'react-device-detect'
@@ -89,8 +89,8 @@ const AccountRewardsListView = styled('div')`
 
   > p {
     text-align: center;
-    text-transform: uppercase;
-    font-weight: ${(props) => props.theme.boldWeight};
+    // text-transform: uppercase;
+    // font-weight: ${(props) => props.theme.boldWeight};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       color: ${(props) => props.theme.colors.light};
     }
@@ -122,11 +122,11 @@ const AccountRewardsList = ({ rewards }) => {
     <AccountRewardsListView
       justify={rewards.length <= count ? 'center' : 'flex-start'}
     >
-      <Preface as="p" color="primary">
+      <Heading as="p">
         {rewards.length > 1
           ? `You have ${rewards.length} rewards!`
           : 'You have a reward!'}
-      </Preface>
+      </Heading>
       <div>
         {rewards.map((reward) => (
           <AccountRewardsListItemContainer key={reward.id}>

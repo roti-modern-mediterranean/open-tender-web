@@ -51,7 +51,13 @@ const Order = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderAccount title={title} text="Back to Orders" path="/orders" />
+        <HeaderAccount
+          title={title}
+          text="Back to Orders"
+          path="/orders"
+          bgColor="secondary"
+          borderColor="secondary"
+        />
         <Main bgColor="secondary">
           <Container>
             <PageContent>
