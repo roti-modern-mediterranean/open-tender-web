@@ -48,7 +48,7 @@ const Thanx = () => {
 
   useEffect(() => {
     if (auth) {
-      history.push('/account')
+      history.push('/')
     } else if (code) {
       dispatch(authCustomerThanx(code))
     } else {

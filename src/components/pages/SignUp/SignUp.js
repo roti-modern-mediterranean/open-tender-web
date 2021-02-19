@@ -92,9 +92,9 @@ const SignUp = () => {
           .catch((err) => {
             dispatch(addMessage(err.detail || err.message))
           })
-          .finally(history.push('/account'))
+          .finally(history.push('/'))
       } else {
-        return history.push('/account')
+        return history.push('/')
       }
     }
   }, [auth, history, posToken, token, api, dispatch])

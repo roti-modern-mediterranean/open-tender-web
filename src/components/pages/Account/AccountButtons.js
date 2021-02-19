@@ -41,7 +41,7 @@ const navButtons = [
   {
     icon: iconMap.User,
     title: 'Account',
-    path: '/account/settings',
+    path: '/account',
   },
 ]
 

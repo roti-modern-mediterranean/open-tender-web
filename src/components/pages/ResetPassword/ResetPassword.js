@@ -48,14 +48,14 @@ const ResetPassword = () => {
   }, [windowRef])
 
   useEffect(() => {
-    if (auth) return history.push('/account')
+    if (auth) return history.push('/')
     if (!resetToken) return history.push('/')
   }, [auth, resetToken, history])
 
   const handleLogin = () => {
     const args = {
       type: 'login',
-      args: { callback: () => history.push('/account') },
+      args: { callback: () => history.push('/') },
     }
     dispatch(openModal(args))
   }

@@ -13,7 +13,7 @@ const navButtons = [
   {
     icon: iconMap.Home,
     title: 'Home',
-    path: '/account',
+    path: '/',
   },
   {
     icon: iconMap.ShoppingBag,
@@ -173,7 +173,7 @@ const Nav = React.forwardRef((props, ref) => {
         <NavHeader>
           {profile && (
             <>
-              <NavItem onClick={(evt) => closeGo(evt, '/account')}>
+              <NavItem onClick={(evt) => closeGo(evt, '/')}>
                 <NavIcon>{iconMap.Smile}</NavIcon>
                 <NavTitle style={{ marginLeft: '-0.2rem' }}>
                   Hi, {profile.first_name}

@@ -54,7 +54,7 @@ const Confirmation = () => {
   }, [windowRef])
 
   useEffect(() => {
-    if (!order) history.push(auth ? '/account' : '/')
+    if (!order) history.push('/')
     dispatch(resetGroupOrder())
     return () => {
       dispatch(resetConfirmation())

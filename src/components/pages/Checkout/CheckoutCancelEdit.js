@@ -21,7 +21,7 @@ const CheckoutCancelEdit = () => {
   const handleCancelEdit = () => {
     dispatch(resetOrder())
     dispatch(resetCheckout())
-    history.push(`/account`)
+    history.push(`/`)
   }
 
   return orderId ? (

@@ -20,7 +20,7 @@ const CancelEdit = ({
   const cancel = () => {
     dispatch(resetOrder())
     dispatch(resetCheckout())
-    history.push(`/account`)
+    history.push(`/`)
   }
 
   if (!orderId) return null

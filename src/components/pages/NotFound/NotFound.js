@@ -31,7 +31,7 @@ const NotFound = () => {
   }, [windowRef])
 
   useEffect(() => {
-    if (token) return history.push('/account')
+    if (token) return history.push('/')
   }, [token, history])
 
   return (

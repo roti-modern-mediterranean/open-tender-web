@@ -56,12 +56,12 @@ const StartOver = ({
         color="header"
         size="header"
       >
-        {auth ? 'Home' : text}
+        {text}
       </ButtonStyled>
     )
   ) : (
     <ButtonIcon label={text} color={color} onClick={startOver}>
-      {auth ? iconMap.Home : icon}
+      {icon}
     </ButtonIcon>
   )
 }

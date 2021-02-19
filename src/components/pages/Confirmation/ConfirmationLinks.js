@@ -10,7 +10,7 @@ const ConfirmationLinks = ({ auth, brand }) => {
 
   const reviewAccount = () => {
     dispatch(resetCustomerOrder())
-    history.push('/account')
+    history.push('/')
   }
 
   return (

@@ -107,9 +107,6 @@ const Routes = () => {
       <Route exact path="/ratings/:id">
         <Rating />
       </Route>
-      <Route exact path="/account">
-        <Account />
-      </Route>
       <Route exact path="/rewards">
         <Rewards />
       </Route>
@@ -125,8 +122,11 @@ const Routes = () => {
       <Route exact path="/group-orders">
         <GroupOrders />
       </Route>
-      <Route exact path="/account/settings">
+      <Route exact path="/account">
         <AccountSettings />
+      </Route>
+      <Route exact path="/account/settings">
+        <Redirect to="/account" />
       </Route>
       <Route exact path="/account/gift-cards">
         <AccountGiftCards />

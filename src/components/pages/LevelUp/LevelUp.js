@@ -58,7 +58,7 @@ const LevelUp = () => {
 
   useEffect(() => {
     if (auth) {
-      history.push('/account')
+      history.push('/')
     } else if (token) {
       if (lat && lng) {
         const geoLatLng = { lat: parseFloat(lat), lng: parseFloat(lng) }
