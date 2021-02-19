@@ -87,8 +87,8 @@ const Orders = () => {
       <Content>
         <HeaderAccount
           title={isBrowser ? null : 'Order History'}
-          // bgColor="secondary"
-          // borderColor="secondary"
+          bgColor="secondary"
+          borderColor="secondary"
         />
         <Main bgColor="secondary">
           <Container>

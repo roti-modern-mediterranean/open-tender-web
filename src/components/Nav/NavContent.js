@@ -11,8 +11,8 @@ import iconMap from '../iconMap'
 
 const navButtons = [
   {
-    icon: iconMap.User,
-    title: 'Account',
+    icon: iconMap.Home,
+    title: 'Home',
     path: '/account',
   },
   {

@@ -7,7 +7,7 @@ import { ButtonStyled, ButtonIcon } from '@open-tender/components'
 import iconMap from '../iconMap'
 
 const AccountBack = ({
-  text = 'Back To Account',
+  text = 'Back Home',
   path = '/account',
   icon = iconMap['ArrowLeft'],
   color,

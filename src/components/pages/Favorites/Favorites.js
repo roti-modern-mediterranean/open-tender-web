@@ -78,7 +78,11 @@ const Favorites = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderAccount title={isBrowser ? null : 'Favorites'} />
+        <HeaderAccount
+          title={isBrowser ? null : 'Favorites'}
+          bgColor="secondary"
+          borderColor="secondary"
+        />
         <Main bgColor="secondary">
           <Container>
             <PageTitle {...config.favorites} />

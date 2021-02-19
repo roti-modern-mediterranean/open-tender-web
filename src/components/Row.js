@@ -7,7 +7,7 @@ const RowView = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem;
+  padding: 1.5rem 2rem;
   margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
 `
 

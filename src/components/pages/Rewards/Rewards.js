@@ -56,6 +56,8 @@ const Rewards = () => {
         <HeaderAccount
           title={isBrowser ? null : 'Rewards'}
           maxWidth="76.8rem"
+          bgColor="secondary"
+          borderColor="secondary"
         />
         <Main bgColor="secondary">
           <Container>

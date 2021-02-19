@@ -65,8 +65,10 @@ const AccountProfile = () => {
         <HeaderAccount
           title={isBrowser ? null : account.profile.title}
           maxWidth="76.8rem"
-          text="Back to Settings"
+          text="Back to Account"
           path="/account/settings"
+          bgColor="secondary"
+          borderColor="secondary"
         />
         <Main bgColor="secondary">
           <Container>

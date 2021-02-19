@@ -60,6 +60,8 @@ const AccountGiftCards = () => {
         <HeaderAccount
           title={isBrowser ? null : 'Gift Cards'}
           maxWidth="76.8rem"
+          bgColor="secondary"
+          borderColor="secondary"
         />
         <Main bgColor="secondary">
           <Container>
