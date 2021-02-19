@@ -3,28 +3,27 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const AccountRewardsImageView = styled('div')`
-  width: 4.5rem;
-  height: 4.5rem;
+  width: ${(props) => props.size}rem;
+  height: ${(props) => props.size}rem;
   flex-shrink: 0;
   margin-right: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  // border-radius: 0.5rem;
   border-radius: ${(props) => props.theme.border.radiusSmall};
   background-color: ${(props) => props.theme.bgColors.secondary};
 
   img {
-    height: 4.5rem;
+    height: ${(props) => props.size}rem;
     width: auto;
     max-width: none;
   }
 `
 
-const AccountRewardsImage = ({ imageUrl, title }) => {
+const AccountRewardsImage = ({ imageUrl, title, size = 4.5 }) => {
   return (
-    <AccountRewardsImageView>
+    <AccountRewardsImageView size={size}>
       <img src={imageUrl} title={title} alt={title} />
     </AccountRewardsImageView>
   )
@@ -34,6 +33,7 @@ AccountRewardsImage.displayName = 'AccountRewardsImage'
 AccountRewardsImage.propTypes = {
   imageUrl: propTypes.string,
   title: propTypes.string,
+  size: propTypes.number,
 }
 
 export default AccountRewardsImage

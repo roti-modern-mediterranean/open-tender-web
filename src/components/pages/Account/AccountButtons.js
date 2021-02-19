@@ -39,8 +39,8 @@ const navButtons = [
     path: '/account/gift-cards',
   },
   {
-    icon: iconMap.Settings,
-    title: 'Account Settings',
+    icon: iconMap.User,
+    title: 'Account',
     path: '/account/settings',
   },
 ]

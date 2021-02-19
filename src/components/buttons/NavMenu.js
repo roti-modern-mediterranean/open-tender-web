@@ -20,7 +20,7 @@ const NavMenu = ({ color }) => {
       color={color}
       onClick={() => dispatch(toggleNav())}
     >
-      {!auth || isHome ? iconMap.User : iconMap.Menu}
+      {!auth && isHome ? iconMap.User : iconMap.Menu}
     </ButtonIcon>
   )
 }

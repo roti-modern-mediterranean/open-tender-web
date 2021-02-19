@@ -2,21 +2,20 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { ButtonLink, Heading, Text } from '@open-tender/components'
+import { Box, ButtonLink, Heading, Text } from '@open-tender/components'
 import { makeLocalDateStr } from '@open-tender/js'
 
 import { openModal } from '../../../slices'
 import iconMap from '../../iconMap'
 import AccountRewardsImage from './AccountRewardsImage'
 
-const AccountRewardsListItemView = styled('div')`
+const AccountRewardsListItemView = styled(Box)`
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem 0.5rem 0.5rem;
-  background-color: ${(props) => props.theme.bgColors.primary};
-  border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 0.4rem 0rem rgba(0, 0, 0, 0.2);
+  padding: 0.75rem 1.5rem 0.75rem 0.75rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    border: 0;
     box-shadow: 0 0 1rem 0rem rgba(0, 0, 0, 0.6);
   }
 `
@@ -34,8 +33,11 @@ const AccountRewardsListItemDetails = styled('div')`
   }
 
   & > div > p + p {
-    margin: 0.2rem 0 0;
+    margin: 0.4rem 0 0;
     font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      margin: 0.2rem 0 0;
+    }
   }
 `
 

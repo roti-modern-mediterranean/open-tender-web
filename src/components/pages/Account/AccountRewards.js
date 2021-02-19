@@ -1,6 +1,8 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { Message } from '@open-tender/components'
+
 import { ProgressCircle } from '../..'
 
 export const AccountRewardsView = styled('div')`
@@ -10,7 +12,7 @@ export const AccountRewardsView = styled('div')`
   align-items: center;
   text-align: center;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 3rem 0 1.5rem;
+    margin: 2.5rem 0 1.5rem;
   }
 `
 
@@ -32,6 +34,8 @@ export const AccountRewardsFooter = styled('div')`
     font-size: ${(props) => props.theme.fonts.sizes.small};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       color: ${(props) => props.theme.colors.light};
+      background-color: transparent;
+      padding: 0;
     }
   }
 `
@@ -47,7 +51,9 @@ const AccountRewards = ({ loyalty }) => {
       {progress && <ProgressCircle progress={progress} />}
       <AccountRewardsFooter>
         {hasCredit ? (
-          <p>You've got ${credit} in credit to redeem!</p>
+          <Message as="p" color="success" size="small">
+            You've got ${credit} in credit to redeem!
+          </Message>
         ) : (
           <p>
             You're ${remaining} away from {towards}

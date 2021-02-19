@@ -58,27 +58,31 @@ const testRewards = [
 ]
 
 const AccountRewardsListView = styled('div')`
+  order: -1;
   width: 100%;
   padding: 2rem 0 0;
-  margin: 2.5rem 0 0;
+  // margin: 2.5rem 0 0;
   background-color: ${(props) => props.theme.bgColors.secondary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    order: 2;
     padding: 0;
     margin: 3rem 0 1rem;
     border: 0;
     background-color: transparent;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 1rem 0;
+    margin: 0 0 1rem;
   }
 
   & > div {
-    width: 100%;
-    overflow-x: scroll;
-    padding: 1.5rem 0 2.5rem 2.5rem;
     display: flex;
+    flex-wrap: wrap;
     justify-content: ${(props) => props.justify};
+    padding: 1rem 2rem 1.5rem;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      flex-wrap: nowrap;
+      width: 100%;
+      overflow-x: scroll;
       padding: 1rem 0 1rem 2rem;
     }
   }
@@ -94,12 +98,18 @@ const AccountRewardsListView = styled('div')`
 `
 
 const AccountRewardsListItemContainer = styled('div')`
-  flex: 0 0 25rem;
-  padding: 0 1rem 0 0;
+  flex: 0 0 50%;
+  padding: 0.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex: 0 0 25rem;
+    padding: 0 1rem 0 0;
+  }
 
   &:last-of-type {
-    flex: 0 0 26rem;
-    padding: 0 2rem 0 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      flex: 0 0 26rem;
+      padding: 0 2rem 0 0;
+    }
   }
 `
 
@@ -115,7 +125,7 @@ const AccountRewardsList = ({ rewards }) => {
       <Preface as="p" color="primary">
         {rewards.length > 1
           ? `You have ${rewards.length} rewards!`
-          : 'You have a reward'}
+          : 'You have a reward!'}
       </Preface>
       <div>
         {rewards.map((reward) => (

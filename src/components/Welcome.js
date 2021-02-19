@@ -5,8 +5,6 @@ import styled from '@emotion/styled'
 const WelcomeMain = styled('div')`
   position: relative;
   width: 100%;
-  // flex: 1 0 100%;
-  // padding: 8.5rem 0 0;
   padding: 6rem 0 0;
   display: flex;
   flex-direction: column;
@@ -23,6 +21,8 @@ const WelcomeMain = styled('div')`
   }
 
   > div {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       background-color: rgba(0, 0, 0, 0.3);
