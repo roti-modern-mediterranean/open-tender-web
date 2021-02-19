@@ -130,7 +130,7 @@ const AccountRewardsList = ({ rewards }) => {
 
 AccountRewardsList.displayName = 'AccountRewardsList'
 AccountRewardsList.propTypes = {
-  rewards: propTypes.object,
+  rewards: propTypes.array,
 }
 
 export default AccountRewardsList

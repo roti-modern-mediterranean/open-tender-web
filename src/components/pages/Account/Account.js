@@ -125,7 +125,7 @@ const Account = () => {
               </AccountHeader>
               {loyalty && <AccountRewards loyalty={loyalty} />}
             </AccountContent>
-            <AccountRewardsList rewards={loyalty.rewards} />
+            {loyalty && <AccountRewardsList rewards={loyalty.rewards} />}
           </Welcome>
         </Main>
       </Content>

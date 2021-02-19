@@ -85,7 +85,11 @@ const Orders = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderAccount title={isBrowser ? null : 'Order History'} />
+        <HeaderAccount
+          title={isBrowser ? null : 'Order History'}
+          // bgColor="secondary"
+          // borderColor="secondary"
+        />
         <Main bgColor="secondary">
           <Container>
             <PageTitle {...config.recentOrders} />

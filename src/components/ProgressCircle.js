@@ -61,7 +61,7 @@ const ProgressPercentage = styled('div')`
   }
 `
 
-const ProgressCirlce = ({ strokeWidth = 12, progress = 35 }) => {
+const ProgressCirlce = ({ strokeWidth = 12, progress }) => {
   const progressRef = useRef()
   const [length, setLength] = useState(null)
   const [offset, setOffset] = useState(null)
@@ -89,7 +89,6 @@ const ProgressCirlce = ({ strokeWidth = 12, progress = 35 }) => {
       let counter = 1
       while (curTime < time) {
         const newOffset = start - (diff / 100) * counter
-        // window.setTimeout(() => setOffset(newOffset), curTime)
         timeout(newOffset, curTime)
         curTime += time / 100
         counter++
@@ -104,21 +103,15 @@ const ProgressCirlce = ({ strokeWidth = 12, progress = 35 }) => {
         <path
           ref={progressRef}
           d={dimensions}
-          // stroke="rgba(255, 255, 255, 0.2)"
           strokeWidth={`${strokeWidth}`}
           fillOpacity="0"
         ></path>
         {offset && (
           <path
             d={dimensions}
-            // stroke="#ffffff"
             strokeWidth={`${strokeWidth}`}
             fillOpacity="0"
             style={style}
-            // style={{
-            //   strokeDasharray: '295.416 295.416',
-            //   strokeDashoffset: '200',
-            // }}
           ></path>
         )}
       </svg>

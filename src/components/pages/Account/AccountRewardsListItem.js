@@ -43,8 +43,8 @@ const AccountRewardsListItemAction = styled('div')`
   margin: 0 0 0 0.5rem;
 
   button {
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2rem;
+    height: 2rem;
   }
 `
 
