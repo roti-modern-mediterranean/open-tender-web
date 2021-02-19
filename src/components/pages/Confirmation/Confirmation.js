@@ -80,6 +80,7 @@ const Confirmation = () => {
           <Container>
             <PageTitle {...config} />
             <PageContent>
+              <ConfirmationLinks auth={auth} brand={brand} />
               {showOptIns && <ConfirmationProfile />}
               {hasFulfillment && (
                 <OrderFulfillment
@@ -87,7 +88,6 @@ const Confirmation = () => {
                   order_fulfillment={order_fulfillment}
                 />
               )}
-              <ConfirmationLinks auth={auth} brand={brand} />
               <Order order={order} isConfirmation={true} />
             </PageContent>
           </Container>

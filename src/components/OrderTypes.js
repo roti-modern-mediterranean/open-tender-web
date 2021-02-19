@@ -17,7 +17,7 @@ import {
 } from 'react-feather'
 import { useHistory } from 'react-router-dom'
 
-const HomeButtons = ({ content }) => {
+const OrderTypeButtons = ({ content }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { orderTypes } = useSelector(selectSettings)
@@ -97,9 +97,9 @@ const HomeButtons = ({ content }) => {
   )
 }
 
-HomeButtons.displayName = 'HomeButtons'
-HomeButtons.propTypes = {
+OrderTypeButtons.displayName = 'OrderTypeButtons'
+OrderTypeButtons.propTypes = {
   content: propTypes.element,
 }
 
-export default HomeButtons
+export default OrderTypeButtons

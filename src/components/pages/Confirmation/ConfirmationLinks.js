@@ -3,6 +3,11 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { resetCustomerOrder } from '@open-tender/redux'
 import { ButtonLink } from '@open-tender/components'
+import styled from '@emotion/styled'
+
+const ConfirmationLinksView = styled('div')`
+  margin: -1rem 0 3rem;
+`
 
 const ConfirmationLinks = ({ auth, brand }) => {
   const dispatch = useDispatch()
@@ -14,7 +19,7 @@ const ConfirmationLinks = ({ auth, brand }) => {
   }
 
   return (
-    <div>
+    <ConfirmationLinksView>
       <p>
         {auth ? (
           <ButtonLink onClick={reviewAccount}>
@@ -30,7 +35,7 @@ const ConfirmationLinks = ({ auth, brand }) => {
           start another order
         </ButtonLink>
       </p>
-    </div>
+    </ConfirmationLinksView>
   )
 }
 

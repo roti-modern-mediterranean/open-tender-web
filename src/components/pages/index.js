@@ -22,7 +22,6 @@ import HouseAccounts from './HouseAccounts'
 import Orders from './Orders'
 import Order from './Order'
 import OrderTypes from './OrderTypes'
-import Landing from './Landing'
 import LevelUp from './LevelUp'
 import Menu from './Menu'
 import NotFound from './NotFound'
@@ -58,7 +57,6 @@ export {
   GroupOrders,
   Home,
   HouseAccounts,
-  Landing,
   LevelUp,
   Menu,
   NotFound,

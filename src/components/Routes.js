@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 // import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import {
   Accessibility,
-  Account,
   AccountAddresses,
   AccountAllergens,
   AccountCreditCards,
@@ -21,7 +20,6 @@ import {
   GroupOrders,
   Home,
   HouseAccounts,
-  Landing,
   LevelUp,
   Menu,
   NotFound,
@@ -51,7 +49,7 @@ const Routes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <Landing />
+        <Home />
       </Route>
       <Route exact path="/order-types">
         <OrderTypes />
