@@ -4,7 +4,11 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
-import { resetOrderType, resetCheckout } from '@open-tender/redux'
+import {
+  selectCustomer,
+  resetOrderType,
+  resetCheckout,
+} from '@open-tender/redux'
 import { ButtonStyled, ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
@@ -31,10 +35,11 @@ const StartOver = ({
   const history = useHistory()
   const dispatch = useDispatch()
   const brand = useSelector(selectBrand)
+  const { auth } = useSelector(selectCustomer)
   const logoUrl = isBrowser ? brand.logo : brand.logoLight
 
   const startOver = () => {
-    dispatch(resetOrderType())
+    if (!auth) dispatch(resetOrderType())
     dispatch(resetCheckout())
     history.push(`/`)
   }
@@ -51,12 +56,12 @@ const StartOver = ({
         color="header"
         size="header"
       >
-        {text}
+        {auth ? 'Home' : text}
       </ButtonStyled>
     )
   ) : (
     <ButtonIcon label={text} color={color} onClick={startOver}>
-      {icon}
+      {auth ? iconMap.Home : icon}
     </ButtonIcon>
   )
 }

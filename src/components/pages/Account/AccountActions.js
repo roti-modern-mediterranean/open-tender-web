@@ -75,6 +75,7 @@ const AccountActions = () => {
   }
   const isCurrentOrder = revenueCenter && serviceType && cart.length
   const isLoading = loading === 'pending' && !isCurrentOrder && !lastOrder
+  console.log(revenueCenter)
 
   useEffect(() => {
     dispatch(fetchCustomerOrders(20))
@@ -94,12 +95,12 @@ const AccountActions = () => {
 
   const startNewOrder = () => {
     dispatch(resetOrder())
-    history.push('/')
+    history.push(`/order-types`)
   }
 
   const switchOrderType = () => {
     dispatch(resetOrderType())
-    history.push(`/`)
+    history.push(`/order-types`)
   }
 
   const continueCurrent = () => {

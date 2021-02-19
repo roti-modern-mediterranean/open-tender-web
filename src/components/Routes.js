@@ -21,11 +21,13 @@ import {
   GroupOrders,
   Home,
   HouseAccounts,
+  Landing,
   LevelUp,
   Menu,
   NotFound,
   Orders,
   Order,
+  OrderTypes,
   Profile,
   Rating,
   Refunds,
@@ -49,7 +51,10 @@ const Routes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <Home />
+        <Landing />
+      </Route>
+      <Route exact path="/order-types">
+        <OrderTypes />
       </Route>
       <Route exact path="/order">
         <Redirect to="/" />

@@ -19,7 +19,7 @@ import {
 } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectBrand, selectConfig, closeModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Background,
@@ -43,8 +43,9 @@ const AccountContent = styled('div')`
   justify-content: space-between;
   align-items: flex-end;
   margin: 2rem 0 0;
-  padding: 0 2.5rem;
+  padding: 0 2.5rem 2.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -77,7 +78,8 @@ const Account = () => {
   useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
-  }, [windowRef])
+    dispatch(closeModal())
+  }, [windowRef, dispatch])
 
   useEffect(() => {
     if (!token) return history.push('/')
@@ -102,7 +104,6 @@ const Account = () => {
       <Helmet>
         <title>Welcome Back | {siteTitle}</title>
       </Helmet>
-      <Background imageUrl={background} />
       <Content maxWidth="76.8rem" hasFooter={isBrowser ? true : false}>
         <HeaderMobile
           bgColor={isBrowser ? 'primary' : 'transparent'}
