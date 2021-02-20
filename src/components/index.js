@@ -14,6 +14,7 @@ import HeaderAccount from './HeaderAccount'
 import HeaderDefault from './HeaderDefault'
 import HeaderLogo from './HeaderLogo'
 import HeaderMobile from './HeaderMobile'
+import Hero from './Hero'
 import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
 import LinkSeparator from './LinkSeparator'
@@ -73,6 +74,7 @@ export {
   HeaderDefault,
   HeaderLogo,
   HeaderMobile,
+  Hero,
   ImageSpinner,
   ItemCards,
   LinkSeparator,

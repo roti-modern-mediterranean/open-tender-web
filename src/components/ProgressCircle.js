@@ -12,19 +12,18 @@ const ProgressCirlceView = styled('div')`
   width: 12rem;
   height: 12rem;
   margin: 0 auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 10rem;
+    height: 10rem;
+  }
 
   path:last-of-type {
     stroke: ${(props) => props.theme.links.primary.color};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      stroke: #ffffff;
-    }
   }
 
   path:first-of-type {
-    stroke: ${(props) => props.theme.bgColors.secondary};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      stroke: rgba(255, 255, 255, 0.2);
-    }
+    stroke: ${(props) => props.theme.bgColors.primary};
+    stroke: rgba(0, 0, 0, 0.1);
   }
 `
 
@@ -38,6 +37,7 @@ const ProgressPercentage = styled('div')`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 
   > div {
     margin: -0.5rem 0 0;
@@ -45,14 +45,14 @@ const ProgressPercentage = styled('div')`
     span {
       display: block;
       line-height: 1;
-      @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-        color: ${(props) => props.theme.colors.light};
-      }
     }
 
     span:first-of-type {
       font-size: ${(props) => props.theme.fonts.sizes.h2};
       margin: 0 0 0.3rem;
+      @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+        font-size: ${(props) => props.theme.fonts.sizes.h3};
+      }
     }
 
     span:last-of-type {

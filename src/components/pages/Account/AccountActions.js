@@ -24,14 +24,12 @@ import styled from '@emotion/styled'
 const Continue = ({ current, startNew }) => {
   return (
     <>
-      <ButtonStyled icon={iconMap.ShoppingBag} onClick={current} size="big">
+      <ButtonStyled onClick={current} size="small">
         Continue Current Order
       </ButtonStyled>
-      <div style={{ margin: '1.5rem 0 0' }}>
-        <ButtonStyled onClick={startNew} size="small" color="secondary">
-          Or start a new order from scratch
-        </ButtonStyled>
-      </div>
+      <ButtonStyled onClick={startNew} size="small" color="secondary">
+        Start a New Order
+      </ButtonStyled>
     </>
   )
 }
@@ -39,24 +37,34 @@ const Continue = ({ current, startNew }) => {
 const Reorder = ({ orderTypeName, reorder, switchType }) => {
   return (
     <>
-      <ButtonStyled icon={iconMap.ShoppingBag} onClick={reorder} size="big">
+      <ButtonStyled onClick={reorder} size="small">
         Order {orderTypeName} Again
       </ButtonStyled>
-      <div style={{ margin: '1.5rem 0 0' }}>
-        <ButtonStyled onClick={switchType} size="small" color="secondary">
-          Or switch to a different order type
-        </ButtonStyled>
-      </div>
+      <ButtonStyled onClick={switchType} size="small" color="secondary">
+        Change Order Type
+      </ButtonStyled>
     </>
   )
 }
 
 const AccountActionsView = styled('div')`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   margin: 2rem 0 0;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 1.5rem 0 0;
+    margin: 1.5rem -0.5rem 0;
+  }
+
+  button {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      display: block;
+      flex: 1 1 50%;
+      padding: 1rem 0;
+      margin: 0 0.5rem;
+    }
   }
 `
 

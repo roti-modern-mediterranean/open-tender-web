@@ -15,15 +15,15 @@ const AccountScanView = styled('div')`
   button {
     padding: 0.8rem 1.5rem 0.8rem 1.3rem;
     border-width: ${(props) => props.theme.border.width};
-    color: ${(props) => props.theme.colors.light};
-    border-color: ${(props) => props.theme.colors.light};
+    color: ${(props) => props.theme.colors.primary};
+    border-color: ${(props) => props.theme.colors.primary};
     background-color: transparent;
 
     &:hover,
     &:active,
     &:focus {
-      color: ${(props) => props.theme.colors.light};
-      border-color: ${(props) => props.theme.colors.light};
+      color: ${(props) => props.theme.colors.primary};
+      border-color: ${(props) => props.theme.colors.primary};
       background-color: transparent;
     }
   }

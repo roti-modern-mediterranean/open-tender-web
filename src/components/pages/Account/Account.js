@@ -20,9 +20,11 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, closeModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
+  Container,
   Content,
   HeaderLogo,
   HeaderMobile,
+  Hero,
   Main,
   Welcome,
   WelcomeHeader,
@@ -32,30 +34,19 @@ import AccountActions from './AccountActions'
 import AccountButtons from './AccountButtons'
 import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
+import AccountProgress from './AccountProgress'
 import AccountRewards from './AccountRewards'
-import AccountRewardsList from './AccountRewardsList'
 
 const AccountContent = styled('div')`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  // margin: 2rem 0 0;
-  // padding: 0 2.5rem 2.5rem;
-  padding: 2.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+  margin: 2rem 0;
 `
 
 const AccountHeader = styled('div')`
   flex: 1 0 auto;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex: 1 1 auto;
-    text-align: center;
-  }
+  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  //   flex: 1 1 auto;
+  //   text-align: center;
+  // }
 `
 
 const Account = () => {
@@ -65,6 +56,7 @@ const Account = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
   const loyalty = useSelector(selectCustomerRewards)
+  const { progress, rewards } = loyalty || {}
   // const rewardsLoading = useSelector(selectCustomerRewardsLoading)
   // const hasRewards = rewards && !rewardsLoading
   const { background, mobile, title, subtitle } = accountConfig
@@ -101,30 +93,35 @@ const Account = () => {
       <Helmet>
         <title>Welcome Back | {siteTitle}</title>
       </Helmet>
-      <Content maxWidth="76.8rem" hasFooter={isBrowser ? true : false}>
+      <Content
+      // maxWidth="76.8rem"
+      // hasFooter={isBrowser ? true : false}
+      >
         <HeaderMobile
-          bgColor={isBrowser ? 'primary' : 'transparent'}
-          borderColor={isBrowser ? 'primary' : 'transparent'}
-          maxWidth="76.8rem"
+          // bgColor={isBrowser ? 'primary' : 'transparent'}
+          // borderColor={isBrowser ? 'primary' : 'transparent'}
+          // maxWidth="76.8rem"
+          bgColor="primary"
+          borderColor="primary"
           left={<HeaderLogo />}
           right={
             <>
               {!isBrowser && <AccountScan />}
-              <Logout color="light" />
+              <Logout />
             </>
           }
         />
-        <Main padding="0" imageUrl={mobile || background}>
-          <Welcome footer={isBrowser ? <AccountButtons /> : <AccountTabs />}>
-            <AccountContent>
-              <AccountHeader>
-                <WelcomeHeader title={pageTitle} subtitle={subtitle} />
-                <AccountActions />
-              </AccountHeader>
-              {loyalty && <AccountRewards loyalty={loyalty} />}
-            </AccountContent>
-            {loyalty && <AccountRewardsList rewards={loyalty.rewards} />}
-          </Welcome>
+        <Main>
+          <AccountTabs />
+          <Hero imageUrl={mobile || background}>&nbsp;</Hero>
+          <AccountContent>
+            <Container>
+              <WelcomeHeader title={pageTitle} subtitle={subtitle} />
+              <AccountActions />
+            </Container>
+          </AccountContent>
+          {progress && <AccountProgress loyalty={loyalty} />}
+          {rewards && <AccountRewards rewards={rewards} />}
         </Main>
       </Content>
     </>

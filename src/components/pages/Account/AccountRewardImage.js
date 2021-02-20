@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-const AccountRewardsImageView = styled('div')`
+const AccountRewardImageView = styled('div')`
   width: ${(props) => props.size}rem;
   height: ${(props) => props.size}rem;
   flex-shrink: 0;
@@ -21,19 +21,19 @@ const AccountRewardsImageView = styled('div')`
   }
 `
 
-const AccountRewardsImage = ({ imageUrl, title, size = 4.5 }) => {
+const AccountRewardImage = ({ imageUrl, title, size = 4.5 }) => {
   return (
-    <AccountRewardsImageView size={size}>
+    <AccountRewardImageView size={size}>
       <img src={imageUrl} title={title} alt={title} />
-    </AccountRewardsImageView>
+    </AccountRewardImageView>
   )
 }
 
-AccountRewardsImage.displayName = 'AccountRewardsImage'
-AccountRewardsImage.propTypes = {
+AccountRewardImage.displayName = 'AccountRewardImage'
+AccountRewardImage.propTypes = {
   imageUrl: propTypes.string,
   title: propTypes.string,
   size: propTypes.number,
 }
 
-export default AccountRewardsImage
+export default AccountRewardImage

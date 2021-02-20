@@ -1,6 +1,5 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { isMobile } from 'react-device-detect'
 
 import { selectBrand } from '../slices'
 import styled from '@emotion/styled'
@@ -18,9 +17,9 @@ const HeaderLogoLink = styled('a')`
   }
 `
 
-const HeaderLogo = () => {
+const HeaderLogo = ({ useLight = false }) => {
   const brand = useSelector(selectBrand)
-  const logoUrl = isMobile ? brand.logoLight : brand.logo
+  const logoUrl = useLight ? brand.logoLight : brand.logo
 
   return (
     <HeaderLogoLink href={brand.url} rel="noopener noreferrer">

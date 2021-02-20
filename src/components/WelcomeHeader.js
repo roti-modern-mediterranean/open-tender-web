@@ -3,15 +3,13 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const WelcomeHeaderView = styled('div')`
-  // padding: 0 2.5rem;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
 
   h1 {
     line-height: 1;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      color: ${(props) => props.theme.colors.light};
-      font-size: ${(props) => props.theme.fonts.sizes.h2};
+      font-size: ${(props) => props.theme.fonts.sizes.h3};
     }
   }
 
@@ -19,7 +17,6 @@ const WelcomeHeaderView = styled('div')`
     line-height: ${(props) => props.theme.lineHeight};
     margin: 1rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      color: ${(props) => props.theme.colors.light};
       font-size: ${(props) => props.theme.fonts.sizes.small};
     }
   }

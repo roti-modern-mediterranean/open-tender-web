@@ -1,72 +1,120 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Message } from '@open-tender/components'
 
-import { ProgressCircle } from '../..'
+import AccountReward from './AccountReward'
+import AccountSectionHeader from './AccountSectionHeader'
 
-export const AccountRewardsView = styled('div')`
+const testRewards = [
+  {
+    id: 1,
+    title: 'Buy One Entree, Get Second for half price',
+    description: 'Get two entrees for the price of one. Today only!',
+    image_url:
+      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
+    qr_code_url:
+      'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
+    expiration: '02/18/2021',
+    discount_type: 'DOLLAR',
+    amount: '15.00',
+  },
+  {
+    id: 2,
+    title: 'Free Drink with purchase of $20 or more',
+    description: 'Get two entrees for the price of one. Today only!',
+    image_url:
+      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
+    // qr_code_url:
+    //   'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
+    expiration: '02/28/2021',
+    discount_type: 'DOLLAR',
+    amount: '15.00',
+  },
+  {
+    id: 3,
+    title: 'Free Drink!',
+    description: 'Get two entrees for the price of one. Today only!',
+    // image_url:
+    //   'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
+    // qr_code_url:
+    //   'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
+    expiration: '02/18/2021',
+    discount_type: 'DOLLAR',
+    amount: '15.00',
+  },
+  {
+    id: 4,
+    title: 'Get two entrees for the price of one. Today only!',
+    description: 'Get two entrees for the price of one. Today only!',
+    image_url:
+      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
+    qr_code_url:
+      'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
+    expiration: '02/18/2021',
+    discount_type: 'DOLLAR',
+    amount: '15.00',
+  },
+]
+
+const AccountRewardsView = styled('div')`
+  width: 100%;
+  margin: 2rem 0;
+`
+
+const AccountRewardsList = styled('div')`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  text-align: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 2.5rem 0 1.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 1rem 2rem 1.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow-x: scroll;
+    padding: 1rem 0 1rem ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
-export const AccountRewardsHeader = styled('div')`
-  margin: 0 0 1.5rem;
+const AccountRewardsListItem = styled('div')`
+  flex: 0 0 50%;
+  padding: 0.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex: 0 0 29rem;
+    padding: 0 1rem 0 0;
+  }
 
-  h2 {
-    font-size: ${(props) => props.theme.fonts.sizes.h5};
+  &:last-of-type {
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      color: ${(props) => props.theme.colors.light};
+      flex: 0 0 30rem;
+      padding: 0 2rem 0 0;
     }
   }
 `
 
-export const AccountRewardsFooter = styled('div')`
-  margin: 1.5rem 0 0;
+const AccountRewards = ({ rewards }) => {
+  rewards = testRewards
+  if (!rewards.length) return null
+  const title =
+    rewards.length > 1
+      ? `You have ${rewards.length} rewards!`
+      : 'You have a reward!'
 
-  p {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      color: ${(props) => props.theme.colors.light};
-      background-color: transparent;
-      padding: 0;
-    }
-  }
-`
-
-const AccountRewards = ({ loyalty }) => {
-  const { name, progress, credit, remaining, towards } = loyalty
-  const hasCredit = parseFloat(credit) > 0
   return (
     <AccountRewardsView>
-      <AccountRewardsHeader>
-        <h2>{name}</h2>
-      </AccountRewardsHeader>
-      {progress && <ProgressCircle progress={progress} />}
-      <AccountRewardsFooter>
-        {hasCredit ? (
-          <Message as="p" color="success" size="small">
-            You've got ${credit} in credit to redeem!
-          </Message>
-        ) : (
-          <p>
-            You're ${remaining} away from {towards}
-          </p>
-        )}
-      </AccountRewardsFooter>
+      <AccountSectionHeader title={title} to="/rewards" />
+      <AccountRewardsList>
+        {rewards.map((reward) => (
+          <AccountRewardsListItem key={reward.id}>
+            <AccountReward reward={reward} />
+          </AccountRewardsListItem>
+        ))}
+      </AccountRewardsList>
     </AccountRewardsView>
   )
 }
 
 AccountRewards.displayName = 'AccountRewards'
 AccountRewards.propTypes = {
-  loyalty: propTypes.object,
+  rewards: propTypes.array,
 }
 
 export default AccountRewards

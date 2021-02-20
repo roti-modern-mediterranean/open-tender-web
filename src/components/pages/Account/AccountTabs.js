@@ -9,18 +9,20 @@ import iconMap from '../../iconMap'
 import AccountTab from './AccountTab'
 
 const AccountTabsView = styled('div')`
-  // position: fixed;
-  // z-index: 14;
-  // top: 0;
-  // right: 0;
+  position: fixed;
+  z-index: 14;
+  bottom: 0;
+  right: 0;
   width: 100%;
   max-width: ${(props) => props.maxWidth};
   height: 6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
+  // background-color: rgba(0, 0, 0, 0.3);
+  // border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
+  background-color: ${(props) => props.theme.bgColors.primary};
+  border-top: 0.1rem solid ${(props) => props.theme.border.color};
 `
 
 const navTabs = [

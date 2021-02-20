@@ -13,7 +13,7 @@ const AccountTabView = styled('button')`
   margin: 0;
   border: 0;
   background-color: transparent;
-  color: ${(props) => props.theme.colors.light};
+  color: ${(props) => props.theme.colors.primary};
   text-align: center;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
@@ -21,10 +21,8 @@ const AccountTabView = styled('button')`
 
 const AccountTabIcon = styled('span')`
   position: relative;
-  // top: -0.1rem;
   width: 1.8rem;
   height: 1.8rem;
-  // flex-shrink: 0;
 `
 
 const AccountTabTitle = styled('span')`
