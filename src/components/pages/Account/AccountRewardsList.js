@@ -63,6 +63,7 @@ const AccountRewardsListView = styled('div')`
   padding: 2rem 0 0;
   // margin: 2.5rem 0 0;
   background-color: ${(props) => props.theme.bgColors.secondary};
+  // background-color: ${(props) => props.theme.links.primary.color};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     order: 2;
     padding: 0;

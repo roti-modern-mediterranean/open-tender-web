@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
+import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectConfig, closeModal } from '../../../slices'
+import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Account } from '../../buttons'
 import {
@@ -23,6 +24,7 @@ const GuestHeader = styled('div')`
 
 const Guest = () => {
   const dispatch = useDispatch()
+  const brand = useSelector(selectBrand)
   const { home: homeConfig } = useSelector(selectConfig)
   const { background, mobile, title, subtitle } = homeConfig
   const { windowRef } = useContext(AppContext)
@@ -35,6 +37,9 @@ const Guest = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{brand.title}</title>
+      </Helmet>
       <Content maxWidth="76.8rem">
         <HeaderMobile
           bgColor={isBrowser ? 'primary' : 'transparent'}
