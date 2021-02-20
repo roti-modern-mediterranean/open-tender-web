@@ -9,10 +9,8 @@ import {
   fetchCustomer,
   fetchCustomerCreditCards,
   resetCustomerThanx,
-  // fetchCustomerThanx,
   fetchCustomerRewards,
   selectCustomerRewards,
-  // selectCustomerRewardsLoading,
   selectCustomerThanx,
   logoutCustomer,
   addMessage,
@@ -22,7 +20,6 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, closeModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
   Content,
   HeaderLogo,
   HeaderMobile,
@@ -42,8 +39,9 @@ const AccountContent = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin: 2rem 0 0;
-  padding: 0 2.5rem 2.5rem;
+  // margin: 2rem 0 0;
+  // padding: 0 2.5rem 2.5rem;
+  padding: 2.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0;
     flex-direction: column;
@@ -85,7 +83,6 @@ const Account = () => {
     if (!token) return history.push('/')
     dispatch(fetchCustomer())
     dispatch(fetchCustomerCreditCards(true))
-    // if (has_thanx) dispatch(fetchCustomerThanx())
     dispatch(fetchCustomerRewards())
   }, [token, dispatch, history, has_thanx])
 

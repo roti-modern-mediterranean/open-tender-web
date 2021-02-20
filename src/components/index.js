@@ -37,6 +37,7 @@ import OrderImages from './OrderImages'
 import OrderImage from './OrderImage'
 import OrderQuantity from './OrderQuantity'
 import OrderTag from './OrderTag'
+import OrderTypes from './OrderTypes'
 import PageContent from './PageContent'
 import PageError from './PageError'
 import PageTitle from './PageTitle'
@@ -98,6 +99,7 @@ export {
   OrderImage,
   OrderQuantity,
   OrderTag,
+  OrderTypes,
   PageContent,
   PageError,
   PageTitle,

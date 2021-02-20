@@ -10,6 +10,7 @@ import {
   AccountSettings,
   Catering,
   Checkout,
+  ChooseOrderType,
   Confirmation,
   Donations,
   Favorites,
@@ -25,7 +26,6 @@ import {
   NotFound,
   Orders,
   Order,
-  OrderTypes,
   Profile,
   Rating,
   Refunds,
@@ -52,7 +52,7 @@ const Routes = () => {
         <Home />
       </Route>
       <Route exact path="/order-types">
-        <OrderTypes />
+        <ChooseOrderType />
       </Route>
       <Route exact path="/order">
         <Redirect to="/" />

@@ -7,6 +7,7 @@ import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
 import Catering from './Catering'
 import Checkout from './Checkout'
+import ChooseOrderType from './ChooseOrderType'
 import Confirmation from './Confirmation'
 import Donations from './Donations'
 import ErrorReport from './ErrorReport'
@@ -17,11 +18,11 @@ import GiftCards from './GiftCards'
 import GroupOrderGuest from './GroupOrderGuest'
 import GroupOrderReview from './GroupOrderReview'
 import GroupOrders from './GroupOrders'
+import Guest from './Guest'
 import Home from './Home'
 import HouseAccounts from './HouseAccounts'
 import Orders from './Orders'
 import Order from './Order'
-import OrderTypes from './OrderTypes'
 import LevelUp from './LevelUp'
 import Menu from './Menu'
 import NotFound from './NotFound'
@@ -45,6 +46,7 @@ export {
   AccountSettings,
   Catering,
   Checkout,
+  ChooseOrderType,
   Confirmation,
   Donations,
   ErrorReport,
@@ -55,6 +57,7 @@ export {
   GroupOrderGuest,
   GroupOrderReview,
   GroupOrders,
+  Guest,
   Home,
   HouseAccounts,
   LevelUp,
@@ -62,7 +65,6 @@ export {
   NotFound,
   Orders,
   Order,
-  OrderTypes,
   Profile,
   Rating,
   Refunds,

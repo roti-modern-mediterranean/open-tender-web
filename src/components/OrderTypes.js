@@ -1,10 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { setOrderServiceType } from '@open-tender/redux'
-
-import { selectConfig, selectSettings } from '../../../slices'
-import { NavButtons } from '../..'
+import { useHistory } from 'react-router-dom'
 import {
   Flag,
   ShoppingBag,
@@ -15,13 +12,89 @@ import {
   ShoppingCart,
   DollarSign,
 } from 'react-feather'
-import { useHistory } from 'react-router-dom'
+import styled from '@emotion/styled'
+import {
+  resetRevenueCenters,
+  resetOrderType,
+  selectGroupOrder,
+  resetGroupOrder,
+  setOrderServiceType,
+} from '@open-tender/redux'
+import { Message, useGeolocation } from '@open-tender/components'
 
-const OrderTypeButtons = ({ content }) => {
+import {
+  selectConfig,
+  setGeoLatLng,
+  setGeoError,
+  setGeoLoading,
+  selectSettings,
+} from '../slices'
+import { NavButtons } from '.'
+
+const HomeContent = styled('div')`
+  padding: 0 2.5rem 2.5rem;
+  line-height: ${(props) => props.theme.lineHeight};
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 2.5rem;
+    color: ${(props) => props.theme.colors.light};
+    background-color: rgba(0, 0, 0, 0.3);
+    border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
+  }
+
+  p {
+    margin: 0.5em 0;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+`
+
+const makeContent = (content) => {
+  if (!content || !content.length || !content[0].length) return null
+  return (
+    <HomeContent>
+      {content.map((i, index) => (
+        <p key={index}>{i}</p>
+      ))}
+    </HomeContent>
+  )
+}
+
+const OrderTypes = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { orderTypes } = useSelector(selectSettings)
+  const { geoLatLng, geoError } = useGeolocation()
   const { home } = useSelector(selectConfig)
+  const content = makeContent(home.content)
+  const { orderTypes } = useSelector(selectSettings)
+  const hasOrderTypes = orderTypes && orderTypes.length > 0
+  const { cartGuest } = useSelector(selectGroupOrder)
+  const { cartGuestId } = cartGuest || {}
+
+  useEffect(() => {
+    dispatch(setGeoLoading())
+    dispatch(resetRevenueCenters())
+    dispatch(resetOrderType())
+  }, [dispatch])
+
+  useEffect(() => {
+    if (cartGuestId) dispatch(resetGroupOrder())
+  }, [dispatch, cartGuestId])
+
+  useEffect(() => {
+    if (geoLatLng) {
+      dispatch(setGeoLatLng(geoLatLng))
+    } else if (geoError) {
+      dispatch(setGeoError(geoError))
+    }
+  }, [geoLatLng, geoError, dispatch])
 
   const handleOutpost = () => {
     dispatch(setOrderServiceType('OLO', 'PICKUP', true))
@@ -91,15 +164,21 @@ const OrderTypeButtons = ({ content }) => {
 
   return (
     <div>
-      <NavButtons buttons={buttons} />
+      {hasOrderTypes ? (
+        <NavButtons buttons={buttons} />
+      ) : (
+        <Message color="error">
+          This brand is not currently accepting online orders.
+        </Message>
+      )}
       {content}
     </div>
   )
 }
 
-OrderTypeButtons.displayName = 'OrderTypeButtons'
-OrderTypeButtons.propTypes = {
+OrderTypes.displayName = 'OrderTypes'
+OrderTypes.propTypes = {
   content: propTypes.element,
 }
 
-export default OrderTypeButtons
+export default OrderTypes
