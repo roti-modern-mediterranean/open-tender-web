@@ -56,11 +56,16 @@ const Dots = styled('div')`
 
 const Dot = styled('button')`
   width: 100%;
-  max-width: ${(props) => (props.active ? '1.5rem' : '0.3rem')};
-  height: 0.3rem;
   background-color: ${(props) => props.theme.colors.light};
-  border-radius: 0.2rem;
   margin: 0 0.2rem;
+  max-width: ${(props) => (props.active ? '2rem' : '0.4rem')};
+  height: 0.4rem;
+  border-radius: 0.2rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    max-width: ${(props) => (props.active ? '1.5rem' : '0.3rem')};
+    height: 0.3rem;
+    border-radius: 0.15rem;
+  }
 `
 
 const SliderView = styled('div')`
@@ -71,6 +76,7 @@ const Slider = ({ slides }) => {
   const wrapper = useRef()
   const timer = useRef()
   const duration = isBrowser ? 1000 : 500
+  const timeout = isBrowser ? 3000 : 2000
   const size = isBrowser ? '3rem' : '2rem'
   const [currentSlide, setCurrentSlide] = useState(0)
   const [pause, setPause] = useState(false)
@@ -103,11 +109,11 @@ const Slider = ({ slides }) => {
       if (!pause && slider) {
         slider.next()
       }
-    }, 2000)
+    }, timeout)
     return () => {
       clearInterval(timer.current)
     }
-  }, [pause, slider])
+  }, [pause, slider, timeout])
 
   return (
     <SliderView ref={wrapper}>
@@ -118,7 +124,7 @@ const Slider = ({ slides }) => {
           </div>
         ))}
       </div>
-      {slider && (
+      {slider && isBrowser && (
         <>
           <Arrow
             direction="left"

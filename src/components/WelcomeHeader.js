@@ -17,6 +17,7 @@ const WelcomeHeaderView = styled('div')`
     line-height: ${(props) => props.theme.lineHeight};
     margin: 1rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      margin: 0.5rem 0 0;
       font-size: ${(props) => props.theme.fonts.sizes.small};
     }
   }

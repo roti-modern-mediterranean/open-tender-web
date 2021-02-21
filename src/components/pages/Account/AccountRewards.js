@@ -57,36 +57,33 @@ const testRewards = [
 ]
 
 const AccountRewardsView = styled('div')`
-  width: 100%;
-  margin: 2rem 0;
+  overflow: hidden;
+  margin: 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 2.5rem 0 0;
+    width: 100%;
+  }
 `
 
 const AccountRewardsList = styled('div')`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  padding: 1rem 2rem 1.5rem;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  padding: 1rem 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex-wrap: nowrap;
-    width: 100%;
-    overflow-x: scroll;
     padding: 1rem 0 1rem ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
 const AccountRewardsListItem = styled('div')`
-  flex: 0 0 50%;
-  padding: 0.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex: 0 0 29rem;
-    padding: 0 1rem 0 0;
-  }
+  flex: 0 0 29rem;
+  padding: 0 1rem 0 0;
 
   &:last-of-type {
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      flex: 0 0 30rem;
-      padding: 0 2rem 0 0;
-    }
+    flex: 0 0 30rem;
+    padding: 0 2rem 0 0;
   }
 `
 

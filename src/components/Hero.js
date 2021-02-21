@@ -14,7 +14,7 @@ const HeroView = styled(BgImage)`
   text-align: ${(props) => props.textAlign};
   background-color: ${(props) => props.theme.bgColors.secondary};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    height: 18rem;
+    height: 16rem;
     padding: ${(props) => props.theme.layout.paddingMobile};
   }
 
@@ -30,7 +30,6 @@ const HeroOverlay = styled('div')`
   bottom: 0;
   left: 0;
   right: 0;
-  // background-color: ${(props) => props.theme.overlay.dark};
   background-color: rgba(0, 0, 0, 0.3);
 `
 

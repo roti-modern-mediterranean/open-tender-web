@@ -13,7 +13,7 @@ const AccountScanView = styled('div')`
   animation: slide-down 0.25s ease-in-out 0.125s forwards;
 
   button {
-    padding: 0.8rem 1.5rem 0.8rem 1.3rem;
+    padding: 0.6rem 1.3rem 0.6rem 1.1rem;
     border-width: ${(props) => props.theme.border.width};
     color: ${(props) => props.theme.colors.primary};
     border-color: ${(props) => props.theme.colors.primary};

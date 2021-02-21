@@ -28,33 +28,40 @@ import {
   HeroContent,
   Main,
   Slider,
-  Welcome,
   WelcomeHeader,
 } from '../..'
 import { Logout } from '../../buttons'
 import AccountActions from './AccountActions'
-import AccountButtons from './AccountButtons'
 import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
 import AccountProgress from './AccountProgress'
 import AccountRewards from './AccountRewards'
 
 const AccountContent = styled('div')`
-  margin: 2rem 0;
+  margin: 3rem 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 2rem 0;
+  }
 `
 
-const AccountHeader = styled('div')`
-  flex: 1 0 auto;
-  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-  //   flex: 1 1 auto;
-  //   text-align: center;
-  // }
+const AccountLoyalty = styled('div')`
+  display: flex;
+  justtify-content: flex-start;
+  align-items: center;
+  padding: 3rem 0;
+  background-color: ${(props) => props.theme.bgColors.secondary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem 0;
+  }
 `
 
 const promotions = [
   {
-    title: 'New Item!',
-    subtitle: 'This is a new item!',
+    title: "Don't miss today's deals!",
+    subtitle:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     image_url:
       'http://s3.amazonaws.com/betterboh/u/img/local/2/1610935724_italian_1800x1200.jpg',
     color: null,
@@ -63,28 +70,31 @@ const promotions = [
     overlay: true,
   },
   {
-    title: 'New Item!',
-    subtitle: 'This is a new item!',
+    title: "Don't miss today's deals!",
+    subtitle:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     image_url:
       'https://s3.amazonaws.com/betterboh/u/img/local/2/1613691230_sweet-potatoes_1800x1200.jpg',
     color: null,
     vertical: 'bottom',
-    horizontal: 'center',
+    horizontal: 'left',
     overlay: true,
   },
   {
-    title: 'New Item!',
-    subtitle: 'This is a new item!',
+    title: "Don't miss today's deals!",
+    subtitle:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     image_url:
       'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608048551_jarritos-pineapple_1800x1200.jpg',
     color: null,
     vertical: 'bottom',
-    horizontal: 'center',
+    horizontal: 'right',
     overlay: true,
   },
 ]
 
 const makeSlides = (promotions) => {
+  if (!promotions || !promotions.length) return null
   const items = promotions
     .filter((i) => i.image_url)
     .map((i) => ({ ...i, imageUrl: i.image_url }))
@@ -110,6 +120,7 @@ const Account = () => {
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
   const token = auth ? auth.access_token : null
   const { windowRef } = useContext(AppContext)
+  const promotions = []
   const slides = makeSlides(promotions)
 
   useEffect(() => {
@@ -152,24 +163,38 @@ const Account = () => {
           borderColor="primary"
           left={<HeaderLogo />}
           right={
-            <>
-              {!isBrowser && <AccountScan />}
-              <Logout />
-            </>
+            isBrowser ? (
+              <>
+                <AccountTabs />
+                <Logout />
+              </>
+            ) : (
+              <>
+                <AccountScan />
+                <Logout />
+              </>
+            )
           }
         />
         <Main>
-          <AccountTabs />
-          {/* <Hero imageUrl={mobile || background}>&nbsp;</Hero> */}
-          <Slider slides={slides} />
+          {!isBrowser && <AccountTabs />}
+          {slides ? (
+            <Slider slides={slides} />
+          ) : (
+            <Hero imageUrl={isBrowser ? background : mobile}>&nbsp;</Hero>
+          )}
           <AccountContent>
             <Container>
               <WelcomeHeader title={pageTitle} subtitle={subtitle} />
               <AccountActions />
             </Container>
           </AccountContent>
-          {progress && <AccountProgress loyalty={loyalty} />}
-          {rewards && <AccountRewards rewards={rewards} />}
+          {loyalty && (
+            <AccountLoyalty>
+              {progress && <AccountProgress loyalty={loyalty} />}
+              {rewards && <AccountRewards rewards={rewards} />}
+            </AccountLoyalty>
+          )}
         </Main>
       </Content>
     </>

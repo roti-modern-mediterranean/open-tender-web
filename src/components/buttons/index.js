@@ -1,11 +1,11 @@
 import ButtonBoth from './ButtonBoth'
 import Account from './Account'
-import AccountBack from './AccountBack'
 import Allergens from './Allergens'
 import CancelEdit from './CancelEdit'
 import Favorite from './Favorite'
 import GroupGuest from './GroupGuest'
 import GroupOrder from './GroupOrder'
+import Home from './Home'
 import LeaveGroup from './LeaveGroup'
 import Locations from './Locations'
 import Logout from './Logout'
@@ -20,12 +20,12 @@ import StartOver from './StartOver'
 export {
   ButtonBoth,
   Account,
-  AccountBack,
   Allergens,
   CancelEdit,
   Favorite,
   GroupOrder,
   GroupGuest,
+  Home,
   LeaveGroup,
   Locations,
   Logout,

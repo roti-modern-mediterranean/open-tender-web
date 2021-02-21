@@ -2,7 +2,9 @@ import React from 'react'
 import propTypes from 'prop-types'
 
 import { HeaderMobile } from '.'
-import { AccountBack, Logout } from './buttons'
+import { Home, Logout } from './buttons'
+import { isBrowser } from 'react-device-detect'
+import AccountTabs from './pages/Account/AccountTabs'
 
 const HeaderAccount = ({
   maxWidth = '100%',
@@ -18,8 +20,13 @@ const HeaderAccount = ({
       maxWidth={maxWidth}
       bgColor={bgColor}
       borderColor={borderColor}
-      left={<AccountBack text={text} path={path} />}
-      right={<Logout />}
+      left={<Home text={text} path={path} />}
+      right={
+        <>
+          {isBrowser && <AccountTabs />}
+          <Logout />
+        </>
+      }
     />
   )
 }

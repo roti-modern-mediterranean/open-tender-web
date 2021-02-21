@@ -13,7 +13,7 @@ const AccountTabView = styled('button')`
   margin: 0;
   border: 0;
   background-color: transparent;
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.color || props.theme.colors.primary};
   text-align: center;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
@@ -32,7 +32,7 @@ const AccountTabTitle = styled('span')`
   letter-spacing: 0.05em;
 `
 
-const AccountTab = ({ title, icon, onClick, delay = '0.125s' }) => {
+const AccountTab = ({ title, icon, onClick, color, delay = '0.125s' }) => {
   const onUp = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()

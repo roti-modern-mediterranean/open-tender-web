@@ -1,10 +1,12 @@
 import styled from '@emotion/styled'
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
+import { ButtonStyled } from '@open-tender/components'
 // import { selectCustomerGroupOrders } from '@open-tender/redux'
 
-import { selectBrand, selectSettings } from '../../../slices'
+import { selectBrand, selectSettings, selectTheme } from '../../../slices'
 import iconMap from '../../iconMap'
 import AccountTab from './AccountTab'
 
@@ -55,6 +57,8 @@ const navTabs = [
 
 const AccountTabs = () => {
   const history = useHistory()
+  const { pathname } = useLocation()
+  const theme = useSelector(selectTheme)
   const { has_rewards, has_thanx } = useSelector(selectBrand)
   const { accountSections } = useSelector(selectSettings)
   const hasLevelUp = accountSections.filter((i) => i === 'levelup').length > 0
@@ -69,16 +73,32 @@ const AccountTabs = () => {
   }))
   const delay = 0.125
 
-  return (
+  return isMobile ? (
     <AccountTabsView>
       {buttons.map((button, index) => (
         <AccountTab
           key={button.title}
           delay={`${((index + 1) * 0.125 + delay).toFixed(3)}s`}
           {...button}
+          color={button.path === pathname ? theme.links.primary.color : null}
         />
       ))}
     </AccountTabsView>
+  ) : (
+    buttons.map((button) => (
+      <ButtonStyled
+        key={button.title}
+        onClick={button.onClick}
+        icon={button.icon}
+        color="header"
+        size="header"
+        style={
+          button.path === pathname ? { color: theme.links.primary.color } : null
+        }
+      >
+        {button.title}
+      </ButtonStyled>
+    ))
   )
 }
 

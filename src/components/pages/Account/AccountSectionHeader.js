@@ -6,15 +6,15 @@ import iconMap from '../../iconMap'
 import { Link } from 'react-router-dom'
 
 const AccountSectionHeaderView = styled('div')`
-  width: 100%;
+  // width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.2rem;
 
   h2 {
     display: block;
-    font-size: ${(props) => props.theme.fonts.sizes.big};
+    font-size: ${(props) => props.theme.fonts.sizes.main};
   }
 
   p {

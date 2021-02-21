@@ -18,7 +18,7 @@ import {
   WelcomeHeader,
 } from '../..'
 import AccountSettingsButtons from './AccountSettingsButtons'
-import { AccountBack, Logout } from '../../buttons'
+import { Home, Logout } from '../../buttons'
 
 const AccountSettingsView = styled('div')`
   padding: 2.5rem;
@@ -52,7 +52,7 @@ const AccountSettings = () => {
           maxWidth="76.8rem"
           bgColor={isBrowser ? 'primary' : 'transparent'}
           borderColor={isBrowser ? 'primary' : 'transparent'}
-          left={<AccountBack color="light" />}
+          left={<Home color="light" />}
           right={<Logout color="light" />}
         />
         <Main padding="0" imageUrl={background}>

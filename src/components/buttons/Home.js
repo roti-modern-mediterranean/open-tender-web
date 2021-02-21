@@ -6,12 +6,7 @@ import { ButtonStyled, ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 
-const AccountBack = ({
-  text = 'Back',
-  path = '/',
-  icon = iconMap['ArrowLeft'],
-  color,
-}) => {
+const Home = ({ text = 'Home', path = '/', icon = iconMap.Home, color }) => {
   const history = useHistory()
 
   return isBrowser ? (
@@ -30,11 +25,11 @@ const AccountBack = ({
   )
 }
 
-AccountBack.displayName = 'AccountBack'
-AccountBack.propTypes = {
+Home.displayName = 'Home'
+Home.propTypes = {
   text: propTypes.string,
   classes: propTypes.string,
   icon: propTypes.element,
 }
 
-export default AccountBack
+export default Home

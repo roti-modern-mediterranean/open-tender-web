@@ -20,28 +20,48 @@ import { ButtonStyled } from '@open-tender/components'
 import iconMap from '../../iconMap'
 import { Loading } from '../..'
 import styled from '@emotion/styled'
+import { isBrowser } from 'react-device-detect'
 
-const Continue = ({ current, startNew }) => {
+const ButtonText = styled('span')`
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+`
+
+const Continue = ({ size, icon, current, startNew }) => {
   return (
     <>
-      <ButtonStyled onClick={current} size="small">
-        Continue Current Order
+      <ButtonStyled icon={icon} onClick={current} size={size}>
+        <ButtonText>Continue Current Order</ButtonText>
       </ButtonStyled>
-      <ButtonStyled onClick={startNew} size="small" color="secondary">
-        Start a New Order
+      <ButtonStyled
+        icon={iconMap.RefreshCw}
+        onClick={startNew}
+        size={size}
+        color="secondary"
+      >
+        <ButtonText>Start a New Order</ButtonText>
       </ButtonStyled>
     </>
   )
 }
 
-const Reorder = ({ orderTypeName, reorder, switchType }) => {
+const Reorder = ({ size, icon, orderTypeName, reorder, switchType }) => {
   return (
     <>
-      <ButtonStyled onClick={reorder} size="small">
-        Order {orderTypeName} Again
+      <ButtonStyled icon={icon} onClick={reorder} size={size}>
+        <ButtonText>Order {orderTypeName} Again</ButtonText>
       </ButtonStyled>
-      <ButtonStyled onClick={switchType} size="small" color="secondary">
-        Change Order Type
+      <ButtonStyled
+        icon={iconMap.RefreshCw}
+        onClick={switchType}
+        size={size}
+        color="secondary"
+      >
+        <ButtonText>Switch Order Type</ButtonText>
       </ButtonStyled>
     </>
   )
@@ -55,34 +75,50 @@ const AccountActionsView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 1.5rem -0.5rem 0;
+    margin: 1rem -0.5rem 0;
   }
 
   button {
+    margin: 0 1rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       display: block;
       flex: 1 1 50%;
-      padding: 1rem 0;
+      padding: 1rem 1rem;
       margin: 0 0.5rem;
+      overflow: hidden;
     }
   }
 `
+
+const makeOrderTypeIcon = (orderType, serviceType) => {
+  return orderType === 'CATERING'
+    ? iconMap.Users
+    : serviceType === 'DELIVERY'
+    ? iconMap.Truck
+    : iconMap.ShoppingBag
+}
 
 const AccountActions = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const currentOrder = useSelector(selectOrder)
-  const { revenueCenter, serviceType, cart } = currentOrder
+  const { revenueCenter, orderType, serviceType, cart } = currentOrder
   const { entities: orders, loading } = useSelector(selectCustomerOrders)
   const cartQuantity = useSelector(selectCartQuantity)
   const lastOrder = useMemo(() => getLastOrder(orders), [orders])
   let orderTypeName = null
+  let orderTypeIcon = iconMap.ShoppingBag
   if (lastOrder) {
     const { order_type, service_type } = lastOrder
     orderTypeName = makeOrderTypeName(order_type, service_type)
+    orderTypeIcon = makeOrderTypeIcon(order_type, service_type)
   }
   const isCurrentOrder = revenueCenter && serviceType && cart.length
+  if (isCurrentOrder) {
+    orderTypeIcon = makeOrderTypeIcon(orderType, serviceType)
+  }
   const isLoading = loading === 'pending' && !isCurrentOrder && !lastOrder
+  const buttonSize = isBrowser ? 'default' : 'small'
 
   useEffect(() => {
     dispatch(fetchCustomerOrders(20))
@@ -119,9 +155,16 @@ const AccountActions = () => {
       {isLoading ? (
         <Loading text="Retrieving your account info..." />
       ) : isCurrentOrder ? (
-        <Continue current={continueCurrent} startNew={startNewOrder} />
+        <Continue
+          icon={orderTypeIcon}
+          size={buttonSize}
+          current={continueCurrent}
+          startNew={startNewOrder}
+        />
       ) : lastOrder ? (
         <Reorder
+          icon={orderTypeIcon}
+          size={buttonSize}
           orderTypeName={orderTypeName}
           reorder={continueCurrent}
           switchType={switchOrderType}
@@ -130,9 +173,9 @@ const AccountActions = () => {
         <ButtonStyled
           icon={iconMap.ShoppingBag}
           onClick={startNewOrder}
-          size="big"
+          size={buttonSize}
         >
-          Start a New Order
+          <ButtonText>Start a New Order</ButtonText>
         </ButtonStyled>
       )}
     </AccountActionsView>

@@ -8,8 +8,13 @@ import Container from '../../Container'
 import { Link } from 'react-router-dom'
 
 const AccountProgressView = styled('div')`
-  padding: 1.5rem 0;
-  background-color: ${(props) => props.theme.bgColors.secondary};
+  flex: 0 0 50rem;
+  // padding: 1.5rem 0;
+  // background-color: ${(props) => props.theme.bgColors.secondary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex: 1 1 100%;
+    width: 100%;
+  }
 
   & > div {
     display: flex;
@@ -19,10 +24,12 @@ const AccountProgressView = styled('div')`
 `
 
 const AccountProgressContent = styled('div')`
-  margin: 0 4rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0 4rem 0 0;
+  }
 
   h2 {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
+    font-size: ${(props) => props.theme.fonts.sizes.xBig};
   }
 
   p {

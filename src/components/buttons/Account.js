@@ -43,13 +43,13 @@ const Account = ({ color, style = null, useButton = false }) => {
       <ButtonStyled
         onClick={() => history.push(`/`)}
         label="Manage your account"
-        icon={iconMap.User}
+        icon={iconMap.Home}
         color="header"
         size="header"
         style={style}
         useButton={useButton}
       >
-        Account
+        Home
       </ButtonStyled>
     )
   ) : (
