@@ -83,7 +83,6 @@ const AccountActions = () => {
   }
   const isCurrentOrder = revenueCenter && serviceType && cart.length
   const isLoading = loading === 'pending' && !isCurrentOrder && !lastOrder
-  console.log(revenueCenter)
 
   useEffect(() => {
     dispatch(fetchCustomerOrders(20))

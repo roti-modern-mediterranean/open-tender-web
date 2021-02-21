@@ -7,12 +7,15 @@ const HeroView = styled(BgImage)`
   position: relative;
   width: 100%;
   height: 32rem;
+  padding: ${(props) => props.theme.layout.padding};
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: ${(props) => props.justifyContent};
+  align-items: ${(props) => props.alignItems};
+  text-align: ${(props) => props.textAlign};
   background-color: ${(props) => props.theme.bgColors.secondary};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     height: 18rem;
+    padding: ${(props) => props.theme.layout.paddingMobile};
   }
 
   > div {
@@ -21,9 +24,50 @@ const HeroView = styled(BgImage)`
   }
 `
 
-const Hero = ({ imageUrl, children }) => {
+const HeroOverlay = styled('div')`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  // background-color: ${(props) => props.theme.overlay.dark};
+  background-color: rgba(0, 0, 0, 0.3);
+`
+
+const makeAlignment = (alignment) => {
+  switch (alignment) {
+    case 'top':
+    case 'left':
+      return 'flex-start'
+    case 'bottom':
+    case 'right':
+      return 'flex-end'
+    default:
+      return 'center'
+  }
+}
+
+const Hero = ({
+  imageUrl,
+  vertical = 'bottom',
+  horizontal = 'center',
+  overlay = false,
+  children,
+}) => {
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
-  return <HeroView style={bgStyle}>{children}</HeroView>
+  const justifyContent = makeAlignment(horizontal)
+  const alignItems = makeAlignment(vertical)
+  return (
+    <HeroView
+      justifyContent={justifyContent}
+      alignItems={alignItems}
+      textAlign={horizontal}
+      style={bgStyle}
+    >
+      {overlay && <HeroOverlay />}
+      {children}
+    </HeroView>
+  )
 }
 
 Hero.displayName = 'Hero'

@@ -25,7 +25,9 @@ import {
   HeaderLogo,
   HeaderMobile,
   Hero,
+  HeroContent,
   Main,
+  Slider,
   Welcome,
   WelcomeHeader,
 } from '../..'
@@ -49,6 +51,50 @@ const AccountHeader = styled('div')`
   // }
 `
 
+const promotions = [
+  {
+    title: 'New Item!',
+    subtitle: 'This is a new item!',
+    image_url:
+      'http://s3.amazonaws.com/betterboh/u/img/local/2/1610935724_italian_1800x1200.jpg',
+    color: null,
+    vertical: 'bottom',
+    horizontal: 'center',
+    overlay: true,
+  },
+  {
+    title: 'New Item!',
+    subtitle: 'This is a new item!',
+    image_url:
+      'https://s3.amazonaws.com/betterboh/u/img/local/2/1613691230_sweet-potatoes_1800x1200.jpg',
+    color: null,
+    vertical: 'bottom',
+    horizontal: 'center',
+    overlay: true,
+  },
+  {
+    title: 'New Item!',
+    subtitle: 'This is a new item!',
+    image_url:
+      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608048551_jarritos-pineapple_1800x1200.jpg',
+    color: null,
+    vertical: 'bottom',
+    horizontal: 'center',
+    overlay: true,
+  },
+]
+
+const makeSlides = (promotions) => {
+  const items = promotions
+    .filter((i) => i.image_url)
+    .map((i) => ({ ...i, imageUrl: i.image_url }))
+  return items.map((i) => (
+    <Hero key={i.imageUrl} {...i}>
+      <HeroContent {...i} />
+    </Hero>
+  ))
+}
+
 const Account = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -64,6 +110,7 @@ const Account = () => {
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
   const token = auth ? auth.access_token : null
   const { windowRef } = useContext(AppContext)
+  const slides = makeSlides(promotions)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -113,7 +160,8 @@ const Account = () => {
         />
         <Main>
           <AccountTabs />
-          <Hero imageUrl={mobile || background}>&nbsp;</Hero>
+          {/* <Hero imageUrl={mobile || background}>&nbsp;</Hero> */}
+          <Slider slides={slides} />
           <AccountContent>
             <Container>
               <WelcomeHeader title={pageTitle} subtitle={subtitle} />

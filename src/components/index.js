@@ -15,6 +15,7 @@ import HeaderDefault from './HeaderDefault'
 import HeaderLogo from './HeaderLogo'
 import HeaderMobile from './HeaderMobile'
 import Hero from './Hero'
+import HeroContent from './HeroContent'
 import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
 import LinkSeparator from './LinkSeparator'
@@ -52,6 +53,7 @@ import ScreenreaderTitle from './ScreenreaderTitle'
 import SectionTitle from './SectionTitle'
 import Sidebar from './Sidebar'
 import SkipLink from './SkipLink'
+import Slider from './Slider'
 import Tag from './Tag'
 import Welcome from './Welcome'
 import WelcomeContent from './WelcomeContent'
@@ -75,6 +77,7 @@ export {
   HeaderLogo,
   HeaderMobile,
   Hero,
+  HeroContent,
   ImageSpinner,
   ItemCards,
   LinkSeparator,
@@ -116,6 +119,7 @@ export {
   SectionTitle,
   Sidebar,
   SkipLink,
+  Slider,
   Tag,
   Welcome,
   WelcomeContent,
