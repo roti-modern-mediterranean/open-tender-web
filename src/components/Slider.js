@@ -139,13 +139,13 @@ const Slider = ({ slides }) => {
             direction="left"
             size={size}
             onClick={(e) => e.stopPropagation() || slider.prev()}
-            disabled={currentSlide === 0}
+            // disabled={currentSlide === 0}
           />
           <Arrow
             direction="right"
             size={size}
             onClick={(e) => e.stopPropagation() || slider.next()}
-            disabled={currentSlide === slider.details().size - 1}
+            // disabled={currentSlide === slider.details().size - 1}
           />
         </>
       )}

@@ -9,7 +9,8 @@ import { selectBrand } from '../../../slices'
 import iconMap from '../../iconMap'
 
 const AccountButtonsView = styled('div')`
-  padding: 0 ${(props) => props.theme.layout.padding};
+  padding: ${(props) => props.theme.layout.padding};
+  padding-top: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0;
   }

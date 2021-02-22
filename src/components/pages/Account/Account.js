@@ -40,20 +40,24 @@ import AccountRewards from './AccountRewards'
 import { makeSlides } from '../../HeroSlides'
 
 const AccountContent = styled('div')`
-  margin: ${(props) => (props.isMobile ? '0 0 6rem' : '0')};
+  // background-color: ${(props) => props.theme.bgColors.secondary};
+  padding: ${(props) => (props.isMobile ? '0 0 6rem' : '0')};
+`
+
+const AccountHeader = styled('div')`
+  background-color: ${(props) => props.theme.bgColors.primary};
+  padding: 0 0 3rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0 0 2.5rem;
+  }
 `
 
 const AccountLoyalty = styled('div')`
-  // display: flex;
-  // justify-content: flex-start;
-  // align-items: center;
-  // padding: 3rem 0;
-  // // background-color: ${(props) => props.theme.bgColors.secondary};
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   flex-direction: column;
-  //   align-items: flex-start;
-  //   padding: 2rem 0;
-  // }
+  // background-color: ${(props) => props.theme.bgColors.secondary};
+  padding: 2.5rem 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 2rem 0;
+  }
 `
 
 const Account = () => {
@@ -123,7 +127,7 @@ const Account = () => {
             )
           }
         />
-        <Main>
+        <Main bgColor="secondary">
           {!isBrowser && <AccountTabs />}
           <PageView>
             {!isBrowser && (
@@ -136,12 +140,10 @@ const Account = () => {
               </PageHero>
             )}
             <AccountContent isMobile={!isBrowser}>
-              <PageHeader
-                title={pageTitle}
-                subtitle={subtitle}
-                // style={{ padding: '0' }}
-              />
-              <AccountActions />
+              <AccountHeader>
+                <PageHeader title={pageTitle} subtitle={subtitle} />
+                <AccountActions />
+              </AccountHeader>
               {loyalty && (
                 <AccountLoyalty>
                   {progress && <AccountProgress loyalty={loyalty} />}

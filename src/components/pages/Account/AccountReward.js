@@ -46,7 +46,7 @@ const AccountRewardContent = styled('div')``
 const AccountRewardNote = styled('div')`
   display: flex;
   align-items: center;
-  margin: 0 0 0.5rem;
+  margin: 0 0 1rem;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 
   span {
@@ -58,21 +58,29 @@ const AccountRewardNote = styled('div')`
     width: 1.2rem;
     height: 1.2rem;
     margin: 0 0.4rem 0 0;
-    color: ${(props) => props.theme.links.primary.color};
+    // color: ${(props) => props.theme.links.primary.color};
+`
+
+const AccountRewardTitle = styled('p')`
+  color: ${(props) => props.theme.colors.primary};
+  font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
 const AccountRewardDescription = styled('p')`
   margin: 0.3rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
+  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
 const AccountRewardExpiration = styled('div')`
-  margin: 0.5rem 0 0;
+  margin: 1rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
 const AccountRewardAction = styled('div')`
   margin: 0 0 0 0.5rem;
+  // position: absolute;
+  // bottom: 0.4rem;
+  // right: 1rem;
 
   button {
     width: 2rem;
@@ -98,9 +106,9 @@ const AccountReward = ({ reward }) => {
         <div>
           <AccountRewardContent>
             <AccountRewardNote>
-              <span>{iconMap.Grid}</span>Scan at restaurant only
+              <span>{iconMap.Grid}</span>Scan in-store only
             </AccountRewardNote>
-            <Heading as="p">{reward.title}</Heading>
+            <AccountRewardTitle>{reward.title}</AccountRewardTitle>
             {reward.description && (
               <AccountRewardDescription>
                 {reward.description}

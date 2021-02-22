@@ -18,11 +18,12 @@ const ProgressCirlceView = styled('div')`
   }
 
   path:last-of-type {
-    stroke: ${(props) => props.theme.links.primary.color};
+    // stroke: ${(props) => props.theme.links.primary.color};
+    stroke: ${(props) => props.theme.colors.primary};
   }
 
   path:first-of-type {
-    stroke: ${(props) => props.theme.bgColors.primary};
+    // stroke: ${(props) => props.theme.bgColors.primary};
     stroke: rgba(0, 0, 0, 0.1);
   }
 `

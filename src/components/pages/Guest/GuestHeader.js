@@ -18,9 +18,13 @@ const GuestHeaderView = styled('div')`
 `
 
 const GuestHeaderFootnote = styled('p')`
+  margin: 2.5rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 2rem 0 0;
+  }
 `
 
 const GuestHeaderLinks = styled('p')`

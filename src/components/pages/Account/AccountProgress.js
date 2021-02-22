@@ -8,20 +8,25 @@ import Container from '../../Container'
 import { Link } from 'react-router-dom'
 
 const AccountProgressView = styled('div')`
-  margin: 3rem 0 0;
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   margin: 2rem 0 0;
-  // }
+  // max-width: 52rem;
+  margin: 0;
 
   & > div {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    flex-direction: row-reverse;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 `
 
 const AccountProgressContent = styled('div')`
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  flex-grow: 1;
+  margin: 0 0 0 3rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0 4rem 0 0;
   }
 
@@ -53,7 +58,8 @@ const AccountProgress = ({ loyalty }) => {
             </Text>
           )}
           <p>
-            You're ${remaining} away from {hasCredit && 'another '}
+            {hasCredit ? "And you're" : "You're"} ${remaining} away from{' '}
+            {hasCredit && 'another '}
             {towards}
           </p>
           <p>

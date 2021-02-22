@@ -12,9 +12,9 @@ const Logout = ({ text = 'Logout', icon = iconMap.UserX, color }) => {
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
 
-  if (!auth) return null
-
-  return isBrowser ? (
+  return !isBrowser ? (
+    <NavMenu color={color} />
+  ) : auth ? (
     <ButtonStyled
       onClick={() => dispatch(logoutCustomer())}
       icon={icon}
@@ -23,9 +23,7 @@ const Logout = ({ text = 'Logout', icon = iconMap.UserX, color }) => {
     >
       {text}
     </ButtonStyled>
-  ) : (
-    <NavMenu color={color} />
-  )
+  ) : null
 }
 
 Logout.displayName = 'Logout'

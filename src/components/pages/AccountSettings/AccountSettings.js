@@ -46,6 +46,7 @@ const AccountSettings = () => {
       {isBrowser && <Background imageUrl={background} />}
       <Content maxWidth="76.8rem">
         <HeaderMobile
+          title={isBrowser ? null : 'Account'}
           maxWidth="76.8rem"
           bgColor="primary"
           borderColor="primary"
