@@ -8,26 +8,44 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Account } from '../../buttons'
-import {
-  Content,
-  HeaderLogo,
-  HeaderMobile,
-  Main,
-  OrderTypes,
-  Welcome,
-  WelcomeHeader,
-} from '../..'
+import { Content, HeaderLogo, HeaderMobile, Hero, Main, Slider } from '../..'
+import { makeSlides } from '../../HeroSlides'
+import GuestActions from './GuestActions'
+import GuestHeader from './GuestHeader'
 
-const GuestHeader = styled('div')`
-  padding: 2.5rem;
+const GuestView = styled('div')`
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+`
+
+const GuestContent = styled('div')`
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: 32rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    max-height: 100%;
+  }
+
+  & > div {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    & > div {
+      flex-grow: 1;
+    }
+  }
 `
 
 const Guest = () => {
   const dispatch = useDispatch()
   const brand = useSelector(selectBrand)
   const { home: homeConfig } = useSelector(selectConfig)
-  const { background, mobile, title, subtitle } = homeConfig
+  const { background, mobile } = homeConfig
   const { windowRef } = useContext(AppContext)
+  const slides = makeSlides([])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -40,20 +58,30 @@ const Guest = () => {
       <Helmet>
         <title>{brand.title}</title>
       </Helmet>
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderMobile
-          bgColor={isBrowser ? 'primary' : 'transparent'}
-          borderColor={isBrowser ? 'primary' : 'transparent'}
-          maxWidth="76.8rem"
+          bgColor="primary"
+          borderColor="primary"
           left={<HeaderLogo />}
-          right={<Account color="light" />}
+          right={<Account />}
         />
-        <Main padding="0" imageUrl={mobile || background}>
-          <Welcome footer={<OrderTypes />}>
-            <GuestHeader>
-              <WelcomeHeader title={title} subtitle={subtitle} />
+        <Main>
+          <GuestView>
+            <GuestContent>
+              {slides ? (
+                <Slider slides={slides} />
+              ) : (
+                <Hero imageUrl={isBrowser ? background : mobile}>&nbsp;</Hero>
+              )}
+            </GuestContent>
+            <GuestHeader
+              title="Hi there!"
+              subtitle="Let's get things started."
+              footnote="Hint: you don't need an account to place an order."
+            >
+              <GuestActions />
             </GuestHeader>
-          </Welcome>
+          </GuestView>
         </Main>
       </Content>
     </>

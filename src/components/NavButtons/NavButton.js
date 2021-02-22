@@ -27,13 +27,11 @@ const NavButtonView = styled('button')`
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 1.75rem 2rem 1.75rem 2.5rem;
+    padding: 1.75rem ${(props) => props.theme.layout.paddingMobile};
     margin: 0;
     border: 0;
-    border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
     border-radius: 0;
-    background-color: transparent;
-    color: ${(props) => props.theme.colors.light};
+    border-top: 0.1rem solid ${(props) => props.theme.border.color};
   }
 
   &:hover {
@@ -42,9 +40,8 @@ const NavButtonView = styled('button')`
 
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       border: 0;
-      border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
-      background-color: transparent;
-      color: ${(props) => props.theme.colors.light};
+      border-top: 0.1rem solid ${(props) => props.theme.border.color};
+      background-color: ${(props) => props.theme.bgColors.primary};
     }
   }
 

@@ -16,6 +16,7 @@ import HeaderLogo from './HeaderLogo'
 import HeaderMobile from './HeaderMobile'
 import Hero from './Hero'
 import HeroContent from './HeroContent'
+import HeroSlides from './HeroSlides'
 import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
 import LinkSeparator from './LinkSeparator'
@@ -39,10 +40,10 @@ import OrderImages from './OrderImages'
 import OrderImage from './OrderImage'
 import OrderQuantity from './OrderQuantity'
 import OrderTag from './OrderTag'
-import OrderTypes from './OrderTypes'
 import PageContent from './PageContent'
 import PageError from './PageError'
 import PageTitle from './PageTitle'
+import PageHeader from './PageHeader'
 import ProgressBar from './ProgressBar'
 import ProgressCircle from './ProgressCircle'
 import QRCode from './QRCode'
@@ -55,9 +56,6 @@ import Sidebar from './Sidebar'
 import SkipLink from './SkipLink'
 import Slider from './Slider'
 import Tag from './Tag'
-import Welcome from './Welcome'
-import WelcomeContent from './WelcomeContent'
-import WelcomeHeader from './WelcomeHeader'
 
 export {
   Alerts,
@@ -78,6 +76,7 @@ export {
   HeaderMobile,
   Hero,
   HeroContent,
+  HeroSlides,
   ImageSpinner,
   ItemCards,
   LinkSeparator,
@@ -104,9 +103,9 @@ export {
   OrderImage,
   OrderQuantity,
   OrderTag,
-  OrderTypes,
   PageContent,
   PageError,
+  PageHeader,
   PageTitle,
   ProgressBar,
   ProgressCircle,
@@ -121,7 +120,4 @@ export {
   SkipLink,
   Slider,
   Tag,
-  Welcome,
-  WelcomeContent,
-  WelcomeHeader,
 }

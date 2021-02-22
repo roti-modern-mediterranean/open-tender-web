@@ -25,10 +25,9 @@ import {
   HeaderLogo,
   HeaderMobile,
   Hero,
-  HeroContent,
   Main,
+  PageHeader,
   Slider,
-  WelcomeHeader,
 } from '../..'
 import { Logout } from '../../buttons'
 import AccountActions from './AccountActions'
@@ -36,6 +35,7 @@ import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
 import AccountProgress from './AccountProgress'
 import AccountRewards from './AccountRewards'
+import { makeSlides } from '../../HeroSlides'
 
 const AccountContent = styled('div')`
   margin: 3rem 0;
@@ -57,54 +57,6 @@ const AccountLoyalty = styled('div')`
   }
 `
 
-const promotions = [
-  {
-    title: "Don't miss today's deals!",
-    subtitle:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    image_url:
-      'http://s3.amazonaws.com/betterboh/u/img/local/2/1610935724_italian_1800x1200.jpg',
-    color: null,
-    vertical: 'bottom',
-    horizontal: 'center',
-    overlay: true,
-  },
-  {
-    title: "Don't miss today's deals!",
-    subtitle:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    image_url:
-      'https://s3.amazonaws.com/betterboh/u/img/local/2/1613691230_sweet-potatoes_1800x1200.jpg',
-    color: null,
-    vertical: 'bottom',
-    horizontal: 'left',
-    overlay: true,
-  },
-  {
-    title: "Don't miss today's deals!",
-    subtitle:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    image_url:
-      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608048551_jarritos-pineapple_1800x1200.jpg',
-    color: null,
-    vertical: 'bottom',
-    horizontal: 'right',
-    overlay: true,
-  },
-]
-
-const makeSlides = (promotions) => {
-  if (!promotions || !promotions.length) return null
-  const items = promotions
-    .filter((i) => i.image_url)
-    .map((i) => ({ ...i, imageUrl: i.image_url }))
-  return items.map((i) => (
-    <Hero key={i.imageUrl} {...i}>
-      <HeroContent {...i} />
-    </Hero>
-  ))
-}
-
 const Account = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -120,8 +72,7 @@ const Account = () => {
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
   const token = auth ? auth.access_token : null
   const { windowRef } = useContext(AppContext)
-  const promotions = []
-  const slides = makeSlides(promotions)
+  const slides = makeSlides([])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -151,14 +102,8 @@ const Account = () => {
       <Helmet>
         <title>Welcome Back | {siteTitle}</title>
       </Helmet>
-      <Content
-      // maxWidth="76.8rem"
-      // hasFooter={isBrowser ? true : false}
-      >
+      <Content>
         <HeaderMobile
-          // bgColor={isBrowser ? 'primary' : 'transparent'}
-          // borderColor={isBrowser ? 'primary' : 'transparent'}
-          // maxWidth="76.8rem"
           bgColor="primary"
           borderColor="primary"
           left={<HeaderLogo />}
@@ -185,7 +130,11 @@ const Account = () => {
           )}
           <AccountContent>
             <Container>
-              <WelcomeHeader title={pageTitle} subtitle={subtitle} />
+              <PageHeader
+                title={pageTitle}
+                subtitle={subtitle}
+                style={{ padding: '0' }}
+              />
               <AccountActions />
             </Container>
           </AccountContent>

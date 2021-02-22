@@ -50,7 +50,8 @@ const Dots = styled('div')`
   align-items: center;
   height: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    height: ${(props) => props.theme.layout.paddingMobile};
+    // height: ${(props) => props.theme.layout.paddingMobile};
+    height: 3rem;
   }
 `
 
@@ -76,7 +77,7 @@ const Slider = ({ slides }) => {
   const wrapper = useRef()
   const timer = useRef()
   const duration = isBrowser ? 1000 : 500
-  const timeout = isBrowser ? 3000 : 2000
+  const interval = isBrowser ? 3000 : 3000
   const size = isBrowser ? '3rem' : '2rem'
   const [currentSlide, setCurrentSlide] = useState(0)
   const [pause, setPause] = useState(false)
@@ -109,11 +110,11 @@ const Slider = ({ slides }) => {
       if (!pause && slider) {
         slider.next()
       }
-    }, timeout)
+    }, interval)
     return () => {
       clearInterval(timer.current)
     }
-  }, [pause, slider, timeout])
+  }, [pause, slider, interval])
 
   return (
     <SliderView ref={wrapper}>

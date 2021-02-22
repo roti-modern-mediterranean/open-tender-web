@@ -7,7 +7,7 @@ import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
 import Catering from './Catering'
 import Checkout from './Checkout'
-import ChooseOrderType from './ChooseOrderType'
+import OrderType from './OrderType'
 import Confirmation from './Confirmation'
 import Donations from './Donations'
 import ErrorReport from './ErrorReport'
@@ -46,7 +46,7 @@ export {
   AccountSettings,
   Catering,
   Checkout,
-  ChooseOrderType,
+  OrderType,
   Confirmation,
   Donations,
   ErrorReport,

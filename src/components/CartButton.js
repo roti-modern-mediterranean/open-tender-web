@@ -115,10 +115,12 @@ const CartButton = () => {
   const canOrder = useSelector(selectCanOrder)
   const cartQuantity = useSelector(selectCartQuantity)
   const showEmptyCart = contains(pathname, ['menu', 'checkout'])
+  const isHome = pathname === '/'
   const hideCart =
     (cartQuantity === 0 && !showEmptyCart) ||
     contains(pathname, ['review', 'gift-cards']) ||
-    !canOrder
+    !canOrder ||
+    isHome
 
   const toggle = (evt) => {
     evt.preventDefault()

@@ -10,7 +10,7 @@ import {
   AccountSettings,
   Catering,
   Checkout,
-  ChooseOrderType,
+  OrderType,
   Confirmation,
   Donations,
   Favorites,
@@ -51,9 +51,6 @@ const Routes = () => {
       <Route exact path="/">
         <Home />
       </Route>
-      <Route exact path="/order-types">
-        <ChooseOrderType />
-      </Route>
       <Route exact path="/order">
         <Redirect to="/" />
       </Route>
@@ -68,6 +65,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/thanx/callback">
         <Thanx />
+      </Route>
+      <Route exact path="/order-type">
+        <OrderType />
       </Route>
       <Route exact path="/signup">
         <SignUp />

@@ -6,7 +6,8 @@ import { BgImage } from '@open-tender/components'
 const HeroView = styled(BgImage)`
   position: relative;
   width: 100%;
-  height: 32rem;
+  height: 100%;
+  min-height: 32rem;
   padding: ${(props) => props.theme.layout.padding};
   display: flex;
   justify-content: ${(props) => props.justifyContent};
@@ -14,23 +15,31 @@ const HeroView = styled(BgImage)`
   text-align: ${(props) => props.textAlign};
   background-color: ${(props) => props.theme.bgColors.secondary};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    height: 16rem;
+    // height: 16rem;
+    min-height: 16rem;
     padding: ${(props) => props.theme.layout.paddingMobile};
+    padding-bottom: 2.5rem;
   }
 
-  > div {
-    opacity: 0;
-    animation: slide-up 0.25s ease-in-out 0.125s forwards;
-  }
+  // > div {
+  //   opacity: 0;
+  //   animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  // }
 `
 
 const HeroOverlay = styled('div')`
   position: absolute;
+  z-index: 1;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.3);
+`
+
+const HeroChildren = styled('div')`
+  position: relative;
+  z-index: 2;
 `
 
 const makeAlignment = (alignment) => {
@@ -64,7 +73,7 @@ const Hero = ({
       style={bgStyle}
     >
       {overlay && <HeroOverlay />}
-      {children}
+      <HeroChildren>{children}</HeroChildren>
     </HeroView>
   )
 }

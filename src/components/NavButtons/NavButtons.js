@@ -4,10 +4,11 @@ import styled from '@emotion/styled'
 import NavButton from './NavButton'
 
 const NavButtonsContainer = styled('div')`
-  padding: 0 2.5rem 2.5rem;
+  padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0;
-    background-color: rgba(0, 0, 0, 0.3);
+    // background-color: rgba(0, 0, 0, 0.3);
+    border-bottom: 0.1rem solid ${(props) => props.theme.border.color};
   }
 `
 

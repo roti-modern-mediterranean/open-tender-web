@@ -1,14 +1,14 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
-import {
-  selectCustomer,
-  resetOrderType,
-  resetCheckout,
-} from '@open-tender/redux'
+// import {
+//   selectCustomer,
+//   resetOrderType,
+//   resetCheckout,
+// } from '@open-tender/redux'
 import { ButtonStyled, ButtonIcon } from '@open-tender/components'
 
 import iconMap from '../iconMap'
@@ -27,21 +27,21 @@ const HeaderLogoButton = styled('button')`
 `
 
 const StartOver = ({
-  text = 'Start Over',
+  text = 'Order Type',
   icon = iconMap.ArrowLeft,
   isLogo = false,
   color,
 }) => {
   const history = useHistory()
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const brand = useSelector(selectBrand)
-  const { auth } = useSelector(selectCustomer)
+  // const { auth } = useSelector(selectCustomer)
   const logoUrl = isBrowser ? brand.logo : brand.logoLight
 
   const startOver = () => {
-    if (!auth) dispatch(resetOrderType())
-    dispatch(resetCheckout())
-    history.push(`/`)
+    // if (!auth) dispatch(resetOrderType())
+    // dispatch(resetCheckout())
+    history.push(`/order-type`)
   }
 
   return isBrowser ? (

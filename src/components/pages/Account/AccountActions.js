@@ -85,6 +85,7 @@ const AccountActionsView = styled('div')`
       flex: 1 1 50%;
       padding: 1rem 1rem;
       margin: 0 0.5rem;
+      line-height: 1.2;
       overflow: hidden;
     }
   }
@@ -138,12 +139,12 @@ const AccountActions = () => {
 
   const startNewOrder = () => {
     dispatch(resetOrder())
-    history.push(`/order-types`)
+    history.push(`/order-type`)
   }
 
   const switchOrderType = () => {
     dispatch(resetOrderType())
-    history.push(`/order-types`)
+    history.push(`/order-type`)
   }
 
   const continueCurrent = () => {

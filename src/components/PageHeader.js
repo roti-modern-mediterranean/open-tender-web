@@ -2,9 +2,13 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-const WelcomeHeaderView = styled('div')`
+const PageHeaderView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  padding: 2.5rem ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 2rem ${(props) => props.theme.layout.paddingMobile};
+  }
 
   h1 {
     line-height: 1;
@@ -23,23 +27,19 @@ const WelcomeHeaderView = styled('div')`
   }
 `
 
-const WelcomeHeader = ({ title, subtitle, children }) => {
+const PageHeader = ({ title, subtitle, style = null }) => {
   return (
-    <WelcomeHeaderView>
+    <PageHeaderView style={style}>
       {title && <h1>{title}</h1>}
       {subtitle && <p>{subtitle}</p>}
-    </WelcomeHeaderView>
+    </PageHeaderView>
   )
 }
 
-WelcomeHeader.displayName = 'WelcomeHeader'
-WelcomeHeader.propTypes = {
+PageHeader.displayName = 'PageHeader'
+PageHeader.propTypes = {
   title: propTypes.string,
   subtitle: propTypes.string,
-  children: propTypes.oneOfType([
-    propTypes.arrayOf(propTypes.node),
-    propTypes.node,
-  ]),
 }
 
-export default WelcomeHeader
+export default PageHeader

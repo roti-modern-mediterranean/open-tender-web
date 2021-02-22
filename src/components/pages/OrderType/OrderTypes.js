@@ -12,13 +12,13 @@ import {
   ShoppingCart,
   DollarSign,
 } from 'react-feather'
-import styled from '@emotion/styled'
 import {
   resetRevenueCenters,
   resetOrderType,
   selectGroupOrder,
   resetGroupOrder,
   setOrderServiceType,
+  resetCheckout,
 } from '@open-tender/redux'
 import { Message, useGeolocation } from '@open-tender/components'
 
@@ -28,51 +28,14 @@ import {
   setGeoError,
   setGeoLoading,
   selectSettings,
-} from '../slices'
-import { NavButtons } from '.'
-
-const HomeContent = styled('div')`
-  padding: 0 2.5rem 2.5rem;
-  line-height: ${(props) => props.theme.lineHeight};
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 2.5rem;
-    color: ${(props) => props.theme.colors.light};
-    background-color: rgba(0, 0, 0, 0.3);
-    border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
-  }
-
-  p {
-    margin: 0.5em 0;
-
-    &:first-of-type {
-      margin-top: 0;
-    }
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-  }
-`
-
-const makeContent = (content) => {
-  if (!content || !content.length || !content[0].length) return null
-  return (
-    <HomeContent>
-      {content.map((i, index) => (
-        <p key={index}>{i}</p>
-      ))}
-    </HomeContent>
-  )
-}
+} from '../../../slices'
+import { NavButtons } from '../..'
 
 const OrderTypes = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { geoLatLng, geoError } = useGeolocation()
   const { home } = useSelector(selectConfig)
-  const content = makeContent(home.content)
   const { orderTypes } = useSelector(selectSettings)
   const hasOrderTypes = orderTypes && orderTypes.length > 0
   const { cartGuest } = useSelector(selectGroupOrder)
@@ -82,6 +45,7 @@ const OrderTypes = () => {
     dispatch(setGeoLoading())
     dispatch(resetRevenueCenters())
     dispatch(resetOrderType())
+    dispatch(resetCheckout())
   }, [dispatch])
 
   useEffect(() => {
@@ -171,7 +135,6 @@ const OrderTypes = () => {
           This brand is not currently accepting online orders.
         </Message>
       )}
-      {content}
     </div>
   )
 }
