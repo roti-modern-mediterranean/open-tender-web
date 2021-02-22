@@ -19,6 +19,20 @@ const BackgroundContainer = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     display: none;
   }
+
+  & > div {
+    p:first-of-type {
+      @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+        font-size: ${(props) => props.theme.fonts.sizes.xBig};
+      }
+    }
+
+    p + p {
+      @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+        font-size: ${(props) => props.theme.fonts.sizes.small};
+      }
+    }
+  }
 `
 
 const BackgroundLoading = styled('div')`
