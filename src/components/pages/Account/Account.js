@@ -49,7 +49,7 @@ const AccountLoyalty = styled('div')`
   justtify-content: flex-start;
   align-items: center;
   padding: 3rem 0;
-  background-color: ${(props) => props.theme.bgColors.secondary};
+  // background-color: ${(props) => props.theme.bgColors.secondary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex-direction: column;
     align-items: flex-start;
