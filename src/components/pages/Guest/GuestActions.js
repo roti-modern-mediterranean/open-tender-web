@@ -25,6 +25,9 @@ const GuestActionsView = styled('div')`
   margin: 2rem 0;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    justify-content: center;
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 1.5rem -0.5rem;
   }

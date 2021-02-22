@@ -4,11 +4,11 @@ import styled from '@emotion/styled'
 import GuestActions from './GuestActions'
 
 const GuestHeaderView = styled('div')`
-  padding: 2.5rem;
+  padding: 5rem 2.5rem 2.5rem 0;
   flex: 0 0 auto;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     text-align: center;
     padding: 2rem;
   }
@@ -35,9 +35,7 @@ const GuestHeader = ({ title, subtitle, footnote, children }) => {
     <GuestHeaderView>
       {title && <h1>{title}</h1>}
       {subtitle && <p>{subtitle}</p>}
-      <div>
-        <GuestActions />
-      </div>
+      <GuestActions />
       {footnote && <p>{footnote}</p>}
     </GuestHeaderView>
   )

@@ -16,16 +16,24 @@ import GuestHeader from './GuestHeader'
 const GuestView = styled('div')`
   flex: 1 1 auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
+  // align-items: center;
+  padding: 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex-direction: column;
+    padding: 0;
+  }
 `
 
 const GuestContent = styled('div')`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  max-height: 32rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    max-height: 100%;
+  // max-height: 32rem;
+  padding: 0 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    // max-height: 100%;
+    padding: 0;
   }
 
   & > div {

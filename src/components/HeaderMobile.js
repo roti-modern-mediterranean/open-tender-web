@@ -19,7 +19,7 @@ const HeaderMobileView = styled('div')`
   background-color: ${(props) => props.theme.bgColors[props.bgColor]};
   box-shadow: ${(props) =>
     props.stuck ? props.theme.boxShadow.outer : 'none'};
-  padding: 0 1.3rem;
+  padding: 0 1.7rem;
   border: 0;
   border-bottom-width: 0.1rem;
   border-style: solid;
