@@ -1,5 +1,6 @@
 import Alerts from './Alerts'
 import Background from './Background'
+import ButtonText from './ButtonText'
 import Card from './Card'
 import CartButton from './CartButton'
 import Content from './Content'
@@ -14,6 +15,7 @@ import HeaderAccount from './HeaderAccount'
 import HeaderDefault from './HeaderDefault'
 import HeaderLogo from './HeaderLogo'
 import HeaderMobile from './HeaderMobile'
+import HeaderUser from './HeaderUser'
 import Hero from './Hero'
 import HeroContent from './HeroContent'
 import HeroSlides from './HeroSlides'
@@ -40,6 +42,7 @@ import OrderImages from './OrderImages'
 import OrderImage from './OrderImage'
 import OrderQuantity from './OrderQuantity'
 import OrderTag from './OrderTag'
+import PageButtons from './PageButtons'
 import PageContent from './PageContent'
 import PageError from './PageError'
 import PageTitle from './PageTitle'
@@ -62,6 +65,7 @@ import Tag from './Tag'
 export {
   Alerts,
   Background,
+  ButtonText,
   Card,
   CartButton,
   Container,
@@ -76,6 +80,7 @@ export {
   HeaderDefault,
   HeaderLogo,
   HeaderMobile,
+  HeaderUser,
   Hero,
   HeroContent,
   HeroSlides,
@@ -105,6 +110,7 @@ export {
   OrderImage,
   OrderQuantity,
   OrderTag,
+  PageButtons,
   PageContent,
   PageError,
   PageHeader,

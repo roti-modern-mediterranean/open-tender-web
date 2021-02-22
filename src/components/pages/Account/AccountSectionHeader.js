@@ -14,7 +14,7 @@ const AccountSectionHeaderView = styled('div')`
 
   h2 {
     display: block;
-    font-size: ${(props) => props.theme.fonts.sizes.main};
+    font-size: ${(props) => props.theme.fonts.sizes.big};
   }
 
   p {

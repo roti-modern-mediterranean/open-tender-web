@@ -56,7 +56,9 @@ const AccountSettings = () => {
           <PageView>
             {!isBrowser && (
               <PageHero>
-                <Hero imageUrl={mobile}>&nbsp;</Hero>
+                <Hero imageUrl={mobile} style={{ minHeight: '0' }}>
+                  &nbsp;
+                </Hero>
               </PageHero>
             )}
             <PageHeader

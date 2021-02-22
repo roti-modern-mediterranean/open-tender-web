@@ -18,14 +18,14 @@ import { AppContext } from '../../../App'
 import {
   Container,
   Content,
+  HeaderUser,
+  ItemCards,
   Loading,
   Main,
-  PageTitle,
-  PageContent,
-  HeaderAccount,
-  ItemCards,
   OrderCardItem,
+  PageContent,
   PageError,
+  PageTitle,
 } from '../..'
 import OrdersList from './OrdersList'
 
@@ -85,7 +85,7 @@ const Orders = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderAccount
+        <HeaderUser
           title={isBrowser ? null : 'Order History'}
           bgColor="secondary"
           borderColor="secondary"

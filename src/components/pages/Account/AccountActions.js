@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
 import {
   resetOrderType,
   resetOrder,
@@ -18,18 +19,7 @@ import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
 
 import iconMap from '../../iconMap'
-import { Loading } from '../..'
-import styled from '@emotion/styled'
-import { isBrowser } from 'react-device-detect'
-
-const ButtonText = styled('span')`
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-`
+import { ButtonText, Container, Loading, PageButtons } from '../..'
 
 const Continue = ({ size, icon, current, startNew }) => {
   return (
@@ -66,30 +56,6 @@ const Reorder = ({ size, icon, orderTypeName, reorder, switchType }) => {
     </>
   )
 }
-
-const AccountActionsView = styled('div')`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 2rem 0 0;
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 1rem -0.5rem 0;
-  }
-
-  button {
-    margin: 0 1rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      display: block;
-      flex: 1 1 50%;
-      padding: 1rem 1rem;
-      margin: 0 0.5rem;
-      line-height: 1.2;
-      overflow: hidden;
-    }
-  }
-`
 
 const makeOrderTypeIcon = (orderType, serviceType) => {
   return orderType === 'CATERING'
@@ -152,34 +118,36 @@ const AccountActions = () => {
   }
 
   return (
-    <AccountActionsView>
-      {isLoading ? (
-        <Loading text="Retrieving your account info..." />
-      ) : isCurrentOrder ? (
-        <Continue
-          icon={orderTypeIcon}
-          size={buttonSize}
-          current={continueCurrent}
-          startNew={startNewOrder}
-        />
-      ) : lastOrder ? (
-        <Reorder
-          icon={orderTypeIcon}
-          size={buttonSize}
-          orderTypeName={orderTypeName}
-          reorder={continueCurrent}
-          switchType={switchOrderType}
-        />
-      ) : (
-        <ButtonStyled
-          icon={iconMap.ShoppingBag}
-          onClick={startNewOrder}
-          size={buttonSize}
-        >
-          <ButtonText>Start a New Order</ButtonText>
-        </ButtonStyled>
-      )}
-    </AccountActionsView>
+    <Container>
+      <PageButtons>
+        {isLoading ? (
+          <Loading text="Retrieving your account info..." />
+        ) : isCurrentOrder ? (
+          <Continue
+            icon={orderTypeIcon}
+            size={buttonSize}
+            current={continueCurrent}
+            startNew={startNewOrder}
+          />
+        ) : lastOrder ? (
+          <Reorder
+            icon={orderTypeIcon}
+            size={buttonSize}
+            orderTypeName={orderTypeName}
+            reorder={continueCurrent}
+            switchType={switchOrderType}
+          />
+        ) : (
+          <ButtonStyled
+            icon={iconMap.ShoppingBag}
+            onClick={startNewOrder}
+            size={buttonSize}
+          >
+            <ButtonText>Start a New Order</ButtonText>
+          </ButtonStyled>
+        )}
+      </PageButtons>
+    </Container>
   )
 }
 

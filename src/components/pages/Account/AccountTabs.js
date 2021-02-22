@@ -4,7 +4,6 @@ import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { ButtonStyled } from '@open-tender/components'
-// import { selectCustomerGroupOrders } from '@open-tender/redux'
 
 import { selectBrand, selectSettings, selectTheme } from '../../../slices'
 import iconMap from '../../iconMap'
@@ -44,6 +43,11 @@ const navTabs = [
     path: '/rewards',
   },
   {
+    icon: iconMap.DollarSign,
+    title: 'Deals',
+    path: '/deals',
+  },
+  {
     icon: iconMap.Gift,
     title: 'Gift Cards',
     path: '/account/gift-cards',
@@ -59,13 +63,15 @@ const AccountTabs = () => {
   const history = useHistory()
   const { pathname } = useLocation()
   const theme = useSelector(selectTheme)
-  const { has_rewards, has_thanx } = useSelector(selectBrand)
+  const { has_rewards, has_thanx, has_deals = false } = useSelector(selectBrand)
   const { accountSections } = useSelector(selectSettings)
   const hasLevelUp = accountSections.filter((i) => i === 'levelup').length > 0
   const hasRewards = has_rewards || has_thanx || hasLevelUp
-  // const { entities: groupOrders } = useSelector(selectCustomerGroupOrders)
-  let removed = !hasRewards ? ['/rewards'] : []
-  // if (!groupOrders.length) removed.push('/group-orders')
+  let removed = []
+  if (!hasRewards) removed.push('/rewards')
+  if (!has_deals) removed.push('/deals')
+  if (!isMobile || (hasRewards && has_deals))
+    removed.push('/account/gift-cards')
   const filteredButtons = navTabs.filter((i) => !removed.includes(i.path))
   const buttons = filteredButtons.map((i) => ({
     ...i,

@@ -60,9 +60,12 @@ const Hero = ({
   vertical = 'bottom',
   horizontal = 'center',
   overlay = false,
+  style = {},
   children,
 }) => {
-  const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
+  const bgStyle = imageUrl
+    ? { ...style, backgroundImage: `url(${imageUrl}` }
+    : null
   const justifyContent = makeAlignment(horizontal)
   const alignItems = makeAlignment(vertical)
   return (

@@ -14,11 +14,12 @@ import { AppContext } from '../../../App'
 import {
   Container,
   Content,
-  HeaderAccount,
+  HeaderUser,
   Main,
   Order as OrderSummary,
   PageContent,
 } from '../..'
+import { isMobile } from 'react-device-detect'
 
 const Order = () => {
   const dispatch = useDispatch()
@@ -51,10 +52,8 @@ const Order = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderAccount
-          title={title}
-          text="Back to Orders"
-          path="/orders"
+        <HeaderUser
+          title={isMobile ? title : null}
           bgColor="secondary"
           borderColor="secondary"
         />

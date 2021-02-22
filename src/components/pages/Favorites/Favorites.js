@@ -19,12 +19,12 @@ import {
   Container,
   Content,
   ItemCards,
+  HeaderUser,
   Loading,
   Main,
+  OrderCardItem,
   PageTitle,
   PageContent,
-  HeaderAccount,
-  OrderCardItem,
   PageError,
 } from '../..'
 
@@ -78,7 +78,7 @@ const Favorites = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderAccount
+        <HeaderUser
           title={isBrowser ? null : 'Favorites'}
           bgColor="secondary"
           borderColor="secondary"

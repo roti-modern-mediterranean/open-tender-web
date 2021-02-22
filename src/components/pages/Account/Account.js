@@ -20,13 +20,15 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, closeModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Container,
+  Background,
   Content,
   HeaderLogo,
   HeaderMobile,
   Hero,
   Main,
   PageHeader,
+  PageHero,
+  PageView,
   Slider,
 } from '../..'
 import { Logout } from '../../buttons'
@@ -38,23 +40,20 @@ import AccountRewards from './AccountRewards'
 import { makeSlides } from '../../HeroSlides'
 
 const AccountContent = styled('div')`
-  margin: 3rem 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 2rem 0;
-  }
+  margin: ${(props) => (props.isMobile ? '0 0 6rem' : '0')};
 `
 
 const AccountLoyalty = styled('div')`
-  display: flex;
-  justtify-content: flex-start;
-  align-items: center;
-  padding: 3rem 0;
-  // background-color: ${(props) => props.theme.bgColors.secondary};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem 0;
-  }
+  // display: flex;
+  // justify-content: flex-start;
+  // align-items: center;
+  // padding: 3rem 0;
+  // // background-color: ${(props) => props.theme.bgColors.secondary};
+  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  //   flex-direction: column;
+  //   align-items: flex-start;
+  //   padding: 2rem 0;
+  // }
 `
 
 const Account = () => {
@@ -102,17 +101,20 @@ const Account = () => {
       <Helmet>
         <title>Welcome Back | {siteTitle}</title>
       </Helmet>
-      <Content>
+      {isBrowser && (
+        <Background imageUrl={slides ? null : background}>
+          {slides && <Slider slides={slides} />}
+        </Background>
+      )}
+      <Content maxWidth="76.8rem">
         <HeaderMobile
           bgColor="primary"
           borderColor="primary"
+          maxWidth="76.8rem"
           left={<HeaderLogo />}
           right={
             isBrowser ? (
-              <>
-                <AccountTabs />
-                <Logout />
-              </>
+              <AccountTabs />
             ) : (
               <>
                 <AccountScan />
@@ -123,27 +125,31 @@ const Account = () => {
         />
         <Main>
           {!isBrowser && <AccountTabs />}
-          {slides ? (
-            <Slider slides={slides} />
-          ) : (
-            <Hero imageUrl={isBrowser ? background : mobile}>&nbsp;</Hero>
-          )}
-          <AccountContent>
-            <Container>
+          <PageView>
+            {!isBrowser && (
+              <PageHero>
+                {slides ? (
+                  <Slider slides={slides} />
+                ) : (
+                  <Hero imageUrl={mobile}>&nbsp;</Hero>
+                )}
+              </PageHero>
+            )}
+            <AccountContent isMobile={!isBrowser}>
               <PageHeader
                 title={pageTitle}
                 subtitle={subtitle}
-                style={{ padding: '0' }}
+                // style={{ padding: '0' }}
               />
               <AccountActions />
-            </Container>
-          </AccountContent>
-          {loyalty && (
-            <AccountLoyalty>
-              {progress && <AccountProgress loyalty={loyalty} />}
-              {rewards && <AccountRewards rewards={rewards} />}
-            </AccountLoyalty>
-          )}
+              {loyalty && (
+                <AccountLoyalty>
+                  {progress && <AccountProgress loyalty={loyalty} />}
+                  {rewards && <AccountRewards rewards={rewards} />}
+                </AccountLoyalty>
+              )}
+            </AccountContent>
+          </PageView>
         </Main>
       </Content>
     </>

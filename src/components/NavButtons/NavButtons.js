@@ -3,17 +3,11 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import NavButton from './NavButton'
 
-const NavButtonsContainer = styled('div')`
-  // padding: 0 ${(props) => props.theme.layout.padding};
-  padding: 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0;
-  }
-`
+const NavButtonsView = styled('div')``
 
 const NavButtons = ({ buttons, delay = 0.125 }) => {
   return (
-    <NavButtonsContainer>
+    <NavButtonsView>
       {buttons.map((button, index) => (
         <NavButton
           key={button.title}
@@ -21,7 +15,7 @@ const NavButtons = ({ buttons, delay = 0.125 }) => {
           {...button}
         />
       ))}
-    </NavButtonsContainer>
+    </NavButtonsView>
   )
 }
 

@@ -65,8 +65,6 @@ const AccountCreditCards = () => {
         <HeaderAccount
           title={isBrowser ? null : account.creditCards.title}
           maxWidth="76.8rem"
-          text="Back"
-          path="/account"
           bgColor="secondary"
           borderColor="secondary"
         />

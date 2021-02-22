@@ -11,7 +11,7 @@ import {
   Background,
   Container,
   Content,
-  HeaderAccount,
+  HeaderUser,
   Main,
   PageContent,
   PageTitle,
@@ -53,7 +53,7 @@ const Rewards = () => {
       </Helmet>
       <Background imageUrl={background} />
       <Content maxWidth="76.8rem">
-        <HeaderAccount
+        <HeaderUser
           title={isBrowser ? null : 'Rewards'}
           maxWidth="76.8rem"
           bgColor="secondary"

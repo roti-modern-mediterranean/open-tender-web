@@ -8,7 +8,7 @@ const HeroContentView = styled('div')`
 
   p {
     color: ${(props) => props.color || props.theme.colors.light};
-    text-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    // text-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
   }
 
   p:first-of-type {

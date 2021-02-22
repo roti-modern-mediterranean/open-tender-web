@@ -2,31 +2,17 @@ import React from 'react'
 import propTypes from 'prop-types'
 
 import { HeaderMobile } from '.'
-import { Home, Logout } from './buttons'
-import { isBrowser } from 'react-device-detect'
-import AccountTabs from './pages/Account/AccountTabs'
+import { AccountSettings, Logout } from './buttons'
 
-const HeaderAccount = ({
-  maxWidth = '100%',
-  title,
-  bgColor,
-  borderColor,
-  text,
-  path,
-}) => {
+const HeaderAccount = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
   return (
     <HeaderMobile
       title={title}
       maxWidth={maxWidth}
       bgColor={bgColor}
       borderColor={borderColor}
-      left={<Home text={text} path={path} />}
-      right={
-        <>
-          {isBrowser && <AccountTabs />}
-          <Logout />
-        </>
-      }
+      left={<AccountSettings />}
+      right={<Logout />}
     />
   )
 }
@@ -37,8 +23,6 @@ HeaderAccount.propTypes = {
   title: propTypes.string,
   bgColor: propTypes.string,
   borderColor: propTypes.string,
-  text: propTypes.string,
-  path: propTypes.string,
 }
 
 export default HeaderAccount

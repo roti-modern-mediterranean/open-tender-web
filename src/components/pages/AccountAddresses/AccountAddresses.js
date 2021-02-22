@@ -60,8 +60,6 @@ const AccountAddresses = () => {
         <HeaderAccount
           title={isBrowser ? null : config.account.addresses.title}
           maxWidth="76.8rem"
-          text="Back"
-          path="/account"
           bgColor="secondary"
           borderColor="secondary"
         />

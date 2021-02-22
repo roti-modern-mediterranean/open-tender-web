@@ -58,11 +58,10 @@ const testRewards = [
 
 const AccountRewardsView = styled('div')`
   overflow: hidden;
-  margin: 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 2.5rem 0 0;
-    width: 100%;
-  }
+  margin: 3rem 0 0;
+  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  //   width: 100%;
+  // }
 `
 
 const AccountRewardsList = styled('div')`

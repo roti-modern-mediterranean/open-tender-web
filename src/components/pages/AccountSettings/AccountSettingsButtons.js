@@ -1,13 +1,18 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { logoutCustomer } from '@open-tender/redux'
+
 import { NavButtons } from '../..'
 import { selectBrand } from '../../../slices'
 import iconMap from '../../iconMap'
 
-const AccountButtonsContainer = styled('div')`
-  // padding: 0 2.5rem 2.5rem;
+const AccountButtonsView = styled('div')`
+  padding: 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0;
+  }
 `
 
 const navButtons = [
@@ -15,6 +20,11 @@ const navButtons = [
     icon: iconMap.Sliders,
     title: 'Dietary Preferences',
     path: '/account/allergens',
+  },
+  {
+    icon: iconMap.Gift,
+    title: 'Gift Cards',
+    path: '/account/gift-cards',
   },
   {
     icon: iconMap.CreditCard,
@@ -36,10 +46,16 @@ const navButtons = [
     title: 'Profile & Preferences',
     path: '/account/profile',
   },
+  {
+    icon: iconMap.UserX,
+    title: 'Logout',
+    func: logoutCustomer,
+  },
 ]
 
 const AccountSettingsButtons = () => {
   const history = useHistory()
+  const dispatch = useDispatch()
   const { has_rewards, has_thanx } = useSelector(selectBrand)
   const filteredButtons =
     has_rewards || has_thanx
@@ -47,13 +63,13 @@ const AccountSettingsButtons = () => {
       : navButtons.filter((i) => i.path !== '/rewards')
   const buttons = filteredButtons.map((i) => ({
     ...i,
-    onClick: () => history.push(i.path),
+    onClick: i.path ? () => history.push(i.path) : () => dispatch(i.func()),
   }))
 
   return (
-    <AccountButtonsContainer>
+    <AccountButtonsView>
       <NavButtons buttons={buttons} />
-    </AccountButtonsContainer>
+    </AccountButtonsView>
   )
 }
 

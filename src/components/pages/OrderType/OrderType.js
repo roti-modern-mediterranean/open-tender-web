@@ -5,7 +5,7 @@ import { isBrowser } from 'react-device-detect'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Account, Home } from '../../buttons'
+import { Home, Logout } from '../../buttons'
 import {
   Background,
   Content,
@@ -41,8 +41,9 @@ const OrderType = () => {
           bgColor="primary"
           borderColor="primary"
           maxWidth="76.8rem"
+          title={!isBrowser ? 'Order Type' : null}
           left={<Home />}
-          right={<Account />}
+          right={<Logout />}
         />
         <Main>
           <PageView>

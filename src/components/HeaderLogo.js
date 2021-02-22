@@ -3,14 +3,13 @@ import { useSelector } from 'react-redux'
 
 import { selectBrand } from '../slices'
 import styled from '@emotion/styled'
+import { isMobile } from 'react-device-detect'
 
 const HeaderLogoLink = styled('a')`
   display: block;
   max-width: 14rem;
-  margin: 0.4rem 0 0 1.2rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin-left: 1.5rem;
-  }
+  margin: 0.4rem 0 0;
+  margin-left: ${(props) => (props.isMobile ? '1.5rem' : '0')};
 
   img {
     pointer-events: none;
@@ -22,7 +21,11 @@ const HeaderLogo = ({ useLight = false }) => {
   const logoUrl = useLight ? brand.logoLight : brand.logo
 
   return (
-    <HeaderLogoLink href={brand.url} rel="noopener noreferrer">
+    <HeaderLogoLink
+      isMobile={isMobile}
+      href={brand.url}
+      rel="noopener noreferrer"
+    >
       <img src={logoUrl} alt="logo" />
     </HeaderLogoLink>
   )

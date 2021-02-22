@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { AppContext } from '../App'
-import { isBrowser } from 'react-device-detect'
+import { isBrowser, isMobile } from 'react-device-detect'
 
-const makePadding = (theme) => {
-  const { padding } = theme.buttons.sizes.header
-  const buttonPadding = parseFloat(padding.split(' ')[1].replace('rem', ''))
-  const headerPadding = parseFloat(theme.layout.padding.replace('rem', ''))
-  return `${headerPadding - buttonPadding}rem`
-}
+// const makePadding = (theme) => {
+//   const { padding } = theme.buttons.sizes.header
+//   const buttonPadding = parseFloat(padding.split(' ')[1].replace('rem', ''))
+//   const headerPadding = parseFloat(theme.layout.padding.replace('rem', ''))
+//   return `${headerPadding - buttonPadding}rem`
+// }
 
 const HeaderMobileView = styled('div')`
   position: fixed;
@@ -26,15 +26,14 @@ const HeaderMobileView = styled('div')`
   background-color: ${(props) => props.theme.bgColors[props.bgColor]};
   box-shadow: ${(props) =>
     props.stuck ? props.theme.boxShadow.outer : 'none'};
-  // padding: 0 1.7rem;
-  padding: 0 ${(props) => makePadding(props.theme)};
   border: 0;
   border-bottom-width: 0.1rem;
   border-style: solid;
   border-color: ${(props) => props.theme.bgColors[props.borderColor]};
-
+  padding: ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0;
+    padding: ${(props) =>
+      props.isMobile ? '0' : props.theme.layout.paddingMobile};
   }
 `
 
@@ -75,7 +74,7 @@ const HeaderMobileNav = styled('div')`
     props.isBrowser
       ? `
     button {
-    margin: 0 0 0 1rem;
+    margin: 0 0 0 ${props.theme.layout.padding};
 
     &:first-of-type {
       margin: 0
@@ -120,6 +119,7 @@ const HeaderMobile = ({
         bgColor={bgColor}
         borderColor={adjustedBorderColor}
         maxWidth={maxWidth}
+        isMobile={isMobile}
       >
         <HeaderMobileNav>{left}</HeaderMobileNav>
         {title && (

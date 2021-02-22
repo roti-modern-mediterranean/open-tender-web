@@ -1,5 +1,6 @@
 import ButtonBoth from './ButtonBoth'
 import Account from './Account'
+import AccountSettings from './AccountSettings'
 import Allergens from './Allergens'
 import CancelEdit from './CancelEdit'
 import Favorite from './Favorite'
@@ -20,6 +21,7 @@ import StartOver from './StartOver'
 export {
   ButtonBoth,
   Account,
+  AccountSettings,
   Allergens,
   CancelEdit,
   Favorite,
