@@ -9,13 +9,13 @@ const HeroView = styled(BgImage)`
   height: 100%;
   min-height: 32rem;
   padding: ${(props) => props.theme.layout.padding};
+  flex-grow: 1;
   display: flex;
   justify-content: ${(props) => props.justifyContent};
   align-items: ${(props) => props.alignItems};
   text-align: ${(props) => props.textAlign};
   background-color: ${(props) => props.theme.bgColors.secondary};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    // height: 16rem;
     min-height: 16rem;
     padding: ${(props) => props.theme.layout.paddingMobile};
     padding-bottom: 2.5rem;

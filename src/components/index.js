@@ -44,6 +44,8 @@ import PageContent from './PageContent'
 import PageError from './PageError'
 import PageTitle from './PageTitle'
 import PageHeader from './PageHeader'
+import PageHero from './PageHero'
+import PageView from './PageView'
 import ProgressBar from './ProgressBar'
 import ProgressCircle from './ProgressCircle'
 import QRCode from './QRCode'
@@ -106,7 +108,9 @@ export {
   PageContent,
   PageError,
   PageHeader,
+  PageHero,
   PageTitle,
+  PageView,
   ProgressBar,
   ProgressCircle,
   QRCode,

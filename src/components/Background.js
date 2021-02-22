@@ -11,6 +11,7 @@ const BackgroundContainer = styled('div')`
   bottom: 0;
   left: 0;
   right: 76.8rem;
+  display: flex;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

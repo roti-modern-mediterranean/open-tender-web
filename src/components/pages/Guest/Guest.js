@@ -8,52 +8,57 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Account } from '../../buttons'
-import { Content, HeaderLogo, HeaderMobile, Hero, Main, Slider } from '../..'
+import {
+  Background,
+  Content,
+  HeaderLogo,
+  HeaderMobile,
+  Hero,
+  Main,
+  PageView,
+  PageHero,
+  Slider,
+} from '../..'
 import { makeSlides } from '../../HeroSlides'
-import GuestActions from './GuestActions'
 import GuestHeader from './GuestHeader'
 
-const GuestView = styled('div')`
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: row-reverse;
-  // align-items: center;
+const GuestContent = styled('div')`
+  line-height: ${(props) => props.theme.lineHeight};
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  margin: 0 0 2.5rem;
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex-direction: column;
-    padding: 0;
-  }
-`
-
-const GuestContent = styled('div')`
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  // max-height: 32rem;
-  padding: 0 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    // max-height: 100%;
-    padding: 0;
+    margin: 0 0 2rem;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    text-align: center;
   }
 
-  & > div {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+  p {
+    margin: 0.5em 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
 
-    & > div {
-      flex-grow: 1;
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
     }
   }
 `
 
 const Guest = () => {
   const dispatch = useDispatch()
-  const brand = useSelector(selectBrand)
-  const { home: homeConfig } = useSelector(selectConfig)
-  const { background, mobile } = homeConfig
   const { windowRef } = useContext(AppContext)
+  const brand = useSelector(selectBrand)
+  const { home } = useSelector(selectConfig)
+  const { background, mobile, content } = home
+  const hasContent = !!(content && content.length && content[0].length)
   const slides = makeSlides([])
+  // const slides = null
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -66,30 +71,39 @@ const Guest = () => {
       <Helmet>
         <title>{brand.title}</title>
       </Helmet>
-      <Content>
+      {isBrowser && (
+        <Background imageUrl={slides ? null : background}>
+          {slides && <Slider slides={slides} />}
+        </Background>
+      )}
+      <Content maxWidth="76.8rem">
         <HeaderMobile
           bgColor="primary"
           borderColor="primary"
+          maxWidth="76.8rem"
           left={<HeaderLogo />}
           right={<Account />}
         />
         <Main>
-          <GuestView>
+          <PageView>
+            {!isBrowser && (
+              <PageHero>
+                {slides ? (
+                  <Slider slides={slides} />
+                ) : (
+                  <Hero imageUrl={mobile}>&nbsp;</Hero>
+                )}
+              </PageHero>
+            )}
+            <GuestHeader />
+          </PageView>
+          {hasContent && (
             <GuestContent>
-              {slides ? (
-                <Slider slides={slides} />
-              ) : (
-                <Hero imageUrl={isBrowser ? background : mobile}>&nbsp;</Hero>
-              )}
+              {content.map((i, index) => (
+                <p key={index}>{i}</p>
+              ))}
             </GuestContent>
-            <GuestHeader
-              title="Hi there!"
-              subtitle="Let's get things started."
-              footnote="Hint: you don't need an account to place an order."
-            >
-              <GuestActions />
-            </GuestHeader>
-          </GuestView>
+          )}
         </Main>
       </Content>
     </>

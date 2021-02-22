@@ -116,7 +116,11 @@ const SignUp = () => {
       </Helmet>
       <Background imageUrl={signupConfig.background} />
       <Content maxWidth="76.8rem">
-        <HeaderDefault title={isBrowser ? null : signupConfig.title} />
+        <HeaderDefault
+          title={isBrowser ? null : signupConfig.title}
+          bgColor="secondary"
+          borderColor="secondary"
+        />
         <Main bgColor="secondary">
           <Container>
             <PageTitle {...signupConfig} />

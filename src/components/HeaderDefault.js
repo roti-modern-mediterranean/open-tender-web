@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 
 import { HeaderMobile } from '.'
-import { StartOver, Account } from './buttons'
+import { Account, Home } from './buttons'
 
 const HeaderDefault = ({
   maxWidth = '76.8rem',
@@ -17,7 +17,7 @@ const HeaderDefault = ({
       maxWidth={maxWidth}
       bgColor={bgColor}
       borderColor={borderColor}
-      left={<StartOver isLogo={isLogo} />}
+      left={<Home />}
       right={<Account />}
     />
   )

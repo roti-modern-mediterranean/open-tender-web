@@ -30,6 +30,14 @@ import {
   selectSettings,
 } from '../../../slices'
 import { NavButtons } from '../..'
+import styled from '@emotion/styled'
+
+const OrderTypesView = styled('div')`
+  padding: 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0;
+  }
+`
 
 const OrderTypes = () => {
   const dispatch = useDispatch()
@@ -127,7 +135,7 @@ const OrderTypes = () => {
   }))
 
   return (
-    <div>
+    <OrderTypesView>
       {hasOrderTypes ? (
         <NavButtons buttons={buttons} />
       ) : (
@@ -135,7 +143,7 @@ const OrderTypes = () => {
           This brand is not currently accepting online orders.
         </Message>
       )}
-    </div>
+    </OrderTypesView>
   )
 }
 

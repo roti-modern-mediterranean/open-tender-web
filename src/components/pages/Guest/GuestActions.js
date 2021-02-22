@@ -22,14 +22,14 @@ const GuestActionsView = styled('div')`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 2rem 0;
+  margin: 0 0 2.5rem;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     justify-content: center;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 1.5rem -0.5rem;
+    margin: -0.3rem -0.5rem 1.9rem;
   }
 
   button {

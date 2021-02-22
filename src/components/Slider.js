@@ -71,6 +71,13 @@ const Dot = styled('button')`
 
 const SliderView = styled('div')`
   position: relative;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    flex-grow: 1;
+  }
 `
 
 const Slider = ({ slides }) => {

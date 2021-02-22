@@ -7,15 +7,25 @@ import { selectCustomer } from '@open-tender/redux'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Background, Content, HeaderMobile, Main, PageHeader } from '../..'
+import {
+  Background,
+  Content,
+  HeaderMobile,
+  Hero,
+  Main,
+  PageHeader,
+  PageHero,
+  PageView,
+} from '../..'
 import AccountSettingsButtons from './AccountSettingsButtons'
 import { Home, Logout } from '../../buttons'
+import { isBrowser } from 'react-device-detect'
 
 const AccountSettings = () => {
   const history = useHistory()
   const { title: siteTitle } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
-  const { background } = accountConfig
+  const { background, mobile } = accountConfig
   const { auth, profile } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)
 
@@ -33,7 +43,7 @@ const AccountSettings = () => {
       <Helmet>
         <title>Account Settings | {siteTitle}</title>
       </Helmet>
-      <Background imageUrl={background} />
+      {isBrowser && <Background imageUrl={background} />}
       <Content maxWidth="76.8rem">
         <HeaderMobile
           maxWidth="76.8rem"
@@ -43,11 +53,18 @@ const AccountSettings = () => {
           right={<Logout />}
         />
         <Main>
-          <PageHeader
-            title="Account"
-            subtitle="Manage saved credit cards, addresses, etc."
-          />
-          <AccountSettingsButtons />
+          <PageView>
+            {!isBrowser && (
+              <PageHero>
+                <Hero imageUrl={mobile}>&nbsp;</Hero>
+              </PageHero>
+            )}
+            <PageHeader
+              title="Account"
+              subtitle="Manage saved credit cards, addresses, etc."
+            />
+            <AccountSettingsButtons />
+          </PageView>
         </Main>
       </Content>
     </>

@@ -4,6 +4,13 @@ import styled from '@emotion/styled'
 import { AppContext } from '../App'
 import { isBrowser } from 'react-device-detect'
 
+const makePadding = (theme) => {
+  const { padding } = theme.buttons.sizes.header
+  const buttonPadding = parseFloat(padding.split(' ')[1].replace('rem', ''))
+  const headerPadding = parseFloat(theme.layout.padding.replace('rem', ''))
+  return `${headerPadding - buttonPadding}rem`
+}
+
 const HeaderMobileView = styled('div')`
   position: fixed;
   z-index: 14;
@@ -19,7 +26,8 @@ const HeaderMobileView = styled('div')`
   background-color: ${(props) => props.theme.bgColors[props.bgColor]};
   box-shadow: ${(props) =>
     props.stuck ? props.theme.boxShadow.outer : 'none'};
-  padding: 0 1.7rem;
+  // padding: 0 1.7rem;
+  padding: 0 ${(props) => makePadding(props.theme)};
   border: 0;
   border-bottom-width: 0.1rem;
   border-style: solid;

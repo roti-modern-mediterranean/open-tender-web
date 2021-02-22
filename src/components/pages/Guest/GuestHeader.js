@@ -1,42 +1,55 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
+
 import GuestActions from './GuestActions'
+import { selectConfig } from '../../../slices'
+import { useSelector } from 'react-redux'
+import { Container, PageHeader } from '../..'
 
 const GuestHeaderView = styled('div')`
-  padding: 5rem 2.5rem 2.5rem 0;
   flex: 0 0 auto;
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  margin: 0 0 2.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     text-align: center;
-    padding: 2rem;
-  }
-
-  h1 {
-    line-height: 1;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h3};
-    }
-  }
-
-  p {
-    line-height: ${(props) => props.theme.lineHeight};
-    margin: 1rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      margin: 0.5rem 0 0;
-      font-size: ${(props) => props.theme.fonts.sizes.small};
-    }
+    margin: 0 0 2rem;
   }
 `
 
-const GuestHeader = ({ title, subtitle, footnote, children }) => {
+const GuestHeaderFootnote = styled('p')`
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
+`
+
+const GuestHeaderLinks = styled('p')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  margin: 3rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 1.5rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+`
+
+const GuestHeader = () => {
+  const { home } = useSelector(selectConfig)
+  const { title, subtitle } = home
+  const footnote = "Hint: you don't need an account to place an order."
+
   return (
     <GuestHeaderView>
-      {title && <h1>{title}</h1>}
-      {subtitle && <p>{subtitle}</p>}
-      <GuestActions />
-      {footnote && <p>{footnote}</p>}
+      <PageHeader title={title} subtitle={subtitle} />
+      <Container>
+        <GuestActions />
+        {footnote && <GuestHeaderFootnote>{footnote}</GuestHeaderFootnote>}
+        <GuestHeaderLinks>
+          <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
+          <Link to="/donations">make a donation</Link> |{' '}
+          <Link to="/contact">get in touch</Link>
+        </GuestHeaderLinks>
+      </Container>
     </GuestHeaderView>
   )
 }

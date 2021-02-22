@@ -1,46 +1,31 @@
 import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
-import styled from '@emotion/styled'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Account, Home } from '../../buttons'
-import { Background, Content, HeaderMobile, Main, PageHeader } from '../..'
+import {
+  Background,
+  Content,
+  HeaderMobile,
+  Hero,
+  Main,
+  PageHeader,
+  PageHero,
+  PageView,
+  Slider,
+} from '../..'
 import OrderTypes from './OrderTypes'
-
-const OrderTypeContent = styled('div')`
-  line-height: ${(props) => props.theme.lineHeight};
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  padding: 2.5rem ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 2rem ${(props) => props.theme.layout.paddingMobile};
-  }
-
-  p {
-    margin: 0.5em 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.small};
-    }
-
-    &:first-of-type {
-      margin-top: 0;
-    }
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-  }
-`
+import { makeSlides } from '../../HeroSlides'
 
 const OrderType = () => {
   const dispatch = useDispatch()
   const { home } = useSelector(selectConfig)
-  const { background, mobile, title, subtitle, content } = home
-  const hasContent = content && content.length && content[0].length
+  const { background, mobile } = home
   const { windowRef } = useContext(AppContext)
+  const slides = makeSlides([])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -57,19 +42,25 @@ const OrderType = () => {
           borderColor="primary"
           maxWidth="76.8rem"
           left={<Home />}
-          // right={<Logout />}
           right={<Account />}
         />
         <Main>
-          <PageHeader title={title} subtitle={subtitle} />
-          <OrderTypes />
-          {hasContent && (
-            <OrderTypeContent>
-              {content.map((i, index) => (
-                <p key={index}>{i}</p>
-              ))}
-            </OrderTypeContent>
-          )}
+          <PageView>
+            {!isBrowser && (
+              <PageHero>
+                {slides ? (
+                  <Slider slides={slides} />
+                ) : (
+                  <Hero imageUrl={mobile}>&nbsp;</Hero>
+                )}
+              </PageHero>
+            )}
+            <PageHeader
+              title="Select an order type"
+              subtitle="Please choose an order type to get started"
+            />
+            <OrderTypes />
+          </PageView>
         </Main>
       </Content>
     </>
