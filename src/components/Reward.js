@@ -8,7 +8,7 @@ import { makeLocalDateStr } from '@open-tender/js'
 import { openModal } from '../slices'
 import iconMap from './iconMap'
 
-const AccountRewardView = styled(Box)`
+const RewardView = styled(Box)`
   position: relative;
   height: 100%;
   display: flex;
@@ -16,13 +16,13 @@ const AccountRewardView = styled(Box)`
   padding: 1rem;
 `
 
-const AccountRewardImage = styled(BgImage)`
+const RewardImage = styled(BgImage)`
   flex: 0 0 25%;
   height: 100%;
   background-color: ${(props) => props.theme.bgColors.secondary};
 `
 
-const AccountRewardDetails = styled('div')`
+const RewardDetails = styled('div')`
   flex: 1 1 75%;
   height: 100%;
   padding: 0 0 0 1rem;
@@ -35,9 +35,9 @@ const AccountRewardDetails = styled('div')`
   }
 `
 
-const AccountRewardContent = styled('div')``
+const RewardContent = styled('div')``
 
-const AccountRewardNote = styled('div')`
+const RewardNote = styled('div')`
   display: flex;
   align-items: center;
   margin: 0 0 1rem;
@@ -55,22 +55,22 @@ const AccountRewardNote = styled('div')`
     // color: ${(props) => props.theme.links.primary.color};
 `
 
-const AccountRewardTitle = styled('p')`
+const RewardTitle = styled('p')`
   color: ${(props) => props.theme.colors.primary};
   font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
-const AccountRewardDescription = styled('p')`
+const RewardDescription = styled('p')`
   margin: 0.3rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
-const AccountRewardExpiration = styled('div')`
+const RewardExpiration = styled('div')`
   margin: 1rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
-const AccountRewardAction = styled('div')`
+const RewardAction = styled('div')`
   margin: 0 0 0 0.5rem;
   // position: absolute;
   // bottom: 0.4rem;
@@ -82,35 +82,34 @@ const AccountRewardAction = styled('div')`
   }
 `
 
-const AccountReward = ({ reward }) => {
+const Reward = ({ item }) => {
+  console.log(item)
   const dispatch = useDispatch()
   const today = makeLocalDateStr(new Date(), 0, 'MM/dd/yyyy')
-  const bgStyle = reward.image_url
-    ? { backgroundImage: `url(${reward.image_url}` }
+  const bgStyle = item.image_url
+    ? { backgroundImage: `url(${item.image_url}` }
     : null
 
   const redeem = () => {
-    dispatch(openModal({ type: 'reward', args: { reward } }))
+    dispatch(openModal({ type: 'item', args: { item } }))
   }
 
   return (
-    <AccountRewardView>
-      <AccountRewardImage style={bgStyle}>&nbsp;</AccountRewardImage>
-      <AccountRewardDetails>
+    <RewardView>
+      <RewardImage style={bgStyle}>&nbsp;</RewardImage>
+      <RewardDetails>
         <div>
-          <AccountRewardContent>
-            <AccountRewardNote>
+          <RewardContent>
+            <RewardNote>
               <span>{iconMap.Grid}</span>Scan in-store only
-            </AccountRewardNote>
-            <AccountRewardTitle>{reward.title}</AccountRewardTitle>
-            {reward.description && (
-              <AccountRewardDescription>
-                {reward.description}
-              </AccountRewardDescription>
+            </RewardNote>
+            <RewardTitle>{item.title}</RewardTitle>
+            {item.description && (
+              <RewardDescription>{item.description}</RewardDescription>
             )}
-          </AccountRewardContent>
-          <AccountRewardExpiration>
-            {reward.expiration === today ? (
+          </RewardContent>
+          <RewardExpiration>
+            {item.expiration === today ? (
               <Text
                 color="alert"
                 size="xSmall"
@@ -124,27 +123,27 @@ const AccountReward = ({ reward }) => {
                 Today only!
               </Text>
             ) : (
-              <p>Use by {reward.expiration}</p>
+              <p>Use by {item.expiration}</p>
             )}
-          </AccountRewardExpiration>
+          </RewardExpiration>
         </div>
-      </AccountRewardDetails>
-      <AccountRewardAction>
+      </RewardDetails>
+      <RewardAction>
         <ButtonLink
           onClick={redeem}
           disabled={false}
-          label={`Apply ${reward.name}`}
+          label={`Apply ${item.name}`}
         >
           {iconMap.PlusCircle}
         </ButtonLink>
-      </AccountRewardAction>
-    </AccountRewardView>
+      </RewardAction>
+    </RewardView>
   )
 }
 
-AccountReward.displayName = 'AccountReward'
-AccountReward.propTypes = {
-  reward: propTypes.object,
+Reward.displayName = 'Reward'
+Reward.propTypes = {
+  item: propTypes.object,
 }
 
-export default AccountReward
+export default Reward

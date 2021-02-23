@@ -1,8 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
 
-import { Reward, SectionHeader } from '../..'
+import { ItemsScrollable, Reward, Section, SectionHeader } from '../..'
 
 const testRewards = [
   {
@@ -55,55 +54,23 @@ const testRewards = [
   },
 ]
 
-const AccountRewardsView = styled('div')`
-  overflow: hidden;
-  margin: 3rem 0 0;
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   width: 100%;
-  // }
-`
-
-const AccountRewardsList = styled('div')`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  overflow-x: scroll;
-  padding: 1rem 0 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 1rem 0 1rem ${(props) => props.theme.layout.paddingMobile};
-  }
-`
-
-const AccountRewardsListItem = styled('div')`
-  flex: 0 0 29rem;
-  padding: 0 1rem 0 0;
-
-  &:last-of-type {
-    flex: 0 0 30rem;
-    padding: 0 2rem 0 0;
-  }
-`
-
 const AccountRewards = ({ rewards }) => {
   rewards = testRewards
   if (!rewards.length) return null
+  rewards = rewards.map((i) => ({ ...i, key: i.id }))
   const title =
     rewards.length > 1
       ? `You have ${rewards.length} rewards!`
       : 'You have a reward!'
 
   return (
-    <AccountRewardsView>
+    <Section>
       <SectionHeader title={title} to="/rewards" />
-      <AccountRewardsList>
-        {rewards.map((reward) => (
-          <AccountRewardsListItem key={reward.id}>
-            <Reward reward={reward} />
-          </AccountRewardsListItem>
-        ))}
-      </AccountRewardsList>
-    </AccountRewardsView>
+      <ItemsScrollable
+        items={rewards}
+        renderItem={(props) => <Reward {...props} />}
+      />
+    </Section>
   )
 }
 

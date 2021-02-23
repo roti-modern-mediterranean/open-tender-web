@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
-import { Reward, SectionHeader } from '.'
+import { Reward, Section, SectionHeader } from '.'
+import ItemsScrollable from './ItemsScrollable'
 
 const testRewards = [
   {
@@ -54,55 +54,21 @@ const testRewards = [
   },
 ]
 
-const DealsView = styled('div')`
-  overflow: hidden;
-  margin: 2.5rem 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 2rem 0;
-  }
-`
-
-const DealsList = styled('div')`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  overflow-x: scroll;
-  padding: 1rem 0 0 ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 1rem 0 1rem ${(props) => props.theme.layout.paddingMobile};
-  }
-`
-
-const DealsListItem = styled('div')`
-  flex: 0 0 29rem;
-  padding: 0 1rem 0 0;
-
-  &:last-of-type {
-    flex: 0 0 30rem;
-    padding: 0 2rem 0 0;
-  }
-`
-
 const Deals = ({ deals }) => {
   deals = testRewards
-  const hasDeals = deals.length > 0
+  // if (!deals.length) return null
+  deals = deals.map((i) => ({ ...i, key: i.id }))
 
   return (
-    <DealsView>
+    <Section>
       <SectionHeader title="Today's Deals" to="/deals" />
-      <DealsList>
-        {hasDeals ? (
-          deals.map((reward) => (
-            <DealsListItem key={reward.id}>
-              <Reward reward={reward} />
-            </DealsListItem>
-          ))
-        ) : (
-          <p>We're not featuring any deals today. Please check back soon!</p>
-        )}
-      </DealsList>
-    </DealsView>
+      <ItemsScrollable
+        items={deals}
+        renderItem={(props) => <Reward {...props} />}
+      >
+        <p>We're not featuring any deals today. Please check back soon!</p>
+      </ItemsScrollable>
+    </Section>
   )
 }
 

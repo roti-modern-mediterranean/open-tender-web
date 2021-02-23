@@ -26,6 +26,7 @@ import {
   HeaderLogo,
   HeaderMobile,
   Hero,
+  LoyaltyProgram,
   Main,
   PageHeader,
   PageHero,
@@ -53,9 +54,11 @@ const AccountHeader = styled('div')`
 `
 
 const AccountLoyalty = styled('div')`
-  margin: 2.5rem 0;
+  margin: ${(props) => props.theme.layout.padding} 0;
+  padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 2rem 0;
+    margin: ${(props) => props.theme.layout.paddingMobile} 0;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
@@ -68,7 +71,9 @@ const Account = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
   const loyalty = useSelector(selectCustomerRewards)
-  const { progress, rewards } = loyalty || {}
+  // console.log(loyalty)
+  let { progress, rewards } = loyalty || {}
+  rewards = []
   // const rewardsLoading = useSelector(selectCustomerRewardsLoading)
   // const hasRewards = rewards && !rewardsLoading
   const { background, mobile, title, subtitle } = accountConfig
@@ -147,10 +152,14 @@ const Account = () => {
               </AccountHeader>
               {loyalty && (
                 <AccountLoyalty>
-                  {progress && <AccountProgress loyalty={loyalty} />}
-                  {rewards && <AccountRewards rewards={rewards} />}
+                  {progress ? (
+                    <AccountProgress loyalty={loyalty} />
+                  ) : (
+                    <LoyaltyProgram program={loyalty} />
+                  )}
                 </AccountLoyalty>
               )}
+              {rewards && <AccountRewards rewards={rewards} />}
               {has_deals && <Deals />}
             </AccountContent>
           </PageView>

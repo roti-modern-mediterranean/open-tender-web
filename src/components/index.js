@@ -22,8 +22,10 @@ import HeroContent from './HeroContent'
 import HeroSlides from './HeroSlides'
 import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
+import ItemsScrollable from './ItemsScrollable'
 import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
+import LoyaltyProgram from './LoyaltyProgram'
 import Main from './Main'
 import MapsAutocomplete from './MapsAutocomplete'
 import Modal, { ModalClose, ModalContent, ModalView } from './Modal'
@@ -58,6 +60,7 @@ import Reward from './Reward'
 import Routes from './Routes'
 import Row from './Row'
 import ScreenreaderTitle from './ScreenreaderTitle'
+import Section from './Section'
 import SectionHeader from './SectionHeader'
 import SectionTitle from './SectionTitle'
 import Sidebar from './Sidebar'
@@ -90,8 +93,10 @@ export {
   HeroSlides,
   ImageSpinner,
   ItemCards,
+  ItemsScrollable,
   LinkSeparator,
   Loading,
+  LoyaltyProgram,
   Main,
   MapsAutocomplete,
   Modal,
@@ -130,6 +135,7 @@ export {
   Routes,
   Row,
   ScreenreaderTitle,
+  Section,
   SectionHeader,
   SectionTitle,
   Sidebar,

@@ -3,9 +3,9 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { loyaltyType, formatDollars } from '@open-tender/js'
 import { Box, Heading, Text } from '@open-tender/components'
-import { ProgressBar, ProgressCircle } from '../..'
+import { ProgressBar, ProgressCircle } from '.'
 
-export const RewardsProgramView = styled(Box)`
+export const LoyaltyProgramView = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: stretch;
@@ -19,7 +19,7 @@ export const RewardsProgramView = styled(Box)`
   }
 `
 
-const RewardsProgramSummary = styled('div')`
+const LoyaltyProgramSummary = styled('div')`
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
@@ -35,7 +35,7 @@ const RewardsProgramSummary = styled('div')`
   }
 `
 
-export const RewardsProgramHeader = styled('div')`
+export const LoyaltyProgramHeader = styled('div')`
   margin: 0 0 1.5rem;
 
   h2 {
@@ -48,7 +48,7 @@ export const RewardsProgramHeader = styled('div')`
   }
 `
 
-const RewardsProgramCredit = styled('div')`
+const LoyaltyProgramCredit = styled('div')`
   margin: 1rem 0;
 
   p + p {
@@ -57,12 +57,12 @@ const RewardsProgramCredit = styled('div')`
   }
 `
 
-const RewardsProgramStatus = styled('div')`
+const LoyaltyProgramStatus = styled('div')`
   flex-grow: 0;
   margin: 1rem 0 0;
 `
 
-const RewardsProgramStatusHeader = styled('div')`
+const LoyaltyProgramStatusHeader = styled('div')`
   margin: 0 0 2.5rem;
 
   p + p {
@@ -71,7 +71,7 @@ const RewardsProgramStatusHeader = styled('div')`
   }
 `
 
-const RewardsProgramProgress = styled('div')`
+const LoyaltyProgramProgress = styled('div')`
   flex: 0 0 16rem;
   // width: 16rem;
 
@@ -134,7 +134,7 @@ const makeStatus = (tiers, status, isDollars = true) => {
   return { progress, points }
 }
 
-const RewardsProgram = ({ program }) => {
+const LoyaltyProgram = ({ program }) => {
   const {
     name,
     description,
@@ -156,28 +156,28 @@ const RewardsProgram = ({ program }) => {
   const currentStatus = makeStatus(tiers, status)
 
   return (
-    <RewardsProgramView>
-      <RewardsProgramSummary>
+    <LoyaltyProgramView>
+      <LoyaltyProgramSummary>
         <div>
-          <RewardsProgramHeader>
+          <LoyaltyProgramHeader>
             <h2>{name}</h2>
             {description && <p>{description}</p>}
-          </RewardsProgramHeader>
+          </LoyaltyProgramHeader>
           {currentCredit ? (
-            <RewardsProgramCredit>
+            <LoyaltyProgramCredit>
               <Text color="success" bold={true} as="p">
                 ${currentCredit.toFixed(2)} in credit available!
               </Text>
               <p>Apply to your next order when you checkout.</p>
-            </RewardsProgramCredit>
+            </LoyaltyProgramCredit>
           ) : null}
         </div>
         {currentStatus && (
-          <RewardsProgramStatus>
-            <RewardsProgramStatusHeader>
+          <LoyaltyProgramStatus>
+            <LoyaltyProgramStatusHeader>
               <p>
                 You're currently at{' '}
-                <Text color="success" bold={true}>
+                <Text color="primary" bold={true}>
                   {status.name}
                 </Text>{' '}
                 status
@@ -186,12 +186,12 @@ const RewardsProgram = ({ program }) => {
                 {formatDollars(status.progress, '', 0)} spent in the last 365
                 days
               </p>
-            </RewardsProgramStatusHeader>
+            </LoyaltyProgramStatusHeader>
             <ProgressBar {...currentStatus} />
-          </RewardsProgramStatus>
+          </LoyaltyProgramStatus>
         )}
-      </RewardsProgramSummary>
-      <RewardsProgramProgress>
+      </LoyaltyProgramSummary>
+      <LoyaltyProgramProgress>
         <Heading as="p">Current Progress</Heading>
         <ProgressCircle progress={progress} />
         {progress ? (
@@ -203,14 +203,14 @@ const RewardsProgram = ({ program }) => {
         ) : (
           <p>Make your first purchase to start earning rewards!</p>
         )}
-      </RewardsProgramProgress>
-    </RewardsProgramView>
+      </LoyaltyProgramProgress>
+    </LoyaltyProgramView>
   )
 }
 
-RewardsProgram.displayName = 'RewardsProgram'
-RewardsProgram.propTypes = {
+LoyaltyProgram.displayName = 'LoyaltyProgram'
+LoyaltyProgram.propTypes = {
   program: propTypes.object,
 }
 
-export default RewardsProgram
+export default LoyaltyProgram

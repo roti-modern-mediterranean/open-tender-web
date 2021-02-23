@@ -10,7 +10,7 @@ const SectionHeaderView = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 0 0.2rem;
+  // margin: 0 0 0.2rem;
 
   h2 {
     display: block;
