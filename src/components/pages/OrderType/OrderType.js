@@ -37,7 +37,11 @@ const OrderType = () => {
 
   return (
     <>
-      <Background imageUrl={isBrowser ? background : mobile} />
+      {isBrowser && (
+        <Background imageUrl={slides ? null : background}>
+          {slides && <Slider slides={slides} />}
+        </Background>
+      )}
       <Content maxWidth="76.8rem">
         <HeaderMobile
           bgColor="primary"

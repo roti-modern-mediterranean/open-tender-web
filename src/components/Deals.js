@@ -1,8 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-
-import { Reward, SectionHeader } from '../..'
+import { Reward, SectionHeader } from '.'
 
 const testRewards = [
   {
@@ -55,15 +54,15 @@ const testRewards = [
   },
 ]
 
-const AccountRewardsView = styled('div')`
+const DealsView = styled('div')`
   overflow: hidden;
-  margin: 3rem 0 0;
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   width: 100%;
-  // }
+  margin: 2.5rem 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 2rem 0;
+  }
 `
 
-const AccountRewardsList = styled('div')`
+const DealsList = styled('div')`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -75,7 +74,7 @@ const AccountRewardsList = styled('div')`
   }
 `
 
-const AccountRewardsListItem = styled('div')`
+const DealsListItem = styled('div')`
   flex: 0 0 29rem;
   padding: 0 1rem 0 0;
 
@@ -85,31 +84,31 @@ const AccountRewardsListItem = styled('div')`
   }
 `
 
-const AccountRewards = ({ rewards }) => {
-  rewards = testRewards
-  if (!rewards.length) return null
-  const title =
-    rewards.length > 1
-      ? `You have ${rewards.length} rewards!`
-      : 'You have a reward!'
+const Deals = ({ deals }) => {
+  deals = testRewards
+  const hasDeals = deals.length > 0
 
   return (
-    <AccountRewardsView>
-      <SectionHeader title={title} to="/rewards" />
-      <AccountRewardsList>
-        {rewards.map((reward) => (
-          <AccountRewardsListItem key={reward.id}>
-            <Reward reward={reward} />
-          </AccountRewardsListItem>
-        ))}
-      </AccountRewardsList>
-    </AccountRewardsView>
+    <DealsView>
+      <SectionHeader title="Today's Deals" to="/deals" />
+      <DealsList>
+        {hasDeals ? (
+          deals.map((reward) => (
+            <DealsListItem key={reward.id}>
+              <Reward reward={reward} />
+            </DealsListItem>
+          ))
+        ) : (
+          <p>We're not featuring any deals today. Please check back soon!</p>
+        )}
+      </DealsList>
+    </DealsView>
   )
 }
 
-AccountRewards.displayName = 'AccountRewards'
-AccountRewards.propTypes = {
+Deals.displayName = 'Deals'
+Deals.propTypes = {
   rewards: propTypes.array,
 }
 
-export default AccountRewards
+export default Deals

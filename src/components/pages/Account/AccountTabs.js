@@ -20,8 +20,6 @@ const AccountTabsView = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // background-color: rgba(0, 0, 0, 0.3);
-  // border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
   background-color: ${(props) => props.theme.bgColors.primary};
   border-top: 0.1rem solid ${(props) => props.theme.border.color};
 `
@@ -63,7 +61,7 @@ const AccountTabs = () => {
   const history = useHistory()
   const { pathname } = useLocation()
   const theme = useSelector(selectTheme)
-  const { has_rewards, has_thanx, has_deals = false } = useSelector(selectBrand)
+  const { has_rewards, has_thanx, has_deals = true } = useSelector(selectBrand)
   const { accountSections } = useSelector(selectSettings)
   const hasLevelUp = accountSections.filter((i) => i === 'levelup').length > 0
   const hasRewards = has_rewards || has_thanx || hasLevelUp

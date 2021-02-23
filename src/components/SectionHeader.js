@@ -1,12 +1,12 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
-import { Container } from '../..'
-import iconMap from '../../iconMap'
 import { Link } from 'react-router-dom'
+import styled from '@emotion/styled'
 
-const AccountSectionHeaderView = styled('div')`
-  // width: 100%;
+import { Container } from '.'
+import iconMap from './iconMap'
+
+const SectionHeaderView = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,10 +39,10 @@ const AccountSectionHeaderView = styled('div')`
   }
 `
 
-const AccountSectionHeader = ({ title, to }) => {
+const SectionHeader = ({ title, to }) => {
   return (
     <Container>
-      <AccountSectionHeaderView>
+      <SectionHeaderView>
         <h2>{title}</h2>
         {to && (
           <p>
@@ -52,19 +52,15 @@ const AccountSectionHeader = ({ title, to }) => {
             </Link>
           </p>
         )}
-      </AccountSectionHeaderView>
+      </SectionHeaderView>
     </Container>
   )
 }
 
-AccountSectionHeader.displayName = 'AccountSectionHeader'
-AccountSectionHeader.propTypes = {
+SectionHeader.displayName = 'SectionHeader'
+SectionHeader.propTypes = {
   title: propTypes.string,
   to: propTypes.string,
-  // children: propTypes.oneOfType([
-  //   propTypes.arrayOf(propTypes.node),
-  //   propTypes.node,
-  // ]),
 }
 
-export default AccountSectionHeader
+export default SectionHeader

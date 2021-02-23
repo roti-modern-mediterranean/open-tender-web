@@ -22,6 +22,7 @@ import { AppContext } from '../../../App'
 import {
   Background,
   Content,
+  Deals,
   HeaderLogo,
   HeaderMobile,
   Hero,
@@ -40,7 +41,6 @@ import AccountRewards from './AccountRewards'
 import { makeSlides } from '../../HeroSlides'
 
 const AccountContent = styled('div')`
-  // background-color: ${(props) => props.theme.bgColors.secondary};
   padding: ${(props) => (props.isMobile ? '0 0 6rem' : '0')};
 `
 
@@ -53,17 +53,18 @@ const AccountHeader = styled('div')`
 `
 
 const AccountLoyalty = styled('div')`
-  // background-color: ${(props) => props.theme.bgColors.secondary};
-  padding: 2.5rem 0;
+  margin: 2.5rem 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 2rem 0;
+    margin: 2rem 0;
   }
 `
 
 const Account = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { title: siteTitle, has_thanx } = useSelector(selectBrand)
+  const { title: siteTitle, has_thanx, has_deals = true } = useSelector(
+    selectBrand
+  )
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
   const loyalty = useSelector(selectCustomerRewards)
@@ -150,6 +151,7 @@ const Account = () => {
                   {rewards && <AccountRewards rewards={rewards} />}
                 </AccountLoyalty>
               )}
+              {has_deals && <Deals />}
             </AccountContent>
           </PageView>
         </Main>

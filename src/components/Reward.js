@@ -2,17 +2,11 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import {
-  BgImage,
-  Box,
-  ButtonLink,
-  Heading,
-  Text,
-} from '@open-tender/components'
+import { BgImage, Box, ButtonLink, Text } from '@open-tender/components'
 import { makeLocalDateStr } from '@open-tender/js'
 
-import { openModal } from '../../../slices'
-import iconMap from '../../iconMap'
+import { openModal } from '../slices'
+import iconMap from './iconMap'
 
 const AccountRewardView = styled(Box)`
   position: relative;

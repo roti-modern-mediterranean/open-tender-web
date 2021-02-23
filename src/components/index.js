@@ -5,6 +5,7 @@ import Card from './Card'
 import CartButton from './CartButton'
 import Content from './Content'
 import Container from './Container'
+import Deals from './Deals'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
 import FormHeader from './FormHeader'
@@ -53,9 +54,11 @@ import ProgressBar from './ProgressBar'
 import ProgressCircle from './ProgressCircle'
 import QRCode from './QRCode'
 import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
+import Reward from './Reward'
 import Routes from './Routes'
 import Row from './Row'
 import ScreenreaderTitle from './ScreenreaderTitle'
+import SectionHeader from './SectionHeader'
 import SectionTitle from './SectionTitle'
 import Sidebar from './Sidebar'
 import SkipLink from './SkipLink'
@@ -70,6 +73,7 @@ export {
   CartButton,
   Container,
   Content,
+  Deals,
   ErrorBoundary,
   Footer,
   FormHeader,
@@ -122,9 +126,11 @@ export {
   QRCode,
   RevenueCenter,
   RevenueCenterChild,
+  Reward,
   Routes,
   Row,
   ScreenreaderTitle,
+  SectionHeader,
   SectionTitle,
   Sidebar,
   SkipLink,
