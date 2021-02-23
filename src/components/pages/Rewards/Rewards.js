@@ -20,6 +20,7 @@ import RewardsPrograms from './RewardsProgams'
 import RewardsThanx from './RewardsThanx'
 import { AppContext } from '../../../App'
 import RewardsLevelUp from './RewardsLevelUp'
+import AccountTabs from '../Account/AccountTabs'
 
 const defaultConfig = {
   title: 'Rewards',
@@ -60,6 +61,7 @@ const Rewards = () => {
           borderColor="secondary"
         />
         <Main bgColor="secondary">
+          {!isBrowser && <AccountTabs />}
           <Container>
             <PageTitle {...config} />
             <PageContent>

@@ -27,6 +27,7 @@ import {
   PageContent,
   PageError,
 } from '../..'
+import AccountTabs from '../Account/AccountTabs'
 
 const Favorites = () => {
   const dispatch = useDispatch()
@@ -84,6 +85,7 @@ const Favorites = () => {
           borderColor="secondary"
         />
         <Main bgColor="secondary">
+          {!isBrowser && <AccountTabs />}
           <Container>
             <PageTitle {...config.favorites} />
             <PageContent>

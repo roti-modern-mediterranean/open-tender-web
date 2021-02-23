@@ -7,6 +7,9 @@ const PageTitleContainer = styled('div')`
   padding: 3rem 0;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    text-align: center;
+  }
 `
 
 const PageTitlePreface = styled('p')`
@@ -18,6 +21,9 @@ const PageTitleTitle = styled('h1')`
   font-size: ${(props) => props.theme.fonts.sizes.h1};
   margin: 0 0 0 -0.1rem;
   line-height: 1.1;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
+  }
 `
 
 const PageTitleSubtitle = styled('p')`
@@ -25,6 +31,10 @@ const PageTitleSubtitle = styled('p')`
     props.isError ? props.theme.colors.error : props.theme.fonts.body.color};
   line-height: ${(props) => props.theme.lineHeight};
   margin: 0.5rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0.5rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
 `
 
 const PageTitle = ({ title, subtitle, preface, error, link }) => {

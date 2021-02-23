@@ -9,7 +9,6 @@ const HeaderDefault = ({
   title,
   bgColor = 'primary',
   borderColor = 'primary',
-  isLogo = true,
 }) => {
   return (
     <HeaderMobile

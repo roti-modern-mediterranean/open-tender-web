@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { ButtonStyled } from '@open-tender/components'
 
-import { selectBrand, selectSettings, selectTheme } from '../../../slices'
+import { selectBrand, selectTheme } from '../../../slices'
 import iconMap from '../../iconMap'
 import AccountTab from './AccountTab'
 
@@ -22,6 +22,7 @@ const AccountTabsView = styled('div')`
   align-items: center;
   background-color: ${(props) => props.theme.bgColors.primary};
   border-top: 0.1rem solid ${(props) => props.theme.border.color};
+  // border-top: 0.1rem solid ${(props) => props.theme.bgColors.secondary};
 `
 
 const navTabs = [
@@ -41,7 +42,7 @@ const navTabs = [
     path: '/rewards',
   },
   {
-    icon: iconMap.DollarSign,
+    icon: iconMap.Tag,
     title: 'Deals',
     path: '/deals',
   },
@@ -61,10 +62,9 @@ const AccountTabs = () => {
   const history = useHistory()
   const { pathname } = useLocation()
   const theme = useSelector(selectTheme)
-  const { has_rewards, has_thanx, has_deals = true } = useSelector(selectBrand)
-  const { accountSections } = useSelector(selectSettings)
-  const hasLevelUp = accountSections.filter((i) => i === 'levelup').length > 0
-  const hasRewards = has_rewards || has_thanx || hasLevelUp
+  const brand = useSelector(selectBrand)
+  const { has_rewards, has_thanx, has_levelup, has_deals = true } = brand
+  const hasRewards = has_rewards || has_thanx || has_levelup
   let removed = []
   if (!hasRewards) removed.push('/rewards')
   if (!has_deals) removed.push('/deals')
@@ -75,14 +75,12 @@ const AccountTabs = () => {
     ...i,
     onClick: () => history.push(i.path),
   }))
-  const delay = 0.125
 
   return isMobile ? (
     <AccountTabsView>
       {buttons.map((button, index) => (
         <AccountTab
           key={button.title}
-          delay={`${((index + 1) * 0.125 + delay).toFixed(3)}s`}
           {...button}
           color={button.path === pathname ? theme.links.primary.color : null}
         />

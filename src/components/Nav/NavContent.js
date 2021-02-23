@@ -9,6 +9,34 @@ import { openModal, selectBrand, toggleNav } from '../../slices'
 import NavClose from './NavClose'
 import iconMap from '../iconMap'
 
+const guestButtons = [
+  {
+    icon: iconMap.Home,
+    title: 'Home',
+    path: '/',
+  },
+  {
+    icon: iconMap.Tag,
+    title: 'Deals',
+    path: '/deals',
+  },
+  {
+    icon: iconMap.Gift,
+    title: 'Gift Cards',
+    path: '/gift-cards',
+  },
+  {
+    icon: iconMap.DollarSign,
+    title: 'Donations',
+    path: '/donations',
+  },
+  {
+    icon: iconMap.PlusCircle,
+    title: 'Sign Up',
+    path: '/signup',
+  },
+]
+
 const navButtons = [
   {
     icon: iconMap.Home,
@@ -31,9 +59,19 @@ const navButtons = [
     path: '/rewards',
   },
   {
+    icon: iconMap.Tag,
+    title: 'Deals',
+    path: '/deals',
+  },
+  {
     icon: iconMap.Gift,
     title: 'Gift Cards',
     path: '/account/gift-cards',
+  },
+  {
+    icon: iconMap.DollarSign,
+    title: 'Donations',
+    path: '/donations',
   },
   {
     icon: iconMap.Sliders,
@@ -83,18 +121,18 @@ const NavContainer = styled('div')`
   flex-direction: column;
 `
 
-const NavHeader = styled('div')`
-  width: 100%;
-  padding: 2.5rem 0 1rem;
+// const NavHeader = styled('div')`
+//   width: 100%;
+//   padding: 2.5rem 0 1rem;
 
-  button span {
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
-  }
-`
+//   button span {
+//     font-size: ${(props) => props.theme.fonts.sizes.h3};
+//   }
+// `
 
 const NavItems = styled('nav')`
   width: 100%;
-  padding: 0 0 2rem;
+  padding: 2rem 0 2rem;
 `
 
 const NavItem = styled('button')`
@@ -136,11 +174,14 @@ const Nav = React.forwardRef((props, ref) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { profile } = useSelector(selectCustomer)
-  const { has_rewards, has_thanx } = useSelector(selectBrand)
-  const filteredButtons =
-    has_rewards || has_thanx
-      ? navButtons
-      : navButtons.filter((i) => i.path !== '/rewards')
+  const brand = useSelector(selectBrand)
+  const { has_rewards, has_thanx, has_levelup, has_deals = true } = brand
+  const hasRewards = has_rewards || has_thanx || has_levelup
+  let removed = []
+  if (!hasRewards) removed.push('/rewards')
+  if (!has_deals) removed.push('/deals')
+  const buttons = profile ? navButtons : guestButtons
+  const filteredButtons = buttons.filter((i) => !removed.includes(i.path))
 
   const closeGo = (evt, path) => {
     evt.target.blur()
@@ -170,7 +211,7 @@ const Nav = React.forwardRef((props, ref) => {
     <NavView ref={ref}>
       <NavContainer>
         <NavClose />
-        <NavHeader>
+        {/* <NavHeader>
           {profile && (
             <>
               <NavItem onClick={(evt) => closeGo(evt, '/')}>
@@ -181,36 +222,28 @@ const Nav = React.forwardRef((props, ref) => {
               </NavItem>
             </>
           )}
-        </NavHeader>
+        </NavHeader> */}
         <NavItems>
-          {profile ? (
-            filteredButtons.map((i) => (
-              <NavItem key={i.path} onClick={(evt) => closeGo(evt, i.path)}>
-                <NavIcon>{i.icon}</NavIcon>
-                <NavTitle>{i.title}</NavTitle>
-              </NavItem>
-            ))
-          ) : (
-            <>
-              <NavItem onClick={login}>
-                <NavIcon>{iconMap.User}</NavIcon>
-                <NavTitle>Login</NavTitle>
-              </NavItem>
-              <NavItem onClick={(evt) => closeGo(evt, '/signup')}>
-                <NavIcon>{iconMap.PlusCircle}</NavIcon>
-                <NavTitle>Sign Up</NavTitle>
-              </NavItem>
-            </>
-          )}
+          {filteredButtons.map((i) => (
+            <NavItem key={i.path} onClick={(evt) => closeGo(evt, i.path)}>
+              <NavIcon>{i.icon}</NavIcon>
+              <NavTitle>{i.title}</NavTitle>
+            </NavItem>
+          ))}
         </NavItems>
-        {profile && (
-          <NavFooter>
+        <NavFooter>
+          {profile ? (
             <NavItem onClick={logout}>
               <NavIcon>{iconMap.LogOut}</NavIcon>
               <NavTitle>Logout</NavTitle>
             </NavItem>
-          </NavFooter>
-        )}
+          ) : (
+            <NavItem onClick={login}>
+              <NavIcon>{iconMap.User}</NavIcon>
+              <NavTitle>Login</NavTitle>
+            </NavItem>
+          )}
+        </NavFooter>
       </NavContainer>
     </NavView>
   )

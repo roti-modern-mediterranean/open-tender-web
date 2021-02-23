@@ -28,9 +28,14 @@ import {
   PageTitle,
 } from '../..'
 import OrdersList from './OrdersList'
+import AccountTabs from '../Account/AccountTabs'
 
 const ToggleView = styled('div')`
-  margin: -1rem 0 3rem;
+  margin: 0 0 4rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: -1rem 0 3rem;
+    text-align: center;
+  }
 `
 
 const Orders = () => {
@@ -91,6 +96,7 @@ const Orders = () => {
           borderColor="secondary"
         />
         <Main bgColor="secondary">
+          {!isBrowser && <AccountTabs />}
           <Container>
             <PageTitle {...config.recentOrders} />
             <PageContent>

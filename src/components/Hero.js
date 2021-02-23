@@ -8,7 +8,7 @@ const HeroView = styled(BgImage)`
   width: 100%;
   height: 100%;
   min-height: 32rem;
-  padding: ${(props) => props.theme.layout.padding};
+  padding: 5% ${(props) => props.theme.layout.padding};
   flex-grow: 1;
   display: flex;
   justify-content: ${(props) => props.justifyContent};

@@ -15,8 +15,8 @@ const AccountTabView = styled('button')`
   background-color: transparent;
   color: ${(props) => props.color || props.theme.colors.primary};
   text-align: center;
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
+  // opacity: 0;
+  // animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
 `
 
 const AccountTabIcon = styled('span')`
@@ -40,7 +40,7 @@ const AccountTab = ({ title, icon, onClick, color, delay = '0.125s' }) => {
   }
 
   return (
-    <AccountTabView onClick={onUp} delay={delay}>
+    <AccountTabView onClick={onUp} delay={delay} color={color}>
       <AccountTabIcon>{icon}</AccountTabIcon>
       <AccountTabTitle>
         {title}

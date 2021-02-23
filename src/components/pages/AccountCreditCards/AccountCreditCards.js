@@ -25,6 +25,15 @@ import {
 } from '../..'
 import { AppContext } from '../../../App'
 import CreditCards from './CreditCards'
+import styled from '@emotion/styled'
+
+const AccountCreditCardsButtons = styled('div')`
+  margin: 0 0 4rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: -1rem 0 3rem;
+    text-align: center;
+  }
+`
 
 const AccountCreditCards = () => {
   const dispatch = useDispatch()
@@ -72,11 +81,13 @@ const AccountCreditCards = () => {
           <Container>
             <PageTitle {...account.creditCards} />
             <PageContent>
-              <ButtonStyled
-                onClick={() => dispatch(openModal({ type: 'creditCard' }))}
-              >
-                Add a New Credit Card
-              </ButtonStyled>
+              <AccountCreditCardsButtons>
+                <ButtonStyled
+                  onClick={() => dispatch(openModal({ type: 'creditCard' }))}
+                >
+                  Add a New Credit Card
+                </ButtonStyled>
+              </AccountCreditCardsButtons>
               {savedCards.length > 0 && (
                 <CreditCards creditCards={savedCards} isLoading={isLoading} />
               )}
@@ -89,13 +100,15 @@ const AccountCreditCards = () => {
                         loyalty recognition at the point of sale in our
                         restaurants."
                   />
-                  <ButtonStyled
-                    onClick={() =>
-                      dispatch(openModal({ type: 'creditCardLinked' }))
-                    }
-                  >
-                    Add a New Linked Card
-                  </ButtonStyled>
+                  <AccountCreditCardsButtons>
+                    <ButtonStyled
+                      onClick={() =>
+                        dispatch(openModal({ type: 'creditCardLinked' }))
+                      }
+                    >
+                      Add a New Linked Card
+                    </ButtonStyled>
+                  </AccountCreditCardsButtons>
                   {linkedCards.length > 0 && (
                     <Message
                       color="alert"
