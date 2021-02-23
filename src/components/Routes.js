@@ -10,8 +10,8 @@ import {
   AccountSettings,
   Catering,
   Checkout,
-  OrderType,
   Confirmation,
+  Deals,
   Donations,
   Favorites,
   Fulfillment,
@@ -24,8 +24,9 @@ import {
   LevelUp,
   Menu,
   NotFound,
-  Orders,
   Order,
+  Orders,
+  OrderType,
   Profile,
   Rating,
   Refunds,
@@ -155,6 +156,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/donations">
         <Donations />
+      </Route>
+      <Route exact path="/deals">
+        <Deals />
       </Route>
       <Route>
         <NotFound />

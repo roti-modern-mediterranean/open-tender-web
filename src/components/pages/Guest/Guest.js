@@ -31,7 +31,7 @@ const GuestHeader = styled('div')`
   background-color: ${(props) => props.theme.bgColors.primary};
   padding: 0 0 3rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 0 2.5rem;
+    padding: 0.5rem 0 3rem;
   }
 `
 

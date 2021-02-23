@@ -7,8 +7,8 @@ import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
 import Catering from './Catering'
 import Checkout from './Checkout'
-import OrderType from './OrderType'
 import Confirmation from './Confirmation'
+import Deals from './Deals'
 import Donations from './Donations'
 import ErrorReport from './ErrorReport'
 import ErrorFatal from './ErrorFatal'
@@ -21,11 +21,12 @@ import GroupOrders from './GroupOrders'
 import Guest from './Guest'
 import Home from './Home'
 import HouseAccounts from './HouseAccounts'
-import Orders from './Orders'
-import Order from './Order'
 import LevelUp from './LevelUp'
 import Menu from './Menu'
 import NotFound from './NotFound'
+import Order from './Order'
+import Orders from './Orders'
+import OrderType from './OrderType'
 import Profile from './Profile'
 import Rating from './Rating'
 import Refunds from './Refunds'
@@ -46,8 +47,8 @@ export {
   AccountSettings,
   Catering,
   Checkout,
-  OrderType,
   Confirmation,
+  Deals,
   Donations,
   ErrorReport,
   ErrorFatal,
@@ -63,8 +64,9 @@ export {
   LevelUp,
   Menu,
   NotFound,
-  Orders,
   Order,
+  Orders,
+  OrderType,
   Profile,
   Rating,
   Refunds,
