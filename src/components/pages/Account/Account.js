@@ -14,6 +14,7 @@ import {
   selectCustomerThanx,
   logoutCustomer,
   addMessage,
+  selectCustomerRewardsLoading,
 } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
@@ -71,10 +72,9 @@ const Account = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
   const loyalty = useSelector(selectCustomerRewards)
-  // console.log(loyalty)
   let { progress, rewards } = loyalty || {}
   rewards = []
-  // const rewardsLoading = useSelector(selectCustomerRewardsLoading)
+  const rewardsLoading = useSelector(selectCustomerRewardsLoading)
   // const hasRewards = rewards && !rewardsLoading
   const { background, mobile, title, subtitle } = accountConfig
   const { auth, profile } = useSelector(selectCustomer)
@@ -155,7 +155,10 @@ const Account = () => {
                   {progress ? (
                     <AccountProgress loyalty={loyalty} />
                   ) : (
-                    <LoyaltyProgram program={loyalty} />
+                    <LoyaltyProgram
+                      isLoading={rewardsLoading}
+                      program={loyalty}
+                    />
                   )}
                 </AccountLoyalty>
               )}

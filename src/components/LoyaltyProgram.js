@@ -5,7 +5,7 @@ import { loyaltyType, formatDollars } from '@open-tender/js'
 import { Box, Heading, Text } from '@open-tender/components'
 import { ProgressBar, ProgressCircle } from '.'
 
-export const LoyaltyProgramView = styled(Box)`
+const LoyaltyProgramView = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: stretch;
@@ -35,7 +35,7 @@ const LoyaltyProgramSummary = styled('div')`
   }
 `
 
-export const LoyaltyProgramHeader = styled('div')`
+const LoyaltyProgramHeader = styled('div')`
   margin: 0 0 1.5rem;
 
   h2 {
@@ -134,7 +134,7 @@ const makeStatus = (tiers, status, isDollars = true) => {
   return { progress, points }
 }
 
-const LoyaltyProgram = ({ program }) => {
+const LoyaltyProgram = ({ program, isLoading = false }) => {
   const {
     name,
     description,
@@ -170,7 +170,14 @@ const LoyaltyProgram = ({ program }) => {
               </Text>
               <p>Apply to your next order when you checkout.</p>
             </LoyaltyProgramCredit>
-          ) : null}
+          ) : (
+            <LoyaltyProgramCredit>
+              <Text color="primary" bold={true} as="p">
+                $0.00 credit balance
+              </Text>
+              <p>Make progress towards your next credit with every order.</p>
+            </LoyaltyProgramCredit>
+          )}
         </div>
         {currentStatus && (
           <LoyaltyProgramStatus>
@@ -193,7 +200,7 @@ const LoyaltyProgram = ({ program }) => {
       </LoyaltyProgramSummary>
       <LoyaltyProgramProgress>
         <Heading as="p">Current Progress</Heading>
-        <ProgressCircle progress={progress} />
+        <ProgressCircle progress={progress} isLoading={isLoading} />
         {progress ? (
           <p>
             {hasCredit ? "You're" : "You're"} ${remaining} away from{' '}

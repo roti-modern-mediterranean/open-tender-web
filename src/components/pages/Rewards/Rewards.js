@@ -6,7 +6,8 @@ import { isBrowser } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig, selectSettings } from '../../../slices'
+import { AppContext } from '../../../App'
+import { selectBrand, selectConfig } from '../../../slices'
 import {
   Background,
   Container,
@@ -18,7 +19,6 @@ import {
 } from '../..'
 import RewardsPrograms from './RewardsProgams'
 import RewardsThanx from './RewardsThanx'
-import { AppContext } from '../../../App'
 import RewardsLevelUp from './RewardsLevelUp'
 import AccountTabs from '../Account/AccountTabs'
 
@@ -29,11 +29,9 @@ const defaultConfig = {
 
 const Rewards = () => {
   const history = useHistory()
-  const { title: siteTitle, has_thanx: hasThanx } = useSelector(selectBrand)
-  const { accountSections } = useSelector(selectSettings)
-  const hasLevelUp = accountSections.filter((i) => i === 'levelup').length > 0
+  const { title: siteTitle, has_thanx, has_levelup } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
-  const config = hasLevelUp ? accountConfig.levelup : defaultConfig
+  const config = has_levelup ? accountConfig.levelup : defaultConfig
   const { background } = accountConfig
   const { auth } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)
@@ -65,9 +63,9 @@ const Rewards = () => {
           <Container>
             <PageTitle {...config} />
             <PageContent>
-              {hasLevelUp ? (
+              {has_levelup ? (
                 <RewardsLevelUp />
-              ) : hasThanx ? (
+              ) : has_thanx ? (
                 <RewardsThanx />
               ) : (
                 <RewardsPrograms />

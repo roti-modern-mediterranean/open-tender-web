@@ -41,7 +41,6 @@ const promotions = [
 
 export const makeSlides = (items) => {
   items = items.length ? items : promotions
-  console.log(items)
   if (!items || !items.length) return null
   const filteredItems = items
     .filter((i) => i.image_url)

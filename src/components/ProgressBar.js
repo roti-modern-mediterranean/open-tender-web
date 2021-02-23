@@ -7,15 +7,13 @@ const ProgressView = styled('div')`
   width: 100%;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
-  // background-color: ${(props) => props.theme.bgColors.secondary};
-  // box-shadow: ${(props) => props.theme.boxShadow.inset};
 `
 
 const ProgressBarFill = styled('div')`
   width: 0;
   height: 1rem;
   border-radius: 0.5rem;
-  animation: fill-bar 0.5s ease-in-out 0.25s forwards;
+  animation: fill-bar 0.5s ease-in-out 0.5s forwards;
   // background-color: ${(props) => props.theme.links.primary.color};
   background-color: ${(props) => props.theme.colors.primary};
 `
@@ -41,7 +39,6 @@ const ProgressAmount = styled('div')`
 `
 
 const ProgressBar = ({ progress, points = [] }) => {
-  console.log(progress, points)
   const style = { width: `${progress || 0}%` }
   return (
     <ProgressView>

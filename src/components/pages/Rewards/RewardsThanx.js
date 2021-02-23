@@ -7,13 +7,13 @@ import {
   selectCustomerThanx,
 } from '@open-tender/redux'
 
-import RewardsProgram from './RewardsProgam'
-import { Loading } from '../..'
+import { Loading, LoyaltyProgram } from '../..'
 import RewardsRewards from './RewardsRewards'
 
 const RewardsThanx = () => {
   const dispatch = useDispatch()
   const { thanx, loading, error } = useSelector(selectCustomerThanx)
+  const isLoading = loading === 'pending'
   const { progress, rewards } = thanx || {}
   const program = {
     name: 'Your Progress',
@@ -30,7 +30,7 @@ const RewardsThanx = () => {
     <>
       {thanx ? (
         <>
-          <RewardsProgram program={program} />
+          <LoyaltyProgram program={program} isLoading={isLoading} />
           <RewardsRewards rewards={rewards} />
         </>
       ) : loading === 'pending' ? (

@@ -83,7 +83,6 @@ const RewardAction = styled('div')`
 `
 
 const Reward = ({ item }) => {
-  console.log(item)
   const dispatch = useDispatch()
   const today = makeLocalDateStr(new Date(), 0, 'MM/dd/yyyy')
   const bgStyle = item.image_url

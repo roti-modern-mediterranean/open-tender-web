@@ -6,6 +6,7 @@ import { Heading, Preface } from '@open-tender/components'
 // https://kimmobrunfeldt.github.io/progressbar.js/
 // https://github.com/kimmobrunfeldt/progressbar.js/tree/master/src
 // https://dev.to/vaibhavkhulbe/let-s-make-and-wear-those-css-3-progress-rings-2ngf
+// https://developer.mozilla.org/en-US/docs/Web/API/Element/animate
 
 const ProgressCirlceView = styled('div')`
   position: relative;
@@ -18,12 +19,10 @@ const ProgressCirlceView = styled('div')`
   }
 
   path:last-of-type {
-    // stroke: ${(props) => props.theme.links.primary.color};
     stroke: ${(props) => props.theme.colors.primary};
   }
 
   path:first-of-type {
-    // stroke: ${(props) => props.theme.bgColors.primary};
     stroke: rgba(0, 0, 0, 0.1);
   }
 `
@@ -62,41 +61,48 @@ const ProgressPercentage = styled('div')`
   }
 `
 
-const ProgressCirlce = ({ strokeWidth = 12, progress }) => {
+const ProgressCirlce = ({ strokeWidth = 12, progress, isLoading }) => {
   const progressRef = useRef()
+  const offsetRef = useRef()
   const [length, setLength] = useState(null)
   const [offset, setOffset] = useState(null)
   const radius = 50 - strokeWidth / 2
   const dimensions = `M 50,50 m 0,-${radius} a ${radius},${radius} 0 1 1 0,${
     radius * 2
   } a ${radius},${radius} 0 1 1 0,-${radius * 2}`
-  const strokeDasharray = length
-    ? `${length.toFixed(3)} ${length.toFixed(3)}`
+  const style = length
+    ? {
+        strokeDasharray: `${length.toFixed(3)} ${length.toFixed(3)}`,
+        strokeDashoffset: length,
+      }
     : null
-  const style = offset ? { strokeDasharray, strokeDashoffset: offset } : null
 
   useEffect(() => {
     setLength(progressRef.current.getTotalLength())
   }, [])
 
   useEffect(() => {
-    const timeout = (o, t) => window.setTimeout(() => setOffset(o), t)
-    if (length) {
-      const start = length
-      const end = length - (length * progress) / 100
-      const diff = start - end
-      const time = 1500 * (progress / 100)
-      let curTime = 0
-      let counter = 1
-      while (curTime < time) {
-        const newOffset = start - (diff / 100) * counter
-        timeout(newOffset, curTime)
-        curTime += time / 100
-        counter++
-      }
-    }
-    return () => clearTimeout(timeout)
+    const end = length - (length * progress) / 100
+    setOffset(end)
   }, [length, progress])
+
+  useEffect(() => {
+    if (length && offset && !isLoading) {
+      const duration = 2000 * (progress / 100)
+      const strokeDasharray = `${length.toFixed(3)} ${length.toFixed(3)}`
+      offsetRef.current.animate(
+        [
+          { strokeDasharray, strokeDashoffset: length },
+          { strokeDasharray, strokeDashoffset: offset },
+        ],
+        {
+          delay: 500,
+          duration,
+          fill: 'forwards',
+        }
+      )
+    }
+  }, [length, offset, progress, isLoading])
 
   return (
     <ProgressCirlceView>
@@ -107,14 +113,13 @@ const ProgressCirlce = ({ strokeWidth = 12, progress }) => {
           strokeWidth={`${strokeWidth}`}
           fillOpacity="0"
         ></path>
-        {offset && (
-          <path
-            d={dimensions}
-            strokeWidth={`${strokeWidth}`}
-            fillOpacity="0"
-            style={style}
-          ></path>
-        )}
+        <path
+          ref={offsetRef}
+          d={dimensions}
+          strokeWidth={`${strokeWidth}`}
+          fillOpacity="0"
+          style={style}
+        ></path>
       </svg>
       <ProgressPercentage>
         <div>

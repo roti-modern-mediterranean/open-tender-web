@@ -1,7 +1,33 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Heading } from '@open-tender/components'
-import { RewardsProgramView, RewardsProgramHeader } from './RewardsProgam'
+import { Box, Heading } from '@open-tender/components'
+
+const RewardsRewardsView = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 2rem 2rem;
+  margin: 0 0 3rem;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex-direction: column;
+    text-align: center;
+  }
+`
+
+const RewardsRewardsHeader = styled('div')`
+  margin: 0 0 1.5rem;
+
+  h2 {
+    font-size: ${(props) => props.theme.fonts.sizes.h5};
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+`
 
 const RewardsReward = styled('div')`
   padding: 1.5rem;
@@ -26,11 +52,11 @@ const RewardsFinePrint = styled('p')`
 const RewardsRewards = ({ rewards }) => {
   if (!rewards || !rewards.length) return null
   return (
-    <RewardsProgramView>
-      <RewardsProgramHeader>
+    <RewardsRewardsView>
+      <RewardsRewardsHeader>
         <h2>Your Rewards</h2>
         <p>You'll have the opportunity to redeem these on the checkout page.</p>
-      </RewardsProgramHeader>
+      </RewardsRewardsHeader>
       <div>
         {rewards.map((reward) => {
           return (
@@ -46,7 +72,7 @@ const RewardsRewards = ({ rewards }) => {
           )
         })}
       </div>
-    </RewardsProgramView>
+    </RewardsRewardsView>
   )
 }
 
