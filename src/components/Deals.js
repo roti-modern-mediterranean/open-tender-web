@@ -64,7 +64,7 @@ const Deals = ({ deals }) => {
       <SectionHeader title="Today's Deals" to="/deals" />
       <ItemsScrollable
         items={deals}
-        renderItem={(props) => <Reward {...props} />}
+        renderItem={(item) => <Reward item={item} />}
       >
         <p>We're not featuring any deals today. Please check back soon!</p>
       </ItemsScrollable>

@@ -42,6 +42,8 @@ import AccountTabs from './AccountTabs'
 import AccountProgress from './AccountProgress'
 import AccountRewards from './AccountRewards'
 import { makeSlides } from '../../HeroSlides'
+import AccountOrders from './AccountOrders'
+import AccountFavorites from './AccountFavorites'
 
 const AccountContent = styled('div')`
   padding: ${(props) => (props.isMobile ? '0 0 6rem' : '0')};
@@ -188,6 +190,8 @@ const Account = () => {
                 )}
                 {rewards && <AccountRewards rewards={rewards} />}
                 {has_deals && <Deals />}
+                <AccountOrders />
+                <AccountFavorites />
               </AccountFooter>
             </AccountContent>
           </PageView>

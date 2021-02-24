@@ -30,7 +30,7 @@ const GuestHeader = styled('div')`
   background-color: ${(props) => props.theme.bgColors.primary};
   padding: 0 0 3rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0.5rem 0 3rem;
+    padding: 0.5rem 0 2.5rem;
   }
 `
 
@@ -58,6 +58,12 @@ const GuestHeaderLinks = styled('p')`
 
 const GuestFooter = styled('div')`
   border-top: 0.1rem solid ${(props) => props.theme.border.color};
+
+  // & > div:first-of-type {
+  //   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  //     margin-top: ${(props) => props.theme.layout.paddingMobile};
+  //   }
+  // }
 `
 
 const GuestContent = styled('div')`

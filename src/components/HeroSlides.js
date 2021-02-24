@@ -23,7 +23,7 @@ const promotions = [
       'https://s3.amazonaws.com/betterboh/u/img/local/2/1613691230_sweet-potatoes_1800x1200.jpg',
     color: null,
     vertical: 'bottom',
-    horizontal: 'left',
+    horizontal: 'center',
     overlay: true,
   },
   {
@@ -34,7 +34,7 @@ const promotions = [
       'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608048551_jarritos-pineapple_1800x1200.jpg',
     color: null,
     vertical: 'bottom',
-    horizontal: 'right',
+    horizontal: 'center',
     overlay: true,
   },
 ]

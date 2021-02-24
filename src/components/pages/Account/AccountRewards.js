@@ -68,7 +68,7 @@ const AccountRewards = ({ rewards }) => {
       <SectionHeader title={title} to="/rewards" />
       <ItemsScrollable
         items={rewards}
-        renderItem={(props) => <Reward {...props} />}
+        renderItem={(item) => <Reward item={item} />}
       />
     </Section>
   )

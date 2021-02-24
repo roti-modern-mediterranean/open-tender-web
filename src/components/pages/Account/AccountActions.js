@@ -14,6 +14,7 @@ import {
   setOrderServiceType,
   setAddress,
   selectCartQuantity,
+  fetchMenuItems,
 } from '@open-tender/redux'
 import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
@@ -94,12 +95,20 @@ const AccountActions = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if (lastOrder && !cartQuantity) {
-      const { revenue_center, service_type, order_type, address } = lastOrder
-      const { revenue_center_id, is_outpost } = revenue_center
-      dispatch(fetchRevenueCenter(revenue_center_id))
-      dispatch(setOrderServiceType(order_type, service_type, is_outpost))
-      dispatch(setAddress(address || null))
+    if (lastOrder) {
+      const {
+        revenue_center,
+        service_type: serviceType,
+        order_type,
+        address,
+      } = lastOrder
+      const { revenue_center_id: revenueCenterId, is_outpost } = revenue_center
+      if (!cartQuantity) {
+        dispatch(fetchRevenueCenter(revenueCenterId))
+        dispatch(setOrderServiceType(order_type, serviceType, is_outpost))
+        dispatch(setAddress(address || null))
+      }
+      dispatch(fetchMenuItems({ revenueCenterId, serviceType }))
     }
   }, [lastOrder, cartQuantity, dispatch])
 
