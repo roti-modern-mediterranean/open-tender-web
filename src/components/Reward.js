@@ -90,7 +90,7 @@ const Reward = ({ item }) => {
     : null
 
   const redeem = () => {
-    dispatch(openModal({ type: 'item', args: { item } }))
+    dispatch(openModal({ type: 'reward', args: { reward: item } }))
   }
 
   return (

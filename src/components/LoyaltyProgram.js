@@ -10,7 +10,6 @@ const LoyaltyProgramView = styled(Box)`
   justify-content: space-between;
   align-items: stretch;
   padding: 2rem 2rem;
-  margin: 0 0 3rem;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {

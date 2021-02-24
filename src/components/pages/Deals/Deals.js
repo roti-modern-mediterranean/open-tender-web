@@ -144,7 +144,7 @@ const Deals = () => {
                 <DealsView>
                   {deals.map((deal) => (
                     <Deal key={deal.id}>
-                      <Reward reward={deal} />
+                      <Reward item={deal} />
                     </Deal>
                   ))}
                 </DealsView>

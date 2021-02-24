@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const SectionTitleContainer = styled('div')`
-  margin: 6rem 0 2rem;
+  margin: 2rem 0 2rem;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { Box, Heading } from '@open-tender/components'
 
-const RewardsRewardsView = styled(Box)`
+const ThanxRewardsView = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: stretch;
@@ -16,7 +16,7 @@ const RewardsRewardsView = styled(Box)`
   }
 `
 
-const RewardsRewardsHeader = styled('div')`
+const ThanxRewardsHeader = styled('div')`
   margin: 0 0 1.5rem;
 
   h2 {
@@ -29,7 +29,7 @@ const RewardsRewardsHeader = styled('div')`
   }
 `
 
-const RewardsReward = styled('div')`
+const ThanxRewardsReward = styled('div')`
   padding: 1.5rem;
   margin: 1rem 0 0;
   border: 0.1rem solid ${(props) => props.theme.border.color};
@@ -41,41 +41,41 @@ const RewardsReward = styled('div')`
   }
 `
 
-const RewardsTitle = styled(Heading)`
+const ThanxRewardsTitle = styled(Heading)`
   font-size: ${(props) => props.theme.fonts.sizes.main};
 `
 
-const RewardsFinePrint = styled('p')`
+const ThanxRewardsFinePrint = styled('p')`
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
 `
 
-const RewardsRewards = ({ rewards }) => {
+const ThanxRewards = ({ rewards }) => {
   if (!rewards || !rewards.length) return null
   return (
-    <RewardsRewardsView>
-      <RewardsRewardsHeader>
+    <ThanxRewardsView>
+      <ThanxRewardsHeader>
         <h2>Your Rewards</h2>
         <p>You'll have the opportunity to redeem these on the checkout page.</p>
-      </RewardsRewardsHeader>
+      </ThanxRewardsHeader>
       <div>
         {rewards.map((reward) => {
           return (
-            <RewardsReward key={reward.ext_id}>
-              <RewardsTitle>{reward.name}</RewardsTitle>
+            <ThanxRewardsReward key={reward.ext_id}>
+              <ThanxRewardsTitle>{reward.name}</ThanxRewardsTitle>
               {reward.description && <p>{reward.description}</p>}
               {reward.fine_print && (
-                <RewardsFinePrint>
+                <ThanxRewardsFinePrint>
                   Fine Print: {reward.fine_print}
-                </RewardsFinePrint>
+                </ThanxRewardsFinePrint>
               )}
-            </RewardsReward>
+            </ThanxRewardsReward>
           )
         })}
       </div>
-    </RewardsRewardsView>
+    </ThanxRewardsView>
   )
 }
 
-RewardsRewards.displayName = 'RewardsRewards'
+ThanxRewards.displayName = 'ThanxRewards'
 
-export default RewardsRewards
+export default ThanxRewards

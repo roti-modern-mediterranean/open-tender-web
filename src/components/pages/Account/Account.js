@@ -54,6 +54,10 @@ const AccountHeader = styled('div')`
   }
 `
 
+const AccountFooter = styled('div')`
+  border-top: 0.1rem solid ${(props) => props.theme.border.color};
+`
+
 const AccountLoyalty = styled('div')`
   margin: ${(props) => props.theme.layout.padding} 0;
   padding: 0 ${(props) => props.theme.layout.padding};
@@ -150,20 +154,22 @@ const Account = () => {
                 <PageHeader title={pageTitle} subtitle={subtitle} />
                 <AccountActions />
               </AccountHeader>
-              {loyalty && (
-                <AccountLoyalty>
-                  {progress ? (
-                    <AccountProgress loyalty={loyalty} />
-                  ) : (
-                    <LoyaltyProgram
-                      isLoading={rewardsLoading}
-                      program={loyalty}
-                    />
-                  )}
-                </AccountLoyalty>
-              )}
-              {rewards && <AccountRewards rewards={rewards} />}
-              {has_deals && <Deals />}
+              <AccountFooter>
+                {loyalty && (
+                  <AccountLoyalty>
+                    {progress ? (
+                      <AccountProgress loyalty={loyalty} />
+                    ) : (
+                      <LoyaltyProgram
+                        isLoading={rewardsLoading}
+                        program={loyalty}
+                      />
+                    )}
+                  </AccountLoyalty>
+                )}
+                {rewards && <AccountRewards rewards={rewards} />}
+                {has_deals && <Deals />}
+              </AccountFooter>
             </AccountContent>
           </PageView>
         </Main>

@@ -23,6 +23,7 @@ import HeroSlides from './HeroSlides'
 import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
 import ItemsScrollable from './ItemsScrollable'
+import ItemsStacked from './ItemsStacked'
 import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
 import LoyaltyProgram from './LoyaltyProgram'
@@ -94,6 +95,7 @@ export {
   ImageSpinner,
   ItemCards,
   ItemsScrollable,
+  ItemsStacked,
   LinkSeparator,
   Loading,
   LoyaltyProgram,

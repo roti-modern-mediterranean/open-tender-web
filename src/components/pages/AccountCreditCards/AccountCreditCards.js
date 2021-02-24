@@ -28,7 +28,7 @@ import CreditCards from './CreditCards'
 import styled from '@emotion/styled'
 
 const AccountCreditCardsButtons = styled('div')`
-  margin: 0 0 4rem;
+  margin: -1rem 0 3rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: -1rem 0 3rem;
     text-align: center;
@@ -113,7 +113,8 @@ const AccountCreditCards = () => {
                     <Message
                       color="alert"
                       size="small"
-                      style={{ width: '100%', margin: '3rem 0' }}
+                      as="div"
+                      style={{ width: '100%', margin: '0rem 0 3rem' }}
                     >
                       PLEASE NOTE: To pay with these cards ONLINE, use the Apple
                       Pay or Google Pay option on the checkout page.

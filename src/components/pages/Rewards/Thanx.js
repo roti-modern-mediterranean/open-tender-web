@@ -8,7 +8,7 @@ import {
 } from '@open-tender/redux'
 
 import { Loading, LoyaltyProgram } from '../..'
-import RewardsRewards from './RewardsRewards'
+import ThanxRewards from './ThanxRewards'
 
 const RewardsThanx = () => {
   const dispatch = useDispatch()
@@ -31,7 +31,7 @@ const RewardsThanx = () => {
       {thanx ? (
         <>
           <LoyaltyProgram program={program} isLoading={isLoading} />
-          <RewardsRewards rewards={rewards} />
+          <ThanxRewards rewards={rewards} />
         </>
       ) : loading === 'pending' ? (
         <Loading text="Retrieving your rewards..." />

@@ -15,23 +15,23 @@ import {
   HeaderUser,
   Main,
   PageContent,
-  PageTitle,
 } from '../..'
-import RewardsPrograms from './RewardsProgams'
-import RewardsThanx from './RewardsThanx'
-import RewardsLevelUp from './RewardsLevelUp'
+import LoyaltyProgams from './LoyaltyProgams'
+import Thanx from './Thanx'
+import LevelUp from './LevelUp'
 import AccountTabs from '../Account/AccountTabs'
+import RewardsList from './RewardsList'
 
-const defaultConfig = {
-  title: 'Rewards',
-  subtitle: 'A summary of your current rewards progress',
-}
+// const defaultConfig = {
+//   title: 'Rewards',
+//   subtitle: 'A summary of your current rewards progress',
+// }
 
 const Rewards = () => {
   const history = useHistory()
   const { title: siteTitle, has_thanx, has_levelup } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
-  const config = has_levelup ? accountConfig.levelup : defaultConfig
+  // const config = has_levelup ? accountConfig.levelup : defaultConfig
   const { background } = accountConfig
   const { auth } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)
@@ -61,14 +61,16 @@ const Rewards = () => {
         <Main bgColor="secondary">
           {!isBrowser && <AccountTabs />}
           <Container>
-            <PageTitle {...config} />
             <PageContent>
               {has_levelup ? (
-                <RewardsLevelUp />
+                <LevelUp />
               ) : has_thanx ? (
-                <RewardsThanx />
+                <Thanx />
               ) : (
-                <RewardsPrograms />
+                <>
+                  <LoyaltyProgams />
+                  <RewardsList />
+                </>
               )}
             </PageContent>
           </Container>

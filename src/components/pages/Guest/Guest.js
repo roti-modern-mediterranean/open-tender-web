@@ -23,7 +23,6 @@ import {
   Container,
 } from '../..'
 import { makeSlides } from '../../HeroSlides'
-// import GuestHeader from './GuestHeader'
 import GuestActions from './GuestActions'
 import { Link } from 'react-router-dom'
 
@@ -55,6 +54,10 @@ const GuestHeaderLinks = styled('p')`
     font-size: ${(props) => props.theme.fonts.sizes.small};
     text-align: center;
   }
+`
+
+const GuestFooter = styled('div')`
+  border-top: 0.1rem solid ${(props) => props.theme.border.color};
 `
 
 const GuestContent = styled('div')`
@@ -146,7 +149,7 @@ const Guest = () => {
                 </GuestHeaderLinks>
               </Container>
             </GuestHeader>
-            <div>
+            <GuestFooter>
               {has_deals && <Deals />}
               {hasContent && (
                 <GuestContent hasDeals={has_deals}>
@@ -155,7 +158,7 @@ const Guest = () => {
                   ))}
                 </GuestContent>
               )}
-            </div>
+            </GuestFooter>
           </PageView>
         </Main>
       </Content>
