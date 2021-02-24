@@ -15,14 +15,15 @@ import { AppContext } from '../../../App'
 import {
   Container,
   Content,
+  HeaderUser,
   Loading,
   Main,
-  PageTitle,
   PageContent,
-  HeaderAccount,
   PageError,
+  PageTitle,
 } from '../..'
 import OrdersList from '../Orders/OrdersList'
+import AccountTabs from '../Account/AccountTabs'
 
 const GroupOrders = () => {
   const dispatch = useDispatch()
@@ -56,12 +57,13 @@ const GroupOrders = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderAccount
+        <HeaderUser
           title={isBrowser ? null : 'Group Orders'}
           bgColor="secondary"
           borderColor="secondary"
         />
         <Main bgColor="secondary">
+          {!isBrowser && <AccountTabs />}
           <Container>
             <PageTitle {...config.groupOrders} />
             <PageContent>

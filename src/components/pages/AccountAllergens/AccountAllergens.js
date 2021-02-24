@@ -21,13 +21,14 @@ import {
   Container,
   Content,
   FormWrapper,
-  HeaderAccount,
+  HeaderUser,
   Loading,
   Main,
-  PageTitle,
   PageContent,
+  PageTitle,
 } from '../..'
 import styled from '@emotion/styled'
+import AccountTabs from '../Account/AccountTabs'
 
 const AllergenFormView = styled('div')`
   label {
@@ -84,13 +85,14 @@ const AccountAllergens = () => {
       </Helmet>
       <Background imageUrl={account.background} />
       <Content maxWidth="76.8rem">
-        <HeaderAccount
+        <HeaderUser
           title={isBrowser ? null : account.allergens.title}
           maxWidth="76.8rem"
           bgColor="secondary"
           borderColor="secondary"
         />
         <Main bgColor="secondary">
+          {!isBrowser && <AccountTabs />}
           <Container>
             <PageTitle {...account.allergens} />
             <PageContent>

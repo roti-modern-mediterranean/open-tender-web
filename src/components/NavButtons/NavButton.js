@@ -27,7 +27,8 @@ const NavButtonView = styled('button')`
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 1.75rem ${(props) => props.theme.layout.paddingMobile};
+    height: 5.8rem;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
     margin: 0;
     border: 0;
     border-radius: 0;

@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { selectCustomer } from '@open-tender/redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCustomer, logoutCustomer } from '@open-tender/redux'
+import { ButtonLink } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
@@ -10,22 +11,22 @@ import { AppContext } from '../../../App'
 import {
   Background,
   Content,
-  HeaderMobile,
-  Hero,
+  HeaderUser,
   Main,
   PageHeader,
   PageHero,
   PageView,
 } from '../..'
 import AccountSettingsButtons from './AccountSettingsButtons'
-import { Home, Logout } from '../../buttons'
 import { isBrowser } from 'react-device-detect'
+import AccountTabs from '../Account/AccountTabs'
 
 const AccountSettings = () => {
   const history = useHistory()
+  const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
-  const { background, mobile } = accountConfig
+  const { background } = accountConfig
   const { auth, profile } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)
 
@@ -45,27 +46,26 @@ const AccountSettings = () => {
       </Helmet>
       {isBrowser && <Background imageUrl={background} />}
       <Content maxWidth="76.8rem">
-        <HeaderMobile
+        <HeaderUser
           title={isBrowser ? null : 'Account'}
           maxWidth="76.8rem"
           bgColor="primary"
           borderColor="primary"
-          left={<Home />}
-          right={<Logout />}
         />
         <Main>
-          <PageView>
-            {!isBrowser && (
-              <PageHero>
-                <Hero imageUrl={mobile} style={{ minHeight: '0' }}>
-                  &nbsp;
-                </Hero>
-              </PageHero>
-            )}
+          {!isBrowser && <AccountTabs />}
+          <PageView style={!isBrowser ? { paddingBottom: '6rem' } : null}>
+            {!isBrowser && <PageHero>&nbsp;</PageHero>}
             <PageHeader
               title="Account"
               subtitle="Manage saved credit cards, addresses, etc."
-            />
+            >
+              <p>
+                <ButtonLink onClick={() => dispatch(logoutCustomer())}>
+                  Log out of your account
+                </ButtonLink>
+              </p>
+            </PageHeader>
             <AccountSettingsButtons />
           </PageView>
         </Main>

@@ -2,7 +2,6 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { logoutCustomer } from '@open-tender/redux'
 
 import { NavButtons } from '../..'
 import { selectBrand } from '../../../slices'
@@ -47,11 +46,11 @@ const navButtons = [
     title: 'Profile & Preferences',
     path: '/account/profile',
   },
-  {
-    icon: iconMap.UserX,
-    title: 'Logout',
-    func: logoutCustomer,
-  },
+  // {
+  //   icon: iconMap.UserX,
+  //   title: 'Logout',
+  //   func: logoutCustomer,
+  // },
 ]
 
 const AccountSettingsButtons = () => {

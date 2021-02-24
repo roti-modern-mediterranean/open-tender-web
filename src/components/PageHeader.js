@@ -29,12 +29,13 @@ const PageHeaderView = styled('div')`
   }
 `
 
-const PageHeader = ({ title, subtitle, style = null }) => {
+const PageHeader = ({ title, subtitle, style = null, children }) => {
   return (
     <PageHeaderView style={style}>
       <Container>
         {title && <h1>{title}</h1>}
         {subtitle && <p>{subtitle}</p>}
+        {children}
       </Container>
     </PageHeaderView>
   )
@@ -44,6 +45,10 @@ PageHeader.displayName = 'PageHeader'
 PageHeader.propTypes = {
   title: propTypes.string,
   subtitle: propTypes.string,
+  children: propTypes.oneOfType([
+    propTypes.arrayOf(propTypes.node),
+    propTypes.node,
+  ]),
 }
 
 export default PageHeader

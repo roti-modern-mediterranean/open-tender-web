@@ -6,6 +6,7 @@ import {
   fetchCustomerOrder,
   selectCustomerOrder,
 } from '@open-tender/redux'
+import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 
 import { maybeRefreshVersion } from '../../../app/version'
@@ -19,7 +20,7 @@ import {
   Order as OrderSummary,
   PageContent,
 } from '../..'
-import { isMobile } from 'react-device-detect'
+import AccountTabs from '../Account/AccountTabs'
 
 const Order = () => {
   const dispatch = useDispatch()
@@ -58,6 +59,7 @@ const Order = () => {
           borderColor="secondary"
         />
         <Main bgColor="secondary">
+          {isMobile && <AccountTabs />}
           <Container>
             <PageContent>
               <OrderSummary {...customerOrder} />

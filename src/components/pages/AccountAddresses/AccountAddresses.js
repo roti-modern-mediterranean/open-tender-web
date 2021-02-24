@@ -13,16 +13,17 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import Addresses from './Addresses'
 import {
+  Background,
   Container,
   Content,
+  HeaderUser,
   Loading,
   Main,
-  PageTitle,
   PageContent,
-  HeaderAccount,
-  Background,
+  PageTitle,
 } from '../..'
 import { AppContext } from '../../../App'
+import AccountTabs from '../Account/AccountTabs'
 
 const AccountAddresses = () => {
   const history = useHistory()
@@ -57,13 +58,14 @@ const AccountAddresses = () => {
       </Helmet>
       <Background imageUrl={config.account.background} />
       <Content maxWidth="76.8rem">
-        <HeaderAccount
+        <HeaderUser
           title={isBrowser ? null : config.account.addresses.title}
           maxWidth="76.8rem"
           bgColor="secondary"
           borderColor="secondary"
         />
         <Main bgColor="secondary">
+          {!isBrowser && <AccountTabs />}
           <Container>
             <PageTitle {...config.addresses} />
             <PageContent>

@@ -15,15 +15,16 @@ import {
   Background,
   Container,
   Content,
-  HeaderAccount,
+  HeaderUser,
   Loading,
   Main,
-  PageTitle,
   PageContent,
   PageError,
+  PageTitle,
 } from '../..'
 import { AppContext } from '../../../App'
 import HouseAccountsList from './HouseAccountsList'
+import AccountTabs from '../Account/AccountTabs'
 
 const AccountHouseAccounts = () => {
   const dispatch = useDispatch()
@@ -57,13 +58,14 @@ const AccountHouseAccounts = () => {
       </Helmet>
       <Background imageUrl={account.background} />
       <Content maxWidth="76.8rem">
-        <HeaderAccount
+        <HeaderUser
           title={isBrowser ? null : account.houseAccounts.title}
           maxWidth="76.8rem"
           bgColor="secondary"
           borderColor="secondary"
         />
         <Main bgColor="secondary">
+          {!isBrowser && <AccountTabs />}
           <Container>
             <PageTitle {...account.houseAccounts} />
             <PageContent>

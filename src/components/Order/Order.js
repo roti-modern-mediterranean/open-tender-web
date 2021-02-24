@@ -38,9 +38,9 @@ const OrderView = styled(Box)`
   max-width: ${(props) => props.theme.breakpoints.tablet};
   margin: 4rem auto;
   padding: ${(props) => props.theme.layout.padding};
-
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: ${(props) => props.theme.layout.paddingMobile};
+    margin: 3rem auto;
   }
 
   h1 {

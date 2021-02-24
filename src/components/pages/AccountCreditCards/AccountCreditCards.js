@@ -16,7 +16,7 @@ import {
   Background,
   Container,
   Content,
-  HeaderAccount,
+  HeaderUser,
   Loading,
   Main,
   PageTitle,
@@ -26,6 +26,7 @@ import {
 import { AppContext } from '../../../App'
 import CreditCards from './CreditCards'
 import styled from '@emotion/styled'
+import AccountTabs from '../Account/AccountTabs'
 
 const AccountCreditCardsButtons = styled('div')`
   margin: -1rem 0 3rem;
@@ -71,13 +72,14 @@ const AccountCreditCards = () => {
       </Helmet>
       <Background imageUrl={account.background} />
       <Content maxWidth="76.8rem">
-        <HeaderAccount
+        <HeaderUser
           title={isBrowser ? null : account.creditCards.title}
           maxWidth="76.8rem"
           bgColor="secondary"
           borderColor="secondary"
         />
         <Main bgColor="secondary">
+          {!isBrowser && <AccountTabs />}
           <Container>
             <PageTitle {...account.creditCards} />
             <PageContent>

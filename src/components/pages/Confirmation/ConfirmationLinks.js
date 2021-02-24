@@ -7,6 +7,10 @@ import styled from '@emotion/styled'
 
 const ConfirmationLinksView = styled('div')`
   margin: -1rem 0 3rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: -1rem 0 1rem;
+    text-align: center;
+  }
 `
 
 const ConfirmationLinks = ({ auth, brand }) => {

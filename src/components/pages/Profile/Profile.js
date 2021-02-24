@@ -18,12 +18,13 @@ import {
   Container,
   Content,
   FormWrapper,
-  HeaderAccount,
+  HeaderUser,
   Loading,
   Main,
-  PageTitle,
   PageContent,
+  PageTitle,
 } from '../..'
+import AccountTabs from '../Account/AccountTabs'
 
 const AccountProfile = () => {
   const dispatch = useDispatch()
@@ -62,13 +63,14 @@ const AccountProfile = () => {
       </Helmet>
       <Background imageUrl={account.background} />
       <Content maxWidth="76.8rem">
-        <HeaderAccount
+        <HeaderUser
           title={isBrowser ? null : account.profile.title}
           maxWidth="76.8rem"
           bgColor="secondary"
           borderColor="secondary"
         />
         <Main bgColor="secondary">
+          {!isBrowser && <AccountTabs />}
           <Container>
             <PageTitle {...account.profile} />
             <PageContent>

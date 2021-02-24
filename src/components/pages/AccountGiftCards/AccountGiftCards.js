@@ -13,17 +13,18 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
+  Background,
   Container,
   Content,
+  HeaderUser,
   Loading,
   Main,
   PageTitle,
   PageContent,
-  HeaderAccount,
-  Background,
 } from '../..'
 import GiftCardsList from './GiftCardsList'
 import GiftCardButtons from './GiftCardsButtons'
+import AccountTabs from '../Account/AccountTabs'
 
 const AccountGiftCards = () => {
   const history = useHistory()
@@ -57,13 +58,14 @@ const AccountGiftCards = () => {
       </Helmet>
       <Background imageUrl={config.background} />
       <Content maxWidth="76.8rem">
-        <HeaderAccount
+        <HeaderUser
           title={isBrowser ? null : 'Gift Cards'}
           maxWidth="76.8rem"
           bgColor="secondary"
           borderColor="secondary"
         />
         <Main bgColor="secondary">
+          {!isBrowser && <AccountTabs />}
           <Container>
             <PageTitle {...config.giftCards} />
             <PageContent>

@@ -19,6 +19,10 @@ const FooterContainer = styled('div')`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: 24rem;
+    padding: 0 0 6rem;
+  }
 `
 
 const FooterLogo = styled('div')`
