@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const ItemsStackedView = styled('div')`
-  margin: 0 -0.5rem;
+  margin: -0.5rem;
   display: flex;
   flex-wrap: wrap;
 `

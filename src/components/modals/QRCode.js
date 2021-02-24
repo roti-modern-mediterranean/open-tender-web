@@ -2,84 +2,80 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { ButtonStyled, useImage } from '@open-tender/components'
+import { ButtonStyled, Heading, Text } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
+import { QRCode as QRCodeImage } from '..'
 import { ModalContent, ModalView } from '..'
-import ImageSpinner from '../ImageSpinner'
 
-const QRCodeView = styled('button')`
-  position: relative;
-  display: block;
-  width: 100%;
-  // padding: ${(props) => props.padding};
-  padding: 50% 0;
-  border-style: solid;
-  border-width: ${(props) => props.theme.border.width};
-  border-color: ${(props) => props.theme.border.color};
-  border-radius: ${(props) => props.theme.border.radiusSmall};
-  background-color: white;
-  line-height: 0.1;
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-  }
-`
-
-const QRCodeLoading = styled('div')`
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+const QRCodeView = styled('div')`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 1rem 0 0;
+  text-align: center;
+`
 
-  > div p {
-    display: inline-block;
-    max-width: 24rem;
-    line-height: 1.5;
+const QRCodeHeader = styled('div')`
+  & > p {
+    margin: 0;
+  }
+
+  p:first-of-type {
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  p + p {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    line-height: 1.2;
+    margin: 1rem 0 0;
   }
 `
 
-const QRCode = ({ src, alt, subtitle }) => {
+const QRCodeContent = styled('div')`
+  margin: 1.5rem 0;
+
+  & > div {
+    width: 16rem;
+    margin: 0 auto;
+  }
+
+  p {
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
+`
+
+const QRCode = ({ src, alt, title, description, alert, footnote }) => {
   const dispatch = useDispatch()
-  const { hasLoaded, hasError } = useImage(src)
-  const isLoading = !hasLoaded && !hasError
 
   return (
     <ModalView style={{ maxWidth: '36rem' }}>
-      <ModalContent
-        title={alt}
-        subtitle={subtitle}
-        footer={
+      <ModalContent>
+        <QRCodeView>
+          <QRCodeHeader>
+            <Heading as="p">{title}</Heading>
+            {description && <p>{description}</p>}
+            {alert && (
+              <Text color="alert" size="small" as="p">
+                {alert}
+              </Text>
+            )}
+          </QRCodeHeader>
+          <QRCodeContent>
+            <p>Scan to redeem in-store</p>
+            <div>
+              <QRCodeImage src={src} title={alt} />
+            </div>
+            {footnote && <p>{footnote}</p>}
+          </QRCodeContent>
           <div>
             <ButtonStyled color="cart" onClick={() => dispatch(closeModal())}>
               Close
             </ButtonStyled>
           </div>
-        }
-      >
-        <QRCodeView padding={src && hasLoaded ? '0' : '50% 0'}>
-          {isLoading ? (
-            <QRCodeLoading>
-              <ImageSpinner size={30} />
-            </QRCodeLoading>
-          ) : hasLoaded ? (
-            <img src={src} alt={alt} />
-          ) : hasError ? (
-            <QRCodeLoading>
-              <div>
-                <p>QR Code failed to load. Please close window and retry.</p>
-              </div>
-            </QRCodeLoading>
-          ) : null}
         </QRCodeView>
       </ModalContent>
     </ModalView>
@@ -88,9 +84,12 @@ const QRCode = ({ src, alt, subtitle }) => {
 
 QRCode.displayName = 'QRCode'
 QRCode.prototypes = {
-  src: propTypes.stirng,
-  alt: propTypes.stirng,
-  subtitle: propTypes.stirng,
+  src: propTypes.string,
+  alt: propTypes.string,
+  title: propTypes.string,
+  description: propTypes.string,
+  alert: propTypes.string,
+  footnote: propTypes.string,
 }
 
 export default QRCode

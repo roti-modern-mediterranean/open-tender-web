@@ -34,6 +34,11 @@ const AccountScan = () => {
   const { has_pos } = useSelector(selectBrand)
   const { qrcode, loading, error } = useSelector(selectCustomerQRCode)
   const hasQRCode = has_pos && qrcode && !error && loading === 'idle'
+  const src = qrcode
+  const alt = 'Sign Into Your Account'
+  const title = alt
+  const alert = 'Only relevant for IN-STORE transactions'
+  const footnote = "This is NOT required if you're paying with a credit card"
 
   useEffect(() => {
     if (has_pos) dispatch(fetchCustomerQRCode())
@@ -47,7 +52,7 @@ const AccountScan = () => {
           dispatch(
             openModal({
               type: 'qrCode',
-              args: { src: qrcode, alt: 'Scan to sign in' },
+              args: { src, alt, title, alert, footnote },
             })
           )
         }

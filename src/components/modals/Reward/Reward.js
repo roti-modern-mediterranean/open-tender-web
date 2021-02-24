@@ -5,8 +5,7 @@ import styled from '@emotion/styled'
 import { ButtonStyled, Heading, Text } from '@open-tender/components'
 
 import { closeModal } from '../../../slices'
-import { ModalContent, ModalView } from '../..'
-import RewardQRCode from './RewardQRCode'
+import { ModalContent, ModalView, QRCode } from '../..'
 import RewardImage from './RewardImage'
 
 const RewardView = styled('div')`
@@ -44,6 +43,11 @@ const RewardContent = styled('div')`
   }
 `
 
+const RewardQRCodeView = styled('div')`
+  width: 16rem;
+  margin: 0 auto;
+`
+
 const Reward = ({ reward }) => {
   const dispatch = useDispatch()
   const { title, description, image_url, qr_code_url, expiration } = reward
@@ -63,7 +67,9 @@ const Reward = ({ reward }) => {
             {qr_code_url ? (
               <>
                 <p>Scan to redeem in-store</p>
-                <RewardQRCode src={qr_code_url} title={title} />
+                <RewardQRCodeView>
+                  <QRCode src={qr_code_url} alt={title} />
+                </RewardQRCodeView>
               </>
             ) : image_url ? (
               <RewardImage src={image_url} alt={title} />
