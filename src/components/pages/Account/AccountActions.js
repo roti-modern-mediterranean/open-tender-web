@@ -19,7 +19,7 @@ import { getLastOrder, makeOrderTypeName } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
 
 import iconMap from '../../iconMap'
-import { ButtonText, Container, Loading, PageButtons } from '../..'
+import { ButtonText, Loading, PageButtons } from '../..'
 
 const Continue = ({ size, icon, current, startNew }) => {
   return (
@@ -118,36 +118,34 @@ const AccountActions = () => {
   }
 
   return (
-    <Container>
-      <PageButtons>
-        {isLoading ? (
-          <Loading text="Retrieving your account info..." />
-        ) : isCurrentOrder ? (
-          <Continue
-            icon={orderTypeIcon}
-            size={buttonSize}
-            current={continueCurrent}
-            startNew={startNewOrder}
-          />
-        ) : lastOrder ? (
-          <Reorder
-            icon={orderTypeIcon}
-            size={buttonSize}
-            orderTypeName={orderTypeName}
-            reorder={continueCurrent}
-            switchType={switchOrderType}
-          />
-        ) : (
-          <ButtonStyled
-            icon={iconMap.ShoppingBag}
-            onClick={startNewOrder}
-            size={buttonSize}
-          >
-            <ButtonText>Start a New Order</ButtonText>
-          </ButtonStyled>
-        )}
-      </PageButtons>
-    </Container>
+    <PageButtons>
+      {isLoading ? (
+        <Loading text="Retrieving your account info..." />
+      ) : isCurrentOrder ? (
+        <Continue
+          icon={orderTypeIcon}
+          size={buttonSize}
+          current={continueCurrent}
+          startNew={startNewOrder}
+        />
+      ) : lastOrder ? (
+        <Reorder
+          icon={orderTypeIcon}
+          size={buttonSize}
+          orderTypeName={orderTypeName}
+          reorder={continueCurrent}
+          switchType={switchOrderType}
+        />
+      ) : (
+        <ButtonStyled
+          icon={iconMap.ShoppingBag}
+          onClick={startNewOrder}
+          size={buttonSize}
+        >
+          <ButtonText>Start a New Order</ButtonText>
+        </ButtonStyled>
+      )}
+    </PageButtons>
   )
 }
 

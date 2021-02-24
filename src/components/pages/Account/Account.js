@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import styled from '@emotion/styled'
@@ -22,6 +22,7 @@ import { selectBrand, selectConfig, closeModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Background,
+  Container,
   Content,
   Deals,
   HeaderLogo,
@@ -51,6 +52,17 @@ const AccountHeader = styled('div')`
   padding: 0 0 3rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 0 2.5rem;
+  }
+`
+
+const AccountHeaderLinks = styled('p')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  margin: 2.5rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 1.5rem 0 0;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    text-align: center;
   }
 `
 
@@ -152,7 +164,14 @@ const Account = () => {
             <AccountContent isMobile={!isBrowser}>
               <AccountHeader>
                 <PageHeader title={pageTitle} subtitle={subtitle} />
-                <AccountActions />
+                <Container>
+                  <AccountActions />
+                  <AccountHeaderLinks>
+                    <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
+                    <Link to="/donations">make a donation</Link> |{' '}
+                    <Link to="/contact">get in touch</Link>
+                  </AccountHeaderLinks>
+                </Container>
               </AccountHeader>
               <AccountFooter>
                 {loyalty && (

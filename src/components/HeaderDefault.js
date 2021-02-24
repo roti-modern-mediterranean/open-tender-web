@@ -1,8 +1,10 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { selectCustomer } from '@open-tender/redux'
 
 import { HeaderMobile } from '.'
-import { Account, Home } from './buttons'
+import { Account, Home, Logout } from './buttons'
+import { useSelector } from 'react-redux'
 
 const HeaderDefault = ({
   maxWidth = '76.8rem',
@@ -10,6 +12,8 @@ const HeaderDefault = ({
   bgColor = 'primary',
   borderColor = 'primary',
 }) => {
+  const { auth } = useSelector(selectCustomer)
+
   return (
     <HeaderMobile
       title={title}
@@ -17,7 +21,7 @@ const HeaderDefault = ({
       bgColor={bgColor}
       borderColor={borderColor}
       left={<Home />}
-      right={<Account />}
+      right={auth ? <Logout /> : <Account />}
     />
   )
 }
