@@ -7,7 +7,10 @@ import { ItemsScrollable, OrderCard, Section, SectionHeader } from '../..'
 const AccountOrders = () => {
   const { entities: orders, error } = useSelector(selectCustomerOrders)
   if (!orders.length || error) return null
-  const filtered = orders.map((i) => ({ ...i, key: i.order_id })).slice(0, 5)
+  const filtered = orders
+    .map((i) => ({ ...i, key: i.order_id }))
+    .filter((i) => i.order_type !== 'MERCH')
+    .slice(0, 5)
 
   return (
     <Section>

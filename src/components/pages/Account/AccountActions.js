@@ -9,7 +9,6 @@ import {
   fetchCustomerOrders,
   selectCustomerOrders,
   fetchCustomerFavorites,
-  fetchCustomerGroupOrders,
   fetchRevenueCenter,
   setOrderServiceType,
   setAddress,
@@ -91,7 +90,6 @@ const AccountActions = () => {
   useEffect(() => {
     dispatch(fetchCustomerOrders(20))
     dispatch(fetchCustomerFavorites())
-    dispatch(fetchCustomerGroupOrders())
   }, [dispatch])
 
   useEffect(() => {
