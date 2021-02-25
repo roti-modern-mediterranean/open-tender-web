@@ -1,23 +1,20 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  selectCustomerGiftCards,
-  fetchCustomerGiftCards,
-} from '@open-tender/redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { selectCustomerGiftCards } from '@open-tender/redux'
 
 import { GiftCard, ItemsScrollable, Section, SectionHeader } from '../..'
 
 const AccountGiftCards = () => {
-  const dispatch = useDispatch()
   const { entities: giftCards, loading } = useSelector(selectCustomerGiftCards)
   const isLoading = loading === 'pending'
   const filtered = giftCards
     .map((i) => ({ ...i, key: i.gift_card_id, isLoading }))
     .slice(0, 5)
 
-  useEffect(() => {
-    dispatch(fetchCustomerGiftCards())
-  }, [dispatch])
+  // we don't need this because we get gift cards with the customer
+  // useEffect(() => {
+  //   dispatch(fetchCustomerGiftCards())
+  // }, [dispatch])
 
   if (!giftCards.length) return null
 

@@ -45,6 +45,7 @@ import { makeSlides } from '../../HeroSlides'
 import AccountOrders from './AccountOrders'
 import AccountFavorites from './AccountFavorites'
 import AccountGiftCards from './AccountGiftCards'
+import AccountGroupOrders from './AccountGroupOrders'
 
 const AccountContent = styled('div')`
   padding: ${(props) => (props.isMobile ? '0 0 6rem' : '0')};
@@ -191,6 +192,7 @@ const Account = () => {
                 )}
                 {rewards && <AccountRewards rewards={rewards} />}
                 {has_deals && <Deals />}
+                <AccountGroupOrders />
                 <AccountOrders />
                 <AccountFavorites />
                 <AccountGiftCards />
