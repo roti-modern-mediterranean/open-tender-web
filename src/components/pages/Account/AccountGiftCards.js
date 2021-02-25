@@ -9,9 +9,10 @@ import { GiftCard, ItemsScrollable, Section, SectionHeader } from '../..'
 
 const AccountGiftCards = () => {
   const dispatch = useDispatch()
-  const { entities: giftCards } = useSelector(selectCustomerGiftCards)
+  const { entities: giftCards, loading } = useSelector(selectCustomerGiftCards)
+  const isLoading = loading === 'pending'
   const filtered = giftCards
-    .map((i) => ({ ...i, key: i.gift_card_id }))
+    .map((i) => ({ ...i, key: i.gift_card_id, isLoading }))
     .slice(0, 5)
 
   useEffect(() => {
