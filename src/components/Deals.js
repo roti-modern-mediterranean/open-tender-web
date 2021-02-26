@@ -1,69 +1,28 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectDeals, fetchDeals } from '@open-tender/redux'
+
 import { Reward, Section, SectionHeader } from '.'
 import ItemsScrollable from './ItemsScrollable'
+import { selectBrand } from '../slices'
 
-const testRewards = [
-  {
-    id: 1,
-    title: 'Buy One Entree, Get Second for half price',
-    description: 'Get two entrees for the price of one. Today only!',
-    image_url:
-      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
-    qr_code_url:
-      'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
-    expiration: '02/18/2021',
-    discount_type: 'DOLLAR',
-    amount: '15.00',
-  },
-  {
-    id: 2,
-    title: 'Free Drink with purchase of $20 or more',
-    description: 'Get two entrees for the price of one. Today only!',
-    image_url:
-      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
-    // qr_code_url:
-    //   'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
-    expiration: '02/28/2021',
-    discount_type: 'DOLLAR',
-    amount: '15.00',
-  },
-  {
-    id: 3,
-    title: 'Free Drink!',
-    description: 'Get two entrees for the price of one. Today only!',
-    // image_url:
-    //   'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
-    // qr_code_url:
-    //   'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
-    expiration: '02/18/2021',
-    discount_type: 'DOLLAR',
-    amount: '15.00',
-  },
-  {
-    id: 4,
-    title: 'Get two entrees for the price of one. Today only!',
-    description: 'Get two entrees for the price of one. Today only!',
-    image_url:
-      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
-    qr_code_url:
-      'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
-    expiration: '02/18/2021',
-    discount_type: 'DOLLAR',
-    amount: '15.00',
-  },
-]
+const Deals = () => {
+  const dispatch = useDispatch()
+  const { has_deals = true } = useSelector(selectBrand)
+  const { entities: deals, error } = useSelector(selectDeals)
+  const items = deals.map((i) => ({ ...i, key: i.discount_id }))
 
-const Deals = ({ deals }) => {
-  deals = testRewards
-  // if (!deals.length) return null
-  deals = deals.map((i) => ({ ...i, key: i.id }))
+  useEffect(() => {
+    if (has_deals) dispatch(fetchDeals())
+  }, [has_deals, dispatch])
+
+  if (!has_deals || error) return null
 
   return (
     <Section>
       <SectionHeader title="Today's Deals" to="/deals" />
       <ItemsScrollable
-        items={deals}
+        items={items}
         renderItem={(item) => <Reward item={item} />}
       >
         <p>We're not featuring any deals today. Please check back soon!</p>
@@ -73,8 +32,5 @@ const Deals = ({ deals }) => {
 }
 
 Deals.displayName = 'Deals'
-Deals.propTypes = {
-  rewards: propTypes.array,
-}
 
 export default Deals

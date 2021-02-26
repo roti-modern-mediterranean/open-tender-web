@@ -33,8 +33,7 @@ const ServiceType = ({ style = null, useButton = false }) => {
   if (!serviceType) return null
 
   const handleServiceType = () => {
-    const startOver = () => history.push(`/`)
-    dispatch(openModal({ type: 'orderType', args: { startOver } }))
+    dispatch(openModal({ type: 'orderType' }))
   }
 
   const handleCatering = () => {

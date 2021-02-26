@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
-import { selectCustomer } from '@open-tender/redux'
+import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
@@ -13,8 +13,10 @@ import {
   Content,
   HeaderDefault,
   HeaderUser,
+  Loading,
   Main,
   PageContent,
+  PageError,
   PageTitle,
   Reward,
 } from '../..'
@@ -22,60 +24,9 @@ import { AppContext } from '../../../App'
 import AccountTabs from '../Account/AccountTabs'
 import styled from '@emotion/styled'
 
-const testDeals = [
-  {
-    id: 1,
-    title: 'Buy One Entree, Get Second for half price',
-    description: 'Get two entrees for the price of one. Today only!',
-    image_url:
-      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
-    qr_code_url:
-      'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
-    expiration: '02/18/2021',
-    discount_type: 'DOLLAR',
-    amount: '15.00',
-  },
-  {
-    id: 2,
-    title: 'Free Drink with purchase of $20 or more',
-    description: 'Get two entrees for the price of one. Today only!',
-    image_url:
-      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
-    // qr_code_url:
-    //   'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
-    expiration: '02/28/2021',
-    discount_type: 'DOLLAR',
-    amount: '15.00',
-  },
-  {
-    id: 3,
-    title: 'Free Drink!',
-    description: 'Get two entrees for the price of one. Today only!',
-    // image_url:
-    //   'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
-    // qr_code_url:
-    //   'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
-    expiration: '02/18/2021',
-    discount_type: 'DOLLAR',
-    amount: '15.00',
-  },
-  {
-    id: 4,
-    title: 'Get two entrees for the price of one. Today only!',
-    description: 'Get two entrees for the price of one. Today only!',
-    image_url:
-      'http://s3.amazonaws.com/betterboh/u/img/prod/2/1608047267_topo-chico_900x600.jpg',
-    qr_code_url:
-      'http://s3.amazonaws.com/betterboh/u/img/local/2/1613177993_qrcode_2_3.svg',
-    expiration: '02/18/2021',
-    discount_type: 'DOLLAR',
-    amount: '15.00',
-  },
-]
-
 const defaultConfig = {
   title: 'Deals',
-  subtitle: 'Available to both customers with accounts and guests',
+  subtitle: 'Daily offers available to all customers. Check back daily!',
 }
 
 const DealsView = styled('div')`
@@ -94,13 +45,14 @@ const Deal = styled('div')`
 
 const Deals = () => {
   const history = useHistory()
+  const dispatch = useDispatch()
   const { title: siteTitle, has_deals = true } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const config = { ...accountConfig, ...defaultConfig }
   const { background } = config
   const { auth } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)
-  const deals = testDeals
+  const { entities: deals, loading, error } = useSelector(selectDeals)
   const hasDeals = deals.length > 0
 
   useEffect(() => {
@@ -111,6 +63,10 @@ const Deals = () => {
   useEffect(() => {
     if (!has_deals) return history.push('/')
   }, [has_deals, history])
+
+  useEffect(() => {
+    dispatch(fetchDeals())
+  }, [dispatch])
 
   return (
     <>
@@ -140,7 +96,9 @@ const Deals = () => {
           <Container>
             <PageTitle {...config} />
             <PageContent>
-              {hasDeals ? (
+              {error ? (
+                <PageError error={error} />
+              ) : hasDeals ? (
                 <DealsView>
                   {deals.map((deal) => (
                     <Deal key={deal.id}>
@@ -148,6 +106,8 @@ const Deals = () => {
                     </Deal>
                   ))}
                 </DealsView>
+              ) : loading === 'pending' ? (
+                <Loading text="Retrieving today's deals..." />
               ) : (
                 <p>
                   We're not featuring any deals today. Please check back soon!

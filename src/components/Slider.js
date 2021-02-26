@@ -81,7 +81,7 @@ const SliderView = styled('div')`
   }
 `
 
-const Slider = ({ slides }) => {
+const Slider = ({ slides, loop = false }) => {
   const wrapper = useRef()
   const timer = useRef()
   const duration = isBrowser ? 1000 : 500
@@ -94,7 +94,7 @@ const Slider = ({ slides }) => {
     slideChanged(s) {
       setCurrentSlide(s.details().relativeSlide)
     },
-    loop: true,
+    loop: loop,
     duration: duration,
     dragStart: () => {
       setPause(true)
@@ -114,15 +114,17 @@ const Slider = ({ slides }) => {
   }, [wrapper])
 
   React.useEffect(() => {
-    timer.current = setInterval(() => {
-      if (!pause && slider) {
-        slider.next()
+    if (loop) {
+      timer.current = setInterval(() => {
+        if (!pause && slider) {
+          slider.next()
+        }
+      }, interval)
+      return () => {
+        clearInterval(timer.current)
       }
-    }, interval)
-    return () => {
-      clearInterval(timer.current)
     }
-  }, [pause, slider, interval])
+  }, [loop, pause, slider, interval])
 
   return (
     <SliderView ref={wrapper}>
@@ -139,13 +141,13 @@ const Slider = ({ slides }) => {
             direction="left"
             size={size}
             onClick={(e) => e.stopPropagation() || slider.prev()}
-            // disabled={currentSlide === 0}
+            disabled={!loop && currentSlide === 0}
           />
           <Arrow
             direction="right"
             size={size}
             onClick={(e) => e.stopPropagation() || slider.next()}
-            // disabled={currentSlide === slider.details().size - 1}
+            disabled={!loop && currentSlide === slider.details().size - 1}
           />
         </>
       )}

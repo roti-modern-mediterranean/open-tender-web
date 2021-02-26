@@ -7,7 +7,7 @@ import { ImageSpinner } from '../..'
 
 const RewardImageContainer = styled('div')`
   width: 100%;
-  margin: 0 auto;
+  margin: 0 auto 1.5rem;
 `
 
 const RewardImageView = styled('div')`

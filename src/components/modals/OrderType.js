@@ -1,5 +1,5 @@
 import React from 'react'
-import propTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetOrderType, selectOrder } from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
@@ -8,15 +8,16 @@ import { ButtonStyled } from '@open-tender/components'
 import { closeModal } from '../../slices'
 import { ModalContent, ModalView } from '..'
 
-const OrderType = ({ startOver }) => {
+const OrderType = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { serviceType } = useSelector(selectOrder)
   const serviceTypeName = serviceTypeNamesMap[serviceType]
 
   const changeOrderType = () => {
     dispatch(resetOrderType())
     dispatch(closeModal())
-    startOver()
+    history.push(`/order-type`)
   }
 
   const cancel = () => {
@@ -51,8 +52,5 @@ const OrderType = ({ startOver }) => {
 }
 
 OrderType.displayName = 'OrderType'
-OrderType.prototypes = {
-  startOver: propTypes.func,
-}
 
 export default OrderType

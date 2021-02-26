@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
@@ -50,7 +50,13 @@ const RewardQRCodeView = styled('div')`
 
 const Reward = ({ reward }) => {
   const dispatch = useDispatch()
-  const { title, description, image_url, qr_code_url, expiration } = reward
+  const { title, description, imageUrl, expiration, service_type } = reward
+  const [qrCodeUrl, setQRCodeUrl] = useState(null)
+  const hasQRCode = !service_type || service_type === 'WALKIN'
+
+  const scan = () => {
+    console.log('retrieve QR code')
+  }
 
   return (
     <ModalView style={{ maxWidth: '36rem' }}>
@@ -59,28 +65,46 @@ const Reward = ({ reward }) => {
           <RewardHeader>
             <Heading as="p">{title}</Heading>
             {description && <p>{description}</p>}
-            <Text color="alert" size="small" as="p">
-              Use by {expiration}
-            </Text>
+            {expiration ? (
+              <Text color="alert" size="small" as="p">
+                Use by {expiration}
+              </Text>
+            ) : (
+              <Text size="small" as="p">
+                Expires never!
+              </Text>
+            )}
+            {reward.per_order === 1 && (
+              <Text color="alert" size="small" as="p">
+                Cannot be used with any other discounts
+              </Text>
+            )}
           </RewardHeader>
           <RewardContent>
-            {qr_code_url ? (
+            {qrCodeUrl ? (
               <>
                 <p>Scan to redeem in-store</p>
                 <RewardQRCodeView>
-                  <QRCode src={qr_code_url} alt={title} />
+                  <QRCode src={qrCodeUrl} alt={title} />
                 </RewardQRCodeView>
               </>
-            ) : image_url ? (
-              <RewardImage src={image_url} alt={title} />
+            ) : imageUrl ? (
+              <RewardImage src={imageUrl} alt={title} />
             ) : null}
+            {hasQRCode && !qrCodeUrl && (
+              <p>
+                <ButtonStyled color="cart" onClick={scan}>
+                  Scan In-store
+                </ButtonStyled>
+              </p>
+            )}
             <p>
               To redeem online, add the relevant items to your cart and apply
               this reward on the Checkout page
             </p>
           </RewardContent>
           <div>
-            <ButtonStyled color="cart" onClick={() => dispatch(closeModal())}>
+            <ButtonStyled onClick={() => dispatch(closeModal())}>
               Close
             </ButtonStyled>
           </div>

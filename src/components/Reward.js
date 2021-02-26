@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { BgImage, Box, ButtonLink, Text } from '@open-tender/components'
-import { makeLocalDateStr } from '@open-tender/js'
+import { makeLocalDateStr, formatDateStr } from '@open-tender/js'
 
 import { openModal } from '../slices'
 import iconMap from './iconMap'
@@ -11,6 +11,7 @@ import iconMap from './iconMap'
 const RewardView = styled(Box)`
   position: relative;
   height: 100%;
+  min-height: 11rem;
   display: flex;
   align-items: center;
   padding: 1rem;
@@ -82,15 +83,89 @@ const RewardAction = styled('div')`
   }
 `
 
+const makeImageUrl = (images) => {
+  const imagesMap = images
+    .filter((i) => i.url)
+    .reduce((obj, i) => ({ ...obj, [i.type]: i.url }), {})
+  return imagesMap.SMALL_IMAGE || imagesMap.APP_IMAGE || imagesMap.LARGE_IMAGE
+}
+
+const makeServiceType = (serviceType) => {
+  switch (serviceType) {
+    case 'WALKIN':
+      return (
+        <>
+          <span>{iconMap.Grid}</span>Scan in-store only
+        </>
+      )
+    case 'PICKUP':
+      return (
+        <>
+          <span>{iconMap.ShoppingBag}</span>Pickup orders only
+        </>
+      )
+    case 'DELIVERY':
+      return (
+        <>
+          <span>{iconMap.Truck}</span>Delivery orders only
+        </>
+      )
+    default:
+      return null
+  }
+}
+
+const makeOrderType = (orderType) => {
+  switch (orderType) {
+    case 'OLO':
+      return null
+    case 'CATERING':
+      return 'Catering only'
+    case 'MERCH':
+      return 'Merch only'
+    default:
+      return null
+  }
+}
+
+const makeLimitations = (item) => {
+  const { order_type, service_type } = item
+  const serviceType = makeServiceType(service_type)
+  const orderType = makeOrderType(order_type)
+  const comma = serviceType && orderType ? ', ' : null
+  if (serviceType || orderType) {
+    return (
+      <>
+        {serviceType}
+        {comma}
+        {orderType}
+      </>
+    )
+  }
+  return (
+    <>
+      <span>{iconMap.Star}</span>Valid on all orders
+    </>
+  )
+}
+
+const makeReward = (item) => {
+  const imageUrl = makeImageUrl(item.images)
+  const expiration = formatDateStr(item.end_date, 'MMMM d, yyyy')
+  const limitations = makeLimitations(item)
+  return { ...item, imageUrl, expiration, limitations }
+}
+
 const Reward = ({ item }) => {
   const dispatch = useDispatch()
-  const today = makeLocalDateStr(new Date(), 0, 'MM/dd/yyyy')
-  const bgStyle = item.image_url
-    ? { backgroundImage: `url(${item.image_url}` }
+  const today = makeLocalDateStr(new Date(), 0, 'yyyy-MM-dd')
+  const reward = makeReward(item)
+  const bgStyle = reward.imageUrl
+    ? { backgroundImage: `url(${reward.imageUrl}` }
     : null
 
   const redeem = () => {
-    dispatch(openModal({ type: 'reward', args: { reward: item } }))
+    dispatch(openModal({ type: 'reward', args: { reward } }))
   }
 
   return (
@@ -99,16 +174,21 @@ const Reward = ({ item }) => {
       <RewardDetails>
         <div>
           <RewardContent>
-            <RewardNote>
-              <span>{iconMap.Grid}</span>Scan in-store only
-            </RewardNote>
-            <RewardTitle>{item.title}</RewardTitle>
-            {item.description && (
-              <RewardDescription>{item.description}</RewardDescription>
+            <RewardNote>{reward.limitations}</RewardNote>
+            <RewardTitle>{reward.title}</RewardTitle>
+            {reward.description && (
+              <RewardDescription>{reward.description}</RewardDescription>
             )}
+            {/* {reward.per_order === 1 && (
+              <RewardDescription>
+                <Text color="alert">
+                  Cannot be used with any other discounts
+                </Text>
+              </RewardDescription>
+            )} */}
           </RewardContent>
           <RewardExpiration>
-            {item.expiration === today ? (
+            {reward.end_date === today ? (
               <Text
                 color="alert"
                 size="xSmall"
@@ -121,8 +201,10 @@ const Reward = ({ item }) => {
               >
                 Today only!
               </Text>
+            ) : reward.end_date ? (
+              <p>Use by {reward.expiration}</p>
             ) : (
-              <p>Use by {item.expiration}</p>
+              <p>Expires never!</p>
             )}
           </RewardExpiration>
         </div>
@@ -131,7 +213,7 @@ const Reward = ({ item }) => {
         <ButtonLink
           onClick={redeem}
           disabled={false}
-          label={`Apply ${item.name}`}
+          label={`Apply ${reward.name}`}
         >
           {iconMap.PlusCircle}
         </ButtonLink>
