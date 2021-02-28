@@ -98,7 +98,7 @@ const Guest = () => {
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
   const brand = useSelector(selectBrand)
-  const { has_deals = true } = brand
+  const { has_deals } = brand
   const { home } = useSelector(selectConfig)
   const { background, mobile, content, title, subtitle } = home
   const footnote = "Hint: you don't need an account to place an order."

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react'
 import propTypes from 'prop-types'
 import { isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
+
 import { ButtonStyled } from '@open-tender/components'
 
 import { AppContext } from '../App'

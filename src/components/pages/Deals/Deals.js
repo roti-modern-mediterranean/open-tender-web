@@ -46,7 +46,7 @@ const Deal = styled('div')`
 const Deals = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { title: siteTitle, has_deals = true } = useSelector(selectBrand)
+  const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const config = { ...accountConfig, ...defaultConfig }
   const { background } = config

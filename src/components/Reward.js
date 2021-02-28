@@ -7,6 +7,7 @@ import { makeLocalDateStr, formatDateStr } from '@open-tender/js'
 
 import { openModal } from '../slices'
 import iconMap from './iconMap'
+import { Tag } from '.'
 
 const RewardView = styled(Box)`
   position: relative;
@@ -15,6 +16,12 @@ const RewardView = styled(Box)`
   display: flex;
   align-items: center;
   padding: 1rem;
+`
+
+const RewardTag = styled('div')`
+  position: absolute;
+  top: -1.1rem;
+  right: 1.5rem;
 `
 
 const RewardImage = styled(BgImage)`
@@ -160,6 +167,7 @@ const Reward = ({ item }) => {
   const dispatch = useDispatch()
   const today = makeLocalDateStr(new Date(), 0, 'yyyy-MM-dd')
   const reward = makeReward(item)
+  const todayOnly = reward.end_date === today
   const bgStyle = reward.imageUrl
     ? { backgroundImage: `url(${reward.imageUrl}` }
     : null
@@ -170,6 +178,9 @@ const Reward = ({ item }) => {
 
   return (
     <RewardView>
+      <RewardTag>
+        {todayOnly && <Tag text="Today only!" icon={null} bgColor="alert" />}
+      </RewardTag>
       <RewardImage style={bgStyle}>&nbsp;</RewardImage>
       <RewardDetails>
         <div>
@@ -189,18 +200,7 @@ const Reward = ({ item }) => {
           </RewardContent>
           <RewardExpiration>
             {reward.end_date === today ? (
-              <Text
-                color="alert"
-                size="xSmall"
-                bold={true}
-                as="p"
-                style={{
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.03em',
-                }}
-              >
-                Today only!
-              </Text>
+              <p>Valid today only</p>
             ) : reward.end_date ? (
               <p>Use by {reward.expiration}</p>
             ) : (

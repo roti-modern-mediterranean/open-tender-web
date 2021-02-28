@@ -63,7 +63,7 @@ const AccountTabs = () => {
   const { pathname } = useLocation()
   const theme = useSelector(selectTheme)
   const brand = useSelector(selectBrand)
-  const { has_rewards, has_thanx, has_levelup, has_deals = true } = brand
+  const { has_rewards, has_thanx, has_levelup, has_deals } = brand
   const hasRewards = has_rewards || has_thanx || has_levelup
   let removed = []
   if (!hasRewards) removed.push('/rewards')

@@ -86,9 +86,7 @@ const AccountLoyalty = styled('div')`
 const Account = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { title: siteTitle, has_thanx, has_deals = true } = useSelector(
-    selectBrand
-  )
+  const { title: siteTitle, has_thanx, has_deals } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
   const loyalty = useSelector(selectCustomerRewards)

@@ -8,7 +8,7 @@ import { selectBrand } from '../slices'
 
 const Deals = () => {
   const dispatch = useDispatch()
-  const { has_deals = true } = useSelector(selectBrand)
+  const { has_deals } = useSelector(selectBrand)
   const { entities: deals, error } = useSelector(selectDeals)
   const items = deals.map((i) => ({ ...i, key: i.discount_id }))
 

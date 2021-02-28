@@ -75,6 +75,8 @@ const Confirmation = () => {
         <HeaderDefault
           title={isBrowser ? null : 'Confirmation'}
           isLogo={false}
+          bgColor="secondary"
+          borderColor="secondary"
         />
         <Main bgColor="secondary">
           <Container>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 
-import { selectDisplaySettings } from '../../../slices'
+import { selectBrand, selectDisplaySettings } from '../../../slices'
 import { RevenueCenter, RevenueCenterChild, NavSticky } from '../..'
 import { MenuContext } from './Menu'
 import MenuRevenueCenters from './MenuRevenueCenters'
@@ -12,6 +12,7 @@ import MenuError from './MenuError'
 import MenuHero from './MenuHero'
 import styled from '@emotion/styled'
 import { AppContext } from '../../../App'
+import MenuDeals from './MenuDeals'
 
 const MenuView = styled('div')`
   position: relative;
@@ -32,6 +33,7 @@ const MenuContent = () => {
     menuHeroChild,
     menuHeroChildMobile,
   } = useSelector(selectDisplaySettings)
+  const { has_deals } = useSelector(selectBrand)
   const showHero =
     menuHero === undefined ? true : isMobile ? menuHeroMobile : menuHero
   const showHeroChild =
@@ -112,6 +114,7 @@ const MenuContent = () => {
                   revenueCenter={selected}
                   change={change}
                 />
+                {has_deals && <MenuDeals />}
                 <MenuCategories categories={visible} />
               </>
             )}
