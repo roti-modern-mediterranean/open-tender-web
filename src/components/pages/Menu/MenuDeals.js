@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { makeValidDeals } from '@open-tender/js'
 import { fetchDeals, selectDeals, selectOrder } from '@open-tender/redux'
-import { Box } from '@open-tender/components'
+import { Box, Preface } from '@open-tender/components'
 
 import { Container, Reward } from '../..'
 
@@ -14,6 +14,11 @@ const MenuDealsView = styled(Box)`
   margin: 6rem ${(props) => props.theme.layout.padding} 0;
   padding: 0rem 2rem 1rem;
   background-color: ${(props) => props.theme.bgColors.secondary};
+  // border-color: ${(props) => props.theme.bgColors.success};
+  // background: linear-gradient(
+  //   ${(props) => props.theme.bgColors.success},
+  //   ${(props) => props.theme.colors.success}
+  // );
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: ${(props) => props.theme.layout.paddingMobile};
     margin-bottom: 0;
@@ -29,13 +34,18 @@ const MenuDealsHeader = styled('div')`
   }
 
   h2 {
+    font-weight: ${(props) => props.theme.boldWeight};
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h3};
+      font-size: ${(props) => props.theme.fonts.sizes.h5};
+    }
   }
 
   p {
-    margin: 1rem 0 0;
+    margin: 0.5rem 0 0;
     line-height: ${(props) => props.theme.lineHeight};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
   }
 `
 
@@ -52,21 +62,6 @@ const MenuDealsItems = styled('div')`
 const MenuDeal = styled('div')`
   width: 34rem;
   padding: 1rem;
-
-  // @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
-  //   width: 25%;
-  // }
-
-  // @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-  //   width: 33.33333%;
-  // }
-
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   width: 33.33333%;
-  //   padding: ${(props) => props.theme.layout.paddingMobile};
-  //   padding-bottom: 0;
-  //   padding-left: 0;
-  // }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
@@ -93,7 +88,13 @@ const MenuDeals = () => {
     <MenuDealsView>
       <MenuDealsHeader>
         <Container>
-          <h2>Today's Deals</h2>
+          <Preface as="h2" size="h4" color="primary">
+            Today's Deals
+          </Preface>
+          <p>
+            To redeem these deals, add the relevant items to your cart and then
+            apply the activated deals on the Checkout page.
+          </p>
         </Container>
       </MenuDealsHeader>
       <MenuDealsItems>

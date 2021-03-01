@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { BgImage, Box, ButtonLink, Text } from '@open-tender/components'
+import { BgImage, Box, ButtonLink } from '@open-tender/components'
 import { makeLocalDateStr, formatDateStr } from '@open-tender/js'
 
 import { openModal } from '../slices'
@@ -20,8 +20,12 @@ const RewardView = styled(Box)`
 
 const RewardTag = styled('div')`
   position: absolute;
-  top: -1.1rem;
-  right: 1.5rem;
+  top: -0.9rem;
+  right: 1rem;
+
+  & > span {
+    padding: 0.3rem 0.7rem 0.4rem;
+  }
 `
 
 const RewardImage = styled(BgImage)`

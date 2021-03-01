@@ -91,6 +91,10 @@ const Reward = ({ reward }) => {
             ) : imageUrl ? (
               <RewardImage src={imageUrl} alt={title} />
             ) : null}
+            <p>
+              To redeem online, add the relevant items to your cart and apply
+              this reward on the Checkout page
+            </p>
             {hasQRCode && !qrCodeUrl && (
               <p>
                 <ButtonStyled color="cart" onClick={scan}>
@@ -98,10 +102,6 @@ const Reward = ({ reward }) => {
                 </ButtonStyled>
               </p>
             )}
-            <p>
-              To redeem online, add the relevant items to your cart and apply
-              this reward on the Checkout page
-            </p>
           </RewardContent>
           <div>
             <ButtonStyled onClick={() => dispatch(closeModal())}>
