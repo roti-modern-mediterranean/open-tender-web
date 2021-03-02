@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
-import { ButtonStyled, Heading, Text } from '@open-tender/components'
+import { selectCustomer } from '@open-tender/redux'
+import {
+  ButtonLink,
+  ButtonStyled,
+  Heading,
+  Text,
+  Message,
+} from '@open-tender/components'
 
-import { closeModal } from '../../../slices'
+import { closeModal, openModal, selectAPI } from '../../../slices'
 import { ModalContent, ModalView, QRCode } from '../..'
 import RewardImage from './RewardImage'
 
@@ -48,14 +55,51 @@ const RewardQRCodeView = styled('div')`
   margin: 0 auto;
 `
 
+const errors = {
+  default: 'Failed to retrieve QR Code. Please try again or contact support.',
+  account: 'Account required. Please login and try again',
+  verified:
+    'Verfied account required. Please clink the link in the email that was just sent to you, and then try again.',
+}
+
 const Reward = ({ reward }) => {
   const dispatch = useDispatch()
-  const { title, description, imageUrl, expiration, service_type } = reward
   const [qrCodeUrl, setQRCodeUrl] = useState(null)
+  const [fetching, setFetching] = useState(false)
+  const [error, setError] = useState(null)
+  const { title, description, imageUrl, expiration, service_type } = reward
+  const api = useSelector(selectAPI)
+  const { profile } = useSelector(selectCustomer)
+  const { customer_id, is_verified } = profile || {}
   const hasQRCode = !service_type || service_type === 'WALKIN'
 
-  const scan = () => {
-    console.log('retrieve QR code')
+  const scan = async () => {
+    setFetching(true)
+    try {
+      const { qr_code_url } = await api.getDiscountQRCode(
+        reward.discount_id,
+        customer_id
+      )
+      setQRCodeUrl(qr_code_url)
+    } catch (err) {
+      if (!err.code) {
+        setError(errors.default)
+      } else if (err.code === 'ACCOUNT_REQUIRED') {
+        setError(errors.account)
+      } else if (err.code === 'VERIFIED_ACCOUNT_REQUIRED') {
+        setError(errors.verified)
+      } else {
+        setError(err.detail)
+      }
+    }
+    setFetching(false)
+  }
+
+  const signUp = () => {
+    dispatch(closeModal())
+    setTimeout(() => {
+      dispatch(openModal({ type: 'signUp' }))
+    }, 250)
   }
 
   return (
@@ -79,6 +123,23 @@ const Reward = ({ reward }) => {
                 Cannot be used with any other discounts
               </Text>
             )}
+            {reward.auth_type === 'ACCOUNT' && !customer_id && (
+              <>
+                <Text color="alert" size="small" as="p">
+                  Account required to redeem this discount.
+                </Text>
+                <p>
+                  <ButtonLink onClick={signUp}>
+                    Click here to sign up.
+                  </ButtonLink>
+                </p>
+              </>
+            )}
+            {reward.auth_type === 'VERIFIED' && !is_verified && (
+              <Text color="alert" size="small" as="p">
+                Verified account required to redeem this discount.
+              </Text>
+            )}
           </RewardHeader>
           <RewardContent>
             {qrCodeUrl ? (
@@ -96,11 +157,18 @@ const Reward = ({ reward }) => {
               this reward on the Checkout page
             </p>
             {hasQRCode && !qrCodeUrl && (
-              <p>
-                <ButtonStyled color="cart" onClick={scan}>
-                  Scan In-store
-                </ButtonStyled>
-              </p>
+              <>
+                {error && (
+                  <Message size="small" color="error">
+                    {error}
+                  </Message>
+                )}
+                <p>
+                  <ButtonStyled color="cart" onClick={scan} disabled={fetching}>
+                    {fetching ? 'Retrieving QR Code' : 'Scan In-store'}
+                  </ButtonStyled>
+                </p>
+              </>
             )}
           </RewardContent>
           <div>
