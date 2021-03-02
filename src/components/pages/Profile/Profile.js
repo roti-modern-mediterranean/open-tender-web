@@ -6,8 +6,9 @@ import {
   selectCustomer,
   updateCustomer,
   resetLoginError,
+  sendCustomerVerificationEmail,
 } from '@open-tender/redux'
-import { ProfileForm } from '@open-tender/components'
+import { ButtonLink, ProfileForm } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
 import { maybeRefreshVersion } from '../../../app/version'
@@ -25,11 +26,25 @@ import {
   PageTitle,
 } from '../..'
 import AccountTabs from '../Account/AccountTabs'
+import styled from '@emotion/styled'
+
+const VerifyAccount = styled('div')`
+  margin: 0 0 ${(props) => props.theme.layout.padding};
+
+  p {
+    color: ${(props) => props.theme.colors.primary};
+    line-height: ${(props) => props.theme.lineHeight};
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
+  }
+`
 
 const AccountProfile = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const account = useSelector(selectAccountConfig)
   const { auth, profile, loading, error } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
@@ -54,6 +69,11 @@ const AccountProfile = () => {
     return () => dispatch(resetLoginError())
   }, [auth, dispatch, history])
 
+  const verifyAccount = async () => {
+    const linkUrl = `${window.location.origin}/verify`
+    dispatch(sendCustomerVerificationEmail(linkUrl))
+  }
+
   return (
     <>
       <Helmet>
@@ -75,15 +95,29 @@ const AccountProfile = () => {
             <PageTitle {...account.profile} />
             <PageContent>
               {profile ? (
-                <FormWrapper>
-                  <ProfileForm
-                    profile={profile}
-                    loading={loading}
-                    error={error}
-                    update={update}
-                    optIns={optIns}
-                  />
-                </FormWrapper>
+                <>
+                  {has_deals && !profile.is_verified && (
+                    <VerifyAccount>
+                      <p>
+                        Your account has not yet been verified, which gives you
+                        access to certain deals and rewards that are made
+                        available only to verified accounts.{' '}
+                        <ButtonLink onClick={verifyAccount}>
+                          Click here to verify your account.
+                        </ButtonLink>
+                      </p>
+                    </VerifyAccount>
+                  )}
+                  <FormWrapper>
+                    <ProfileForm
+                      profile={profile}
+                      loading={loading}
+                      error={error}
+                      update={update}
+                      optIns={optIns}
+                    />
+                  </FormWrapper>
+                </>
               ) : isLoading ? (
                 <Loading text="Retrieving your profile & preferences..." />
               ) : errMsg ? (

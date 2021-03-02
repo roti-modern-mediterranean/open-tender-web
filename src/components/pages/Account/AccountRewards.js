@@ -5,7 +5,7 @@ import { ItemsScrollable, Reward, Section, SectionHeader } from '../..'
 
 const AccountRewards = ({ rewards }) => {
   if (!rewards.length) return null
-  rewards = rewards.map((i) => ({ ...i, key: i.id }))
+  rewards = rewards.map((i) => ({ ...i, key: i.discount_id }))
   const title =
     rewards.length > 1
       ? `You have ${rewards.length} rewards!`

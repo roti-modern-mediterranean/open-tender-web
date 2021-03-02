@@ -46,10 +46,16 @@ const ProgressBar = ({ progress, points = [] }) => {
         <ProgressBarFill />
       </div>
       {points.map((point) => (
-        <ProgressPoint style={{ left: `${point.percentage.toFixed(5)}%` }} />
+        <ProgressPoint
+          key={point.percentage}
+          style={{ left: `${point.percentage.toFixed(5)}%` }}
+        />
       ))}
       {points.map((point) => (
-        <ProgressAmount style={{ left: `${point.percentage.toFixed(5)}%` }}>
+        <ProgressAmount
+          key={point.percentage}
+          style={{ left: `${point.percentage.toFixed(5)}%` }}
+        >
           {point.value}
         </ProgressAmount>
       ))}
