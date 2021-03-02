@@ -24,7 +24,7 @@ const RewardTag = styled('div')`
   right: 1rem;
 
   & > span {
-    padding: 0.3rem 0.7rem 0.4rem;
+    padding: 0.3rem 1rem 0.4rem;
   }
 `
 

@@ -3,7 +3,12 @@ import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { makeValidDeals } from '@open-tender/js'
-import { fetchDeals, selectDeals, selectOrder } from '@open-tender/redux'
+import {
+  fetchDeals,
+  selectDeals,
+  selectOrder,
+  selectCustomer,
+} from '@open-tender/redux'
 import { Box, Preface } from '@open-tender/components'
 
 import { Container, Reward } from '../..'
@@ -72,6 +77,8 @@ const MenuDeal = styled('div')`
 const MenuDeals = () => {
   const dispatch = useDispatch()
   const { entities, error } = useSelector(selectDeals)
+  const { profile } = useSelector(selectCustomer)
+  const { customer_id } = profile || {}
   const order = useSelector(selectOrder)
   const deals = useMemo(() => makeValidDeals(entities, order), [
     entities,
@@ -80,7 +87,7 @@ const MenuDeals = () => {
 
   useEffect(() => {
     dispatch(fetchDeals())
-  }, [dispatch])
+  }, [dispatch, customer_id])
 
   // const deals = has_deals ? makeValidDeals(entities, order) : []
   if (!deals || !deals.length || error) return null

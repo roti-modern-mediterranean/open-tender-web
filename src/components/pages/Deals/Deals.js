@@ -50,7 +50,8 @@ const Deals = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const config = { ...accountConfig, ...defaultConfig }
   const { background } = config
-  const { auth } = useSelector(selectCustomer)
+  const { auth, profile } = useSelector(selectCustomer)
+  const { customer_id } = profile || {}
   const { windowRef } = useContext(AppContext)
   const { entities: deals, loading, error } = useSelector(selectDeals)
   const hasDeals = deals.length > 0
@@ -66,7 +67,7 @@ const Deals = () => {
 
   useEffect(() => {
     dispatch(fetchDeals())
-  }, [dispatch])
+  }, [dispatch, customer_id])
 
   return (
     <>
@@ -101,7 +102,7 @@ const Deals = () => {
               ) : hasDeals ? (
                 <DealsView>
                   {deals.map((deal) => (
-                    <Deal key={deal.id}>
+                    <Deal key={deal.discount_id}>
                       <Reward item={deal} />
                     </Deal>
                   ))}
