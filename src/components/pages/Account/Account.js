@@ -95,7 +95,7 @@ const Account = () => {
   const rewardsLoading = useSelector(selectCustomerRewardsLoading)
   // const hasRewards = rewards && !rewardsLoading
   const { background, mobile, title, subtitle } = accountConfig
-  const { auth, profile } = useSelector(selectCustomer)
+  const { auth, profile, error } = useSelector(selectCustomer)
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
   const token = auth ? auth.access_token : null
   const { windowRef } = useContext(AppContext)
@@ -113,6 +113,14 @@ const Account = () => {
     dispatch(fetchCustomerCreditCards(true))
     dispatch(fetchCustomerRewards())
   }, [token, dispatch, history, has_thanx])
+
+  useEffect(() => {
+    if (error) {
+      dispatch(logoutCustomer())
+      dispatch(addMessage(error))
+      return history.push('/')
+    }
+  }, [error, dispatch, history])
 
   useEffect(() => {
     if (

@@ -18,6 +18,7 @@ const PageButtons = styled('div')`
     margin: 0 1rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       display: block;
+      max-width: 50%;
       flex: 1 1 50%;
       padding: 1.1rem 1rem;
       margin: 0 0.5rem;

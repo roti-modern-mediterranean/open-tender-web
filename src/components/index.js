@@ -69,6 +69,7 @@ import Sidebar from './Sidebar'
 import SkipLink from './SkipLink'
 import Slider from './Slider'
 import Tag from './Tag'
+import VerifyAccount from './VerifyAccount'
 
 export {
   Alerts,
@@ -146,4 +147,5 @@ export {
   SkipLink,
   Slider,
   Tag,
+  VerifyAccount,
 }

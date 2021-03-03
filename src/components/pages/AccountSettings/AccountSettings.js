@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
-import { ButtonLink } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
@@ -16,10 +16,12 @@ import {
   PageHeader,
   PageHero,
   PageView,
+  VerifyAccount,
 } from '../..'
 import AccountSettingsButtons from './AccountSettingsButtons'
 import { isBrowser } from 'react-device-detect'
 import AccountTabs from '../Account/AccountTabs'
+import iconMap from '../../iconMap'
 
 const AccountSettings = () => {
   const history = useHistory()
@@ -45,7 +47,7 @@ const AccountSettings = () => {
         <title>Account Settings | {siteTitle}</title>
       </Helmet>
       {isBrowser && <Background imageUrl={background} />}
-      <Content maxWidth="76.8rem">
+      <Content maxWidth="76.8rem" hasFooter={false}>
         <HeaderUser
           title={isBrowser ? null : 'Account'}
           maxWidth="76.8rem"
@@ -60,11 +62,22 @@ const AccountSettings = () => {
               title="Account"
               subtitle="Manage saved credit cards, addresses, etc."
             >
-              <p>
-                <ButtonLink onClick={() => dispatch(logoutCustomer())}>
+              <div style={{ margin: '1.5rem 0 0' }}>
+                <p>
+                  {/* <ButtonLink onClick={() => dispatch(logoutCustomer())}>
                   Log out of your account
-                </ButtonLink>
-              </p>
+                </ButtonLink> */}
+                  <ButtonStyled
+                    icon={iconMap.Logout}
+                    onClick={() => dispatch(logoutCustomer())}
+                    color="secondary"
+                    size="small"
+                  >
+                    Log out of your account
+                  </ButtonStyled>
+                </p>
+                <VerifyAccount style={{ margin: '2rem 0 0' }} />
+              </div>
             </PageHeader>
             <AccountSettingsButtons />
           </PageView>
