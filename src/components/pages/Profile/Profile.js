@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
+  fetchCustomer,
   updateCustomer,
   resetLoginError,
   sendCustomerVerificationEmail,
@@ -46,7 +47,8 @@ const AccountProfile = () => {
   const history = useHistory()
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const account = useSelector(selectAccountConfig)
-  const { auth, profile, loading, error } = useSelector(selectCustomer)
+  const { profile, loading, error } = useSelector(selectCustomer)
+  const { customer_id } = profile || {}
   const isLoading = loading === 'pending'
   const errMsg = error ? error.message || null : null
   const update = useCallback((data) => dispatch(updateCustomer(data)), [
@@ -65,9 +67,10 @@ const AccountProfile = () => {
   }, [error, windowRef])
 
   useEffect(() => {
-    if (!auth) return history.push('/')
+    if (!customer_id) return history.push('/')
+    dispatch(fetchCustomer())
     return () => dispatch(resetLoginError())
-  }, [auth, dispatch, history])
+  }, [customer_id, dispatch, history])
 
   const verifyAccount = async () => {
     const linkUrl = `${window.location.origin}/verify`

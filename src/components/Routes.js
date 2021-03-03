@@ -36,6 +36,7 @@ import {
   Rewards,
   SignUp,
   Thanx,
+  VerifyAccount,
 } from './pages'
 
 // <TransitionGroup component={null}>
@@ -75,6 +76,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/reset-password">
         <ResetPassword />
+      </Route>
+      <Route exact path="/verify">
+        <VerifyAccount />
       </Route>
       <Route exact path="/catering">
         <Catering />

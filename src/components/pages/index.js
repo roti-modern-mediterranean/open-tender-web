@@ -36,6 +36,7 @@ import RevenueCenter from './RevenueCenter'
 import Rewards from './Rewards'
 import SignUp from './SignUp'
 import Thanx from './Thanx'
+import VerifyAccount from './VerifyAccount'
 
 export {
   Accessibility,
@@ -76,4 +77,5 @@ export {
   Rewards,
   SignUp,
   Thanx,
+  VerifyAccount,
 }
