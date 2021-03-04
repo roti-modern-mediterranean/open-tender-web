@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
+import { isBrowser, deviceType } from 'react-device-detect'
 import {
   User,
   ShoppingBag,
@@ -32,6 +32,7 @@ import {
   resetCompletedOrder,
   setConfirmationOrder,
   logoutCustomer,
+  setDeviceType,
 } from '@open-tender/redux'
 import { CheckoutForm, FormError } from '@open-tender/components'
 
@@ -51,6 +52,19 @@ import {
 import CheckoutHeader from './CheckoutHeader'
 import CheckoutTotal from './CheckoutTotal'
 import CheckoutCancelEdit from './CheckoutCancelEdit'
+
+const makeDeviceType = (deviceType) => {
+  switch (deviceType) {
+    case 'tablet':
+      return 'TABLET'
+    case 'mobile':
+      return 'MOBILE'
+    case 'browser':
+      return 'DESKTOP'
+    default:
+      return 'DESKTOP'
+  }
+}
 
 const Checkout = () => {
   const formRef = useRef()
@@ -91,6 +105,7 @@ const Checkout = () => {
     google_pay: <Smartphone size={null} />,
   }
   const { windowRef } = useContext(AppContext)
+  const deviceTypeName = makeDeviceType(deviceType)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -102,11 +117,12 @@ const Checkout = () => {
   }, [windowRef, formError, submitting])
 
   useEffect(() => {
+    dispatch(setDeviceType(deviceTypeName))
     return () => {
       dispatch(resetErrors())
       dispatch(resetTip())
     }
-  }, [dispatch])
+  }, [dispatch, deviceTypeName])
 
   useEffect(() => {
     if (!revenueCenterId || !serviceType) {
