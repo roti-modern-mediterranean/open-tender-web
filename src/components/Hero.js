@@ -34,7 +34,7 @@ const HeroOverlay = styled('div')`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: ${(props) => props.color || 'rgba(0, 0, 0, 0.3)'};
 `
 
 const HeroChildren = styled('div')`
@@ -42,13 +42,22 @@ const HeroChildren = styled('div')`
   z-index: 2;
 `
 
+const makeOverlayColor = (color, opacity) => {
+  if (!color || !opacity) return null
+  const r = parseInt(color.slice(0, 2), 16)
+  const g = parseInt(color.slice(2, 4), 16)
+  const b = parseInt(color.slice(4, 6), 16)
+  const o = parseFloat(opacity / 100.0).toFixed(2)
+  return `rgba(${r}, ${g}, ${b}, ${o})`
+}
+
 const makeAlignment = (alignment) => {
   switch (alignment) {
-    case 'top':
-    case 'left':
+    case 'TOP':
+    case 'LEFT':
       return 'flex-start'
-    case 'bottom':
-    case 'right':
+    case 'BOTTOM':
+    case 'RIGHT':
       return 'flex-end'
     default:
       return 'center'
@@ -57,15 +66,18 @@ const makeAlignment = (alignment) => {
 
 const Hero = ({
   imageUrl,
-  vertical = 'bottom',
-  horizontal = 'center',
-  overlay = false,
+  vertical = 'BOTTOM',
+  horizontal = 'CENTER',
+  show_overlay = false,
+  overlay_color,
+  overlay_opacity,
   style = {},
   children,
 }) => {
   const bgStyle = imageUrl
     ? { ...style, backgroundImage: `url(${imageUrl}` }
     : null
+  const overlayColor = makeOverlayColor(overlay_color, overlay_opacity)
   const justifyContent = makeAlignment(horizontal)
   const alignItems = makeAlignment(vertical)
   return (
@@ -75,7 +87,7 @@ const Hero = ({
       textAlign={horizontal}
       style={bgStyle}
     >
-      {overlay && <HeroOverlay />}
+      {show_overlay && <HeroOverlay color={overlayColor} />}
       <HeroChildren>{children}</HeroChildren>
     </HeroView>
   )

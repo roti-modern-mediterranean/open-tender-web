@@ -24,6 +24,10 @@ const MenuDealsView = styled(Box)`
   //   ${(props) => props.theme.bgColors.success},
   //   ${(props) => props.theme.colors.success}
   // );
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: ${(props) => props.theme.layout.paddingMobile};
+    margin-bottom: 0;
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: ${(props) => props.theme.layout.paddingMobile};
     margin-bottom: 0;
@@ -59,7 +63,7 @@ const MenuDealsItems = styled('div')`
   flex-wrap: wrap;
   justify-content: center;
   margin: 0 -1rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 0 -0.5rem;
   }
 `

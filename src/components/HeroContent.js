@@ -32,11 +32,13 @@ const HeroContentView = styled('div')`
   }
 `
 
-const HeroContent = ({ title, subtitle, color }) => {
+const HeroContent = ({ title, subtitle, text_color }) => {
   return (
     <HeroContentView>
-      <Heading as="p">{title}</Heading>
-      <p>{subtitle}</p>
+      <Heading as="p" style={{ color: `#${text_color}` }}>
+        {title}
+      </Heading>
+      <p style={{ color: `#${text_color}` }}>{subtitle}</p>
     </HeroContentView>
   )
 }
@@ -45,7 +47,7 @@ HeroContent.displayName = 'HeroContent'
 HeroContent.propTypes = {
   title: propTypes.string,
   subtitle: propTypes.string,
-  color: propTypes.string,
+  text_color: propTypes.string,
 }
 
 export default HeroContent

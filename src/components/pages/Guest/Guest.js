@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
+import { selectAnnouncements, fetchAnnouncements } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
@@ -103,14 +104,18 @@ const Guest = () => {
   const { background, mobile, content, title, subtitle } = home
   const footnote = "Hint: you don't need an account to place an order."
   const hasContent = !!(content && content.length && content[0].length)
-  const slides = makeSlides([])
-  // const slides = null
+  const { entities: announcements } = useSelector(selectAnnouncements)
+  const slides = makeSlides(announcements)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
     dispatch(closeModal())
   }, [windowRef, dispatch])
+
+  useEffect(() => {
+    dispatch(fetchAnnouncements('HOME'))
+  }, [dispatch])
 
   return (
     <>
