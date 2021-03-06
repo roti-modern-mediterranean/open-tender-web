@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectCustomer } from '@open-tender/redux'
 import { isBrowser } from 'react-device-detect'
+import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal } from '../../../slices'
@@ -11,23 +12,20 @@ import {
   Background,
   Content,
   HeaderMobile,
-  Hero,
   Main,
   PageHeader,
   PageHero,
   PageView,
-  Slider,
 } from '../..'
 import OrderTypes from './OrderTypes'
-import { makeSlides } from '../../HeroSlides'
 
 const OrderType = () => {
   const dispatch = useDispatch()
-  const { home } = useSelector(selectConfig)
+  const announcements = useSelector(selectAnnouncements)
   const { auth } = useSelector(selectCustomer)
-  const { background, mobile } = home
+  const { orderType } = useSelector(selectConfig)
+  const { background, mobile, title, subtitle, showHero } = orderType
   const { windowRef } = useContext(AppContext)
-  const slides = makeSlides([])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -35,13 +33,13 @@ const OrderType = () => {
     dispatch(closeModal())
   }, [windowRef, dispatch])
 
+  useEffect(() => {
+    dispatch(fetchAnnouncementPage('ORDER_TYPE'))
+  }, [dispatch])
+
   return (
     <>
-      {isBrowser && (
-        <Background imageUrl={slides ? null : background}>
-          {slides && <Slider slides={slides} />}
-        </Background>
-      )}
+      <Background announcements={announcements} imageUrl={background} />
       <Content maxWidth="76.8rem">
         <HeaderMobile
           bgColor="primary"
@@ -54,18 +52,13 @@ const OrderType = () => {
         <Main>
           <PageView>
             {!isBrowser && (
-              <PageHero>
-                {slides ? (
-                  <Slider slides={slides} />
-                ) : (
-                  <Hero imageUrl={mobile}>&nbsp;</Hero>
-                )}
-              </PageHero>
+              <PageHero
+                announcements={announcements}
+                imageUrl={mobile}
+                showHero={showHero}
+              />
             )}
-            <PageHeader
-              title="Select an order type"
-              subtitle="Please choose an order type to get started"
-            />
+            <PageHeader title={title} subtitle={subtitle} />
             <OrderTypes />
           </PageView>
         </Main>

@@ -1,8 +1,13 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { isMobileOnly } from 'react-device-detect'
+import { isBrowser } from 'react-device-detect'
 import { ClipLoader } from 'react-spinners'
 import styled from '@emotion/styled'
+import { useImage } from '@open-tender/components'
+import { useSelector } from 'react-redux'
+import { selectTheme } from '../slices'
+import { makeSlides } from './HeroSlides'
+import { Slider } from '.'
 
 const BackgroundContainer = styled('div')`
   position: fixed;
@@ -45,17 +50,31 @@ const BackgroundLoading = styled('div')`
   align-items: center;
 `
 
-const Background = ({ imageUrl, children }) => {
+const Background = ({ imageUrl, announcements }) => {
+  const { hasLoaded, hasError } = useImage(imageUrl)
+  const theme = useSelector(selectTheme)
+  if (!isBrowser) return null
+  if (!imageUrl && !announcements) return null
+
+  const { settings, entities, loading, error } = announcements || {}
+  const slides = makeSlides(entities)
+  const isLoading = loading === 'pending'
+  const hasAnnouncements = entities && entities.length > 0
+  const showBackground = imageUrl && !isLoading && (!hasAnnouncements || error)
+  const backgroundLoading = showBackground && !hasLoaded && !hasError
+  const loaderColor = theme.bgColors.primary
   const bgStyle =
-    imageUrl && !isMobileOnly ? { backgroundImage: `url(${imageUrl}` } : null
+    showBackground && imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
+
   return (
     <BackgroundContainer style={bgStyle}>
-      {imageUrl && !bgStyle && (
+      {slides ? (
+        <Slider settings={settings} slides={slides} />
+      ) : backgroundLoading ? (
         <BackgroundLoading>
-          <ClipLoader size={30} loading={true} />
+          <ClipLoader size={30} loading={true} color={`${loaderColor}`} />
         </BackgroundLoading>
-      )}
-      {children}
+      ) : null}
     </BackgroundContainer>
   )
 }
@@ -63,10 +82,11 @@ const Background = ({ imageUrl, children }) => {
 Background.displayName = 'Background'
 Background.propTypes = {
   imageUrl: propTypes.string,
-  children: propTypes.oneOfType([
-    propTypes.arrayOf(propTypes.node),
-    propTypes.node,
-  ]),
+  announcements: propTypes.object,
+  // children: propTypes.oneOfType([
+  //   propTypes.arrayOf(propTypes.node),
+  //   propTypes.node,
+  // ]),
 }
 
 export default Background

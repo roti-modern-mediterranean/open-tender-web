@@ -15,6 +15,8 @@ import {
   logoutCustomer,
   addMessage,
   selectCustomerRewardsLoading,
+  selectAnnouncements,
+  fetchAnnouncementPage,
 } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
@@ -27,13 +29,11 @@ import {
   Deals,
   HeaderLogo,
   HeaderMobile,
-  Hero,
   LoyaltyProgram,
   Main,
   PageHeader,
   PageHero,
   PageView,
-  Slider,
 } from '../..'
 import { Logout } from '../../buttons'
 import AccountActions from './AccountActions'
@@ -41,7 +41,6 @@ import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
 import AccountProgress from './AccountProgress'
 import AccountRewards from './AccountRewards'
-import { makeSlides } from '../../HeroSlides'
 import AccountOrders from './AccountOrders'
 import AccountFavorites from './AccountFavorites'
 import AccountGiftCards from './AccountGiftCards'
@@ -86,6 +85,7 @@ const AccountLoyalty = styled('div')`
 const Account = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const announcements = useSelector(selectAnnouncements)
   const { title: siteTitle, has_thanx, has_deals } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
@@ -93,13 +93,11 @@ const Account = () => {
   let { progress, rewards } = loyalty || {}
   rewards = []
   const rewardsLoading = useSelector(selectCustomerRewardsLoading)
-  // const hasRewards = rewards && !rewardsLoading
-  const { background, mobile, title, subtitle } = accountConfig
+  const { background, mobile, title, subtitle, showHero } = accountConfig
   const { auth, profile, error } = useSelector(selectCustomer)
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
   const token = auth ? auth.access_token : null
   const { windowRef } = useContext(AppContext)
-  const slides = makeSlides([])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -109,18 +107,20 @@ const Account = () => {
 
   useEffect(() => {
     if (!token) return history.push('/')
+    dispatch(fetchAnnouncementPage('ACCOUNT'))
     dispatch(fetchCustomer())
     dispatch(fetchCustomerCreditCards(true))
     dispatch(fetchCustomerRewards())
   }, [token, dispatch, history, has_thanx])
 
-  useEffect(() => {
-    if (error) {
-      dispatch(logoutCustomer())
-      dispatch(addMessage(error))
-      return history.push('/')
-    }
-  }, [error, dispatch, history])
+  // useEffect(() => {
+  //   if (error) {
+  //     console.log(error)
+  //     dispatch(logoutCustomer())
+  //     dispatch(addMessage(error))
+  //     return history.push('/')
+  //   }
+  // }, [error, dispatch, history])
 
   useEffect(() => {
     if (
@@ -137,11 +137,7 @@ const Account = () => {
       <Helmet>
         <title>Welcome Back | {siteTitle}</title>
       </Helmet>
-      {isBrowser && (
-        <Background imageUrl={slides ? null : background}>
-          {slides && <Slider slides={slides} />}
-        </Background>
-      )}
+      <Background announcements={announcements} imageUrl={background} />
       <Content maxWidth="76.8rem">
         <HeaderMobile
           bgColor="primary"
@@ -163,13 +159,11 @@ const Account = () => {
           {!isBrowser && <AccountTabs />}
           <PageView>
             {!isBrowser && (
-              <PageHero>
-                {slides ? (
-                  <Slider slides={slides} />
-                ) : (
-                  <Hero imageUrl={mobile}>&nbsp;</Hero>
-                )}
-              </PageHero>
+              <PageHero
+                announcements={announcements}
+                imageUrl={mobile}
+                showHero={showHero}
+              />
             )}
             <AccountContent isMobile={!isBrowser}>
               <AccountHeader>

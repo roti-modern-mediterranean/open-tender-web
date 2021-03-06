@@ -81,11 +81,36 @@ const SliderView = styled('div')`
   }
 `
 
-const Slider = ({ slides, loop = false }) => {
+const defaultSettings = {
+  autoplay: false,
+  transition: 1000,
+  transition_mobile: 500,
+  duration: 3000,
+  duration_mobile: 2500,
+  show_arrows: true,
+  show_arrows_mobile: false,
+  show_dots: true,
+  show_dots_mobile: true,
+}
+
+const Slider = ({ settings = {}, slides }) => {
   const wrapper = useRef()
   const timer = useRef()
-  const duration = isBrowser ? 1000 : 500
-  const interval = isBrowser ? 3000 : 3000
+  const {
+    autoplay,
+    transition,
+    transition_mobile,
+    duration,
+    duration_mobile,
+    show_arrows,
+    show_arrows_mobile,
+    show_dots,
+    show_dots_mobile,
+  } = settings || defaultSettings
+  const transitionSpeed = isBrowser ? transition : transition_mobile
+  const interval = isBrowser ? duration : duration_mobile
+  const showArrows = isBrowser ? show_arrows : show_arrows_mobile
+  const showDots = isBrowser ? show_dots : show_dots_mobile
   const size = isBrowser ? '3rem' : '2rem'
   const [currentSlide, setCurrentSlide] = useState(0)
   const [pause, setPause] = useState(false)
@@ -94,8 +119,8 @@ const Slider = ({ slides, loop = false }) => {
     slideChanged(s) {
       setCurrentSlide(s.details().relativeSlide)
     },
-    loop: loop,
-    duration: duration,
+    loop: autoplay,
+    duration: transitionSpeed,
     dragStart: () => {
       setPause(true)
     },
@@ -114,7 +139,7 @@ const Slider = ({ slides, loop = false }) => {
   }, [wrapper])
 
   React.useEffect(() => {
-    if (loop) {
+    if (autoplay) {
       timer.current = setInterval(() => {
         if (!pause && slider) {
           slider.next()
@@ -124,7 +149,7 @@ const Slider = ({ slides, loop = false }) => {
         clearInterval(timer.current)
       }
     }
-  }, [loop, pause, slider, interval])
+  }, [autoplay, pause, slider, interval])
 
   return (
     <SliderView ref={wrapper}>
@@ -135,23 +160,23 @@ const Slider = ({ slides, loop = false }) => {
           </div>
         ))}
       </div>
-      {slider && isBrowser && (
+      {slider && showArrows && (
         <>
           <Arrow
             direction="left"
             size={size}
             onClick={(e) => e.stopPropagation() || slider.prev()}
-            disabled={!loop && currentSlide === 0}
+            disabled={!autoplay && currentSlide === 0}
           />
           <Arrow
             direction="right"
             size={size}
             onClick={(e) => e.stopPropagation() || slider.next()}
-            disabled={!loop && currentSlide === slider.details().size - 1}
+            disabled={!autoplay && currentSlide === slider.details().size - 1}
           />
         </>
       )}
-      {slider && (
+      {slider && showDots && (
         <Dots>
           {[...Array(slider.details().size).keys()].map((idx) => {
             return (
@@ -172,6 +197,7 @@ const Slider = ({ slides, loop = false }) => {
 
 Slider.displayName = 'Slider'
 Slider.propTypes = {
+  settings: propTypes.object,
   slides: propTypes.array,
 }
 

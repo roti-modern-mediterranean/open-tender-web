@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
-import { selectAnnouncements, fetchAnnouncements } from '@open-tender/redux'
+import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
@@ -14,16 +14,13 @@ import {
   Content,
   HeaderLogo,
   HeaderMobile,
-  Hero,
   Main,
   PageView,
   PageHero,
-  Slider,
   Deals,
   PageHeader,
   Container,
 } from '../..'
-import { makeSlides } from '../../HeroSlides'
 import GuestActions from './GuestActions'
 import { Link } from 'react-router-dom'
 
@@ -98,14 +95,14 @@ const GuestContent = styled('div')`
 const Guest = () => {
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
+  const announcements = useSelector(selectAnnouncements)
   const brand = useSelector(selectBrand)
   const { has_deals } = brand
   const { home } = useSelector(selectConfig)
-  const { background, mobile, content, title, subtitle } = home
+  const { background, mobile, content, title, subtitle, showHero } = home
   const footnote = "Hint: you don't need an account to place an order."
   const hasContent = !!(content && content.length && content[0].length)
-  const { entities: announcements } = useSelector(selectAnnouncements)
-  const slides = makeSlides(announcements)
+  const hasFooter = has_deals || hasContent
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -114,7 +111,7 @@ const Guest = () => {
   }, [windowRef, dispatch])
 
   useEffect(() => {
-    dispatch(fetchAnnouncements('HOME'))
+    dispatch(fetchAnnouncementPage('HOME'))
   }, [dispatch])
 
   return (
@@ -122,11 +119,7 @@ const Guest = () => {
       <Helmet>
         <title>{brand.title}</title>
       </Helmet>
-      {isBrowser && (
-        <Background imageUrl={slides ? null : background}>
-          {slides && <Slider slides={slides} />}
-        </Background>
-      )}
+      <Background announcements={announcements} imageUrl={background} />
       <Content maxWidth="76.8rem">
         <HeaderMobile
           bgColor="primary"
@@ -135,16 +128,14 @@ const Guest = () => {
           left={<HeaderLogo />}
           right={<Account />}
         />
-        <Main bgColor="secondary">
+        <Main bgColor={hasFooter ? 'secondary' : 'primary'}>
           <PageView>
             {!isBrowser && (
-              <PageHero>
-                {slides ? (
-                  <Slider slides={slides} />
-                ) : (
-                  <Hero imageUrl={mobile}>&nbsp;</Hero>
-                )}
-              </PageHero>
+              <PageHero
+                announcements={announcements}
+                imageUrl={mobile}
+                showHero={showHero}
+              />
             )}
             <GuestHeader>
               <PageHeader title={title} subtitle={subtitle} />
@@ -160,16 +151,18 @@ const Guest = () => {
                 </GuestHeaderLinks>
               </Container>
             </GuestHeader>
-            <GuestFooter>
-              {has_deals && <Deals />}
-              {hasContent && (
-                <GuestContent hasDeals={has_deals}>
-                  {content.map((i, index) => (
-                    <p key={index}>{i}</p>
-                  ))}
-                </GuestContent>
-              )}
-            </GuestFooter>
+            {hasFooter && (
+              <GuestFooter>
+                {has_deals && <Deals />}
+                {hasContent && (
+                  <GuestContent hasDeals={has_deals}>
+                    {content.map((i, index) => (
+                      <p key={index}>{i}</p>
+                    ))}
+                  </GuestContent>
+                )}
+              </GuestFooter>
+            )}
           </PageView>
         </Main>
       </Content>
