@@ -1,15 +1,14 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Container } from '.'
 
 const PageHeaderView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
-  padding: 2.5rem 0;
+  padding: 0 0 2.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     text-align: center;
-    padding: 2rem 0;
+    padding: 0 0 2rem;
   }
 
   h1 {
@@ -32,11 +31,9 @@ const PageHeaderView = styled('div')`
 const PageHeader = ({ title, subtitle, style = null, children }) => {
   return (
     <PageHeaderView style={style}>
-      <Container>
-        {title && <h1>{title}</h1>}
-        {subtitle && <p>{subtitle}</p>}
-        {children}
-      </Container>
+      {title && <h1>{title}</h1>}
+      {subtitle && <p>{subtitle}</p>}
+      {children}
     </PageHeaderView>
   )
 }

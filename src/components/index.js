@@ -1,5 +1,7 @@
 import Alerts from './Alerts'
 import Background from './Background'
+import BackgroundImage from './BackgroundImage'
+import BackgroundLoading from './BackgroundLoading'
 import ButtonText from './ButtonText'
 import Card from './Card'
 import CartButton from './CartButton'
@@ -74,6 +76,8 @@ import VerifyAccount from './VerifyAccount'
 export {
   Alerts,
   Background,
+  BackgroundImage,
+  BackgroundLoading,
   ButtonText,
   Card,
   CartButton,

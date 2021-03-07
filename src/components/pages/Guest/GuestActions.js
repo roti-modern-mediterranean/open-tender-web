@@ -29,6 +29,7 @@ const GuestActions = () => {
         icon={iconMap.ShoppingBag}
         onClick={startNewOrder}
         size={buttonSize}
+        // color="cart"
       >
         <ButtonText>Start New Order</ButtonText>
       </ButtonStyled>

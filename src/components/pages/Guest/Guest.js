@@ -23,36 +23,7 @@ import {
 } from '../..'
 import GuestActions from './GuestActions'
 import { Link } from 'react-router-dom'
-
-const GuestHeader = styled('div')`
-  background-color: ${(props) => props.theme.bgColors.primary};
-  padding: 0 0 3rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0.5rem 0 2.5rem;
-  }
-`
-
-const GuestHeaderFootnote = styled('p')`
-  margin: 2rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.125s forwards;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 2rem 0 0;
-    text-align: center;
-  }
-`
-
-const GuestHeaderLinks = styled('p')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.125s forwards;
-  margin: 2.5rem 0 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 1.5rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    text-align: center;
-  }
-`
+import GuestGreeting from './GuestGreeting'
 
 const GuestFooter = styled('div')`
   border-top: 0.1rem solid ${(props) => props.theme.border.color};
@@ -99,8 +70,7 @@ const Guest = () => {
   const brand = useSelector(selectBrand)
   const { has_deals } = brand
   const { home } = useSelector(selectConfig)
-  const { background, mobile, content, title, subtitle, showHero } = home
-  const footnote = "Hint: you don't need an account to place an order."
+  const { background, mobile, content, title, showHero } = home
   const hasContent = !!(content && content.length && content[0].length)
   const hasFooter = has_deals || hasContent
 
@@ -119,38 +89,24 @@ const Guest = () => {
       <Helmet>
         <title>{brand.title}</title>
       </Helmet>
-      <Background announcements={announcements} imageUrl={background} />
-      <Content maxWidth="76.8rem">
+      {/* <Background announcements={announcements} imageUrl={background} /> */}
+      <Content>
         <HeaderMobile
           bgColor="primary"
           borderColor="primary"
-          maxWidth="76.8rem"
+          // maxWidth="76.8rem"
           left={<HeaderLogo />}
           right={<Account />}
         />
         <Main bgColor={hasFooter ? 'secondary' : 'primary'}>
           <PageView>
-            {!isBrowser && (
-              <PageHero
-                announcements={announcements}
-                imageUrl={mobile}
-                showHero={showHero}
-              />
-            )}
-            <GuestHeader>
-              <PageHeader title={title} subtitle={subtitle} />
-              <Container>
-                <GuestActions />
-                {footnote && (
-                  <GuestHeaderFootnote>{footnote}</GuestHeaderFootnote>
-                )}
-                <GuestHeaderLinks>
-                  <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
-                  <Link to="/donations">make a donation</Link> |{' '}
-                  <Link to="/contact">get in touch</Link>
-                </GuestHeaderLinks>
-              </Container>
-            </GuestHeader>
+            <PageHero
+              announcements={announcements}
+              imageUrl={isBrowser ? background : mobile}
+              showHero={showHero}
+            >
+              <GuestGreeting />
+            </PageHero>
             {hasFooter && (
               <GuestFooter>
                 {has_deals && <Deals />}

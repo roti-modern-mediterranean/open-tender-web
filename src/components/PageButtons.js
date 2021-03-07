@@ -26,6 +26,13 @@ const PageButtons = styled('div')`
       line-height: 1.2;
       overflow: hidden;
     }
+
+    &:last-of-type {
+      margin-right: 0;
+      @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+        margin-right: 0.5rem;
+      }
+    }
   }
 `
 
