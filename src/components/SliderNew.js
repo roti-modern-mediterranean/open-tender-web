@@ -119,7 +119,7 @@ const calcAdvance = (preIndex, index, lastIndex) => {
 const calcShift = (idx, preIndex, index, lastIndex, isAdvance) => {
   const prevIndex = index === 0 ? lastIndex : index - 1
   const nextIndex = index === lastIndex ? 0 : index + 1
-  console.log(preIndex, index, isAdvance)
+  // console.log(preIndex, index, isAdvance)
   if (preIndex !== index) {
     if (isAdvance) {
       return idx === index ? 0 : idx === nextIndex ? 100 : 100
@@ -138,16 +138,18 @@ const calcShift = (idx, preIndex, index, lastIndex, isAdvance) => {
 const calcActive = (idx, index, preIndex, lastIndex, isAdvance) => {
   const prevIndex = index === 0 ? lastIndex : index - 1
   const nextIndex = index === lastIndex ? 0 : index + 1
-  if (idx === index) {
-    return true
-  } else if (index !== preIndex) {
-    return false
-  } else if (isAdvance && idx === prevIndex) {
-    return true
-  } else if (!isAdvance && idx === nextIndex) {
-    return true
+  if (preIndex !== index) {
+    return idx === index
   } else {
-    return false
+    if (idx === index) {
+      return true
+    } else if (isAdvance && idx === prevIndex) {
+      return true
+    } else if (!isAdvance && idx === nextIndex) {
+      return true
+    } else {
+      return false
+    }
   }
 }
 
@@ -184,7 +186,6 @@ const SliderNew = ({ settings = {}, slides }) => {
         const idx = index === count - 1 ? 0 : index + 1
         if (!pause) {
           setPreIndex(idx)
-          // setIndex(idx)
         }
       }, interval)
       return () => {
@@ -196,9 +197,14 @@ const SliderNew = ({ settings = {}, slides }) => {
   useEffect(() => {
     if (index !== preIndex) {
       setIsAdvance(calcAdvance(preIndex, index, lastIndex))
-      setIndex(preIndex)
     }
   }, [index, preIndex, lastIndex])
+
+  useEffect(() => {
+    if (index !== preIndex) {
+      setIndex(preIndex)
+    }
+  }, [isAdvance, index, preIndex])
 
   useEffect(() => {
     if (autoplay) {
@@ -216,7 +222,6 @@ const SliderNew = ({ settings = {}, slides }) => {
     evt.target.blur()
     if (idx >= 0 && idx <= count - 1) {
       setPreIndex(idx)
-      // setIndex(idx)
     }
   }
 
