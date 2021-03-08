@@ -15,7 +15,7 @@ const BackgroundLoadingView = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
-  ${(props) => (props.zIndex ? `z-index: props.zIndex;` : null)};
+  z-index: ${(props) => props.zIndex || 1};
 `
 
 const BackgroundLoading = ({ zIndex = null }) => {

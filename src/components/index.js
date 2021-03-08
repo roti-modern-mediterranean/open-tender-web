@@ -1,5 +1,6 @@
 import Alerts from './Alerts'
 import Background from './Background'
+import BackgroundContent from './BackgroundContent'
 import BackgroundImage from './BackgroundImage'
 import BackgroundLoading from './BackgroundLoading'
 import ButtonText from './ButtonText'
@@ -76,6 +77,7 @@ import VerifyAccount from './VerifyAccount'
 export {
   Alerts,
   Background,
+  BackgroundContent,
   BackgroundImage,
   BackgroundLoading,
   ButtonText,
