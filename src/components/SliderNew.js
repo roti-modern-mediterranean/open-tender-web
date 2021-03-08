@@ -102,12 +102,63 @@ const defaultSettings = {
   show_dots_mobile: true,
 }
 
+const calcAdvance = (preIndex, index, lastIndex) => {
+  if (index === lastIndex && preIndex === 0) {
+    return true
+  } else if (preIndex > index) {
+    if (preIndex === lastIndex && index === 0) {
+      return false
+    } else {
+      return true
+    }
+  } else {
+    return false
+  }
+}
+
+const calcShift = (idx, preIndex, index, lastIndex, isAdvance) => {
+  const prevIndex = index === 0 ? lastIndex : index - 1
+  const nextIndex = index === lastIndex ? 0 : index + 1
+  console.log(preIndex, index, isAdvance)
+  if (preIndex !== index) {
+    if (isAdvance) {
+      return idx === index ? 0 : idx === nextIndex ? 100 : 100
+    } else {
+      return idx === index ? 0 : idx === prevIndex ? -100 : 100
+    }
+  } else {
+    if (isAdvance) {
+      return idx === index ? 0 : idx === prevIndex ? -100 : 100
+    } else {
+      return idx === index ? 0 : idx === nextIndex ? 100 : 100
+    }
+  }
+}
+
+const calcActive = (idx, index, preIndex, lastIndex, isAdvance) => {
+  const prevIndex = index === 0 ? lastIndex : index - 1
+  const nextIndex = index === lastIndex ? 0 : index + 1
+  if (idx === index) {
+    return true
+  } else if (index !== preIndex) {
+    return false
+  } else if (isAdvance && idx === prevIndex) {
+    return true
+  } else if (!isAdvance && idx === nextIndex) {
+    return true
+  } else {
+    return false
+  }
+}
+
 const SliderNew = ({ settings = {}, slides }) => {
   const timer = useRef(null)
   const slider = useRef()
   const [pause, setPause] = useState(false)
   const [index, setIndex] = useState(0)
-  const [lastIndex, setLastIndex] = useState(0)
+  const [preIndex, setPreIndex] = useState(0)
+  const [isAdvance, setIsAdvance] = useState(true)
+  // const [lastIndex, setLastIndex] = useState(0)
   const {
     autoplay,
     transition,
@@ -125,21 +176,15 @@ const SliderNew = ({ settings = {}, slides }) => {
   const showDots = isBrowser ? show_dots : show_dots_mobile
   const size = isBrowser ? '3rem' : '2rem'
   const count = slides.length
-  const last = count - 1
-  const prevIndex = index === 0 ? last : index - 1
-  const nextIndex = index === last ? 0 : index + 1
-  const moveLeft =
-    (index > lastIndex && !(index === last && lastIndex === 0)) ||
-    (index === 0 && lastIndex === last)
-  const moveRight = !moveLeft
+  const lastIndex = count - 1
 
   useEffect(() => {
     if (autoplay) {
       timer.current = setInterval(() => {
         const idx = index === count - 1 ? 0 : index + 1
         if (!pause) {
-          setLastIndex(index)
-          setIndex(idx)
+          setPreIndex(idx)
+          // setIndex(idx)
         }
       }, interval)
       return () => {
@@ -147,6 +192,13 @@ const SliderNew = ({ settings = {}, slides }) => {
       }
     }
   }, [index, count, interval, pause, autoplay])
+
+  useEffect(() => {
+    if (index !== preIndex) {
+      setIsAdvance(calcAdvance(preIndex, index, lastIndex))
+      setIndex(preIndex)
+    }
+  }, [index, preIndex, lastIndex])
 
   useEffect(() => {
     if (autoplay) {
@@ -163,26 +215,23 @@ const SliderNew = ({ settings = {}, slides }) => {
     evt.preventDefault()
     evt.target.blur()
     if (idx >= 0 && idx <= count - 1) {
-      setLastIndex(index)
-      setIndex(idx)
+      setPreIndex(idx)
+      // setIndex(idx)
     }
   }
 
   return (
     <SliderView ref={slider}>
       {slides.map((slide, idx) => {
-        const shift = idx === index ? 0 : idx === prevIndex ? -100 : 100
-        const active =
-          idx === index ||
-          (moveLeft && idx === prevIndex) ||
-          (moveRight && idx === nextIndex)
+        const active = calcActive(idx, preIndex, index, lastIndex, isAdvance)
+        const shift = calcShift(idx, preIndex, index, lastIndex, isAdvance)
         return (
           <Slide
             key={slide.imageUrl}
-            transition={transitionSpeed}
             index={idx}
-            shift={shift}
             active={active}
+            transition={transitionSpeed}
+            shift={shift}
           >
             <BackgroundImage {...slide}>
               <BackgroundContent {...slide} />
@@ -195,13 +244,17 @@ const SliderNew = ({ settings = {}, slides }) => {
           <Arrow
             direction="left"
             size={size}
-            onClick={(evt) => showSlide(evt, index === 0 ? last : index - 1)}
+            onClick={(evt) =>
+              showSlide(evt, index === 0 ? lastIndex : index - 1)
+            }
             // disabled={!autoplay && index === 0}
           />
           <Arrow
             direction="right"
             size={size}
-            onClick={(evt) => showSlide(evt, index === last ? 0 : index + 1)}
+            onClick={(evt) =>
+              showSlide(evt, index === lastIndex ? 0 : index + 1)
+            }
             // disabled={!autoplay && index === count - 1}
           />
         </>
