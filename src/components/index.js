@@ -14,6 +14,8 @@ import Footer from './Footer'
 import FormHeader from './FormHeader'
 import FormWrapper from './FormWrapper'
 import GiftCard from './GiftCard'
+import Greeting from './Greeting'
+import GreetingHeader from './GreetingHeader'
 import GroupOrderLink from './GroupOrderLink'
 import GroupOrderTime from './GroupOrderTime'
 import HeaderAccount from './HeaderAccount'
@@ -91,6 +93,8 @@ export {
   FormHeader,
   FormWrapper,
   GiftCard,
+  Greeting,
+  GreetingHeader,
   GroupOrderLink,
   GroupOrderTime,
   HeaderAccount,

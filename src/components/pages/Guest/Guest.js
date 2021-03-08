@@ -10,20 +10,17 @@ import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Account } from '../../buttons'
 import {
-  Background,
   Content,
+  Deals,
+  Greeting,
   HeaderLogo,
   HeaderMobile,
   Main,
   PageView,
   PageHero,
-  Deals,
-  PageHeader,
-  Container,
 } from '../..'
 import GuestActions from './GuestActions'
 import { Link } from 'react-router-dom'
-import GuestGreeting from './GuestGreeting'
 
 const GuestFooter = styled('div')`
   border-top: 0.1rem solid ${(props) => props.theme.border.color};
@@ -63,6 +60,14 @@ const GuestContent = styled('div')`
   }
 `
 
+const GuestLinks = () => (
+  <p>
+    <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
+    <Link to="/donations">make a donation</Link> |{' '}
+    <Link to="/contact">get in touch</Link>
+  </p>
+)
+
 const Guest = () => {
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
@@ -70,9 +75,10 @@ const Guest = () => {
   const brand = useSelector(selectBrand)
   const { has_deals } = brand
   const { home } = useSelector(selectConfig)
-  const { background, mobile, content, title, showHero } = home
+  const { background, mobile, content, title, subtitle, showHero } = home
   const hasContent = !!(content && content.length && content[0].length)
   const hasFooter = has_deals || hasContent
+  const footnote = "Hint: you don't need an account to place an order."
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -89,23 +95,28 @@ const Guest = () => {
       <Helmet>
         <title>{brand.title}</title>
       </Helmet>
-      {/* <Background announcements={announcements} imageUrl={background} /> */}
       <Content>
         <HeaderMobile
-          bgColor="primary"
-          borderColor="primary"
-          // maxWidth="76.8rem"
+          bgColor={isBrowser ? 'secondary' : 'primary'}
+          borderColor={isBrowser ? 'secondary' : 'primary'}
           left={<HeaderLogo />}
           right={<Account />}
         />
-        <Main bgColor={hasFooter ? 'secondary' : 'primary'}>
+        <Main bgColor="secondary">
           <PageView>
             <PageHero
               announcements={announcements}
               imageUrl={isBrowser ? background : mobile}
               showHero={showHero}
             >
-              <GuestGreeting />
+              <Greeting
+                title={title}
+                subtitle={subtitle}
+                actions={<GuestActions />}
+                footnote={footnote}
+              >
+                <GuestLinks />
+              </Greeting>
             </PageHero>
             {hasFooter && (
               <GuestFooter>

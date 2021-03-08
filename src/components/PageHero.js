@@ -14,10 +14,12 @@ const PageHeroView = styled('div')`
   position: relative;
   display: flex;
   flex-grow: 1;
+  min-height: 42rem;
   max-height: 48rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex-direction: column-reverse;
     max-height: 100%;
+    min-height: 0;
   }
 `
 
@@ -27,7 +29,7 @@ const PageHeroGreeting = styled('div')`
   display: flex;
   align-items: center;
   padding: ${(props) => props.theme.layout.padding};
-  background-color: ${(props) => props.theme.bgColors.secondary};
+  background-color: ${(props) => props.theme.bgColors.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 2rem ${(props) => props.theme.layout.paddingMobile};
     background-color: ${(props) => props.theme.bgColors.primary};
@@ -37,16 +39,6 @@ const PageHeroGreeting = styled('div')`
 const PageHeroContent = styled('div')`
   flex-grow: 1;
   position: relative;
-  display: flex;
-`
-
-const PageHeroSlider = styled('div')`
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
 `
 
@@ -66,7 +58,7 @@ const makeSlides = (items) => {
 
 const PageHero = ({ announcements, imageUrl, children }) => {
   const { settings, entities, loading, error } = announcements || {}
-  const slides = makeSlides(entities)
+  const slides = error ? null : makeSlides(entities)
   const isLoading = loading === 'pending'
   // const hasAnnouncements = entities && entities.length > 0
 
@@ -74,9 +66,13 @@ const PageHero = ({ announcements, imageUrl, children }) => {
     <PageHeroView minHeight={announcements ? '18rem' : '0'}>
       {children && <PageHeroGreeting>{children}</PageHeroGreeting>}
       <PageHeroContent>
-        {isLoading && <BackgroundLoading />}
-        {slides && <SliderNew settings={settings} slides={slides} />}
-        {/* <BackgroundImage imageUrl={imageUrl} /> */}
+        {isLoading ? (
+          <BackgroundLoading />
+        ) : slides ? (
+          <SliderNew settings={settings} slides={slides} />
+        ) : (
+          <BackgroundImage imageUrl={imageUrl} />
+        )}
       </PageHeroContent>
     </PageHeroView>
   )

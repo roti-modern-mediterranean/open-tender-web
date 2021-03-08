@@ -27,6 +27,7 @@ import {
   Container,
   Content,
   Deals,
+  Greeting,
   HeaderLogo,
   HeaderMobile,
   LoyaltyProgram,
@@ -70,7 +71,7 @@ const AccountHeaderLinks = styled('p')`
 `
 
 const AccountFooter = styled('div')`
-  border-top: 0.1rem solid ${(props) => props.theme.border.color};
+  // border-top: 0.1rem solid ${(props) => props.theme.border.color};
 `
 
 const AccountLoyalty = styled('div')`
@@ -81,6 +82,14 @@ const AccountLoyalty = styled('div')`
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
+
+const AccountLinks = () => (
+  <p>
+    <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
+    <Link to="/donations">make a donation</Link> |{' '}
+    <Link to="/contact">get in touch</Link>
+  </p>
+)
 
 const Account = () => {
   const history = useHistory()
@@ -137,12 +146,10 @@ const Account = () => {
       <Helmet>
         <title>Welcome Back | {siteTitle}</title>
       </Helmet>
-      <Background announcements={announcements} imageUrl={background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderMobile
-          bgColor="primary"
-          borderColor="primary"
-          maxWidth="76.8rem"
+          bgColor={isBrowser ? 'secondary' : 'primary'}
+          borderColor={isBrowser ? 'secondary' : 'primary'}
           left={<HeaderLogo />}
           right={
             isBrowser ? (
@@ -158,25 +165,21 @@ const Account = () => {
         <Main bgColor="secondary">
           {!isBrowser && <AccountTabs />}
           <PageView>
-            {!isBrowser && (
-              <PageHero
-                announcements={announcements}
-                imageUrl={mobile}
-                showHero={showHero}
-              />
-            )}
+            <PageHero
+              announcements={announcements}
+              imageUrl={isBrowser ? background : mobile}
+              // showHero={showHero}
+            >
+              <Greeting
+                title={pageTitle}
+                subtitle={subtitle}
+                actions={<AccountActions />}
+                style={!isBrowser ? { margin: '0 0 6rem' } : null}
+              >
+                <AccountLinks />
+              </Greeting>
+            </PageHero>
             <AccountContent isMobile={!isBrowser}>
-              <AccountHeader>
-                <PageHeader title={pageTitle} subtitle={subtitle} />
-                <Container>
-                  <AccountActions />
-                  <AccountHeaderLinks>
-                    <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
-                    <Link to="/donations">make a donation</Link> |{' '}
-                    <Link to="/contact">get in touch</Link>
-                  </AccountHeaderLinks>
-                </Container>
-              </AccountHeader>
               <AccountFooter>
                 {loyalty && (
                   <AccountLoyalty>
