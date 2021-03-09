@@ -6,9 +6,9 @@ const PageSectionHeaderView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   text-align: center;
-  padding: 0 0 3rem;
+  margin: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 0 2rem;
+    margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
   }
 
   h2 {

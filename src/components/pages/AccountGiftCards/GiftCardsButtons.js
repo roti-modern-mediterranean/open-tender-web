@@ -7,9 +7,10 @@ import styled from '@emotion/styled'
 
 const GiftCardButtonsView = styled('div')`
   display: flex;
-  margin: 0 0 4rem;
+  justify-content: center;
+  margin: ${(props) => props.theme.layout.padding} auto;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: -1rem 0 3rem;
+    margin: ${(props) => props.theme.layout.paddingMobile} auto;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {

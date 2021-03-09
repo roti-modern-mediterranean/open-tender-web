@@ -18,12 +18,12 @@ import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Background,
-  Container,
   Content,
   FormWrapper,
   HeaderUser,
   Loading,
   Main,
+  PageContainer,
   PageContent,
   PageTitle,
 } from '../..'
@@ -84,16 +84,11 @@ const AccountAllergens = () => {
         </title>
       </Helmet>
       <Background imageUrl={account.background} />
-      <Content maxWidth="76.8rem">
-        <HeaderUser
-          title={isBrowser ? null : account.allergens.title}
-          maxWidth="76.8rem"
-          bgColor="secondary"
-          borderColor="secondary"
-        />
-        <Main bgColor="secondary">
+      <Content>
+        <HeaderUser title={isBrowser ? null : account.allergens.title} />
+        <Main>
           {!isBrowser && <AccountTabs />}
-          <Container>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...account.allergens} />
             <PageContent>
               {brandAllergens.entities.length ? (
@@ -115,7 +110,7 @@ const AccountAllergens = () => {
                 <p>Allergens aren't currently listed on our menu.</p>
               )}
             </PageContent>
-          </Container>
+          </PageContainer>
         </Main>
       </Content>
     </>

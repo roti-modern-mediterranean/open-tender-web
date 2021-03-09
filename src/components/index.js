@@ -62,6 +62,7 @@ import PageContainer from './PageContainer'
 import PageSection from './PageSection'
 import PageSectionHeader from './PageSectionHeader'
 import PageTitle from './PageTitle'
+import PageTitleButtons from './PageTitleButtons'
 import PageView from './PageView'
 import ProgressBar from './ProgressBar'
 import ProgressCircle from './ProgressCircle'
@@ -149,6 +150,7 @@ export {
   PageSection,
   PageSectionHeader,
   PageTitle,
+  PageTitleButtons,
   PageView,
   ProgressBar,
   ProgressCircle,

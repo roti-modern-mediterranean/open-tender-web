@@ -29,7 +29,6 @@ const AccountTabTitle = styled('span')`
   padding: 0.7rem 0 0;
   line-height: 1;
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  letter-spacing: 0.05em;
 `
 
 const AccountTab = ({ title, icon, onClick, color, delay = '0.125s' }) => {

@@ -14,25 +14,26 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand, openModal } from '../../../slices'
 import {
   Background,
-  Container,
   Content,
   HeaderUser,
   Loading,
   Main,
-  PageTitle,
+  PageContainer,
   PageContent,
-  SectionTitle,
+  PageSection,
+  PageTitle,
+  PageTitleButtons,
 } from '../..'
 import { AppContext } from '../../../App'
 import CreditCards from './CreditCards'
-import styled from '@emotion/styled'
 import AccountTabs from '../Account/AccountTabs'
+import styled from '@emotion/styled'
 
-const AccountCreditCardsButtons = styled('div')`
-  margin: -1rem 0 3rem;
+const CreditCardMessage = styled('div')`
+  text-align: center;
+  margin: ${(props) => props.theme.layout.padding} auto;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: -1rem 0 3rem;
-    text-align: center;
+    margin: ${(props) => props.theme.layout.paddingMobile} auto;
   }
 `
 
@@ -71,76 +72,65 @@ const AccountCreditCards = () => {
         </title>
       </Helmet>
       <Background imageUrl={account.background} />
-      <Content maxWidth="76.8rem">
-        <HeaderUser
-          title={isBrowser ? null : account.creditCards.title}
-          maxWidth="76.8rem"
-          bgColor="secondary"
-          borderColor="secondary"
-        />
-        <Main bgColor="secondary">
+      <Content>
+        <HeaderUser title={isBrowser ? null : account.creditCards.title} />
+        <Main>
           {!isBrowser && <AccountTabs />}
-          <Container>
-            <PageTitle {...account.creditCards} />
-            <PageContent>
-              <AccountCreditCardsButtons>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
+            <PageTitle {...account.creditCards}>
+              <PageTitleButtons>
                 <ButtonStyled
                   onClick={() => dispatch(openModal({ type: 'creditCard' }))}
                 >
                   Add a New Credit Card
                 </ButtonStyled>
-              </AccountCreditCardsButtons>
-              {savedCards.length > 0 && (
-                <CreditCards creditCards={savedCards} isLoading={isLoading} />
-              )}
-              {hasLinkedCards && (
-                <>
-                  <SectionTitle
-                    title="Linked Cards"
-                    subtitle="These are cards you have saved in either Apple Pay or
+              </PageTitleButtons>
+            </PageTitle>
+            {savedCards.length > 0 && (
+              <CreditCards creditCards={savedCards} isLoading={isLoading} />
+            )}
+            {hasLinkedCards && (
+              <PageSection
+                title="Linked Cards"
+                subtitle="These are cards you have saved in either Apple Pay or
                         Google Pay that have been linked with your account for
                         loyalty recognition at the point of sale in our
                         restaurants."
-                  />
-                  <AccountCreditCardsButtons>
-                    <ButtonStyled
-                      onClick={() =>
-                        dispatch(openModal({ type: 'creditCardLinked' }))
-                      }
-                    >
-                      Add a New Linked Card
-                    </ButtonStyled>
-                  </AccountCreditCardsButtons>
-                  {linkedCards.length > 0 && (
-                    <Message
-                      color="alert"
-                      size="small"
-                      as="div"
-                      style={{ width: '100%', margin: '0rem 0 3rem' }}
-                    >
+              >
+                <PageTitleButtons>
+                  <ButtonStyled
+                    onClick={() =>
+                      dispatch(openModal({ type: 'creditCardLinked' }))
+                    }
+                  >
+                    Add a New Linked Card
+                  </ButtonStyled>
+                </PageTitleButtons>
+                {linkedCards.length > 0 && (
+                  <CreditCardMessage>
+                    <Message color="alert" size="small" as="div">
                       PLEASE NOTE: To pay with these cards ONLINE, use the Apple
                       Pay or Google Pay option on the checkout page.
                     </Message>
-                  )}
-                  <CreditCards
-                    creditCards={linkedCards}
-                    isLoading={isLoading}
-                    style={{ margin: '0' }}
-                    showDefault={false}
-                  />
-                </>
-              )}
-              {entities.length === 0 && (
-                <>
-                  {isLoading ? (
-                    <Loading text="Retrieving your cards on file..." />
-                  ) : (
-                    <p>Looks like you haven't added any credit cards yet.</p>
-                  )}
-                </>
-              )}
-            </PageContent>
-          </Container>
+                  </CreditCardMessage>
+                )}
+                <CreditCards
+                  creditCards={linkedCards}
+                  isLoading={isLoading}
+                  showDefault={false}
+                />
+              </PageSection>
+            )}
+            {entities.length === 0 && (
+              <PageContent>
+                {isLoading ? (
+                  <Loading text="Retrieving your cards on file..." />
+                ) : (
+                  <p>Looks like you haven't added any credit cards yet.</p>
+                )}
+              </PageContent>
+            )}
+          </PageContainer>
         </Main>
       </Content>
     </>

@@ -18,10 +18,10 @@ const PageSectionView = styled('div')`
 `
 
 const PageSectionLink = styled('div')`
-  margin: 3rem 0;
   text-align: center;
+  margin: ${(props) => props.theme.layout.padding} 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 2rem 0;
+    margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
   }
 
   p {

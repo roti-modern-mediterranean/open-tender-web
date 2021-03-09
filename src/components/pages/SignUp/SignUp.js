@@ -116,7 +116,7 @@ const SignUp = () => {
       <Content>
         <HeaderDefault title={isBrowser ? null : signupConfig.title} />
         <Main>
-          <PageContainer style={{ maxWidth: '72rem' }}>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...signupConfig} />
             {posToken && (
               <p style={{ margin: '0 0 4rem' }}>

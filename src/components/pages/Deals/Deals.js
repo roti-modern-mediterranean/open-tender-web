@@ -15,6 +15,7 @@ import {
   Loading,
   Main,
   PageContainer,
+  PageContent,
   PageError,
   PageTitle,
   Reward,
@@ -66,6 +67,7 @@ const Deals = () => {
   const { windowRef } = useContext(AppContext)
   const { entities: deals, loading, error } = useSelector(selectDeals)
   const hasDeals = deals.length > 0
+  const isLoading = loading === 'pending'
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -108,12 +110,19 @@ const Deals = () => {
                   </Deal>
                 ))}
               </DealsView>
-            ) : loading === 'pending' ? (
-              <Loading text="Retrieving today's deals..." />
             ) : (
-              <p>
-                We're not featuring any deals today. Please check back soon!
-              </p>
+              <PageContent>
+                {isLoading ? (
+                  <Loading
+                    text="Retrieving today's deals..."
+                    style={{ textAlign: 'center' }}
+                  />
+                ) : (
+                  <p>
+                    We're not featuring any deals today. Please check back soon!
+                  </p>
+                )}
+              </PageContent>
             )}
           </PageContainer>
         </Main>

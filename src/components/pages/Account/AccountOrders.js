@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { selectCustomerOrders } from '@open-tender/redux'
 
-import { Loading, OrderCard, PageSection } from '../..'
+import { Loading, OrderCard, PageContent, PageSection } from '../..'
 import { selectConfig } from '../../../slices'
 
 const OrdersView = styled('div')`
@@ -40,6 +40,7 @@ const AccountOrders = () => {
     .filter((i) => i.order_type !== 'MERCH')
   const displayed = filtered.slice(0, 3)
   const isMore = filtered.length > displayed.length
+  const isLoading = loading === 'pending'
 
   return (
     <PageSection
@@ -47,8 +48,13 @@ const AccountOrders = () => {
       subtitle={subtitle}
       to={isMore ? '/orders' : null}
     >
-      {loading === 'pending' ? (
-        <Loading text="Retrieving your recent orders..." />
+      {isLoading ? (
+        <PageContent style={{ margin: '0 auto' }}>
+          <Loading
+            text="Retrieving your recent orders..."
+            style={{ textAlign: 'center' }}
+          />
+        </PageContent>
       ) : hasOrders ? (
         <OrdersView>
           {displayed.map((order) => (
@@ -58,7 +64,11 @@ const AccountOrders = () => {
           ))}
         </OrdersView>
       ) : (
-        <p>{empty}</p>
+        <PageContent style={{ margin: '0 auto' }}>
+          <div>
+            <p>{empty}</p>
+          </div>
+        </PageContent>
       )}
     </PageSection>
   )

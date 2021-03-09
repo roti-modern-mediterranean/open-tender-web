@@ -18,12 +18,7 @@ const CreditCardIcon = styled('span')`
   // height: auto;
 `
 
-const CreditCards = ({
-  creditCards,
-  isLoading,
-  style = { margin: '4rem 0 0' },
-  showDefault = true,
-}) => {
+const CreditCards = ({ creditCards, isLoading, showDefault = true }) => {
   const dispatch = useDispatch()
 
   const handleDefault = (creditCard) => {
@@ -38,7 +33,7 @@ const CreditCards = ({
   }
 
   return (
-    <div style={style}>
+    <div>
       {creditCards.map((creditCard) => (
         <Row
           key={creditCard.customer_card_id}
@@ -104,7 +99,6 @@ CreditCards.displayName = 'CreditCards'
 CreditCards.prototypes = {
   creditCards: propTypes.array,
   isLoading: propTypes.bool,
-  style: propTypes.object,
   showDefault: propTypes.bool,
 }
 

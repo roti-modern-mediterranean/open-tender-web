@@ -23,6 +23,7 @@ import {
   Main,
   OrderCardItem,
   PageContainer,
+  PageContent,
   PageError,
   PageTitle,
 } from '../..'
@@ -97,7 +98,6 @@ const Orders = () => {
           <PageContainer style={{ maxWidth: '100%' }}>
             <PageTitle {...config.recentOrders} />
             <PageError error={error} />
-
             {recentOrders.length ? (
               <>
                 <ToggleView>
@@ -133,10 +133,17 @@ const Orders = () => {
                   />
                 )}
               </>
-            ) : isLoading ? (
-              <Loading text="Retrieving your order history..." />
             ) : (
-              <p>Looks like you don't have any orders yet</p>
+              <PageContent>
+                {isLoading ? (
+                  <Loading
+                    text="Retrieving your order history..."
+                    style={{ textAlign: 'center' }}
+                  />
+                ) : (
+                  <p>Looks like you don't have any orders yet.</p>
+                )}
+              </PageContent>
             )}
           </PageContainer>
         </Main>

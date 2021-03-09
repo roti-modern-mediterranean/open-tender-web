@@ -25,6 +25,7 @@ import {
   PageTitle,
   PageError,
   PageContainer,
+  PageContent,
 } from '../..'
 import AccountTabs from '../Account/AccountTabs'
 
@@ -91,13 +92,20 @@ const Favorites = () => {
                 sequential={false}
                 renderItem={(props) => <OrderCardItem {...props} />}
               />
-            ) : isLoading ? (
-              <Loading text="Retrieving your order history..." />
             ) : (
-              <p>
-                Looks like you don't have any favorites yet. Visit your past
-                orders to add some.
-              </p>
+              <PageContent>
+                {isLoading ? (
+                  <Loading
+                    text="Retrieving your favorites..."
+                    style={{ textAlign: 'center' }}
+                  />
+                ) : (
+                  <p>
+                    Looks like you don't have any favorites yet. Please visit
+                    the Recent Orders page to add some.
+                  </p>
+                )}
+              </PageContent>
             )}
           </PageContainer>
         </Main>

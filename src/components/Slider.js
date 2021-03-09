@@ -7,7 +7,7 @@ import { BackgroundContent, BackgroundImage } from '.'
 
 const ArrowView = styled('div')`
   position: absolute;
-  z-index: 1000;
+  z-index: 100;
   top: 50%;
   transform: translateY(-50%);
   width: ${(props) => props.size};
@@ -42,7 +42,7 @@ Arrow.propTypes = {
 
 const Dots = styled('div')`
   position: absolute;
-  z-index: 1000;
+  z-index: 100;
   bottom: 0;
   left: 0;
   right: 0;
