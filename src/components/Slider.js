@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import propTypes from 'prop-types'
-import { useKeenSlider } from 'keen-slider/react'
-import 'keen-slider/keen-slider.min.css'
 import styled from '@emotion/styled'
 import iconMap from './iconMap'
 import { isBrowser } from 'react-device-detect'
+import { BackgroundContent, BackgroundImage } from '.'
 
 const ArrowView = styled('div')`
   position: absolute;
+  z-index: 1000;
   top: 50%;
   transform: translateY(-50%);
   width: ${(props) => props.size};
@@ -42,16 +42,21 @@ Arrow.propTypes = {
 
 const Dots = styled('div')`
   position: absolute;
+  z-index: 1000;
   bottom: 0;
   left: 0;
   right: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: right;
+  padding: 0 ${(props) => props.theme.layout.padding};
   height: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     // height: ${(props) => props.theme.layout.paddingMobile};
     height: 3rem;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
   }
 `
 
@@ -71,14 +76,22 @@ const Dot = styled('button')`
 
 const SliderView = styled('div')`
   position: relative;
-  max-width: 100%;
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
+  // display: flex;
+`
 
-  & > div {
-    flex-grow: 1;
-  }
+const Slide = styled('div')`
+  position: absolute;
+  z-index: ${(props) => props.index};
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  transition: transform ${(props) => props.transition}ms ease;
+  opacity: ${(props) => (props.active ? '1' : '0')};
+  transform: translate3D(${(props) => props.shift.toFixed(2)}%, 0, 0);
 `
 
 const defaultSettings = {
@@ -93,9 +106,12 @@ const defaultSettings = {
   show_dots_mobile: true,
 }
 
-const Slider = ({ settings = {}, slides }) => {
-  const wrapper = useRef()
-  const timer = useRef()
+const SliderNew = ({ settings = {}, slides }) => {
+  const timer = useRef(null)
+  const slider = useRef()
+  const [pause, setPause] = useState(false)
+  const [index, setIndex] = useState(0)
+  const [lastIndex, setLastIndex] = useState(0)
   const {
     autoplay,
     transition,
@@ -112,93 +128,107 @@ const Slider = ({ settings = {}, slides }) => {
   const showArrows = isBrowser ? show_arrows : show_arrows_mobile
   const showDots = isBrowser ? show_dots : show_dots_mobile
   const size = isBrowser ? '3rem' : '2rem'
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [pause, setPause] = useState(false)
-  const [sliderRef, slider] = useKeenSlider({
-    initial: 0,
-    slideChanged(s) {
-      setCurrentSlide(s.details().relativeSlide)
-    },
-    loop: autoplay,
-    duration: transitionSpeed,
-    dragStart: () => {
-      setPause(true)
-    },
-    dragEnd: () => {
-      setPause(false)
-    },
-  })
+  const count = slides.length
+  const last = count - 1
+  const prevIndex = index === 0 ? last : index - 1
+  const nextIndex = index === last ? 0 : index + 1
+  const moveLeft =
+    (index > lastIndex && !(index === last && lastIndex === 0)) ||
+    (index === 0 && lastIndex === last)
+  const moveRight = !moveLeft
 
-  React.useEffect(() => {
-    wrapper.current.addEventListener('mouseover', () => {
-      setPause(true)
-    })
-    wrapper.current.addEventListener('mouseout', () => {
-      setPause(false)
-    })
-  }, [wrapper])
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (autoplay) {
       timer.current = setInterval(() => {
-        if (!pause && slider) {
-          slider.next()
+        const idx = index === count - 1 ? 0 : index + 1
+        if (!pause) {
+          setLastIndex(index)
+          setIndex(idx)
         }
       }, interval)
       return () => {
         clearInterval(timer.current)
       }
     }
-  }, [autoplay, pause, slider, interval])
+  }, [index, count, interval, pause, autoplay])
+
+  useEffect(() => {
+    if (autoplay) {
+      slider.current.addEventListener('mouseover', () => {
+        setPause(true)
+      })
+      slider.current.addEventListener('mouseout', () => {
+        setPause(false)
+      })
+    }
+  }, [slider, autoplay])
+
+  const showSlide = (evt, idx) => {
+    evt.preventDefault()
+    evt.target.blur()
+    if (idx >= 0 && idx <= count - 1) {
+      setLastIndex(index)
+      setIndex(idx)
+    }
+  }
 
   return (
-    <SliderView ref={wrapper}>
-      <div ref={sliderRef} className="keen-slider">
-        {slides.map((slide) => (
-          <div key={slide.key} className="keen-slider__slide">
-            {slide}
-          </div>
-        ))}
-      </div>
-      {slider && showArrows && (
+    <SliderView ref={slider}>
+      {slides.map((slide, idx) => {
+        const shift = idx === index ? 0 : idx === prevIndex ? -100 : 100
+        const active =
+          idx === index ||
+          (moveLeft && idx === prevIndex) ||
+          (moveRight && idx === nextIndex)
+        return (
+          <Slide
+            key={slide.imageUrl}
+            transition={transitionSpeed}
+            index={idx}
+            shift={shift}
+            active={active}
+          >
+            <BackgroundImage {...slide}>
+              <BackgroundContent {...slide} />
+            </BackgroundImage>
+          </Slide>
+        )
+      })}
+      {showArrows && (
         <>
           <Arrow
             direction="left"
             size={size}
-            onClick={(e) => e.stopPropagation() || slider.prev()}
-            disabled={!autoplay && currentSlide === 0}
+            onClick={(evt) => showSlide(evt, index === 0 ? last : index - 1)}
+            // disabled={!autoplay && index === 0}
           />
           <Arrow
             direction="right"
             size={size}
-            onClick={(e) => e.stopPropagation() || slider.next()}
-            disabled={!autoplay && currentSlide === slider.details().size - 1}
+            onClick={(evt) => showSlide(evt, index === last ? 0 : index + 1)}
+            // disabled={!autoplay && index === count - 1}
           />
         </>
       )}
-      {slider && showDots && (
+      {showDots && (
         <Dots>
-          {[...Array(slider.details().size).keys()].map((idx) => {
-            return (
-              <Dot
-                key={idx}
-                onClick={() => {
-                  slider.moveToSlideRelative(idx)
-                }}
-                active={currentSlide === idx}
-              />
-            )
-          })}
+          {slides.map((slide, idx) => (
+            <Dot
+              key={slide.announcement_id}
+              onClick={(evt) => showSlide(evt, idx)}
+              active={index === idx}
+            />
+          ))}
         </Dots>
       )}
     </SliderView>
   )
 }
 
-Slider.displayName = 'Slider'
-Slider.propTypes = {
+SliderNew.displayName = 'SliderNew'
+SliderNew.propTypes = {
   settings: propTypes.object,
   slides: propTypes.array,
 }
 
-export default Slider
+export default SliderNew

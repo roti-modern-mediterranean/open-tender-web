@@ -11,11 +11,17 @@ const BackgroundContentView = styled('div')`
   left: 0;
   right: 0;
   display: flex;
-  // padding: ${(props) => props.theme.layout.padding} 5rem;
-  padding: 5rem;
+  padding: 5rem ${(props) => props.theme.layout.padding};
+  // padding: 5rem;
   justify-content: ${(props) => props.justifyContent};
   align-items: ${(props) => props.alignItems};
   text-align: ${(props) => props.textAlign};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 2.5rem;
+    justify-content: center;
+    align-items: flex-end;
+    text-align: center;
+  }
 `
 
 const BackgroundContentText = styled('div')`

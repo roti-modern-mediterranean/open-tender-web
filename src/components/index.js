@@ -9,6 +9,7 @@ import CartButton from './CartButton'
 import Content from './Content'
 import Container from './Container'
 import Deals from './Deals'
+import DealsScrollable from './DealsScrollable'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
 import FormHeader from './FormHeader'
@@ -55,9 +56,12 @@ import OrderTag from './OrderTag'
 import PageButtons from './PageButtons'
 import PageContent from './PageContent'
 import PageError from './PageError'
-import PageTitle from './PageTitle'
 import PageHeader from './PageHeader'
 import PageHero from './PageHero'
+import PageMain from './PageMain'
+import PageSection from './PageSection'
+import PageSectionHeader from './PageSectionHeader'
+import PageTitle from './PageTitle'
 import PageView from './PageView'
 import ProgressBar from './ProgressBar'
 import ProgressCircle from './ProgressCircle'
@@ -73,6 +77,7 @@ import SectionTitle from './SectionTitle'
 import Sidebar from './Sidebar'
 import SkipLink from './SkipLink'
 import Slider from './Slider'
+import SliderKeen from './SliderKeen'
 import Tag from './Tag'
 import VerifyAccount from './VerifyAccount'
 
@@ -88,6 +93,7 @@ export {
   Container,
   Content,
   Deals,
+  DealsScrollable,
   ErrorBoundary,
   Footer,
   FormHeader,
@@ -139,6 +145,9 @@ export {
   PageError,
   PageHeader,
   PageHero,
+  PageMain,
+  PageSection,
+  PageSectionHeader,
   PageTitle,
   PageView,
   ProgressBar,
@@ -156,6 +165,7 @@ export {
   Sidebar,
   SkipLink,
   Slider,
+  SliderKeen,
   Tag,
   VerifyAccount,
 }

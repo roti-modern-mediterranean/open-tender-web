@@ -1,13 +1,7 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { BgImage, Box, useImage } from '@open-tender/components'
 
-import { BackgroundImage, BackgroundLoading, Hero, Slider } from '.'
-// import { makeSlides } from './HeroSlides'
-import { selectTheme } from '../slices'
-import { useSelector } from 'react-redux'
-import { ClipLoader } from 'react-spinners'
-import SliderNew from './SliderNew'
+import { BackgroundImage, BackgroundLoading, Slider } from '.'
 import { isBrowser } from 'react-device-detect'
 
 const PageHeroView = styled('div')`
@@ -15,7 +9,7 @@ const PageHeroView = styled('div')`
   display: flex;
   flex-grow: 1;
   min-height: 42rem;
-  max-height: 48rem;
+  max-height: ${(props) => props.maxHeight || '100%'};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex-direction: column-reverse;
     max-height: 100%;
@@ -40,6 +34,9 @@ const PageHeroContent = styled('div')`
   flex-grow: 1;
   position: relative;
   display: flex;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    min-height: 32rem;
+  }
 `
 
 const makeImageUrl = (images, isBrowser) => {
@@ -56,20 +53,23 @@ const makeSlides = (items) => {
   }))
 }
 
-const PageHero = ({ announcements, imageUrl, children }) => {
+const PageHero = ({ announcements, imageUrl, maxHeight, children }) => {
   const { settings, entities, loading, error } = announcements || {}
   const slides = error ? null : makeSlides(entities)
   const isLoading = loading === 'pending'
   // const hasAnnouncements = entities && entities.length > 0
 
   return (
-    <PageHeroView minHeight={announcements ? '18rem' : '0'}>
+    <PageHeroView
+      minHeight={announcements ? '18rem' : '0'}
+      maxHeight={maxHeight}
+    >
       {children && <PageHeroGreeting>{children}</PageHeroGreeting>}
       <PageHeroContent>
         {isLoading ? (
           <BackgroundLoading />
         ) : slides ? (
-          <SliderNew settings={settings} slides={slides} />
+          <Slider settings={settings} slides={slides} />
         ) : (
           <BackgroundImage imageUrl={imageUrl} />
         )}

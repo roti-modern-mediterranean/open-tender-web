@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import styled from '@emotion/styled'
@@ -8,7 +9,7 @@ import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Account } from '../../buttons'
+import { Account, Deals as DealsButton } from '../../buttons'
 import {
   Content,
   Deals,
@@ -16,21 +17,11 @@ import {
   HeaderLogo,
   HeaderMobile,
   Main,
-  PageView,
   PageHero,
+  PageMain,
+  PageView,
 } from '../..'
 import GuestActions from './GuestActions'
-import { Link } from 'react-router-dom'
-
-const GuestFooter = styled('div')`
-  border-top: 0.1rem solid ${(props) => props.theme.border.color};
-
-  // & > div:first-of-type {
-  //   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //     margin-top: ${(props) => props.theme.layout.paddingMobile};
-  //   }
-  // }
-`
 
 const GuestContent = styled('div')`
   line-height: ${(props) => props.theme.lineHeight};
@@ -76,9 +67,9 @@ const Guest = () => {
   const { has_deals } = brand
   const { home } = useSelector(selectConfig)
   const { background, mobile, content, title, subtitle, showHero } = home
-  const hasContent = !!(content && content.length && content[0].length)
-  const hasFooter = has_deals || hasContent
   const footnote = "Hint: you don't need an account to place an order."
+  const hasContent = !!(content && content.length && content[0].length)
+  const hasPageContent = hasContent || has_deals
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -100,14 +91,23 @@ const Guest = () => {
           bgColor={isBrowser ? 'secondary' : 'primary'}
           borderColor={isBrowser ? 'secondary' : 'primary'}
           left={<HeaderLogo />}
-          right={<Account />}
+          right={
+            <>
+              {isBrowser && has_deals && <DealsButton />}
+              <Account />
+            </>
+          }
         />
-        <Main bgColor="secondary">
+        <Main
+          bgColor="secondary"
+          // style={{ height: '100%', overflowY: 'scroll' }}
+        >
           <PageView>
             <PageHero
               announcements={announcements}
               imageUrl={isBrowser ? background : mobile}
               showHero={showHero}
+              maxHeight={hasPageContent ? '48rem' : null}
             >
               <Greeting
                 title={title}
@@ -118,8 +118,8 @@ const Guest = () => {
                 <GuestLinks />
               </Greeting>
             </PageHero>
-            {hasFooter && (
-              <GuestFooter>
+            {hasPageContent && (
+              <PageMain>
                 {has_deals && <Deals />}
                 {hasContent && (
                   <GuestContent hasDeals={has_deals}>
@@ -128,7 +128,7 @@ const Guest = () => {
                     ))}
                   </GuestContent>
                 )}
-              </GuestFooter>
+              </PageMain>
             )}
           </PageView>
         </Main>

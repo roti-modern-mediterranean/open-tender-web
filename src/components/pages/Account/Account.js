@@ -23,16 +23,13 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, closeModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
-  Deals,
+  DealsScrollable,
   Greeting,
   HeaderLogo,
   HeaderMobile,
   LoyaltyProgram,
   Main,
-  PageHeader,
   PageHero,
   PageView,
 } from '../..'
@@ -49,25 +46,6 @@ import AccountGroupOrders from './AccountGroupOrders'
 
 const AccountContent = styled('div')`
   padding: ${(props) => (props.isMobile ? '0 0 6rem' : '0')};
-`
-
-const AccountHeader = styled('div')`
-  background-color: ${(props) => props.theme.bgColors.primary};
-  padding: 0 0 3rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0 0 2.5rem;
-  }
-`
-
-const AccountHeaderLinks = styled('p')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.125s forwards;
-  margin: 2.5rem 0 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 1.5rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    text-align: center;
-  }
 `
 
 const AccountFooter = styled('div')`
@@ -194,7 +172,7 @@ const Account = () => {
                   </AccountLoyalty>
                 )}
                 {rewards && <AccountRewards rewards={rewards} />}
-                {has_deals && <Deals />}
+                {has_deals && <DealsScrollable />}
                 <AccountGroupOrders />
                 <AccountOrders />
                 <AccountFavorites />

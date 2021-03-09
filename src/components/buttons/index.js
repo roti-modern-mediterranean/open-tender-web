@@ -3,6 +3,7 @@ import Account from './Account'
 import AccountSettings from './AccountSettings'
 import Allergens from './Allergens'
 import CancelEdit from './CancelEdit'
+import Deals from './Deals'
 import Favorite from './Favorite'
 import GroupGuest from './GroupGuest'
 import GroupOrder from './GroupOrder'
@@ -24,6 +25,7 @@ export {
   AccountSettings,
   Allergens,
   CancelEdit,
+  Deals,
   Favorite,
   GroupOrder,
   GroupGuest,

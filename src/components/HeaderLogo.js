@@ -10,6 +10,9 @@ const HeaderLogoLink = styled('a')`
   max-width: 16rem;
   margin: 0.4rem 0 0;
   margin-left: ${(props) => (props.isMobile ? '1.5rem' : '0')};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 14rem;
+  }
 
   img {
     pointer-events: none;
