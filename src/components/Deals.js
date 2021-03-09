@@ -11,7 +11,7 @@ const DealsView = styled('div')`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     margin: -0.5rem;
     justify-content: center;
   }
@@ -20,11 +20,11 @@ const DealsView = styled('div')`
 const Deal = styled('div')`
   width: 33.33333%;
   padding: 1rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     width: 50%;
     padding: 0.5rem;
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
     padding: 0.5rem;
   }

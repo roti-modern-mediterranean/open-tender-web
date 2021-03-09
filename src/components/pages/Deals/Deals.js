@@ -9,13 +9,12 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import {
   Background,
-  Container,
   Content,
   HeaderDefault,
   HeaderUser,
   Loading,
   Main,
-  PageContent,
+  PageContainer,
   PageError,
   PageTitle,
   Reward,
@@ -30,16 +29,28 @@ const defaultConfig = {
 }
 
 const DealsView = styled('div')`
-  margin: 0 -0.5rem;
+  margin: -1rem;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    margin: -0.5rem;
+    justify-content: center;
+  }
 `
 
 const Deal = styled('div')`
-  width: 50%;
-  padding: 0.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  width: 33.33333%;
+  padding: 1rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    width: 50%;
+    padding: 0.5rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
+    padding: 0.5rem;
   }
 `
 
@@ -77,45 +88,34 @@ const Deals = () => {
         </title>
       </Helmet>
       <Background imageUrl={background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         {auth ? (
-          <HeaderUser
-            title={isBrowser ? null : config.title}
-            maxWidth="76.8rem"
-            bgColor="secondary"
-            borderColor="secondary"
-          />
+          <HeaderUser title={isBrowser ? null : config.title} />
         ) : (
-          <HeaderDefault
-            title={isBrowser ? null : config.title}
-            bgColor="secondary"
-            borderColor="secondary"
-          />
+          <HeaderDefault title={isBrowser ? null : config.title} />
         )}
-        <Main bgColor="secondary">
+        <Main>
           {!isBrowser && auth && <AccountTabs />}
-          <Container>
+          <PageContainer>
             <PageTitle {...config} />
-            <PageContent>
-              {error ? (
-                <PageError error={error} />
-              ) : hasDeals ? (
-                <DealsView>
-                  {deals.map((deal) => (
-                    <Deal key={deal.discount_id}>
-                      <Reward item={deal} />
-                    </Deal>
-                  ))}
-                </DealsView>
-              ) : loading === 'pending' ? (
-                <Loading text="Retrieving today's deals..." />
-              ) : (
-                <p>
-                  We're not featuring any deals today. Please check back soon!
-                </p>
-              )}
-            </PageContent>
-          </Container>
+            {error ? (
+              <PageError error={error} />
+            ) : hasDeals ? (
+              <DealsView>
+                {deals.map((deal) => (
+                  <Deal key={deal.discount_id}>
+                    <Reward item={deal} />
+                  </Deal>
+                ))}
+              </DealsView>
+            ) : loading === 'pending' ? (
+              <Loading text="Retrieving today's deals..." />
+            ) : (
+              <p>
+                We're not featuring any deals today. Please check back soon!
+              </p>
+            )}
+          </PageContainer>
         </Main>
       </Content>
     </>

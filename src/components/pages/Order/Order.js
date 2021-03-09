@@ -13,14 +13,16 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Container,
   Content,
   HeaderUser,
+  LinkIcon,
   Main,
   Order as OrderSummary,
-  PageContent,
+  PageContainer,
+  PageTitle,
 } from '../..'
 import AccountTabs from '../Account/AccountTabs'
+import iconMap from '../../iconMap'
 
 const Order = () => {
   const dispatch = useDispatch()
@@ -53,18 +55,20 @@ const Order = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser
-          title={isMobile ? title : null}
-          bgColor="secondary"
-          borderColor="secondary"
-        />
-        <Main bgColor="secondary">
+        <HeaderUser title={isMobile ? title : null} />
+        <Main>
           {isMobile && <AccountTabs />}
-          <Container>
-            <PageContent>
-              <OrderSummary {...customerOrder} />
-            </PageContent>
-          </Container>
+          <PageContainer>
+            <PageTitle>
+              <LinkIcon
+                to="/orders"
+                icon={iconMap.ArrowLeft}
+                text="Back to all orders"
+                isBefore={true}
+              />
+            </PageTitle>
+            <OrderSummary {...customerOrder} />
+          </PageContainer>
         </Main>
       </Content>
     </>

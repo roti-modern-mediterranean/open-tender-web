@@ -15,7 +15,7 @@ const RewardView = styled(Box)`
   min-height: 11rem;
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
 `
 
 const RewardTag = styled('div')`

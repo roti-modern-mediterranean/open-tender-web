@@ -7,7 +7,7 @@ import { Account, Home, Logout } from './buttons'
 import { useSelector } from 'react-redux'
 
 const HeaderDefault = ({
-  maxWidth = '76.8rem',
+  maxWidth = '100%',
   title,
   bgColor = 'primary',
   borderColor = 'primary',

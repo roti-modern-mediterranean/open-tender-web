@@ -7,7 +7,7 @@ const TagView = styled('span')`
   display: inline-block;
   padding: 0.5rem 1rem 0.5rem;
   border-radius: 1.5rem;
-  // line-height: 0;
+  line-height: 0;
   color: ${(props) => props.theme.colors.light};
   background-color: ${(props) => props.theme.colors[props.bgColor]};
 `
@@ -15,17 +15,17 @@ const TagView = styled('span')`
 const TagContainer = styled('span')`
   display: flex;
   align-items: center;
-  // line-height: 0;
+  line-height: 0;
 
   span {
     display: inline-block;
-    padding: 0.1rem 0 0;
+    // padding: 0.1rem 0 0;
   }
 `
 
 const TagIcon = styled('span')`
   position: relative;
-  top: -0.1rem;
+  // top: -0.1rem;
   width: 1.2rem;
   height: 1.2rem;
   padding: 0;
@@ -36,6 +36,7 @@ const TagIcon = styled('span')`
 const TagText = styled(Preface)`
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   color: ${(props) => props.theme.colors.light};
+  // line-height: 0;
 `
 
 const Tag = ({ text, icon, bgColor = 'secondary' }) => {

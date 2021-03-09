@@ -8,11 +8,11 @@ const PageHeroView = styled('div')`
   flex-grow: 1;
   position: relative;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   // min-height: 42rem;
   // max-height: ${(props) => props.maxHeight || '100%'};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex-direction: column-reverse;
+    flex-direction: column;
     // max-height: 100%;
     // min-height: 0;
   }
@@ -23,10 +23,11 @@ const PageHeroGreeting = styled('div')`
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  padding: 4rem ${(props) => props.theme.layout.padding};
-  background-color: ${(props) => props.theme.bgColors.primary};
+  margin: ${(props) => props.theme.layout.margin} 0;
+  padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 2rem ${(props) => props.theme.layout.paddingMobile};
+    margin: ${(props) => props.theme.layout.marginMobile} 0;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
     background-color: ${(props) => props.theme.bgColors.primary};
   }
 `
@@ -56,18 +57,21 @@ const makeSlides = (items) => {
   }))
 }
 
-const PageHero = ({ announcements, imageUrl, maxHeight, children }) => {
+const PageHero = ({
+  announcements,
+  imageUrl,
+  showHero,
+  maxHeight,
+  children,
+}) => {
   const { settings, entities, loading, error } = announcements || {}
   const slides = error ? null : makeSlides(entities)
   const isLoading = loading === 'pending'
-  // const hasAnnouncements = entities && entities.length > 0
+
+  if (!slides && !showHero) return null
 
   return (
-    <PageHeroView
-      minHeight={announcements ? '18rem' : '0'}
-      maxHeight={maxHeight}
-    >
-      {children && <PageHeroGreeting>{children}</PageHeroGreeting>}
+    <PageHeroView maxHeight={maxHeight}>
       <PageHeroContent>
         {isLoading ? (
           <BackgroundLoading />
@@ -77,6 +81,7 @@ const PageHero = ({ announcements, imageUrl, maxHeight, children }) => {
           <BackgroundImage imageUrl={imageUrl} />
         )}
       </PageHeroContent>
+      {children && <PageHeroGreeting>{children}</PageHeroGreeting>}
     </PageHeroView>
   )
 }
@@ -86,6 +91,7 @@ PageHero.propTypes = {
   imageUrl: propTypes.string,
   announcements: propTypes.object,
   showHero: propTypes.bool,
+  maxHeight: propTypes.string,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node,

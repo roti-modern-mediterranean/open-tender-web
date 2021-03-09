@@ -17,8 +17,8 @@ import {
   HeaderLogo,
   HeaderMobile,
   Main,
+  PageContainer,
   PageHero,
-  PageMain,
   PageView,
 } from '../..'
 import GuestActions from './GuestActions'
@@ -88,8 +88,6 @@ const Guest = () => {
       </Helmet>
       <Content>
         <HeaderMobile
-          // bgColor={isBrowser ? 'secondary' : 'primary'}
-          // borderColor={isBrowser ? 'secondary' : 'primary'}
           left={<HeaderLogo />}
           right={
             <>
@@ -98,10 +96,7 @@ const Guest = () => {
             </>
           }
         />
-        <Main
-          bgColor="secondary"
-          // style={{ height: '100%', overflowY: 'scroll' }}
-        >
+        <Main>
           <PageView>
             <PageHero
               announcements={announcements}
@@ -119,7 +114,7 @@ const Guest = () => {
               </Greeting>
             </PageHero>
             {hasPageContent && (
-              <PageMain>
+              <PageContainer>
                 {has_deals && <Deals />}
                 {hasContent && (
                   <GuestContent hasDeals={has_deals}>
@@ -128,7 +123,7 @@ const Guest = () => {
                     ))}
                   </GuestContent>
                 )}
-              </PageMain>
+              </PageContainer>
             )}
           </PageView>
         </Main>

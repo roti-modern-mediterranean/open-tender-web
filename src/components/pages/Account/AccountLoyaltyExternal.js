@@ -7,7 +7,7 @@ import { ProgressCircle } from '../..'
 import Container from '../../Container'
 import { Link } from 'react-router-dom'
 
-const AccountProgressView = styled('div')`
+const AccountLoyaltyView = styled('div')`
   // max-width: 52rem;
   margin: 0;
 
@@ -23,7 +23,7 @@ const AccountProgressView = styled('div')`
   }
 `
 
-const AccountProgressContent = styled('div')`
+const AccountLoyaltyContent = styled('div')`
   flex-grow: 1;
   margin: 0 0 0 3rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -40,17 +40,17 @@ const AccountProgressContent = styled('div')`
   }
 `
 
-const AccountProgressCircle = styled('div')`
+const AccountLoyaltyCircle = styled('div')`
   flex: 0 0 auto;
 `
 
-const AccountProgress = ({ loyalty }) => {
+const AccountLoyalty = ({ loyalty }) => {
   const { name, progress, credit, remaining, towards } = loyalty
   const hasCredit = parseFloat(credit) > 0
   return (
-    <AccountProgressView>
+    <AccountLoyaltyView>
       <Container>
-        <AccountProgressContent>
+        <AccountLoyaltyContent>
           <h2>{name}</h2>
           {hasCredit && (
             <Text as="p" color="success" size="small" bold={true}>
@@ -65,20 +65,20 @@ const AccountProgress = ({ loyalty }) => {
           <p>
             <Link to="/rewards">See all rewards</Link>
           </p>
-        </AccountProgressContent>
+        </AccountLoyaltyContent>
         {progress && (
-          <AccountProgressCircle>
+          <AccountLoyaltyCircle>
             <ProgressCircle progress={progress} />
-          </AccountProgressCircle>
+          </AccountLoyaltyCircle>
         )}
       </Container>
-    </AccountProgressView>
+    </AccountLoyaltyView>
   )
 }
 
-AccountProgress.displayName = 'AccountProgress'
-AccountProgress.propTypes = {
+AccountLoyalty.displayName = 'AccountLoyalty'
+AccountLoyalty.propTypes = {
   loyalty: propTypes.object,
 }
 
-export default AccountProgress
+export default AccountLoyalty

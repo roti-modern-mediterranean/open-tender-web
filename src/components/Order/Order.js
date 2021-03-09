@@ -35,10 +35,11 @@ import OrderRevenueCenter from './OrderRevenueCenter'
 import OrderSection from './OrderSection'
 
 const OrderView = styled(Box)`
-  max-width: ${(props) => props.theme.breakpoints.tablet};
   margin: 4rem auto;
+  max-width: ${(props) => props.theme.breakpoints.tablet};
   padding: ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
     padding: ${(props) => props.theme.layout.paddingMobile};
     margin: 3rem auto;
   }

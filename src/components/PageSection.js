@@ -7,17 +7,21 @@ import iconMap from './iconMap'
 import { PageSectionHeader } from '.'
 
 const PageSectionView = styled('div')`
-  margin: 5rem 0;
+  margin: ${(props) => props.theme.layout.margin} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 2.5rem 0;
+    margin: ${(props) => props.theme.layout.marginMobile} 0;
+  }
+
+  &:first-of-type {
+    margin-top: 0;
   }
 `
 
 const PageSectionLink = styled('div')`
-  margin: 2.5rem 0;
+  margin: 3rem 0;
   text-align: center;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 1.5rem 0;
+    margin: 2rem 0;
   }
 
   p {

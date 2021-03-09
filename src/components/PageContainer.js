@@ -1,13 +1,14 @@
 import styled from '@emotion/styled'
 
-const PageMain = styled('div')`
+const PageContainer = styled('div')`
   width: 100%;
   max-width: 112rem;
-  margin: 0 auto;
+  margin: ${(props) => props.theme.layout.margin} auto;
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: ${(props) => props.theme.layout.marginMobile} auto;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `
 
-export default PageMain
+export default PageContainer

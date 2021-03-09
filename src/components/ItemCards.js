@@ -6,14 +6,14 @@ const ItemCardsView = styled('div')`
   display: flex;
   flex-wrap: wrap;
   margin: 0 -0.5rem;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.125s forwards;
 `
 const ItemCardsItem = styled('div')`
     flex: 0 0 30rem;
     max-width: 12.5%;
     padding: 0 0.5rem;
     margin: 0 0 1rem;
-    opacity: 0;
-    animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
 
     @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
       flex: 0 0 16.66667%;
@@ -34,15 +34,12 @@ const ItemCardsItem = styled('div')`
   }
 `
 
-const ItemCards = ({ items, delay = 0.125, sequential = true, renderItem }) => {
+const ItemCards = ({ items, renderItem }) => {
   return (
     <ItemCardsView>
       {items.map((item, index) => {
-        const itemDelay = sequential
-          ? `${((index + 1) * 0.125 + delay).toFixed(3)}s`
-          : `${delay.toFixed(3)}s`
         return (
-          <ItemCardsItem key={`${item.id}-${index}`} delay={itemDelay}>
+          <ItemCardsItem key={`${item.id}-${index}`}>
             {renderItem({ item })}
           </ItemCardsItem>
         )

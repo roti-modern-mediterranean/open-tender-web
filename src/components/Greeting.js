@@ -2,15 +2,13 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-import { GreetingHeader } from '.'
+import { PageTitle } from '.'
 
 const GreetingView = styled('div')`
-  // padding: 0 ${(props) => props.theme.layout.padding};
   width: 100%;
   text-align: center;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
-    // padding: 0;
   }
 `
 
@@ -39,7 +37,7 @@ const GuestContent = styled('div')`
 const Greeting = ({ title, subtitle, actions, footnote, children, style }) => {
   return (
     <GreetingView style={style}>
-      <GreetingHeader title={title} subtitle={subtitle} />
+      <PageTitle title={title} subtitle={subtitle} />
       {actions}
       {footnote && <GreetingFootnote>{footnote}</GreetingFootnote>}
       {children && <GuestContent>{children}</GuestContent>}

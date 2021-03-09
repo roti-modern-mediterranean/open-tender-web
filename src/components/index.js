@@ -16,7 +16,6 @@ import FormHeader from './FormHeader'
 import FormWrapper from './FormWrapper'
 import GiftCard from './GiftCard'
 import Greeting from './Greeting'
-import GreetingHeader from './GreetingHeader'
 import GroupOrderLink from './GroupOrderLink'
 import GroupOrderTime from './GroupOrderTime'
 import HeaderAccount from './HeaderAccount'
@@ -31,6 +30,7 @@ import ImageSpinner from './ImageSpinner'
 import ItemCards from './ItemCards'
 import ItemsScrollable from './ItemsScrollable'
 import ItemsStacked from './ItemsStacked'
+import LinkIcon from './LinkIcon'
 import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
 import LoyaltyProgram from './LoyaltyProgram'
@@ -58,7 +58,7 @@ import PageContent from './PageContent'
 import PageError from './PageError'
 import PageHeader from './PageHeader'
 import PageHero from './PageHero'
-import PageMain from './PageMain'
+import PageContainer from './PageContainer'
 import PageSection from './PageSection'
 import PageSectionHeader from './PageSectionHeader'
 import PageTitle from './PageTitle'
@@ -100,7 +100,6 @@ export {
   FormWrapper,
   GiftCard,
   Greeting,
-  GreetingHeader,
   GroupOrderLink,
   GroupOrderTime,
   HeaderAccount,
@@ -115,6 +114,7 @@ export {
   ItemCards,
   ItemsScrollable,
   ItemsStacked,
+  LinkIcon,
   LinkSeparator,
   Loading,
   LoyaltyProgram,
@@ -145,7 +145,7 @@ export {
   PageError,
   PageHeader,
   PageHero,
-  PageMain,
+  PageContainer,
   PageSection,
   PageSectionHeader,
   PageTitle,

@@ -62,11 +62,12 @@ const Dots = styled('div')`
 
 const Dot = styled('button')`
   width: 100%;
-  background-color: ${(props) => props.theme.colors.light};
   margin: 0 0.2rem;
-  max-width: ${(props) => (props.active ? '2rem' : '0.4rem')};
   height: 0.4rem;
   border-radius: 0.2rem;
+  background-color: ${(props) => props.theme.colors.light};
+  max-width: ${(props) => (props.active ? '2rem' : '0.4rem')};
+  opacity: ${(props) => (props.active ? '1' : '0.5')};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     max-width: ${(props) => (props.active ? '1.5rem' : '0.3rem')};
     height: 0.3rem;

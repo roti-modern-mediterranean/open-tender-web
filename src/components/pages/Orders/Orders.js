@@ -16,14 +16,13 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Container,
   Content,
   HeaderUser,
   ItemCards,
   Loading,
   Main,
   OrderCardItem,
-  PageContent,
+  PageContainer,
   PageError,
   PageTitle,
 } from '../..'
@@ -31,10 +30,10 @@ import OrdersList from './OrdersList'
 import AccountTabs from '../Account/AccountTabs'
 
 const ToggleView = styled('div')`
-  margin: 0 0 4rem;
+  text-align: center;
+  margin: 0 0 ${(props) => props.theme.layout.margin};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: -1rem 0 3rem;
-    text-align: center;
+    margin: 0 0 ${(props) => props.theme.layout.marginMobile};
   }
 `
 
@@ -90,59 +89,54 @@ const Orders = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser
-          title={isBrowser ? null : 'Order History'}
-          bgColor="secondary"
-          borderColor="secondary"
-        />
-        <Main bgColor="secondary">
+        <HeaderUser title={isBrowser ? null : 'Order History'} />
+        <Main>
           {!isBrowser && <AccountTabs />}
-          <Container>
+          <PageContainer style={{ marginBottom: '0', maxWidth: '100%' }}>
             <PageTitle {...config.recentOrders} />
-            <PageContent>
-              <PageError error={error} />
-              {recentOrders.length ? (
-                <>
-                  <ToggleView>
-                    <ButtonToggleGroup>
-                      <ButtonStyled
-                        onClick={() => setToggle('orders')}
-                        disabled={toggle === 'orders'}
-                      >
-                        Recent Orders
+            <PageError error={error} />
+
+            {recentOrders.length ? (
+              <>
+                <ToggleView>
+                  <ButtonToggleGroup>
+                    <ButtonStyled
+                      onClick={() => setToggle('orders')}
+                      disabled={toggle === 'orders'}
+                    >
+                      Recent Orders
+                    </ButtonStyled>
+                    <ButtonStyled
+                      onClick={() => setToggle('items')}
+                      disabled={toggle === 'items'}
+                    >
+                      Recent Items
+                    </ButtonStyled>
+                  </ButtonToggleGroup>
+                </ToggleView>
+                {toggle === 'orders' ? (
+                  <>
+                    <OrdersList orders={recentOrders} delay={0} />
+                    {entities.length - 1 > count && (
+                      <ButtonStyled onClick={loadMore}>
+                        Load more recent orders
                       </ButtonStyled>
-                      <ButtonStyled
-                        onClick={() => setToggle('items')}
-                        disabled={toggle === 'items'}
-                      >
-                        Recent Items
-                      </ButtonStyled>
-                    </ButtonToggleGroup>
-                  </ToggleView>
-                  {toggle === 'orders' ? (
-                    <>
-                      <OrdersList orders={recentOrders} delay={0} />
-                      {entities.length - 1 > count && (
-                        <ButtonStyled onClick={loadMore}>
-                          Load more recent orders
-                        </ButtonStyled>
-                      )}
-                    </>
-                  ) : (
-                    <ItemCards
-                      items={items}
-                      delay={0}
-                      renderItem={(props) => <OrderCardItem {...props} />}
-                    />
-                  )}
-                </>
-              ) : isLoading ? (
-                <Loading text="Retrieving your order history..." />
-              ) : (
-                <p>Looks like you don't have any orders yet</p>
-              )}
-            </PageContent>
-          </Container>
+                    )}
+                  </>
+                ) : (
+                  <ItemCards
+                    items={items}
+                    delay={0}
+                    renderItem={(props) => <OrderCardItem {...props} />}
+                  />
+                )}
+              </>
+            ) : isLoading ? (
+              <Loading text="Retrieving your order history..." />
+            ) : (
+              <p>Looks like you don't have any orders yet</p>
+            )}
+          </PageContainer>
         </Main>
       </Content>
     </>
