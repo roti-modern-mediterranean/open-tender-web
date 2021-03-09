@@ -47,8 +47,8 @@ const Dots = styled('div')`
   left: 0;
   right: 0;
   display: flex;
-  justify-content: flex-end;
-  align-items: right;
+  justify-content: center;
+  align-items: center;
   padding: 0 ${(props) => props.theme.layout.padding};
   height: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {

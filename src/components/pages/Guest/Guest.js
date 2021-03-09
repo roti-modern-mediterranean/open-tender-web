@@ -88,8 +88,8 @@ const Guest = () => {
       </Helmet>
       <Content>
         <HeaderMobile
-          bgColor={isBrowser ? 'secondary' : 'primary'}
-          borderColor={isBrowser ? 'secondary' : 'primary'}
+          // bgColor={isBrowser ? 'secondary' : 'primary'}
+          // borderColor={isBrowser ? 'secondary' : 'primary'}
           left={<HeaderLogo />}
           right={
             <>

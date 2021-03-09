@@ -126,8 +126,8 @@ const Account = () => {
       </Helmet>
       <Content>
         <HeaderMobile
-          bgColor={isBrowser ? 'secondary' : 'primary'}
-          borderColor={isBrowser ? 'secondary' : 'primary'}
+          // bgColor={isBrowser ? 'secondary' : 'primary'}
+          // borderColor={isBrowser ? 'secondary' : 'primary'}
           left={<HeaderLogo />}
           right={
             isBrowser ? (

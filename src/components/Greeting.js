@@ -6,7 +6,8 @@ import { GreetingHeader } from '.'
 
 const GreetingView = styled('div')`
   // padding: 0 ${(props) => props.theme.layout.padding};
-  // text-align: center;
+  width: 100%;
+  text-align: center;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
     // padding: 0;

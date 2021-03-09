@@ -5,15 +5,16 @@ import { BackgroundImage, BackgroundLoading, Slider } from '.'
 import { isBrowser } from 'react-device-detect'
 
 const PageHeroView = styled('div')`
+  flex-grow: 1;
   position: relative;
   display: flex;
-  flex-grow: 1;
-  min-height: 42rem;
-  max-height: ${(props) => props.maxHeight || '100%'};
+  flex-direction: column-reverse;
+  // min-height: 42rem;
+  // max-height: ${(props) => props.maxHeight || '100%'};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex-direction: column-reverse;
-    max-height: 100%;
-    min-height: 0;
+    // max-height: 100%;
+    // min-height: 0;
   }
 `
 
@@ -22,7 +23,7 @@ const PageHeroGreeting = styled('div')`
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  padding: ${(props) => props.theme.layout.padding};
+  padding: 4rem ${(props) => props.theme.layout.padding};
   background-color: ${(props) => props.theme.bgColors.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 2rem ${(props) => props.theme.layout.paddingMobile};
@@ -34,6 +35,8 @@ const PageHeroContent = styled('div')`
   flex-grow: 1;
   position: relative;
   display: flex;
+  min-height: 44rem;
+  // min-height: 50vh;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     min-height: 32rem;
   }

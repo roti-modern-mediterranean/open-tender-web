@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 const PageButtons = styled('div')`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   margin: -0.5rem 0 0;
   opacity: 0;
