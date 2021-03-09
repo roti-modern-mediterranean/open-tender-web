@@ -1,6 +1,8 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+// import { BgImage, Box, ButtonLink } from '@open-tender/components'
+
 import iconMap from '../iconMap'
 
 const NavButtonView = styled('button')`
@@ -11,40 +13,33 @@ const NavButtonView = styled('button')`
   line-height: 1;
   padding: 2rem 2rem 2rem 2.5rem;
   margin: 0 0 1rem;
-  font-family: ${(props) => props.theme.fonts.headings.family};
-  font-weight: ${(props) => props.theme.fonts.headings.weight};
-  letter-spacing: ${(props) => props.theme.fonts.headings.letterSpacing};
-  text-transform: ${(props) => props.theme.fonts.headings.textTransform};
-  -webkit-font-smoothing: ${(props) =>
-    props.theme.fonts.headings.fontSmoothing};
   color: ${(props) => props.theme.fonts.headings.color};
-  font-size: ${(props) => props.theme.fonts.sizes.big};
-  background-color: ${(props) => props.theme.bgColors.primary};
-  border: 0.1rem solid ${(props) => props.theme.border.color};
-  border-radius: ${(props) => props.theme.border.radiusSmall};
   transition: ${(props) => props.theme.links.transition};
   opacity: 0;
   animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
 
+  font-size: ${(props) => props.theme.fonts.sizes.big};
+  // font-family: ${(props) => props.theme.buttons.sizes.default.bgColor};
+
+  border-style: solid;
+  border-width: ${(props) => props.theme.border.width};
+  border-color: ${(props) => props.theme.border.color};
+  border-radius: ${(props) => props.theme.border.radius};
+  background-color: ${(props) => props.theme.bgColors.secondary};
+  box-shadow: ${(props) => props.theme.boxShadow.outer};
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    height: 5.8rem;
-    padding: 0 ${(props) => props.theme.layout.paddingMobile};
-    margin: 0;
-    border: 0;
-    border-radius: 0;
-    border-top: 0.1rem solid ${(props) => props.theme.border.color};
-    // border-top: 0.1rem solid ${(props) => props.theme.bgColors.secondary};
+    margin: 0 0 0.5rem;
+    font-size: ${(props) => props.theme.fonts.sizes.main};
   }
 
   &:hover {
-    background-color: ${(props) => props.theme.bgColors.secondary};
-    border: 0.1rem solid ${(props) => props.theme.bgColors.secondary};
-
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      border: 0;
-      border-top: 0.1rem solid ${(props) => props.theme.border.color};
-      background-color: ${(props) => props.theme.bgColors.primary};
-    }
+    border-style: solid;
+    border-width: ${(props) => props.theme.border.width};
+    border-color: ${(props) => props.theme.border.color};
+    border-radius: ${(props) => props.theme.border.radius};
+    background-color: ${(props) =>
+      props.theme.buttons.colors.secondary.bgColor};
   }
 
   &:last-of-type {
@@ -61,6 +56,7 @@ const NavButtonIcon = styled('span')`
   width: 1.4rem;
   height: 1.4rem;
   flex-shrink: 0;
+  line-height: 0;
 `
 
 const NavButtonTitle = styled('span')`
@@ -75,6 +71,7 @@ const NavButtonArrow = styled('span')`
   // top: -0.1rem;
   width: 1.8rem;
   height: 1.8rem;
+  line-height: 0;
   flex-shrink: 0;
   transition: ${(props) => props.theme.links.transition};
   transform: translateX(0);

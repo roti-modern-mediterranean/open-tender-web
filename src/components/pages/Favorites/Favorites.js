@@ -16,7 +16,6 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Container,
   Content,
   ItemCards,
   HeaderUser,
@@ -24,8 +23,8 @@ import {
   Main,
   OrderCardItem,
   PageTitle,
-  PageContent,
   PageError,
+  PageContainer,
 } from '../..'
 import AccountTabs from '../Account/AccountTabs'
 
@@ -79,34 +78,28 @@ const Favorites = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser
-          title={isBrowser ? null : 'Favorites'}
-          bgColor="secondary"
-          borderColor="secondary"
-        />
-        <Main bgColor="secondary">
+        <HeaderUser title={isBrowser ? null : 'Favorites'} />
+        <Main>
           {!isBrowser && <AccountTabs />}
-          <Container>
+          <PageContainer style={{ maxWidth: '100%' }}>
             <PageTitle {...config.favorites} />
-            <PageContent>
-              <PageError error={error} />
-              {items.length ? (
-                <ItemCards
-                  items={items}
-                  delay={0}
-                  sequential={false}
-                  renderItem={(props) => <OrderCardItem {...props} />}
-                />
-              ) : isLoading ? (
-                <Loading text="Retrieving your order history..." />
-              ) : (
-                <p>
-                  Looks like you don't have any favorites yet. Visit your past
-                  orders to add some.
-                </p>
-              )}
-            </PageContent>
-          </Container>
+            <PageError error={error} />
+            {items.length ? (
+              <ItemCards
+                items={items}
+                delay={0}
+                sequential={false}
+                renderItem={(props) => <OrderCardItem {...props} />}
+              />
+            ) : isLoading ? (
+              <Loading text="Retrieving your order history..." />
+            ) : (
+              <p>
+                Looks like you don't have any favorites yet. Visit your past
+                orders to add some.
+              </p>
+            )}
+          </PageContainer>
         </Main>
       </Content>
     </>

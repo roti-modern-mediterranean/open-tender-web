@@ -16,13 +16,12 @@ import { selectAccountConfig, selectBrand, selectOptIns } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Background,
-  Container,
   Content,
   FormWrapper,
   HeaderUser,
   Loading,
   Main,
-  PageContent,
+  PageContainer,
   PageTitle,
   VerifyAccount,
 } from '../..'
@@ -66,38 +65,30 @@ const AccountProfile = () => {
         </title>
       </Helmet>
       <Background imageUrl={account.background} />
-      <Content maxWidth="76.8rem">
-        <HeaderUser
-          title={isBrowser ? null : account.profile.title}
-          maxWidth="76.8rem"
-          bgColor="secondary"
-          borderColor="secondary"
-        />
-        <Main bgColor="secondary">
+      <Content>
+        <HeaderUser title={isBrowser ? null : account.profile.title} />
+        <Main>
           {!isBrowser && <AccountTabs />}
-          <Container>
-            <PageTitle {...account.profile} />
-            <PageContent>
-              {profile ? (
-                <>
-                  <VerifyAccount style={{ margin: '-1rem 0 3rem' }} />
-                  <FormWrapper>
-                    <ProfileForm
-                      profile={profile}
-                      loading={loading}
-                      error={error}
-                      update={update}
-                      optIns={optIns}
-                    />
-                  </FormWrapper>
-                </>
-              ) : isLoading ? (
-                <Loading text="Retrieving your profile & preferences..." />
-              ) : errMsg ? (
-                <p>{errMsg}</p>
-              ) : null}
-            </PageContent>
-          </Container>
+          <PageContainer style={{ maxWidth: '72rem' }}>
+            <PageTitle {...account.profile}>
+              <VerifyAccount style={{ margin: '2rem 0 0' }} />
+            </PageTitle>
+            {profile ? (
+              <FormWrapper>
+                <ProfileForm
+                  profile={profile}
+                  loading={loading}
+                  error={error}
+                  update={update}
+                  optIns={optIns}
+                />
+              </FormWrapper>
+            ) : isLoading ? (
+              <Loading text="Retrieving your profile & preferences..." />
+            ) : errMsg ? (
+              <p>{errMsg}</p>
+            ) : null}
+          </PageContainer>
         </Main>
       </Content>
     </>

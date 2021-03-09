@@ -31,6 +31,8 @@ import AccountTabs from '../Account/AccountTabs'
 
 const ToggleView = styled('div')`
   text-align: center;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
   margin: 0 0 ${(props) => props.theme.layout.margin};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 0 ${(props) => props.theme.layout.marginMobile};
@@ -92,7 +94,7 @@ const Orders = () => {
         <HeaderUser title={isBrowser ? null : 'Order History'} />
         <Main>
           {!isBrowser && <AccountTabs />}
-          <PageContainer style={{ marginBottom: '0', maxWidth: '100%' }}>
+          <PageContainer style={{ maxWidth: '100%' }}>
             <PageTitle {...config.recentOrders} />
             <PageError error={error} />
 

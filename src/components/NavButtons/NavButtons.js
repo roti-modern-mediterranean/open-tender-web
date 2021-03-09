@@ -3,7 +3,11 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import NavButton from './NavButton'
 
-const NavButtonsView = styled('div')``
+const NavButtonsView = styled('div')`
+  // width: 64rem;
+  // max-width: 100%;
+  margin: 0 auto;
+`
 
 const NavButtons = ({ buttons, delay = 0.125 }) => {
   return (

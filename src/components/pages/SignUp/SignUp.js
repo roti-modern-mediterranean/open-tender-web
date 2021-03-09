@@ -23,14 +23,12 @@ import {
 } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
   FormWrapper,
   Main,
   PageTitle,
-  PageContent,
   HeaderDefault,
+  PageContainer,
 } from '../..'
 
 export const ThanxTerms = () => (
@@ -114,41 +112,35 @@ const SignUp = () => {
           {signupConfig.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={signupConfig.background} />
-      <Content maxWidth="76.8rem">
-        <HeaderDefault
-          title={isBrowser ? null : signupConfig.title}
-          bgColor="secondary"
-          borderColor="secondary"
-        />
-        <Main bgColor="secondary">
-          <Container>
+      {/* <Background imageUrl={signupConfig.background} /> */}
+      <Content>
+        <HeaderDefault title={isBrowser ? null : signupConfig.title} />
+        <Main>
+          <PageContainer style={{ maxWidth: '72rem' }}>
             <PageTitle {...signupConfig} />
-            <PageContent>
-              {posToken && (
-                <p style={{ margin: '0 0 4rem' }}>
-                  Already have an account?{' '}
-                  <ButtonLink onClick={login}>Click here to log in.</ButtonLink>
-                </p>
-              )}
-              {has_thanx && <ThanxTerms />}
-              <FormWrapper>
-                <SignUpForm
-                  loading={loading}
-                  error={error}
-                  signUp={signUp}
-                  optIns={optIns}
-                  hasThanx={has_thanx}
-                  posToken={posToken}
-                />
-              </FormWrapper>
-              <div style={{ margin: '3rem 0' }}>
-                <p>
-                  <Link to="/">{signupConfig.back}</Link>
-                </p>
-              </div>
-            </PageContent>
-          </Container>
+            {posToken && (
+              <p style={{ margin: '0 0 4rem' }}>
+                Already have an account?{' '}
+                <ButtonLink onClick={login}>Click here to log in.</ButtonLink>
+              </p>
+            )}
+            {has_thanx && <ThanxTerms />}
+            <FormWrapper>
+              <SignUpForm
+                loading={loading}
+                error={error}
+                signUp={signUp}
+                optIns={optIns}
+                hasThanx={has_thanx}
+                posToken={posToken}
+              />
+            </FormWrapper>
+            <div style={{ margin: '3rem 0' }}>
+              <p>
+                <Link to="/">{signupConfig.back}</Link>
+              </p>
+            </div>
+          </PageContainer>
         </Main>
       </Content>
     </>

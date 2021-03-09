@@ -7,7 +7,7 @@ const ItemCardsView = styled('div')`
   flex-wrap: wrap;
   margin: 0 -0.5rem;
   opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.125s forwards;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
 `
 const ItemCardsItem = styled('div')`
     flex: 0 0 30rem;

@@ -8,11 +8,11 @@ import { selectBrand } from '../../../slices'
 import iconMap from '../../iconMap'
 
 const AccountButtonsView = styled('div')`
-  padding: ${(props) => props.theme.layout.padding};
-  padding-top: 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0;
-  }
+  // padding: ${(props) => props.theme.layout.padding};
+  // padding-top: 0;
+  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  //   padding: 0;
+  // }
 `
 
 const navButtons = [

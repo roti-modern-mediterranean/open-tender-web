@@ -248,12 +248,13 @@ const makeGlobalStyles = (theme) => css`
     width: 100%;
     line-height: ${theme.inputs.lineHeight};
     padding: ${theme.inputs.padding};
-    border-radius: ${theme.border.radiusSmall};
+    border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+    box-shadow: ${theme.inputs.boxShadow};
+    border-radius: ${theme.inputs.radius};
     font-family: ${theme.fonts.body.family};
     font-size: ${theme.fonts.sizes.main};
     color: ${theme.fonts.headings.color};
-    background-color: ${theme.bgColors.secondary};
-    border: ${theme.border.width} solid ${theme.bgColors.secondary};
+    background-color: ${theme.bgColors.primary};
     transition: ${theme.links.transition};
 
     &::placeholder {

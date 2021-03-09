@@ -7,14 +7,14 @@ const OrdersListView = styled('div')`
   display: flex;
   flex-wrap: wrap;
   margin: 1rem -1rem;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
 `
 const OrdersListItem = styled('div')`
     flex: 0 0 36rem;
     max-width: 20%;
     padding: 0 1rem;
     margin: 0 0 2rem;
-    opacity: 0;
-    animation: slide-up 0.25s ease-in-out ${(props) => props.delay} forwards;
 
     @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
       flex: 0 0 25%;
@@ -35,15 +35,12 @@ const OrdersListItem = styled('div')`
   }
 `
 
-const OrdersList = ({ orders, delay = 0.125, isGroup = false }) => {
+const OrdersList = ({ orders, isGroup = false }) => {
   return (
     <OrdersListView>
       {orders.map((order) => {
         return (
-          <OrdersListItem
-            key={order.order_id || order.token}
-            delay={`${delay.toFixed(3)}s`}
-          >
+          <OrdersListItem key={order.order_id || order.token}>
             {isGroup ? (
               <OrderCardGroup order={order} />
             ) : (
