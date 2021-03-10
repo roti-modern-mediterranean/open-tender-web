@@ -15,11 +15,13 @@ const RevenueCenterActionIcon = styled('div')`
   top: 0.1rem;
   width: 1.4rem;
   height: 1.5rem;
+  line-height: 0;
   color: ${(props) => props.theme.fonts.body.color};
 `
 
 const RevenueCenterActionArrow = styled(RevenueCenterActionIcon)`
   transition: all 0.15s ease;
+  line-height: 0;
   transform: translateX(0);
 
   a:hover &,

@@ -1,18 +1,29 @@
-import React, { useEffect, createContext, useContext, useState } from 'react'
+import React, {
+  useEffect,
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+} from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { Helmet } from 'react-helmet'
+import { isMobile } from 'react-device-detect'
 import {
   selectOrder,
   selectMenuVars,
   selectGroupOrderClosed,
   selectMenu,
   selectSelectedAllergenNames,
+  selectCustomer,
+  selectDeals,
   resetRevenueCenter,
   fetchRevenueCenter,
   fetchMenu,
   fetchAllergens,
+  fetchDeals,
 } from '@open-tender/redux'
-import { Helmet } from 'react-helmet'
+import { makeValidDeals } from '@open-tender/js'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
@@ -21,15 +32,15 @@ import { Content, Main, ScreenreaderTitle } from '../..'
 import MenuContent from './MenuContent'
 import MenuHeader from './MenuHeader'
 import MenuMobileMenu from './MenuMobileMenu'
-import { isMobile } from 'react-device-detect'
 
 export const MenuContext = createContext(null)
 
 const MenuPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const { windowRef } = useContext(AppContext)
   const [showMenu, setShowMenu] = useState(false)
-  const { title: siteTitle } = useSelector(selectBrand)
+  const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { menu: menuConfig } = useSelector(selectConfig)
   const { loadingMessage } = menuConfig
   const order = useSelector(selectOrder)
@@ -40,10 +51,17 @@ const MenuPage = () => {
   let { revenueCenters, categories, soldOut, error, loading } = useSelector(
     selectMenu
   )
+  const isLoading = loading === 'pending'
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const groupOrderClosed = useSelector(selectGroupOrderClosed)
-  const isLoading = loading === 'pending'
-  const { windowRef } = useContext(AppContext)
+  const { profile } = useSelector(selectCustomer)
+  const { customer_id } = profile || {}
+  const { entities } = useSelector(selectDeals)
+  const deals = has_deals && entities.length ? entities : null
+  const validDeals = useMemo(
+    () => makeValidDeals(deals, orderType, serviceType, revenueCenterId),
+    [deals, orderType, serviceType, revenueCenterId]
+  )
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -57,9 +75,9 @@ const MenuPage = () => {
       return history.push('/review')
     } else {
       const requested = orderType === 'CATERING' ? requestedAt : null
+      dispatch(fetchAllergens())
       dispatch(fetchRevenueCenter(revenueCenterId, requested))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
-      dispatch(fetchAllergens())
     }
   }, [
     revenueCenterId,
@@ -70,6 +88,12 @@ const MenuPage = () => {
     history,
     groupOrderClosed,
   ])
+
+  useEffect(() => {
+    if (has_deals && !isLoading) {
+      dispatch(fetchDeals())
+    }
+  }, [has_deals, customer_id, isLoading, dispatch])
 
   const changeRevenueCenter = () => {
     dispatch(resetRevenueCenter())
@@ -95,6 +119,7 @@ const MenuPage = () => {
               isLoading,
               loadingMessage,
               error,
+              deals: validDeals,
             }}
           >
             {isMobile && (

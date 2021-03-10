@@ -9,6 +9,7 @@ import CartButton from './CartButton'
 import Content from './Content'
 import Container from './Container'
 import Deals from './Deals'
+import DealsSection from './DealsSection'
 import DealsScrollable from './DealsScrollable'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
@@ -94,6 +95,7 @@ export {
   Container,
   Content,
   Deals,
+  DealsSection,
   DealsScrollable,
   ErrorBoundary,
   Footer,

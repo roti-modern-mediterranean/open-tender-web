@@ -20,7 +20,7 @@ const RewardView = styled('div')`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 1rem 0 0;
+  margin: 0;
   text-align: center;
 `
 
@@ -31,19 +31,27 @@ const RewardHeader = styled('div')`
 
   p:first-of-type {
     font-size: ${(props) => props.theme.fonts.sizes.h3};
-    line-height: 1.2;
+    line-height: 1;
     margin: 0;
   }
 
   p + p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
     line-height: 1.2;
-    margin: 1rem 0 0;
+    margin: 0.5rem 0;
+  }
+`
+
+const RewardFinePrint = styled('div')`
+  & > p {
+    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+    line-height: 1.2;
+    margin: 0 !important;
   }
 `
 
 const RewardContent = styled('div')`
-  margin: 1.5rem 0;
+  margin: 1.5rem 0 0;
 
   p {
     font-size: ${(props) => props.theme.fonts.sizes.small};
@@ -109,6 +117,8 @@ const Reward = ({ reward }) => {
           <RewardHeader>
             <Heading as="p">{title}</Heading>
             {description && <p>{description}</p>}
+          </RewardHeader>
+          <RewardFinePrint>
             {expiration ? (
               <Text color="alert" size="small" as="p">
                 Use by {expiration}
@@ -140,7 +150,8 @@ const Reward = ({ reward }) => {
                 Verified account required to redeem this discount.
               </Text>
             )}
-          </RewardHeader>
+          </RewardFinePrint>
+
           <RewardContent>
             {qrCodeUrl ? (
               <>

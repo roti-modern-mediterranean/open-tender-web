@@ -9,14 +9,14 @@ import {
   selectGroupOrder,
   selectAutoSelect,
 } from '@open-tender/redux'
-import { ButtonStyled, Message } from '@open-tender/components'
+import { ButtonStyled, Message, Text } from '@open-tender/components'
 
 import { selectConfig } from '../../slices'
 import iconMap from '../iconMap'
 import RevenueCenterButtons from './RevenueCenterButtons'
 
 const RevenueCenterOrderView = styled('div')`
-  margin: 1.5rem 0 0;
+  margin: 1rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 1rem 0 0;
   }
@@ -85,13 +85,13 @@ export const RevenueCenterOrder = ({ revenueCenter, isMenu, isLanding }) => {
           {msg.message && (
             <RevenueCenterOrderMessage>
               <p>
-                <Message
+                <Text
                   color={msg.color}
                   size="small"
                   style={{ borderRadius: '0.3rem' }}
                 >
                   {msg.message}
-                </Message>
+                </Text>
               </p>
             </RevenueCenterOrderMessage>
           )}

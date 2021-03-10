@@ -12,7 +12,7 @@ import { AppContext } from '../../../App'
 import { Account, Deals as DealsButton } from '../../buttons'
 import {
   Content,
-  Deals,
+  DealsSection,
   Greeting,
   HeaderLogo,
   HeaderMobile,
@@ -115,7 +115,7 @@ const Guest = () => {
             </PageHero>
             {hasPageContent && (
               <PageContainer>
-                {has_deals && <Deals />}
+                {has_deals && <DealsSection />}
                 {hasContent && (
                   <GuestContent hasDeals={has_deals}>
                     {content.map((i, index) => (

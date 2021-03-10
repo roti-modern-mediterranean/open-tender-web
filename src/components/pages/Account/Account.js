@@ -24,7 +24,7 @@ import { selectBrand, selectConfig, closeModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  Deals,
+  DealsSection,
   Greeting,
   HeaderLogo,
   HeaderMobile,
@@ -135,7 +135,7 @@ const Account = () => {
               </Greeting>
             </PageHero>
             <PageContainer style={{ marginTop: '0' }}>
-              {has_deals && <Deals />}
+              {has_deals && <DealsSection />}
               <AccountOrders />
               <AccountLoyalty />
               {/* <AccountGroupOrders />

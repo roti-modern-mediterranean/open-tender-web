@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { selectDeals, fetchDeals } from '@open-tender/redux'
 
-import { Loading, PageSection, Reward } from '.'
-import { selectBrand } from '../slices'
+import { Reward } from '.'
 
 const DealsView = styled('div')`
   margin: -1rem;
@@ -30,42 +28,21 @@ const Deal = styled('div')`
   }
 `
 
-const Deals = () => {
-  const dispatch = useDispatch()
-  const { has_deals } = useSelector(selectBrand)
-  const { entities: deals, loading, error } = useSelector(selectDeals)
-  const hasDeals = deals.length > 0 && !error
-  // const items = deals.map((i) => ({ ...i, key: i.discount_id }))
-  const displayed = deals.slice(0, 3)
-  const isMore = deals.length > displayed.length
-
-  useEffect(() => {
-    if (has_deals) dispatch(fetchDeals())
-  }, [has_deals, dispatch])
-
+const Deals = ({ deals }) => {
   return (
-    <PageSection
-      title="Today's Deals"
-      subtitle="These deals can be redeemed from the checkout page"
-      to={isMore ? '/deals' : null}
-    >
-      {loading === 'pending' ? (
-        <Loading text="Retrieving today's deals..." />
-      ) : hasDeals ? (
-        <DealsView>
-          {displayed.map((deal) => (
-            <Deal key={deal.discount_id}>
-              <Reward item={deal} />
-            </Deal>
-          ))}
-        </DealsView>
-      ) : (
-        <p>We're not featuring any deals today. Please check back soon!</p>
-      )}
-    </PageSection>
+    <DealsView>
+      {deals.map((deal) => (
+        <Deal key={deal.discount_id}>
+          <Reward item={deal} />
+        </Deal>
+      ))}
+    </DealsView>
   )
 }
 
 Deals.displayName = 'Deals'
+Deals.propTypes = {
+  deals: propTypes.array,
+}
 
 export default Deals

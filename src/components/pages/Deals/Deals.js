@@ -10,6 +10,7 @@ import { selectBrand, selectConfig } from '../../../slices'
 import {
   Background,
   Content,
+  Deals as DealsList,
   HeaderDefault,
   HeaderUser,
   Loading,
@@ -18,42 +19,14 @@ import {
   PageContent,
   PageError,
   PageTitle,
-  Reward,
 } from '../..'
 import { AppContext } from '../../../App'
 import AccountTabs from '../Account/AccountTabs'
-import styled from '@emotion/styled'
 
 const defaultConfig = {
   title: 'Deals',
   subtitle: 'Daily offers available to all customers. Check back daily!',
 }
-
-const DealsView = styled('div')`
-  margin: -1rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    margin: -0.5rem;
-    justify-content: center;
-  }
-`
-
-const Deal = styled('div')`
-  width: 33.33333%;
-  padding: 1rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    width: 50%;
-    padding: 0.5rem;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 100%;
-    padding: 0.5rem;
-  }
-`
 
 const Deals = () => {
   const history = useHistory()
@@ -103,13 +76,7 @@ const Deals = () => {
             {error ? (
               <PageError error={error} />
             ) : hasDeals ? (
-              <DealsView>
-                {deals.map((deal) => (
-                  <Deal key={deal.discount_id}>
-                    <Reward item={deal} />
-                  </Deal>
-                ))}
-              </DealsView>
+              <DealsList deals={deals} />
             ) : (
               <PageContent>
                 {isLoading ? (

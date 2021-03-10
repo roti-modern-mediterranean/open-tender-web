@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 
-import { selectBrand, selectDisplaySettings } from '../../../slices'
+import { selectDisplaySettings } from '../../../slices'
 import { RevenueCenter, RevenueCenterChild, NavSticky } from '../..'
 import { MenuContext } from './Menu'
 import MenuRevenueCenters from './MenuRevenueCenters'
@@ -26,6 +26,7 @@ const MenuContent = () => {
     isLoading,
     error,
     menuConfig,
+    deals,
   } = useContext(MenuContext)
   const {
     menuHero,
@@ -33,7 +34,6 @@ const MenuContent = () => {
     menuHeroChild,
     menuHeroChildMobile,
   } = useSelector(selectDisplaySettings)
-  const { has_deals } = useSelector(selectBrand)
   const showHero =
     menuHero === undefined ? true : isMobile ? menuHeroMobile : menuHero
   const showHeroChild =
@@ -46,7 +46,8 @@ const MenuContent = () => {
   const heroRef = useRef()
   const [selected, setSelected] = useState(null)
   const [visible, setVisible] = useState([])
-  const navItems = visible ? visible.map((i) => i.name) : []
+  let navItems = visible ? visible.map((i) => i.name) : []
+  navItems = deals && deals.length > 0 ? ['Deals', ...navItems] : navItems
   const heroHeight = heroRef.current
     ? heroRef.current.getBoundingClientRect().height
     : 0
@@ -114,7 +115,7 @@ const MenuContent = () => {
                   revenueCenter={selected}
                   change={change}
                 />
-                {has_deals && <MenuDeals />}
+                <MenuDeals deals={deals} />
                 <MenuCategories categories={visible} />
               </>
             )}
