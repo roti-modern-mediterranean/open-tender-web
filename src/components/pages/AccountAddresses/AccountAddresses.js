@@ -13,12 +13,11 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import Addresses from './Addresses'
 import {
-  Background,
-  Container,
   Content,
   HeaderUser,
   Loading,
   Main,
+  PageContainer,
   PageContent,
   PageTitle,
 } from '../..'
@@ -56,31 +55,28 @@ const AccountAddresses = () => {
           {config.addresses.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={config.account.background} />
-      <Content maxWidth="76.8rem">
-        <HeaderUser
-          title={isBrowser ? null : config.account.addresses.title}
-          maxWidth="76.8rem"
-          bgColor="secondary"
-          borderColor="secondary"
-        />
-        <Main bgColor="secondary">
+      <Content>
+        <HeaderUser title={isBrowser ? null : config.account.addresses.title} />
+        <Main>
           {!isBrowser && <AccountTabs />}
-          <Container>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config.addresses} />
-            <PageContent>
-              {entities.length ? (
-                <Addresses addresses={entities} isLoading={isLoading} />
-              ) : isLoading ? (
-                <Loading text="Retrieving your order history..." />
-              ) : (
-                <p>
-                  Looks like you haven't added any addresses yet. Please place
-                  an order to add one.
-                </p>
-              )}
-            </PageContent>
-          </Container>
+
+            {entities.length ? (
+              <Addresses addresses={entities} isLoading={isLoading} />
+            ) : (
+              <PageContent>
+                {isLoading ? (
+                  <Loading text="Retrieving your order history..." />
+                ) : (
+                  <p>
+                    Looks like you haven't added any addresses yet. Please place
+                    an order to add one.
+                  </p>
+                )}
+              </PageContent>
+            )}
+          </PageContainer>
         </Main>
       </Content>
     </>

@@ -12,12 +12,11 @@ import { Helmet } from 'react-helmet'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import {
-  Background,
-  Container,
   Content,
   HeaderUser,
   Loading,
   Main,
+  PageContainer,
   PageContent,
   PageError,
   PageTitle,
@@ -56,29 +55,25 @@ const AccountHouseAccounts = () => {
           {account.houseAccounts.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={account.background} />
-      <Content maxWidth="76.8rem">
-        <HeaderUser
-          title={isBrowser ? null : account.houseAccounts.title}
-          maxWidth="76.8rem"
-          bgColor="secondary"
-          borderColor="secondary"
-        />
-        <Main bgColor="secondary">
+      <Content>
+        <HeaderUser title={isBrowser ? null : account.houseAccounts.title} />
+        <Main>
           {!isBrowser && <AccountTabs />}
-          <Container>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...account.houseAccounts} />
-            <PageContent>
-              <PageError error={error} />
-              {entities.length ? (
-                <HouseAccountsList houseAccounts={entities} />
-              ) : isLoading ? (
-                <Loading text="Retrieving your house accounts..." />
-              ) : (
-                <p>{account.houseAccounts.empty}</p>
-              )}
-            </PageContent>
-          </Container>
+            <PageError error={error} />
+            {entities.length ? (
+              <HouseAccountsList houseAccounts={entities} />
+            ) : (
+              <PageContent>
+                {isLoading ? (
+                  <Loading text="Retrieving your house accounts..." />
+                ) : (
+                  <p>{account.houseAccounts.empty}</p>
+                )}
+              </PageContent>
+            )}
+          </PageContainer>
         </Main>
       </Content>
     </>

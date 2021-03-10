@@ -6,10 +6,9 @@ import { selectCustomer, logoutCustomer } from '@open-tender/redux'
 import { ButtonLink } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
   Content,
   HeaderUser,
   Main,
@@ -25,8 +24,6 @@ const AccountSettings = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { account: accountConfig } = useSelector(selectConfig)
-  const { background } = accountConfig
   const { auth, profile } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)
 
@@ -44,12 +41,11 @@ const AccountSettings = () => {
       <Helmet>
         <title>Account Settings | {siteTitle}</title>
       </Helmet>
-      {isBrowser && <Background imageUrl={background} />}
       <Content>
         <HeaderUser title={isBrowser ? null : 'Account'} />
         <Main>
           {!isBrowser && <AccountTabs />}
-          <PageContainer style={{ maxWidth: '64rem' }}>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle
               title="Account"
               subtitle="Manage saved credit cards, addresses, etc."

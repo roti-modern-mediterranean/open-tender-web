@@ -91,6 +91,7 @@ const HeaderMobile = ({
   bgColor = 'primary',
   borderColor = 'primary',
   maxWidth = '100%',
+  style = null,
 }) => {
   const header = useRef(null)
   const [stuck, setStuck] = useState(false)
@@ -120,6 +121,7 @@ const HeaderMobile = ({
         borderColor={adjustedBorderColor}
         maxWidth={maxWidth}
         isMobile={isMobile}
+        style={style}
       >
         <HeaderMobileNav>{left}</HeaderMobileNav>
         {title && (

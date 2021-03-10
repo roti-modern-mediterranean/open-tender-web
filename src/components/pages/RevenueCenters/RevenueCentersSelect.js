@@ -16,7 +16,13 @@ import { makeDisplayedRevenueCenters, renameLocation } from '@open-tender/js'
 import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
 
 import { selectConfig, selectSettings, selectGeoLatLng } from '../../../slices'
-import { Container, Loading, PageContent, RevenueCenter } from '../..'
+import {
+  Container,
+  Loading,
+  PageContent,
+  PageTitle,
+  RevenueCenter,
+} from '../..'
 import styled from '@emotion/styled'
 import iconMap from '../../iconMap'
 
@@ -33,22 +39,24 @@ const RevenueCentersSelectView = styled('div')`
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 6rem 0 ${(props) => (props.showMap ? '20rem' : '0')};
+    margin: 7.2rem 0 ${(props) => (props.showMap ? '24rem' : '0')};
     padding: 1rem 0 0;
     transition: all 0.25s ease;
-    transform: translateY(${(props) => (props.showMap ? '20rem' : '0')});
+    transform: translateY(${(props) => (props.showMap ? '24rem' : '0')});
   }
 `
 
 const RevenueCentersSelectShowMap = styled('div')`
   display: none;
-  margin: 0 0 0.75rem;
+  width: 100%;
+  margin: 0.5rem 0 1rem;
+  text-align: center;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: block;
   }
 
   button {
-    display: block;
+    display: inline-block;
     padding: 0.5rem 0;
   }
 
@@ -61,29 +69,13 @@ const RevenueCentersSelectShowMap = styled('div')`
   }
 `
 
-const RevenueCentersSelectHeader = styled('div')`
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0 0 2rem;
-  }
-
-  h2 {
-    line-height: 1;
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h3};
-    }
-  }
-
-  p {
-    margin: 0.75rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      // margin: 0.25rem 0 0;
-    }
-  }
-`
-
 const RevenueCentersSelectList = styled('ul')`
-  > li {
+  margin: 0 0 ${(props) => props.theme.layout.margin};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0 0 ${(props) => props.theme.layout.marginMobile};
+  }
+
+  & > li {
     margin: ${(props) => props.theme.layout.padding} 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
@@ -179,42 +171,45 @@ const RevenueCentersSelect = () => {
     <RevenueCentersSelectView showMap={showMap}>
       <Container>
         {isLoading ? (
-          <Loading text="Retrieving nearest locations..." />
+          <PageContent>
+            <Loading
+              text="Retrieving nearest locations..."
+              style={{ textAlign: 'center' }}
+            />
+          </PageContent>
         ) : (
           <>
-            <PageContent>
-              <RevenueCentersSelectHeader>
-                <RevenueCentersSelectShowMap>
-                  <ButtonLink onClick={() => setShowMap(!showMap)}>
-                    <Preface>{showMap ? 'Hide Map' : 'Show Map'}</Preface>
-                  </ButtonLink>
-                </RevenueCentersSelectShowMap>
-                <h2>{renamedTitle}</h2>
-                <p>{renamedError || renamedMsg}</p>
-              </RevenueCentersSelectHeader>
-              {showRevenueCenters ? (
-                <RevenueCentersSelectList>
-                  {displayedRevenueCenters.map((revenueCenter) => (
-                    <li key={revenueCenter.revenue_center_id}>
-                      <RevenueCenter
-                        revenueCenter={revenueCenter}
-                        classes="rc--card"
-                        showImage={!isMobileOnly}
-                      />
-                    </li>
-                  ))}
-                </RevenueCentersSelectList>
-              ) : (
-                <div style={{ margin: '3rem 0 0' }}>
-                  <ButtonStyled
-                    icon={iconMap.RefreshCw}
-                    onClick={handleStartOver}
-                  >
-                    Start Over
-                  </ButtonStyled>
-                </div>
-              )}
-            </PageContent>
+            <PageTitle>
+              <RevenueCentersSelectShowMap>
+                <ButtonLink onClick={() => setShowMap(!showMap)}>
+                  <Preface>{showMap ? 'Hide Map' : 'Show Map'}</Preface>
+                </ButtonLink>
+              </RevenueCentersSelectShowMap>
+              <h2>{renamedTitle}</h2>
+              <p>{renamedError || renamedMsg}</p>
+            </PageTitle>
+            {showRevenueCenters ? (
+              <RevenueCentersSelectList>
+                {displayedRevenueCenters.map((revenueCenter) => (
+                  <li key={revenueCenter.revenue_center_id}>
+                    <RevenueCenter
+                      revenueCenter={revenueCenter}
+                      classes="rc--card"
+                      showImage={!isMobileOnly}
+                    />
+                  </li>
+                ))}
+              </RevenueCentersSelectList>
+            ) : (
+              <div style={{ margin: '3rem 0 0' }}>
+                <ButtonStyled
+                  icon={iconMap.RefreshCw}
+                  onClick={handleStartOver}
+                >
+                  Start Over
+                </ButtonStyled>
+              </div>
+            )}
           </>
         )}
       </Container>

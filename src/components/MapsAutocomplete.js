@@ -1,34 +1,35 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
 import { setAddress, selectOrder } from '@open-tender/redux'
-import { GoogleMapsAutocomplete } from '@open-tender/components'
+import { Box, GoogleMapsAutocomplete } from '@open-tender/components'
 
 import iconMap from './iconMap'
-import { Container } from '.'
-import styled from '@emotion/styled'
 
 const MapsAutocompleteView = styled('div')`
   position: relative;
   z-index: 2;
-  background-color: ${(props) => props.theme.bgColors.primary};
-  // padding: ${(props) => props.theme.layout.padding} 0;
-  padding: 2rem 0 4rem;
+  padding: 0 ${(props) => props.theme.layout.padding};
+  margin: 0 0 ${(props) => props.theme.layout.padding};
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: fixed;
     z-index: 15;
     top: 6rem;
     left: 0;
     right: 0;
-    height: 6rem;
-    padding: 0 0 1.5rem;
+    height: 7.2rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    border-bottom-style: solid;
-    border-bottom-width: 0.1rem;
-    border-bottom-color: ${(props) => props.theme.border.color};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+    background-color: 0 ${(props) => props.theme.bgColors.primary};
   }
+`
+
+const MapsAutocompleteInput = styled(Box)`
+  padding: ${(props) => props.theme.layout.paddingMobile};
 `
 
 const MapsAutocomplete = ({
@@ -48,7 +49,7 @@ const MapsAutocomplete = ({
 
   return (
     <MapsAutocompleteView>
-      <Container>
+      <MapsAutocompleteInput>
         <GoogleMapsAutocomplete
           maps={maps}
           map={map}
@@ -60,7 +61,7 @@ const MapsAutocomplete = ({
           icon={iconMap.Navigation}
           placeholder={placeholder}
         />
-      </Container>
+      </MapsAutocompleteInput>
     </MapsAutocompleteView>
   )
 }

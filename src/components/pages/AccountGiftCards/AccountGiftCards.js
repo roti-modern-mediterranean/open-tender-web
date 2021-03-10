@@ -14,7 +14,6 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { openModal, selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
   Content,
   HeaderUser,
   Loading,
@@ -57,7 +56,6 @@ const AccountGiftCards = () => {
           {config.giftCards.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={config.background} />
       <Content>
         <HeaderUser title={isBrowser ? null : 'Gift Cards'} />
         <Main>

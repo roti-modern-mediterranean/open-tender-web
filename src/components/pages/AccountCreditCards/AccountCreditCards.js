@@ -13,7 +13,6 @@ import { Helmet } from 'react-helmet'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand, openModal } from '../../../slices'
 import {
-  Background,
   Content,
   HeaderUser,
   Loading,
@@ -71,7 +70,6 @@ const AccountCreditCards = () => {
           {account.creditCards.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={account.background} />
       <Content>
         <HeaderUser title={isBrowser ? null : account.creditCards.title} />
         <Main>

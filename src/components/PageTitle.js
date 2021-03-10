@@ -18,6 +18,14 @@ const PageTitleView = styled('div')`
     }
   }
 
+  h2 {
+    line-height: 1;
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h3};
+    }
+  }
+
   p {
     line-height: ${(props) => props.theme.lineHeight};
     margin: 0.5rem 0 0;

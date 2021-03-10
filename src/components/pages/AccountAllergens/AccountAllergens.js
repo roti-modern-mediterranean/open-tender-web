@@ -17,7 +17,6 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
   Content,
   FormWrapper,
   HeaderUser,
@@ -83,7 +82,6 @@ const AccountAllergens = () => {
           {account.allergens.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={account.background} />
       <Content>
         <HeaderUser title={isBrowser ? null : account.allergens.title} />
         <Main>
