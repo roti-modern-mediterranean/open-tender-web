@@ -40,15 +40,7 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { cardIconMap } from '../../../assets/cardIcons'
 import { selectAPI, selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
-import {
-  Background,
-  Container,
-  Content,
-  Loading,
-  Main,
-  PageTitle,
-  PageContent,
-} from '../..'
+import { Content, Loading, Main, PageTitle, PageContainer } from '../..'
 import CheckoutHeader from './CheckoutHeader'
 import CheckoutTotal from './CheckoutTotal'
 import CheckoutCancelEdit from './CheckoutCancelEdit'
@@ -156,41 +148,40 @@ const Checkout = () => {
       <Helmet>
         <title>Checkout | {title}</title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      {/* <Background imageUrl={config.background} /> */}
+      <Content>
         <CheckoutHeader title={isBrowser ? null : 'Checkout'} />
         <CheckoutTotal checkout={checkout} />
         <Main style={{ padding: '12rem 0 0' }}>
-          <Container>
-            <PageTitle {...config} />
-            <PageContent>
+          <PageContainer>
+            <PageTitle {...config}>
               <CheckoutCancelEdit />
-              <div ref={formRef} style={{ margin: '0 0 4rem' }}>
-                {!check ? (
-                  formError ? (
-                    <FormError errMsg={formError} />
-                  ) : (
-                    <Loading text="Calculating your check..." />
-                  )
-                ) : null}
-                <CheckoutForm
-                  dispatch={dispatch}
-                  history={history}
-                  iconMap={iconMap}
-                  cardIconMap={cardIconMap}
-                  config={config}
-                  checkout={checkout}
-                  order={order}
-                  customer={customer}
-                  autoSelect={autoSelect}
-                  hasThanx={has_thanx}
-                  api={api}
-                  spinner={<Loading />}
-                  brand={brand}
-                />
-              </div>
-            </PageContent>
-          </Container>
+            </PageTitle>
+          </PageContainer>
+          <div ref={formRef} style={{ margin: '0 0 4rem' }}>
+            {!check ? (
+              formError ? (
+                <FormError errMsg={formError} />
+              ) : (
+                <Loading text="Calculating your check..." />
+              )
+            ) : null}
+            <CheckoutForm
+              dispatch={dispatch}
+              history={history}
+              iconMap={iconMap}
+              cardIconMap={cardIconMap}
+              config={config}
+              checkout={checkout}
+              order={order}
+              customer={customer}
+              autoSelect={autoSelect}
+              hasThanx={has_thanx}
+              api={api}
+              spinner={<Loading />}
+              brand={brand}
+            />
+          </div>
         </Main>
       </Content>
     </>

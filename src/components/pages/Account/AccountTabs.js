@@ -21,8 +21,8 @@ const AccountTabsView = styled('div')`
   justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.theme.bgColors.primary};
-  border-top: 0.1rem solid ${(props) => props.theme.border.color};
   // border-top: 0.1rem solid ${(props) => props.theme.bgColors.secondary};
+  border-top: 0.1rem solid #d4dce8;
 `
 
 const navTabs = [

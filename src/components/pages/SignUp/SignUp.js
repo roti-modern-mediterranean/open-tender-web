@@ -8,8 +8,7 @@ import {
   selectSignUp,
   signUpCustomer,
   resetSignUp,
-  addMessage,
-  showNotification,
+  linkPosToken,
 } from '@open-tender/redux'
 import { ButtonLink, SignUpForm } from '@open-tender/components'
 
@@ -29,6 +28,7 @@ import {
   PageTitle,
   HeaderDefault,
   PageContainer,
+  PageContent,
 } from '../..'
 
 export const ThanxTerms = () => (
@@ -84,13 +84,7 @@ const SignUp = () => {
   useEffect(() => {
     if (auth) {
       if (posToken) {
-        api
-          .postCustomerPosToken(token, posToken)
-          .then(() => dispatch(showNotification('Order successfully linked!')))
-          .catch((err) => {
-            dispatch(addMessage(err.detail || err.message))
-          })
-          .finally(history.push('/'))
+        dispatch(linkPosToken(posToken)).finally(history.push('/'))
       } else {
         return history.push('/')
       }
@@ -102,7 +96,7 @@ const SignUp = () => {
   }, [error, windowRef])
 
   const login = () => {
-    dispatch(openModal({ type: 'login', args: { posToken } }))
+    dispatch(openModal({ type: 'login' }))
   }
 
   return (
@@ -112,18 +106,16 @@ const SignUp = () => {
           {signupConfig.title} | {siteTitle}
         </title>
       </Helmet>
-      {/* <Background imageUrl={signupConfig.background} /> */}
       <Content>
         <HeaderDefault title={isBrowser ? null : signupConfig.title} />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...signupConfig} />
-            {posToken && (
-              <p style={{ margin: '0 0 4rem' }}>
+            <PageTitle {...signupConfig}>
+              <p style={{ margin: '2rem 0' }}>
                 Already have an account?{' '}
                 <ButtonLink onClick={login}>Click here to log in.</ButtonLink>
               </p>
-            )}
+            </PageTitle>
             {has_thanx && <ThanxTerms />}
             <FormWrapper>
               <SignUpForm
@@ -132,14 +124,13 @@ const SignUp = () => {
                 signUp={signUp}
                 optIns={optIns}
                 hasThanx={has_thanx}
-                posToken={posToken}
               />
             </FormWrapper>
-            <div style={{ margin: '3rem 0' }}>
+            <PageContent>
               <p>
                 <Link to="/">{signupConfig.back}</Link>
               </p>
-            </div>
+            </PageContent>
           </PageContainer>
         </Main>
       </Content>

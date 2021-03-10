@@ -7,12 +7,7 @@ import { HeaderMobile } from '../..'
 import { Account, CancelEdit, Menu, Reopen } from '../../buttons'
 import { isBrowser } from 'react-device-detect'
 
-const CheckoutHeader = ({
-  maxWidth = '76.8rem',
-  title,
-  bgColor,
-  borderColor,
-}) => {
+const CheckoutHeader = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
   const { cartId } = useSelector(selectGroupOrder)
 
   return (

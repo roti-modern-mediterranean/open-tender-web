@@ -7,7 +7,7 @@ import styled from '@emotion/styled'
 
 const LoyaltyProgamsView = styled('div')`
   & > div + div {
-    margin: 3rem 0 0;
+    margin: 3rem auto 0;
   }
 `
 

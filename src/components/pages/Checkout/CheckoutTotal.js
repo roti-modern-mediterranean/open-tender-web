@@ -14,7 +14,7 @@ const CheckoutTotalView = styled('header')`
   z-index: 10;
   right: 0;
   width: 100%;
-  max-width: 76.8rem;
+  max-width: 100%;
   top: ${(props) => props.theme.layout.navHeight};
   height: ${(props) => props.theme.layout.navHeight};
   color: ${(props) => props.theme.colors.light};
