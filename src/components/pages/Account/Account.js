@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
-import styled from '@emotion/styled'
 import { Helmet } from 'react-helmet'
 import {
   selectCustomer,
@@ -10,11 +9,9 @@ import {
   fetchCustomerCreditCards,
   resetCustomerThanx,
   fetchCustomerRewards,
-  selectCustomerRewards,
   selectCustomerThanx,
   logoutCustomer,
   addMessage,
-  selectCustomerRewardsLoading,
   selectAnnouncements,
   fetchAnnouncementPage,
 } from '@open-tender/redux'
@@ -28,7 +25,6 @@ import {
   Greeting,
   HeaderLogo,
   HeaderMobile,
-  LoyaltyProgram,
   Main,
   PageContainer,
   PageHero,
@@ -40,9 +36,9 @@ import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
 import AccountOrders from './AccountOrders'
 import AccountLoyalty from './AccountLoyalty'
-import AccountFavorites from './AccountFavorites'
-import AccountGiftCards from './AccountGiftCards'
-import AccountGroupOrders from './AccountGroupOrders'
+// import AccountFavorites from './AccountFavorites'
+// import AccountGiftCards from './AccountGiftCards'
+// import AccountGroupOrders from './AccountGroupOrders'
 
 const AccountLinks = () => (
   <p>
@@ -60,7 +56,7 @@ const Account = () => {
   const { account: accountConfig } = useSelector(selectConfig)
   const { error: thanxError } = useSelector(selectCustomerThanx)
   const { background, mobile, title, subtitle, showHero } = accountConfig
-  const { auth, profile, error } = useSelector(selectCustomer)
+  const { auth, profile } = useSelector(selectCustomer)
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
   const token = auth ? auth.access_token : null
   const { windowRef } = useContext(AppContext)

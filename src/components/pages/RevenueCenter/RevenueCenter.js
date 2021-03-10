@@ -27,7 +27,6 @@ import {
   HeaderDefault,
   Loading,
   Main,
-  PageContent,
   RevenueCenter as RevenueCenterCard,
   ScreenreaderTitle,
 } from '../..'
@@ -95,28 +94,29 @@ const RevenueCenter = () => {
       </Helmet>
       <Background imageUrl={imageUrl || config.background} />
       <Content maxWidth="76.8rem">
-        <HeaderDefault title={isBrowser ? null : config.title} />
+        <HeaderDefault
+          maxWidth="76.8rem"
+          title={isBrowser ? null : config.title}
+        />
         <Main>
           <Container>
             <ScreenreaderTitle>{title}</ScreenreaderTitle>
-            <PageContent>
-              <div style={{ margin: '4rem 0 0' }}>
-                {isLoading ? (
-                  <Loading text="Retrieving nearest locations..." />
-                ) : revenueCenter ? (
-                  <RevenueCenterCard
-                    revenueCenter={revenueCenter}
-                    showImage={true}
-                    isLanding={true}
-                  />
-                ) : (
-                  <p>
-                    Location not found. Please try a different URL or{' '}
-                    <Link to="/">head back to our home page</Link>.
-                  </p>
-                )}
-              </div>
-            </PageContent>
+            <div style={{ margin: '4rem 0 0' }}>
+              {isLoading ? (
+                <Loading text="Retrieving nearest locations..." />
+              ) : revenueCenter ? (
+                <RevenueCenterCard
+                  revenueCenter={revenueCenter}
+                  showImage={true}
+                  isLanding={true}
+                />
+              ) : (
+                <p>
+                  Location not found. Please try a different URL or{' '}
+                  <Link to="/">head back to our home page</Link>.
+                </p>
+              )}
+            </div>
           </Container>
         </Main>
       </Content>

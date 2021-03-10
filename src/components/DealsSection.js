@@ -1,11 +1,17 @@
 import React, { useEffect } from 'react'
+import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 
 import { Deals, Loading, PageSection } from '.'
 import { selectBrand } from '../slices'
 
-const DealsSection = ({ limit = 3 }) => {
+const DealsSection = ({
+  title = "Today's Deals",
+  subtitle = 'These deals can be redeemed from the checkout page or scanned to apply in-store',
+  empty = "We're not featuring any deals today. Please check back soon!",
+  limit = 3,
+}) => {
   const dispatch = useDispatch()
   const { has_deals } = useSelector(selectBrand)
   const { profile } = useSelector(selectCustomer)
@@ -24,8 +30,8 @@ const DealsSection = ({ limit = 3 }) => {
 
   return (
     <PageSection
-      title="Today's Deals"
-      subtitle="These deals can be redeemed from the checkout page or scanned to apply in-store"
+      title={title}
+      subtitle={subtitle}
       to={isMore ? '/deals' : null}
     >
       {loading === 'pending' ? (
@@ -33,12 +39,18 @@ const DealsSection = ({ limit = 3 }) => {
       ) : hasDeals ? (
         <Deals deals={displayed} />
       ) : (
-        <p>We're not featuring any deals today. Please check back soon!</p>
+        <p>{empty}</p>
       )}
     </PageSection>
   )
 }
 
 DealsSection.displayName = 'DealsSection'
+DealsSection.propTypes = {
+  title: propTypes.string,
+  subtitle: propTypes.string,
+  empty: propTypes.string,
+  limit: propTypes.number,
+}
 
 export default DealsSection

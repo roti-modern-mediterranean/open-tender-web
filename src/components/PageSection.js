@@ -41,8 +41,9 @@ const PageSectionLink = styled('div')`
     }
 
     span + span {
-      width: 1.2rem;
-      height: 1.2rem;
+      line-height: 0;
+      width: ${(props) => props.theme.fonts.sizes.small};
+      height: ${(props) => props.theme.fonts.sizes.small};
       margin: 0 0 0 0.5rem;
     }
   }

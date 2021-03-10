@@ -22,6 +22,7 @@ import {
   Loading,
   Main,
   PageContainer,
+  PageContent,
   PageTitle,
   VerifyAccount,
 } from '../..'
@@ -83,11 +84,15 @@ const AccountProfile = () => {
                   optIns={optIns}
                 />
               </FormWrapper>
-            ) : isLoading ? (
-              <Loading text="Retrieving your profile & preferences..." />
-            ) : errMsg ? (
-              <p>{errMsg}</p>
-            ) : null}
+            ) : (
+              <PageContent>
+                {isLoading ? (
+                  <Loading text="Retrieving your profile & preferences..." />
+                ) : errMsg ? (
+                  <p>{errMsg}</p>
+                ) : null}
+              </PageContent>
+            )}
           </PageContainer>
         </Main>
       </Content>

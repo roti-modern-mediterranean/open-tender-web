@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Message } from '@open-tender/components'
 import { fetchCustomerLoyalty, selectCustomerLoyalty } from '@open-tender/redux'
 
-import { Loading, LoyaltyProgram, Section } from '../..'
+import { Loading, LoyaltyProgram, PageContent, PageError } from '../..'
 import styled from '@emotion/styled'
 
 const LoyaltyProgamsView = styled('div')`
@@ -22,11 +21,9 @@ const RewardsPrograms = () => {
   }, [dispatch])
 
   return (
-    <Section>
+    <>
       {error ? (
-        <Message color="error" style={{ width: '100%' }}>
-          {error}
-        </Message>
+        <PageError error={error} />
       ) : entities.length ? (
         <LoyaltyProgamsView>
           {entities.map((program) => {
@@ -39,12 +36,16 @@ const RewardsPrograms = () => {
             )
           })}
         </LoyaltyProgamsView>
-      ) : isLoading ? (
-        <Loading text="Retrieving your rewards..." />
       ) : (
-        <p>Looks like you don't have any reward programs yet.</p>
+        <PageContent>
+          {isLoading ? (
+            <Loading text="Retrieving your rewards..." />
+          ) : (
+            <p>Looks like you don't have any reward programs yet.</p>
+          )}
+        </PageContent>
       )}
-    </Section>
+    </>
   )
 }
 

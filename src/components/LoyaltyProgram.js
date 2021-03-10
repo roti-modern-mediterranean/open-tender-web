@@ -6,13 +6,15 @@ import { Box, Heading, Text } from '@open-tender/components'
 import { ProgressBar, ProgressCircle } from '.'
 
 const LoyaltyProgramView = styled(Box)`
+  margin: 0 auto;
+  max-width: ${(props) => props.theme.layout.maxWidth};
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   padding: 2rem 2rem;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex-direction: column;
     text-align: center;
   }
@@ -24,7 +26,7 @@ const LoyaltyProgramSummary = styled('div')`
   flex-direction: column;
   justify-content: space-between;
   padding: 0 6rem 2.5rem 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 0 0 2.5rem;
     margin: 0 0 3rem;
   }

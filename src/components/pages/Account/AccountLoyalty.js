@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import styled from '@emotion/styled'
 import {
   fetchCustomerRewards,
   selectCustomerRewards,
@@ -10,11 +9,6 @@ import {
 import { Loading, LoyaltyProgram, PageSection } from '../..'
 import AccountLoyaltyExternal from './AccountLoyaltyExternal'
 import { selectConfig } from '../../../slices'
-
-const AccountLoyaltyView = styled('div')`
-  margin: 0 auto;
-  max-width: 72rem;
-`
 
 const AccountLoyalty = () => {
   const dispatch = useDispatch()
@@ -34,14 +28,10 @@ const AccountLoyalty = () => {
     <PageSection title={title} subtitle={subtitle} to="/rewards">
       {isLoading ? (
         <Loading text="Retrieving your loyalty status..." />
+      ) : progress ? (
+        <AccountLoyaltyExternal loyalty={loyalty} />
       ) : (
-        <AccountLoyaltyView>
-          {progress ? (
-            <AccountLoyaltyExternal loyalty={loyalty} />
-          ) : (
-            <LoyaltyProgram program={loyalty} isLoading={isLoading} />
-          )}
-        </AccountLoyaltyView>
+        <LoyaltyProgram program={loyalty} isLoading={isLoading} />
       )}
     </PageSection>
   )

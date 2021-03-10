@@ -14,6 +14,8 @@ const RevenueCenterView = styled(Box)`
   position: relative;
   overflow: hidden;
   width: 100%;
+  background-color: ${(props) =>
+    props.theme.bgColors[props.isMenu ? 'primary' : 'secondary']};
 `
 
 const RevenueCenterImage = styled(BgImage)`
@@ -146,7 +148,7 @@ const RevenueCenter = ({
       : null
 
   return (
-    <RevenueCenterView style={style}>
+    <RevenueCenterView style={style} isMenu={isMenu}>
       {showImage && (
         <RevenueCenterImage style={bgStyle}>&nbsp;</RevenueCenterImage>
       )}
