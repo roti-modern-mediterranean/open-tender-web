@@ -131,8 +131,8 @@ const Account = () => {
               </Greeting>
             </PageHero>
             <PageContainer style={{ marginTop: '0' }}>
-              {has_deals && <DealsSection />}
               <AccountOrders />
+              {has_deals && <DealsSection />}
               <AccountLoyalty />
               {/* <AccountGroupOrders />
               <AccountFavorites />

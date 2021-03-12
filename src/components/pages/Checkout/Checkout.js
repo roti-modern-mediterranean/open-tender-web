@@ -40,7 +40,14 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { cardIconMap } from '../../../assets/cardIcons'
 import { selectAPI, selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Content, Loading, Main, PageTitle, PageContainer } from '../..'
+import {
+  Content,
+  Loading,
+  Main,
+  PageTitle,
+  PageContainer,
+  PageContent,
+} from '../..'
 import CheckoutHeader from './CheckoutHeader'
 import CheckoutTotal from './CheckoutTotal'
 import CheckoutCancelEdit from './CheckoutCancelEdit'
@@ -154,18 +161,23 @@ const Checkout = () => {
         <CheckoutTotal checkout={checkout} />
         <Main style={{ padding: '12rem 0 0' }}>
           <PageContainer>
-            <PageTitle {...config}>
+            <PageTitle {...config} style={{ marginBottom: '0' }}>
               <CheckoutCancelEdit />
             </PageTitle>
           </PageContainer>
-          <div ref={formRef} style={{ margin: '0 0 4rem' }}>
-            {!check ? (
-              formError ? (
+          {!check && (
+            <PageContent style={{ marginTop: '0' }}>
+              {formError ? (
                 <FormError errMsg={formError} />
               ) : (
-                <Loading text="Calculating your check..." />
-              )
-            ) : null}
+                <Loading
+                  text="Calculating your check..."
+                  style={{ textAlign: 'center' }}
+                />
+              )}
+            </PageContent>
+          )}
+          <div ref={formRef} style={{ margin: '0 0 4rem' }}>
             <CheckoutForm
               dispatch={dispatch}
               history={history}

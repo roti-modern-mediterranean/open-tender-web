@@ -23,6 +23,7 @@ const FavoriteView = styled('button')`
 
 const FavoriteIcon = styled('span')`
   display: block;
+  line-height: 0;
   width: ${(props) => props.theme.favorite.iconSize};
   height: ${(props) => props.theme.favorite.iconSize};
 `

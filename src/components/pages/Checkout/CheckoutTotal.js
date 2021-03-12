@@ -26,10 +26,15 @@ const CheckoutTotalContainer = styled('div')`
   justify-content: space-between;
   align-items: center;
   height: ${(props) => props.theme.layout.navHeight};
+  max-width: 36rem;
+  margin: 0 auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    max-width: 100%;
+  }
 `
 
 const CheckoutTotalLabel = styled(Preface)`
-  font-size: ${(props) => props.theme.fonts.sizes.main};
+  font-size: ${(props) => props.theme.fonts.sizes.small};
   color: ${(props) => props.theme.colors.light};
 `
 

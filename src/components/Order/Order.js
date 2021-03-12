@@ -47,6 +47,9 @@ const OrderView = styled(Box)`
   h1 {
     line-height: 1;
     margin: 0.5rem 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.h3};
+    }
   }
 `
 
@@ -62,6 +65,9 @@ const OrderSectionHeader = styled('h2')`
   margin: 4rem 0 1rem -0.1rem;
   line-height: 1;
   font-size: ${(props) => props.theme.fonts.sizes.h3};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.theme.fonts.sizes.h4};
+  }
 `
 
 const OrderCentered = styled('div')`
@@ -153,7 +159,6 @@ const Order = ({ order, loading, error, isConfirmation }) => {
                 icon={iconMap.Edit}
                 onClick={() => dispatch(editOrder(order))}
                 size="small"
-                color={isConfirmation ? 'secondary' : 'primary'}
               >
                 Edit
               </ButtonStyled>
@@ -162,7 +167,6 @@ const Order = ({ order, loading, error, isConfirmation }) => {
               icon={iconMap.RefreshCw}
               onClick={handleReorder}
               size="small"
-              color={isConfirmation ? 'secondary' : 'primary'}
             >
               Reorder
             </ButtonStyled>
@@ -171,7 +175,6 @@ const Order = ({ order, loading, error, isConfirmation }) => {
                 icon={iconMap.Star}
                 onClick={updateRating}
                 size="small"
-                color={isConfirmation ? 'secondary' : 'primary'}
               >
                 {rating ? 'Update Rating' : 'Add Rating'}
               </ButtonStyled>

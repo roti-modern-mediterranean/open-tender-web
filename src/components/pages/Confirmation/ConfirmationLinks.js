@@ -6,10 +6,9 @@ import { ButtonLink } from '@open-tender/components'
 import styled from '@emotion/styled'
 
 const ConfirmationLinksView = styled('div')`
-  margin: -1rem 0 3rem;
+  margin: 1.5rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: -1rem 0 1rem;
-    text-align: center;
+    margin: 1.5rem 0 0;
   }
 `
 

@@ -16,7 +16,6 @@ import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Background,
-  Container,
   Content,
   Main,
   Order,
@@ -24,6 +23,7 @@ import {
   PageTitle,
   PageContent,
   HeaderDefault,
+  PageContainer,
 } from '../..'
 import ConfirmationProfile from './ConfirmationProfile'
 import ConfirmationLinks from './ConfirmationLinks'
@@ -71,18 +71,17 @@ const Confirmation = () => {
         <title>Confirmation | {brand.title}</title>
       </Helmet>
       <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderDefault
           title={isBrowser ? null : 'Confirmation'}
           isLogo={false}
-          bgColor="secondary"
-          borderColor="secondary"
         />
-        <Main bgColor="secondary">
-          <Container>
-            <PageTitle {...config} />
-            <PageContent>
+        <Main>
+          <PageContainer>
+            <PageTitle {...config}>
               <ConfirmationLinks auth={auth} brand={brand} />
+            </PageTitle>
+            <PageContent style={{ margin: '2.5rem auto' }}>
               {showOptIns && <ConfirmationProfile />}
               {hasFulfillment && (
                 <OrderFulfillment
@@ -90,9 +89,9 @@ const Confirmation = () => {
                   order_fulfillment={order_fulfillment}
                 />
               )}
-              <Order order={order} isConfirmation={true} />
             </PageContent>
-          </Container>
+            <Order order={order} isConfirmation={true} />
+          </PageContainer>
         </Main>
       </Content>
     </>
