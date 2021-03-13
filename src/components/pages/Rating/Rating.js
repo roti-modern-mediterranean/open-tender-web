@@ -11,20 +11,20 @@ import {
   resetOrderRating,
   selectCustomer,
 } from '@open-tender/redux'
-import { Message, OrderRatingForm } from '@open-tender/components'
+import { Heading, Message, OrderRatingForm } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Container,
   Content,
+  FormWrapper,
   HeaderDefault,
   Loading,
   Main,
-  PageTitle,
+  PageContainer,
   PageContent,
-  Background,
+  PageTitle,
 } from '../..'
 import iconMap from '../../iconMap'
 
@@ -43,7 +43,7 @@ const makePageTitles = (orderRating, isSubmitted, unsubscribe, isCancelled) => {
   } else if (orderRating && orderRating.order_id) {
     return {
       title: `Almost done!`,
-      subtitle: `Please verify your rating and add any comments (optionally) for order #${orderRating.order_id}, and then click Submit.`,
+      subtitle: `Please verify your rating and (optionally) add any comments, and then click Submit.`,
     }
   } else if (isCancelled) {
     return {
@@ -69,7 +69,6 @@ const Rating = () => {
   const [submitted, setSubmitted] = useState(false)
   const { id: ratingUuid } = useParams()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { account: accountConfig } = useSelector(selectConfig)
   const { orderRating, loading, error } = useSelector(selectOrderRating)
   const { auth } = useSelector(selectCustomer)
   const errMsg = error ? error || error.message : null
@@ -118,11 +117,10 @@ const Rating = () => {
           {title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={accountConfig.background} />
-      <Content maxWidth="76.8rem">
-        <HeaderDefault title={isBrowser ? null : 'Curbside Pickup'} />
+      <Content>
+        <HeaderDefault title={isBrowser ? null : 'Rate Your Order'} />
         <Main>
-          <Container>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...pageTitles} />
             <PageContent>
               {loading === 'pending' ? (
@@ -140,16 +138,25 @@ const Rating = () => {
                   )}
                 </p>
               ) : orderRating ? (
-                <OrderRatingForm
-                  orderId={ratingUuid}
-                  orderRating={adjustedRating}
-                  icon={iconMap.Star}
-                  updateRating={updateRating}
-                  callback={callback}
-                />
+                <FormWrapper>
+                  <Heading
+                    as="p"
+                    size="h4"
+                    style={{ textAlign: 'left', margin: '0 0 3rem' }}
+                  >
+                    Rate Order #{orderRating.order_id}
+                  </Heading>
+                  <OrderRatingForm
+                    orderId={ratingUuid}
+                    orderRating={adjustedRating}
+                    icon={iconMap.Star}
+                    updateRating={updateRating}
+                    callback={callback}
+                  />
+                </FormWrapper>
               ) : null}
             </PageContent>
-          </Container>
+          </PageContainer>
         </Main>
       </Content>
     </>

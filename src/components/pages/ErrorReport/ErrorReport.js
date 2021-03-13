@@ -10,28 +10,33 @@ import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
 import {
-  Background,
-  Container,
   Content,
-  Main,
-  PageTitle,
-  PageContent,
   HeaderMobile,
   HeaderLogo,
+  Main,
+  PageContainer,
+  PageContent,
+  PageTitle,
 } from '../..'
 import styled from '@emotion/styled'
 
 const ErrorReportView = styled('div')`
-  margin: 4rem 0 0;
+  margin: ${(props) => props.theme.layout.padding} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: ${(props) => props.theme.layout.paddingMobile} 0;
+  }
 `
 
 const ErrorReportDetails = styled('div')`
-  margin: 4rem 0 0;
   padding: 2rem;
   overflow-x: scroll;
   color: ${(props) => props.theme.colors.error};
   background-color: ${(props) => props.theme.bgColors.error};
   border-radius: ${(props) => props.theme.border.radius};
+  margin: ${(props) => props.theme.layout.padding} 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: ${(props) => props.theme.layout.paddingMobile} 0;
+  }
 
   pre {
     margin: 0;
@@ -64,16 +69,10 @@ const ErrorReport = ({ error, errorInfo, eventId }) => {
           {config.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem" hasRouter={false}>
-        <HeaderMobile
-          maxWidth="76.8rem"
-          borderColor="primary"
-          left={<HeaderLogo />}
-          // right={<Account color="light" />}
-        />
+      <Content hasRouter={false}>
+        <HeaderMobile title={<HeaderLogo />} />
         <Main>
-          <Container>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config} />
             <PageContent>
               <p>
@@ -99,7 +98,7 @@ const ErrorReport = ({ error, errorInfo, eventId }) => {
                 </ErrorReportDetails>
               </ErrorReportView>
             </PageContent>
-          </Container>
+          </PageContainer>
         </Main>
       </Content>
     </>

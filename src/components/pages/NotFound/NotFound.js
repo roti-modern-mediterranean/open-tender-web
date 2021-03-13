@@ -9,12 +9,11 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
   Main,
-  PageTitle,
+  PageContainer,
   PageContent,
+  PageTitle,
   HeaderDefault,
 } from '../..'
 
@@ -41,16 +40,15 @@ const NotFound = () => {
           {config.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderDefault title={isBrowser ? null : config.title} />
         <Main>
-          <Container>
+          <PageContainer>
             <PageTitle {...config} />
             <PageContent>
               <Link to="/">{config.back}</Link>
             </PageContent>
-          </Container>
+          </PageContainer>
         </Main>
       </Content>
     </>

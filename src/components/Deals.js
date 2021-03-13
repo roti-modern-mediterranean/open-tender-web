@@ -5,6 +5,8 @@ import styled from '@emotion/styled'
 import { Reward } from '.'
 
 const DealsView = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
   margin: -1rem;
   display: flex;
   flex-wrap: wrap;

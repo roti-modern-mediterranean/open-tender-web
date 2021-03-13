@@ -12,16 +12,15 @@ import {
 import { ButtonLink, Text } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
   HeaderDefault,
   Loading,
   Main,
   PageTitle,
+  PageContainer,
   PageContent,
 } from '../..'
 
@@ -31,7 +30,6 @@ const VerifyAccount = () => {
   const { hash } = useLocation()
   const verifyToken = hash.includes('#') ? hash.split('#')[1] : ''
   const { auth } = useSelector(selectCustomer)
-  const { account: config } = useSelector(selectConfig)
   const title = 'Verify Account'
   const { title: siteTitle } = useSelector(selectBrand)
   const { success, loading, error } = useSelector(selectVerifyAccount)
@@ -62,15 +60,10 @@ const VerifyAccount = () => {
           {title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
-        <HeaderDefault
-          title={isBrowser ? null : title}
-          bgColor="secondary"
-          borderColor="secondary"
-        />
-        <Main bgColor="secondary">
-          <Container>
+      <Content>
+        <HeaderDefault title={isBrowser ? null : title} />
+        <Main>
+          <PageContainer>
             {success ? (
               <>
                 <PageTitle
@@ -113,7 +106,7 @@ const VerifyAccount = () => {
             ) : loading === 'pending' ? (
               <Loading text="Verifying your account. Please sit tight." />
             ) : null}
-          </Container>
+          </PageContainer>
         </Main>
       </Content>
     </>

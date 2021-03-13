@@ -9,7 +9,6 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { AppContext } from '../../../App'
 import { selectBrand, selectConfig } from '../../../slices'
 import {
-  Background,
   Content,
   HeaderUser,
   Main,
@@ -33,7 +32,6 @@ const Rewards = () => {
   const { title: siteTitle, has_thanx, has_levelup } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const config = has_levelup ? accountConfig.levelup : defaultConfig
-  const { background } = accountConfig
   const { auth } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)
 
@@ -51,7 +49,6 @@ const Rewards = () => {
       <Helmet>
         <title>Rewards | {siteTitle}</title>
       </Helmet>
-      <Background imageUrl={background} />
       <Content>
         <HeaderUser title={isBrowser ? null : 'Rewards'} />
         <Main>

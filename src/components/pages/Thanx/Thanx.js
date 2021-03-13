@@ -8,16 +8,15 @@ import { isObject } from '@open-tender/js'
 import { Message } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
+  HeaderDefault,
   Main,
   PageTitle,
+  PageContainer,
   PageContent,
-  HeaderDefault,
   Loading,
 } from '../..'
 
@@ -25,7 +24,6 @@ const Thanx = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { refunds: config } = useSelector(selectConfig)
   const { auth, loading, error } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
   const errMsg = error
@@ -61,11 +59,10 @@ const Thanx = () => {
       <Helmet>
         <title>Thanx | {siteTitle}</title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderDefault title={isBrowser ? null : 'Thanx'} />
         <Main>
-          <Container>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle title={title} subtitle={subtitle} />
             <PageContent>
               {isLoading ? (
@@ -76,7 +73,7 @@ const Thanx = () => {
                 </Message>
               ) : null}
             </PageContent>
-          </Container>
+          </PageContainer>
         </Main>
       </Content>
     </>

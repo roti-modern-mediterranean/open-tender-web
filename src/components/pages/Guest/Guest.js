@@ -114,7 +114,7 @@ const Guest = () => {
               </Greeting>
             </PageHero>
             {hasPageContent && (
-              <PageContainer>
+              <PageContainer style={{ marginTop: '0' }}>
                 {has_deals && <DealsSection />}
                 {hasContent && (
                   <GuestContent hasDeals={has_deals}>

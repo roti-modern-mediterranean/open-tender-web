@@ -13,24 +13,22 @@ import { isObject } from '@open-tender/js'
 import { Message } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig, setGeoLatLng } from '../../../slices'
+import { selectBrand, setGeoLatLng } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
-  Main,
-  PageTitle,
-  PageContent,
   HeaderDefault,
   Loading,
+  Main,
+  PageContainer,
+  PageContent,
+  PageTitle,
 } from '../..'
 
 const LevelUp = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { home: config } = useSelector(selectConfig)
   const { auth } = useSelector(selectCustomer)
   const { loading, error } = useSelector(selectLevelUp)
   const isLoading = loading === 'pending'
@@ -76,11 +74,10 @@ const LevelUp = () => {
       <Helmet>
         <title>LevelUp | {siteTitle}</title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderDefault title={isBrowser ? null : 'LevelUp'} />
         <Main>
-          <Container>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle title={title} subtitle={subtitle} />
             <PageContent>
               {isLoading ? (
@@ -91,7 +88,7 @@ const LevelUp = () => {
                 </Message>
               ) : null}
             </PageContent>
-          </Container>
+          </PageContainer>
         </Main>
       </Content>
     </>

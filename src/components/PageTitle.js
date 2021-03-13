@@ -6,9 +6,10 @@ const PageTitleView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   text-align: center;
-  margin: 0 0 ${(props) => props.theme.layout.padding};
+  max-width: ${(props) => props.theme.layout.maxWidth};
+  margin: 0 auto ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
+    margin: 0 auto ${(props) => props.theme.layout.paddingMobile};
   }
 
   h1 {

@@ -6,15 +6,14 @@ import { Helmet } from 'react-helmet'
 import { fetchOrderFulfillment } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig, selectFulfillment } from '../../../slices'
+import { selectBrand, selectFulfillment } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
   HeaderDefault,
   Main,
   OrderFulfillment,
+  PageContainer,
   PageContent,
 } from '../..'
 
@@ -23,7 +22,6 @@ const Fulfillment = () => {
   const history = useHistory()
   const { id: orderId } = useParams()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { fulfillment: config } = useSelector(selectConfig)
   const fulfillment = useSelector(selectFulfillment)
   const { windowRef } = useContext(AppContext)
 
@@ -45,17 +43,14 @@ const Fulfillment = () => {
       <Helmet>
         <title>Curbside Pickup | {siteTitle}</title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderDefault title={isBrowser ? null : 'Curbside Pickup'} />
-        <Main bgColor="secondary">
-          <Container>
+        <Main>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageContent>
-              <div style={{ margin: '4rem 0 0' }}>
-                <OrderFulfillment orderId={orderId} />
-              </div>
+              <OrderFulfillment orderId={orderId} />
             </PageContent>
-          </Container>
+          </PageContainer>
         </Main>
       </Content>
     </>

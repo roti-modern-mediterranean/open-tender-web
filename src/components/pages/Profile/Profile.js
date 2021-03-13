@@ -15,7 +15,6 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand, selectOptIns } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
   Content,
   FormWrapper,
   HeaderUser,
@@ -65,7 +64,6 @@ const AccountProfile = () => {
           {account.profile.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={account.background} />
       <Content>
         <HeaderUser title={isBrowser ? null : account.profile.title} />
         <Main>

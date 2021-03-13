@@ -15,14 +15,13 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, openModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
   FormWrapper,
-  Main,
-  PageTitle,
-  PageContent,
   HeaderDefault,
+  Main,
+  PageContainer,
+  PageContent,
+  PageTitle,
 } from '../..'
 
 const ResetPassword = () => {
@@ -67,11 +66,10 @@ const ResetPassword = () => {
           {config.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderDefault title={isBrowser ? null : config.title} />
-        <Main bgColor="secondary">
-          <Container>
+        <Main>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             {success ? (
               <>
                 <PageTitle
@@ -104,7 +102,7 @@ const ResetPassword = () => {
                 </PageContent>
               </>
             )}
-          </Container>
+          </PageContainer>
         </Main>
       </Content>
     </>
