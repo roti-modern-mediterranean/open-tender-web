@@ -271,7 +271,7 @@ const makeGlobalStyles = (theme) => css`
     &:focus {
       color: ${theme.colors.primary};
       background-color: ${theme.bgColors.primary};
-      border: ${theme.border.width} solid ${theme.colors.primary};
+      border: ${theme.inputs.borderWidth} solid ${theme.colors.primary};
     }
 
     &:disabled,
@@ -280,7 +280,7 @@ const makeGlobalStyles = (theme) => css`
       opacity: 0.5;
       color: ${theme.fonts.headings.color};
       background-color: ${theme.bgColors.secondary};
-      border: ${theme.border.width} solid ${theme.bgColors.secondary};
+      border: ${theme.inputs.borderWidth} solid ${theme.bgColors.secondary};
     }
   }
 
@@ -309,6 +309,8 @@ const makeGlobalStyles = (theme) => css`
   select:read-only {
     opacity: 1;
     cursor: pointer;
+    border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+    background-color: ${theme.bgColors.primary};
   }
 
   @keyframes fade-in {

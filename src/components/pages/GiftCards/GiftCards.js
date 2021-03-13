@@ -19,13 +19,13 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
+  FormWrapper,
   Main,
   PageTitle,
   PageContent,
   HeaderDefault,
+  PageContainer,
 } from '../..'
 
 const iconMap = {
@@ -68,13 +68,12 @@ const GiftCards = () => {
           {config.title} | {title}
         </title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderDefault title={isBrowser ? null : config.title} />
         <Main>
-          <Container>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config} />
-            <PageContent>
+            <FormWrapper>
               <GiftCardsForm
                 customer={customer}
                 creditCards={creditCards}
@@ -88,7 +87,9 @@ const GiftCards = () => {
                 iconMap={iconMap}
                 windowRef={windowRef}
               />
-              {success && (
+            </FormWrapper>
+            {success && (
+              <PageContent>
                 <p>
                   {customer ? (
                     <Link to="/">Head back to your account page</Link>
@@ -98,9 +99,9 @@ const GiftCards = () => {
                     </Link>
                   )}
                 </p>
-              )}
-            </PageContent>
-          </Container>
+              </PageContent>
+            )}
+          </PageContainer>
         </Main>
       </Content>
     </>

@@ -36,7 +36,7 @@ const TagIcon = styled('span')`
 const TagText = styled(Preface)`
   font-size: ${(props) => props.theme.fonts.sizes.xSmall};
   color: ${(props) => props.theme.colors.light};
-  // line-height: 0;
+  line-height: 1.2;
 `
 
 const Tag = ({ text, icon, bgColor = 'secondary' }) => {

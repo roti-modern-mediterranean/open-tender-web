@@ -15,7 +15,6 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
   Content,
   Main,
   Order,
@@ -70,7 +69,6 @@ const Confirmation = () => {
       <Helmet>
         <title>Confirmation | {brand.title}</title>
       </Helmet>
-      <Background imageUrl={config.background} />
       <Content>
         <HeaderDefault
           title={isBrowser ? null : 'Confirmation'}

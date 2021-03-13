@@ -50,10 +50,7 @@ const AccountOrders = () => {
     >
       {isLoading ? (
         <PageContent style={{ margin: '0 auto' }}>
-          <Loading
-            text="Retrieving your recent orders..."
-            style={{ textAlign: 'center' }}
-          />
+          <Loading text="Retrieving your recent orders..." />
         </PageContent>
       ) : hasOrders ? (
         <OrdersView>

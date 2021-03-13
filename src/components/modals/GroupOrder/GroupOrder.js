@@ -12,7 +12,7 @@ const GroupOrder = () => {
   const token = useSelector(selectGroupOrderToken)
 
   return (
-    <ModalView>
+    <ModalView style={{ width: '60rem' }}>
       {token ? (
         <GroupOrderShare />
       ) : auth ? (

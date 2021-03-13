@@ -95,10 +95,7 @@ const Favorites = () => {
             ) : (
               <PageContent>
                 {isLoading ? (
-                  <Loading
-                    text="Retrieving your favorites..."
-                    style={{ textAlign: 'center' }}
-                  />
+                  <Loading text="Retrieving your favorites..." />
                 ) : (
                   <p>
                     Looks like you don't have any favorites yet. Please visit

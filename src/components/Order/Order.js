@@ -259,10 +259,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
     </OrderView>
   ) : isLoading ? (
     <OrderCentered>
-      <Loading
-        text="Retrieving your order..."
-        style={{ textAlign: 'center' }}
-      />
+      <Loading text="Retrieving your order..." />
     </OrderCentered>
   ) : error ? (
     <OrderCentered>

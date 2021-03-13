@@ -136,10 +136,7 @@ const Orders = () => {
             ) : (
               <PageContent>
                 {isLoading ? (
-                  <Loading
-                    text="Retrieving your order history..."
-                    style={{ textAlign: 'center' }}
-                  />
+                  <Loading text="Retrieving your order history..." />
                 ) : (
                   <p>Looks like you don't have any orders yet.</p>
                 )}

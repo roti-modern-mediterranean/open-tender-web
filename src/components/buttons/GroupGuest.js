@@ -19,7 +19,11 @@ import {
 import iconMap from '../iconMap'
 import { ButtonBoth } from '.'
 
-const GroupGuest = ({ icon = iconMap.ShoppingBag, useButton = false }) => {
+const GroupGuest = ({
+  icon = iconMap.ShoppingBag,
+  useButton = false,
+  style = { paddingLeft: '1.5rem', paddingRight: '1.5rem' },
+}) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const tz = useSelector(selectTimezone)
@@ -56,6 +60,7 @@ const GroupGuest = ({ icon = iconMap.ShoppingBag, useButton = false }) => {
       onClick={onClick}
       color="cart"
       useButton={useButton}
+      style={style}
     />
   )
 }
@@ -64,6 +69,7 @@ GroupGuest.displayName = 'GroupGuest'
 GroupGuest.propTypes = {
   icon: propTypes.element,
   useButton: propTypes.bool,
+  style: propTypes.object,
 }
 
 export default GroupGuest

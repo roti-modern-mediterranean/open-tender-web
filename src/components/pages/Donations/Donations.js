@@ -18,13 +18,13 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
   Main,
   PageTitle,
   PageContent,
   HeaderDefault,
+  FormWrapper,
+  PageContainer,
 } from '../..'
 
 const Donations = () => {
@@ -59,13 +59,12 @@ const Donations = () => {
           {config.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderDefault title={isBrowser ? null : config.title} />
         <Main>
-          <Container>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config} />
-            <PageContent>
+            <FormWrapper>
               <DonationForm
                 customer={customer}
                 creditCards={creditCards}
@@ -78,7 +77,9 @@ const Donations = () => {
                 error={error}
                 windowRef={windowRef}
               />
-              {success && (
+            </FormWrapper>
+            {success && (
+              <PageContent>
                 <p>
                   {customer ? (
                     <Link to="/">Head back to your account page</Link>
@@ -88,9 +89,9 @@ const Donations = () => {
                     </Link>
                   )}
                 </p>
-              )}
-            </PageContent>
-          </Container>
+              </PageContent>
+            )}
+          </PageContainer>
         </Main>
       </Content>
     </>

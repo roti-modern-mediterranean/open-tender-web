@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
+import { selectGroupOrder } from '@open-tender/redux'
 
 import { selectDisplaySettings } from '../../../slices'
 import { RevenueCenter, RevenueCenterChild, NavSticky } from '../..'
@@ -34,6 +35,7 @@ const MenuContent = () => {
     menuHeroChild,
     menuHeroChildMobile,
   } = useSelector(selectDisplaySettings)
+  const { cartGuest } = useSelector(selectGroupOrder)
   const showHero =
     menuHero === undefined ? true : isMobile ? menuHeroMobile : menuHero
   const showHeroChild =
@@ -115,7 +117,7 @@ const MenuContent = () => {
                   revenueCenter={selected}
                   change={change}
                 />
-                <MenuDeals deals={deals} />
+                {!cartGuest && <MenuDeals deals={deals} />}
                 <MenuCategories categories={visible} />
               </>
             )}

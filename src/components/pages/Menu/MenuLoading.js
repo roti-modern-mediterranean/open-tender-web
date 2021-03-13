@@ -19,7 +19,7 @@ const MenuLoading = () => {
   const { isLoading, loadingMessage } = useContext(MenuContext)
   return isLoading ? (
     <MenuLoadingView>
-      <Loading text={loadingMessage} style={{ textAlign: 'center' }} />
+      <Loading text={loadingMessage} />
     </MenuLoadingView>
   ) : null
 }

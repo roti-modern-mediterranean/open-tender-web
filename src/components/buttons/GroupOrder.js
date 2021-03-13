@@ -11,7 +11,7 @@ import { ButtonBoth } from '.'
 const GroupOrder = ({
   text = 'Group Order',
   icon = iconMap.Users,
-  style = null,
+  style = { paddingLeft: '1.5rem', paddingRight: '1.5rem' },
   useButton = false,
 }) => {
   const dispatch = useDispatch()
@@ -35,7 +35,7 @@ const GroupOrder = ({
       icon={icon}
       onClick={onClick}
       color={isCartOwner ? 'cart' : 'header'}
-      style={style}
+      style={isCartOwner ? style : null}
       useButton={useButton}
     />
   )

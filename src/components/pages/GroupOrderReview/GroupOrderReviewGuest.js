@@ -16,23 +16,17 @@ import { Message, CartItem, ButtonStyled } from '@open-tender/components'
 import { selectConfig, selectDisplaySettings } from '../../../slices'
 import iconMap from '../../iconMap'
 import {
-  Background,
-  Container,
   Content,
+  HeaderMobile,
   Loading,
   Main,
   OrderQuantity,
   PageTitle,
+  PageContainer,
   PageContent,
-  HeaderMobile,
 } from '../..'
 import { Menu, StartOver } from '../../buttons'
-import styled from '@emotion/styled'
-
-const CartTitle = styled('h2')`
-  font-size: ${(props) => props.theme.fonts.sizes.h3};
-  margin: 4rem 0 2rem;
-`
+import { GroupOrderCartView } from './GroupOrderReview'
 
 const makeSubtitle = (error, cart, firstName, config) => {
   if (!error) {
@@ -79,22 +73,22 @@ const GroupOrderReviewGuest = () => {
 
   return (
     <>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderMobile
           title={isBrowser ? null : 'Join Group Order'}
-          maxWidth="76.8rem"
           left={closed || error ? <StartOver /> : <Menu />}
           right={null}
         />
         <Main>
-          <Container>
-            <PageTitle title={config.title} subtitle={subtitle} />
-            <PageContent>
-              {isLoading ? (
+          <PageContainer>
+            <PageTitle title={config.title} subtitle={subtitle}>
+              {isLoading && (
                 <Loading text="Submitting your order to the group..." />
-              ) : (
-                <>
+              )}
+            </PageTitle>
+            {!isLoading && (
+              <>
+                <PageContent style={{ margin: '3rem auto' }}>
                   {!error ? (
                     <p>
                       <Link to={menuSlug}>
@@ -119,32 +113,30 @@ const GroupOrderReviewGuest = () => {
                       Start A New Order
                     </ButtonStyled>
                   </p>
-                  {cart.length > 0 && (
-                    <>
-                      <CartTitle>
-                        Items submitted to {firstName}'s group order
-                      </CartTitle>
-                      <ul>
-                        {cart.map((item, index) => {
-                          return (
-                            <li key={`${item.id}-${index}`}>
-                              <CartItem
-                                item={item}
-                                showModifiers={true}
-                                displaySettings={displaySettings}
-                              >
-                                <OrderQuantity item={item} show={false} />
-                              </CartItem>
-                            </li>
-                          )
-                        })}
-                      </ul>
-                    </>
-                  )}
-                </>
-              )}
-            </PageContent>
-          </Container>
+                </PageContent>
+                {cart.length > 0 && (
+                  <GroupOrderCartView>
+                    <h2>Items submitted to {firstName}'s group order</h2>
+                    <ul>
+                      {cart.map((item, index) => {
+                        return (
+                          <li key={`${item.id}-${index}`}>
+                            <CartItem
+                              item={item}
+                              showModifiers={true}
+                              displaySettings={displaySettings}
+                            >
+                              <OrderQuantity item={item} show={false} />
+                            </CartItem>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </GroupOrderCartView>
+                )}
+              </>
+            )}
+          </PageContainer>
         </Main>
       </Content>
     </>

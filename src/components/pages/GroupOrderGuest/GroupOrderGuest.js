@@ -1,5 +1,4 @@
 import React, { useEffect, useCallback, useContext } from 'react'
-import { isBrowser } from 'react-device-detect'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -19,22 +18,22 @@ import {
 import { CartGuestForm, ButtonStyled } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig } from '../../../slices'
+import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
 import {
-  Background,
-  Container,
   Content,
+  FormWrapper,
+  HeaderLogo,
+  HeaderMobile,
   Loading,
   Main,
   PageTitle,
-  PageContent,
-  HeaderLogo,
-  HeaderMobile,
+  PageContainer,
 } from '../..'
 
 import GroupOrderError from './GroupOrderError'
+import styled from '@emotion/styled'
 
 const formatTime = (time) => {
   return time
@@ -112,12 +111,25 @@ const makeTitle = (
   }
 }
 
+const GroupOrderGuestIntro = styled('div')`
+  margin: ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
+  }
+
+  p {
+    margin: 1em 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: ${(props) => props.theme.fonts.sizes.small};
+    }
+  }
+`
+
 const GroupOrderGuest = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { token } = useParams()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { groupOrders: config } = useSelector(selectConfig)
   const groupOrder = useSelector(selectGroupOrder)
   const {
     revenueCenterId,
@@ -214,58 +226,62 @@ const GroupOrderGuest = () => {
       <Helmet>
         <title>Join Group Order | {siteTitle}</title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
-        <HeaderMobile
-          title={isBrowser ? null : 'Join Group Order'}
-          maxWidth="76.8rem"
-          left={<HeaderLogo />}
-          right={null}
-        />
+      <Content>
+        <HeaderMobile title={<HeaderLogo />} />
         <Main>
-          <Container>
-            <PageTitle title={title} subtitle={subtitle} />
-            <PageContent>
-              {isLoading ? (
-                <Loading text="Retrieving group order info..." />
-              ) : showForm ? (
-                <>
-                  <p>
-                    {spotsRemaining && (
-                      <span>Only {spotsRemaining} spots left! </span>
-                    )}{' '}
-                    {spendingLimit && (
-                      <span>
-                        There is a spending limit of ${spendingLimit} for this
-                        order.
-                      </span>
-                    )}
-                  </p>
-                  <p>Please enter a first and last name to get started.</p>
-                  <CartGuestForm
-                    cartId={cartId}
-                    joinCart={joinCart}
-                    loading={loading}
-                    errMsg={errMsg}
-                  />
-                </>
-              ) : (
-                <>
-                  <GroupOrderError
-                    cartId={cartId}
-                    error={error}
-                    closed={closed}
-                    pastCutoff={pastCutoff}
-                    atCapacity={atCapacity}
-                    cartOwnerName={cartOwnerName}
-                  />
-                  <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
-                    Start A New Order
-                  </ButtonStyled>
-                </>
-              )}
-            </PageContent>
-          </Container>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
+            <PageTitle title={title} subtitle={subtitle}>
+              <GroupOrderGuestIntro>
+                {isLoading ? (
+                  <Loading text="Retrieving group order info..." />
+                ) : showForm ? (
+                  <>
+                    <p>
+                      {spotsRemaining && (
+                        <span>Only {spotsRemaining} spots left! </span>
+                      )}{' '}
+                      {spendingLimit && (
+                        <span>
+                          There is a spending limit of ${spendingLimit} for this
+                          order.
+                        </span>
+                      )}
+                    </p>
+                    <p>Please enter a first and last name to get started.</p>
+                  </>
+                ) : (
+                  <>
+                    <GroupOrderError
+                      cartId={cartId}
+                      error={error}
+                      closed={closed}
+                      pastCutoff={pastCutoff}
+                      atCapacity={atCapacity}
+                      cartOwnerName={cartOwnerName}
+                    />
+                    <p>
+                      <ButtonStyled
+                        icon={iconMap.RefreshCw}
+                        onClick={startOver}
+                      >
+                        Start A New Order
+                      </ButtonStyled>
+                    </p>
+                  </>
+                )}
+              </GroupOrderGuestIntro>
+            </PageTitle>
+            {showForm && !isLoading && (
+              <FormWrapper>
+                <CartGuestForm
+                  cartId={cartId}
+                  joinCart={joinCart}
+                  loading={loading}
+                  errMsg={errMsg}
+                />
+              </FormWrapper>
+            )}
+          </PageContainer>
         </Main>
       </Content>
     </>

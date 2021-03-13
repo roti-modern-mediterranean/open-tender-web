@@ -7,13 +7,12 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
   Main,
   PageTitle,
   PageContent,
   HeaderDefault,
+  PageContainer,
 } from '../..'
 
 const Accessibility = () => {
@@ -35,18 +34,17 @@ const Accessibility = () => {
           {config.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderDefault title={isBrowser ? null : config.title} />
         <Main>
-          <Container>
+          <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config} />
-            <PageContent>
+            <PageContent style={{ textAlign: 'left', marginTop: '3rem' }}>
               {content.map((i, index) => (
                 <p key={index}>{i}</p>
               ))}
             </PageContent>
-          </Container>
+          </PageContainer>
         </Main>
       </Content>
     </>

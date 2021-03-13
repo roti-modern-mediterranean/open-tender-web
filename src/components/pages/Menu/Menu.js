@@ -13,6 +13,7 @@ import {
   selectOrder,
   selectMenuVars,
   selectGroupOrderClosed,
+  selectGroupOrder,
   selectMenu,
   selectSelectedAllergenNames,
   selectCustomer,
@@ -54,6 +55,7 @@ const MenuPage = () => {
   const isLoading = loading === 'pending'
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const groupOrderClosed = useSelector(selectGroupOrderClosed)
+  const { cartGuest } = useSelector(selectGroupOrder)
   const { profile } = useSelector(selectCustomer)
   const { customer_id } = profile || {}
   const { entities } = useSelector(selectDeals)
@@ -90,10 +92,10 @@ const MenuPage = () => {
   ])
 
   useEffect(() => {
-    if (has_deals && !isLoading) {
+    if (has_deals && !isLoading && !cartGuest) {
       dispatch(fetchDeals())
     }
-  }, [has_deals, customer_id, isLoading, dispatch])
+  }, [has_deals, customer_id, isLoading, dispatch, cartGuest])
 
   const changeRevenueCenter = () => {
     dispatch(resetRevenueCenter())

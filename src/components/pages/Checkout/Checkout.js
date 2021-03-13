@@ -155,7 +155,6 @@ const Checkout = () => {
       <Helmet>
         <title>Checkout | {title}</title>
       </Helmet>
-      {/* <Background imageUrl={config.background} /> */}
       <Content>
         <CheckoutHeader title={isBrowser ? null : 'Checkout'} />
         <CheckoutTotal checkout={checkout} />
@@ -170,10 +169,7 @@ const Checkout = () => {
               {formError ? (
                 <FormError errMsg={formError} />
               ) : (
-                <Loading
-                  text="Calculating your check..."
-                  style={{ textAlign: 'center' }}
-                />
+                <Loading text="Calculating your check..." />
               )}
             </PageContent>
           )}

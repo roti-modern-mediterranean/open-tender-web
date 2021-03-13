@@ -26,7 +26,7 @@ const PageTitleView = styled('div')`
     }
   }
 
-  p {
+  & > p {
     line-height: ${(props) => props.theme.lineHeight};
     margin: 0.5rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {

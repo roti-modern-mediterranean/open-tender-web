@@ -31,13 +31,12 @@ import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
 import {
-  Background,
-  Container,
   Content,
   HeaderMobile,
   Loading,
   Main,
   PageTitle,
+  PageContainer,
   PageContent,
 } from '../..'
 import { Account, StartOver } from '../../buttons'
@@ -45,6 +44,7 @@ import styled from '@emotion/styled'
 
 const CateringDatepicker = styled(Box)`
   max-width: 48rem;
+  margin: 0 auto;
   font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
@@ -67,12 +67,16 @@ const CateringPolicy = styled('div')`
 
   h2 + p {
     margin: 0.5rem 0 2rem;
-    font-size: ${(props) => props.theme.fonts.sizes.main};
+    // font-size: ${(props) => props.theme.fonts.sizes.main};
+  }
+
+  div {
+    text-align: left;
   }
 
   div p {
     margin: 1em 0;
-    font-size: ${(props) => props.theme.fonts.sizes.small};
+    // font-size: ${(props) => props.theme.fonts.sizes.small};
     line-height: ${(props) => props.theme.lineHeight};
   }
 `
@@ -171,7 +175,7 @@ const CateringPage = () => {
 
   const startOver = () => {
     dispatch(resetOrder())
-    history.push(`/`)
+    history.push(`/order-type`)
   }
 
   return (
@@ -181,17 +185,14 @@ const CateringPage = () => {
           {config.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={config.background} />
-      <Content maxWidth="76.8rem">
+      <Content>
         <HeaderMobile
-          maxWidth="76.8rem"
-          borderColor="primary"
           title={isBrowser ? null : 'Catering'}
           left={<StartOver />}
           right={<Account />}
         />
         <Main>
-          <Container>
+          <PageContainer>
             <PageTitle {...config} />
             <PageContent>
               {isLoading ? (
@@ -268,7 +269,7 @@ const CateringPage = () => {
                 )}
               </CateringPolicy>
             </PageContent>
-          </Container>
+          </PageContainer>
         </Main>
       </Content>
     </>

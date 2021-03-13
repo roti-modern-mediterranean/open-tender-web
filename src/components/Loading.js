@@ -14,7 +14,7 @@ const loader = (type, props) => {
 }
 
 const LoadingView = styled('div')`
-  text-align: left;
+  text-align: center;
 `
 
 const LoadingLoader = styled('div')`

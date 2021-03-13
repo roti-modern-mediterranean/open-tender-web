@@ -8,7 +8,6 @@ import { selectCustomer, selectDeals, fetchDeals } from '@open-tender/redux'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import {
-  Background,
   Content,
   Deals as DealsList,
   HeaderDefault,
@@ -34,7 +33,6 @@ const Deals = () => {
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const config = { ...accountConfig, ...defaultConfig }
-  const { background } = config
   const { auth, profile } = useSelector(selectCustomer)
   const { customer_id } = profile || {}
   const { windowRef } = useContext(AppContext)
@@ -62,7 +60,6 @@ const Deals = () => {
           {config.title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={background} />
       <Content>
         {auth ? (
           <HeaderUser title={isBrowser ? null : config.title} />
@@ -80,10 +77,7 @@ const Deals = () => {
             ) : (
               <PageContent>
                 {isLoading ? (
-                  <Loading
-                    text="Retrieving today's deals..."
-                    style={{ textAlign: 'center' }}
-                  />
+                  <Loading text="Retrieving today's deals..." />
                 ) : (
                   <p>
                     We're not featuring any deals today. Please check back soon!

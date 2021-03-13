@@ -172,10 +172,7 @@ const RevenueCentersSelect = () => {
       <Container>
         {isLoading ? (
           <PageContent>
-            <Loading
-              text="Retrieving nearest locations..."
-              style={{ textAlign: 'center' }}
-            />
+            <Loading text="Retrieving nearest locations..." />
           </PageContent>
         ) : (
           <>

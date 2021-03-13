@@ -38,7 +38,7 @@ import AccountOrders from './AccountOrders'
 import AccountLoyalty from './AccountLoyalty'
 // import AccountFavorites from './AccountFavorites'
 // import AccountGiftCards from './AccountGiftCards'
-// import AccountGroupOrders from './AccountGroupOrders'
+import AccountGroupOrders from './AccountGroupOrders'
 
 const AccountLinks = () => (
   <p>
@@ -131,11 +131,11 @@ const Account = () => {
               </Greeting>
             </PageHero>
             <PageContainer style={{ marginTop: '0' }}>
+              <AccountGroupOrders />
               <AccountOrders />
               {has_deals && <DealsSection />}
               <AccountLoyalty />
-              {/* <AccountGroupOrders />
-              <AccountFavorites />
+              {/* <AccountFavorites />
               <AccountGiftCards /> */}
             </PageContainer>
           </PageView>
