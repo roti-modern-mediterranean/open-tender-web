@@ -49,10 +49,10 @@ const ProgressPercentage = styled('div')`
     }
 
     span:first-of-type {
-      font-size: ${(props) => props.theme.fonts.sizes.h2};
+      font-size: ${(props) => props.theme.fonts.sizes.h3};
       margin: 0 0 0.3rem;
       @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-        font-size: ${(props) => props.theme.fonts.sizes.h3};
+        font-size: ${(props) => props.theme.fonts.sizes.h4};
       }
     }
 
@@ -125,7 +125,7 @@ const ProgressCirlce = ({ strokeWidth = 12, progress, isLoading }) => {
       <ProgressPercentage>
         <div>
           <Heading>{progress}%</Heading>
-          <Preface size="small">complete</Preface>
+          <Preface size="xSmall">complete</Preface>
         </div>
       </ProgressPercentage>
     </ProgressCirlceView>

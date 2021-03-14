@@ -67,20 +67,21 @@ const PageHero = ({
   const { settings, entities, loading, error } = announcements || {}
   const slides = error ? null : makeSlides(entities)
   const isLoading = loading === 'pending'
-
-  if (!slides && !showHero) return null
+  const hasHero = imageUrl && showHero
 
   return (
     <PageHeroView maxHeight={maxHeight}>
-      <PageHeroContent>
-        {isLoading ? (
-          <BackgroundLoading />
-        ) : slides ? (
-          <Slider settings={settings} slides={slides} />
-        ) : (
-          <BackgroundImage imageUrl={imageUrl} />
-        )}
-      </PageHeroContent>
+      {(slides || hasHero) && (
+        <PageHeroContent>
+          {isLoading ? (
+            <BackgroundLoading />
+          ) : slides ? (
+            <Slider settings={settings} slides={slides} />
+          ) : hasHero ? (
+            <BackgroundImage imageUrl={imageUrl} />
+          ) : null}
+        </PageHeroContent>
+      )}
       {children && <PageHeroGreeting>{children}</PageHeroGreeting>}
     </PageHeroView>
   )

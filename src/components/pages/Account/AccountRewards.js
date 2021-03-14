@@ -1,30 +1,38 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  fetchCustomerRewards,
+  selectCustomerRewards,
+  selectCustomerRewardsLoading,
+} from '@open-tender/redux'
 
-import { ItemsScrollable, Reward, Section, SectionHeader } from '../..'
+import { Loading, LoyaltyProgram, PageSection } from '../..'
+import { selectConfig } from '../../../slices'
 
-const AccountRewards = ({ rewards }) => {
-  if (!rewards.length) return null
-  rewards = rewards.map((i) => ({ ...i, key: i.discount_id }))
-  const title =
-    rewards.length > 1
-      ? `You have ${rewards.length} rewards!`
-      : 'You have a reward!'
+const AccountRewards = () => {
+  const dispatch = useDispatch()
+  const { account } = useSelector(selectConfig)
+  const loyalty = useSelector(selectCustomerRewards)
+  const isLoading = useSelector(selectCustomerRewardsLoading)
+  const { title, subtitle } = account.loyalty
+
+  useEffect(() => {
+    dispatch(fetchCustomerRewards())
+  }, [dispatch])
+
+  if (!loyalty) return null
 
   return (
-    <Section>
-      <SectionHeader title={title} to="/rewards" />
-      <ItemsScrollable
-        items={rewards}
-        renderItem={(item) => <Reward item={item} />}
-      />
-    </Section>
+    <PageSection title={title} subtitle={subtitle} to="/rewards">
+      {isLoading ? (
+        <Loading text="Retrieving your loyalty status..." />
+      ) : (
+        <LoyaltyProgram program={loyalty} />
+      )}
+    </PageSection>
   )
 }
 
 AccountRewards.displayName = 'AccountRewards'
-AccountRewards.propTypes = {
-  rewards: propTypes.array,
-}
 
 export default AccountRewards

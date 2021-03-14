@@ -12,7 +12,7 @@ import { openModal } from '../../../slices'
 import iconMap from '../../iconMap'
 import { Loading, PageContent, Row } from '../..'
 
-const RewardsLevelUp = () => {
+const LevelUpConnect = () => {
   const [checking, setChecking] = useState(false)
   const dispatch = useDispatch()
   const { levelup, loading } = useSelector(selectCustomerLevelUp)
@@ -129,5 +129,5 @@ const RewardsLevelUp = () => {
   )
 }
 
-RewardsLevelUp.displayName = 'RewardsLevelUp'
-export default RewardsLevelUp
+LevelUpConnect.displayName = 'LevelUpConnect'
+export default LevelUpConnect

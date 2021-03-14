@@ -54,8 +54,8 @@ const GuestContent = styled('div')`
 const GuestLinks = () => (
   <p>
     <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
-    <Link to="/donations">make a donation</Link> |{' '}
-    <Link to="/contact">get in touch</Link>
+    <Link to="/donations">make a donation</Link>
+    {/* <Link to="/contact">get in touch</Link> */}
   </p>
 )
 

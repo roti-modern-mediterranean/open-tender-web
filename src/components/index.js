@@ -70,6 +70,7 @@ import ProgressCircle from './ProgressCircle'
 import QRCode from './QRCode'
 import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
 import Reward from './Reward'
+import Rewards from './Rewards'
 import RewardsSection from './RewardsSection'
 import Routes from './Routes'
 import Row from './Row'
@@ -161,6 +162,7 @@ export {
   RevenueCenter,
   RevenueCenterChild,
   Reward,
+  Rewards,
   RewardsSection,
   Routes,
   Row,

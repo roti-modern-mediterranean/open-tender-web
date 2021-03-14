@@ -14,24 +14,18 @@ import {
   Main,
   PageContainer,
   PageTitle,
-  RewardsSection,
+  // RewardsSection,
 } from '../..'
-import LoyaltyProgams from './LoyaltyProgams'
-import Thanx from './Thanx'
-import LevelUp from './LevelUp'
 import AccountTabs from '../Account/AccountTabs'
-
-const defaultConfig = {
-  title: 'Rewards',
-  subtitle:
-    "A summary of your current loyalty status and a list of any rewards you've earned.",
-}
+import LoyaltyProgams from './LoyaltyProgams'
+import ThanxLoyalty from './ThanxLoyalty'
+import LevelUpLoyalty from './LevelUpLoyalty'
 
 const Rewards = () => {
   const history = useHistory()
   const { title: siteTitle, has_thanx, has_levelup } = useSelector(selectBrand)
-  const { account: accountConfig } = useSelector(selectConfig)
-  const config = has_levelup ? accountConfig.levelup : defaultConfig
+  const { account } = useSelector(selectConfig)
+  const config = has_levelup ? account.levelup : account.loyalty
   const { auth } = useSelector(selectCustomer)
   const { windowRef } = useContext(AppContext)
 
@@ -56,13 +50,13 @@ const Rewards = () => {
           <PageContainer>
             <PageTitle {...config} />
             {has_levelup ? (
-              <LevelUp />
+              <LevelUpLoyalty />
             ) : has_thanx ? (
-              <Thanx />
+              <ThanxLoyalty />
             ) : (
               <>
                 <LoyaltyProgams />
-                <RewardsSection limit={null} />
+                {/* <RewardsSection limit={null} /> */}
               </>
             )}
           </PageContainer>

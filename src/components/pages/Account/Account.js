@@ -7,11 +7,6 @@ import {
   selectCustomer,
   fetchCustomer,
   fetchCustomerCreditCards,
-  resetCustomerThanx,
-  fetchCustomerRewards,
-  selectCustomerThanx,
-  logoutCustomer,
-  addMessage,
   selectAnnouncements,
   fetchAnnouncementPage,
 } from '@open-tender/redux'
@@ -21,7 +16,6 @@ import { selectBrand, selectConfig, closeModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  DealsSection,
   Greeting,
   HeaderLogo,
   HeaderMobile,
@@ -36,15 +30,14 @@ import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
 import AccountOrders from './AccountOrders'
 import AccountLoyalty from './AccountLoyalty'
-// import AccountFavorites from './AccountFavorites'
-// import AccountGiftCards from './AccountGiftCards'
 import AccountGroupOrders from './AccountGroupOrders'
+import AccountDeals from './AccountDeals'
 
 const AccountLinks = () => (
   <p>
     <Link to="/gift-cards">Purchase gift cards</Link> |{' '}
-    <Link to="/donations">make a donation</Link> |{' '}
-    <Link to="/contact">get in touch</Link>
+    <Link to="/donations">make a donation</Link>
+    {/* <Link to="/contact">get in touch</Link> */}
   </p>
 )
 
@@ -52,9 +45,8 @@ const Account = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const announcements = useSelector(selectAnnouncements)
-  const { title: siteTitle, has_thanx, has_deals } = useSelector(selectBrand)
+  const { title: siteTitle } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
-  const { error: thanxError } = useSelector(selectCustomerThanx)
   const { background, mobile, title, subtitle, showHero } = accountConfig
   const { auth, profile } = useSelector(selectCustomer)
   const pageTitle = profile ? `${title}, ${profile.first_name}` : ''
@@ -72,8 +64,7 @@ const Account = () => {
     dispatch(fetchAnnouncementPage('ACCOUNT'))
     dispatch(fetchCustomer())
     dispatch(fetchCustomerCreditCards(true))
-    dispatch(fetchCustomerRewards())
-  }, [token, dispatch, history, has_thanx])
+  }, [token, dispatch, history])
 
   // useEffect(() => {
   //   if (error) {
@@ -83,16 +74,6 @@ const Account = () => {
   //     return history.push('/')
   //   }
   // }, [error, dispatch, history])
-
-  useEffect(() => {
-    if (
-      thanxError === 'This customer does not have a connected Thanx account'
-    ) {
-      dispatch(logoutCustomer())
-      dispatch(resetCustomerThanx())
-      dispatch(addMessage('Please login to reauthenticate your account'))
-    }
-  }, [thanxError, dispatch])
 
   return profile ? (
     <>
@@ -125,7 +106,6 @@ const Account = () => {
                 title={pageTitle}
                 subtitle={subtitle}
                 actions={<AccountActions />}
-                // style={!isBrowser ? { margin: '0 0 6rem' } : null}
               >
                 <AccountLinks />
               </Greeting>
@@ -133,10 +113,8 @@ const Account = () => {
             <PageContainer style={{ marginTop: '0' }}>
               <AccountGroupOrders />
               <AccountOrders />
-              {has_deals && <DealsSection />}
+              <AccountDeals />
               <AccountLoyalty />
-              {/* <AccountFavorites />
-              <AccountGiftCards /> */}
             </PageContainer>
           </PageView>
         </Main>

@@ -135,13 +135,15 @@ const makeStatus = (tiers, status, isDollars = true) => {
   return { progress, points }
 }
 
-const makeProgress = (spend, redemption, loyalty_type) => {
+const makeProgress = (loyalty_type, spend, redemption) => {
   if (!spend || !redemption || !loyalty_type) return null
   const currentSpend = parseFloat(spend.current)
   const threshold = parseFloat(redemption.threshold)
-  return loyalty_type === loyaltyType.CREDIT
-    ? parseInt((currentSpend / threshold) * 100)
-    : null
+  const progress =
+    loyalty_type === loyaltyType.CREDIT
+      ? parseInt((currentSpend / threshold) * 100)
+      : null
+  return progress
 }
 
 const LoyaltyProgram = ({ program, isLoading = false }) => {

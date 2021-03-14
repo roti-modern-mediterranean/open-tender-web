@@ -63,7 +63,7 @@ const AccountGroupOrders = () => {
       ) : hasOrders ? (
         <GroupOrdersView>
           {displayed.map((order) => (
-            <GroupOrder key={order.order_id}>
+            <GroupOrder key={order.cart_id}>
               <OrderCardGroup order={order} />
             </GroupOrder>
           ))}
