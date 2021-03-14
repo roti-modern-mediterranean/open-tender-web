@@ -31,7 +31,7 @@ const AccountLoyalty = () => {
       ) : progress ? (
         <AccountLoyaltyExternal loyalty={loyalty} />
       ) : (
-        <LoyaltyProgram program={loyalty} isLoading={isLoading} />
+        <LoyaltyProgram program={loyalty} />
       )}
     </PageSection>
   )

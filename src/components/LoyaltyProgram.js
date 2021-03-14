@@ -94,32 +94,32 @@ const LoyaltyProgramProgress = styled('div')`
   }
 `
 
-const tiers = [
-  {
-    level: 1,
-    threshold: 1000,
-    name: 'Green',
-    description: 'Lorem ipsum',
-  },
-  {
-    level: 2,
-    threshold: 2500,
-    name: 'Gold',
-    description: 'Lorem ipsum',
-  },
-  {
-    level: 3,
-    threshold: 5000,
-    name: 'Black',
-    description: 'Lorem ipsum',
-  },
-]
+// const tiers = [
+//   {
+//     level: 1,
+//     threshold: 1000,
+//     name: 'Green',
+//     description: 'Lorem ipsum',
+//   },
+//   {
+//     level: 2,
+//     threshold: 2500,
+//     name: 'Gold',
+//     description: 'Lorem ipsum',
+//   },
+//   {
+//     level: 3,
+//     threshold: 5000,
+//     name: 'Black',
+//     description: 'Lorem ipsum',
+//   },
+// ]
 
-const status = {
-  level: 1,
-  name: 'Green',
-  progress: 1500,
-}
+// const status = {
+//   level: 1,
+//   name: 'Green',
+//   progress: 1500,
+// }
 
 const makeStatus = (tiers, status, isDollars = true) => {
   if (!tiers) return null
@@ -135,6 +135,15 @@ const makeStatus = (tiers, status, isDollars = true) => {
   return { progress, points }
 }
 
+const makeProgress = (spend, redemption, loyalty_type) => {
+  if (!spend || !redemption || !loyalty_type) return null
+  const currentSpend = parseFloat(spend.current)
+  const threshold = parseFloat(redemption.threshold)
+  return loyalty_type === loyaltyType.CREDIT
+    ? parseInt((currentSpend / threshold) * 100)
+    : null
+}
+
 const LoyaltyProgram = ({ program, isLoading = false }) => {
   const {
     name,
@@ -145,16 +154,15 @@ const LoyaltyProgram = ({ program, isLoading = false }) => {
     credit,
     remaining,
     towards,
+    progress,
+    tiers,
+    status,
   } = program
-  const currentCredit = parseFloat(credit.current)
-  const currentSpend = parseFloat(spend.current)
-  const threshold = parseFloat(redemption.threshold)
-  const progress =
-    loyalty_type === loyaltyType.CREDIT
-      ? parseInt((currentSpend / threshold) * 100)
-      : null
+  const currentProgress =
+    progress || makeProgress(loyalty_type, spend, redemption)
+  const currentCredit = credit ? parseFloat(credit.current) : 0
   const hasCredit = currentCredit > 0
-  const currentStatus = makeStatus(tiers, status)
+  const currentStatus = tiers && status ? makeStatus(tiers, status) : null
 
   return (
     <LoyaltyProgramView>
@@ -199,19 +207,21 @@ const LoyaltyProgram = ({ program, isLoading = false }) => {
           </LoyaltyProgramStatus>
         )}
       </LoyaltyProgramSummary>
-      <LoyaltyProgramProgress>
-        <Heading as="p">Current Progress</Heading>
-        <ProgressCircle progress={progress} isLoading={isLoading} />
-        {progress ? (
-          <p>
-            {hasCredit ? "You're" : "You're"} ${remaining} away from{' '}
-            {hasCredit && 'another '}
-            {towards}
-          </p>
-        ) : (
-          <p>Make your first purchase to start earning rewards!</p>
-        )}
-      </LoyaltyProgramProgress>
+      {currentProgress && (
+        <LoyaltyProgramProgress>
+          <Heading as="p">Current Progress</Heading>
+          <ProgressCircle progress={currentProgress} isLoading={isLoading} />
+          {currentProgress ? (
+            <p>
+              {hasCredit ? "You're" : "You're"} ${remaining} away from{' '}
+              {hasCredit && 'another '}
+              {towards}
+            </p>
+          ) : (
+            <p>Make your first purchase to start earning rewards!</p>
+          )}
+        </LoyaltyProgramProgress>
+      )}
     </LoyaltyProgramView>
   )
 }

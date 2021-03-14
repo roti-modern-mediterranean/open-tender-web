@@ -1,84 +1,20 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
-import { Text } from '@open-tender/components'
 
-import { ProgressCircle } from '../..'
-import Container from '../../Container'
-import { Link } from 'react-router-dom'
+import { LoyaltyProgram } from '../..'
 
-const AccountLoyaltyView = styled('div')`
-  // max-width: 52rem;
-  margin: 0;
+const AccountLoyaltyExternal = ({ loyalty }) => {
+  const { credit } = loyalty
+  const extLoyalty = credit
+    ? { ...loyalty, credit: { current: credit } }
+    : loyalty
 
-  & > div {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: row-reverse;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  }
-`
-
-const AccountLoyaltyContent = styled('div')`
-  flex-grow: 1;
-  margin: 0 0 0 3rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 0 4rem 0 0;
-  }
-
-  h2 {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
-  }
-
-  p {
-    margin: 0.75rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-  }
-`
-
-const AccountLoyaltyCircle = styled('div')`
-  flex: 0 0 auto;
-`
-
-const AccountLoyalty = ({ loyalty }) => {
-  const { name, progress, credit, remaining, towards } = loyalty
-  const hasCredit = parseFloat(credit) > 0
-  return (
-    <AccountLoyaltyView>
-      <Container>
-        <AccountLoyaltyContent>
-          <h2>{name}</h2>
-          {hasCredit && (
-            <Text as="p" color="success" size="small" bold={true}>
-              You've got ${credit} in credit to redeem!
-            </Text>
-          )}
-          <p>
-            {hasCredit ? "And you're" : "You're"} ${remaining} away from{' '}
-            {hasCredit && 'another '}
-            {towards}
-          </p>
-          <p>
-            <Link to="/rewards">See all rewards</Link>
-          </p>
-        </AccountLoyaltyContent>
-        {progress && (
-          <AccountLoyaltyCircle>
-            <ProgressCircle progress={progress} />
-          </AccountLoyaltyCircle>
-        )}
-      </Container>
-    </AccountLoyaltyView>
-  )
+  return <LoyaltyProgram program={extLoyalty} />
 }
 
-AccountLoyalty.displayName = 'AccountLoyalty'
-AccountLoyalty.propTypes = {
+AccountLoyaltyExternal.displayName = 'AccountLoyaltyExternal'
+AccountLoyaltyExternal.propTypes = {
   loyalty: propTypes.object,
 }
 
-export default AccountLoyalty
+export default AccountLoyaltyExternal

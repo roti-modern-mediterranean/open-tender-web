@@ -10,7 +10,7 @@ import { ButtonLink, ButtonStyled } from '@open-tender/components'
 
 import { openModal } from '../../../slices'
 import iconMap from '../../iconMap'
-import { Loading, Row } from '../..'
+import { Loading, PageContent, Row } from '../..'
 
 const RewardsLevelUp = () => {
   const [checking, setChecking] = useState(false)
@@ -41,14 +41,14 @@ const RewardsLevelUp = () => {
   }
 
   return (
-    <>
+    <PageContent style={{ maxWidth: '76.8rem' }}>
       {isLoading ? (
         <Loading text="Retrieving your LevelUp account status..." />
       ) : levelup ? (
         levelup.status === 'ACCEPTED' ? (
           <Row
             content={
-              <>
+              <div style={{ marginRight: '2rem', textAlign: 'left' }}>
                 <p>Account connected!</p>
                 <p>
                   Your LevelUp account is currently connected via your{' '}
@@ -56,7 +56,7 @@ const RewardsLevelUp = () => {
                   change this, disconnect your account and then connect it
                   again.
                 </p>
-              </>
+              </div>
             }
             actions={
               <ButtonStyled
@@ -125,7 +125,7 @@ const RewardsLevelUp = () => {
           </p>
         </>
       )}
-    </>
+    </PageContent>
   )
 }
 

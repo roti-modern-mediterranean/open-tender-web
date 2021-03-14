@@ -115,8 +115,8 @@ const SignUp = () => {
                 Already have an account?{' '}
                 <ButtonLink onClick={login}>Click here to log in.</ButtonLink>
               </p>
+              {has_thanx && <ThanxTerms />}
             </PageTitle>
-            {has_thanx && <ThanxTerms />}
             <FormWrapper>
               <SignUpForm
                 loading={loading}
