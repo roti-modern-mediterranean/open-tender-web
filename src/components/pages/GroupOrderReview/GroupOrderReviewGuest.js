@@ -17,7 +17,7 @@ import { selectConfig, selectDisplaySettings } from '../../../slices'
 import iconMap from '../../iconMap'
 import {
   Content,
-  HeaderMobile,
+  Header,
   Loading,
   Main,
   OrderQuantity,
@@ -74,7 +74,7 @@ const GroupOrderReviewGuest = () => {
   return (
     <>
       <Content>
-        <HeaderMobile
+        <Header
           title={isBrowser ? null : 'Join Group Order'}
           left={closed || error ? <StartOver /> : <Menu />}
           right={null}

@@ -35,7 +35,7 @@ import {
   PageTitle,
   PageContent,
   PageContainer,
-  HeaderMobile,
+  Header,
   LinkSeparator,
 } from '../..'
 import {
@@ -174,7 +174,7 @@ const GroupOrderReviewOwner = () => {
   return (
     <>
       <Content>
-        <HeaderMobile
+        <Header
           title={isBrowser ? null : 'Review Group Order'}
           left={<Menu />}
           right={

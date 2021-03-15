@@ -28,7 +28,7 @@ import iconMap from '../../iconMap'
 import {
   Content,
   HeaderLogo,
-  HeaderMobile,
+  Header,
   Loading,
   Main,
   PageTitle,
@@ -230,7 +230,7 @@ const GroupOrderGuest = () => {
         <title>Join Group Order | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderMobile title={<HeaderLogo />} />
+        <Header title={<HeaderLogo />} />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle title={title} subtitle={subtitle}>

@@ -22,7 +22,7 @@ import {
 import { AppContext } from '../../../App'
 import {
   Content,
-  HeaderMobile,
+  Header,
   Main,
   MapsAutocomplete,
   ScreenreaderTitle,
@@ -81,7 +81,7 @@ const RevenueCenters = () => {
         <title>Locations | {siteTitle}</title>
       </Helmet>
       <Content maxWidth="76.8rem">
-        <HeaderMobile
+        <Header
           maxWidth="76.8rem"
           borderColor={isMobile ? 'transparent' : 'primary'}
           style={{ boxShadow: 'none' }}

@@ -20,7 +20,7 @@ import GroupOrderTime from './GroupOrderTime'
 import HeaderAccount from './HeaderAccount'
 import HeaderDefault from './HeaderDefault'
 import HeaderLogo from './HeaderLogo'
-import HeaderMobile from './HeaderMobile'
+import Header from './Header'
 import HeaderUser from './HeaderUser'
 import Hero from './Hero'
 import HeroContent from './HeroContent'
@@ -104,10 +104,10 @@ export {
   Greeting,
   GroupOrderLink,
   GroupOrderTime,
+  Header,
   HeaderAccount,
   HeaderDefault,
   HeaderLogo,
-  HeaderMobile,
   HeaderUser,
   Hero,
   HeroContent,

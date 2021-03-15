@@ -18,7 +18,7 @@ import {
   Content,
   Greeting,
   HeaderLogo,
-  HeaderMobile,
+  Header,
   Main,
   PageContainer,
   PageHero,
@@ -81,7 +81,7 @@ const Account = () => {
         <title>Welcome Back | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderMobile
+        <Header
           left={<HeaderLogo />}
           right={
             isBrowser ? (
