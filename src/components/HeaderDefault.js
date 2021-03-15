@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { selectCustomer } from '@open-tender/redux'
 
-import { HeaderMobile } from '.'
+import { Header } from '.'
 import { Account, Home, Logout } from './buttons'
 import { useSelector } from 'react-redux'
 
@@ -15,7 +15,7 @@ const HeaderDefault = ({
   const { auth } = useSelector(selectCustomer)
 
   return (
-    <HeaderMobile
+    <Header
       title={title}
       maxWidth={maxWidth}
       bgColor={bgColor}

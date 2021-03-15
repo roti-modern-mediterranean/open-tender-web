@@ -11,7 +11,7 @@ import { isBrowser, isMobile } from 'react-device-detect'
 //   return `${headerPadding - buttonPadding}rem`
 // }
 
-const HeaderMobileView = styled('div')`
+const HeaderView = styled('div')`
   position: fixed;
   z-index: 14;
   top: 0;
@@ -37,7 +37,7 @@ const HeaderMobileView = styled('div')`
   }
 `
 
-const HeaderMobileTitle = styled('div')`
+const HeaderTitle = styled('div')`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -66,7 +66,7 @@ const HeaderMobileTitle = styled('div')`
   }
 `
 
-const HeaderMobileNav = styled('div')`
+const HeaderNav = styled('div')`
   position: relative;
   z-index: 2;
 
@@ -84,7 +84,7 @@ const HeaderMobileNav = styled('div')`
       : `display: flex; align-items: center;`}
 `
 
-const HeaderMobile = ({
+const Header = ({
   left,
   title,
   right,
@@ -115,7 +115,7 @@ const HeaderMobile = ({
 
   return (
     <nav ref={header} role="navigation" aria-label="Primary Navigation">
-      <HeaderMobileView
+      <HeaderView
         stuck={stuck}
         bgColor={bgColor}
         borderColor={adjustedBorderColor}
@@ -123,20 +123,20 @@ const HeaderMobile = ({
         isMobile={isMobile}
         style={style}
       >
-        <HeaderMobileNav>{left}</HeaderMobileNav>
+        <HeaderNav>{left}</HeaderNav>
         {title && (
-          <HeaderMobileTitle>
+          <HeaderTitle>
             <span>{title}</span>
-          </HeaderMobileTitle>
+          </HeaderTitle>
         )}
-        <HeaderMobileNav isBrowser={isBrowser}>{right}</HeaderMobileNav>
-      </HeaderMobileView>
+        <HeaderNav isBrowser={isBrowser}>{right}</HeaderNav>
+      </HeaderView>
     </nav>
   )
 }
 
-HeaderMobile.displayName = 'HeaderMobile'
-HeaderMobile.propTypes = {
+Header.displayName = 'Header'
+Header.propTypes = {
   left: propTypes.element,
   title: propTypes.oneOfType([propTypes.string, propTypes.element]),
   right: propTypes.element,
@@ -145,4 +145,4 @@ HeaderMobile.propTypes = {
   maxWidth: propTypes.string,
 }
 
-export default HeaderMobile
+export default Header

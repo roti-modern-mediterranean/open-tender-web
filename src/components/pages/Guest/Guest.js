@@ -15,7 +15,7 @@ import {
   DealsSection,
   Greeting,
   HeaderLogo,
-  HeaderMobile,
+  Header,
   Main,
   PageContainer,
   PageHero,
@@ -87,7 +87,7 @@ const Guest = () => {
         <title>{brand.title}</title>
       </Helmet>
       <Content>
-        <HeaderMobile
+        <Header
           left={<HeaderLogo />}
           right={
             <>

@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 
-import { HeaderMobile } from '.'
+import { Header } from '.'
 import { Home, NavMenu } from './buttons'
 import { isBrowser } from 'react-device-detect'
 import AccountTabs from './pages/Account/AccountTabs'
@@ -15,7 +15,7 @@ const HeaderUser = ({
   path,
 }) => {
   return (
-    <HeaderMobile
+    <Header
       title={title}
       maxWidth={maxWidth}
       bgColor={bgColor}

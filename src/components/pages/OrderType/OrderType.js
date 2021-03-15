@@ -9,7 +9,7 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Account, Home, Logout } from '../../buttons'
-import { Content, HeaderMobile, Main, PageContainer, PageTitle } from '../..'
+import { Content, Header, Main, PageContainer, PageTitle } from '../..'
 import OrderTypes from './OrderTypes'
 
 const OrderType = () => {
@@ -37,7 +37,7 @@ const OrderType = () => {
         <title>Account Settings | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderMobile
+        <Header
           title={!isBrowser ? 'Order Type' : null}
           left={<Home />}
           right={auth ? <Logout /> : <Account />}

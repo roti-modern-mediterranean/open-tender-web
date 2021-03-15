@@ -12,7 +12,7 @@ import {
 import { serviceTypeNamesMap } from '@open-tender/js'
 import { Preface, Heading } from '@open-tender/components'
 
-import { HeaderMobile } from '../..'
+import { Header } from '../..'
 import {
   Account,
   Allergens,
@@ -124,7 +124,7 @@ const MenuHeader = ({
   )
 
   return (
-    <HeaderMobile
+    <Header
       title={
         isBrowser ? null : (
           <MenuHeaderTitle

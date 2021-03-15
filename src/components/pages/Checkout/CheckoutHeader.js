@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { selectGroupOrder } from '@open-tender/redux'
 
-import { HeaderMobile } from '../..'
+import { Header } from '../..'
 import { Account, CancelEdit, Menu, Reopen } from '../../buttons'
 import { isBrowser } from 'react-device-detect'
 
@@ -11,7 +11,7 @@ const CheckoutHeader = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
   const { cartId } = useSelector(selectGroupOrder)
 
   return (
-    <HeaderMobile
+    <Header
       title={title}
       maxWidth={maxWidth}
       bgColor={bgColor}

@@ -11,7 +11,7 @@ import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
 import {
   Content,
-  HeaderMobile,
+  Header,
   HeaderLogo,
   Main,
   PageContainer,
@@ -70,7 +70,7 @@ const ErrorReport = ({ error, errorInfo, eventId }) => {
         </title>
       </Helmet>
       <Content hasRouter={false}>
-        <HeaderMobile title={<HeaderLogo />} />
+        <Header title={<HeaderLogo />} />
         <Main>
           <PageContainer style={{ maxWidth: '76.8rem' }}>
             <PageTitle {...config} />

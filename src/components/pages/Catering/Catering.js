@@ -32,7 +32,7 @@ import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
 import {
   Content,
-  HeaderMobile,
+  Header,
   Loading,
   Main,
   PageTitle,
@@ -186,7 +186,7 @@ const CateringPage = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderMobile
+        <Header
           title={isBrowser ? null : 'Catering'}
           left={<StartOver />}
           right={<Account />}

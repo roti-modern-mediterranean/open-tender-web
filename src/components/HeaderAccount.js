@@ -1,12 +1,12 @@
 import React from 'react'
 import propTypes from 'prop-types'
 
-import { HeaderMobile } from '.'
+import { Header } from '.'
 import { AccountSettings, Logout } from './buttons'
 
 const HeaderAccount = ({ maxWidth = '100%', title, bgColor, borderColor }) => {
   return (
-    <HeaderMobile
+    <Header
       title={title}
       maxWidth={maxWidth}
       bgColor={bgColor}
