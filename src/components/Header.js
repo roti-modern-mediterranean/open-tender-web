@@ -4,6 +4,13 @@ import styled from '@emotion/styled'
 import { AppContext } from '../App'
 import { isBrowser, isMobile } from 'react-device-detect'
 
+// const makePadding = (theme) => {
+//   const { padding } = theme.buttons.sizes.header
+//   const buttonPadding = parseFloat(padding.split(' ')[1].replace('rem', ''))
+//   const headerPadding = parseFloat(theme.layout.padding.replace('rem', ''))
+//   return `${headerPadding - buttonPadding}rem`
+// }
+
 const HeaderView = styled('div')`
   position: fixed;
   z-index: 14;
