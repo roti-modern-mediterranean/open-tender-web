@@ -131,7 +131,9 @@ const Order = ({ order, loading, error, isConfirmation }) => {
   } = details || {}
   const hasDetails =
     eating_utensils || serving_utensils || person_count || tax_exempt_id
-  const orderTitle = `${orderTypeName} from ${revenue_center.name}`
+  const orderTitle = revenue_center
+    ? `${orderTypeName} from ${revenue_center.name}`
+    : ''
 
   const handleReorder = () => {
     const { revenue_center_id: revenueCenterId } = revenue_center
