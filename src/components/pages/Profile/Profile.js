@@ -8,7 +8,7 @@ import {
   updateCustomer,
   resetLoginError,
 } from '@open-tender/redux'
-import { ProfileForm } from '@open-tender/components'
+import { FormWrapper, ProfileForm } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
 import { maybeRefreshVersion } from '../../../app/version'
@@ -16,7 +16,6 @@ import { selectAccountConfig, selectBrand, selectOptIns } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  FormWrapper,
   HeaderUser,
   Loading,
   Main,

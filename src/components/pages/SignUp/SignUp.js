@@ -10,7 +10,7 @@ import {
   resetSignUp,
   linkPosToken,
 } from '@open-tender/redux'
-import { ButtonLink, SignUpForm } from '@open-tender/components'
+import { ButtonLink, FormWrapper, SignUpForm } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import {
@@ -23,7 +23,6 @@ import {
 import { AppContext } from '../../../App'
 import {
   Content,
-  FormWrapper,
   Main,
   PageTitle,
   HeaderDefault,

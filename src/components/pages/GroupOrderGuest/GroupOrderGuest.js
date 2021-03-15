@@ -15,7 +15,11 @@ import {
   selectCustomer,
   logoutCustomer,
 } from '@open-tender/redux'
-import { CartGuestForm, ButtonStyled } from '@open-tender/components'
+import {
+  CartGuestForm,
+  FormWrapper,
+  ButtonStyled,
+} from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
@@ -23,7 +27,6 @@ import { AppContext } from '../../../App'
 import iconMap from '../../iconMap'
 import {
   Content,
-  FormWrapper,
   HeaderLogo,
   HeaderMobile,
   Loading,

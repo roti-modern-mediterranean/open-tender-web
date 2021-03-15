@@ -9,14 +9,17 @@ import {
   resetPassword,
   resetPasswordReset,
 } from '@open-tender/redux'
-import { ButtonLink, ResetPasswordForm } from '@open-tender/components'
+import {
+  ButtonLink,
+  FormWrapper,
+  ResetPasswordForm,
+} from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, openModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  FormWrapper,
   HeaderDefault,
   Main,
   PageContainer,

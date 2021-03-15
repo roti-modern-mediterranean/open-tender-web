@@ -3,7 +3,7 @@ import { isBrowser } from 'react-device-detect'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
-import { DonationForm } from '@open-tender/components'
+import { DonationForm, FormWrapper } from '@open-tender/components'
 import {
   selectDonation,
   resetDonation,
@@ -23,7 +23,6 @@ import {
   PageTitle,
   PageContent,
   HeaderDefault,
-  FormWrapper,
   PageContainer,
 } from '../..'
 

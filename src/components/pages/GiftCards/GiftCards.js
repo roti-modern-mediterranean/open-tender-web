@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { Minus, Plus } from 'react-feather'
 import { Link } from 'react-router-dom'
-import { GiftCardsForm } from '@open-tender/components'
+import { GiftCardsForm, FormWrapper } from '@open-tender/components'
 import {
   selectGiftCards,
   resetGiftCards,
@@ -20,7 +20,6 @@ import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  FormWrapper,
   Main,
   PageTitle,
   PageContent,

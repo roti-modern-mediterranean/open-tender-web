@@ -11,14 +11,18 @@ import {
   resetOrderRating,
   selectCustomer,
 } from '@open-tender/redux'
-import { Heading, Message, OrderRatingForm } from '@open-tender/components'
+import {
+  FormWrapper,
+  Heading,
+  Message,
+  OrderRatingForm,
+} from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  FormWrapper,
   HeaderDefault,
   Loading,
   Main,
