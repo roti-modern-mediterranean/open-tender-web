@@ -2,7 +2,6 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
-import { Heading } from '@open-tender/components'
 import styled from '@emotion/styled'
 
 import { openModal, selectBrand, toggleNav } from '../../slices'
@@ -102,7 +101,7 @@ const navButtons = [
 
 const NavView = styled('nav')`
   position: fixed;
-  z-index: 17;
+  z-index: 101;
   top: 0;
   bottom: 0;
   right: 0;
@@ -141,8 +140,8 @@ const NavItem = styled('button')`
   justify-content: flex-start;
   align-items: center;
   text-align: left;
-  line-height: 1;
-  padding: 1.2rem 1rem 1.2rem 3.5rem;
+  line-height: 0;
+  padding: 1rem 1rem 1rem 3.5rem;
   color: ${(props) => props.theme.fonts.headings.color};
 
   span {
@@ -154,15 +153,16 @@ const NavIcon = styled('span')`
   display: block;
   line-height: 0;
   position: relative;
-  top: -0.1rem;
   width: 1.6rem;
   height: 1.6rem;
   margin: 0 1.7rem 0 0;
+  line-height: 0;
 `
 
-const NavTitle = styled(Heading)`
+const NavTitle = styled('p')`
   flex-grow: 1;
-  font-size: ${(props) => props.theme.fonts.sizes.big};
+  font-size: ${(props) => props.theme.fonts.sizes.main};
+  line-height: 1.2;
 `
 
 const NavFooter = styled('div')`
