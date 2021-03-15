@@ -16,6 +16,7 @@ import {
   Greeting,
   HeaderLogo,
   HeaderMobile,
+  Logo,
   Main,
   PageContainer,
   PageHero,
@@ -89,6 +90,7 @@ const Guest = () => {
       <Content>
         <HeaderMobile
           left={<HeaderLogo />}
+          title={<Logo />}
           right={
             <>
               {isBrowser && has_deals && <DealsButton />}

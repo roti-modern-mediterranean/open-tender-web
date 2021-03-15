@@ -32,6 +32,7 @@ import ItemsStacked from './ItemsStacked'
 import LinkIcon from './LinkIcon'
 import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
+import Logo from './Logo'
 import LoyaltyProgram from './LoyaltyProgram'
 import Main from './Main'
 import MapsAutocomplete from './MapsAutocomplete'
@@ -118,6 +119,7 @@ export {
   LinkIcon,
   LinkSeparator,
   Loading,
+  Logo,
   LoyaltyProgram,
   Main,
   MapsAutocomplete,
