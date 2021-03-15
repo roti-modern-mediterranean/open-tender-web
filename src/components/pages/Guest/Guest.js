@@ -9,12 +9,11 @@ import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Account, Deals as DealsButton } from '../../buttons'
+import { Account, Deals as DealsButton, NavMenu } from '../../buttons'
 import {
   Content,
   DealsSection,
   Greeting,
-  HeaderLogo,
   Header,
   Logo,
   Main,
@@ -89,7 +88,7 @@ const Guest = () => {
       </Helmet>
       <Content>
         <Header
-          left={<HeaderLogo />}
+          left={<NavMenu />}
           title={<Logo />}
           right={
             <>
@@ -97,6 +96,8 @@ const Guest = () => {
               <Account />
             </>
           }
+          bgColor={isBrowser ? 'dark' : 'primary'}
+          borderColor={isBrowser ? 'dark' : 'primary'}
         />
         <Main>
           <PageView>

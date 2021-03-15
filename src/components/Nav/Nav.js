@@ -61,9 +61,9 @@ const Nav = () => {
       <TransitionGroup component={null}>
         {isOpen ? (
           <CSSTransition
-            key="sidebar"
-            classNames="sidebar"
-            timeout={{ enter: 250, exit: 250 }}
+            key="sidebar-left"
+            classNames="sidebar-left"
+            timeout={{ enter: 500, exit: 500 }}
             onEntered={handleFocus}
             onExited={handleExit}
           >

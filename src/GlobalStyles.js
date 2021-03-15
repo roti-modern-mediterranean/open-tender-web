@@ -390,6 +390,17 @@ const makeGlobalStyles = (theme) => css`
     transform: translateX(0);
   }
 
+  .sidebar-left-enter,
+  .sidebar-left-exit.sidebar-left-exit-active {
+    transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+    transform: translateX(-100%);
+  }
+
+  .sidebar-left-enter.sidebar-left-enter-active,
+  .sidebar-left-exit {
+    transform: translateX(0);
+  }
+
   .overlay-enter,
   .overlay-exit.overlay-exit-active {
     transition: all 250ms ease;

@@ -11,7 +11,7 @@ const HeaderView = styled('div')`
   right: 0;
   width: 100%;
   max-width: ${(props) => props.maxWidth};
-  height: 6rem;
+  height: 7.7rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

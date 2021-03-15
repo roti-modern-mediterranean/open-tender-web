@@ -2,41 +2,73 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCustomer, logoutCustomer } from '@open-tender/redux'
+import { Heading, Preface } from '@open-tender/components'
 import styled from '@emotion/styled'
 
 import { openModal, selectBrand, toggleNav } from '../../slices'
 import NavClose from './NavClose'
 import iconMap from '../iconMap'
 
-const guestButtons = [
+const guestLinks = [
   {
-    icon: iconMap.Home,
-    title: 'Home',
-    path: '/',
+    title: 'Account',
+    links: [
+      {
+        title: 'Home',
+        path: '/',
+      },
+      {
+        title: 'Register',
+        path: '/signup',
+      },
+      {
+        title: 'Login',
+        button: 'login',
+      },
+    ],
   },
   {
-    icon: iconMap.Tag,
-    title: 'Deals',
-    path: '/deals',
+    title: 'Orders',
+    links: [
+      {
+        title: 'Cart',
+        button: 'cart',
+      },
+    ],
   },
   {
-    icon: iconMap.Gift,
-    title: 'Gift Cards',
-    path: '/gift-cards',
+    title: 'Food Preferences',
+    links: [
+      {
+        title: 'Nutrition & Allergen Info',
+        path: '/nutrition',
+      },
+    ],
   },
   {
-    icon: iconMap.DollarSign,
-    title: 'Donations',
-    path: '/donations',
-  },
-  {
-    icon: iconMap.PlusCircle,
-    title: 'Sign Up',
-    path: '/signup',
+    title: 'Other',
+    links: [
+      {
+        title: 'Locations',
+        path: '/locations',
+      },
+      {
+        title: 'About',
+        path: '/about',
+      },
+      {
+        title: 'Careers',
+        path: '/careers',
+      },
+      {
+        title: 'Terms',
+        path: '/terms',
+      },
+    ],
   },
 ]
 
-const navButtons = [
+const userLinks = [
   {
     icon: iconMap.Home,
     title: 'Home',
@@ -104,12 +136,15 @@ const NavView = styled('nav')`
   z-index: 101;
   top: 0;
   bottom: 0;
-  right: 0;
-  width: 28rem;
+  left: 0;
+  width: 48rem;
   max-width: 100%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  background-color: ${(props) => props.theme.bgColors.primary};
+  background-color: ${(props) => props.theme.bgColors.dark};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: 30rem;
+  }
 `
 
 const NavContainer = styled('div')`
@@ -120,18 +155,17 @@ const NavContainer = styled('div')`
   flex-direction: column;
 `
 
-// const NavHeader = styled('div')`
-//   width: 100%;
-//   padding: 2.5rem 0 1rem;
-
-//   button span {
-//     font-size: ${(props) => props.theme.fonts.sizes.h3};
-//   }
-// `
-
 const NavItems = styled('nav')`
   width: 100%;
-  padding: 2rem 0 2rem;
+  padding: 9rem 3rem;
+`
+
+const NavSection = styled('div')`
+  margin: 0 0 2rem;
+`
+
+const NavSectionTitle = styled('div')`
+  margin: 0 0 0.5rem;
 `
 
 const NavItem = styled('button')`
@@ -140,23 +174,14 @@ const NavItem = styled('button')`
   justify-content: flex-start;
   align-items: center;
   text-align: left;
-  line-height: 0;
-  padding: 1rem 1rem 1rem 3.5rem;
-  color: ${(props) => props.theme.fonts.headings.color};
+  padding: 0.5rem 0;
+  // margin: 0.25rem 0 0;
+  color: ${(props) => props.theme.links.primary.color};
 
   span {
-    font-size: ${(props) => props.theme.fonts.sizes.big};
+    // font-size: ${(props) => props.theme.fonts.sizes.main};
+    color: ${(props) => props.theme.links.primary.color};
   }
-`
-
-const NavIcon = styled('span')`
-  display: block;
-  line-height: 0;
-  position: relative;
-  width: 1.6rem;
-  height: 1.6rem;
-  margin: 0 1.7rem 0 0;
-  line-height: 0;
 `
 
 const NavTitle = styled('p')`
@@ -166,8 +191,24 @@ const NavTitle = styled('p')`
 `
 
 const NavFooter = styled('div')`
+  position: relative;
   width: 100%;
-  padding: 0 0 2rem;
+  padding: 2rem 0 0;
+
+  & > div:first-of-type {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0.1rem;
+    // border-top: 0.1rem solid ${(props) => props.theme.colors.primary};
+    background-color: ${(props) => props.theme.colors.primary};
+    opacity: 0.15;
+  }
+
+  button p span {
+    text-transform: uppercase;
+  }
 `
 
 const Nav = React.forwardRef((props, ref) => {
@@ -180,8 +221,11 @@ const Nav = React.forwardRef((props, ref) => {
   let removed = []
   if (!hasRewards) removed.push('/rewards')
   if (!has_deals) removed.push('/deals')
-  const buttons = profile ? navButtons : guestButtons
-  const filteredButtons = buttons.filter((i) => !removed.includes(i.path))
+  const links = profile ? userLinks : guestLinks
+  const filteredLinks = links.map((s) => ({
+    ...s,
+    links: s.links.filter((i) => !removed.includes(i.path)),
+  }))
 
   const closeGo = (evt, path) => {
     evt.target.blur()
@@ -207,43 +251,47 @@ const Nav = React.forwardRef((props, ref) => {
     dispatch(logoutCustomer())
   }
 
+  const buttons = {
+    cart: null,
+    login: login,
+  }
+
   return (
     <NavView ref={ref}>
       <NavContainer>
         <NavClose />
-        {/* <NavHeader>
-          {profile && (
-            <>
-              <NavItem onClick={(evt) => closeGo(evt, '/')}>
-                <NavIcon>{iconMap.Smile}</NavIcon>
-                <NavTitle style={{ marginLeft: '-0.2rem' }}>
-                  Hi, {profile.first_name}
+        <NavItems>
+          {filteredLinks.map((section) => (
+            <NavSection>
+              <NavSectionTitle>
+                <Heading size="h6">{section.title}</Heading>
+              </NavSectionTitle>
+              {section.links.map((i) => (
+                <NavItem key={i.path} onClick={(evt) => closeGo(evt, i.path)}>
+                  <NavTitle>
+                    <Preface>{i.title}</Preface>
+                  </NavTitle>
+                </NavItem>
+              ))}
+            </NavSection>
+          ))}
+          <NavFooter>
+            <div />
+            {profile ? (
+              <NavItem onClick={logout}>
+                <NavTitle>
+                  <Preface>Sign Out</Preface>
                 </NavTitle>
               </NavItem>
-            </>
-          )}
-        </NavHeader> */}
-        <NavItems>
-          {filteredButtons.map((i) => (
-            <NavItem key={i.path} onClick={(evt) => closeGo(evt, i.path)}>
-              <NavIcon>{i.icon}</NavIcon>
-              <NavTitle>{i.title}</NavTitle>
-            </NavItem>
-          ))}
+            ) : (
+              <NavItem onClick={login}>
+                <NavTitle>
+                  <Preface>Login</Preface>
+                </NavTitle>
+              </NavItem>
+            )}
+          </NavFooter>
         </NavItems>
-        <NavFooter>
-          {profile ? (
-            <NavItem onClick={logout}>
-              <NavIcon>{iconMap.LogOut}</NavIcon>
-              <NavTitle>Logout</NavTitle>
-            </NavItem>
-          ) : (
-            <NavItem onClick={login}>
-              <NavIcon>{iconMap.User}</NavIcon>
-              <NavTitle>Login</NavTitle>
-            </NavItem>
-          )}
-        </NavFooter>
       </NavContainer>
     </NavView>
   )
