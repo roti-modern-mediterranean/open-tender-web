@@ -131,6 +131,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
   } = details || {}
   const hasDetails =
     eating_utensils || serving_utensils || person_count || tax_exempt_id
+  const orderTitle = `${orderTypeName} from ${revenue_center.name}`
 
   const handleReorder = () => {
     const { revenue_center_id: revenueCenterId } = revenue_center
@@ -149,9 +150,7 @@ const Order = ({ order, loading, error, isConfirmation }) => {
     <OrderView>
       <div>
         <Preface>Order #{order_id}</Preface>
-        <h1>
-          {orderTypeName} from {revenue_center.name}
-        </h1>
+        {isConfirmation ? <h2>{orderTitle}</h2> : <h1>{orderTitle}</h1>}
         {!isMerch && (
           <OrderButtons>
             {auth && order.is_editable && (
