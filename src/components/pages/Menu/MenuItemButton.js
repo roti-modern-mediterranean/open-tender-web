@@ -3,18 +3,34 @@ import styled from '@emotion/styled'
 const MenuItemButton = styled('button')`
   cursor: ${(props) => (props.isSoldOut ? 'default' : 'pointer')};
   display: block;
-  width: 100%;
-  margin: 0;
-  text-align: left;
-  background-color: transparent;
-  opacity: 1;
+  padding: 0.9rem 1.5rem 0.8rem;
+  margin: 0 0 0 1.6rem;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  text-transform: uppercase;
   transition: all 0.15s ease;
-  // font-size: ${(props) => props.theme.fonts.sizes.main};
+  border-radius: 2.5rem;
+  color: ${(props) =>
+    props.secondary
+      ? props.theme.links.primary.color
+      : props.theme.fonts.headings.color};
+  border: 0.1rem solid ${(props) => props.theme.links.primary.color};
+  background-color: ${(props) =>
+    props.secondary ? 'transparent' : props.theme.links.primary.color};
 
-  &:hover,
-  &:active,
+  &:hover:enabled,
+  &:active:enabled {
+    color: ${(props) => props.theme.fonts.headings.color};
+    border-color: ${(props) => props.theme.links.primary.hover};
+    background-color: ${(props) => props.theme.links.primary.hover};
+  }
+
   &:focus {
-    opacity: ${(props) => (props.isSoldOut ? '1.0' : '0.8')};
+    outline: none;
+    box-shadow: ${(props) =>
+      props.secondary ? 'none' : '0 3px 10px 0 rgba(0, 0, 0, 0.2)'};
   }
 `
 

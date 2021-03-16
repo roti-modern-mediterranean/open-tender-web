@@ -8,12 +8,12 @@ import { ImageSpinner } from '../..'
 const MenuItemImageView = styled('div')`
   position: relative;
   z-index: 1;
-  padding: 30% 0;
-  background-color: ${(props) => props.theme.bgColors.secondary};
-  border-radius: ${(props) => props.theme.border.radius};
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+  border-radius: 50%;
+  // background-color: ${(props) =>
+    props.theme.bgColors[props.isInverted ? 'primary' : 'secondary']};
 `
 
 const MenuItemImageLoading = styled('div')`

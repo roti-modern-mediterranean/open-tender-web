@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { setCurrentItem, selectCartCounts } from '@open-tender/redux'
 import { convertStringToArray, makeDisplayPrice } from '@open-tender/js'
-import { Box, Heading } from '@open-tender/components'
+import { Box, Heading, Preface } from '@open-tender/components'
 
 import { selectDisplaySettings, openModal } from '../../../slices'
 import iconMap from '../../iconMap'
@@ -14,38 +14,34 @@ import { MenuItemButton, MenuItemImage } from '.'
 
 const MenuItemView = styled('div')`
   position: relative;
-  width: 20%;
-  padding: ${(props) => props.theme.layout.padding};
-  padding-bottom: 0;
-  padding-left: 0;
-
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
-    width: 25%;
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    width: 33.33333%;
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 33.33333%;
-    padding: ${(props) => props.theme.layout.paddingMobile};
-    padding-bottom: 0;
-    padding-left: 0;
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: 50%;
-    padding: ${(props) => props.theme.layout.paddingMobile};
-    padding-bottom: 0;
-    padding-left: 0;
-  }
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 17rem;
+  cursor: pointer;
 `
 
 export const MenuItemContainer = styled(Box)`
   position: relative;
   width: 100%;
   height: 100%;
+`
+
+export const MenuItemImageView = styled('div')`
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 17rem;
+  height: 17rem;
+  transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+  transform-origin: top left;
+  transform: scale(1) translate3D(0, 0, 0);
+
+  .item-active & {
+    transform: scale(0.43) translate3D(0, 1.8rem, 0);
+  }
 `
 
 export const MenuItemOverlay = styled('div')`
@@ -66,134 +62,116 @@ export const MenuItemOverlay = styled('div')`
     props.isSoldOut ? props.theme.overlay.dark : 'transparent'};
 `
 
-const MenuItemCount = styled('div')`
-  position: absolute;
-  z-index: 3;
-  top: -1.3rem;
-  right: -1.2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 1.3em;
-  padding-bottom: 0.1rem;
-  border-width: 0.2rem;
-  border-style: solid;
-  color: ${(props) => props.theme.colors.light};
-  background-color: ${(props) => props.theme.colors.error};
-  border-color: ${(props) => props.theme.colors.light};
-  font-weight: ${(props) => props.theme.boldWeight};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    top: -1rem;
-    right: -0.9rem;
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+const MenuItemContent = styled('div')`
+  min-height: 11.5rem;
+  padding: 2rem 2rem 2rem 7.5rem;
+  margin: 0 0 0 11rem;
+  transition: background-color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+  border-radius: ${(props) => props.theme.border.radius};
+  background-color: ${(props) =>
+    props.theme.bgColors[props.isInverted ? 'primary' : 'secondary']};
+
+  .item-active & {
+    min-height: 100%;
+    padding: 2rem 2rem 2rem 7.5rem;
+    margin: 0 0 0 2rem;
+    background-color: ${(props) => props.theme.colors.light};
   }
 `
 
-const MenuItemAlert = styled('div')`
-  position: absolute;
-  z-index: 2;
-  bottom: -1.2rem;
-  left: 0;
-  right: 0;
+const MenuItemContentHeader = styled('div')`
   display: flex;
-  justify-content: center;
-  align-items: center;
-`
+  flex-direction: column;
 
-const MenuItemContent = styled('div')`
-  padding: 1.2rem 1.4rem 0.9rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 0.9rem 0.9rem 0.6rem;
+  .item-active & {
+    flex-direction: row;
+    justify-content: space-between;
   }
 `
 
 const MenuItemName = styled('p')`
-  line-height: 1.2;
-  font-size: ${(props) => props.theme.fonts.sizes.big};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    font-size: ${(props) => props.theme.fonts.sizes.main};
+  line-height: 1.1;
+  font-size: 2rem;
+  color: ${(props) => props.theme.fonts.headings.color};
+  transition: color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+
+  .item-active & span {
+    color: ${(props) => props.theme.fonts.body.color};
   }
 `
 
 const MenuItemDescription = styled('p')`
-  margin: 0.5rem 0 0;
+  opacity: 0;
+  max-height: 0;
+  padding: 0;
   line-height: ${(props) => props.theme.lineHeight};
   color: ${(props) => props.theme.fonts.body.color};
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    display: none;
+
+  .item-active & {
+    opacity: 1;
+    max-height: none;
+    padding: 0.5rem 0 2rem;
   }
 `
 
 const MenuItemDetails = styled('p')`
-  margin: 0.5rem 0 0;
+  margin: 0.1rem 0 0;
   line-height: ${(props) => props.theme.lineHeight};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0.3rem 0 0;
-  }
+  flex-shrink: 0;
 
   span {
     display: inline-block;
-    margin: 0 1.5rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      margin: 0 0.75rem 0 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
   }
 `
 
-const MenuItemPrice = styled('span')`
-  color: ${(props) => props.theme.fonts.headings.color};
-  font-weight: ${(props) => props.theme.boldWeight};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    font-weight: ${(props) => props.theme.fonts.body.weight};
-  }
-`
-
-const MenuItemCals = styled('span')`
+const MenuItemPrice = styled(Preface)`
   color: ${(props) => props.theme.fonts.body.color};
-  font-weight: ${(props) => props.theme.boldWeight};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    font-weight: ${(props) => props.theme.fonts.body.weight};
-  }
+  font-size: 1.8rem;
+  font-weight: 500;
 `
 
-const MenuItemAllergens = styled('span')`
-  color: ${(props) => props.theme.colors.alert};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    display: none !important;
-  }
-`
-
-const MenuItemTags = styled('span')`
+const MenuItemCals = styled(Preface)`
   color: ${(props) => props.theme.fonts.body.color};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    display: none !important;
+  font-size: 1.5rem;
+  margin: 0 0 0 0.3rem;
+
+  span {
+    font-size: 1.1rem;
   }
 `
 
-const MenuItem = ({ item }) => {
+const MenuItemButtons = styled('div')`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  opacity: 0;
+  max-height: 0;
+
+  .item-active & {
+    opacity: 1;
+    max-height: none;
+  }
+`
+
+const MenuItem = ({ item, isInverted }) => {
   const dispatch = useDispatch()
-  const { soldOut, menuConfig, allergenAlerts } = useContext(MenuContext)
+  const container = useRef(null)
+  const viewButton = useRef(null)
+  const addButton = useRef(null)
+  const [activeItem, setActiveItem] = useState(null)
+  const { soldOut, menuConfig, allergenAlerts } = useContext(MenuContext) || {}
   const {
     menuImages: showImage,
     calories: showCals,
     tags: showTags,
     allergens: showAllergens,
   } = useSelector(selectDisplaySettings)
-  const soldOutMsg = menuConfig.soldOutMessage || 'Sold out for day'
+  const soldOutMsg = menuConfig
+    ? menuConfig.soldOutMessage || 'Sold out for day'
+    : null
   const cartCounts = useSelector(selectCartCounts)
-  const isSoldOut = soldOut.includes(item.id)
+  const isSoldOut = soldOut ? soldOut.includes(item.id) : false
   const cartCount = cartCounts[item.id] || 0
   const smallImg =
     item.small_image_url || item.app_image_url || item.big_image_url
@@ -205,19 +183,11 @@ const MenuItem = ({ item }) => {
       : null
   const allergens = showAllergens ? convertStringToArray(item.allergens) : []
   const tags = showTags ? convertStringToArray(item.tags) : []
-  const allergenAlert = allergens.length
-    ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
-    : []
+  const allergenAlert =
+    allergenAlerts && allergens.length
+      ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
+      : []
   const hasAllergens = allergenAlert.length > 0
-
-  const handleClick = (evt) => {
-    evt.preventDefault()
-    if (!isSoldOut) {
-      dispatch(setCurrentItem(item))
-      dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
-    }
-  }
-
   const itemTag = isSoldOut ? (
     <Tag icon={iconMap.Slash} text={soldOutMsg} bgColor="alert" />
   ) : hasAllergens ? (
@@ -228,43 +198,86 @@ const MenuItem = ({ item }) => {
     />
   ) : null
 
+  const handleView = (evt) => {
+    evt.preventDefault()
+    if (!isSoldOut) {
+      dispatch(setCurrentItem(item))
+      dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
+    }
+  }
+
+  const handleAdd = (evt) => {
+    evt.preventDefault()
+    if (!isSoldOut) {
+      dispatch(setCurrentItem(item))
+      dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
+    }
+  }
+
+  const handleClick = () => {
+    viewButton.current.focus()
+  }
+
   return (
-    <MenuItemView>
-      <MenuItemContainer>
-        {cartCount > 0 && <MenuItemCount>{cartCount}</MenuItemCount>}
+    <MenuItemView
+      ref={container}
+      onClick={handleClick}
+      className={item.id === activeItem ? 'item-active' : ''}
+    >
+      {/* {cartCount > 0 && <MenuItemCount>{cartCount}</MenuItemCount>}
         {!showImage && itemTag ? (
           <MenuItemAlert>{itemTag}</MenuItemAlert>
-        ) : null}
-        <MenuItemButton onClick={handleClick} isSoldOut={isSoldOut}>
-          {showImage && (
-            <MenuItemImage imageUrl={imageUrl}>
-              {itemTag && (
-                <MenuItemOverlay isSoldOut={isSoldOut}>
-                  <div>{itemTag}</div>
-                </MenuItemOverlay>
-              )}
-            </MenuItemImage>
+        ) : null} */}
+      <MenuItemImageView>
+        <MenuItemImage imageUrl={imageUrl} isInverted={isInverted}>
+          {itemTag && (
+            <MenuItemOverlay isSoldOut={isSoldOut}>
+              <div>{itemTag}</div>
+            </MenuItemOverlay>
           )}
-          <MenuItemContent>
-            <MenuItemName>
-              <Heading>{item.name}</Heading>
-            </MenuItemName>
-            {item.description && (
-              <MenuItemDescription>{item.description}</MenuItemDescription>
+        </MenuItemImage>
+      </MenuItemImageView>
+      <MenuItemContent isInverted={isInverted}>
+        <MenuItemContentHeader>
+          <MenuItemName>
+            <Heading>{item.name}</Heading>
+          </MenuItemName>
+          <MenuItemDetails>
+            {price && <MenuItemPrice>{price}</MenuItemPrice>}
+            {cals && (
+              <MenuItemCals>
+                <span>/</span> {cals} cals
+              </MenuItemCals>
             )}
-            <MenuItemDetails>
-              {price && <MenuItemPrice>{price}</MenuItemPrice>}
-              {cals && <MenuItemCals>{cals} cals</MenuItemCals>}
-              {allergens.length > 0 && (
-                <MenuItemAllergens>{allergens.join(', ')}</MenuItemAllergens>
-              )}
-              {tags.length > 0 && (
-                <MenuItemTags>{tags.join(', ')}</MenuItemTags>
-              )}
-            </MenuItemDetails>
-          </MenuItemContent>
-        </MenuItemButton>
-      </MenuItemContainer>
+          </MenuItemDetails>
+        </MenuItemContentHeader>
+        {item.description && (
+          <MenuItemDescription>{item.description}</MenuItemDescription>
+        )}
+        <MenuItemButtons>
+          <MenuItemButton
+            ref={viewButton}
+            onClick={handleView}
+            onFocus={() => setActiveItem(item.id)}
+            onBlur={() => setActiveItem(null)}
+            isSoldOut={isSoldOut}
+            secondary={true}
+          >
+            View
+          </MenuItemButton>
+          {menuConfig && (
+            <MenuItemButton
+              ref={addButton}
+              onClick={handleAdd}
+              onFocus={() => setActiveItem(item.id)}
+              onBlur={() => setActiveItem(null)}
+              isSoldOut={isSoldOut}
+            >
+              Add
+            </MenuItemButton>
+          )}
+        </MenuItemButtons>
+      </MenuItemContent>
     </MenuItemView>
   )
 }
