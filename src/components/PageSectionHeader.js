@@ -3,9 +3,6 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const PageSectionHeaderView = styled('div')`
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.125s forwards;
-  text-align: center;
   margin: 0 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
@@ -20,6 +17,7 @@ const PageSectionHeaderView = styled('div')`
 
   p {
     line-height: ${(props) => props.theme.lineHeight};
+    font-size: ${(props) => props.theme.fonts.sizes.xBig};
     margin: 0.5rem 0 0;
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       margin: 0.5rem 0 0;

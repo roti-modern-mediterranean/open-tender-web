@@ -2,11 +2,11 @@ import styled from '@emotion/styled'
 
 const PageContainer = styled('div')`
   width: 100%;
-  max-width: 112rem;
-  margin: ${(props) => props.theme.layout.margin} auto;
+  max-width: ${(props) => props.theme.layout.containerMaxWidth};
+  margin: ${(props) => props.theme.layout.margin} 0;
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: ${(props) => props.theme.layout.marginMobile} auto;
+    margin: ${(props) => props.theme.layout.marginMobile} 0;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
 `

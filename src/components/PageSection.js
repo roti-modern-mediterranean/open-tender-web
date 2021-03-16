@@ -4,16 +4,12 @@ import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
 
 import iconMap from './iconMap'
-import { PageSectionHeader } from '.'
+import { Container, PageSectionHeader } from '.'
 
 const PageSectionView = styled('div')`
   margin: ${(props) => props.theme.layout.margin} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: ${(props) => props.theme.layout.marginMobile} 0;
-  }
-
-  &:first-of-type {
-    margin-top: 0;
   }
 `
 
@@ -52,20 +48,22 @@ const PageSectionLink = styled('div')`
 const PageSection = ({ title, subtitle, to, style = null, children }) => {
   return (
     <PageSectionView style={style}>
-      <PageSectionHeader title={title} subtitle={subtitle} />
-      {children}
-      {to && (
-        <PageSectionLink>
-          {to && (
-            <p>
-              <Link to={to}>
-                <span>View all</span>
-                <span>{iconMap.ArrowRight}</span>
-              </Link>
-            </p>
-          )}
-        </PageSectionLink>
-      )}
+      <Container>
+        <PageSectionHeader title={title} subtitle={subtitle} />
+        {children}
+        {to && (
+          <PageSectionLink>
+            {to && (
+              <p>
+                <Link to={to}>
+                  <span>View all</span>
+                  <span>{iconMap.ArrowRight}</span>
+                </Link>
+              </p>
+            )}
+          </PageSectionLink>
+        )}
+      </Container>
     </PageSectionView>
   )
 }
