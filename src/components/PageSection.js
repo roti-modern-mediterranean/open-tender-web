@@ -8,7 +8,7 @@ import { Container, PageSectionHeader } from '.'
 
 const PageSectionView = styled('div')`
   margin: ${(props) => props.theme.layout.margin} 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     margin: ${(props) => props.theme.layout.marginMobile} 0;
   }
 `

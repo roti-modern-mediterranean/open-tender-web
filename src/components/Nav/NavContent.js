@@ -7,7 +7,6 @@ import styled from '@emotion/styled'
 
 import { openModal, selectBrand, toggleNav } from '../../slices'
 import NavClose from './NavClose'
-import iconMap from '../iconMap'
 
 const guestLinks = [
   {

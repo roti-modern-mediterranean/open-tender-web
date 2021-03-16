@@ -1,22 +1,21 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
 import { selectCustomer } from '@open-tender/redux'
 import { ButtonIcon } from '@open-tender/components'
 
 import { toggleNav } from '../../slices'
 import iconMap from '../iconMap'
-import styled from '@emotion/styled'
+// import styled from '@emotion/styled'
 
-const NavMenuView = styled('span')`
-  display: flex;
-  align-items: center;
+// const NavMenuView = styled('span')`
+//   display: flex;
+//   align-items: center;
 
-  svg {
-    fill: ${(props) => props.color};
-  }
-`
+//   svg {
+//     fill: ${(props) => props.color};
+//   }
+// `
 
 const NavMenu = ({ color, size }) => {
   const dispatch = useDispatch()

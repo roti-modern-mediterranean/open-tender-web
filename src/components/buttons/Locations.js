@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
 import { ButtonStyled, ButtonIcon } from '@open-tender/components'
 
-import { MapMarker } from '../icons'
+// import { MapMarker } from '../icons'
 import styled from '@emotion/styled'
 import iconMap from '../iconMap'
 

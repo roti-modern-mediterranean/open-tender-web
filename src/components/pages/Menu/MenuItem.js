@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
-import { setCurrentItem, selectCartCounts } from '@open-tender/redux'
+import { setCurrentItem } from '@open-tender/redux'
 import { convertStringToArray, makeDisplayPrice } from '@open-tender/js'
 import { Box, Heading, Preface } from '@open-tender/components'
 
@@ -164,15 +164,15 @@ const MenuItem = ({ item, isInverted }) => {
   const {
     menuImages: showImage,
     calories: showCals,
-    tags: showTags,
+    // tags: showTags,
     allergens: showAllergens,
   } = useSelector(selectDisplaySettings)
   const soldOutMsg = menuConfig
     ? menuConfig.soldOutMessage || 'Sold out for day'
     : null
-  const cartCounts = useSelector(selectCartCounts)
   const isSoldOut = soldOut ? soldOut.includes(item.id) : false
-  const cartCount = cartCounts[item.id] || 0
+  // const cartCounts = useSelector(selectCartCounts)
+  // const cartCount = cartCounts[item.id] || 0
   const smallImg =
     item.small_image_url || item.app_image_url || item.big_image_url
   const imageUrl = showImage ? smallImg : null
@@ -182,7 +182,7 @@ const MenuItem = ({ item, isInverted }) => {
       ? parseInt(item.nutritional_info.calories) || null
       : null
   const allergens = showAllergens ? convertStringToArray(item.allergens) : []
-  const tags = showTags ? convertStringToArray(item.tags) : []
+  // const tags = showTags ? convertStringToArray(item.tags) : []
   const allergenAlert =
     allergenAlerts && allergens.length
       ? allergens.filter((allergen) => allergenAlerts.includes(allergen))

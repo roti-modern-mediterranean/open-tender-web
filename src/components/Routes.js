@@ -7,7 +7,6 @@ import {
   AccountAllergens,
   AccountCreditCards,
   AccountGiftCards,
-  AccountSettings,
   Catering,
   Checkout,
   Confirmation,

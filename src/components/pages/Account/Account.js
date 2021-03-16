@@ -17,17 +17,13 @@ import { AppContext } from '../../../App'
 import {
   Content,
   Greeting,
-  HeaderLogo,
-  Header,
   Main,
   PageContainer,
   PageHero,
   PageView,
   HeaderDefault,
 } from '../..'
-import { Logout } from '../../buttons'
 import AccountActions from './AccountActions'
-import AccountScan from './AccountScan'
 import AccountTabs from './AccountTabs'
 import AccountOrders from './AccountOrders'
 import AccountLoyalty from './AccountLoyalty'

@@ -7,16 +7,7 @@ import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Locations, NavMenu, OrderNow } from '../../buttons'
-import {
-  Content,
-  Header,
-  HeaderDefault,
-  Logo,
-  Main,
-  PageHero,
-  PageView,
-} from '../..'
+import { Content, HeaderDefault, Main, PageHero, PageView } from '../..'
 import HomeMenu from '../Home/HomeMenu'
 
 const Guest = () => {
