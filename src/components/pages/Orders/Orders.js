@@ -17,7 +17,7 @@ import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   ItemCards,
   Loading,
   Main,
@@ -92,7 +92,7 @@ const Orders = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : 'Order History'} />
+        <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '100%' }}>

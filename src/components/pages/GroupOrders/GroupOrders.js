@@ -15,7 +15,7 @@ import { AppContext } from '../../../App'
 import {
   Container,
   Content,
-  HeaderUser,
+  HeaderDefault,
   Loading,
   Main,
   PageContent,
@@ -57,11 +57,7 @@ const GroupOrders = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser
-          title={isBrowser ? null : 'Group Orders'}
-          bgColor="secondary"
-          borderColor="secondary"
-        />
+        <HeaderDefault />
         <Main bgColor="secondary">
           {!isBrowser && <AccountTabs />}
           <Container>

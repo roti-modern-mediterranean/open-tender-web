@@ -8,14 +8,7 @@ import { selectCustomer } from '@open-tender/redux'
 import { maybeRefreshVersion } from '../../../app/version'
 import { AppContext } from '../../../App'
 import { selectBrand, selectConfig } from '../../../slices'
-import {
-  Content,
-  HeaderUser,
-  Main,
-  PageContainer,
-  PageTitle,
-  // RewardsSection,
-} from '../..'
+import { Content, HeaderDefault, Main, PageContainer, PageTitle } from '../..'
 import AccountTabs from '../Account/AccountTabs'
 import LoyaltyProgams from './LoyaltyProgams'
 import ThanxLoyalty from './ThanxLoyalty'
@@ -44,7 +37,7 @@ const Rewards = () => {
         <title>Rewards | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : 'Rewards'} />
+        <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer>

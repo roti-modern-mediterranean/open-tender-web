@@ -14,7 +14,7 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand, openModal } from '../../../slices'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   Loading,
   Main,
   PageContainer,
@@ -71,7 +71,7 @@ const AccountCreditCards = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : account.creditCards.title} />
+        <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>

@@ -14,7 +14,7 @@ import { selectBrand, selectConfig } from '../../../slices'
 import Addresses from './Addresses'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   Loading,
   Main,
   PageContainer,
@@ -56,7 +56,7 @@ const AccountAddresses = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : config.account.addresses.title} />
+        <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>

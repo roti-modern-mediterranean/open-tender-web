@@ -14,7 +14,7 @@ import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   LinkIcon,
   Main,
   Order as OrderSummary,
@@ -55,7 +55,7 @@ const Order = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isMobile ? title : null} />
+        <HeaderDefault />
         <Main>
           {isMobile && <AccountTabs />}
           <PageContainer>

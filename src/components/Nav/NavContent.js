@@ -70,64 +70,76 @@ const guestLinks = [
 
 const userLinks = [
   {
-    icon: iconMap.Home,
-    title: 'Home',
-    path: '/',
+    title: 'Account',
+    links: [
+      {
+        title: 'Home',
+        path: '/',
+      },
+      {
+        title: 'Profile',
+        path: '/profile',
+      },
+      {
+        title: 'Addresses',
+        path: '/addresses',
+      },
+      {
+        title: 'Payment',
+        path: '/credit-cards',
+      },
+      {
+        title: 'Gift Cards',
+        path: '/gift-cards',
+      },
+    ],
   },
   {
-    icon: iconMap.ShoppingBag,
-    title: 'Order History',
-    path: '/orders',
+    title: 'Orders',
+    links: [
+      {
+        title: 'Recent Orders',
+        path: '/orders',
+      },
+      {
+        title: 'Cart',
+        button: 'cart',
+      },
+    ],
   },
   {
-    icon: iconMap.Heart,
-    title: 'Favorites',
-    path: '/favorites',
+    title: 'Food Preferences',
+    links: [
+      {
+        title: 'Favorites',
+        path: '/favorites',
+      },
+      {
+        title: 'Nutrition & Allergen Info',
+        path: '/nutrition',
+      },
+    ],
   },
   {
-    icon: iconMap.Award,
-    title: 'Rewards',
-    path: '/rewards',
-  },
-  {
-    icon: iconMap.Tag,
-    title: 'Deals',
-    path: '/deals',
-  },
-  {
-    icon: iconMap.Gift,
-    title: 'Gift Cards',
-    path: '/account/gift-cards',
-  },
-  {
-    icon: iconMap.DollarSign,
-    title: 'Donations',
-    path: '/donations',
-  },
-  {
-    icon: iconMap.Sliders,
-    title: 'Allergens',
-    path: '/account/allergens',
-  },
-  {
-    icon: iconMap.MapPin,
-    title: 'Addresses',
-    path: '/account/addresses',
-  },
-  {
-    icon: iconMap.CreditCard,
-    title: 'Credit Cards',
-    path: '/account/credit-cards',
-  },
-  {
-    icon: iconMap.Home,
-    title: 'House Accounts',
-    path: '/account/house-accounts',
-  },
-  {
-    icon: iconMap.Settings,
-    title: 'Profile & Preferences',
-    path: '/account/profile',
+    title: 'Other',
+    links: [
+      {
+        title: 'Locations',
+        path: '/locations',
+      },
+      {
+        title: 'About',
+        path: '/about',
+      },
+      {
+        title: 'Careers',
+        path: '/careers',
+      },
+      {
+        title: 'Terms',
+        path: '/terms',
+      },
+    ],
   },
 ]
 

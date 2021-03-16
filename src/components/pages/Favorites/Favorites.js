@@ -17,15 +17,15 @@ import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
+  HeaderDefault,
   ItemCards,
-  HeaderUser,
   Loading,
   Main,
   OrderCardItem,
-  PageTitle,
   PageError,
   PageContainer,
   PageContent,
+  PageTitle,
 } from '../..'
 import AccountTabs from '../Account/AccountTabs'
 
@@ -79,7 +79,7 @@ const Favorites = () => {
         <title>Order History | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : 'Favorites'} />
+        <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '100%' }}>

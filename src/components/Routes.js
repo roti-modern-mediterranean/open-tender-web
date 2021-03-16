@@ -125,29 +125,23 @@ const Routes = () => {
       <Route exact path="/group-orders">
         <GroupOrders />
       </Route>
-      <Route exact path="/account">
-        <AccountSettings />
+      <Route exact path="/profile">
+        <Profile />
       </Route>
-      <Route exact path="/account/settings">
-        <Redirect to="/account" />
-      </Route>
-      <Route exact path="/account/gift-cards">
-        <AccountGiftCards />
-      </Route>
-      <Route exact path="/account/allergens">
+      <Route exact path="/nutrition">
         <AccountAllergens />
       </Route>
-      <Route exact path="/account/credit-cards">
-        <AccountCreditCards />
-      </Route>
-      <Route exact path="/account/addresses">
+      <Route exact path="/addresses">
         <AccountAddresses />
       </Route>
-      <Route exact path="/account/house-accounts">
-        <HouseAccounts />
+      <Route exact path="/credit-cards">
+        <AccountCreditCards />
       </Route>
-      <Route exact path="/account/profile">
-        <Profile />
+      <Route exact path="/gift-cards">
+        <AccountGiftCards />
+      </Route>
+      <Route exact path="/house-accounts">
+        <HouseAccounts />
       </Route>
       <Route exact path="/accessibility">
         <Accessibility />

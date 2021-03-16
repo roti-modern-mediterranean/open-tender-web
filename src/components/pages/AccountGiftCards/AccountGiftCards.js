@@ -15,7 +15,7 @@ import { openModal, selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   Loading,
   Main,
   PageTitle,
@@ -57,7 +57,7 @@ const AccountGiftCards = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : 'Gift Cards'} />
+        <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>

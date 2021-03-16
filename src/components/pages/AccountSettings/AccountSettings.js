@@ -10,7 +10,7 @@ import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   Main,
   PageContainer,
   PageTitle,
@@ -42,7 +42,7 @@ const AccountSettings = () => {
         <title>Account Settings | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : 'Account'} />
+        <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>

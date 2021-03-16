@@ -23,6 +23,7 @@ import {
   PageContainer,
   PageHero,
   PageView,
+  HeaderDefault,
 } from '../..'
 import { Logout } from '../../buttons'
 import AccountActions from './AccountActions'
@@ -81,19 +82,7 @@ const Account = () => {
         <title>Welcome Back | {siteTitle}</title>
       </Helmet>
       <Content>
-        <Header
-          left={<HeaderLogo />}
-          right={
-            isBrowser ? (
-              <AccountTabs />
-            ) : (
-              <>
-                <AccountScan />
-                <Logout />
-              </>
-            )
-          }
-        />
+        <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageView>

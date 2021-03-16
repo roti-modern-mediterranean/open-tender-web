@@ -16,7 +16,6 @@ import { selectAccountConfig, selectBrand, selectOptIns } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  HeaderUser,
   Loading,
   Main,
   PageContainer,
@@ -25,6 +24,7 @@ import {
   VerifyAccount,
 } from '../..'
 import AccountTabs from '../Account/AccountTabs'
+import HeaderDefault from '../../HeaderDefault'
 
 const AccountProfile = () => {
   const dispatch = useDispatch()
@@ -64,7 +64,7 @@ const AccountProfile = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : account.profile.title} />
+        <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '72rem' }}>

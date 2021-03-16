@@ -11,7 +11,6 @@ import {
   Content,
   Deals as DealsList,
   HeaderDefault,
-  HeaderUser,
   Loading,
   Main,
   PageContainer,
@@ -61,11 +60,7 @@ const Deals = () => {
         </title>
       </Helmet>
       <Content>
-        {auth ? (
-          <HeaderUser title={isBrowser ? null : config.title} />
-        ) : (
-          <HeaderDefault title={isBrowser ? null : config.title} />
-        )}
+        <HeaderDefault />
         <Main>
           {!isBrowser && auth && <AccountTabs />}
           <PageContainer>

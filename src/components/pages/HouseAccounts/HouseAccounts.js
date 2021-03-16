@@ -13,7 +13,7 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   Loading,
   Main,
   PageContainer,
@@ -56,7 +56,7 @@ const AccountHouseAccounts = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : account.houseAccounts.title} />
+        <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>

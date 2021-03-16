@@ -18,7 +18,7 @@ import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
-  HeaderUser,
+  HeaderDefault,
   Loading,
   Main,
   PageContainer,
@@ -82,7 +82,7 @@ const AccountAllergens = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderUser title={isBrowser ? null : account.allergens.title} />
+        <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
