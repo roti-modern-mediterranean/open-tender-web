@@ -4,7 +4,7 @@ import { isMobile } from 'react-device-detect'
 import { selectGroupOrder } from '@open-tender/redux'
 
 import { selectDisplaySettings } from '../../../slices'
-import { RevenueCenter, RevenueCenterChild, NavSticky } from '../..'
+import { RevenueCenter, NavSticky } from '../..'
 import { MenuContext } from './Menu'
 import MenuRevenueCenters from './MenuRevenueCenters'
 import MenuCategories from './MenuCategories'
@@ -29,21 +29,10 @@ const MenuContent = () => {
     menuConfig,
     deals,
   } = useContext(MenuContext)
-  const {
-    menuHero,
-    menuHeroMobile,
-    menuHeroChild,
-    menuHeroChildMobile,
-  } = useSelector(selectDisplaySettings)
+  const { menuHero, menuHeroMobile } = useSelector(selectDisplaySettings)
   const { cartGuest } = useSelector(selectGroupOrder)
   const showHero =
     menuHero === undefined ? true : isMobile ? menuHeroMobile : menuHero
-  const showHeroChild =
-    menuHeroChild === undefined
-      ? true
-      : isMobile
-      ? menuHeroChildMobile
-      : menuHeroChild
   const topRef = useRef()
   const heroRef = useRef()
   const [selected, setSelected] = useState(null)
@@ -79,16 +68,6 @@ const MenuContent = () => {
 
   return (
     <>
-      {selected && showHeroChild && (
-        <div ref={heroRef}>
-          <MenuHero imageUrl={selected.large_image_url}>
-            <RevenueCenterChild
-              revenueCenter={selected}
-              style={{ maxWidth: '44rem' }}
-            />
-          </MenuHero>
-        </div>
-      )}
       {!selected && revenueCenter && showHero && (
         <div ref={heroRef}>
           <MenuHero imageUrl={menuConfig.background}>

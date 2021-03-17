@@ -1,4 +1,3 @@
-import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
+import RevenueCenter from './RevenueCenter'
 
-export { RevenueCenterChild }
 export default RevenueCenter

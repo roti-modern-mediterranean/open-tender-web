@@ -4,126 +4,81 @@ import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { selectGroupOrder } from '@open-tender/redux'
 import { stripTags } from '@open-tender/js'
-import { BgImage, Box } from '@open-tender/components'
+import { BgImage, Preface } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 import RevenueCenterOrder from './RevenueCenterOrder'
-import RevenueCenterAction from './RevenueCenterAction'
+import { PrefaceTitle } from '..'
 
-const RevenueCenterView = styled(Box)`
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  background-color: ${(props) =>
-    props.theme.bgColors[props.isMenu ? 'primary' : 'secondary']};
+const RevenueCenterView = styled('button')`
+  display: block;
+  text-align: left;
+`
+
+const RevenueCenterHeader = styled('span')`
+  display: block;
+  margin: 0 0 1rem;
+`
+
+const RevenueCenterContent = styled('span')`
+  display: flex;
+  align-items: flex-start;
 `
 
 const RevenueCenterImage = styled(BgImage)`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 24rem;
+  display: block;
+  flex: 0 0 7.8rem;
+  // width: 7.8rem;
+  height: 5.8rem;
+  border-radius: 0.4rem;
   background-color: ${(props) => props.theme.bgColors.secondary};
-
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: none;
-  }
 `
 
-const RevenueCenterContent = styled('div')`
-  padding: 0 ${(props) => (props.showImage ? `24rem` : null)} 0 0;
-
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 0;
-  }
-
-  > div {
-    padding: 1.5rem 2rem;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      padding: 1.5rem 1.5rem;
-    }
-  }
+const RevenueCenterDetails = styled('span')`
+  display: block;
+  padding: 0 0 0 1rem;
 `
 
-const RevenueCenterHeader = styled('div')`
+const RevenueCenterDetailView = styled('span')`
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin-bottom: 1rem;
-  }
+  align-items: flex-start;
+  margin: 0 0 0.6rem;
 
-  & > * {
-    display: block;
-  }
-
-  h2 {
-    font-size: ${(props) => props.theme.fonts.sizes.h4};
-  }
-
-  p {
-    padding-top: 0.4rem;
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
+  &:last-of-type {
+    margin: 0;
   }
 `
 
-const RevenueCenterActions = styled('div')`
-  a,
-  button {
-    display: block;
-    width: 100%;
-    text-align: left;
+const RevenueCenterDetailIcon = styled('span')`
+  display: block;
+  position: relative;
+  top: 0.1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  line-height: 0;
+  color: ${(props) => props.theme.fonts.body.color};
+`
+
+const RevenueCenterDetailText = styled('span')`
+  display: block;
+  width: 100%;
+  padding: 0 0 0 1rem;
+  line-height: 1;
+
+  span {
+    font-size: 1.5rem;
+    font-weight: normal;
   }
 `
 
-const RevenueCenterDesc = styled('div')`
-  margin: 0.75rem 0 0;
-
-  p {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
-  }
-`
-
-export const RevenueCenterChild = ({ revenueCenter, style }) => {
-  const { hours_desc, description } = revenueCenter
-  const hoursDesc = hours_desc ? stripTags(hours_desc) : null
-  const desc = description ? stripTags(description) : null
-  return (
-    <RevenueCenterView style={style}>
-      <RevenueCenterContent>
-        <div>
-          <RevenueCenterHeader>
-            <h2>{revenueCenter.name}</h2>
-          </RevenueCenterHeader>
-          <RevenueCenterActions>
-            {desc && (
-              <RevenueCenterDesc>
-                <p>{desc}</p>
-              </RevenueCenterDesc>
-            )}
-            {hoursDesc && (
-              <RevenueCenterAction
-                icon={iconMap['Clock']}
-                text={hoursDesc}
-                arrow={null}
-              />
-            )}
-          </RevenueCenterActions>
-        </div>
-      </RevenueCenterContent>
-    </RevenueCenterView>
-  )
-}
-
-RevenueCenterChild.displayName = 'RevenueCenterChild'
-RevenueCenterChild.propTypes = {
-  revenueCenter: propTypes.object,
-  style: propTypes.object,
-}
+const RevenueCenterDetail = ({ icon, text }) => (
+  <RevenueCenterDetailView>
+    <RevenueCenterDetailIcon>{icon}</RevenueCenterDetailIcon>
+    <RevenueCenterDetailText>
+      <Preface>{text}</Preface>
+    </RevenueCenterDetailText>
+  </RevenueCenterDetailView>
+)
 
 const RevenueCenter = ({
   revenueCenter,
@@ -142,58 +97,24 @@ const RevenueCenter = ({
   const hoursDesc = hours.description ? stripTags(hours.description) : null
   const hoursDescIcon = is_outpost ? iconMap.AlertCircle : iconMap.Clock
 
-  const distance =
-    revenueCenter.distance !== null && revenueCenter.distance !== undefined
-      ? revenueCenter.distance
-      : null
-
   return (
     <RevenueCenterView style={style} isMenu={isMenu}>
-      {showImage && (
-        <RevenueCenterImage style={bgStyle}>&nbsp;</RevenueCenterImage>
-      )}
+      <RevenueCenterHeader>
+        <PrefaceTitle as="h2">{revenueCenter.name}</PrefaceTitle>
+      </RevenueCenterHeader>
       <RevenueCenterContent showImage={showImage}>
-        <div>
-          <RevenueCenterHeader>
-            <h2>{revenueCenter.name}</h2>
-            {distance !== null && <p>{distance.toFixed(2)} miles away</p>}
-          </RevenueCenterHeader>
-          <RevenueCenterActions>
-            <a
-              href={revenueCenter.directions_url}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <RevenueCenterAction
-                icon={iconMap.MapPin}
-                text={address.street}
-              />
-            </a>
-            {phoneUrl && (
-              <a href={phoneUrl} rel="noopener noreferrer" target="_blank">
-                <RevenueCenterAction
-                  icon={iconMap.Phone}
-                  text={address.phone}
-                />
-              </a>
-            )}
-            {hoursDesc && (
-              <RevenueCenterAction
-                icon={hoursDescIcon}
-                text={hoursDesc}
-                arrow={null}
-              />
-            )}
-          </RevenueCenterActions>
-          {!cartGuest && (
-            <RevenueCenterOrder
-              revenueCenter={revenueCenter}
-              isMenu={isMenu}
-              isLanding={isLanding}
-            />
+        {showImage && <RevenueCenterImage as="span" style={bgStyle} />}
+        <RevenueCenterDetails>
+          <RevenueCenterDetail icon={iconMap.MapPin} text={address.street} />
+          {phoneUrl && (
+            <RevenueCenterDetail icon={iconMap.Phone} text={address.phone} />
           )}
-        </div>
+          {hoursDesc && (
+            <RevenueCenterDetail icon={hoursDescIcon} text={hoursDesc} />
+          )}
+        </RevenueCenterDetails>
       </RevenueCenterContent>
+      {!cartGuest && <RevenueCenterOrder revenueCenter={revenueCenter} />}
     </RevenueCenterView>
   )
 }

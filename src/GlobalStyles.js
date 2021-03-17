@@ -258,7 +258,7 @@ const makeGlobalStyles = (theme) => css`
     transition: ${theme.links.transition};
 
     &::placeholder {
-      color: ${theme.fonts.headings.color};
+      color: ${theme.inputs.color};
       opacity: 0.5;
     }
 
@@ -269,18 +269,18 @@ const makeGlobalStyles = (theme) => css`
 
     &:active,
     &:focus {
-      color: ${theme.colors.primary};
-      background-color: ${theme.bgColors.primary};
-      border: ${theme.inputs.borderWidth} solid ${theme.colors.primary};
+      color: ${theme.inputs.color};
+      background-color: ${theme.inputs.bgColor};
+      border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
     }
 
     &:disabled,
     &:read-only {
       cursor: default;
       opacity: 0.5;
-      color: ${theme.fonts.headings.color};
-      background-color: ${theme.bgColors.secondary};
-      border: ${theme.inputs.borderWidth} solid ${theme.bgColors.secondary};
+      color: ${theme.inputs.color};
+      background-color: ${theme.inputs.bgColor};
+      border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
     }
   }
 

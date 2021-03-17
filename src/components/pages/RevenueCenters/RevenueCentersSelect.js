@@ -26,25 +26,7 @@ import {
 import styled from '@emotion/styled'
 import iconMap from '../../iconMap'
 
-const RevenueCentersSelectView = styled('div')`
-  position: relative;
-  z-index: 1;
-  flex-grow: 1;
-  background-color: ${(props) => props.theme.bgColors.primary};
-  // padding: ${(props) => props.theme.layout.padding} 0;
-
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 44rem 0 0;
-    padding: 3rem 0 0;
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 7.2rem 0 ${(props) => (props.showMap ? '24rem' : '0')};
-    padding: 1rem 0 0;
-    transition: all 0.25s ease;
-    transform: translateY(${(props) => (props.showMap ? '24rem' : '0')});
-  }
-`
+const RevenueCentersSelectView = styled('div')``
 
 const RevenueCentersSelectShowMap = styled('div')`
   display: none;
@@ -76,10 +58,7 @@ const RevenueCentersSelectList = styled('ul')`
   }
 
   & > li {
-    margin: ${(props) => props.theme.layout.padding} 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
-    }
+    margin: 2rem 0 0;
   }
 `
 
@@ -169,14 +148,13 @@ const RevenueCentersSelect = () => {
 
   return (
     <RevenueCentersSelectView showMap={showMap}>
-      <Container>
-        {isLoading ? (
-          <PageContent>
-            <Loading text="Retrieving nearest locations..." />
-          </PageContent>
-        ) : (
-          <>
-            <PageTitle>
+      {isLoading ? (
+        <PageContent>
+          <Loading text="Retrieving nearest locations..." />
+        </PageContent>
+      ) : (
+        <>
+          {/* <PageTitle>
               <RevenueCentersSelectShowMap>
                 <ButtonLink onClick={() => setShowMap(!showMap)}>
                   <Preface>{showMap ? 'Hide Map' : 'Show Map'}</Preface>
@@ -184,32 +162,27 @@ const RevenueCentersSelect = () => {
               </RevenueCentersSelectShowMap>
               <h2>{renamedTitle}</h2>
               <p>{renamedError || renamedMsg}</p>
-            </PageTitle>
-            {showRevenueCenters ? (
-              <RevenueCentersSelectList>
-                {displayedRevenueCenters.map((revenueCenter) => (
-                  <li key={revenueCenter.revenue_center_id}>
-                    <RevenueCenter
-                      revenueCenter={revenueCenter}
-                      classes="rc--card"
-                      showImage={!isMobileOnly}
-                    />
-                  </li>
-                ))}
-              </RevenueCentersSelectList>
-            ) : (
-              <div style={{ margin: '3rem 0 0' }}>
-                <ButtonStyled
-                  icon={iconMap.RefreshCw}
-                  onClick={handleStartOver}
-                >
-                  Start Over
-                </ButtonStyled>
-              </div>
-            )}
-          </>
-        )}
-      </Container>
+            </PageTitle> */}
+          {showRevenueCenters ? (
+            <RevenueCentersSelectList>
+              {displayedRevenueCenters.map((revenueCenter) => (
+                <li key={revenueCenter.revenue_center_id}>
+                  <RevenueCenter
+                    revenueCenter={revenueCenter}
+                    showImage={true}
+                  />
+                </li>
+              ))}
+            </RevenueCentersSelectList>
+          ) : (
+            <div style={{ margin: '3rem 0 0' }}>
+              <ButtonStyled icon={iconMap.RefreshCw} onClick={handleStartOver}>
+                Start Over
+              </ButtonStyled>
+            </div>
+          )}
+        </>
+      )}
     </RevenueCentersSelectView>
   )
 }

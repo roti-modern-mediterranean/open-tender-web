@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
-import { isMobile } from 'react-device-detect'
+import { isBrowser, isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import ClipLoader from 'react-spinners/ClipLoader'
 import {
@@ -20,21 +20,14 @@ import {
   selectConfig,
 } from '../../../slices'
 import { AppContext } from '../../../App'
-import {
-  Content,
-  Header,
-  Main,
-  MapsAutocomplete,
-  ScreenreaderTitle,
-} from '../..'
-import RevenueCentersSelect from './RevenueCentersSelect'
-import {
-  Account,
-  RequestedAt,
-  RevenueCenter,
-  ServiceType,
-  StartOver,
-} from '../../buttons'
+import { Content, Header, Main, ScreenreaderTitle } from '../..'
+import userMarker from '../../../assets/userMarker.svg'
+import mapMarkerRed from '../../../assets/mapMarkerRed.svg'
+import mapMarkerDarkRed from '../../../assets/mapMarkerDarkRed.svg'
+
+import { StartOver } from '../../buttons'
+import RevenueCenterMap from './RevenueCenterMap'
+import MapsAutocomplete from './MapsAutocomplete'
 
 const RevenueCenters = () => {
   const history = useHistory()
@@ -80,27 +73,16 @@ const RevenueCenters = () => {
       <Helmet>
         <title>Locations | {siteTitle}</title>
       </Helmet>
-      <Content maxWidth="76.8rem">
+      <Content>
         <Header
-          maxWidth="76.8rem"
-          borderColor={isMobile ? 'transparent' : 'primary'}
+          bgColor="transparent"
+          borderColor="transparent"
           style={{ boxShadow: 'none' }}
           title={isMobile ? navTitle : null}
           left={<StartOver />}
-          right={
-            isMobile ? (
-              <Account />
-            ) : (
-              <>
-                <Account />
-                <RevenueCenter />
-                <ServiceType />
-                <RequestedAt />
-              </>
-            )
-          }
+          right={null}
         />
-        <Main>
+        <Main style={{ paddingTop: '0' }}>
           <ScreenreaderTitle>Locations</ScreenreaderTitle>
           {apiKey && (
             <GoogleMap
@@ -109,10 +91,10 @@ const RevenueCenters = () => {
               styles={styles}
               center={center}
               loader={<ClipLoader size={30} loading={true} />}
+              renderMap={(props) => <RevenueCenterMap {...props} />}
               // events={null}
             >
               <MapsAutocomplete setCenter={setCenter} center={center} />
-              <RevenueCentersSelect />
               {revenueCenters.map((i) => {
                 const isActive = i.revenue_center_id === activeMarker
                 const icon = isActive ? icons.locationSelected : icons.location
@@ -124,8 +106,13 @@ const RevenueCenters = () => {
                       lat: i.address.lat,
                       lng: i.address.lng,
                     }}
-                    icon={icon.url}
-                    size={icon.size}
+                    // icon={icon.url}
+                    icon={isBrowser ? mapMarkerRed : mapMarkerDarkRed}
+                    size={
+                      isBrowser
+                        ? { width: 66, height: 66 }
+                        : { width: 40, height: 40 }
+                    }
                     anchor={icon.anchor}
                     events={{
                       onClick: () => setActiveMarker(i.revenue_center_id),
@@ -140,7 +127,8 @@ const RevenueCenters = () => {
                     lat: center.lat,
                     lng: center.lng,
                   }}
-                  icon={icons.user.url}
+                  // icon={icons.user.url}
+                  icon={userMarker}
                   size={icons.user.size}
                   anchor={icons.user.anchor}
                   drop={null}

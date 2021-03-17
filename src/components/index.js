@@ -35,7 +35,6 @@ import Loading from './Loading'
 import Logo from './Logo'
 import LoyaltyProgram from './LoyaltyProgram'
 import Main from './Main'
-import MapsAutocomplete from './MapsAutocomplete'
 import Modal, { ModalClose, ModalContent, ModalView } from './Modal'
 import Nav from './Nav'
 import NavButtons from './NavButtons'
@@ -64,10 +63,11 @@ import PageSectionHeader from './PageSectionHeader'
 import PageTitle from './PageTitle'
 import PageTitleButtons from './PageTitleButtons'
 import PageView from './PageView'
+import PrefaceTitle from './PrefaceTitle'
 import ProgressBar from './ProgressBar'
 import ProgressCircle from './ProgressCircle'
 import QRCode from './QRCode'
-import RevenueCenter, { RevenueCenterChild } from './RevenueCenter'
+import RevenueCenter from './RevenueCenter'
 import Reward from './Reward'
 import Rewards from './Rewards'
 import RewardsSection from './RewardsSection'
@@ -122,7 +122,6 @@ export {
   Logo,
   LoyaltyProgram,
   Main,
-  MapsAutocomplete,
   Modal,
   ModalClose,
   ModalContent,
@@ -154,11 +153,11 @@ export {
   PageTitle,
   PageTitleButtons,
   PageView,
+  PrefaceTitle,
   ProgressBar,
   ProgressCircle,
   QRCode,
   RevenueCenter,
-  RevenueCenterChild,
   Reward,
   Rewards,
   RewardsSection,
