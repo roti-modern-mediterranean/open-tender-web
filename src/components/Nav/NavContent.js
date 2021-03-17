@@ -187,18 +187,21 @@ const NavItem = styled('button')`
   text-align: left;
   padding: 0.5rem 0;
   // margin: 0.25rem 0 0;
+  font-weight: normal;
   color: ${(props) => props.theme.links.primary.color};
 
-  span {
-    // font-size: ${(props) => props.theme.fonts.sizes.main};
+  p span {
     color: ${(props) => props.theme.links.primary.color};
+    font-weight: normal;
+    text-transform: none;
+    font-size: 2.2rem;
   }
 `
 
 const NavTitle = styled('p')`
-  flex-grow: 1;
-  font-size: ${(props) => props.theme.fonts.sizes.main};
-  line-height: 1.2;
+  // flex-grow: 1;
+  // font-size: ${(props) => props.theme.fonts.sizes.main};
+  // line-height: 1.2;
 `
 
 const NavFooter = styled('div')`

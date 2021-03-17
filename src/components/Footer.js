@@ -1,9 +1,11 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { ButtonStyled, Preface } from '@open-tender/components'
+
 import { Container } from '.'
-import logo from '../assets/logo_footer.png'
 import packageJson from '../../package.json'
+import { Facebook, Instagram, Twitter } from 'react-feather'
 
 const FooterView = styled('footer')`
   position: relative;
@@ -14,53 +16,86 @@ const FooterView = styled('footer')`
 `
 
 const FooterContainer = styled('div')`
-  height: 18rem;
+  // height: 25rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    height: 24rem;
-    padding: 0 0 6rem;
-  }
-`
+  align-items: center;
+  padding: 5.5rem 0 8.5rem;
+  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  //   height: 24rem;
+  //   padding: 0 0 6rem;
+  // }
 
-const FooterLogo = styled('div')`
-  max-width: 16rem;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 0 2rem;
-  }
+  & > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  img {
-    display: inline-block;
-    margin-top: 0.2rem;
-    pointer-events: none;
+    &:first-of-type {
+      margin: 0 0 5rem;
+    }
   }
 `
 
 const FooterNav = styled('nav')`
   margin: 0;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
+  // font-size: ${(props) => props.theme.fonts.sizes.small};
 
   ul li {
     float: left;
-    margin: 1.5rem 2rem 0 0;
+    margin: 0 5rem 0 0;
+
     &:last-child {
       margin-right: 0;
     }
 
-    a {
-      color: ${(props) => props.theme.links.light.color};
+    // a {
+    //   color: ${(props) => props.theme.links.light.color};
+    // }
+
+    // a:hover,
+    // a:active,
+    // a:focus {
+    //   color: ${(props) => props.theme.links.light.hover};
+    // }
+  }
+`
+
+const FooterSocial = styled('div')`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  span {
+    display: block;
+
+    &:first-of-type {
+      color: ${(props) => props.theme.colors.light};
+      font-weight: 500;
+      font-size: 1.7rem;
+      letter-spacing: 0.01em;
+      line-height: 1;
     }
 
-    a:hover,
-    a:active,
-    a:focus {
-      color: ${(props) => props.theme.links.light.hover};
+    & + span {
+      line-height: 0;
+      width: 1.6rem;
+      height: 1.6rem;
+      color: ${(props) => props.theme.colors.light};
+      margin: 0 0 0 1.75rem;
     }
   }
 `
+
+const FooterCopyright = styled('div')`
+  p {
+    margin: 0 0 1.5rem;
+  }
+`
+
+const FooterButtons = styled('div')``
 
 const FooterVersion = styled('div')`
   position: absolute;
@@ -76,51 +111,78 @@ const FooterVersion = styled('div')`
 `
 
 const Footer = ({ hasRouter = true }) => {
-  return (
+  const history = useHistory()
+
+  return hasRouter ? (
     <FooterView role="contentinfo">
       <Container>
         <FooterContainer>
-          <FooterLogo>
-            <span>Powered by</span>
-            <img src={logo} alt="Open Tender Logo" />
-          </FooterLogo>
-          <FooterNav aria-label="Legal Policies Navigation">
-            <ul>
-              <li>
-                <a
-                  href="https://demo.brandibble.co/order/terms/"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  Terms of Use
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://demo.brandibble.co/order/privacy/"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  Privacy
-                </a>
-              </li>
-              {hasRouter && (
-                <>
+          <div>
+            <FooterNav aria-label="Legal Policies Navigation">
+              <ul>
+                <li>
+                  <Link to="/careers">Careers</Link>
+                </li>
+                <li>
+                  <Link to="/about">About</Link>
+                </li>
+                <li>
+                  <Link to="/contact">Contact & Help</Link>
+                </li>
+                <li>
+                  <Link to="/menu">Menu</Link>
+                </li>
+                <li>
+                  <Link to="/menu">Nutrition & Allergen Info</Link>
+                </li>
+              </ul>
+            </FooterNav>
+            <FooterSocial>
+              <Preface>Follow Us</Preface>
+              <span>
+                <Facebook size={null} />
+              </span>
+              <span>
+                <Instagram size={null} />
+              </span>
+              <span>
+                <Twitter size={null} />
+              </span>
+            </FooterSocial>
+          </div>
+          <div>
+            <FooterCopyright>
+              <p>
+                Copyright © 2020 Roti Modern Mediterranean. All rights reserved.
+              </p>
+              <FooterNav aria-label="Legal Policies Navigation">
+                <ul>
+                  <li>
+                    <Link to="/privacy">Privacy Policy</Link>
+                  </li>
+                  <li>
+                    <Link to="/terms">Terms & Conditions</Link>
+                  </li>
                   <li>
                     <Link to="/accessibility">Accessibility</Link>
                   </li>
                   <li>
                     <Link to="/refunds">Refunds</Link>
                   </li>
-                </>
-              )}
-            </ul>
-          </FooterNav>
+                </ul>
+              </FooterNav>
+            </FooterCopyright>
+            <FooterButtons>
+              <ButtonStyled onClick={() => history.push('/locations')}>
+                Locate a Roti
+              </ButtonStyled>
+            </FooterButtons>
+          </div>
         </FooterContainer>
+        {/* <FooterVersion aria-hidden="true">v{packageJson.version}</FooterVersion> */}
       </Container>
-      <FooterVersion aria-hidden="true">v{packageJson.version}</FooterVersion>
     </FooterView>
-  )
+  ) : null
 }
 
 Footer.displayName = 'Footer'
