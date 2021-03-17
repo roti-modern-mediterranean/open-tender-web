@@ -13,10 +13,10 @@ const HeaderDefault = () => {
   return (
     <Header
       left={<NavMenu />}
-      title={<Logo />}
+      title={isBrowser ? <Logo /> : <Locations />}
       right={
         <>
-          <Locations />
+          {isBrowser && <Locations />}
           <OrderNow />
         </>
       }

@@ -1,10 +1,11 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
-import { ButtonStyled, ButtonIcon } from '@open-tender/components'
+import { selectOrder, setOrderServiceType } from '@open-tender/redux'
+import { ButtonStyled } from '@open-tender/components'
 
-// import { MapMarker } from '../icons'
 import styled from '@emotion/styled'
 import iconMap from '../iconMap'
 
@@ -23,21 +24,28 @@ const LocationsIcon = styled('span')`
 `
 
 const Locations = ({ text = 'Find A Roti', icon = iconMap.MapPin }) => {
+  const dispatch = useDispatch()
   const history = useHistory()
+  const { orderType, serviceType } = useSelector(selectOrder)
+  const mobileStyles = { color: '#621C27' }
 
-  const back = () => {
+  const onClick = () => {
+    if (!orderType || !serviceType) {
+      dispatch(setOrderServiceType('OLO', 'PICKUP'))
+    }
     history.push(`/locations`)
   }
 
-  return isBrowser ? (
-    <ButtonStyled onClick={back} color="header" size="header">
+  return (
+    <ButtonStyled
+      onClick={onClick}
+      color="header"
+      size="header"
+      style={!isBrowser ? mobileStyles : null}
+    >
       <LocationsText>{text}</LocationsText>
       <LocationsIcon>{icon}</LocationsIcon>
     </ButtonStyled>
-  ) : (
-    <ButtonIcon label={text} onClick={back}>
-      {icon}
-    </ButtonIcon>
   )
 }
 

@@ -1,11 +1,64 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { selectCustomer } from '@open-tender/redux'
-import { Account, Guest } from '..'
+import React, { useContext, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { isBrowser } from 'react-device-detect'
+import { Helmet } from 'react-helmet'
+import {
+  selectAnnouncements,
+  fetchAnnouncementPage,
+  selectCustomer,
+} from '@open-tender/redux'
+
+import { maybeRefreshVersion } from '../../../app/version'
+import { selectConfig, closeModal, selectBrand } from '../../../slices'
+import { AppContext } from '../../../App'
+import { Content, HeaderDefault, Main, PageHero, PageView } from '../..'
+import HomeMenu from '../Home/HomeMenu'
+import HomeJourneys from '../Home/HomeJourneys'
+import HomeRecentOrders from './HomeRecentOrders'
 
 const Home = () => {
+  const dispatch = useDispatch()
+  const { windowRef } = useContext(AppContext)
+  const announcements = useSelector(selectAnnouncements)
   const { auth } = useSelector(selectCustomer)
-  return auth ? <Account /> : <Guest />
+  const brand = useSelector(selectBrand)
+  const { home } = useSelector(selectConfig)
+  const { background, mobile, showHero } = home
+  const page = auth ? 'ACCOUNT' : 'HOME'
+
+  useEffect(() => {
+    windowRef.current.scrollTop = 0
+    maybeRefreshVersion()
+    dispatch(closeModal())
+  }, [windowRef, dispatch])
+
+  useEffect(() => {
+    dispatch(fetchAnnouncementPage(page))
+  }, [dispatch, page])
+
+  return (
+    <>
+      <Helmet>
+        <title>{brand.title}</title>
+      </Helmet>
+      <Content>
+        <HeaderDefault />
+        <Main>
+          <PageView>
+            <PageHero
+              announcements={announcements}
+              imageUrl={isBrowser ? background : mobile}
+              showHero={showHero}
+              maxHeight="36rem"
+            />
+            {auth && <HomeRecentOrders />}
+            <HomeMenu />
+            <HomeJourneys />
+          </PageView>
+        </Main>
+      </Content>
+    </>
+  )
 }
 
 Home.displayName = 'Home'

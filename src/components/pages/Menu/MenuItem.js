@@ -133,6 +133,7 @@ const MenuItemPrice = styled(Preface)`
 
 const MenuItemCals = styled(Preface)`
   color: ${(props) => props.theme.fonts.body.color};
+  font-weight: normal;
   font-size: 1.5rem;
   margin: 0 0 0 0.3rem;
 

@@ -9,7 +9,7 @@ import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Content, HeaderDefault, Main, PageHero, PageView } from '../..'
 import HomeMenu from '../Home/HomeMenu'
-import HomeJourneys from '../Home/HomeOrderJourneys'
+import HomeJourneys from '../Home/HomeJourneys'
 
 const Guest = () => {
   const dispatch = useDispatch()
