@@ -10,7 +10,8 @@ import { isBrowser } from 'react-device-detect'
 
 const HomeMenuNavView = styled('div')`
   display: none;
-  margin: 4rem 0;
+  max-width: 40rem;
+  margin: 4rem auto;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     display: block;
   }

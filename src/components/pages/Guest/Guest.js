@@ -9,6 +9,7 @@ import { selectConfig, closeModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Content, HeaderDefault, Main, PageHero, PageView } from '../..'
 import HomeMenu from '../Home/HomeMenu'
+import HomeJourneys from '../Home/HomeOrderJourneys'
 
 const Guest = () => {
   const dispatch = useDispatch()
@@ -44,6 +45,7 @@ const Guest = () => {
               maxHeight="36rem"
             />
             <HomeMenu />
+            <HomeJourneys />
           </PageView>
         </Main>
       </Content>

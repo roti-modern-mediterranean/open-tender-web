@@ -8,7 +8,6 @@ import iconMap from '../../iconMap'
 import MenuItem from '../Menu/MenuItem'
 
 const HomeMenuCategoryView = styled('div')`
-  max-width: 46.2rem;
   width: 33.33333%;
   padding: 0 1.2rem;
   background-color: ${(props) =>
@@ -16,6 +15,11 @@ const HomeMenuCategoryView = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     width: 100%;
     padding: 3.5rem ${(props) => props.theme.layout.paddingMobile};
+  }
+
+  & > div {
+    max-width: 46.2rem;
+    margin: 0 auto;
   }
 `
 
@@ -91,26 +95,28 @@ const HomeMenuCategory = ({ category, isInverted = false }) => {
 
   return (
     <HomeMenuCategoryView id={slugify(category.name)} isInverted={isInverted}>
-      <HomeMenuCategoryHeader>
-        <h3>{category.name}</h3>
-        <p>{category.description}</p>
-      </HomeMenuCategoryHeader>
       <div>
-        {items.map((item) => (
-          <HomeMenuCategoryItem>
-            <MenuItem key={item.id} item={item} isInverted={isInverted} />
-          </HomeMenuCategoryItem>
-        ))}
+        <HomeMenuCategoryHeader>
+          <h3>{category.name}</h3>
+          <p>{category.description}</p>
+        </HomeMenuCategoryHeader>
+        <div>
+          {items.map((item) => (
+            <HomeMenuCategoryItem>
+              <MenuItem key={item.id} item={item} isInverted={isInverted} />
+            </HomeMenuCategoryItem>
+          ))}
+        </div>
+        {isMore && (
+          <HomeMenuCategoryFooter>
+            <MoreLink
+              onClick={() => history.push('/menu')}
+              text={`View all ${category.name}`}
+              icon={isBrowser ? iconMap.ChevronRight : iconMap.ArrowRight}
+            />
+          </HomeMenuCategoryFooter>
+        )}
       </div>
-      {isMore && (
-        <HomeMenuCategoryFooter>
-          <MoreLink
-            onClick={() => history.push('/menu')}
-            text={`View all ${category.name}`}
-            icon={isBrowser ? iconMap.ChevronRight : iconMap.ArrowRight}
-          />
-        </HomeMenuCategoryFooter>
-      )}
     </HomeMenuCategoryView>
   )
 }
