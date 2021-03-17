@@ -5,7 +5,7 @@ import { selectCustomer, logoutCustomer } from '@open-tender/redux'
 import { Heading, Preface } from '@open-tender/components'
 import styled from '@emotion/styled'
 
-import { openModal, selectBrand, toggleNav } from '../../slices'
+import { openModal, selectBrand, toggleNav, toggleSidebar } from '../../slices'
 import NavClose from './NavClose'
 
 const guestLinks = [
@@ -262,9 +262,17 @@ const Nav = React.forwardRef((props, ref) => {
     dispatch(logoutCustomer())
   }
 
+  const cart = (evt) => {
+    evt.target.blur()
+    evt.preventDefault()
+    evt.stopPropagation()
+    dispatch(toggleNav())
+    dispatch(toggleSidebar())
+  }
+
   const buttons = {
-    cart: null,
     login: login,
+    cart: cart,
   }
 
   return (
@@ -278,7 +286,12 @@ const Nav = React.forwardRef((props, ref) => {
                 <Heading size="h6">{section.title}</Heading>
               </NavSectionTitle>
               {section.links.map((i) => (
-                <NavItem key={i.path} onClick={(evt) => closeGo(evt, i.path)}>
+                <NavItem
+                  key={i.path}
+                  onClick={(evt) =>
+                    i.path ? closeGo(evt, i.path) : buttons[i.button](evt)
+                  }
+                >
                   <NavTitle>
                     <Preface>{i.title}</Preface>
                   </NavTitle>
