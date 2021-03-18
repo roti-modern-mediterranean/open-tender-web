@@ -58,11 +58,11 @@ const RevenueCentersSelectList = styled('ul')`
   }
 
   & > li {
-    margin: 2rem 0 0;
+    margin: 2.5rem 0 0;
   }
 `
 
-const RevenueCentersSelect = () => {
+const RevenueCentersSelect = ({ setActive, activeMarker }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const [showMap, setShowMap] = useState(false)
@@ -146,6 +146,12 @@ const RevenueCentersSelect = () => {
     history.push(`/`)
   }
 
+  const filtered = activeMarker
+    ? displayedRevenueCenters.filter(
+        (i) => i.revenue_center_id === activeMarker
+      )
+    : displayedRevenueCenters
+
   return (
     <RevenueCentersSelectView showMap={showMap}>
       {isLoading ? (
@@ -165,11 +171,12 @@ const RevenueCentersSelect = () => {
             </PageTitle> */}
           {showRevenueCenters ? (
             <RevenueCentersSelectList>
-              {displayedRevenueCenters.map((revenueCenter) => (
+              {filtered.map((revenueCenter) => (
                 <li key={revenueCenter.revenue_center_id}>
                   <RevenueCenter
                     revenueCenter={revenueCenter}
-                    showImage={true}
+                    setActive={setActive}
+                    activeMarker={activeMarker}
                   />
                 </li>
               ))}

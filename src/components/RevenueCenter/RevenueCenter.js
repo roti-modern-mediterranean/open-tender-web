@@ -9,15 +9,31 @@ import { BgImage, Preface } from '@open-tender/components'
 import iconMap from '../iconMap'
 import RevenueCenterOrder from './RevenueCenterOrder'
 import { PrefaceTitle } from '..'
+import { DetourSign } from '../icons'
 
 const RevenueCenterView = styled('button')`
   display: block;
+  width: 100%;
   text-align: left;
 `
 
 const RevenueCenterHeader = styled('span')`
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin: 0 0 1rem;
+
+  h2 {
+    display: block;
+    line-height: 1;
+  }
+
+  span {
+    position: relative;
+    top: 0.1rem;
+    display: block;
+    flex: 0 0 2rem;
+  }
 `
 
 const RevenueCenterContent = styled('span')`
@@ -53,8 +69,8 @@ const RevenueCenterDetailIcon = styled('span')`
   display: block;
   position: relative;
   top: 0.1rem;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.4rem;
+  height: 1.4rem;
   line-height: 0;
   color: ${(props) => props.theme.fonts.body.color};
 `
@@ -82,31 +98,35 @@ const RevenueCenterDetail = ({ icon, text }) => (
 
 const RevenueCenter = ({
   revenueCenter,
-  showImage,
-  isMenu,
-  isLanding,
+  setActive,
+  activeMarker,
   style = null,
 }) => {
-  const { cartGuest } = useSelector(selectGroupOrder)
+  // const { cartGuest } = useSelector(selectGroupOrder)
   const { address, images, hours, is_outpost } = revenueCenter
   const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const largeImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const bgImage = smallImg.url || largeImg.url
   const bgStyle = bgImage ? { backgroundImage: `url(${bgImage}` } : null
-  const phoneUrl = address.phone ? `tel:${address.phone}` : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
   const hoursDescIcon = is_outpost ? iconMap.AlertCircle : iconMap.Clock
 
+  const makeActive = (evt) => {
+    evt.target.blur()
+    setActive(revenueCenter)
+  }
+
   return (
-    <RevenueCenterView style={style} isMenu={isMenu}>
+    <RevenueCenterView style={style} onClick={(evt) => makeActive(evt)}>
       <RevenueCenterHeader>
         <PrefaceTitle as="h2">{revenueCenter.name}</PrefaceTitle>
+        <DetourSign color="#621C27" />
       </RevenueCenterHeader>
-      <RevenueCenterContent showImage={showImage}>
-        {showImage && <RevenueCenterImage as="span" style={bgStyle} />}
+      <RevenueCenterContent>
+        <RevenueCenterImage as="span" style={bgStyle} />
         <RevenueCenterDetails>
           <RevenueCenterDetail icon={iconMap.MapPin} text={address.street} />
-          {phoneUrl && (
+          {address.phone && (
             <RevenueCenterDetail icon={iconMap.Phone} text={address.phone} />
           )}
           {hoursDesc && (
@@ -114,7 +134,7 @@ const RevenueCenter = ({
           )}
         </RevenueCenterDetails>
       </RevenueCenterContent>
-      {!cartGuest && <RevenueCenterOrder revenueCenter={revenueCenter} />}
+      {/* {!cartGuest && <RevenueCenterOrder revenueCenter={revenueCenter} />} */}
     </RevenueCenterView>
   )
 }
@@ -122,9 +142,7 @@ const RevenueCenter = ({
 RevenueCenter.displayName = 'RevenueCenter'
 RevenueCenter.propTypes = {
   revenueCenter: propTypes.object,
-  showImage: propTypes.bool,
-  isMenu: propTypes.bool,
-  isLanding: propTypes.bool,
+  setActive: propTypes.func,
   style: propTypes.object,
 }
 

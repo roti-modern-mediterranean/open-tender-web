@@ -29,6 +29,24 @@ import { StartOver } from '../../buttons'
 import RevenueCenterMap from './RevenueCenterMap'
 import MapsAutocomplete from './MapsAutocomplete'
 
+const iconSizes = {
+  small: { width: 40, height: 40 },
+  medium: { width: 66, height: 66 },
+  large: { width: 100, height: 100 },
+}
+
+const makeIconSpecs = (isBrowser, isActive) => {
+  const [active, other] = isBrowser
+    ? [mapMarkerDarkRed, mapMarkerRed]
+    : [mapMarkerRed, mapMarkerDarkRed]
+  const url = isActive ? active : other
+  const [activeSize, otherSize] = isBrowser
+    ? [iconSizes.large, iconSizes.medium]
+    : [iconSizes.medium, iconSizes.small]
+  const size = isActive ? activeSize : otherSize
+  return { url, size }
+}
+
 const RevenueCenters = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -68,12 +86,27 @@ const RevenueCenters = () => {
     if (!hasTypes && !paramOrderType) history.push('/')
   }, [hasTypes, param, dispatch, history])
 
+  const setActive = (revenueCenter) => {
+    windowRef.current.scrollTop = 0
+    if (revenueCenter) {
+      const { revenue_center_id, address } = revenueCenter
+      setActiveMarker(revenue_center_id)
+      setCenter({ lat: address.lat, lng: address.lng })
+    } else {
+      setActiveMarker(null)
+      const newCenter = address
+        ? { lat: address.lat, lng: address.lng }
+        : geoLatLng || defaultCenter
+      setCenter(newCenter)
+    }
+  }
+
   return (
     <>
       <Helmet>
         <title>Locations | {siteTitle}</title>
       </Helmet>
-      <Content>
+      <Content hasFooter={false}>
         <Header
           bgColor="transparent"
           borderColor="transparent"
@@ -94,10 +127,15 @@ const RevenueCenters = () => {
               renderMap={(props) => <RevenueCenterMap {...props} />}
               // events={null}
             >
-              <MapsAutocomplete setCenter={setCenter} center={center} />
+              <MapsAutocomplete
+                setCenter={setCenter}
+                center={center}
+                setActive={setActive}
+                activeMarker={activeMarker}
+              />
               {revenueCenters.map((i) => {
                 const isActive = i.revenue_center_id === activeMarker
-                const icon = isActive ? icons.locationSelected : icons.location
+                const icon = makeIconSpecs(isBrowser, isActive)
                 return (
                   <GoogleMapsMarker
                     key={i.revenue_center_id}
@@ -106,17 +144,10 @@ const RevenueCenters = () => {
                       lat: i.address.lat,
                       lng: i.address.lng,
                     }}
-                    // icon={icon.url}
-                    icon={isBrowser ? mapMarkerRed : mapMarkerDarkRed}
-                    size={
-                      isBrowser
-                        ? { width: 66, height: 66 }
-                        : { width: 40, height: 40 }
-                    }
-                    anchor={icon.anchor}
-                    events={{
-                      onClick: () => setActiveMarker(i.revenue_center_id),
-                    }}
+                    icon={icon.url}
+                    size={icon.size}
+                    anchor={null}
+                    events={{ onClick: () => setActive(i) }}
                   />
                 )
               })}
