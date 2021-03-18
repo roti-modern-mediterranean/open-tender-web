@@ -102,8 +102,8 @@ const HomeMenuCategory = ({ category, isInverted = false }) => {
         </HomeMenuCategoryHeader>
         <div>
           {items.map((item) => (
-            <HomeMenuCategoryItem>
-              <MenuItem key={item.id} item={item} isInverted={isInverted} />
+            <HomeMenuCategoryItem key={item.id}>
+              <MenuItem item={item} isInverted={isInverted} />
             </HomeMenuCategoryItem>
           ))}
         </div>

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isMobileOnly } from 'react-device-detect'
 import {
   selectOrder,
   setRevenueCenter,
@@ -12,44 +11,21 @@ import {
   selectRevenueCenters,
   resetCheckout,
 } from '@open-tender/redux'
-import { makeDisplayedRevenueCenters, renameLocation } from '@open-tender/js'
-import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
-
-import { selectConfig, selectSettings, selectGeoLatLng } from '../../../slices'
+import { makeDisplayedRevenueCenters } from '@open-tender/js'
 import {
-  Container,
-  Loading,
-  PageContent,
-  PageTitle,
-  RevenueCenter,
-} from '../..'
+  ButtonLink,
+  ButtonStyled,
+  Message,
+  Preface,
+  Text,
+} from '@open-tender/components'
+
+import { selectSettings, selectGeoLatLng } from '../../../slices'
+import { Loading, PageContent, RevenueCenter } from '../..'
 import styled from '@emotion/styled'
 import iconMap from '../../iconMap'
 
 const RevenueCentersSelectView = styled('div')``
-
-const RevenueCentersSelectShowMap = styled('div')`
-  display: none;
-  width: 100%;
-  margin: 0.5rem 0 1rem;
-  text-align: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    display: block;
-  }
-
-  button {
-    display: inline-block;
-    padding: 0.5rem 0;
-  }
-
-  span {
-    pointer-events: none;
-    display: block;
-    line-height: 1;
-    color: ${(props) => props.theme.links.primary.color};
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  }
-`
 
 const RevenueCentersSelectList = styled('ul')`
   margin: 0 0 ${(props) => props.theme.layout.margin};
@@ -62,12 +38,38 @@ const RevenueCentersSelectList = styled('ul')`
   }
 `
 
+const RevenueCentersSelectMessage = styled('div')`
+  margin: 2rem 0;
+
+  p:first-of-type {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    color: ${(props) => props.theme.colors.alert};
+
+    span {
+      display: block;
+    }
+
+    span:first-of-type {
+      width: 2rem;
+      height: 2rem;
+      margin: 0 1rem 0 0;
+      line-height: 0;
+    }
+  }
+
+  p + p {
+    margin: 0.5rem 0 0 3rem;
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+    line-height: ${(props) => props.theme.lineHeight};
+  }
+`
+
 const RevenueCentersSelect = ({ setActive, activeMarker }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const [showMap, setShowMap] = useState(false)
-  const { revenueCenters: rcConfig } = useSelector(selectConfig)
-  const { maxDistance, locationName } = useSelector(selectSettings)
+  const { maxDistance } = useSelector(selectSettings)
   const geoLatLng = useSelector(selectGeoLatLng)
   const { revenueCenters, loading } = useSelector(selectRevenueCenters)
   const {
@@ -79,18 +81,12 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
   } = useSelector(selectOrder)
   const coords = address || geoLatLng
   const autoSelect = useSelector(selectAutoSelect)
-  const [title, setTitle] = useState(rcConfig.title)
-  const [msg, setMsg] = useState(rcConfig.subtitle)
   const [error, setError] = useState(null)
   const [displayedRevenueCenters, setDisplayedRevenueCenters] = useState([])
   const isLoading = loading === 'pending'
   const missingAddress = serviceType === 'DELIVERY' && !address
   const hasCount = displayedRevenueCenters && displayedRevenueCenters.length > 0
   const showRevenueCenters = hasCount && !isLoading && !error && !missingAddress
-  const names = locationName[isOutpost ? 'OUTPOST' : serviceType]
-  const renamedTitle = renameLocation(title, names)
-  const renamedError = renameLocation(error, names)
-  const renamedMsg = renameLocation(msg, names)
 
   useEffect(() => {
     if (orderType) {
@@ -102,7 +98,7 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
       }
       dispatch(fetchRevenueCenters(params))
     }
-  }, [orderType, isOutpost, coords, requestedAt, dispatch])
+  }, [orderType, serviceType, isOutpost, coords, requestedAt, dispatch])
 
   const autoRouteCallack = useCallback(
     (revenueCenter) => {
@@ -113,7 +109,7 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
   )
 
   useEffect(() => {
-    const { title, msg, error, displayed } = makeDisplayedRevenueCenters(
+    const { error, displayed } = makeDisplayedRevenueCenters(
       revenueCenters,
       serviceType,
       address,
@@ -124,8 +120,6 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
     if (count && autoSelect && !error && !missingAddress) {
       autoRouteCallack(displayed[0])
     } else {
-      setTitle(title)
-      setMsg(msg)
       setError(error)
       setDisplayedRevenueCenters(displayed)
     }
@@ -153,22 +147,14 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
     : displayedRevenueCenters
 
   return (
-    <RevenueCentersSelectView showMap={showMap}>
+    <RevenueCentersSelectView>
       {isLoading ? (
-        <PageContent>
-          <Loading text="Retrieving nearest locations..." />
-        </PageContent>
+        <Loading
+          text="Retrieving nearest locations..."
+          style={{ textAlign: 'left' }}
+        />
       ) : (
         <>
-          {/* <PageTitle>
-              <RevenueCentersSelectShowMap>
-                <ButtonLink onClick={() => setShowMap(!showMap)}>
-                  <Preface>{showMap ? 'Hide Map' : 'Show Map'}</Preface>
-                </ButtonLink>
-              </RevenueCentersSelectShowMap>
-              <h2>{renamedTitle}</h2>
-              <p>{renamedError || renamedMsg}</p>
-            </PageTitle> */}
           {showRevenueCenters ? (
             <RevenueCentersSelectList>
               {filtered.map((revenueCenter) => (
@@ -182,11 +168,34 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
               ))}
             </RevenueCentersSelectList>
           ) : (
-            <div style={{ margin: '3rem 0 0' }}>
-              <ButtonStyled icon={iconMap.RefreshCw} onClick={handleStartOver}>
-                Start Over
-              </ButtonStyled>
-            </div>
+            <RevenueCentersSelectMessage>
+              {missingAddress ? (
+                <>
+                  <p>
+                    <span>{iconMap.AlertTriangle}</span>
+                    <span>Please enter an address</span>
+                  </p>
+                  <p>
+                    A full address with street number is required for delivery
+                    orders.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    <span>{iconMap.AlertTriangle}</span>
+                    <span>No locations near you</span>
+                  </p>
+                  <p>
+                    Sorry, but we don't have any locations near you. Please
+                    enter a different address or head back to our home page
+                  </p>
+                  <ButtonLink onClick={handleStartOver}>
+                    Return to homepage
+                  </ButtonLink>
+                </>
+              )}
+            </RevenueCentersSelectMessage>
           )}
         </>
       )}
@@ -196,11 +205,8 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
 
 RevenueCentersSelect.displayName = 'RevenueCentersSelect'
 RevenueCentersSelect.propTypes = {
-  revenueCenters: propTypes.array,
-  setCenter: propTypes.func,
-  maps: propTypes.object,
-  map: propTypes.object,
-  sessionToken: propTypes.object,
-  autocomplete: propTypes.object,
+  setActive: propTypes.func,
+  activeMarker: propTypes.number,
 }
+
 export default RevenueCentersSelect

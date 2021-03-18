@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { isBrowser, isMobile } from 'react-device-detect'
@@ -25,9 +25,10 @@ import userMarker from '../../../assets/userMarker.svg'
 import mapMarkerRed from '../../../assets/mapMarkerRed.svg'
 import mapMarkerDarkRed from '../../../assets/mapMarkerDarkRed.svg'
 
-import { StartOver } from '../../buttons'
+import { Back } from '../../buttons'
 import RevenueCenterMap from './RevenueCenterMap'
 import MapsAutocomplete from './MapsAutocomplete'
+import RevenueCentersOrderType from './RevenueCentersOrderType'
 
 const iconSizes = {
   small: { width: 40, height: 40 },
@@ -50,6 +51,7 @@ const makeIconSpecs = (isBrowser, isActive) => {
 const RevenueCenters = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const [markers, setMarkers] = useState([])
   const [activeMarker, setActiveMarker] = useState(null)
   const { title: siteTitle } = useSelector(selectBrand)
   const { revenueCenters: config } = useSelector(selectConfig)
@@ -61,7 +63,7 @@ const RevenueCenters = () => {
     ? { lat: address.lat, lng: address.lng }
     : geoLatLng || defaultCenter
   const [center, setCenter] = useState(initialCenter)
-  const { revenueCenters } = useSelector(selectRevenueCenters)
+  const { revenueCenters, loading, error } = useSelector(selectRevenueCenters)
   const hasTypes = orderType && serviceType
   const query = new URLSearchParams(useLocation().search)
   const param = query.get('type')
@@ -86,20 +88,32 @@ const RevenueCenters = () => {
     if (!hasTypes && !paramOrderType) history.push('/')
   }, [hasTypes, param, dispatch, history])
 
-  const setActive = (revenueCenter) => {
-    windowRef.current.scrollTop = 0
-    if (revenueCenter) {
-      const { revenue_center_id, address } = revenueCenter
-      setActiveMarker(revenue_center_id)
-      setCenter({ lat: address.lat, lng: address.lng })
+  const setActive = useCallback(
+    (revenueCenter) => {
+      windowRef.current.scrollTop = 0
+      if (revenueCenter) {
+        const { revenue_center_id, address } = revenueCenter
+        setActiveMarker(revenue_center_id)
+        setCenter({ lat: address.lat, lng: address.lng })
+      } else {
+        setActiveMarker(null)
+        const newCenter = address
+          ? { lat: address.lat, lng: address.lng }
+          : geoLatLng || defaultCenter
+        setCenter(newCenter)
+      }
+    },
+    [address, defaultCenter, geoLatLng, windowRef]
+  )
+
+  useEffect(() => {
+    if (error || loading === 'pending') {
+      setActive(false)
+      setMarkers([])
     } else {
-      setActiveMarker(null)
-      const newCenter = address
-        ? { lat: address.lat, lng: address.lng }
-        : geoLatLng || defaultCenter
-      setCenter(newCenter)
+      setMarkers(revenueCenters)
     }
-  }
+  }, [loading, error, setActive, revenueCenters])
 
   return (
     <>
@@ -112,11 +126,12 @@ const RevenueCenters = () => {
           borderColor="transparent"
           style={{ boxShadow: 'none' }}
           title={isMobile ? navTitle : null}
-          left={<StartOver />}
+          left={<Back />}
           right={null}
         />
         <Main style={{ paddingTop: '0' }}>
           <ScreenreaderTitle>Locations</ScreenreaderTitle>
+          <RevenueCentersOrderType />
           {apiKey && (
             <GoogleMap
               apiKey={apiKey}
@@ -133,7 +148,7 @@ const RevenueCenters = () => {
                 setActive={setActive}
                 activeMarker={activeMarker}
               />
-              {revenueCenters.map((i) => {
+              {markers.map((i) => {
                 const isActive = i.revenue_center_id === activeMarker
                 const icon = makeIconSpecs(isBrowser, isActive)
                 return (

@@ -91,12 +91,13 @@ const MapsAutocomplete = ({
   activeMarker,
 }) => {
   const dispatch = useDispatch()
-  const { address, serviceType } = useSelector(selectOrder)
+  const { address, serviceType, orderType } = useSelector(selectOrder)
   const formattedAddress = address ? address.formatted_address : ''
   const placeholder =
     serviceType === 'DELIVERY'
       ? 'enter a delivery address'
       : 'enter an address or zip code'
+  const orderTypeName = orderType === 'CATERING' ? orderType : serviceType
 
   return (
     <MapsAutocompleteView>
@@ -104,7 +105,7 @@ const MapsAutocomplete = ({
         {activeMarker ? (
           <ChangeLocation onClick={() => setActive(null)} />
         ) : (
-          <Preface as="h2">Find a pickup location near you</Preface>
+          <Preface as="h2">Find a {orderTypeName} location near you</Preface>
         )}
       </MapsAutocompleteHeader>
       {!activeMarker && (

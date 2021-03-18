@@ -28,7 +28,7 @@ const LoadingMessage = styled('p')`
 
 const Loading = ({ type, text, color, size = 100, style = null }) => {
   const theme = useTheme()
-  const themeColor = theme.colors ? theme.colors.primary : null
+  const themeColor = theme.colors ? theme.colors.secondary : null
   const props = { color: color || themeColor, size }
   return (
     <LoadingView style={style}>

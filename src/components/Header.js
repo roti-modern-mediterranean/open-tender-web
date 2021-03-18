@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { Preface } from '@open-tender/components'
+
 import { AppContext } from '../App'
 import { isBrowser, isMobile } from 'react-device-detect'
 
@@ -11,7 +13,7 @@ const HeaderView = styled('div')`
   right: 0;
   width: 100%;
   max-width: ${(props) => props.maxWidth};
-  height: 7.7rem;
+  height: 7.6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,7 +28,7 @@ const HeaderView = styled('div')`
   padding: ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: ${(props) => props.theme.layout.paddingMobile};
-    height: 6.5rem;
+    height: 6.4rem;
   }
 `
 
@@ -48,14 +50,9 @@ const HeaderTitle = styled('div')`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-family: ${(props) => props.theme.fonts.headings.family};
-    font-weight: ${(props) => props.theme.fonts.headings.weight};
-    letter-spacing: ${(props) => props.theme.fonts.headings.letterSpacing};
-    text-transform: ${(props) => props.theme.fonts.headings.textTransform};
-    -webkit-font-smoothing: ${(props) =>
-      props.theme.fonts.headings.fontSmoothing};
-    color: ${(props) => props.theme.fonts.headings.color};
-    font-size: ${(props) => props.theme.fonts.sizes.xBig};
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    font-size: 2.8rem;
   }
 `
 
@@ -119,7 +116,7 @@ const Header = ({
         <HeaderNav>{left}</HeaderNav>
         {title && (
           <HeaderTitle>
-            <span>{title}</span>
+            <Preface>{title}</Preface>
           </HeaderTitle>
         )}
         <HeaderNav isBrowser={isBrowser}>{right}</HeaderNav>
