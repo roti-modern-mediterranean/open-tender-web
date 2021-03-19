@@ -64,6 +64,7 @@ const Orders = () => {
   const { auth } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
   const { windowRef } = useContext(AppContext)
+  console.log(items)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -119,20 +120,6 @@ const Orders = () => {
                   >
                     Recent Items
                   </ButtonToggle>
-                  {/* <ButtonToggleGroup>
-                    <ButtonStyled
-                      onClick={() => setToggle('orders')}
-                      disabled={toggle === 'orders'}
-                    >
-                      Recent Orders
-                    </ButtonStyled>
-                    <ButtonStyled
-                      onClick={() => setToggle('items')}
-                      disabled={toggle === 'items'}
-                    >
-                      Recent Items
-                    </ButtonStyled>
-                  </ButtonToggleGroup> */}
                 </ToggleView>
               )}
             </PageTitle>

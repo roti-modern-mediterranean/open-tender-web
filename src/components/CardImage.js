@@ -28,7 +28,7 @@ const CardImageLoading = styled('div')`
   align-items: center;
 `
 
-const MenuItemBackgroundImage = styled(BgImage)`
+const CardImageBackground = styled(BgImage)`
   position: absolute;
   z-index: 2;
   top: 0;
@@ -58,14 +58,10 @@ const CardImage = ({ imageUrl, children }) => {
         </CardImageLoading>
       )}
       {hasError && (
-        <MenuItemBackgroundImage style={placeholder}>
-          &nbsp;
-        </MenuItemBackgroundImage>
+        <CardImageBackground style={placeholder}>&nbsp;</CardImageBackground>
       )}
       {hasLoaded && (
-        <MenuItemBackgroundImage style={bgStyle}>
-          &nbsp;
-        </MenuItemBackgroundImage>
+        <CardImageBackground style={bgStyle}>&nbsp;</CardImageBackground>
       )}
       {children}
     </CardImageView>

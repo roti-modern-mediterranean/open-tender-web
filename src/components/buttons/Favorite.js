@@ -33,6 +33,7 @@ const Favorite = ({ item, favoriteId }) => {
 
   const handleAdd = (evt) => {
     evt.preventDefault()
+    evt.stopPropagation()
     const cart = makeSimpleCart([item])[0]
     delete cart.quantity
     const data = { cart }
@@ -41,6 +42,7 @@ const Favorite = ({ item, favoriteId }) => {
 
   const handleRemove = (evt) => {
     evt.preventDefault()
+    evt.stopPropagation()
     dispatch(removeCustomerFavorite(favoriteId))
   }
 

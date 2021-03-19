@@ -9,7 +9,7 @@ const OrdersListView = styled('div')`
   flex-wrap: wrap;
   margin: 0 -1.2rem;
   opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  animation: slide-up 0.25s ease-in-out 0s forwards;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     flex-direction: column;
     justify-content: flex-start;

@@ -19,34 +19,6 @@ import { DeliveryLink } from '@open-tender/components'
 
 import iconMap from './iconMap'
 import { Card, CardButton } from '.'
-import styled from '@emotion/styled'
-
-const OrderCardPreface = styled('div')`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  span {
-    display: block;
-    font-family: ${(props) => props.theme.fonts.preface.family};
-    font-size: 1.6rem;
-
-    &:last-of-type {
-      font-weight: 500;
-    }
-  }
-`
-
-const OrderCardDescription = styled('div')`
-  p {
-    font-family: ${(props) => props.theme.fonts.preface.family};
-    font-size: 1.4rem;
-
-    &:first-of-type {
-      font-weight: 500;
-    }
-  }
-`
 
 const OrderCard = ({ order, isLast }) => {
   const history = useHistory()
@@ -72,7 +44,6 @@ const OrderCard = ({ order, isLast }) => {
   const isUpcoming = isoToDate(requested_at) > new Date()
   const streetAddress = makeOrderAddress(address)
   const trackingUrl = isOpen && delivery && delivery.tracking_url
-  console.log(cart)
   const images = cart
     .map((i) =>
       i.images
@@ -97,14 +68,14 @@ const OrderCard = ({ order, isLast }) => {
     <Card
       imageUrl={imageUrl}
       preface={
-        <OrderCardPreface>
+        <>
           <span>{requestedAt}</span>
           <span>${totals.total}</span>
-        </OrderCardPreface>
+        </>
       }
       title={title}
       description={
-        <OrderCardDescription>
+        <>
           <p>
             {orderTypeName} from {revenue_center.name}
           </p>
@@ -118,7 +89,7 @@ const OrderCard = ({ order, isLast }) => {
               />
             </p>
           )}
-        </OrderCardDescription>
+        </>
       }
       view={(props) => (
         <CardButton

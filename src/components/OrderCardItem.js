@@ -1,41 +1,21 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import styled from '@emotion/styled'
 import {
   selectCustomerFavorites,
   selectMenuItems,
   showNotification,
   addItemToCart,
+  addCustomerFavorite,
+  removeCustomerFavorite,
 } from '@open-tender/redux'
-import { displayPrice, rehydrateOrderItem } from '@open-tender/js'
-import { ButtonStyled } from '@open-tender/components'
+import {
+  displayPrice,
+  rehydrateOrderItem,
+  makeSimpleCart,
+} from '@open-tender/js'
 
-import iconMap from './iconMap'
-import { Favorite } from './buttons'
-import { Card } from '.'
-
-const OrderCardItemImageView = styled('div')`
-  div {
-    width: 100%;
-    padding: 33.33333%;
-    margin: 0 0 1rem;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  p {
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  }
-`
-
-const OrderCardItemImage = ({ bgStyle, names }) => (
-  <OrderCardItemImageView>
-    {bgStyle && <div style={bgStyle} />}
-    <p>{names}</p>
-  </OrderCardItemImageView>
-)
+import { Card, CardButton } from '.'
 
 const OrderCardItem = ({ item }) => {
   const dispatch = useDispatch()
@@ -50,7 +30,6 @@ const OrderCardItem = ({ item }) => {
       return [...arr, ...names]
     }, [])
     .join(', ')
-  const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
 
   const addToCart = (item) => {
     const menuItem = menuItems.find((i) => i.id === item.id)
@@ -63,23 +42,39 @@ const OrderCardItem = ({ item }) => {
     }
   }
 
+  const handleFavorite = (evt) => {
+    evt.preventDefault()
+    evt.stopPropagation()
+    if (favoriteId) {
+      dispatch(removeCustomerFavorite(favoriteId))
+    } else {
+      const cart = makeSimpleCart([item])[0]
+      delete cart.quantity
+      const data = { cart }
+      dispatch(addCustomerFavorite(data))
+    }
+  }
+
   return (
     <Card
-      preface={price}
+      imageUrl={imageUrl}
+      preface={<span>{price}</span>}
       title={name}
-      content={<OrderCardItemImage bgStyle={bgStyle} names={optionNames} />}
-      footer={
+      description={
         <>
-          <ButtonStyled
-            icon={iconMap.PlusCircle}
-            onClick={() => addToCart(item)}
-            size="small"
-          >
-            Add
-          </ButtonStyled>
-          <Favorite item={item} favoriteId={favoriteId} />
+          <p>{optionNames}</p>
         </>
       }
+      view={(props) => (
+        <CardButton {...props} onClick={handleFavorite}>
+          {favoriteId ? 'Unfav' : 'Fav'}
+        </CardButton>
+      )}
+      add={(props) => (
+        <CardButton {...props} onClick={() => addToCart(item)}>
+          Add
+        </CardButton>
+      )}
     />
   )
 }

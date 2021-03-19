@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-const MenuItemButton = styled('button')`
+const CardButton = styled('button')`
   cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
   display: block;
   padding: 0.9rem 1.5rem 0.8rem;
@@ -34,4 +34,4 @@ const MenuItemButton = styled('button')`
   }
 `
 
-export default MenuItemButton
+export default CardButton

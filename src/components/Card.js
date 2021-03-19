@@ -49,6 +49,19 @@ const CardPreface = styled('div')`
   opacity: 0;
   max-height: 0;
   padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    display: block;
+    font-family: ${(props) => props.theme.fonts.preface.family};
+    font-size: 1.6rem;
+
+    &:last-of-type {
+      font-weight: 500;
+    }
+  }
 
   .item-active & {
     opacity: 1;
@@ -80,6 +93,15 @@ const CardDescription = styled('div')`
   max-height: 0;
   padding: 0;
 
+  p {
+    font-family: ${(props) => props.theme.fonts.preface.family};
+    font-size: 1.4rem;
+
+    &:first-of-type {
+      font-weight: 500;
+    }
+  }
+
   .item-active & {
     opacity: 1;
     max-height: none;
@@ -94,7 +116,7 @@ const Card = ({ imageUrl, preface, title, description, view, add }) => {
   const [isActive, setIsActive] = useState(false)
 
   const handleClick = () => {
-    viewButton.current.focus()
+    viewButton.current ? viewButton.current.focus() : addButton.current.focus()
   }
 
   return (
@@ -102,6 +124,7 @@ const Card = ({ imageUrl, preface, title, description, view, add }) => {
       ref={container}
       onClick={handleClick}
       className={isActive ? 'item-active' : ''}
+      // className="item-active"
     >
       <CardImageView>
         <CardImage imageUrl={imageUrl} />
