@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { setCurrentItem } from '@open-tender/redux'
 import { convertStringToArray, makeDisplayPrice } from '@open-tender/js'
-import { Box, Heading, Preface } from '@open-tender/components'
+import { Heading, Preface } from '@open-tender/components'
 
 import { selectDisplaySettings, openModal } from '../../../slices'
 import iconMap from '../../iconMap'
-import { Tag } from '../..'
+import { CardButton, CardButtons, CardImage, Tag } from '../..'
 import { MenuContext } from './Menu'
-import { MenuItemButton, MenuItemImage } from '.'
 
 const MenuItemView = styled('div')`
   position: relative;
@@ -22,13 +21,7 @@ const MenuItemView = styled('div')`
   cursor: pointer;
 `
 
-export const MenuItemContainer = styled(Box)`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`
-
-export const MenuItemImageView = styled('div')`
+const MenuItemImageView = styled('div')`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -44,7 +37,7 @@ export const MenuItemImageView = styled('div')`
   }
 `
 
-export const MenuItemOverlay = styled('div')`
+const MenuItemOverlay = styled('div')`
   position: absolute;
   z-index: 3;
   top: 0;
@@ -142,19 +135,6 @@ const MenuItemCals = styled(Preface)`
   }
 `
 
-const MenuItemButtons = styled('div')`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  opacity: 0;
-  max-height: 0;
-
-  .item-active & {
-    opacity: 1;
-    max-height: none;
-  }
-`
-
 const MenuItem = ({ item, isInverted }) => {
   const dispatch = useDispatch()
   const container = useRef(null)
@@ -230,13 +210,13 @@ const MenuItem = ({ item, isInverted }) => {
           <MenuItemAlert>{itemTag}</MenuItemAlert>
         ) : null} */}
       <MenuItemImageView>
-        <MenuItemImage imageUrl={imageUrl} isInverted={isInverted}>
+        <CardImage imageUrl={imageUrl} isInverted={isInverted}>
           {itemTag && (
             <MenuItemOverlay isSoldOut={isSoldOut}>
               <div>{itemTag}</div>
             </MenuItemOverlay>
           )}
-        </MenuItemImage>
+        </CardImage>
       </MenuItemImageView>
       <MenuItemContent isInverted={isInverted}>
         <MenuItemContentHeader>
@@ -255,29 +235,29 @@ const MenuItem = ({ item, isInverted }) => {
         {item.description && (
           <MenuItemDescription>{item.description}</MenuItemDescription>
         )}
-        <MenuItemButtons>
-          <MenuItemButton
+        <CardButtons>
+          <CardButton
             ref={viewButton}
             onClick={handleView}
             onFocus={() => setActiveItem(item.id)}
             onBlur={() => setActiveItem(null)}
-            isSoldOut={isSoldOut}
+            disabled={isSoldOut}
             secondary={true}
           >
             View
-          </MenuItemButton>
+          </CardButton>
           {menuConfig && (
-            <MenuItemButton
+            <CardButton
               ref={addButton}
               onClick={handleAdd}
               onFocus={() => setActiveItem(item.id)}
               onBlur={() => setActiveItem(null)}
-              isSoldOut={isSoldOut}
+              disabled={isSoldOut}
             >
               Add
-            </MenuItemButton>
+            </CardButton>
           )}
-        </MenuItemButtons>
+        </CardButtons>
       </MenuItemContent>
     </MenuItemView>
   )

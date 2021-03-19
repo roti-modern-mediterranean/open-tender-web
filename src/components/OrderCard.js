@@ -15,10 +15,38 @@ import {
   makeOrderAddress,
   makeOrderTypeName,
 } from '@open-tender/js'
-import { ButtonStyled, DeliveryLink } from '@open-tender/components'
+import { DeliveryLink } from '@open-tender/components'
 
 import iconMap from './iconMap'
-import { Card, OrderImages, OrderTag } from '.'
+import { Card, CardButton } from '.'
+import styled from '@emotion/styled'
+
+const OrderCardPreface = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    display: block;
+    font-family: ${(props) => props.theme.fonts.preface.family};
+    font-size: 1.6rem;
+
+    &:last-of-type {
+      font-weight: 500;
+    }
+  }
+`
+
+const OrderCardDescription = styled('div')`
+  p {
+    font-family: ${(props) => props.theme.fonts.preface.family};
+    font-size: 1.4rem;
+
+    &:first-of-type {
+      font-weight: 500;
+    }
+  }
+`
 
 const OrderCard = ({ order, isLast }) => {
   const history = useHistory()
@@ -40,18 +68,22 @@ const OrderCard = ({ order, isLast }) => {
   const isMerch = order_type === 'MERCH'
   const orderTypeName = makeOrderTypeName(order_type, service_type)
   const tz = timezoneMap[timezone]
-  const requestedAt = isoToDateStr(requested_at, tz, 'MMMM d, yyyy @ h:mma')
+  const requestedAt = isoToDateStr(requested_at, tz, 'MMMM d')
   const isUpcoming = isoToDate(requested_at) > new Date()
   const streetAddress = makeOrderAddress(address)
   const trackingUrl = isOpen && delivery && delivery.tracking_url
-  const itemImages = cart
+  console.log(cart)
+  const images = cart
     .map((i) =>
       i.images
         .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
-        .map((image) => ({ title: i.name, imageUrl: image.url }))
+        .map((image) => ({ ...i, imageUrl: image.url }))
     )
     .flat()
-  const itemNames = cart.map((i) => i.name).join(', ')
+    .sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
+    .reverse()
+  const imageUrl = images ? images[0].imageUrl : null
+  const title = cart.map((i) => `${i.quantity} ${i.name}`).join(', ')
 
   const handleReorder = () => {
     const { revenue_center_id: revenueCenterId } = revenue_center
@@ -63,59 +95,49 @@ const OrderCard = ({ order, isLast }) => {
 
   return (
     <Card
-      tag={<OrderTag isUpcoming={isUpcoming} status={status} />}
-      preface={isLast ? 'Your Last Order' : `Order #${order_id}`}
-      title={`${orderTypeName} from ${revenue_center.name}`}
-      subtitle={
-        <>
-          {isUpcoming && trackingUrl && (
-            <DeliveryLink
-              text="Track your delivery"
-              trackingUrl={trackingUrl}
-              newWindowIcon={iconMap.ExternalLink}
-            />
-          )}
-        </>
+      imageUrl={imageUrl}
+      preface={
+        <OrderCardPreface>
+          <span>{requestedAt}</span>
+          <span>${totals.total}</span>
+        </OrderCardPreface>
       }
-      content={
-        <>
+      title={title}
+      description={
+        <OrderCardDescription>
           <p>
-            {requestedAt} &nbsp;|&nbsp; ${totals.total}
+            {orderTypeName} from {revenue_center.name}
           </p>
           <p>{streetAddress}</p>
-          <OrderImages images={itemImages} names={itemNames} />
-        </>
+          {isUpcoming && trackingUrl && (
+            <p>
+              <DeliveryLink
+                text="Track your delivery"
+                trackingUrl={trackingUrl}
+                newWindowIcon={iconMap.ExternalLink}
+              />
+            </p>
+          )}
+        </OrderCardDescription>
       }
-      footer={
-        <>
-          {order.is_editable && (
-            <ButtonStyled
-              icon={iconMap.Edit}
-              onClick={() => dispatch(editOrder(order))}
-              size="small"
-            >
-              Edit
-            </ButtonStyled>
-          )}
-          {!isMerch && (
-            <ButtonStyled
-              icon={iconMap.RefreshCw}
-              onClick={handleReorder}
-              size="small"
-              color={order.is_editable ? 'secondary' : 'primary'}
-            >
-              Reorder
-            </ButtonStyled>
-          )}
-          <ButtonStyled
-            icon={iconMap.FileText}
-            onClick={() => history.push(`/orders/${order_id}`)}
-            size="small"
-            color="secondary"
-          >
-            Details
-          </ButtonStyled>
-        </>
+      view={(props) => (
+        <CardButton
+          {...props}
+          onClick={() => history.push(`/orders/${order_id}`)}
+        >
+          View
+        </CardButton>
+      )}
+      add={(props) =>
+        order.is_editable ? (
+          <CardButton {...props} onClick={() => dispatch(editOrder(order))}>
+            Edit
+          </CardButton>
+        ) : !isMerch ? (
+          <CardButton {...props} onClick={handleReorder}>
+            Add
+          </CardButton>
+        ) : null
       }
     />
   )

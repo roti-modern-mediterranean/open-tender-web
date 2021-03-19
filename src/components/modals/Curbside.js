@@ -50,7 +50,7 @@ const Curbside = ({ handlePickup }) => {
 
   return (
     <ModalView>
-      <ModalContent>
+      <ModalContent style={{ padding: '3rem 2rem' }}>
         <CurbsideHeader>
           <Preface>Curbside Pickup</Preface>
           <CurbsidePickup color={color} />

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { fetchCustomerOrders, selectCustomerOrders } from '@open-tender/redux'
@@ -30,7 +31,7 @@ const Order = styled('div')`
   }
 `
 
-const HomeRecentOrders = () => {
+const HomeRecentOrders = ({ style }) => {
   const dispatch = useDispatch()
   const { entities: orders, loading, error } = useSelector(selectCustomerOrders)
   const { account } = useSelector(selectConfig)
@@ -52,6 +53,7 @@ const HomeRecentOrders = () => {
       title={title}
       subtitle={subtitle}
       to={isMore ? '/orders' : null}
+      style={style}
     >
       {isLoading ? (
         <PageContent style={{ margin: '0 auto' }}>
@@ -77,5 +79,8 @@ const HomeRecentOrders = () => {
 }
 
 HomeRecentOrders.displayName = 'HomeRecentOrders'
+HomeRecentOrders.propTypes = {
+  style: propTypes.object,
+}
 
 export default HomeRecentOrders

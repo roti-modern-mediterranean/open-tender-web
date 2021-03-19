@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 
 const MenuItemButton = styled('button')`
-  cursor: ${(props) => (props.isSoldOut ? 'default' : 'pointer')};
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
   display: block;
   padding: 0.9rem 1.5rem 0.8rem;
   margin: 0 0 0 1.6rem;
@@ -30,7 +30,7 @@ const MenuItemButton = styled('button')`
   &:focus {
     outline: none;
     box-shadow: ${(props) =>
-      props.secondary ? 'none' : '0 3px 10px 0 rgba(0, 0, 0, 0.2)'};
+      props.secondary ? 'none' : '0px 4px 20px rgba(0, 0, 0, 0.25)'};
   }
 `
 

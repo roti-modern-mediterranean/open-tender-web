@@ -51,7 +51,7 @@ const Home = () => {
               showHero={showHero}
               maxHeight="36rem"
             />
-            {auth && <HomeRecentOrders />}
+            {auth && <HomeRecentOrders style={{ marginBottom: '0' }} />}
             <HomeMenu />
             <HomeJourneys />
           </PageView>

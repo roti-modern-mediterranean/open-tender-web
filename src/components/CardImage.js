@@ -3,9 +3,9 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { isBrowser } from 'react-device-detect'
 import { BgImage, useImage } from '@open-tender/components'
-import { ImageSpinner } from '../..'
+import { ImageSpinner } from '.'
 
-const MenuItemImageView = styled('div')`
+const CardImageView = styled('div')`
   position: relative;
   z-index: 1;
   width: 100%;
@@ -16,7 +16,7 @@ const MenuItemImageView = styled('div')`
     props.theme.bgColors[props.isInverted ? 'primary' : 'secondary']};
 `
 
-const MenuItemImageLoading = styled('div')`
+const CardImageLoading = styled('div')`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -39,17 +39,17 @@ const MenuItemBackgroundImage = styled(BgImage)`
   animation: fade-in 0.25s ease-in-out 0s forwards;
 `
 
-const MenuItemImage = ({ imageUrl, children }) => {
+const CardImage = ({ imageUrl, children }) => {
   const { hasLoaded, hasError } = useImage(imageUrl)
   const isLoading = !hasLoaded && !hasError
 
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
   return (
-    <MenuItemImageView>
+    <CardImageView>
       {bgStyle && isLoading && (
-        <MenuItemImageLoading>
+        <CardImageLoading>
           <ImageSpinner size={isBrowser ? 24 : 16} />
-        </MenuItemImageLoading>
+        </CardImageLoading>
       )}
       {hasLoaded && (
         <MenuItemBackgroundImage style={bgStyle}>
@@ -57,12 +57,12 @@ const MenuItemImage = ({ imageUrl, children }) => {
         </MenuItemBackgroundImage>
       )}
       {children}
-    </MenuItemImageView>
+    </CardImageView>
   )
 }
 
-MenuItemImage.displayName = 'MenuItemImage'
-MenuItemImage.propTypes = {
+CardImage.displayName = 'CardImage'
+CardImage.propTypes = {
   imageUrl: propTypes.string,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
@@ -70,4 +70,4 @@ MenuItemImage.propTypes = {
   ]),
 }
 
-export default MenuItemImage
+export default CardImage

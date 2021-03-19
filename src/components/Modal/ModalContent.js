@@ -6,7 +6,7 @@ import { Heading } from '@open-tender/components'
 import { ModalClose } from '.'
 
 const ModalContentView = styled('div')`
-  padding: 3rem 2rem;
+  padding: 3rem 3rem;
 `
 
 const ModalHeader = styled('div')`
@@ -17,6 +17,11 @@ const ModalTitle = styled('p')`
   margin: 0;
   line-height: 1;
   font-size: ${(props) => props.theme.fonts.sizes.h3};
+  color: ${(props) => props.theme.colors.secondary};
+
+  span {
+    color: ${(props) => props.theme.colors.secondary};
+  }
 `
 
 const ModalSubtitle = styled('div')`
