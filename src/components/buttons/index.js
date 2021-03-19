@@ -1,5 +1,6 @@
 import ButtonBoth from './ButtonBoth'
 import ButtonIcon from './ButtonIcon'
+import ButtonToggle from './ButtonToggle'
 import Account from './Account'
 import AccountSettings from './AccountSettings'
 import Allergens from './Allergens'
@@ -25,6 +26,7 @@ import StartOver from './StartOver'
 export {
   ButtonBoth,
   ButtonIcon,
+  ButtonToggle,
   Account,
   AccountSettings,
   Allergens,

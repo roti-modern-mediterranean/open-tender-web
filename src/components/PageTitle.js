@@ -2,37 +2,29 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
+import { PageSectionHeader } from '.'
+
 const PageTitleView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
-  text-align: center;
-  max-width: ${(props) => props.theme.layout.maxWidth};
-  margin: 0 auto ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 auto ${(props) => props.theme.layout.paddingMobile};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 
-  h1 {
-    line-height: 1;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h3};
-    }
+  > div:first-of-type {
+    flex: 1;
   }
 
-  h2 {
-    line-height: 1;
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h3};
-    }
-  }
-
-  & > p {
-    line-height: ${(props) => props.theme.lineHeight};
-    margin: 0.5rem 0 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      margin: 0.5rem 0 0;
-      font-size: ${(props) => props.theme.fonts.sizes.small};
+  > div + div {
+    flex-shrink: 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      margin-top: 2.5rem;
     }
   }
 `
@@ -40,9 +32,12 @@ const PageTitleView = styled('div')`
 const PageTitle = ({ title, subtitle, children, style = null }) => {
   return (
     <PageTitleView style={style}>
-      {title && <h1>{title}</h1>}
-      {subtitle && <p>{subtitle}</p>}
-      {children}
+      <PageSectionHeader
+        title={title}
+        subtitle={subtitle}
+        style={{ margin: 0 }}
+      />
+      {children && <div>{children}</div>}
     </PageTitleView>
   )
 }

@@ -1,10 +1,9 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
-import iconMap from './iconMap'
-import { Container, PageSectionHeader } from '.'
+import { Container, MoreLink, PageSectionHeader } from '.'
 
 const PageSectionView = styled('div')`
   margin: ${(props) => props.theme.layout.margin} 0;
@@ -13,55 +12,34 @@ const PageSectionView = styled('div')`
   }
 `
 
-const PageSectionLink = styled('div')`
-  text-align: center;
-  margin: ${(props) => props.theme.layout.padding} 0 0;
+const PageSectionFooter = styled('div')`
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
-  }
-
-  p {
-    display: block;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.small};
-    }
-
-    a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    span {
-      display: block;
-    }
-
-    span + span {
-      line-height: 0;
-      width: ${(props) => props.theme.fonts.sizes.small};
-      height: ${(props) => props.theme.fonts.sizes.small};
-      margin: 0 0 0 0.5rem;
-    }
+    margin: 1rem 0 0;
   }
 `
 
-const PageSection = ({ title, subtitle, to, style = null, children }) => {
+const PageSection = ({
+  title,
+  subtitle,
+  to,
+  toText = 'View all',
+  style = null,
+  children,
+}) => {
+  const history = useHistory()
+
   return (
     <PageSectionView style={style}>
       <Container>
         <PageSectionHeader title={title} subtitle={subtitle} />
         {children}
         {to && (
-          <PageSectionLink>
-            {to && (
-              <p>
-                <Link to={to}>
-                  <span>View all</span>
-                  <span>{iconMap.ArrowRight}</span>
-                </Link>
-              </p>
-            )}
-          </PageSectionLink>
+          <PageSectionFooter>
+            <MoreLink onClick={() => history.push(to)} text={toText} />
+          </PageSectionFooter>
         )}
       </Container>
     </PageSectionView>
@@ -72,6 +50,8 @@ PageSection.displayName = 'PageHeader'
 PageSection.propTypes = {
   title: propTypes.string,
   subtitle: propTypes.string,
+  to: propTypes.string,
+  style: propTypes.object,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node,

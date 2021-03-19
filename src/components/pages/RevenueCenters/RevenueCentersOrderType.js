@@ -1,7 +1,8 @@
+import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectOrder, setOrderServiceType } from '@open-tender/redux'
-import { ButtonStyled, Heading } from '@open-tender/components'
+import { ButtonToggle } from '../../buttons'
 
 const RevenueCentersOrderTypeView = styled('div')`
   position: fixed;
@@ -30,34 +31,10 @@ const RevenueCentersOrderTypeButtons = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin-top: 6.4rem;
   }
-`
 
-const RevenueCentersOrderTypeButton = styled('div')`
-  width: 33.33333%;
-  padding: 0 0.6rem;
-
-  button,
-  button:hover,
-  button:active,
-  button:focus {
-    width: 100%;
-    padding: 1.4rem 0 1.5rem;
-    border-radius: ${(props) => props.theme.border.radius};
-    background-color: ${(props) =>
-      props.isActive ? props.theme.colors.secondary : props.theme.colors.light};
-    border-color: ${(props) =>
-      props.isActive ? props.theme.colors.secondary : props.theme.colors.light};
-    box-shadow: ${(props) =>
-      props.isActive ? 'none' : '0px 6px 20px rgba(0, 0, 0, 0.13)'};
-
-    span {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: ${(props) =>
-        props.isActive
-          ? props.theme.colors.light
-          : props.theme.colors.secondary};
-    }
+  & > div {
+    width: 33.33333%;
+    padding: 0 0.6rem;
   }
 `
 
@@ -73,29 +50,32 @@ const RevenueCentersOrderType = ({ setActive }) => {
   return (
     <RevenueCentersOrderTypeView>
       <RevenueCentersOrderTypeButtons>
-        <RevenueCentersOrderTypeButton
-          isActive={orderType === 'OLO' && serviceType === 'DELIVERY'}
+        <ButtonToggle
+          disabled={orderType === 'OLO' && serviceType === 'DELIVERY'}
+          onClick={() => setType('OLO', 'DELIVERY')}
         >
-          <ButtonStyled onClick={() => setType('OLO', 'DELIVERY')}>
-            <Heading>Delivery</Heading>
-          </ButtonStyled>
-        </RevenueCentersOrderTypeButton>
-        <RevenueCentersOrderTypeButton
-          isActive={orderType === 'OLO' && serviceType === 'PICKUP'}
+          Delivery
+        </ButtonToggle>
+        <ButtonToggle
+          disabled={orderType === 'OLO' && serviceType === 'PICKUP'}
+          onClick={() => setType('OLO', 'PICKUP')}
         >
-          <ButtonStyled onClick={() => setType('OLO', 'PICKUP')}>
-            <Heading>Pickup</Heading>
-          </ButtonStyled>
-        </RevenueCentersOrderTypeButton>
-        <RevenueCentersOrderTypeButton isActive={orderType === 'CATERING'}>
-          <ButtonStyled onClick={() => setType('CATERING', 'DELIVERY')}>
-            <Heading>Catering</Heading>
-          </ButtonStyled>
-        </RevenueCentersOrderTypeButton>
+          Pickup
+        </ButtonToggle>
+        <ButtonToggle
+          disabled={orderType === 'CATERING'}
+          onClick={() => setType('CATERING', 'DELIVERY')}
+        >
+          Catering
+        </ButtonToggle>
       </RevenueCentersOrderTypeButtons>
     </RevenueCentersOrderTypeView>
   )
 }
 
 RevenueCentersOrderType.displayName = 'RevenueCentersOrderType'
+RevenueCentersOrderType.propTypes = {
+  setActive: propTypes.func,
+}
+
 export default RevenueCentersOrderType

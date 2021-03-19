@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { isBrowser } from 'react-device-detect'
+import { Link } from 'react-router-dom'
 // import { useSelector } from 'react-redux'
 // import { selectCustomer } from '@open-tender/redux'
 
@@ -13,7 +14,15 @@ const HeaderDefault = () => {
   return (
     <Header
       left={<NavMenu />}
-      title={isBrowser ? <Logo /> : <Locations />}
+      title={
+        isBrowser ? (
+          <Link to="/">
+            <Logo />
+          </Link>
+        ) : (
+          <Locations />
+        )
+      }
       right={
         <>
           {isBrowser && <Locations />}

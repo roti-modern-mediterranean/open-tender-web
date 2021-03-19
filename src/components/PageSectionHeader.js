@@ -3,13 +3,15 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const PageSectionHeaderView = styled('div')`
-  margin: 0 0 ${(props) => props.theme.layout.padding};
+  margin: 0 0 5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
+    margin: 0 0 2.5rem;
   }
 
+  h1,
   h2 {
     line-height: 1;
+    font-size: ${(props) => props.theme.fonts.sizes.h2};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-size: ${(props) => props.theme.fonts.sizes.h4};
     }

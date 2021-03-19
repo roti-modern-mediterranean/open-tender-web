@@ -1,11 +1,9 @@
 import styled from '@emotion/styled'
-import { isBrowser } from 'react-device-detect'
 import { useHistory } from 'react-router-dom'
 import { slugify } from '@open-tender/js'
-import { ButtonLink } from '@open-tender/components'
 
-import iconMap from '../../iconMap'
 import MenuItem from '../Menu/MenuItem'
+import { MoreLink } from '../..'
 
 const HomeMenuCategoryView = styled('div')`
   width: 33.33333%;
@@ -48,46 +46,6 @@ const HomeMenuCategoryFooter = styled('div')`
   justify-content: flex-end;
 `
 
-const MoreLinkView = styled('span')`
-  display: block;
-
-  button {
-    display: flex;
-    align-items: center;
-
-    span {
-      display: block;
-      transition: ${(props) => props.theme.links.transition};
-    }
-
-    span:first-of-type {
-      font-family: ${(props) => props.theme.fonts.preface.family};
-      font-weight: 600;
-      font-size: ${(props) => props.theme.fonts.sizes.big};
-      text-transform: uppercase;
-      line-height: 1.16667;
-    }
-
-    span + span {
-      width: 2.2rem;
-      height: 2.2rem;
-      line-height: 1.16667;
-      margin: 0 0 0 0.5rem;
-    }
-  }
-`
-
-const MoreLink = ({ onClick, text, icon }) => {
-  return (
-    <MoreLinkView>
-      <ButtonLink onClick={onClick}>
-        <span>{text}</span>
-        {icon && <span>{icon}</span>}
-      </ButtonLink>
-    </MoreLinkView>
-  )
-}
-
 const HomeMenuCategory = ({ category, isInverted = false }) => {
   const history = useHistory()
   const items = category.items.slice(0, 3)
@@ -112,7 +70,6 @@ const HomeMenuCategory = ({ category, isInverted = false }) => {
             <MoreLink
               onClick={() => history.push('/menu')}
               text={`View all ${category.name}`}
-              icon={isBrowser ? iconMap.ChevronRight : iconMap.ArrowRight}
             />
           </HomeMenuCategoryFooter>
         )}

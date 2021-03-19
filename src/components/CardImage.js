@@ -39,17 +39,28 @@ const MenuItemBackgroundImage = styled(BgImage)`
   animation: fade-in 0.25s ease-in-out 0s forwards;
 `
 
+// TODO: remove this
+const placeholder = {
+  backgroundImage:
+    'url(//s3.amazonaws.com/betterboh/u/img/local/46/1615920805_kids-plate-top-down_400x400.png',
+}
+
 const CardImage = ({ imageUrl, children }) => {
   const { hasLoaded, hasError } = useImage(imageUrl)
   const isLoading = !hasLoaded && !hasError
-
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
+
   return (
     <CardImageView>
       {bgStyle && isLoading && (
         <CardImageLoading>
           <ImageSpinner size={isBrowser ? 24 : 16} />
         </CardImageLoading>
+      )}
+      {hasError && (
+        <MenuItemBackgroundImage style={placeholder}>
+          &nbsp;
+        </MenuItemBackgroundImage>
       )}
       {hasLoaded && (
         <MenuItemBackgroundImage style={bgStyle}>

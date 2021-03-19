@@ -41,6 +41,7 @@ import Logo from './Logo'
 import LoyaltyProgram from './LoyaltyProgram'
 import Main from './Main'
 import Modal, { ModalClose, ModalContent, ModalView } from './Modal'
+import MoreLink from './MoreLink'
 import Nav from './Nav'
 import NavButtons from './NavButtons'
 import NavScroll from './NavScroll'
@@ -136,6 +137,7 @@ export {
   ModalClose,
   ModalContent,
   ModalView,
+  MoreLink,
   Nav,
   NavButtons,
   NavScroll,

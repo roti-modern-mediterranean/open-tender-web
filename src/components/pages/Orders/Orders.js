@@ -10,7 +10,6 @@ import {
   fetchCustomerOrders,
 } from '@open-tender/redux'
 import { makeUniqueDisplayItems } from '@open-tender/js'
-import { ButtonStyled, ButtonToggleGroup } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
@@ -21,6 +20,7 @@ import {
   ItemCards,
   Loading,
   Main,
+  MoreLink,
   OrderCardItem,
   PageContainer,
   PageContent,
@@ -29,21 +29,29 @@ import {
 } from '../..'
 import OrdersList from './OrdersList'
 import AccountTabs from '../Account/AccountTabs'
+import { ButtonToggle } from '../../buttons'
 
 const ToggleView = styled('div')`
-  text-align: center;
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  margin: 0 0 ${(props) => props.theme.layout.margin};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 0 ${(props) => props.theme.layout.marginMobile};
+  display: flex;
+  width: 40rem;
+  max-width: 100%;
+  margin: 0 -0.6rem;
+
+  & > div {
+    width: 50%;
+    padding: 0 0.6rem;
   }
+`
+
+const OrdersLoadMore = styled('div')`
+  display: flex;
+  justify-content: flex-end;
 `
 
 const Orders = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const increment = 20
+  const increment = 15
   const limit = 60
   const [toggle, setToggle] = useState('orders')
   const [count, setCount] = useState(increment)
@@ -95,13 +103,23 @@ const Orders = () => {
         <HeaderDefault />
         <Main>
           {!isBrowser && <AccountTabs />}
-          <PageContainer style={{ maxWidth: '100%' }}>
-            <PageTitle {...config.recentOrders} />
-            <PageError error={error} />
-            {recentOrders.length ? (
-              <>
+          <PageContainer>
+            <PageTitle {...config.recentOrders}>
+              {recentOrders.length > 0 && (
                 <ToggleView>
-                  <ButtonToggleGroup>
+                  <ButtonToggle
+                    disabled={toggle === 'orders'}
+                    onClick={() => setToggle('orders')}
+                  >
+                    Recent Orders
+                  </ButtonToggle>
+                  <ButtonToggle
+                    disabled={toggle === 'items'}
+                    onClick={() => setToggle('items')}
+                  >
+                    Recent Items
+                  </ButtonToggle>
+                  {/* <ButtonToggleGroup>
                     <ButtonStyled
                       onClick={() => setToggle('orders')}
                       disabled={toggle === 'orders'}
@@ -114,15 +132,20 @@ const Orders = () => {
                     >
                       Recent Items
                     </ButtonStyled>
-                  </ButtonToggleGroup>
+                  </ButtonToggleGroup> */}
                 </ToggleView>
+              )}
+            </PageTitle>
+            <PageError error={error} />
+            {recentOrders.length ? (
+              <>
                 {toggle === 'orders' ? (
                   <>
                     <OrdersList orders={recentOrders} delay={0} />
                     {entities.length - 1 > count && (
-                      <ButtonStyled onClick={loadMore}>
-                        Load more recent orders
-                      </ButtonStyled>
+                      <OrdersLoadMore>
+                        <MoreLink onClick={loadMore} text="Load more" />
+                      </OrdersLoadMore>
                     )}
                   </>
                 ) : (
