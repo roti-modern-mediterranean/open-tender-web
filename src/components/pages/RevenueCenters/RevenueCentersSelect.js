@@ -12,57 +12,21 @@ import {
   resetCheckout,
 } from '@open-tender/redux'
 import { makeDisplayedRevenueCenters } from '@open-tender/js'
-import {
-  ButtonLink,
-  ButtonStyled,
-  Message,
-  Preface,
-  Text,
-} from '@open-tender/components'
+import { ButtonLink } from '@open-tender/components'
 
 import { selectSettings, selectGeoLatLng } from '../../../slices'
-import { Loading, PageContent, RevenueCenter } from '../..'
+import { Loading, RevenueCenter } from '../..'
 import styled from '@emotion/styled'
-import iconMap from '../../iconMap'
+import RevenueCentersAlert from './RevenueCentersAlert'
 
 const RevenueCentersSelectView = styled('div')``
 
 const RevenueCentersSelectList = styled('ul')`
-  margin: 0 0 ${(props) => props.theme.layout.margin};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0 0 ${(props) => props.theme.layout.marginMobile};
-  }
-
   & > li {
     margin: 2.5rem 0 0;
-  }
-`
-
-const RevenueCentersSelectMessage = styled('div')`
-  margin: 2rem 0;
-
-  p:first-of-type {
-    display: flex;
-    align-items: center;
-    line-height: 1;
-    color: ${(props) => props.theme.colors.alert};
-
-    span {
-      display: block;
+    &:first-of-type {
+      margin: 0;
     }
-
-    span:first-of-type {
-      width: 2rem;
-      height: 2rem;
-      margin: 0 1rem 0 0;
-      line-height: 0;
-    }
-  }
-
-  p + p {
-    margin: 0.5rem 0 0 3rem;
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
   }
 `
 
@@ -153,51 +117,32 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
           text="Retrieving nearest locations..."
           style={{ textAlign: 'left' }}
         />
+      ) : showRevenueCenters ? (
+        <RevenueCentersSelectList>
+          {filtered.map((revenueCenter) => (
+            <li key={revenueCenter.revenue_center_id}>
+              <RevenueCenter
+                revenueCenter={revenueCenter}
+                setActive={setActive}
+                activeMarker={activeMarker}
+              />
+            </li>
+          ))}
+        </RevenueCentersSelectList>
+      ) : missingAddress ? (
+        <RevenueCentersAlert
+          title="Please enter an address"
+          subtitle="A full address with street number is required for delivery orders."
+        />
       ) : (
-        <>
-          {showRevenueCenters ? (
-            <RevenueCentersSelectList>
-              {filtered.map((revenueCenter) => (
-                <li key={revenueCenter.revenue_center_id}>
-                  <RevenueCenter
-                    revenueCenter={revenueCenter}
-                    setActive={setActive}
-                    activeMarker={activeMarker}
-                  />
-                </li>
-              ))}
-            </RevenueCentersSelectList>
-          ) : (
-            <RevenueCentersSelectMessage>
-              {missingAddress ? (
-                <>
-                  <p>
-                    <span>{iconMap.AlertTriangle}</span>
-                    <span>Please enter an address</span>
-                  </p>
-                  <p>
-                    A full address with street number is required for delivery
-                    orders.
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p>
-                    <span>{iconMap.AlertTriangle}</span>
-                    <span>No locations near you</span>
-                  </p>
-                  <p>
-                    Sorry, but we don't have any locations near you. Please
-                    enter a different address or head back to our home page
-                  </p>
-                  <ButtonLink onClick={handleStartOver}>
-                    Return to homepage
-                  </ButtonLink>
-                </>
-              )}
-            </RevenueCentersSelectMessage>
-          )}
-        </>
+        <RevenueCentersAlert
+          title="No locations near you"
+          subtitle="Sorry, but we don't have any locations near you. Please
+                    enter a different address or head back to our home page.
+                    orders."
+        >
+          <ButtonLink onClick={handleStartOver}>Return to homepage</ButtonLink>
+        </RevenueCentersAlert>
       )}
     </RevenueCentersSelectView>
   )

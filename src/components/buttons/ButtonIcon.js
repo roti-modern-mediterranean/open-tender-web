@@ -62,7 +62,7 @@ const ButtonIcon = ({
 
 ButtonIcon.displayName = 'ButtonIcon'
 ButtonIcon.propTypes = {
-  icon: propTypes.element,
+  icon: propTypes.func,
   size: propTypes.number,
   label: propTypes.string,
   onClick: propTypes.func,

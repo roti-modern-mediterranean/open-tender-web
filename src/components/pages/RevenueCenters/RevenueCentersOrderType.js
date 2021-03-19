@@ -9,15 +9,21 @@ const RevenueCentersOrderTypeView = styled('div')`
   top: 0;
   left: 0;
   right: 0;
-  height: 12rem;
+  height: 16rem;
   background: linear-gradient(
     0deg,
     rgba(212, 219, 228, 0) 0%,
     rgb(212, 219, 228) 100%
   );
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: 12rem;
+  }
 `
 
 const RevenueCentersOrderTypeButtons = styled('div')`
+  width: 40rem;
+  max-width: 100%;
+  margin: 0 auto;
   display: flex;
   padding: 0 0.6rem;
   margin-top: 7.6rem;
@@ -55,11 +61,12 @@ const RevenueCentersOrderTypeButton = styled('div')`
   }
 `
 
-const RevenueCentersOrderType = () => {
+const RevenueCentersOrderType = ({ setActive }) => {
   const dispatch = useDispatch()
   const { orderType, serviceType } = useSelector(selectOrder)
 
   const setType = (orderType, serviceType) => {
+    setActive(null)
     dispatch(setOrderServiceType(orderType, serviceType))
   }
 

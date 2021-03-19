@@ -21,7 +21,7 @@ import {
   Home,
   HouseAccounts,
   LevelUp,
-  Menu,
+  // Menu,
   NotFound,
   Order,
   Orders,
@@ -37,6 +37,7 @@ import {
   Thanx,
   VerifyAccount,
 } from './pages'
+import Menu from './pages/Menu/Menu'
 
 // <TransitionGroup component={null}>
 //   <CSSTransition timeout={10000} classNames="fade" key={location.key}>

@@ -4,21 +4,20 @@ import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { setAddress, selectOrder } from '@open-tender/redux'
 import {
-  ButtonLink,
+  ButtonStyled,
   GoogleMapsAutocomplete,
   Preface,
 } from '@open-tender/components'
 
 import iconMap from '../../iconMap'
 import RevenueCentersSelect from './RevenueCentersSelect'
-import { PrefaceTitle } from '../..'
 
 const MapsAutocompleteView = styled('div')`
   z-index: 2;
   position: absolute;
   top: 100%;
   width: 100%;
-  margin-top: -30rem;
+  margin-top: -31rem;
   transform: translate3D(0, 0, 0);
   // position: relative;
   // margin-top: calc(100vh - 30rem);
@@ -56,27 +55,25 @@ const MapsAutocompleteInput = styled('div')`
   }
 `
 const ChangeLocationView = styled('div')`
-  button {
-    span {
-      color: ${(props) => props.theme.links.primary.color};
-    }
+  margin: -0.5rem 0 0 -1.5rem;
 
-    span:first-of-type {
-      display: inline-block;
-      width: 1.4rem;
-      height: 1.4rem;
-      margin: 0 0.75rem 0 0;
-    }
+  button {
+    width: 100%;
+    border: 0;
   }
 `
 
 const ChangeLocation = ({ onClick }) => {
   return (
     <ChangeLocationView>
-      <ButtonLink onClick={onClick}>
-        <span>{iconMap.RefreshCw}</span>
-        <PrefaceTitle>Change location</PrefaceTitle>
-      </ButtonLink>
+      <ButtonStyled
+        icon={iconMap.RefreshCw}
+        onClick={onClick}
+        color="secondary"
+        size="small"
+      >
+        Change location
+      </ButtonStyled>
     </ChangeLocationView>
   )
 }
@@ -101,29 +98,28 @@ const MapsAutocomplete = ({
 
   return (
     <MapsAutocompleteView>
-      <MapsAutocompleteHeader>
-        {activeMarker ? (
-          <ChangeLocation onClick={() => setActive(null)} />
-        ) : (
-          <Preface as="h2">Find a {orderTypeName} location near you</Preface>
-        )}
-      </MapsAutocompleteHeader>
       {!activeMarker && (
-        <MapsAutocompleteInput>
-          <GoogleMapsAutocomplete
-            maps={maps}
-            map={map}
-            sessionToken={sessionToken}
-            autocomplete={autocomplete}
-            formattedAddress={formattedAddress}
-            setAddress={(address) => dispatch(setAddress(address))}
-            setCenter={setCenter}
-            icon={iconMap.MapPin}
-            placeholder={placeholder}
-          />
-        </MapsAutocompleteInput>
+        <>
+          <MapsAutocompleteHeader>
+            <Preface as="h2">Find a {orderTypeName} location near you</Preface>
+          </MapsAutocompleteHeader>
+          <MapsAutocompleteInput>
+            <GoogleMapsAutocomplete
+              maps={maps}
+              map={map}
+              sessionToken={sessionToken}
+              autocomplete={autocomplete}
+              formattedAddress={formattedAddress}
+              setAddress={(address) => dispatch(setAddress(address))}
+              setCenter={setCenter}
+              icon={iconMap.MapPin}
+              placeholder={placeholder}
+            />
+          </MapsAutocompleteInput>
+        </>
       )}
       <RevenueCentersSelect setActive={setActive} activeMarker={activeMarker} />
+      {activeMarker && <ChangeLocation onClick={() => setActive(null)} />}
     </MapsAutocompleteView>
   )
 }

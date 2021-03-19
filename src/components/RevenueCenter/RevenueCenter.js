@@ -1,8 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
-import { selectGroupOrder } from '@open-tender/redux'
 import { stripTags } from '@open-tender/js'
 import { BgImage, Preface } from '@open-tender/components'
 
@@ -53,6 +51,7 @@ const RevenueCenterImage = styled(BgImage)`
 const RevenueCenterDetails = styled('span')`
   display: block;
   padding: 0 0 0 1rem;
+  overflow: hidden;
 `
 
 const RevenueCenterDetailView = styled('span')`
@@ -80,6 +79,9 @@ const RevenueCenterDetailText = styled('span')`
   width: 100%;
   padding: 0 0 0 1rem;
   line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   span {
     font-size: 1.5rem;
@@ -102,7 +104,6 @@ const RevenueCenter = ({
   activeMarker,
   style = null,
 }) => {
-  // const { cartGuest } = useSelector(selectGroupOrder)
   const { address, images, hours, is_outpost } = revenueCenter
   const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const largeImg = images.find((i) => i.type === 'SMALL_IMAGE')
@@ -110,6 +111,7 @@ const RevenueCenter = ({
   const bgStyle = bgImage ? { backgroundImage: `url(${bgImage}` } : null
   const hoursDesc = hours.description ? stripTags(hours.description) : null
   const hoursDescIcon = is_outpost ? iconMap.AlertCircle : iconMap.Clock
+  const isActive = revenueCenter.revenue_center_id === activeMarker
 
   const makeActive = (evt) => {
     evt.target.blur()
@@ -117,7 +119,11 @@ const RevenueCenter = ({
   }
 
   return (
-    <RevenueCenterView style={style} onClick={(evt) => makeActive(evt)}>
+    <RevenueCenterView
+      style={style}
+      as={isActive ? 'div' : 'button'}
+      onClick={(evt) => makeActive(evt)}
+    >
       <RevenueCenterHeader>
         <PrefaceTitle as="h2">{revenueCenter.name}</PrefaceTitle>
         <DetourSign color="#621C27" />
@@ -134,7 +140,7 @@ const RevenueCenter = ({
           )}
         </RevenueCenterDetails>
       </RevenueCenterContent>
-      {/* {!cartGuest && <RevenueCenterOrder revenueCenter={revenueCenter} />} */}
+      {activeMarker && <RevenueCenterOrder revenueCenter={revenueCenter} />}
     </RevenueCenterView>
   )
 }

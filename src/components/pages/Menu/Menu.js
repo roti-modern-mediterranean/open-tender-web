@@ -36,7 +36,7 @@ import MenuMobileMenu from './MenuMobileMenu'
 
 export const MenuContext = createContext(null)
 
-const MenuPage = () => {
+const Menu = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
@@ -140,5 +140,5 @@ const MenuPage = () => {
   )
 }
 
-MenuPage.displayName = 'MenuPage'
-export default MenuPage
+Menu.displayName = 'Menu'
+export default Menu

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
-import { isBrowser, isMobile } from 'react-device-detect'
+import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import ClipLoader from 'react-spinners/ClipLoader'
 import {
@@ -68,8 +68,7 @@ const RevenueCenters = () => {
   const query = new URLSearchParams(useLocation().search)
   const param = query.get('type')
   const { windowRef } = useContext(AppContext)
-  const navTitle =
-    config.title && config.title.length < 20 ? config.title : 'Find a Store'
+  const navTitle = config.title || 'Ready to lunch?'
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -125,13 +124,13 @@ const RevenueCenters = () => {
           bgColor="transparent"
           borderColor="transparent"
           style={{ boxShadow: 'none' }}
-          title={isMobile ? navTitle : null}
+          title={navTitle}
           left={<Back />}
           right={null}
         />
         <Main style={{ paddingTop: '0' }}>
           <ScreenreaderTitle>Locations</ScreenreaderTitle>
-          <RevenueCentersOrderType />
+          <RevenueCentersOrderType setActive={setActive} />
           {apiKey && (
             <GoogleMap
               apiKey={apiKey}
