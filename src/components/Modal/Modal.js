@@ -16,6 +16,7 @@ import {
   Closed,
   CreditCard,
   CreditCardLinked,
+  Curbside,
   GiftCard,
   GiftCardAssign,
   GiftCardAssignOther,
@@ -76,6 +77,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <Reward {...args} />
     case 'signUp':
       return <SignUp windowRef={windowRef} {...args} />
+    case 'curbside':
+      return <Curbside {...args} />
     case 'working':
       return <Working {...args} />
     default:

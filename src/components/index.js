@@ -3,6 +3,7 @@ import Background from './Background'
 import BackgroundContent from './BackgroundContent'
 import BackgroundImage from './BackgroundImage'
 import BackgroundLoading from './BackgroundLoading'
+import ButtonGroupBig from './ButtonGroupBig'
 import ButtonText from './ButtonText'
 import Card from './Card'
 import CartButton from './CartButton'
@@ -90,6 +91,7 @@ export {
   BackgroundContent,
   BackgroundImage,
   BackgroundLoading,
+  ButtonGroupBig,
   ButtonText,
   Card,
   CartButton,

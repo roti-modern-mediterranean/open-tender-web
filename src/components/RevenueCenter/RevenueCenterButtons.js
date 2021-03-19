@@ -17,23 +17,11 @@ import { ButtonStyled } from '@open-tender/components'
 import RevenueCentersAlert from '../pages/RevenueCenters/RevenueCentersAlert'
 import styled from '@emotion/styled'
 import { openModal } from '../../slices'
+import { ButtonGroupBig } from '..'
 
-const RevenueCenterButtonsView = styled('div')`
+const RevenueCenterButtonsView = styled(ButtonGroupBig)`
   margin: 1.5rem 0;
   flex: 0;
-
-  button {
-    width: 100%;
-    border-radius: ${(props) => props.theme.border.radius};
-
-    &:first-of-type {
-      box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
-    }
-  }
-
-  button + button {
-    margin-top: 1.5rem;
-  }
 `
 
 export const RevenueCenterButtons = ({ revenueCenter }) => {
@@ -59,15 +47,15 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
   const isDelivery = orderType === 'OLO' && serviceType === 'DELIVERY'
   const isCatering = orderType === 'CATERING'
 
-  const handlePickup = () => {
-    dispatch(setOrderServiceType(rcType, 'PICKUP', isOutpost))
+  const handlePickup = (isCurbside = false) => {
+    dispatch(setOrderServiceType(rcType, 'PICKUP', isOutpost, isCurbside))
     if (isOutpost) dispatch(setAddress(address))
     dispatch(setRevenueCenter(revenueCenter))
     history.push(menuSlug)
   }
 
   const handleCurbside = () => {
-    dispatch(openModal({ type: 'curbside', args: { revenueCenter } }))
+    dispatch(openModal({ type: 'curbside', args: { handlePickup } }))
   }
 
   const handleDelivery = () => {
@@ -115,7 +103,9 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
   ) : isPickup ? (
     hasPickup ? (
       <RevenueCenterButtonsView>
-        <ButtonStyled onClick={handlePickup}>Order Pickup</ButtonStyled>
+        <ButtonStyled onClick={handlePickup}>
+          Pickup from this Location
+        </ButtonStyled>
         <ButtonStyled onClick={handleCurbside} color="secondary">
           Curbside Pickup
         </ButtonStyled>

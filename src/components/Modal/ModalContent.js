@@ -6,10 +6,7 @@ import { Heading } from '@open-tender/components'
 import { ModalClose } from '.'
 
 const ModalContentView = styled('div')`
-  padding: 3.5rem 3.5rem 4rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 2.5rem 2.5rem 3rem;
-  }
+  padding: 3rem 2rem;
 `
 
 const ModalHeader = styled('div')`

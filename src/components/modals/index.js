@@ -6,6 +6,7 @@ import CartErrors from './CartErrors'
 import Closed from './Closed'
 import CreditCard from './CreditCard'
 import CreditCardLinked from './CreditCardLinked'
+import Curbside from './Curbside'
 import GiftCard from './GiftCard'
 import GiftCardAssign from './GiftCardAssign'
 import GiftCardAssignOther from './GiftCardAssignOther'
@@ -30,6 +31,7 @@ export {
   Closed,
   CreditCard,
   CreditCardLinked,
+  Curbside,
   GiftCard,
   GiftCardAssign,
   GiftCardAssignOther,

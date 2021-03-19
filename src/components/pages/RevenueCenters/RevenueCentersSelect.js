@@ -57,9 +57,9 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
       let params = { type: orderType }
       if (isOutpost) params = { ...params, is_outpost: true }
       if (coords) params = { ...params, lat: coords.lat, lng: coords.lng }
-      if (orderType === 'CATERING' && requestedAt) {
-        params = { ...params, requestedAt }
-      }
+      // if (orderType === 'CATERING' && requestedAt) {
+      //   params = { ...params, requestedAt }
+      // }
       dispatch(fetchRevenueCenters(params))
     }
   }, [orderType, serviceType, isOutpost, coords, requestedAt, dispatch])
