@@ -36,6 +36,19 @@ export const fetchConfig = createAsyncThunk(
   }
 )
 
+const decorateTheme = (theme) => {
+  return {
+    ...theme,
+    colors: {
+      ...theme.colors,
+      pepper: '#25272A',
+      tahini: '#FBF8EA',
+      paprika: '#E73C3E',
+      beet: '#621C27',
+    },
+  }
+}
+
 const configSlice = createSlice({
   name: 'config',
   initialState: initialState,
@@ -54,7 +67,7 @@ const configSlice = createSlice({
       state.app = app
       state.brand = brand
       state.content = content
-      state.theme = theme
+      state.theme = decorateTheme(theme)
       state.settings = settings
       state.loading = 'idle'
       state.api = new OpenTenderAPI(app)

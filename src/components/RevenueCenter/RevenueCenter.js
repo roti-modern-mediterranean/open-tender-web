@@ -153,7 +153,7 @@ const RevenueCenter = ({
     >
       <RevenueCenterHeader>
         <PrefaceTitle as="h2">{revenueCenter.name}</PrefaceTitle>
-        <DetourSign color="#621C27" />
+        <DetourSign />
       </RevenueCenterHeader>
       <RevenueCenterContent>
         <RevenueCenterImage as="span" style={bgStyle} />

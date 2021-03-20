@@ -16,7 +16,7 @@ import Locations from './Locations'
 import Logout from './Logout'
 import Menu from './Menu'
 import NavMenu from './NavMenu'
-import OrderNow from './OrderNow'
+import Cart from './Cart'
 import Reopen from './Reopen'
 import RequestedAt from './RequestedAt'
 import RevenueCenter from './RevenueCenter'
@@ -32,6 +32,7 @@ export {
   Allergens,
   Back,
   CancelEdit,
+  Cart,
   Deals,
   Favorite,
   GroupOrder,
@@ -42,7 +43,6 @@ export {
   Logout,
   Menu,
   NavMenu,
-  OrderNow,
   Reopen,
   RequestedAt,
   RevenueCenter,

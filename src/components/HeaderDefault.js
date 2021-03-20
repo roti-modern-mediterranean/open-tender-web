@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 // import { selectCustomer } from '@open-tender/redux'
 
 import { Header, Logo } from '.'
-import { NavMenu, Locations, OrderNow } from './buttons'
+import { Cart, NavMenu, Locations } from './buttons'
 
 const HeaderDefault = () => {
   // const { auth } = useSelector(selectCustomer)
@@ -26,7 +26,7 @@ const HeaderDefault = () => {
       right={
         <>
           {isBrowser && <Locations />}
-          <OrderNow />
+          <Cart />
         </>
       }
       bgColor={isBrowser ? 'dark' : 'primary'}

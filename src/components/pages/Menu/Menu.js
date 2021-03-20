@@ -29,7 +29,7 @@ import { makeValidDeals } from '@open-tender/js'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Content, Main, ScreenreaderTitle } from '../..'
+import { Content, HeaderDefault, Main, ScreenreaderTitle } from '../..'
 import MenuContent from './MenuContent'
 import MenuHeader from './MenuHeader'
 import MenuMobileMenu from './MenuMobileMenu'
@@ -107,7 +107,8 @@ const Menu = () => {
         <title>Menu | {siteTitle}</title>
       </Helmet>
       <Content>
-        <MenuHeader showMenu={showMenu} setShowMenu={setShowMenu} />
+        {/* <MenuHeader showMenu={showMenu} setShowMenu={setShowMenu} /> */}
+        <HeaderDefault />
         <Main>
           <MenuContext.Provider
             value={{

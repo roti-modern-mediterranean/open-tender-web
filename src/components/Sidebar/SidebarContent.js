@@ -29,7 +29,7 @@ const SidebarView = styled('aside')`
   right: 0;
   width: 44rem;
   max-width: 100%;
-  background-color: ${(props) => props.theme.bgColors.primary};
+  background-color: ${(props) => props.theme.bgColors.light};
 
   > div {
     position: relative;
@@ -45,7 +45,7 @@ const SidebarView = styled('aside')`
 const SidebarHeader = styled('div')`
   width: 100%;
   padding: 2rem;
-  background-color: ${(props) => props.theme.bgColors.primary};
+  background-color: ${(props) => props.theme.bgColors.light};
 
   h2 {
     margin: 0 0 1rem;
@@ -82,7 +82,7 @@ const SidebarFooter = styled('div')`
   flex-shrink: 0;
   width: 100%;
   height: 7rem;
-  background-color: ${(props) => props.theme.bgColors.primary};
+  background-color: ${(props) => props.theme.bgColors.light};
 
   button {
     width: 100%;

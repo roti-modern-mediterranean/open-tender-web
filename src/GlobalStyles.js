@@ -377,15 +377,13 @@ const makeGlobalStyles = (theme) => css`
 
   .sidebar-enter,
   .sidebar-exit.sidebar-exit-active {
-    transition: all 250ms ease;
-    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
     visibility: hidden;
     transform: translateX(100%);
   }
 
   .sidebar-enter.sidebar-enter-active,
   .sidebar-exit {
-    opacity: 1;
     visibility: visible;
     transform: translateX(0);
   }

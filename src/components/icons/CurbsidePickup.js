@@ -8,7 +8,7 @@ const CurbsidePickupView = styled('span')`
 
   svg {
     width: 100%;
-    fill: ${(props) => props.color || props.theme.links.primary.color};
+    fill: ${(props) => props.color || props.theme.colors.paprika};
   }
 `
 

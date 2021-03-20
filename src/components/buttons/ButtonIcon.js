@@ -1,8 +1,12 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 
+import { selectTheme } from '../../slices'
+
 const ButtonIconView = styled('button')`
+  position: relative;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -33,10 +37,12 @@ const ButtonIcon = ({
   onClick,
   disabled,
   style = null,
+  children,
 }) => {
   const width = `${(parseFloat(size) / 10.0).toFixed(1)}rem`
   const margin = `${(parseFloat((size - 50) / 2) / 10.0).toFixed(1)}rem`
-  const color = isBrowser ? '#E73C3E' : '#621C27'
+  const theme = useSelector(selectTheme)
+  const color = isBrowser ? theme.colors.paprika : theme.colors.beet
 
   const handeClick = (evt) => {
     evt.preventDefault()
@@ -56,6 +62,7 @@ const ButtonIcon = ({
       style={style}
     >
       <span>{icon({ size: width, color })}</span>
+      {children}
     </ButtonIconView>
   )
 }
@@ -68,6 +75,10 @@ ButtonIcon.propTypes = {
   onClick: propTypes.func,
   disabled: propTypes.bool,
   style: propTypes.object,
+  children: propTypes.oneOfType([
+    propTypes.arrayOf(propTypes.node),
+    propTypes.node,
+  ]),
 }
 
 export default ButtonIcon

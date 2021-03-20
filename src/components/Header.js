@@ -59,6 +59,8 @@ const HeaderTitle = styled('div')`
 const HeaderNav = styled('div')`
   position: relative;
   z-index: 2;
+  display: flex;
+  align-items: center;
 
   ${(props) =>
     props.isBrowser

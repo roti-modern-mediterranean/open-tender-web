@@ -1,11 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { isBrowser } from 'react-device-detect'
+import styled from '@emotion/styled'
 import { selectCustomer } from '@open-tender/redux'
 import { ButtonIcon } from '@open-tender/components'
 
-import { toggleNav } from '../../slices'
-import styled from '@emotion/styled'
-import { isBrowser } from 'react-device-detect'
+import { selectTheme, toggleNav } from '../../slices'
 
 const NavMenuView = styled('span')`
   display: block;
@@ -32,8 +32,9 @@ const NavMenuView = styled('span')`
 const NavMenu = () => {
   const dispatch = useDispatch()
   const { auth } = useSelector(selectCustomer)
-  const color = isBrowser ? '#E73C3E' : '#621C27'
   const size = isBrowser ? 30 : 25
+  const theme = useSelector(selectTheme)
+  const color = isBrowser ? theme.colors.paprika : theme.colors.beet
 
   return (
     <NavMenuView color={color} size={size}>

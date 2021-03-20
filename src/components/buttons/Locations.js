@@ -1,5 +1,4 @@
 import React from 'react'
-import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
@@ -8,6 +7,7 @@ import { ButtonStyled } from '@open-tender/components'
 
 import styled from '@emotion/styled'
 import iconMap from '../iconMap'
+import { selectTheme } from '../../slices'
 
 const LocationsText = styled('span')`
   display: block;
@@ -23,11 +23,13 @@ const LocationsIcon = styled('span')`
   line-height: 0;
 `
 
-const Locations = ({ text = 'Find A Roti', icon = iconMap.MapPin }) => {
+const Locations = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { orderType, serviceType } = useSelector(selectOrder)
-  const mobileStyles = { color: '#621C27' }
+  const { orderType, serviceType, revenueCenter } = useSelector(selectOrder)
+  const theme = useSelector(selectTheme)
+  const mobileStyles = { color: theme.colors.beet }
+  const text = revenueCenter ? revenueCenter.name : 'Find a Roti'
 
   const onClick = () => {
     if (!orderType || !serviceType) {
@@ -44,15 +46,11 @@ const Locations = ({ text = 'Find A Roti', icon = iconMap.MapPin }) => {
       style={!isBrowser ? mobileStyles : null}
     >
       <LocationsText>{text}</LocationsText>
-      <LocationsIcon>{icon}</LocationsIcon>
+      <LocationsIcon>{iconMap.MapPin}</LocationsIcon>
     </ButtonStyled>
   )
 }
 
 Locations.displayName = 'Locations'
-Locations.propTypes = {
-  text: propTypes.string,
-  icon: propTypes.element,
-}
 
 export default Locations
