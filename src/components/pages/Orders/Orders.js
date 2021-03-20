@@ -64,7 +64,6 @@ const Orders = () => {
   const { auth } = useSelector(selectCustomer)
   const isLoading = loading === 'pending'
   const { windowRef } = useContext(AppContext)
-  console.log(items)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0

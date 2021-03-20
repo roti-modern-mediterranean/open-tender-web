@@ -63,15 +63,6 @@ const Account = () => {
     dispatch(fetchCustomerCreditCards(true))
   }, [token, dispatch, history])
 
-  // useEffect(() => {
-  //   if (error) {
-  //     console.log(error)
-  //     dispatch(logoutCustomer())
-  //     dispatch(addMessage(error))
-  //     return history.push('/')
-  //   }
-  // }, [error, dispatch, history])
-
   return profile ? (
     <>
       <Helmet>

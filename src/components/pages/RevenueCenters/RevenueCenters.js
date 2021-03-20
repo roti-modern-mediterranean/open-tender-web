@@ -21,9 +21,9 @@ import {
 } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Content, Header, Main, ScreenreaderTitle } from '../..'
-import userMarker from '../../../assets/userMarker.svg'
-import mapMarkerRed from '../../../assets/mapMarkerRed.svg'
-import mapMarkerDarkRed from '../../../assets/mapMarkerDarkRed.svg'
+// import userMarker from '../../../assets/userMarker.svg'
+// import mapMarkerRed from '../../../assets/mapMarkerRed.svg'
+// import mapMarkerDarkRed from '../../../assets/mapMarkerDarkRed.svg'
 
 import { Back } from '../../buttons'
 import RevenueCenterMap from './RevenueCenterMap'
@@ -31,21 +31,32 @@ import MapsAutocomplete from './MapsAutocomplete'
 import RevenueCentersOrderType from './RevenueCentersOrderType'
 
 const iconSizes = {
-  small: { width: 40, height: 40 },
-  medium: { width: 66, height: 66 },
-  large: { width: 100, height: 100 },
+  small: { width: 22, height: 33 },
+  medium: { width: 30, height: 44 },
+  large: { width: 45, height: 66 },
 }
 
-const makeIconSpecs = (isBrowser, isActive) => {
+const iconAnchors = {
+  small: { x: 0, y: 0 },
+  medium: { x: 0, y: 0 },
+  large: { x: 0, y: 0 },
+}
+
+const makeIconSpecs = (icons, isBrowser, isActive) => {
+  const { location, locationSelected } = icons
   const [active, other] = isBrowser
-    ? [mapMarkerDarkRed, mapMarkerRed]
-    : [mapMarkerRed, mapMarkerDarkRed]
+    ? [locationSelected.url, location.url]
+    : [location.url, locationSelected.url]
   const url = isActive ? active : other
   const [activeSize, otherSize] = isBrowser
     ? [iconSizes.large, iconSizes.medium]
     : [iconSizes.medium, iconSizes.small]
   const size = isActive ? activeSize : otherSize
-  return { url, size }
+  const [activeAnchor, otherAnchor] = isBrowser
+    ? [iconAnchors.large, iconAnchors.medium]
+    : [iconAnchors.medium, iconAnchors.small]
+  const anchor = isActive ? activeAnchor : otherAnchor
+  return { url, size, anchor }
 }
 
 const RevenueCenters = () => {
@@ -69,6 +80,7 @@ const RevenueCenters = () => {
   const param = query.get('type')
   const { windowRef } = useContext(AppContext)
   const navTitle = config.title || 'Ready to lunch?'
+  const missingAddress = serviceType === 'DELIVERY' && !address
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -149,7 +161,7 @@ const RevenueCenters = () => {
               />
               {markers.map((i) => {
                 const isActive = i.revenue_center_id === activeMarker
-                const icon = makeIconSpecs(isBrowser, isActive)
+                const icon = makeIconSpecs(icons, isBrowser, isActive)
                 return (
                   <GoogleMapsMarker
                     key={i.revenue_center_id}
@@ -161,7 +173,9 @@ const RevenueCenters = () => {
                     icon={icon.url}
                     size={icon.size}
                     anchor={null}
-                    events={{ onClick: () => setActive(i) }}
+                    events={
+                      missingAddress ? {} : { onClick: () => setActive(i) }
+                    }
                   />
                 )
               })}
@@ -169,11 +183,10 @@ const RevenueCenters = () => {
                 <GoogleMapsMarker
                   title="Your Location"
                   position={{
-                    lat: center.lat,
-                    lng: center.lng,
+                    lat: initialCenter.lat,
+                    lng: initialCenter.lng,
                   }}
-                  // icon={icons.user.url}
-                  icon={userMarker}
+                  icon={icons.user.url}
                   size={icons.user.size}
                   anchor={icons.user.anchor}
                   drop={null}

@@ -3,11 +3,7 @@ import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { setAddress, selectOrder } from '@open-tender/redux'
-import {
-  ButtonStyled,
-  GoogleMapsAutocomplete,
-  Preface,
-} from '@open-tender/components'
+import { GoogleMapsAutocomplete, Preface } from '@open-tender/components'
 
 import iconMap from '../../iconMap'
 import RevenueCentersSelect from './RevenueCentersSelect'
@@ -54,29 +50,6 @@ const MapsAutocompleteInput = styled('div')`
     border-bottom: 0.1rem solid #7f8692;
   }
 `
-const ChangeLocationView = styled('div')`
-  margin: -0.5rem 0 0 -1.5rem;
-
-  button {
-    width: 100%;
-    border: 0;
-  }
-`
-
-const ChangeLocation = ({ onClick }) => {
-  return (
-    <ChangeLocationView>
-      <ButtonStyled
-        icon={iconMap.RefreshCw}
-        onClick={onClick}
-        color="secondary"
-        size="small"
-      >
-        Change location
-      </ButtonStyled>
-    </ChangeLocationView>
-  )
-}
 
 const MapsAutocomplete = ({
   setCenter,
@@ -119,7 +92,6 @@ const MapsAutocomplete = ({
         </>
       )}
       <RevenueCentersSelect setActive={setActive} activeMarker={activeMarker} />
-      {activeMarker && <ChangeLocation onClick={() => setActive(null)} />}
     </MapsAutocompleteView>
   )
 }

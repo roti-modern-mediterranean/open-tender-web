@@ -42,7 +42,7 @@ const OrderNow = ({ text = 'Order Now', icon = null }) => {
     <ButtonStyled
       onClick={onClick}
       color={isBrowser ? 'primary' : 'header'}
-      size={isBrowser ? 'default' : 'header'}
+      size={isBrowser ? 'small' : 'header'}
       style={!isBrowser ? mobileStyles : null}
     >
       {text}

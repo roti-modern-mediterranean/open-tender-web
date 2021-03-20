@@ -51,6 +51,9 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
   const missingAddress = serviceType === 'DELIVERY' && !address
   const hasCount = displayedRevenueCenters && displayedRevenueCenters.length > 0
   const showRevenueCenters = hasCount && !isLoading && !error && !missingAddress
+  const revenueCenterIds = displayedRevenueCenters.map(
+    (i) => i.revenue_center_id
+  )
 
   useEffect(() => {
     if (orderType) {
@@ -105,9 +108,7 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
   }
 
   const filtered = activeMarker
-    ? displayedRevenueCenters.filter(
-        (i) => i.revenue_center_id === activeMarker
-      )
+    ? revenueCenters.filter((i) => i.revenue_center_id === activeMarker)
     : displayedRevenueCenters
 
   return (
@@ -125,6 +126,9 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
                 revenueCenter={revenueCenter}
                 setActive={setActive}
                 activeMarker={activeMarker}
+                hasService={revenueCenterIds.includes(
+                  revenueCenter.revenue_center_id
+                )}
               />
             </li>
           ))}

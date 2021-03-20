@@ -2,12 +2,13 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { stripTags } from '@open-tender/js'
-import { BgImage, Preface } from '@open-tender/components'
+import { BgImage, ButtonStyled, Preface } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 import RevenueCenterOrder from './RevenueCenterOrder'
 import { PrefaceTitle } from '..'
 import { DetourSign } from '../icons'
+import RevenueCentersAlert from '../pages/RevenueCenters/RevenueCentersAlert'
 
 const RevenueCenterView = styled('button')`
   display: block;
@@ -89,6 +90,31 @@ const RevenueCenterDetailText = styled('span')`
   }
 `
 
+const ChangeLocationView = styled('div')`
+  margin: -0.75rem 0 0 -1.5rem;
+
+  button {
+    width: 100%;
+    border: 0;
+    font-size: 1.8rem;
+  }
+`
+
+const ChangeLocation = ({ onClick }) => {
+  return (
+    <ChangeLocationView>
+      <ButtonStyled
+        icon={iconMap.RefreshCw}
+        onClick={onClick}
+        color="secondary"
+        size="small"
+      >
+        Change location
+      </ButtonStyled>
+    </ChangeLocationView>
+  )
+}
+
 const RevenueCenterDetail = ({ icon, text }) => (
   <RevenueCenterDetailView>
     <RevenueCenterDetailIcon>{icon}</RevenueCenterDetailIcon>
@@ -102,6 +128,7 @@ const RevenueCenter = ({
   revenueCenter,
   setActive,
   activeMarker,
+  hasService,
   style = null,
 }) => {
   const { address, images, hours, is_outpost } = revenueCenter
@@ -140,7 +167,19 @@ const RevenueCenter = ({
           )}
         </RevenueCenterDetails>
       </RevenueCenterContent>
-      {activeMarker && <RevenueCenterOrder revenueCenter={revenueCenter} />}
+      {activeMarker && (
+        <>
+          {hasService ? (
+            <RevenueCenterOrder revenueCenter={revenueCenter} />
+          ) : (
+            <RevenueCentersAlert
+              title="This location doesn't deliver to your address"
+              subtitle="Please go back and choose a different location."
+            />
+          )}
+          <ChangeLocation onClick={() => setActive(null)} />
+        </>
+      )}
     </RevenueCenterView>
   )
 }
