@@ -22,7 +22,7 @@ const HomeMenuCategoryView = styled('div')`
 `
 
 const HomeMenuCategoryHeader = styled('div')`
-  margin: 0;
+  margin: 0 0 4rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     text-align: center;
   }

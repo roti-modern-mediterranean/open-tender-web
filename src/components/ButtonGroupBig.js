@@ -12,6 +12,12 @@ const ButtonGroupBig = styled('div')`
   button + button {
     margin-top: 1.5rem;
     background: transparent;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background: transparent;
+    }
   }
 `
 

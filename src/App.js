@@ -10,7 +10,6 @@ import GlobalStyles from './GlobalStyles'
 import Routes from './components/Routes'
 import {
   Alerts,
-  CartButton,
   ErrorBoundary,
   Modal,
   Nav,

@@ -124,7 +124,7 @@ const HomeJourneys = () => {
       subtitle:
         'Start by choosing a meal, then add proteins, sides, toppings, and sauces to make it your own.',
       footer: (
-        <ButtonStyled onClick={() => history.push('/locations')}>
+        <ButtonStyled onClick={() => history.push('/locations')} size="big">
           Build Your Own Plate
         </ButtonStyled>
       ),
@@ -137,11 +137,12 @@ const HomeJourneys = () => {
           <ButtonStyled
             onClick={() => history.push('/locations')}
             color="secondary"
+            size="big"
             style={{ backgroundColor: 'transparent' }}
           >
             Build Your Experience
           </ButtonStyled>
-          <ButtonStyled onClick={() => history.push('/locations')}>
+          <ButtonStyled onClick={() => history.push('/locations')} size="big">
             Recommended Packs
           </ButtonStyled>
         </>
@@ -151,7 +152,7 @@ const HomeJourneys = () => {
       title: 'Group Ordering',
       subtitle: 'Parturient dictumst vitae, arcu posuere massa duis',
       footer: (
-        <ButtonStyled onClick={() => history.push('/locations')}>
+        <ButtonStyled onClick={() => history.push('/locations')} size="big">
           Begin Your Order
         </ButtonStyled>
       ),
@@ -160,7 +161,7 @@ const HomeJourneys = () => {
       title: 'Curbside Pickup',
       subtitle: 'Parturient dictumst vitae, arcu posuere massa duis',
       footer: (
-        <ButtonStyled onClick={() => history.push('/locations')}>
+        <ButtonStyled onClick={() => history.push('/locations')} size="big">
           Order Contactless
         </ButtonStyled>
       ),

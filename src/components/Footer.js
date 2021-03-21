@@ -244,10 +244,7 @@ const Footer = ({ hasRouter = true }) => {
                   />
                 </a>
               </FooterButtonsAppStores>
-              <ButtonStyled
-                onClick={() => history.push('/locations')}
-                size="small"
-              >
+              <ButtonStyled onClick={() => history.push('/locations')}>
                 Locate a Roti
               </ButtonStyled>
             </FooterButtons>

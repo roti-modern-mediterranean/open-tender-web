@@ -64,10 +64,13 @@ const Curbside = ({ handlePickup }) => {
           </p>
         </CurbsideContent>
         <ButtonGroupBig>
-          <ButtonStyled onClick={handleContinue}>Continue</ButtonStyled>
+          <ButtonStyled onClick={handleContinue} size="big">
+            Continue
+          </ButtonStyled>
           <ButtonStyled
             onClick={() => dispatch(closeModal())}
             color="secondary"
+            size="big"
           >
             Cancel
           </ButtonStyled>

@@ -18,7 +18,7 @@ const MenuItemView = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 0 4rem;
+  margin: 0 0 5rem;
 `
 
 const MenuItemImageView = styled('div')`

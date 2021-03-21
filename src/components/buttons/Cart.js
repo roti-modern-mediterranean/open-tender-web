@@ -66,7 +66,7 @@ const Cart = ({ text = 'Order Now' }) => {
     <ButtonStyled
       onClick={onClick}
       color={isBrowser ? 'primary' : 'header'}
-      size={isBrowser ? 'small' : 'header'}
+      size={isBrowser ? 'default' : 'header'}
       style={style}
     >
       {text}

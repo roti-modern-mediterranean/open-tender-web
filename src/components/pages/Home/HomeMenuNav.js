@@ -21,8 +21,8 @@ const HomeMenuNavButtons = styled('div')`
   display: flex;
   width: 100%;
   height: 3.8rem;
-  background-color: ${(props) => props.theme.colors.primary};
   border-radius: ${(props) => props.theme.border.radius};
+  background-color: ${(props) => props.theme.bgColors.light};
 `
 
 const HomeMenuNavButtonView = styled('button')`
@@ -36,16 +36,22 @@ const HomeMenuNavButtonView = styled('button')`
   font-weight: 600;
   font-size: 1.4rem;
   text-transform: uppercase;
-  color: ${(props) =>
-    props.theme.colors[props.active ? 'primary' : 'secondary']};
   border-radius: ${(props) => props.theme.border.radius};
-  background-color: ${(props) =>
-    props.theme.colors[props.active ? 'secondary' : 'primary']};
+  color: ${(props) => props.theme.colors.primary};
+  background-color: ${(props) => props.theme.colors.light};
 
-  // &:hover,
-  // &:focus {
-  //   color: ${(props) => props.theme.links.light.hover};
-  // }
+  &:hover,
+  &:acitve,
+  &:focus {
+    color: ${(props) => props.theme.colors.light};
+    background-color: ${(props) => props.theme.colors.primary};
+  }
+
+  &:disabled {
+    opacity: 1;
+    color: ${(props) => props.theme.colors.light};
+    background-color: ${(props) => props.theme.colors.primary};
+  }
 `
 
 const HomeMenuNavButtonImage = styled(BgImage)`
@@ -85,7 +91,7 @@ const HomeMenuNavButton = ({
   }
 
   return (
-    <HomeMenuNavButtonView onClick={onClick} active={active}>
+    <HomeMenuNavButtonView onClick={onClick} diabled={active}>
       <HomeMenuNavButtonImage style={bgStyle} />
       {category.name}
     </HomeMenuNavButtonView>

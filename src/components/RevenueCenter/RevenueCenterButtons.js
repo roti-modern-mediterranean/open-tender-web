@@ -77,20 +77,23 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
 
   return cartGuest ? (
     <RevenueCenterButtonsView>
-      <ButtonStyled onClick={continueGroupOrder}>
+      <ButtonStyled onClick={continueGroupOrder} size="big">
         Continue Group Order
       </ButtonStyled>
-      <ButtonStyled onClick={startOver} color="secondary">
+      <ButtonStyled onClick={startOver} color="secondary" size="big">
         Start A New Order
       </ButtonStyled>
     </RevenueCenterButtonsView>
   ) : cartId ? (
     hasGroupOrdering ? (
       <RevenueCenterButtonsView>
-        <ButtonStyled onClick={isPickup ? handlePickup : handleDelivery}>
+        <ButtonStyled
+          onClick={isPickup ? handlePickup : handleDelivery}
+          size="big"
+        >
           Continue Group Order From Here
         </ButtonStyled>
-        <ButtonStyled onClick={startOver} color="secondary">
+        <ButtonStyled onClick={startOver} color="secondary" size="big">
           Start A New Order
         </ButtonStyled>
       </RevenueCenterButtonsView>
@@ -103,10 +106,10 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
   ) : isPickup ? (
     hasPickup ? (
       <RevenueCenterButtonsView>
-        <ButtonStyled onClick={handlePickup}>
+        <ButtonStyled onClick={handlePickup} size="big">
           Pickup from this Location
         </ButtonStyled>
-        <ButtonStyled onClick={handleCurbside} color="secondary">
+        <ButtonStyled onClick={handleCurbside} color="secondary" size="big">
           Curbside Pickup
         </ButtonStyled>
       </RevenueCenterButtonsView>
@@ -119,8 +122,10 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
   ) : isDelivery ? (
     hasDelivery ? (
       <RevenueCenterButtonsView>
-        <ButtonStyled onClick={handleDelivery}>Order Delivery</ButtonStyled>
-        <ButtonStyled onClick={handleCurbside} color="secondary">
+        <ButtonStyled onClick={handleDelivery} size="big">
+          Order Delivery
+        </ButtonStyled>
+        <ButtonStyled onClick={handleCurbside} color="secondary" size="big">
           Curbside Pickup
         </ButtonStyled>
       </RevenueCenterButtonsView>
@@ -134,12 +139,12 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
     hasDelivery || hasPickup ? (
       <RevenueCenterButtonsView>
         {hasDelivery && (
-          <ButtonStyled onClick={handleDelivery}>
+          <ButtonStyled onClick={handleDelivery} size="big">
             Order Catering Delivery
           </ButtonStyled>
         )}
         {hasPickup && (
-          <ButtonStyled onClick={handlePickup} color="secondary">
+          <ButtonStyled onClick={handlePickup} color="secondary" size="big">
             Order Catering Pickup
           </ButtonStyled>
         )}
