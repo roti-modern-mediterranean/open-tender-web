@@ -196,14 +196,15 @@ const MenuItem = ({ item, isInverted }) => {
     }
   }
 
-  const handleClick = () => {
+  const handleClick = (evt) => {
+    evt.stopPropagation()
     viewButton.current.focus()
   }
 
   return (
     <MenuItemView
       ref={container}
-      onClick={handleClick}
+      onClick={(evt) => handleClick(evt)}
       className={item.id === activeItem ? 'item-active' : ''}
     >
       {/* {cartCount > 0 && <MenuItemCount>{cartCount}</MenuItemCount>}

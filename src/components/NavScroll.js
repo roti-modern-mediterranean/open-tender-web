@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import propTypes from 'prop-types'
-import { animateScroll as scroll } from 'react-scroll'
 import { slugify } from '@open-tender/js'
 
 import { AppContext } from '../App'
 import styled from '@emotion/styled'
-import { isMobile } from 'react-device-detect'
+import { NavScrollButton } from '.'
 
 const getActiveElement = (elements, topOffset) => {
   return elements
@@ -19,77 +18,33 @@ const getActiveElement = (elements, topOffset) => {
     )
 }
 
-const NavScrollButtonView = styled('button')`
-  font-family: ${(props) => props.theme.fonts.preface.family};
-  font-weight: ${(props) => props.theme.fonts.preface.weight};
-  letter-spacing: ${(props) => props.theme.fonts.preface.letterSpacing};
-  text-transform: ${(props) => props.theme.fonts.preface.textTransform};
-  -webkit-font-smoothing: ${(props) => props.theme.fonts.preface.fontSmoothing};
-  font-size: ${(props) => props.theme.fonts.preface.fontSize};
-  color: ${(props) =>
-    props.theme.links.light[props.active ? 'hover' : 'color']};
-
-  &:hover,
-  &:focus {
-    color: ${(props) => props.theme.links.light.hover};
-  }
-`
-
-const NavScrollButton = ({ container, name, active, offset = 0 }) => {
-  const id = slugify(name)
-
-  const onClick = (evt) => {
-    evt.preventDefault()
-    evt.target.blur()
-    const element = document.getElementById(id)
-    const position = element.offsetTop + offset
-    scroll.scrollTo(position, {
-      container,
-      duration: 500,
-      smooth: true,
-      offset: -30,
-    })
-    const items = element.querySelectorAll('button')
-    const firstItem = items.length ? items[0] : null
-    if (firstItem) firstItem.focus()
-  }
-
-  return (
-    <NavScrollButtonView onClick={onClick} active={active}>
-      {name}
-    </NavScrollButtonView>
-  )
-}
-
 const NavScrollView = styled('div')`
   width: 100%;
   overflow-x: scroll;
   transition: all 500ms ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: ${(props) => props.navHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    justify-content: flex-start;
+  }
 
   ul {
     position: relative;
     display: inline-flex;
-    justify-content: flex-start;
     align-items: center;
-    height: 6rem;
+    height: 3.8rem;
+    border-radius: ${(props) => props.theme.border.radius};
+    background-color: ${(props) => props.theme.bgColors.light};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      margin: 0 2rem;
+    }
 
     li {
       display: block;
+      height: 100%;
       flex-shrink: 0;
-      font-size: ${(props) => props.theme.fonts.preface.fontSize};
-      padding: 0 0 0 ${(props) => props.theme.layout.padding};
-      @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-        padding-left: ${(props) => props.theme.layout.paddingMobile};
-        // padding-right: ${(props) => props.theme.layout.paddingMobile};
-        padding-right: 1rem;
-      }
-
-      &:last-child {
-        padding-right: ${(props) => props.theme.layout.padding};
-        @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-          padding-right: ${(props) => props.theme.layout.paddingMobile};
-        }
-      }
     }
   }
 `
@@ -110,14 +65,12 @@ const shs = (e, sc, eAmt, start) => {
   e.scrollLeft = eAmt * sc + start
 }
 
-const NavScroll = ({ items, offset = 0 }) => {
+const NavScroll = ({ items, scrollOffset = 0, navHeight, topOffset }) => {
   const { windowRef } = useContext(AppContext)
   const navRef = useRef(null)
   const listRef = useRef(null)
   const [active, setActive] = useState(null)
-  const topOffset = 121
   const elements = Array.from(document.getElementsByName('section'))
-  const navOffset = offset + (isMobile ? -30 : -30)
 
   useEffect(() => {
     const winRef = windowRef.current
@@ -138,7 +91,6 @@ const NavScroll = ({ items, offset = 0 }) => {
       if (navActive) {
         const navOffset = navActive.getBoundingClientRect().x
         const parentOffset = navActive.offsetParent.getBoundingClientRect().x
-        // const offsetLeft = navOffset - parentOffset
         if (navRef.current) {
           smoothHorizontalScrolling(
             navRef.current,
@@ -146,29 +98,23 @@ const NavScroll = ({ items, offset = 0 }) => {
             navOffset,
             -parentOffset
           )
-          // navRef.current.scrollTo({
-          //   top: 0,
-          //   left: offsetLeft,
-          //   behavior: 'smooth',
-          // })
-          // navRef.current.scrollLeft = offsetLeft
         }
       }
     }
   }, [active])
 
   return (
-    <NavScrollView ref={navRef}>
+    <NavScrollView ref={navRef} navHeight={navHeight}>
       <ul ref={listRef}>
-        {items.map((name, index) => {
-          const sectionId = slugify(name)
+        {items.map((item, index) => {
+          const sectionId = slugify(item.name)
           const activeId = active ? active.id : null
           return (
             <li key={`${sectionId}-${index}`} id={`nav-${sectionId}`}>
               <NavScrollButton
                 container={windowRef.current}
-                name={name}
-                offset={navOffset}
+                item={item}
+                offset={scrollOffset}
                 active={activeId === sectionId}
               />
             </li>

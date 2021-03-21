@@ -13,7 +13,7 @@ const MenuHeroView = styled(BgImage)`
   background-color: ${(props) => props.theme.bgColors.secondary};
   padding: 6rem ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    min-height: 0;
+    min-height: 20rem;
     padding: 3rem ${(props) => props.theme.layout.paddingMobile};
   }
 

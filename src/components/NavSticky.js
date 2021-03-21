@@ -1,77 +1,51 @@
 import React, { useState, useRef, useEffect, useContext } from 'react'
 import propTypes from 'prop-types'
-import { isMobile } from 'react-device-detect'
+import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
+import { getWidth } from '@open-tender/js'
 
-import { ButtonStyled } from '@open-tender/components'
-
+import { selectTheme } from '../slices'
 import { AppContext } from '../App'
-import iconMap from './iconMap'
 import { NavScroll } from '.'
 
 const NavStickyView = styled('div')`
   width: 100%;
-  height: ${(props) => props.theme.layout.navHeight};
+  height: ${(props) => props.navHeight};
 `
 
 const NavStickyInner = styled('div')`
   width: 100%;
-  background-color: ${(props) => props.theme.bgColors.dark};
+  background: linear-gradient(
+    0deg,
+    rgba(212, 219, 228, 0) 0%,
+    rgb(212, 219, 228, 0.75) 25%,
+    rgb(212, 219, 228) 100%
+  );
   ${(props) =>
     props.stuck &&
     `position: fixed;
       z-index: 10;
-      top: ${props.theme.layout.navHeight};
+      top: ${props.navTopOffset};
       left: 0;
       right: 0;`}
 `
 
-const NavStickyContainer = styled('div')`
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-`
-
-const NavStickyFilter = styled('div')`
-  height: 100%;
-  flex: 0 0;
-  padding: 0 0 0 ${(props) => props.theme.layout.padding};
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: 100%;
-    min-height: ${(props) => props.theme.layout.navHeight};
-    padding: 0;
-    justify-content: center;
-  }
-`
-
-const NavStickyLogo = styled('div')`
-  min-width: 4rem;
-  padding: 0;
-  margin: 0 2rem 0 0;
-  font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-
-  img {
-    display: block;
-    width: auto;
-    max-width: none;
-    height: 4rem;
-  }
-`
-
-const NavSticky = ({ items, offset = 0, revenueCenter, change }) => {
+const NavSticky = ({ items, scrollOffset = 0, height = 90 }) => {
   const [stuck, setStuck] = useState(false)
+  const [topOffset, setTopOffset] = useState(76)
   const stickyRef = useRef(null)
+  const theme = useSelector(selectTheme)
+  const tabletWidth = parseInt(theme.breakpoints.tablet.replace('px', ''))
   const { windowRef } = useContext(AppContext)
-  const topOffset = isMobile ? 60 : 60
-  const showNav = !(isMobile && revenueCenter)
+  const navHeight = `${(parseFloat(height) / 10.0).toFixed(2)}rem`
+  const navTopOffset = `${(parseFloat(topOffset) / 10.0).toFixed(2)}rem`
+
+  useEffect(() => {
+    const width = getWidth()
+    const topOffset =
+      width && tabletWidth ? (width > tabletWidth ? 76 : 64) : 76
+    setTopOffset(topOffset)
+  }, [tabletWidth])
 
   useEffect(() => {
     const winRef = windowRef.current
@@ -87,31 +61,14 @@ const NavSticky = ({ items, offset = 0, revenueCenter, change }) => {
   }, [windowRef, topOffset])
 
   return (
-    <NavStickyView ref={stickyRef}>
-      <NavStickyInner stuck={stuck}>
-        <NavStickyContainer>
-          {revenueCenter && (
-            <NavStickyFilter>
-              <NavStickyLogo>
-                <img
-                  src={revenueCenter.app_image_url}
-                  alt={revenueCenter.name}
-                />
-              </NavStickyLogo>
-              <div>
-                <ButtonStyled
-                  icon={iconMap.RefreshCw}
-                  onClick={() => change(null)}
-                  size="small"
-                  color="secondary"
-                >
-                  Switch
-                </ButtonStyled>
-              </div>
-            </NavStickyFilter>
-          )}
-          {showNav && <NavScroll items={items} offset={offset} />}
-        </NavStickyContainer>
+    <NavStickyView ref={stickyRef} navHeight={navHeight}>
+      <NavStickyInner stuck={stuck} navTopOffset={navTopOffset}>
+        <NavScroll
+          items={items}
+          scrollOffset={scrollOffset}
+          navHeight={navHeight}
+          topOffset={height + topOffset}
+        />
       </NavStickyInner>
     </NavStickyView>
   )
@@ -121,8 +78,6 @@ NavSticky.displayName = 'NavSticky'
 NavSticky.propTypes = {
   items: propTypes.array,
   offset: propTypes.number,
-  revenueCenter: propTypes.object,
-  change: propTypes.func,
 }
 
 export default NavSticky

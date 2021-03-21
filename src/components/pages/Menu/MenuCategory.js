@@ -23,8 +23,8 @@ const MenuCategory = ({ category, isChild }) => {
         </PageSectionHeader>
         <CardList>
           {category.items.map((item) => (
-            <CardListItem>
-              <MenuItem key={item.id} item={item} />
+            <CardListItem key={item.id}>
+              <MenuItem item={item} />
             </CardListItem>
           ))}
         </CardList>

@@ -46,6 +46,7 @@ import MoreLink from './MoreLink'
 import Nav from './Nav'
 import NavButtons from './NavButtons'
 import NavScroll from './NavScroll'
+import NavScrollButton from './NavScrollButton'
 import NavSticky from './NavSticky'
 import Notifications from './Notifications'
 import Order from './Order'
@@ -144,6 +145,7 @@ export {
   Nav,
   NavButtons,
   NavScroll,
+  NavScrollButton,
   NavSticky,
   Notifications,
   Order,

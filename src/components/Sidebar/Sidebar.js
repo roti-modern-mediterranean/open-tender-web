@@ -77,7 +77,7 @@ const Sidebar = () => {
           <CSSTransition
             key="sidebar"
             classNames="sidebar"
-            timeout={{ enter: 250, exit: 250 }}
+            timeout={{ enter: 500, exit: 500 }}
             onEntered={handleFocus}
             onExited={handleExit}
           >

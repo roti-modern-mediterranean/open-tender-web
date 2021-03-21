@@ -33,11 +33,19 @@ const MenuContent = () => {
     menuHero === undefined ? true : isMobile ? menuHeroMobile : menuHero
   const topRef = useRef()
   const heroRef = useRef()
-  let navItems = categories ? categories.map((i) => i.name) : []
-  navItems = deals && deals.length > 0 ? ['Deals', ...navItems] : navItems
   const heroHeight = heroRef.current
     ? heroRef.current.getBoundingClientRect().height
     : 0
+  let navItems = categories
+    ? categories.map((i) => {
+        const imageUrl = i.small_image_url || i.app_image_url || i.big_image_url
+        return { ...i, imageUrl }
+      })
+    : []
+  navItems =
+    deals && deals.length > 0
+      ? [{ name: 'Deals', imageUrl: null }, ...navItems]
+      : navItems
 
   return (
     <>
@@ -50,7 +58,7 @@ const MenuContent = () => {
         <MenuView>
           <MenuLoading />
           <div ref={topRef}>
-            <NavSticky items={navItems} offset={heroHeight} />
+            <NavSticky items={navItems} scrollOffset={heroHeight - 60} />
             {!cartGuest && <MenuDeals deals={deals} />}
             <MenuCategories categories={categories} />
           </div>
