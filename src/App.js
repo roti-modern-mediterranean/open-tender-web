@@ -81,7 +81,6 @@ class App extends React.Component {
                     <Modal />
                     <Alerts />
                     <Notifications />
-                    <CartButton />
                     <Routes />
                     <Sidebar />
                     <Nav />

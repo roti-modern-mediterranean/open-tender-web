@@ -11,47 +11,63 @@ const CardView = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 11.5rem;
   margin: 0 0 2rem;
 `
 
 const CardImageView = styled('div')`
   position: absolute;
   z-index: 1;
-  top: -1rem;
-  left: 0;
-  width: 13rem;
-  height: 13rem;
+  top: -4rem;
+  left: -2rem;
+  width: 19rem;
+  height: 19rem;
   transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
   transform-origin: top left;
   transform: scale(1) translate3D(0, 0, 0);
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    top: -2.5rem;
+    left: -2rem;
+    width: 16.5rem;
+    height: 16.5rem;
+  }
 `
 
 const CardContent = styled('div')`
-  height: 11.5rem;
-  // min-height: 11.5rem;
-  padding: 2rem 2rem 2rem 10rem;
-  margin: 0 0 0 4rem;
+  height: 14rem;
+  padding: 2rem 2rem 2rem 6rem;
+  margin: 0 0 0 10.5rem;
   transition: background-color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
   border-radius: ${(props) => props.theme.border.radius};
   background-color: ${(props) => props.color || props.theme.bgColors.secondary};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: 11.5rem;
+    margin: 0 0 0 3rem;
+    padding: 2.5rem 2.5rem 2.5rem 11.5rem;
+  }
 
   .item-active & {
     height: auto;
-    min-height: 11.5rem;
-    padding: 2rem 2rem 2rem 11rem;
-    margin: 0 0 0 3rem;
+    min-height: 14rem;
     background-color: ${(props) => props.theme.colors.light};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      min-height: 11.5rem;
+      padding: 2rem 2rem 2rem 11.5rem;
+    }
   }
 `
 
 const CardPreface = styled('div')`
-  opacity: 0;
-  max-height: 0;
-  padding: 0;
+  opacity: 1;
+  max-height: none;
+  padding: 0 0 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    opacity: 0;
+    max-height: 0;
+    padding: 0;
+  }
 
   span {
     display: block;
@@ -73,7 +89,7 @@ const CardPreface = styled('div')`
 const CardTitle = styled('p')`
   line-height: 1.1;
   font-size: 1.8rem;
-  max-height: 7rem;
+  max-height: 6rem;
   overflow: hidden;
   color: ${(props) => props.theme.fonts.headings.color};
   transition: color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);

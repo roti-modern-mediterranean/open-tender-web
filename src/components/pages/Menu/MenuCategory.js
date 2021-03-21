@@ -14,7 +14,6 @@ export const MenuCategoryView = styled('div')`
 `
 
 export const MenuCategoryHeader = styled('div')`
-  // text-align: center;
   margin: 0 0 1rem;
 
   h2,
@@ -44,17 +43,17 @@ const MenuItems = styled('div')`
 const MenuCategory = ({ category, isChild }) => {
   return (
     <MenuCategoryView isChild={isChild}>
-      <MenuCategoryHeader>
-        <Container>
+      <Container>
+        <MenuCategoryHeader>
           {isChild ? <h3>{category.name}</h3> : <h2>{category.name}</h2>}
           {category.description && <p>{category.description}</p>}
-        </Container>
-      </MenuCategoryHeader>
-      <MenuItems>
-        {category.items.map((item) => (
-          <MenuItem key={item.id} item={item} />
-        ))}
-      </MenuItems>
+        </MenuCategoryHeader>
+        <MenuItems>
+          {category.items.map((item) => (
+            <MenuItem key={item.id} item={item} />
+          ))}
+        </MenuItems>
+      </Container>
     </MenuCategoryView>
   )
 }

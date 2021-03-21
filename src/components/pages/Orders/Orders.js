@@ -35,11 +35,19 @@ const ToggleView = styled('div')`
   display: flex;
   width: 40rem;
   max-width: 100%;
-  margin: 0 -0.6rem;
+  margin: 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 40rem;
+  }
 
   & > div {
     width: 50%;
-    padding: 0 0.6rem;
+    padding: 0 0 0 1.2rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      padding: 0 0.6rem;
+    }
   }
 `
 

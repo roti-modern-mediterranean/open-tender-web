@@ -42,7 +42,7 @@ const CardImageBackground = styled(BgImage)`
 // TODO: remove this
 const placeholder = {
   backgroundImage:
-    'url(//s3.amazonaws.com/betterboh/u/img/local/46/1615920805_kids-plate-top-down_400x400.png',
+    'url(//s3.amazonaws.com/betterboh/u/img/local/46/1616277717_chicken-kabob-bowl-top-down_02_400x400.png)',
 }
 
 const CardImage = ({ imageUrl, children }) => {
@@ -61,7 +61,7 @@ const CardImage = ({ imageUrl, children }) => {
         <CardImageBackground style={placeholder}>&nbsp;</CardImageBackground>
       )}
       {hasLoaded && (
-        <CardImageBackground style={bgStyle}>&nbsp;</CardImageBackground>
+        <CardImageBackground style={placeholder}>&nbsp;</CardImageBackground>
       )}
       {children}
     </CardImageView>

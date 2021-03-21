@@ -14,7 +14,8 @@ const PageTitleView = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
   }
 
   > div:first-of-type {
@@ -25,6 +26,7 @@ const PageTitleView = styled('div')`
     flex-shrink: 0;
     @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
       margin-top: 2.5rem;
+      width: 100%;
     }
   }
 `

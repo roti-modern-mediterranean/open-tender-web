@@ -40,7 +40,7 @@ const Cart = ({ text = 'Order Now' }) => {
       ? (props) => <CartFull {...props} />
       : (props) => <CartEmpty {...props} />
   const size = isBrowser ? 36 : 24
-  const fontSize = isBrowser ? 15 : 10
+  const fontSize = isBrowser ? '1.5rem' : '1.0rem'
   const style = isBrowser ? null : { backgroundColor: 'transparent' }
 
   const onClick = () => {
