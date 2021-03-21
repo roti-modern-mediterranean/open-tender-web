@@ -12,28 +12,28 @@ import { CardButton, CardButtons, CardImage, Tag } from '../..'
 import { MenuContext } from './Menu'
 
 const MenuItemView = styled('div')`
+  cursor: pointer;
   position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 17rem;
-  cursor: pointer;
+  margin: 0 0 4rem;
 `
 
 const MenuItemImageView = styled('div')`
   position: absolute;
   z-index: 1;
-  top: 0;
-  left: 0;
-  width: 17rem;
-  height: 17rem;
+  top: -4rem;
+  left: -2rem;
+  width: 19rem;
+  height: 19rem;
   transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
   transform-origin: top left;
   transform: scale(1) translate3D(0, 0, 0);
 
   .item-active & {
-    transform: scale(0.43) translate3D(0, 1.8rem, 0);
+    transform: scale(0.57) translate3D(0, 8rem, 0);
   }
 `
 
@@ -56,16 +56,17 @@ const MenuItemOverlay = styled('div')`
 `
 
 const MenuItemContent = styled('div')`
-  min-height: 11.5rem;
-  padding: 2rem 2rem 2rem 7.5rem;
-  margin: 0 0 0 11rem;
+  height: 11.5rem;
+  padding: 2rem 2rem 2rem 6rem;
+  margin: 0 0 0 10.5rem;
   transition: background-color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
   border-radius: ${(props) => props.theme.border.radius};
   background-color: ${(props) =>
     props.theme.bgColors[props.isInverted ? 'primary' : 'secondary']};
 
   .item-active & {
-    min-height: 100%;
+    height: auto;
+    min-height: 11.5rem;
     padding: 2rem 2rem 2rem 7.5rem;
     margin: 0 0 0 2rem;
     background-color: ${(props) => props.theme.colors.light};

@@ -2,8 +2,8 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-import { Container, Reward } from '../..'
-import { MenuCategoryView, MenuCategoryHeader } from './MenuCategory'
+import { Container, PageSectionHeader, Reward } from '../..'
+import { MenuCategoryView } from './MenuCategory'
 
 const MenuDealsView = styled('div')`
   display: flex;
@@ -48,22 +48,22 @@ const MenuDeals = ({ deals }) => {
   if (!deals || !deals.length) return null
   return (
     <MenuCategoryView id="deals">
-      <MenuCategoryHeader>
-        <Container>
+      <Container>
+        <PageSectionHeader>
           <h2>Today's Deals</h2>
           <p>
             These deals can be redeemed from the checkout page once you've added
             the relevant items to your cart
           </p>
-        </Container>
-      </MenuCategoryHeader>
-      <MenuDealsView>
-        {deals.map((deal) => (
-          <MenuDeal key={deal.discount_id}>
-            <Reward item={deal} />
-          </MenuDeal>
-        ))}
-      </MenuDealsView>
+        </PageSectionHeader>
+        <MenuDealsView>
+          {deals.map((deal) => (
+            <MenuDeal key={deal.discount_id}>
+              <Reward item={deal} />
+            </MenuDeal>
+          ))}
+        </MenuDealsView>
+      </Container>
     </MenuCategoryView>
   )
 }
