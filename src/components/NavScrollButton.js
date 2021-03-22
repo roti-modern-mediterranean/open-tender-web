@@ -22,12 +22,12 @@ const NavScrollButtonView = styled('button')`
   color: ${(props) => props.theme.colors.primary};
   background-color: ${(props) => props.theme.colors.light};
 
-  &:hover,
-  &:acitve,
-  &:focus {
-    color: ${(props) => props.theme.colors.light};
-    background-color: ${(props) => props.theme.colors.primary};
-  }
+  // &:hover,
+  // &:active,
+  // &:focus {
+  //   color: ${(props) => props.theme.colors.light};
+  //   background-color: ${(props) => props.theme.colors.primary};
+  // }
 
   &:disabled {
     opacity: 1;
