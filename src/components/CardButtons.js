@@ -6,10 +6,12 @@ const CardButtons = styled('div')`
   align-items: center;
   opacity: 0;
   max-height: 0;
+  overflow: hidden;
 
   .item-active & {
     opacity: 1;
     max-height: none;
+    overflow: visible;
   }
 `
 

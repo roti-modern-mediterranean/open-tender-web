@@ -19,6 +19,10 @@ const MenuItemView = styled('div')`
   flex-direction: column;
   justify-content: center;
   margin: 0 0 5rem;
+
+  &.item-active {
+    margin: 0 0 2rem;
+  }
 `
 
 const MenuItemImageView = styled('div')`
@@ -141,7 +145,7 @@ const MenuItem = ({ item, isInverted }) => {
   const container = useRef(null)
   const viewButton = useRef(null)
   const addButton = useRef(null)
-  const [activeItem, setActiveItem] = useState(null)
+  const [isActive, setIsActive] = useState(false)
   const { soldOut, menuConfig, allergenAlerts } = useContext(MenuContext) || {}
   const {
     menuImages: showImage,
@@ -182,6 +186,7 @@ const MenuItem = ({ item, isInverted }) => {
 
   const handleView = (evt) => {
     evt.preventDefault()
+    evt.stopPropagation()
     if (!isSoldOut) {
       dispatch(setCurrentItem(item))
       dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
@@ -190,27 +195,29 @@ const MenuItem = ({ item, isInverted }) => {
 
   const handleAdd = (evt) => {
     evt.preventDefault()
+    evt.stopPropagation()
     if (!isSoldOut) {
       dispatch(setCurrentItem(item))
       dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
     }
   }
 
-  const handleClick = (evt) => {
-    evt.stopPropagation()
-    viewButton.current.focus()
+  const handleClick = () => {
+    if (isActive) {
+      viewButton.current.blur()
+      addButton.current && addButton.current.blur()
+      setIsActive(false)
+    } else {
+      viewButton.current.focus()
+    }
   }
 
   return (
     <MenuItemView
       ref={container}
       onClick={(evt) => handleClick(evt)}
-      className={item.id === activeItem ? 'item-active' : ''}
+      className={isActive ? 'item-active' : ''}
     >
-      {/* {cartCount > 0 && <MenuItemCount>{cartCount}</MenuItemCount>}
-        {!showImage && itemTag ? (
-          <MenuItemAlert>{itemTag}</MenuItemAlert>
-        ) : null} */}
       <MenuItemImageView>
         <CardImage imageUrl={imageUrl} isInverted={isInverted}>
           {itemTag && (
@@ -241,8 +248,8 @@ const MenuItem = ({ item, isInverted }) => {
           <CardButton
             ref={viewButton}
             onClick={handleView}
-            onFocus={() => setActiveItem(item.id)}
-            onBlur={() => setActiveItem(null)}
+            onFocus={() => setIsActive(true)}
+            // onBlur={() => setIsActive(false)}
             disabled={isSoldOut}
             secondary={true}
           >
@@ -252,8 +259,8 @@ const MenuItem = ({ item, isInverted }) => {
             <CardButton
               ref={addButton}
               onClick={handleAdd}
-              onFocus={() => setActiveItem(item.id)}
-              onBlur={() => setActiveItem(null)}
+              onFocus={() => setIsActive(true)}
+              // onBlur={() => setIsActive(false)}
               disabled={isSoldOut}
             >
               Add

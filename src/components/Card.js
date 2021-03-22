@@ -80,6 +80,7 @@ const CardPreface = styled('div')`
   }
 
   .item-active & {
+    transition: opacity 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
     opacity: 1;
     max-height: none;
     padding: 0 0 0.5rem;
@@ -91,8 +92,10 @@ const CardTitle = styled('p')`
   font-size: 1.8rem;
   max-height: 6rem;
   overflow: hidden;
-  color: ${(props) => props.theme.fonts.headings.color};
-  transition: color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+
+  span {
+    color: ${(props) => props.theme.fonts.headings.color};
+  }
 
   .item-active & {
     height: auto;
@@ -100,6 +103,7 @@ const CardTitle = styled('p')`
   }
 
   .item-active & span {
+    transition: color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
     color: ${(props) => props.theme.fonts.body.color};
   }
 `
@@ -119,6 +123,7 @@ const CardDescription = styled('div')`
   }
 
   .item-active & {
+    transition: opacity 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
     opacity: 1;
     max-height: none;
     padding: 0.5rem 0 1.5rem;
@@ -132,7 +137,15 @@ const Card = ({ imageUrl, preface, title, description, view, add }) => {
   const [isActive, setIsActive] = useState(false)
 
   const handleClick = () => {
-    viewButton.current ? viewButton.current.focus() : addButton.current.focus()
+    if (isActive) {
+      viewButton.current && viewButton.current.blur()
+      addButton.current && addButton.current.blur()
+      setIsActive(false)
+    } else {
+      viewButton.current
+        ? viewButton.current.focus()
+        : addButton.current.focus()
+    }
   }
 
   return (
@@ -140,7 +153,6 @@ const Card = ({ imageUrl, preface, title, description, view, add }) => {
       ref={container}
       onClick={handleClick}
       className={isActive ? 'item-active' : ''}
-      // className="item-active"
     >
       <CardImageView>
         <CardImage imageUrl={imageUrl} />
@@ -159,14 +171,14 @@ const Card = ({ imageUrl, preface, title, description, view, add }) => {
               view({
                 ref: viewButton,
                 onFocus: () => setIsActive(true),
-                onBlur: () => setIsActive(false),
+                // onBlur: () => setIsActive(false),
                 secondary: true,
               })}
             {add &&
               add({
                 ref: addButton,
                 onFocus: () => setIsActive(true),
-                onBlur: () => setIsActive(false),
+                // onBlur: () => setIsActive(false),
               })}
           </CardButtons>
         )}
