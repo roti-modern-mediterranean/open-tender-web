@@ -20,6 +20,7 @@ import { toggleSidebar } from '../../slices'
 import Cart from '../Cart'
 import SidebarClose from './SidebarClose'
 import styled from '@emotion/styled'
+import { Container } from '..'
 
 const SidebarView = styled('aside')`
   position: fixed;
@@ -43,31 +44,27 @@ const SidebarView = styled('aside')`
 `
 
 const SidebarHeader = styled('div')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  padding: 2rem;
+  text-align: center;
+  color: ${(props) => props.theme.colors.primary};
   background-color: ${(props) => props.theme.bgColors.light};
-
-  h2 {
-    margin: 0 0 1rem;
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
-  }
-
-  p {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-
-    span {
-      padding: 0 0.2rem;
-      color: ${(props) => props.theme.fonts.headings.color};
-      font-weight: ${(props) => props.theme.boldWeight};
-    }
+  height: ${(props) => props.theme.layout.navHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: ${(props) => props.theme.layout.navHeightMobile};
   }
 
   div {
-    margin: 2rem auto 0;
+    width: 100%;
+    text-align: center;
+  }
 
-    p {
-      color: ${(props) => props.theme.colors.alert};
-    }
+  h2 {
+    line-height: 1;
+    color: ${(props) => props.theme.colors.primary};
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
   }
 `
 
@@ -75,7 +72,7 @@ const SidebarCart = styled('div')`
   width: 100%;
   flex-grow: 1;
   overflow-y: scroll;
-  padding: 0rem 2rem 1rem;
+  padding: 0 0 1rem;
 `
 
 const SidebarFooter = styled('div')`
@@ -164,84 +161,86 @@ const Sidebar = React.forwardRef((props, ref) => {
       <div>
         <SidebarClose />
         <SidebarHeader>
-          <h2>{orderId ? `Editing Order ${orderId}` : 'Your Order'}</h2>
-          {!notEmpty ? (
-            <p>Your cart is currently empty. Please add some items.</p>
-          ) : (
-            <p>
-              <span>{cartCount} items</span> for a total of{' '}
-              <span>${cartTotal.toFixed(2)}</span> before tax
-            </p>
-          )}
-          {cartCount !== 0 && belowMinimum && (
-            <div>
+          <Container>
+            <h2>{orderId ? `Editing Order ${orderId}` : 'Your Order'}</h2>
+            {/* {cartCount !== 0 && belowMinimum && (
               <p>
                 Your cart total is below the order minimum of $
                 {displayPrice(orderMinimum)}. Please add some items.
               </p>
-            </div>
-          )}
-          {aboveMaximum && (
-            <div>
+            )}
+            {aboveMaximum && (
               <p>
                 Your cart total is above the {orderMaxType} of $
                 {displayPrice(orderMaximum)}. Please edit or remove one or more
                 items before submitting your order.
               </p>
-            </div>
-          )}
+            )} */}
+          </Container>
         </SidebarHeader>
         <SidebarCart>
-          <Cart />
+          <Container>
+            <Cart />
+          </Container>
         </SidebarCart>
         <SidebarFooter>
-          <SidebarButtons>
-            <SidebarBack>
-              {isCheckout && cartId ? (
-                <ButtonStyled onClick={handleReopen} size="big">
-                  Reopen
-                </ButtonStyled>
-              ) : (
-                <ButtonStyled
-                  onClick={handleBack}
-                  size="big"
-                  disabled={!canOrder}
-                  label={
-                    !notEmpty
-                      ? 'Your cart is currently empty. Please add some items.'
-                      : null
-                  }
-                >
-                  Menu
-                </ButtonStyled>
-              )}
-            </SidebarBack>
-            <SidebarCheckout>
-              {showReview ? (
-                <ButtonStyled
-                  onClick={handleReview}
-                  size="big"
-                  color="cart"
-                  disabled={!canCheckout}
-                >
-                  {isReview
-                    ? 'Close'
-                    : isCartOwner
-                    ? 'Review All Orders'
-                    : 'Submit Order'}
-                </ButtonStyled>
-              ) : (
-                <ButtonStyled
-                  onClick={handleCheckout}
-                  size="big"
-                  color="cart"
-                  disabled={!canCheckout}
-                >
-                  {isCheckout ? 'Close' : 'Checkout'}
-                </ButtonStyled>
-              )}
-            </SidebarCheckout>
-          </SidebarButtons>
+          <Container>
+            {/* {!notEmpty ? (
+              <p>Your cart is currently empty. Please add some items.</p>
+            ) : (
+              <p>
+                <span>{cartCount} items</span> for a total of{' '}
+                <span>${cartTotal.toFixed(2)}</span> before tax
+              </p>
+            )} */}
+            <SidebarButtons>
+              <SidebarBack>
+                {isCheckout && cartId ? (
+                  <ButtonStyled onClick={handleReopen} size="big">
+                    Reopen
+                  </ButtonStyled>
+                ) : (
+                  <ButtonStyled
+                    onClick={handleBack}
+                    size="big"
+                    disabled={!canOrder}
+                    label={
+                      !notEmpty
+                        ? 'Your cart is currently empty. Please add some items.'
+                        : null
+                    }
+                  >
+                    Menu
+                  </ButtonStyled>
+                )}
+              </SidebarBack>
+              <SidebarCheckout>
+                {showReview ? (
+                  <ButtonStyled
+                    onClick={handleReview}
+                    size="big"
+                    color="cart"
+                    disabled={!canCheckout}
+                  >
+                    {isReview
+                      ? 'Close'
+                      : isCartOwner
+                      ? 'Review All Orders'
+                      : 'Submit Order'}
+                  </ButtonStyled>
+                ) : (
+                  <ButtonStyled
+                    onClick={handleCheckout}
+                    size="big"
+                    color="cart"
+                    disabled={!canCheckout}
+                  >
+                    {isCheckout ? 'Close' : 'Checkout'}
+                  </ButtonStyled>
+                )}
+              </SidebarCheckout>
+            </SidebarButtons>
+          </Container>
         </SidebarFooter>
       </div>
     </SidebarView>

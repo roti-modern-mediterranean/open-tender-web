@@ -1,6 +1,5 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Plus, Minus } from 'react-feather'
 import {
   setCurrentItem,
   incrementItemInCart,
@@ -8,13 +7,16 @@ import {
   selectCart,
   removeItemFromCart,
 } from '@open-tender/redux'
-import { CartItem, BuilderQuantity } from '@open-tender/components'
+import { BuilderQuantity } from '@open-tender/components'
 
 import { openModal, selectDisplaySettings } from '../slices'
 
-const iconMap = {
-  plus: <Plus size={null} />,
-  minus: <Minus size={null} />,
+import { MinusSign, PlusSign } from './icons'
+import { CartItem } from '.'
+
+const quantityIconMap = {
+  plus: <PlusSign />,
+  minus: <MinusSign />,
 }
 
 const Cart = () => {
@@ -50,7 +52,7 @@ const Cart = () => {
                 decrement={() => dispatch(decrementItemInCart(item))}
                 incrementDisabled={item.quantity === item.max}
                 decrementDisabled={false}
-                iconMap={iconMap}
+                iconMap={quantityIconMap}
               />
             </CartItem>
           </li>

@@ -6,12 +6,21 @@ import styled from '@emotion/styled'
 import { ButtonLink } from '@open-tender/components'
 
 import { toggleSidebar } from '../../slices'
+import { Back } from '../buttons'
 
 const SidebarCloseView = styled('div')`
   position: absolute;
   z-index: 1;
-  top: 7px;
-  right: 7px;
+  top: 0;
+  left: ${(props) => props.theme.layout.padding};
+  width: 5rem;
+  display: flex;
+  align-items: center;
+  height: ${(props) => props.theme.layout.navHeight};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    left: ${(props) => props.theme.layout.paddingMobile};
+    height: ${(props) => props.theme.layout.navHeightMobile};
+  }
 `
 
 const SidebarClose = () => {
@@ -19,12 +28,16 @@ const SidebarClose = () => {
 
   return (
     <SidebarCloseView>
-      <ButtonLink
+      {/* <ButtonLink
         onClick={() => dispatch(toggleSidebar())}
         label="Close cart & return to current page"
       >
         <X size={20} />
-      </ButtonLink>
+      </ButtonLink> */}
+      <Back
+        text="Close cart & return to current page"
+        onClick={() => dispatch(toggleSidebar())}
+      />
     </SidebarCloseView>
   )
 }

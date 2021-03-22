@@ -11,6 +11,7 @@ import CardButtons from './CardButtons'
 import CardImage from './CardImage'
 import { CardList, CardListItem } from './CardList'
 import Cart from './Cart'
+import CartItem from './CartItem'
 import CartButton from './CartButton'
 import Content from './Content'
 import Container from './Container'
@@ -107,6 +108,7 @@ export {
   CardList,
   CardListItem,
   Cart,
+  CartItem,
   CartButton,
   Container,
   Content,

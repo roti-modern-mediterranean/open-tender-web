@@ -45,6 +45,11 @@ const decorateTheme = (theme) => {
       tahini: '#FBF8EA',
       paprika: '#E73C3E',
       beet: '#621C27',
+      cartItemBorder: '#E3DFC9',
+    },
+    layout: {
+      ...theme.layout,
+      navHeightMobile: '6.4rem',
     },
   }
 }
