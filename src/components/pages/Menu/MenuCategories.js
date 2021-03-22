@@ -16,14 +16,15 @@ const MenuCategories = ({ categories }) => {
   if (!categories || !categories.length) return null
   return (
     <MenuCategoriesView>
-      {categories.map((category) => (
+      {categories.map((category, index) => (
         <div key={category.id} id={slugify(category.name)} name="section">
-          <MenuCategory category={category} />
+          <MenuCategory category={category} index={index} />
           {category.children.map((category) => (
             <MenuCategory
               key={category.id}
               category={category}
               isChild={true}
+              index={index}
             />
           ))}
         </div>
