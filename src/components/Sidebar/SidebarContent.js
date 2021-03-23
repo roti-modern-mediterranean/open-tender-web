@@ -20,7 +20,7 @@ import { toggleSidebar } from '../../slices'
 import Cart from '../Cart'
 import SidebarClose from './SidebarClose'
 import styled from '@emotion/styled'
-import { CartFooter, Container } from '..'
+import { CartClose, CartFooter, Container } from '..'
 import { ChevronLeft } from '../icons'
 
 const SidebarView = styled('aside')`
@@ -132,7 +132,10 @@ const Sidebar = React.forwardRef((props, ref) => {
   return (
     <SidebarView ref={ref}>
       <div>
-        <SidebarClose />
+        <CartClose
+          label="Close cart & continue shopping"
+          onClick={() => dispatch(toggleSidebar())}
+        />
         <SidebarHeader>
           <Container>
             <h2>{orderId ? `Editing Order ${orderId}` : 'Your Order'}</h2>
