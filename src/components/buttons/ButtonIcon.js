@@ -31,6 +31,7 @@ const ButtonIconView = styled('button')`
 
 const ButtonIcon = ({
   icon,
+  color,
   size = 25,
   offset = 'left',
   label,
@@ -42,7 +43,8 @@ const ButtonIcon = ({
   const width = `${(parseFloat(size) / 10.0).toFixed(1)}rem`
   const margin = `${(parseFloat((size - 50) / 2) / 10.0).toFixed(1)}rem`
   const theme = useSelector(selectTheme)
-  const color = isBrowser ? theme.colors.paprika : theme.colors.beet
+  const iconColor =
+    color || (isBrowser ? theme.colors.paprika : theme.colors.beet)
 
   const handeClick = (evt) => {
     evt.preventDefault()
@@ -61,7 +63,7 @@ const ButtonIcon = ({
       margin={margin}
       style={style}
     >
-      <span>{icon({ size: width, color })}</span>
+      <span>{icon({ size: width, color: iconColor })}</span>
       {children}
     </ButtonIconView>
   )

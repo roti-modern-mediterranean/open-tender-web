@@ -46,13 +46,15 @@ const HeaderTitle = styled('div')`
 
   > span {
     display: block;
-    max-width: 26rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     font-weight: 500;
     letter-spacing: 0.01em;
     font-size: 2.8rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      max-width: 26rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 `
 

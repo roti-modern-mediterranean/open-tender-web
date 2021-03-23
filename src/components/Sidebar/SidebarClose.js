@@ -1,11 +1,9 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
-import { X } from 'react-feather'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
-import { ButtonLink } from '@open-tender/components'
 
-import { toggleSidebar } from '../../slices'
+import { selectTheme, toggleSidebar } from '../../slices'
 import { Back } from '../buttons'
 
 const SidebarCloseView = styled('div')`
@@ -25,18 +23,14 @@ const SidebarCloseView = styled('div')`
 
 const SidebarClose = () => {
   const dispatch = useDispatch()
+  const theme = useSelector(selectTheme)
 
   return (
     <SidebarCloseView>
-      {/* <ButtonLink
-        onClick={() => dispatch(toggleSidebar())}
-        label="Close cart & return to current page"
-      >
-        <X size={20} />
-      </ButtonLink> */}
       <Back
         text="Close cart & return to current page"
         onClick={() => dispatch(toggleSidebar())}
+        color={theme.colors.beet}
       />
     </SidebarCloseView>
   )
