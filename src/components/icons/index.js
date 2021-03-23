@@ -1,4 +1,5 @@
 import ArrowLeft from './ArrowLeft'
+import ChevronLeft from './ChevronLeft'
 import CartEmpty from './CartEmpty'
 import CartFull from './CartFull'
 import CurbsidePickup from './CurbsidePickup'
@@ -11,6 +12,7 @@ export {
   ArrowLeft,
   CartEmpty,
   CartFull,
+  ChevronLeft,
   CurbsidePickup,
   DetourSign,
   MapMarker,

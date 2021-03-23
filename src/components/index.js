@@ -5,6 +5,7 @@ import BackgroundImage from './BackgroundImage'
 import BackgroundLoading from './BackgroundLoading'
 import ButtonGroupBig from './ButtonGroupBig'
 import ButtonText from './ButtonText'
+import Builder from './Builder'
 import Card from './Card'
 import CardButton from './CardButton'
 import CardButtons from './CardButtons'
@@ -13,6 +14,7 @@ import { CardList, CardListItem } from './CardList'
 import Cart from './Cart'
 import CartItem from './CartItem'
 import CartButton from './CartButton'
+import CartFooter from './CartFooter'
 import Content from './Content'
 import Container from './Container'
 import Deals from './Deals'
@@ -101,6 +103,7 @@ export {
   BackgroundLoading,
   ButtonGroupBig,
   ButtonText,
+  Builder,
   Card,
   CardButton,
   CardButtons,
@@ -110,6 +113,7 @@ export {
   Cart,
   CartItem,
   CartButton,
+  CartFooter,
   Container,
   Content,
   Deals,

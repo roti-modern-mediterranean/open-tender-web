@@ -20,8 +20,8 @@ import { toggleSidebar } from '../../slices'
 import Cart from '../Cart'
 import SidebarClose from './SidebarClose'
 import styled from '@emotion/styled'
-import { Container } from '..'
-import iconMap from '../iconMap'
+import { CartFooter, Container } from '..'
+import { ChevronLeft } from '../icons'
 
 const SidebarView = styled('aside')`
   position: fixed;
@@ -76,93 +76,7 @@ const SidebarCart = styled('div')`
   padding: 0 0 1rem;
 `
 
-const SidebarFooter = styled('div')`
-  flex-shrink: 0;
-  width: 100%;
-  height: 14.5rem;
-  background-color: ${(props) => props.theme.bgColors.light};
-
-  // button {
-  //   width: 100%;
-  //   padding-left: 0;
-  //   padding-right: 0;
-  // }
-`
-
-const SidebarSubtotal = styled('div')`
-  width: 100%;
-  height: 6.5rem;
-  background-color: ${(props) => props.theme.bgColors.light};
-
-  & > div {
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    span {
-      display: block;
-      font-size: 2.1rem;
-      font-weight: normal;
-
-      &:first-of-type {
-        text-transform: none;
-      }
-
-      span {
-        font-weight: 500;
-        display: inline;
-        padding-left: 1rem;
-      }
-    }
-  }
-`
-
-const SidebarButtons = styled('div')`
-  width: 100%;
-  height: 8rem;
-  background-color: ${(props) => props.theme.bgColors.dark};
-
-  & > div {
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-`
-
-const SidebarBack = styled('div')`
-  button {
-    display: flex;
-    align-items: center;
-
-    span:first-of-type {
-      display: block;
-      color: ${(props) => props.theme.colors.light};
-      font-size: 2.1rem;
-      font-weight: 500;
-      text-transform: none;
-    }
-
-    span:last-of-type {
-      position: relative;
-      top: 0.2rem;
-      display: block;
-      line-height: 0;
-      width: 2.2rem;
-      height: 2.2rem;
-      color: ${(props) => props.theme.colors.light};
-    }
-  }
-`
-
-const SidebarCheckout = styled('div')`
-  button {
-    border-radius: 2.5rem;
-  }
-`
-
-const CartAlert = styled(Preface)`
+const CartAlert = styled('span')`
   color: ${(props) => props.theme.colors.paprika};
 `
 
@@ -229,74 +143,64 @@ const Sidebar = React.forwardRef((props, ref) => {
             <Cart />
           </Container>
         </SidebarCart>
-        <SidebarFooter>
-          <SidebarSubtotal>
-            <Container>
-              {cartCount !== 0 && belowMinimum ? (
-                <CartAlert>
-                  Below {formatDollars(orderMinimum)} minimum
-                </CartAlert>
-              ) : aboveMaximum ? (
-                <CartAlert>
-                  Above {formatDollars(orderMaximum)} {orderMaxType}
-                </CartAlert>
-              ) : (
-                <Preface>
-                  {cartCount} {cartCount === 1 ? 'item' : 'items'} added
-                </Preface>
-              )}
-              <Preface>
-                Subtotal <span>{formatDollars(cartTotal)}</span>
-              </Preface>
-            </Container>
-          </SidebarSubtotal>
-          <SidebarButtons>
-            <Container>
-              <SidebarBack>
-                {isCheckout && cartId ? (
-                  <ButtonLink onClick={handleReopen} size="big">
-                    <Preface>Reopen Group Order</Preface>
-                    <span>{iconMap.ChevronRight}</span>
-                  </ButtonLink>
-                ) : (
-                  <ButtonLink
-                    onClick={handleBack}
-                    size="big"
-                    disabled={!canOrder}
-                  >
-                    <Preface>Continue Shopping</Preface>
-                    <span>{iconMap.ChevronRight}</span>
-                  </ButtonLink>
-                )}
-              </SidebarBack>
-              <SidebarCheckout>
-                {showReview ? (
-                  <ButtonStyled
-                    onClick={handleReview}
-                    size="big"
-                    color="cart"
-                    disabled={!canCheckout}
-                  >
-                    {isReview
-                      ? 'Close'
-                      : isCartOwner
-                      ? 'Review Orders'
-                      : 'Submit Order'}
-                  </ButtonStyled>
-                ) : (
-                  <ButtonStyled
-                    onClick={handleCheckout}
-                    size="big"
-                    color="cart"
-                    disabled={!canCheckout}
-                  >
-                    {isCheckout ? 'Close' : 'Checkout'}
-                  </ButtonStyled>
-                )}
-              </SidebarCheckout>
-            </Container>
-          </SidebarButtons>
-        </SidebarFooter>
+        <CartFooter
+          label={
+            cartCount !== 0 && belowMinimum ? (
+              <CartAlert>Below {formatDollars(orderMinimum)} minimum</CartAlert>
+            ) : aboveMaximum ? (
+              <CartAlert>
+                Above {formatDollars(orderMaximum)} {orderMaxType}
+              </CartAlert>
+            ) : (
+              <span style={{ textTransform: 'none' }}>
+                {cartCount} {cartCount === 1 ? 'item' : 'items'} added
+              </span>
+            )
+          }
+          total={
+            <span>
+              Subtotal <span>{formatDollars(cartTotal)}</span>
+            </span>
+          }
+          back={
+            isCheckout && cartId ? (
+              <ButtonLink onClick={handleReopen} size="big">
+                <ChevronLeft />
+                <Preface>Reopen Group Order</Preface>
+              </ButtonLink>
+            ) : (
+              <ButtonLink onClick={handleBack} size="big" disabled={!canOrder}>
+                <ChevronLeft />
+                <Preface>Continue Shopping</Preface>
+              </ButtonLink>
+            )
+          }
+          add={
+            showReview ? (
+              <ButtonStyled
+                onClick={handleReview}
+                size="big"
+                color="cart"
+                disabled={!canCheckout}
+              >
+                {isReview
+                  ? 'Close'
+                  : isCartOwner
+                  ? 'Review Orders'
+                  : 'Submit Order'}
+              </ButtonStyled>
+            ) : (
+              <ButtonStyled
+                onClick={handleCheckout}
+                size="big"
+                color="cart"
+                disabled={!canCheckout}
+              >
+                {isCheckout ? 'Close' : 'Checkout'}
+              </ButtonStyled>
+            )
+          }
+        />
       </div>
     </SidebarView>
   )

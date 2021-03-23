@@ -12,11 +12,11 @@ import {
   showNotification,
   selectGroupOrder,
 } from '@open-tender/redux'
-import { Builder, BuilderOption, BuilderHeader } from '@open-tender/components'
+import { BuilderOption, BuilderHeader } from '@open-tender/components'
 
 import { closeModal, selectDisplaySettings } from '../../slices'
 import iconMap from '../iconMap'
-import { ModalClose, ImageSpinner } from '..'
+import { Builder, ModalClose, ImageSpinner } from '..'
 
 const menuItemsIconMap = {
   plus: iconMap.Plus,
@@ -30,7 +30,6 @@ const MenuItemModalView = styled('div')`
   height: 90%;
   overflow: hidden;
   background-color: ${(props) => props.theme.bgColors.primary};
-  border-radius: ${(props) => props.theme.border.radius};
   margin: 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
@@ -76,8 +75,23 @@ const MenuItem = () => {
   return (
     <MenuItemModalView>
       <MenuItemModalContent role="dialog" aria-labelledby="dialogTitle">
-        <ModalClose onClick={handleClose} isButton={isMobile} />
+        <ModalClose onClick={handleClose} />
         {item && (
+          <Builder
+            menuItem={item}
+            addItemToCart={handleAddItem}
+            cancel={handleClose}
+            soldOut={soldOut}
+            allergens={allergens}
+            renderHeader={(props) => <BuilderHeader {...props} />}
+            renderOption={(props) => <BuilderOption {...props} />}
+            showImage={true}
+            displaySettings={displaySettings}
+            cartId={cartId}
+            spinner={<ImageSpinner />}
+          />
+        )}
+        {/* {item && (
           <Builder
             menuItem={item}
             soldOut={soldOut}
@@ -92,7 +106,7 @@ const MenuItem = () => {
             cartId={cartId}
             spinner={<ImageSpinner />}
           />
-        )}
+        )} */}
       </MenuItemModalContent>
     </MenuItemModalView>
   )
