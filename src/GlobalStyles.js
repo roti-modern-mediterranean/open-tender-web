@@ -248,7 +248,8 @@ const makeGlobalStyles = (theme) => css`
     width: 100%;
     line-height: ${theme.inputs.lineHeight};
     padding: ${theme.inputs.padding};
-    border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+    border: 0;
+    border-bottom: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
     border-radius: ${theme.inputs.radius};
     color: ${theme.inputs.color};
     background-color: ${theme.inputs.bgColor};

@@ -9,10 +9,13 @@ import {
 import { formatDollars } from '@open-tender/js'
 import { useState } from 'react'
 
-import { CartFooter, Container, ImageSpinner } from '..'
+import { CartClose, CartFooter, Container, ImageSpinner } from '..'
+import { closeModal } from '../../slices'
 import { ButtonSmall } from '../buttons'
 import { ChevronDown, ChevronLeft, ChevronUp } from '../icons'
 import BuilderImage from './BuilderImage'
+import BuilderMadeFor from './BuilderMadeFor'
+import BuilderNotes from './BuilderNotes'
 
 const BuilderView = styled('form')`
   position: relative;
@@ -76,8 +79,6 @@ const BuilderName = styled(Heading)`
 
 const BuilderInfo = styled('div')`
   position: relative;
-  // padding: 0;
-  // background-color: ${(props) => props.theme.bgColors.secondary};
 `
 
 const BuilderPrice = styled(Preface)`
@@ -96,6 +97,11 @@ const BuilderDescription = styled('p')`
 
 const BuilderIngredients = styled('div')`
   margin: 0 0 2.5rem;
+`
+
+const BuilderIngredientsText = styled('div')`
+  line-height: ${(props) => props.theme.lineHeight};
+  margin: 1rem 0 0;
 `
 
 const BuilderIngredientsHeader = styled('div')`
@@ -128,28 +134,34 @@ const BuilderToggle = styled(ButtonSmall)`
 `
 
 const BuilderGroups = styled('div')`
-  padding: 0;
+  padding: 0 0 3rem;
   background-color: ${(props) => props.theme.bgColors.light};
 `
 
 const BuilderGroupsNav = styled('div')`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  overflow-x: scroll;
-  padding: 3rem 0 3rem ${(props) => props.theme.layout.padding};
+  padding: 3rem ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 3rem 0 3rem ${(props) => props.theme.layout.paddingMobile};
+    padding: 3rem ${(props) => props.theme.layout.paddingMobile};
+  }
+
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // width: 100%;
+    // overflow-x: scroll;
+    margin: 0 -1.2rem;
   }
 `
 
 const BuilderGroupsNavButton = styled(ButtonSmall)`
-  flex-shrink: 0;
-  margin: 0 1rem 0 0;
+  // flex-shrink: 0;
+  margin: 0;
+  padding: 0.8rem 1.2rem;
+  // padding: ${(props) =>
+    props.isActive ? '0.8rem 1.5rem 0.8rem' : '0.8rem 0 0.8rem 1.5rem'};
   color: ${(props) =>
     props.isActive ? props.theme.colors.light : props.theme.colors.beet};
-  // border: 0.1rem solid ${(props) => props.theme.colors.beet};
   background-color: ${(props) =>
     props.isActive ? props.theme.colors.beet : 'transparent'};
   box-shadow: ${(props) =>
@@ -158,6 +170,16 @@ const BuilderGroupsNavButton = styled(ButtonSmall)`
   &:focus {
     outline: none;
   }
+`
+
+const BuilderNameNotes = styled('div')`
+  padding: 3rem 0;
+`
+
+const BuilderNameNotesWrapper = styled('div')`
+  padding: 1.5rem 2rem 2rem;
+  border: 0.1rem solid ${(props) => props.theme.colors.beet};
+  border-radius: 1.4rem;
 `
 
 const BuilderFooter = styled('div')`
@@ -208,11 +230,12 @@ const Builder = ({
   const imageUrl = item.imageUrl ? item.imageUrl : null
   const {
     calories: showCals,
+    madeFor: showMadeFor,
+    notes: showNotes,
     // builderImages: showImage,
     // tags: showTags,
     // allergens: showAllergens,
   } = displaySettings
-  const hasIngredients = item.ingredients && item.ingredients.length > 0
   const priceCals = makePriceCals(item, showCals)
   const priceTotal = formatDollars(item.totalPrice)
   const hasGroups = groups.length > 0
@@ -234,7 +257,13 @@ const Builder = ({
   return (
     <BuilderView>
       <BuilderContent>
-        <BuilderImage imageUrl={imageUrl} spinner={<ImageSpinner />} />
+        <BuilderImage imageUrl={imageUrl} spinner={<ImageSpinner />}>
+          <CartClose
+            label="Close item & return to menu"
+            onClick={cancel}
+            style={{ top: '3rem' }}
+          />
+        </BuilderImage>
         <BuilderInfo>
           <BuilderHeader>
             <div>
@@ -267,28 +296,47 @@ const Builder = ({
                     )}
                   </BuilderToggle>
                 </BuilderIngredientsHeader>
-                {hasIngredients && <p>{item.ingredients}</p>}
+                <BuilderIngredientsText>
+                  Lorem ipsum dolor sit amet, consecnunc sed velit tempor,
+                  laoreet ante eget, vestibulum purus.
+                </BuilderIngredientsText>
               </BuilderIngredients>
             )}
           </Container>
           {hasGroups && isOpen && (
             <BuilderGroups>
               <BuilderGroupsNav>
-                {groups.map((group, index) => (
-                  <BuilderGroupsNavButton
-                    key={group.name}
-                    onClick={(evt) => toggleGroups(evt, index)}
-                    isActive={index === activeGroup}
-                  >
-                    {group.name}
-                  </BuilderGroupsNavButton>
-                ))}
-                <div style={{ width: '2rem' }}>&nbsp;</div>
+                <div>
+                  {groups.map((group, index) => (
+                    <BuilderGroupsNavButton
+                      key={group.name}
+                      onClick={(evt) => toggleGroups(evt, index)}
+                      isActive={index === activeGroup}
+                    >
+                      {group.name}
+                    </BuilderGroupsNavButton>
+                  ))}
+                </div>
+                {/* <div style={{ width: '2rem' }}>&nbsp;</div> */}
               </BuilderGroupsNav>
               <Container>
                 <p>Groups will go here.</p>
               </Container>
             </BuilderGroups>
+          )}
+          {((showMadeFor && !cartId) || showNotes) && (
+            <BuilderNameNotes>
+              <Container>
+                <BuilderNameNotesWrapper>
+                  {showMadeFor && !cartId && (
+                    <BuilderMadeFor madeFor={madeFor} setMadeFor={setMadeFor} />
+                  )}
+                  {showNotes && (
+                    <BuilderNotes notes={notes} setNotes={setNotes} />
+                  )}
+                </BuilderNameNotesWrapper>
+              </Container>
+            </BuilderNameNotes>
           )}
         </BuilderInfo>
       </BuilderContent>

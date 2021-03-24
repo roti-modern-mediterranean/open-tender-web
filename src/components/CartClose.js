@@ -21,11 +21,11 @@ const CartCloseView = styled('div')`
   }
 `
 
-const CartClose = ({ text, onClick }) => {
+const CartClose = ({ text, onClick, style }) => {
   const theme = useSelector(selectTheme)
 
   return (
-    <CartCloseView>
+    <CartCloseView style={style}>
       <Back text={text} onClick={onClick} color={theme.colors.beet} />
     </CartCloseView>
   )
@@ -35,6 +35,7 @@ CartClose.displayName = 'CartClose'
 CartClose.propTypes = {
   text: propTypes.string,
   onClick: propTypes.func,
+  style: propTypes.object,
 }
 
 export default CartClose

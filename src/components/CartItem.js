@@ -52,6 +52,7 @@ const CartItemQuantity = styled('div')`
       width: 3.6rem;
       height: auto;
       padding: 0;
+      border: 0;
       line-height: 1;
       font-family: ${(props) => props.theme.fonts.preface.family};
       font-weight: 600;

@@ -75,11 +75,10 @@ const MenuItem = () => {
   return (
     <MenuItemModalView>
       <MenuItemModalContent role="dialog" aria-labelledby="dialogTitle">
-        {/* <ModalClose onClick={handleClose} /> */}
-        <CartClose
+        {/* <CartClose
           label="Close item & return to menu"
           onClick={() => dispatch(closeModal())}
-        />
+        /> */}
         {item && (
           <Builder
             menuItem={item}

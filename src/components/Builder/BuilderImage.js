@@ -32,7 +32,7 @@ const BuilderBackgroundImage = styled(BgImage)`
   animation: fade-in 0.25s ease-in-out 0s forwards;
 `
 
-const BuilderImage = ({ imageUrl, spinner }) => {
+const BuilderImage = ({ imageUrl, spinner, children }) => {
   const { hasLoaded, hasError } = useImage(imageUrl)
   const isLoading = !hasLoaded && !hasError
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
@@ -45,6 +45,7 @@ const BuilderImage = ({ imageUrl, spinner }) => {
       {hasLoaded && (
         <BuilderBackgroundImage style={bgStyle}>&nbsp;</BuilderBackgroundImage>
       )}
+      {children}
     </BuilderImageView>
   )
 }
