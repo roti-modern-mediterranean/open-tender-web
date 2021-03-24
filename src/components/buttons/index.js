@@ -1,5 +1,6 @@
 import ButtonBoth from './ButtonBoth'
 import ButtonIcon from './ButtonIcon'
+import ButtonSmall from './ButtonSmall'
 import ButtonToggle from './ButtonToggle'
 import Account from './Account'
 import AccountSettings from './AccountSettings'
@@ -26,6 +27,7 @@ import StartOver from './StartOver'
 export {
   ButtonBoth,
   ButtonIcon,
+  ButtonSmall,
   ButtonToggle,
   Account,
   AccountSettings,

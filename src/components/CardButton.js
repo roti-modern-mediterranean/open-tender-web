@@ -1,17 +1,8 @@
 import styled from '@emotion/styled'
+import { ButtonSmall } from './buttons'
 
-const CardButton = styled('button')`
-  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
-  display: block;
-  padding: 0.9rem 1.5rem 0.8rem;
+const CardButton = styled(ButtonSmall)`
   margin: 0 0 0 1.6rem;
-  font-family: 'Barlow', sans-serif;
-  font-weight: 500;
-  font-size: 1.3rem;
-  line-height: 1.1;
-  text-transform: uppercase;
-  transition: all 0.15s ease;
-  border-radius: 2.5rem;
   color: ${(props) =>
     props.secondary
       ? props.theme.links.primary.color

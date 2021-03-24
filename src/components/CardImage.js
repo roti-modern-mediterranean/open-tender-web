@@ -61,7 +61,7 @@ const CardImage = ({ imageUrl, children }) => {
         <CardImageBackground style={placeholder}>&nbsp;</CardImageBackground>
       )}
       {hasLoaded && (
-        <CardImageBackground style={placeholder}>&nbsp;</CardImageBackground>
+        <CardImageBackground style={bgStyle}>&nbsp;</CardImageBackground>
       )}
       {children}
     </CardImageView>

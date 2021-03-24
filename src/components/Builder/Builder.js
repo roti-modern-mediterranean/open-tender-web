@@ -6,10 +6,12 @@ import {
   Preface,
   useBuilder,
 } from '@open-tender/components'
-import { displayPrice } from '@open-tender/js'
+import { formatDollars } from '@open-tender/js'
+import { useState } from 'react'
 
 import { CartFooter, Container, ImageSpinner } from '..'
-import { ChevronLeft } from '../icons'
+import { ButtonSmall } from '../buttons'
+import { ChevronDown, ChevronLeft, ChevronUp } from '../icons'
 import BuilderImage from './BuilderImage'
 
 const BuilderView = styled('form')`
@@ -68,12 +70,13 @@ const BuilderName = styled(Heading)`
   font-weight: 600;
   letter-spacing: 0.2em;
   font-size: 3rem;
+  line-height: 1;
   color: ${(props) => props.theme.colors.primary};
 `
 
 const BuilderInfo = styled('div')`
   position: relative;
-  padding: 0rem 0 0;
+  // padding: 0;
   // background-color: ${(props) => props.theme.bgColors.secondary};
 `
 
@@ -91,6 +94,72 @@ const BuilderDescription = styled('p')`
   margin: 0 0 2rem;
 `
 
+const BuilderIngredients = styled('div')`
+  margin: 0 0 2.5rem;
+`
+
+const BuilderIngredientsHeader = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const BuilderIngredientsTitle = styled(Preface)`
+  font-size: 2.8rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+`
+
+const BuilderToggle = styled(ButtonSmall)`
+  min-width: 12rem;
+  color: ${(props) => props.theme.colors.beet};
+  border: 0.1rem solid ${(props) => props.theme.colors.beet};
+  background-color: transparent;
+
+  span span {
+    display: inline-block;
+    margin-left: 0.5rem;
+  }
+
+  &:focus {
+    outline: none;
+  }
+`
+
+const BuilderGroups = styled('div')`
+  padding: 0;
+  background-color: ${(props) => props.theme.bgColors.light};
+`
+
+const BuilderGroupsNav = styled('div')`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  overflow-x: scroll;
+  padding: 3rem 0 3rem ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 3rem 0 3rem ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const BuilderGroupsNavButton = styled(ButtonSmall)`
+  flex-shrink: 0;
+  margin: 0 1rem 0 0;
+  color: ${(props) =>
+    props.isActive ? props.theme.colors.light : props.theme.colors.beet};
+  // border: 0.1rem solid ${(props) => props.theme.colors.beet};
+  background-color: ${(props) =>
+    props.isActive ? props.theme.colors.beet : 'transparent'};
+  box-shadow: ${(props) =>
+    props.isActive ? '0px 4px 20px rgba(0, 0, 0, 0.25)' : 'none'};
+
+  &:focus {
+    outline: none;
+  }
+`
+
 const BuilderFooter = styled('div')`
   position: absolute;
   z-index: 1;
@@ -102,7 +171,7 @@ const BuilderFooter = styled('div')`
 
 const makePriceCals = (item, showCals) => {
   const zeroPrice = !!(item.price === '0.00' || item.price === 0)
-  const price = zeroPrice ? null : `$${displayPrice(item.price)}`
+  const price = zeroPrice ? null : `${formatDollars(item.price)}`
   const cals = showCals && item.cals ? `${item.cals.toFixed(0)} cals` : null
   const separator = price && cals ? ' / ' : ''
   const priceCals = `${cals || ''}${separator}${price || ''}`
@@ -132,7 +201,10 @@ const Builder = ({
     decrementOption,
     setOptionQuantity,
   } = useBuilder(menuItem, soldOut)
+  const [isOpen, setIsOpen] = useState(false)
+  const [activeGroup, setActiveGroup] = useState(0)
   const { groups, notes, madeFor, totalPrice } = item
+  console.log(item)
   const imageUrl = item.imageUrl ? item.imageUrl : null
   const {
     calories: showCals,
@@ -142,10 +214,22 @@ const Builder = ({
   } = displaySettings
   const hasIngredients = item.ingredients && item.ingredients.length > 0
   const priceCals = makePriceCals(item, showCals)
-
+  const priceTotal = formatDollars(item.totalPrice)
+  const hasGroups = groups.length > 0
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete =
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
+
+  const toggleIngredients = (evt) => {
+    evt.preventDefault()
+    // if (!isOpen) setActiveGroup(0)
+    setIsOpen(!isOpen)
+  }
+
+  const toggleGroups = (evt, index) => {
+    evt.preventDefault()
+    setActiveGroup(index)
+  }
 
   return (
     <BuilderView>
@@ -154,7 +238,7 @@ const Builder = ({
         <BuilderInfo>
           <BuilderHeader>
             <div>
-              <BuilderCategory>Salad</BuilderCategory>
+              <BuilderCategory>{item.category}</BuilderCategory>
               <BuilderNameView>
                 <BuilderName as="div">{item.name}</BuilderName>
               </BuilderNameView>
@@ -167,15 +251,53 @@ const Builder = ({
               <BuilderPrice as="p">&nbsp;</BuilderPrice>
             )}
             <BuilderDescription>{item.description}</BuilderDescription>
+            {hasGroups && (
+              <BuilderIngredients>
+                <BuilderIngredientsHeader>
+                  <BuilderIngredientsTitle>Ingredients</BuilderIngredientsTitle>
+                  <BuilderToggle onClick={toggleIngredients}>
+                    {isOpen ? (
+                      <span>
+                        Close <ChevronUp />
+                      </span>
+                    ) : (
+                      <span>
+                        Customize <ChevronDown />
+                      </span>
+                    )}
+                  </BuilderToggle>
+                </BuilderIngredientsHeader>
+                {hasIngredients && <p>{item.ingredients}</p>}
+              </BuilderIngredients>
+            )}
           </Container>
+          {hasGroups && isOpen && (
+            <BuilderGroups>
+              <BuilderGroupsNav>
+                {groups.map((group, index) => (
+                  <BuilderGroupsNavButton
+                    key={group.name}
+                    onClick={(evt) => toggleGroups(evt, index)}
+                    isActive={index === activeGroup}
+                  >
+                    {group.name}
+                  </BuilderGroupsNavButton>
+                ))}
+                <div style={{ width: '2rem' }}>&nbsp;</div>
+              </BuilderGroupsNav>
+              <Container>
+                <p>Groups will go here.</p>
+              </Container>
+            </BuilderGroups>
+          )}
         </BuilderInfo>
       </BuilderContent>
       <BuilderFooter>
         <CartFooter
-          label={<span>Subtotal</span>}
+          label={<span>Total Price</span>}
           total={
             <span>
-              <span>$30.00</span>
+              <span>{priceTotal}</span>
             </span>
           }
           back={
