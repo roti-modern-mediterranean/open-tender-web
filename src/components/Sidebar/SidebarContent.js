@@ -18,7 +18,6 @@ import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
 
 import { toggleSidebar } from '../../slices'
 import Cart from '../Cart'
-import SidebarClose from './SidebarClose'
 import styled from '@emotion/styled'
 import { CartClose, CartFooter, Container } from '..'
 import { ChevronLeft } from '../icons'

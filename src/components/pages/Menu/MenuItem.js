@@ -2,14 +2,19 @@ import React, { useContext, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
-import { setCurrentItem } from '@open-tender/redux'
-import { convertStringToArray, makeDisplayPrice } from '@open-tender/js'
+import { setCurrentItem, selectMenuSlug } from '@open-tender/redux'
+import {
+  convertStringToArray,
+  makeDisplayPrice,
+  slugify,
+} from '@open-tender/js'
 import { Heading, Preface } from '@open-tender/components'
 
 import { selectDisplaySettings, openModal } from '../../../slices'
 import iconMap from '../../iconMap'
 import { CardButton, CardButtons, CardImage, Tag } from '../..'
 import { MenuContext } from './Menu'
+import { useHistory } from 'react-router-dom'
 
 const MenuItemView = styled('div')`
   cursor: pointer;
@@ -142,11 +147,13 @@ const MenuItemCals = styled(Preface)`
 
 const MenuItem = ({ item, isInverted }) => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const container = useRef(null)
   const viewButton = useRef(null)
   const addButton = useRef(null)
   const [isActive, setIsActive] = useState(false)
   const { soldOut, menuConfig, allergenAlerts } = useContext(MenuContext) || {}
+  const menuSlug = useSelector(selectMenuSlug)
   const {
     menuImages: showImage,
     calories: showCals,
@@ -189,7 +196,8 @@ const MenuItem = ({ item, isInverted }) => {
     evt.stopPropagation()
     if (!isSoldOut) {
       dispatch(setCurrentItem(item))
-      dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
+      history.push(`${menuSlug}/item/${slugify(item.name)}`)
+      // dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
     }
   }
 

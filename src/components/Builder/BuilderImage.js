@@ -5,11 +5,18 @@ import { BgImage, useImage } from '@open-tender/components'
 
 const BuilderImageView = styled('div')`
   position: relative;
-  top: -3rem;
+  top: -10rem;
   z-index: 2;
   width: 100%;
-  height: 32rem;
-  // background-color: ${(props) => props.theme.bgColors.light};
+  height: 54rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    top: -6rem;
+    height: 40rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    top: -3rem;
+    height: 32rem;
+  }
 `
 
 const BuilderImageLoading = styled('div')`

@@ -26,7 +26,7 @@ const HeaderView = styled('div')`
   border-style: solid;
   border-color: ${(props) => props.theme.bgColors[props.borderColor]};
   padding: ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     padding: ${(props) => props.theme.layout.paddingMobile};
     height: 6.4rem;
   }

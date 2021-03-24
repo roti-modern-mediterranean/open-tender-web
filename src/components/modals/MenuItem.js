@@ -1,7 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { isMobile } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
   selectCurrentItem,
@@ -15,13 +14,7 @@ import {
 import { BuilderOption, BuilderHeader } from '@open-tender/components'
 
 import { closeModal, selectDisplaySettings } from '../../slices'
-import iconMap from '../iconMap'
-import { Builder, ModalClose, ImageSpinner, CartClose } from '..'
-
-const menuItemsIconMap = {
-  plus: iconMap.Plus,
-  minus: iconMap.Minus,
-}
+import { Builder } from '..'
 
 const MenuItemModalView = styled('div')`
   position: relative;
@@ -75,10 +68,6 @@ const MenuItem = () => {
   return (
     <MenuItemModalView>
       <MenuItemModalContent role="dialog" aria-labelledby="dialogTitle">
-        {/* <CartClose
-          label="Close item & return to menu"
-          onClick={() => dispatch(closeModal())}
-        /> */}
         {item && (
           <Builder
             menuItem={item}
@@ -93,22 +82,6 @@ const MenuItem = () => {
             cartId={cartId}
           />
         )}
-        {/* {item && (
-          <Builder
-            menuItem={item}
-            soldOut={soldOut}
-            allergens={allergens}
-            addItemToCart={handleAddItem}
-            renderHeader={(props) => <BuilderHeader {...props} />}
-            renderOption={(props) => <BuilderOption {...props} />}
-            showImage={true}
-            displaySettings={displaySettings}
-            iconMap={menuItemsIconMap}
-            closeModal={handleClose}
-            cartId={cartId}
-            spinner={<ImageSpinner />}
-          />
-        )} */}
       </MenuItemModalContent>
     </MenuItemModalView>
   )

@@ -10,8 +10,7 @@ import {
 import { formatDollars } from '@open-tender/js'
 import { useEffect, useRef, useState } from 'react'
 
-import { CartClose, CartFooter, Container, ImageSpinner } from '..'
-import { closeModal } from '../../slices'
+import { CartFooter, Container, ImageSpinner } from '..'
 import { ButtonSmall } from '../buttons'
 import { ChevronDown, ChevronLeft, ChevronUp } from '../icons'
 import BuilderImage from './BuilderImage'
@@ -20,27 +19,49 @@ import BuilderNotes from './BuilderNotes'
 
 const BuilderView = styled('form')`
   position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 0 0 14.5rem;
-  margin: 0;
-  // background-color: ${(props) => props.theme.bgColors.light};
+  display: flex;
+  justify-content: space-between;
+  max-width: ${(props) => props.theme.layout.containerMaxWidth};
+  padding: 0 ${(props) => props.theme.layout.padding} 14.5rem;
+  margin: ${(props) => props.theme.layout.margin} auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    width: 100%;
+    flex-direction: column;
+    padding: 0 0 14.5rem;
+    margin: 0 auto;
+  }
 `
 
-const BuilderContent = styled('div')`
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
+const BuilderInfo = styled('div')`
+  position: relative;
 `
 
 const BuilderHeader = styled('div')`
+  position: relative;
+  top: -4rem;
+  padding: 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    top: 0;
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const BuilderTitle = styled('div')`
   position: absolute;
   z-index: 1;
-  top: -10rem;
-  width: 100%;
-  height: 10rem;
+  left: 0;
+  right: 0;
   // background-color: #ccc;
+  top: -16rem;
+  height: 15rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    top: -10rem;
+    height: 10rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    top: -10rem;
+    height: 10rem;
+  }
 
   & > div {
     position: relative;
@@ -56,9 +77,17 @@ const BuilderHeader = styled('div')`
 
 const BuilderCategory = styled('h2')`
   display: block;
-  font-size: 11.5rem;
   line-height: 1;
-  margin: -1rem 0 0;
+  font-size: 18rem;
+  margin: -2rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    font-size: 11.5rem;
+    margin: -1rem 0 0;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    font-size: 11.5rem;
+    margin: -1rem 0 0;
+  }
 `
 
 const BuilderNameView = styled('div')`
@@ -74,32 +103,57 @@ const BuilderNameView = styled('div')`
 const BuilderName = styled(Heading)`
   font-weight: 600;
   letter-spacing: 0.2em;
-  font-size: 3rem;
+  font-size: 5rem;
   line-height: 1;
   color: ${(props) => props.theme.colors.primary};
-`
-
-const BuilderInfo = styled('div')`
-  position: relative;
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    font-size: 3rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    font-size: 3rem;
+  }
 `
 
 const BuilderPrice = styled(Preface)`
   text-align: center;
   font-weight: 500;
-  font-size: 2.6rem;
+  font-size: 3.8rem;
   letter-spacing: 0.03em;
   text-transform: none;
   margin: 0 0 2rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    font-size: 2.6rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    font-size: 2.6rem;
+  }
 `
 
 const BuilderDescription = styled('p')`
   line-height: ${(props) => props.theme.lineHeight};
-  margin: 0 0 0;
+  font-size: 1.8rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    font-size: 1.5rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    font-size: 1.5rem;
+  }
 `
 
 const BuilderIngredients = styled('div')`
-  padding: 2rem 0 0;
-  margin: 0 0 2.5rem;
+  flex: 0 0 48rem;
+  margin: 0 0 0 6rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    flex: 1;
+    margin: 0;
+  }
+`
+
+const BuilderIngredientsHeader = styled('div')`
+  padding: 2.5rem 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    padding: 2.5rem ${(props) => props.theme.layout.paddingMobile};
+  }
 `
 
 const BuilderIngredientsText = styled('div')`
@@ -107,7 +161,7 @@ const BuilderIngredientsText = styled('div')`
   margin: 1rem 0 0;
 `
 
-const BuilderIngredientsHeader = styled('div')`
+const BuilderIngredientsTitleWrapper = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -121,10 +175,13 @@ const BuilderIngredientsTitle = styled(Preface)`
 `
 
 const BuilderToggle = styled(ButtonSmall)`
-  // min-width: 12rem;
   color: ${(props) => props.theme.colors.beet};
   border: 0.1rem solid ${(props) => props.theme.colors.beet};
   background-color: transparent;
+  // display: none;
+  // @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+  //   display: block;
+  // }
 
   span span {
     position: relative;
@@ -140,37 +197,46 @@ const BuilderToggle = styled(ButtonSmall)`
 
 const BuilderGroups = styled('div')`
   padding: 0 0 3rem;
-  background-color: ${(props) => props.theme.bgColors.light};
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    background-color: ${(props) => props.theme.bgColors.light};
+    padding: 0 ${(props) => props.theme.layout.paddingMobile} 3rem;
+  }
 `
 
 const BuilderGroupsNav = styled('div')`
-  padding: 3rem ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 3rem ${(props) => props.theme.layout.paddingMobile};
+  padding: 0 0 3rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    padding: 3rem 0;
   }
 
   & > div {
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     align-items: center;
-    // width: 100%;
-    // overflow-x: scroll;
-    margin: 0 -1.2rem;
+    margin: 0 -1.6rem;
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      margin: 0 -1.2rem;
+      justify-content: center;
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      justify-content: space-between;
+    }
   }
 `
 
 const BuilderGroupsNavButton = styled(ButtonSmall)`
-  // flex-shrink: 0;
-  margin: 0;
-  padding: 0.8rem 1.2rem;
-  // padding: ${(props) =>
-    props.isActive ? '0.8rem 1.5rem 0.8rem' : '0.8rem 0 0.8rem 1.5rem'};
   color: ${(props) =>
     props.isActive ? props.theme.colors.light : props.theme.colors.beet};
   background-color: ${(props) =>
     props.isActive ? props.theme.colors.beet : 'transparent'};
   box-shadow: ${(props) =>
     props.isActive ? '0px 4px 20px rgba(0, 0, 0, 0.25)' : 'none'};
+  font-size: 1.6rem;
+  padding: 1.1rem 1.6rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    font-size: 1.3rem;
+    padding: 0.8rem 1.2rem;
+  }
 
   &:focus {
     outline: none;
@@ -178,8 +244,11 @@ const BuilderGroupsNavButton = styled(ButtonSmall)`
 `
 
 const BuilderNameNotes = styled('div')`
-  padding: 3rem 0 0;
-  background-color: ${(props) => props.theme.bgColors.light};
+  padding: 3rem 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    background-color: ${(props) => props.theme.bgColors.light};
+    padding: 3rem ${(props) => props.theme.layout.paddingMobile};
+  }
 `
 
 const BuilderNameNotesWrapper = styled('div')`
@@ -189,8 +258,8 @@ const BuilderNameNotesWrapper = styled('div')`
 `
 
 const BuilderFooter = styled('div')`
-  position: absolute;
-  z-index: 1;
+  position: fixed;
+  z-index: 10;
   bottom: 0;
   left: 0;
   right: 0;
@@ -216,6 +285,7 @@ const Builder = ({
   renderOption,
   displaySettings,
   cartId,
+  windowRef,
 }) => {
   const {
     item,
@@ -255,18 +325,18 @@ const Builder = ({
     if (isOpen) {
       const topOffset = ingredientsRef.current.getBoundingClientRect().top
       animateScroll.scrollTo(topOffset, {
-        container: scrollRef.current,
+        container: windowRef.current,
         duration: 500,
         smooth: true,
       })
     }
-  }, [isOpen])
+  }, [isOpen, windowRef])
 
   const toggleIngredients = (evt) => {
     evt.preventDefault()
     if (isOpen) {
       animateScroll.scrollTo(0, {
-        container: scrollRef.current,
+        container: windowRef.current,
         duration: 500,
         smooth: true,
       })
@@ -283,95 +353,82 @@ const Builder = ({
 
   return (
     <BuilderView>
-      <BuilderContent ref={scrollRef}>
-        <BuilderImage imageUrl={imageUrl} spinner={<ImageSpinner />}>
-          <CartClose
-            label="Close item & return to menu"
-            onClick={cancel}
-            style={{ top: '3rem' }}
-          />
-        </BuilderImage>
-        <BuilderInfo>
-          <BuilderHeader>
+      <BuilderInfo>
+        <BuilderImage imageUrl={imageUrl} spinner={<ImageSpinner />} />
+        <BuilderHeader>
+          <BuilderTitle>
             <div>
               <BuilderCategory>{item.category}</BuilderCategory>
               <BuilderNameView>
                 <BuilderName as="div">{item.name}</BuilderName>
               </BuilderNameView>
             </div>
-          </BuilderHeader>
-          <Container>
-            {priceCals ? (
-              <BuilderPrice as="p">{priceCals}</BuilderPrice>
-            ) : (
-              <BuilderPrice as="p">&nbsp;</BuilderPrice>
-            )}
-            <BuilderDescription>{item.description}</BuilderDescription>
-            <BuilderIngredients ref={ingredientsRef}>
-              <BuilderIngredientsHeader>
-                <BuilderIngredientsTitle>Ingredients</BuilderIngredientsTitle>
-                <BuilderToggle onClick={toggleIngredients}>
-                  {isOpen ? (
-                    <span>
-                      Close <ChevronUp />
-                    </span>
-                  ) : (
-                    <span>
-                      Customize <ChevronDown />
-                    </span>
-                  )}
-                </BuilderToggle>
-              </BuilderIngredientsHeader>
-              <BuilderIngredientsText>
-                Lorem ipsum dolor sit amet, consecnunc sed velit tempor, laoreet
-                ante eget, vestibulum purus.
-              </BuilderIngredientsText>
-            </BuilderIngredients>
-          </Container>
-          {isOpen && (
-            <>
-              {hasGroups && (
-                <BuilderGroups>
-                  <BuilderGroupsNav>
-                    <div>
-                      {groups.map((group, index) => (
-                        <BuilderGroupsNavButton
-                          key={group.name}
-                          onClick={(evt) => toggleGroups(evt, index)}
-                          isActive={index === activeGroup}
-                        >
-                          {group.name}
-                        </BuilderGroupsNavButton>
-                      ))}
-                    </div>
-                    {/* <div style={{ width: '2rem' }}>&nbsp;</div> */}
-                  </BuilderGroupsNav>
-                  <Container>
-                    <p>Groups will go here.</p>
-                  </Container>
-                </BuilderGroups>
-              )}
-              {((showMadeFor && !cartId) || showNotes) && (
-                <BuilderNameNotes>
-                  <Container>
-                    <BuilderNameNotesWrapper>
-                      {showMadeFor && !cartId && (
-                        <BuilderMadeFor
-                          madeFor={madeFor}
-                          setMadeFor={setMadeFor}
-                        />
-                      )}
-                      {showNotes && (
-                        <BuilderNotes notes={notes} setNotes={setNotes} />
-                      )}
-                    </BuilderNameNotesWrapper>
-                  </Container>
-                </BuilderNameNotes>
-              )}
-            </>
+          </BuilderTitle>
+          {priceCals ? (
+            <BuilderPrice as="p">{priceCals}</BuilderPrice>
+          ) : (
+            <BuilderPrice as="p">&nbsp;</BuilderPrice>
           )}
-        </BuilderInfo>
-      </BuilderContent>
+          <BuilderDescription>{item.description}</BuilderDescription>
+        </BuilderHeader>
+      </BuilderInfo>
+      <BuilderIngredients ref={ingredientsRef}>
+        <BuilderIngredientsHeader>
+          <BuilderIngredientsTitleWrapper>
+            <BuilderIngredientsTitle>Ingredients</BuilderIngredientsTitle>
+            <BuilderToggle onClick={toggleIngredients}>
+              {isOpen ? (
+                <span>
+                  Close <ChevronUp />
+                </span>
+              ) : (
+                <span>
+                  Customize <ChevronDown />
+                </span>
+              )}
+            </BuilderToggle>
+          </BuilderIngredientsTitleWrapper>
+          <BuilderIngredientsText>
+            Lorem ipsum dolor sit amet, consecnunc sed velit tempor, laoreet
+            ante eget, vestibulum purus.
+          </BuilderIngredientsText>
+        </BuilderIngredientsHeader>
+        {isOpen && (
+          <>
+            {hasGroups && (
+              <BuilderGroups>
+                <BuilderGroupsNav>
+                  <div>
+                    {groups.map((group, index) => (
+                      <BuilderGroupsNavButton
+                        key={group.name}
+                        onClick={(evt) => toggleGroups(evt, index)}
+                        isActive={index === activeGroup}
+                      >
+                        {group.name}
+                      </BuilderGroupsNavButton>
+                    ))}
+                  </div>
+                  {/* <div style={{ width: '2rem' }}>&nbsp;</div> */}
+                </BuilderGroupsNav>
+                <p>Groups will go here.</p>
+              </BuilderGroups>
+            )}
+            {((showMadeFor && !cartId) || showNotes) && (
+              <BuilderNameNotes>
+                <BuilderNameNotesWrapper>
+                  {showMadeFor && !cartId && (
+                    <BuilderMadeFor madeFor={madeFor} setMadeFor={setMadeFor} />
+                  )}
+                  {showNotes && (
+                    <BuilderNotes notes={notes} setNotes={setNotes} />
+                  )}
+                </BuilderNameNotesWrapper>
+              </BuilderNameNotes>
+            )}
+          </>
+        )}
+      </BuilderIngredients>
       <BuilderFooter>
         <CartFooter
           label={<span>Total Price</span>}

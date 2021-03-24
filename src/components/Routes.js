@@ -35,6 +35,7 @@ import {
   SignUp,
   Thanx,
   VerifyAccount,
+  MenuItem,
 } from './pages'
 
 const Routes = () => {
@@ -79,8 +80,11 @@ const Routes = () => {
       <Route exact path="/locations/:slug">
         <RevenueCenter />
       </Route>
-      <Route path="/menu/:slug">
+      <Route exact path="/menu/:slug">
         <Menu />
+      </Route>
+      <Route path="/menu/:slug/item/:itemSlug">
+        <MenuItem />
       </Route>
       <Route path="/join/:token">
         <GroupOrderGuest />
