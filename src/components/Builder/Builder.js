@@ -10,17 +10,19 @@ import {
 import { formatDollars } from '@open-tender/js'
 import { useEffect, useRef, useState } from 'react'
 
-import { CartFooter, Container, ImageSpinner } from '..'
+import { CartFooter, ImageSpinner } from '..'
 import { ButtonSmall } from '../buttons'
 import { ChevronDown, ChevronLeft, ChevronUp } from '../icons'
 import BuilderImage from './BuilderImage'
 import BuilderMadeFor from './BuilderMadeFor'
 import BuilderNotes from './BuilderNotes'
+import BuilderOptionImage from './BuilderOptionImage'
 
 const BuilderView = styled('form')`
   position: relative;
   display: flex;
   justify-content: space-between;
+  width: 100%;
   max-width: ${(props) => props.theme.layout.containerMaxWidth};
   padding: 0 ${(props) => props.theme.layout.padding} 14.5rem;
   margin: ${(props) => props.theme.layout.margin} auto;
@@ -34,6 +36,8 @@ const BuilderView = styled('form')`
 
 const BuilderInfo = styled('div')`
   position: relative;
+  flex-grow: 1;
+  // width: 100%;
 `
 
 const BuilderHeader = styled('div')`
@@ -195,11 +199,11 @@ const BuilderToggle = styled(ButtonSmall)`
   }
 `
 
-const BuilderGroups = styled('div')`
-  padding: 0 0 3rem;
+const BuilderGroupsContainer = styled('div')`
+  // padding: 0 0 3rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     background-color: ${(props) => props.theme.bgColors.light};
-    padding: 0 ${(props) => props.theme.layout.paddingMobile} 3rem;
+    padding: 0;
   }
 `
 
@@ -208,18 +212,22 @@ const BuilderGroupsNav = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     padding: 3rem 0;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 3rem 0 3rem ${(props) => props.theme.layout.paddingMobile};
+    overflow-x: scroll;
+  }
 
   & > div {
     display: flex;
-    // justify-content: space-between;
     align-items: center;
-    margin: 0 -1.6rem;
+    // margin: 0 -1.6rem;
     @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      margin: 0 -1.2rem;
+      // margin: 0 -1.2rem;
       justify-content: center;
     }
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      justify-content: space-between;
+      margin: 0;
+      justify-content: flex-start;
     }
   }
 `
@@ -241,6 +249,71 @@ const BuilderGroupsNavButton = styled(ButtonSmall)`
   &:focus {
     outline: none;
   }
+`
+
+const BuilderGroupContainer = styled('div')`
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const BuilderGroup = styled('div')`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  overflow: hidden;
+  transition: all 0.25s ease-in-out;
+  opacity: ${(props) => (props.isActive ? '1' : '0')};
+  visibility: ${(props) => (props.isActive ? 'visible' : 'hidden')};
+  max-height: ${(props) => (props.isActive ? 'none' : '0')};
+  margin: 0 -0.5rem;
+`
+
+const BuilderOption = styled('button')`
+  display: block;
+  flex: 0 0 25%;
+  padding: 0 0.5rem;
+  margin: 0 0 1.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    flex: 0 0 16.66667%;
+    padding: 0;
+    margin: 0 0 1.5rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex: 0 0 20%;
+    padding: 0;
+    margin: 0 0 1.5rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex: 0 0 33.33333%;
+    padding: 0;
+    margin: 0 0 1.5rem;
+  }
+`
+
+const BuilderOptionInfo = styled('span')`
+  display: block;
+  width: 100%;
+  margin: 1rem 0 0;
+  text-align: center;
+  line-height: 1;
+`
+
+const BuilderOptionName = styled(Heading)`
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: ${(props) => props.theme.colors.primary};
+`
+
+const BuilderOptionPrice = styled(Heading)`
+  display: block;
+  font-size: 1rem;
+  font-weight: normal;
+  text-transform: none;
+  margin: 0.5rem 0 0;
+  color: ${(props) => props.theme.colors.primary};
 `
 
 const BuilderNameNotes = styled('div')`
@@ -269,7 +342,7 @@ const BuilderFooter = styled('div')`
 const makePriceCals = (item, showCals) => {
   const zeroPrice = !!(item.price === '0.00' || item.price === 0)
   const price = zeroPrice ? null : `${formatDollars(item.price)}`
-  const cals = showCals && item.cals ? `${item.cals.toFixed(0)} cals` : null
+  const cals = showCals && item.cals ? `${item.cals.toFixed(0)} cal` : null
   const separator = price && cals ? ' / ' : ''
   const priceCals = `${cals || ''}${separator}${price || ''}`
   return priceCals || null
@@ -396,7 +469,7 @@ const Builder = ({
         {isOpen && (
           <>
             {hasGroups && (
-              <BuilderGroups>
+              <BuilderGroupsContainer>
                 <BuilderGroupsNav>
                   <div>
                     {groups.map((group, index) => (
@@ -408,11 +481,38 @@ const Builder = ({
                         {group.name}
                       </BuilderGroupsNavButton>
                     ))}
+                    {/* <div style={{ width: '3rem' }}>&nbsp;</div> */}
                   </div>
-                  {/* <div style={{ width: '2rem' }}>&nbsp;</div> */}
                 </BuilderGroupsNav>
-                <p>Groups will go here.</p>
-              </BuilderGroups>
+                <BuilderGroupContainer>
+                  {groups.map((group, index) => {
+                    console.log(group)
+                    return (
+                      <BuilderGroup isActive={index === activeGroup}>
+                        {group.options.map((option) => {
+                          const priceCals = makePriceCals(option, showCals)
+                          return (
+                            <BuilderOption>
+                              <BuilderOptionImage
+                                imageUrl={option.imageUrl}
+                                spinner={<ImageSpinner />}
+                              />
+                              <BuilderOptionInfo>
+                                <BuilderOptionName>
+                                  {option.name}
+                                </BuilderOptionName>
+                                <BuilderOptionPrice>
+                                  {priceCals}
+                                </BuilderOptionPrice>
+                              </BuilderOptionInfo>
+                            </BuilderOption>
+                          )
+                        })}
+                      </BuilderGroup>
+                    )
+                  })}
+                </BuilderGroupContainer>
+              </BuilderGroupsContainer>
             )}
             {((showMadeFor && !cartId) || showNotes) && (
               <BuilderNameNotes>

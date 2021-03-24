@@ -3,23 +3,19 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { BgImage, useImage } from '@open-tender/components'
 
-const BuilderImageView = styled('div')`
+const BuilderOptionImageView = styled('div')`
   position: relative;
-  top: -10rem;
-  z-index: 2;
   width: 100%;
-  height: 54rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
-    top: -6rem;
-    height: 40rem;
-  }
+  padding: 50% 0;
+  border-radius: 1.4rem;
+  background-color: ${(props) => props.theme.bgColors.light};
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    top: -3rem;
-    height: 32rem;
+    border-radius: 0;
+    background-color: transparent;
   }
 `
 
-const BuilderImageLoading = styled('div')`
+const BuilderOptionImageLoading = styled('div')`
   position: absolute;
   z-index: 1;
   top: 0;
@@ -32,33 +28,55 @@ const BuilderImageLoading = styled('div')`
 `
 
 const BuilderBackgroundImage = styled(BgImage)`
-  width: 100%;
-  height: 100%;
-  background-size: auto 100%;
+  position: absolute;
+  z-index: 2;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  background-size: contain;
   opacity: 1;
   animation: fade-in 0.25s ease-in-out 0s forwards;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 `
 
-const BuilderImage = ({ imageUrl, spinner, children }) => {
+const BuilderOptionImage = ({ imageUrl, spinner, children }) => {
   const { hasLoaded, hasError } = useImage(imageUrl)
   const isLoading = !hasLoaded && !hasError
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
 
   return (
-    <BuilderImageView>
+    <BuilderOptionImageView>
       {spinner && isLoading && (
-        <BuilderImageLoading>{spinner}</BuilderImageLoading>
+        <BuilderOptionImageLoading>{spinner}</BuilderOptionImageLoading>
       )}
       {hasLoaded && (
         <BuilderBackgroundImage style={bgStyle}>&nbsp;</BuilderBackgroundImage>
       )}
       {children}
-    </BuilderImageView>
+    </BuilderOptionImageView>
   )
 }
 
-BuilderImage.displayName = 'BuilderImage'
-BuilderImage.propTypes = {
+BuilderOptionImage.displayName = 'BuilderOptionImage'
+BuilderOptionImage.propTypes = {
   imageUrl: propTypes.string,
   spinner: propTypes.oneOfType([propTypes.node, propTypes.element]),
   children: propTypes.oneOfType([
@@ -67,4 +85,4 @@ BuilderImage.propTypes = {
   ]),
 }
 
-export default BuilderImage
+export default BuilderOptionImage
