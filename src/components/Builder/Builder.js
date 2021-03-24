@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { animateScroll } from 'react-scroll'
 import {
   ButtonLink,
   ButtonStyled,
@@ -7,7 +8,7 @@ import {
   useBuilder,
 } from '@open-tender/components'
 import { formatDollars } from '@open-tender/js'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { CartClose, CartFooter, Container, ImageSpinner } from '..'
 import { closeModal } from '../../slices'
@@ -24,6 +25,7 @@ const BuilderView = styled('form')`
   height: 100%;
   padding: 0 0 14.5rem;
   margin: 0;
+  // background-color: ${(props) => props.theme.bgColors.light};
 `
 
 const BuilderContent = styled('div')`
@@ -92,10 +94,11 @@ const BuilderPrice = styled(Preface)`
 
 const BuilderDescription = styled('p')`
   line-height: ${(props) => props.theme.lineHeight};
-  margin: 0 0 2rem;
+  margin: 0 0 0;
 `
 
 const BuilderIngredients = styled('div')`
+  padding: 2rem 0 0;
   margin: 0 0 2.5rem;
 `
 
@@ -118,14 +121,16 @@ const BuilderIngredientsTitle = styled(Preface)`
 `
 
 const BuilderToggle = styled(ButtonSmall)`
-  min-width: 12rem;
+  // min-width: 12rem;
   color: ${(props) => props.theme.colors.beet};
   border: 0.1rem solid ${(props) => props.theme.colors.beet};
   background-color: transparent;
 
   span span {
+    position: relative;
+    top: -0.1rem;
     display: inline-block;
-    margin-left: 0.5rem;
+    margin: 0 0 0 0.5rem;
   }
 
   &:focus {
@@ -173,7 +178,8 @@ const BuilderGroupsNavButton = styled(ButtonSmall)`
 `
 
 const BuilderNameNotes = styled('div')`
-  padding: 3rem 0;
+  padding: 3rem 0 0;
+  background-color: ${(props) => props.theme.bgColors.light};
 `
 
 const BuilderNameNotesWrapper = styled('div')`
@@ -223,6 +229,8 @@ const Builder = ({
     decrementOption,
     setOptionQuantity,
   } = useBuilder(menuItem, soldOut)
+  const scrollRef = useRef(null)
+  const ingredientsRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const [activeGroup, setActiveGroup] = useState(0)
   const { groups, notes, madeFor, totalPrice } = item
@@ -243,10 +251,29 @@ const Builder = ({
   const isIncomplete =
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
 
+  useEffect(() => {
+    if (isOpen) {
+      const topOffset = ingredientsRef.current.getBoundingClientRect().top
+      animateScroll.scrollTo(topOffset, {
+        container: scrollRef.current,
+        duration: 500,
+        smooth: true,
+      })
+    }
+  }, [isOpen])
+
   const toggleIngredients = (evt) => {
     evt.preventDefault()
-    // if (!isOpen) setActiveGroup(0)
-    setIsOpen(!isOpen)
+    if (isOpen) {
+      animateScroll.scrollTo(0, {
+        container: scrollRef.current,
+        duration: 500,
+        smooth: true,
+      })
+      setTimeout(() => setIsOpen(false), 500)
+    } else {
+      setIsOpen(true)
+    }
   }
 
   const toggleGroups = (evt, index) => {
@@ -256,7 +283,7 @@ const Builder = ({
 
   return (
     <BuilderView>
-      <BuilderContent>
+      <BuilderContent ref={scrollRef}>
         <BuilderImage imageUrl={imageUrl} spinner={<ImageSpinner />}>
           <CartClose
             label="Close item & return to menu"
@@ -280,63 +307,68 @@ const Builder = ({
               <BuilderPrice as="p">&nbsp;</BuilderPrice>
             )}
             <BuilderDescription>{item.description}</BuilderDescription>
-            {hasGroups && (
-              <BuilderIngredients>
-                <BuilderIngredientsHeader>
-                  <BuilderIngredientsTitle>Ingredients</BuilderIngredientsTitle>
-                  <BuilderToggle onClick={toggleIngredients}>
-                    {isOpen ? (
-                      <span>
-                        Close <ChevronUp />
-                      </span>
-                    ) : (
-                      <span>
-                        Customize <ChevronDown />
-                      </span>
-                    )}
-                  </BuilderToggle>
-                </BuilderIngredientsHeader>
-                <BuilderIngredientsText>
-                  Lorem ipsum dolor sit amet, consecnunc sed velit tempor,
-                  laoreet ante eget, vestibulum purus.
-                </BuilderIngredientsText>
-              </BuilderIngredients>
-            )}
+            <BuilderIngredients ref={ingredientsRef}>
+              <BuilderIngredientsHeader>
+                <BuilderIngredientsTitle>Ingredients</BuilderIngredientsTitle>
+                <BuilderToggle onClick={toggleIngredients}>
+                  {isOpen ? (
+                    <span>
+                      Close <ChevronUp />
+                    </span>
+                  ) : (
+                    <span>
+                      Customize <ChevronDown />
+                    </span>
+                  )}
+                </BuilderToggle>
+              </BuilderIngredientsHeader>
+              <BuilderIngredientsText>
+                Lorem ipsum dolor sit amet, consecnunc sed velit tempor, laoreet
+                ante eget, vestibulum purus.
+              </BuilderIngredientsText>
+            </BuilderIngredients>
           </Container>
-          {hasGroups && isOpen && (
-            <BuilderGroups>
-              <BuilderGroupsNav>
-                <div>
-                  {groups.map((group, index) => (
-                    <BuilderGroupsNavButton
-                      key={group.name}
-                      onClick={(evt) => toggleGroups(evt, index)}
-                      isActive={index === activeGroup}
-                    >
-                      {group.name}
-                    </BuilderGroupsNavButton>
-                  ))}
-                </div>
-                {/* <div style={{ width: '2rem' }}>&nbsp;</div> */}
-              </BuilderGroupsNav>
-              <Container>
-                <p>Groups will go here.</p>
-              </Container>
-            </BuilderGroups>
-          )}
-          {((showMadeFor && !cartId) || showNotes) && (
-            <BuilderNameNotes>
-              <Container>
-                <BuilderNameNotesWrapper>
-                  {showMadeFor && !cartId && (
-                    <BuilderMadeFor madeFor={madeFor} setMadeFor={setMadeFor} />
-                  )}
-                  {showNotes && (
-                    <BuilderNotes notes={notes} setNotes={setNotes} />
-                  )}
-                </BuilderNameNotesWrapper>
-              </Container>
-            </BuilderNameNotes>
+          {isOpen && (
+            <>
+              {hasGroups && (
+                <BuilderGroups>
+                  <BuilderGroupsNav>
+                    <div>
+                      {groups.map((group, index) => (
+                        <BuilderGroupsNavButton
+                          key={group.name}
+                          onClick={(evt) => toggleGroups(evt, index)}
+                          isActive={index === activeGroup}
+                        >
+                          {group.name}
+                        </BuilderGroupsNavButton>
+                      ))}
+                    </div>
+                    {/* <div style={{ width: '2rem' }}>&nbsp;</div> */}
+                  </BuilderGroupsNav>
+                  <Container>
+                    <p>Groups will go here.</p>
+                  </Container>
+                </BuilderGroups>
+              )}
+              {((showMadeFor && !cartId) || showNotes) && (
+                <BuilderNameNotes>
+                  <Container>
+                    <BuilderNameNotesWrapper>
+                      {showMadeFor && !cartId && (
+                        <BuilderMadeFor
+                          madeFor={madeFor}
+                          setMadeFor={setMadeFor}
+                        />
+                      )}
+                      {showNotes && (
+                        <BuilderNotes notes={notes} setNotes={setNotes} />
+                      )}
+                    </BuilderNameNotesWrapper>
+                  </Container>
+                </BuilderNameNotes>
+              )}
+            </>
           )}
         </BuilderInfo>
       </BuilderContent>

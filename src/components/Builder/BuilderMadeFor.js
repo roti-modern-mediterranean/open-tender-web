@@ -21,12 +21,12 @@ const BuilderMadeFor = ({ madeFor, setMadeFor }) => {
   return (
     <BuilderMadeForView>
       <label htmlFor="made-for">
-        <BuilderMadeForLabel>Who is it for?</BuilderMadeForLabel>
+        <BuilderMadeForLabel>Who is eating this?</BuilderMadeForLabel>
         <input
           id="made-for"
           type="text"
           value={madeFor || ''}
-          placeholder="enter a person's name"
+          placeholder="Enter a person's name"
           onChange={(evt) => setMadeFor(evt.target.value)}
         />
       </label>

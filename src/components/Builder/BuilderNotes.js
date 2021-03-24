@@ -33,7 +33,7 @@ const BuilderNotes = ({ notes, setNotes }) => {
         <textarea
           id="item-notes"
           value={notes || ''}
-          placeholder="add some notes if needed"
+          placeholder="Add anything you want us to know!"
           onChange={(evt) => setNotes(evt.target.value)}
         />
       </label>

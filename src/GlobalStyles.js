@@ -252,7 +252,8 @@ const makeGlobalStyles = (theme) => css`
     border-bottom: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
     border-radius: ${theme.inputs.radius};
     color: ${theme.inputs.color};
-    background-color: ${theme.inputs.bgColor};
+    // background-color: ${theme.inputs.bgColor};
+    background-color: transparent;
     box-shadow: ${theme.inputs.boxShadow};
     font-family: ${theme.fonts.body.family};
     font-size: ${theme.fonts.sizes.main};
