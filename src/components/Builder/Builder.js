@@ -19,9 +19,9 @@ import BuilderMadeFor from './BuilderMadeFor'
 import BuilderNotes from './BuilderNotes'
 import BuilderOptionToggle from './BuilderOptionToggle'
 
-export const makePriceCals = (item, showCals) => {
+export const makePriceCals = (item, showCals, hidePrice) => {
   const zeroPrice = !!(item.price === '0.00' || item.price === 0)
-  const price = zeroPrice ? null : `${formatDollars(item.price)}`
+  const price = zeroPrice || hidePrice ? null : `${formatDollars(item.price)}`
   const cals = showCals && item.cals ? `${item.cals.toFixed(0)} cal` : null
   const separator = price && cals ? ' / ' : ''
   const priceCals = `${cals || ''}${separator}${price || ''}`
@@ -287,9 +287,13 @@ const BuilderGroup = styled('div')`
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    // flex-wrap: wrap;
     margin: 0 -0.5rem;
+    // transition: transform 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
   }
+
+  // & > span ~ div {
+  //   transform: translateY(5rem);
+  // }
 `
 
 const BuilderNameNotes = styled('div')`
@@ -389,6 +393,7 @@ const Builder = ({
   const toggleGroups = (evt, index) => {
     evt.preventDefault()
     setActiveGroup(index)
+    setActiveOption(null)
   }
 
   return (
@@ -461,50 +466,30 @@ const Builder = ({
                           const active = options.find(
                             (i) => `${group.id}-${i.id}` === activeOption
                           )
-                          console.log('active', active)
-                          // const props = {
-                          //   group,
-                          //   active,
-                          //   adjust: (quantity) =>
-                          //     setOptionQuantity(group.id, active.id, quantity),
-                          //   increment: () =>
-                          //     incrementOption(group.id, active.id),
-                          //   decrement: () =>
-                          //     decrementOption(group.id, active.id),
-                          //   allergens,
-                          //   displaySettings,
-                          //   activeOption,
-                          //   setActiveOption,
-                          // }
+                          const show = active ? true : false
+                          const props = {
+                            group,
+                            option: active,
+                            setOptionQuantity,
+                            incrementOption,
+                            decrementOption,
+                            setActiveOption,
+                          }
                           return (
                             <>
-                              <BuilderOptionToggle option={active} />
+                              <BuilderOptionToggle show={show} {...props} />
                               <div>
                                 {options.map((option) => {
+                                  const key = `${group.id}-${option.id}`
                                   const props = {
                                     group,
                                     option,
-                                    adjust: (quantity) =>
-                                      setOptionQuantity(
-                                        group.id,
-                                        option.id,
-                                        quantity
-                                      ),
-                                    increment: () =>
-                                      incrementOption(group.id, option.id),
-                                    decrement: () =>
-                                      decrementOption(group.id, option.id),
                                     allergens,
                                     displaySettings,
                                     activeOption,
                                     setActiveOption,
                                   }
-                                  return (
-                                    <BuilderOption
-                                      key={`${group.id}-${option.id}`}
-                                      {...props}
-                                    />
-                                  )
+                                  return <BuilderOption key={key} {...props} />
                                 })}
                               </div>
                             </>
