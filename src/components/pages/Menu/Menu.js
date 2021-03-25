@@ -1,14 +1,7 @@
-import React, {
-  useEffect,
-  createContext,
-  useContext,
-  useState,
-  useMemo,
-} from 'react'
+import React, { useEffect, createContext, useContext, useMemo } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isMobile } from 'react-device-detect'
 import {
   selectOrder,
   selectMenuVars,
@@ -31,8 +24,6 @@ import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Content, HeaderDefault, Main, ScreenreaderTitle } from '../..'
 import MenuContent from './MenuContent'
-import MenuHeader from './MenuHeader'
-import MenuMobileMenu from './MenuMobileMenu'
 
 export const MenuContext = createContext(null)
 
@@ -40,7 +31,6 @@ const Menu = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
-  const [showMenu, setShowMenu] = useState(false)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { menu: menuConfig } = useSelector(selectConfig)
   const { loadingMessage } = menuConfig
@@ -107,7 +97,6 @@ const Menu = () => {
         <title>Menu | {siteTitle}</title>
       </Helmet>
       <Content>
-        {/* <MenuHeader showMenu={showMenu} setShowMenu={setShowMenu} /> */}
         <HeaderDefault />
         <Main>
           <MenuContext.Provider
@@ -125,13 +114,6 @@ const Menu = () => {
               deals: validDeals,
             }}
           >
-            {isMobile && (
-              <MenuMobileMenu
-                order={order}
-                showMenu={showMenu}
-                setShowMenu={setShowMenu}
-              />
-            )}
             <ScreenreaderTitle>Menu</ScreenreaderTitle>
             <MenuContent />
           </MenuContext.Provider>

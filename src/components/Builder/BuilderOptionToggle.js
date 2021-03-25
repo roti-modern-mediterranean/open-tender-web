@@ -15,12 +15,16 @@ const BotView = styled('span')`
   background-color: ${(props) => props.theme.bgColors.light};
   border-color: ${(props) => props.theme.colors.beet};
   border-style: solid;
-  border-width: ${(props) => (props.show ? '0.1rem' : '0')};
+  border-width: 0;
   max-height: ${(props) =>
     props.showInfo ? '25rem' : props.show ? '5rem' : '0rem'};
   opacity: ${(props) => (props.show ? '1' : '0')};
   visiblity: ${(props) => (props.show ? 'visible' : 'hidden')};
-  margin: ${(props) => (props.show ? '0 0 1rem' : '0')};
+  margin: ${(props) => (props.show ? '0 0 2rem' : '0')};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    border-width: ${(props) => (props.show ? '0.1rem' : '0')};
+    margin: ${(props) => (props.show ? '0 0 1rem' : '0')};
+  }
 `
 
 const BotButtons = styled('div')`

@@ -9,7 +9,7 @@ const BuilderOptionImageView = styled('div')`
   padding: 50% 0;
   border-radius: 1.4rem;
   background-color: ${(props) => props.theme.bgColors.light};
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     border-radius: 0;
     background-color: transparent;
   }
@@ -43,12 +43,12 @@ const BuilderBackgroundImage = styled(BgImage)`
     width: 80%;
     height: 80%;
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    top: 5%;
-    left: 5%;
-    width: 90%;
-    height: 90%;
-  }
+  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  //   top: 5%;
+  //   left: 5%;
+  //   width: 90%;
+  //   height: 90%;
+  // }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     top: 0;
     left: 0;

@@ -8,7 +8,7 @@ import {
   Preface,
   useBuilder,
 } from '@open-tender/components'
-import { formatDollars } from '@open-tender/js'
+import { formatDollars, getWidth } from '@open-tender/js'
 
 import { CartFooter, ImageSpinner } from '..'
 import { ButtonSmall } from '../buttons'
@@ -20,6 +20,8 @@ import BuilderNotes from './BuilderNotes'
 import BuilderOptionToggle from './BuilderOptionToggle'
 import BuilderItemQuantiy from './BuilderItemQuantity'
 import { isBrowser } from 'react-device-detect'
+import { selectTheme } from '../../slices'
+import { useSelector } from 'react-redux'
 
 export const makePriceCals = (item, showCals, hidePrice) => {
   const zeroPrice = !!(item.price === '0.00' || item.price === 0)
@@ -50,6 +52,8 @@ const BuilderView = styled('form')`
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     width: 100%;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     padding: 0 0 14.5rem;
     margin: 0 auto;
   }
@@ -172,6 +176,12 @@ const BuilderIngredients = styled('div')`
     flex: 1;
     margin: 0;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    min-width: 100%;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    max-width: 100%;
+  }
 `
 
 const BuilderIngredientsHeader = styled('div')`
@@ -221,10 +231,8 @@ const BuilderToggle = styled(ButtonSmall)`
 `
 
 const BuilderGroupsContainer = styled('div')`
-  // padding: 0 0 3rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     background-color: ${(props) => props.theme.bgColors.light};
-    padding: 0;
   }
 `
 
@@ -344,6 +352,7 @@ const Builder = ({
   const [isOpen, setIsOpen] = useState(false)
   const [activeGroup, setActiveGroup] = useState(0)
   const [activeOption, setActiveOption] = useState(null)
+  const [perRow, setPerRow] = useState(3)
   const { groups, notes, madeFor, totalPrice } = item
   const imageUrl = item.imageUrl ? item.imageUrl : null
   const {
@@ -360,6 +369,18 @@ const Builder = ({
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete =
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
+  const theme = useSelector(selectTheme)
+  const mobileWidth = parseInt(theme.breakpoints.mobile.replace('px', ''))
+
+  useEffect(() => {
+    const width = getWidth()
+    const count = width && mobileWidth ? (width > mobileWidth ? 4 : 3) : 3
+    setPerRow(count)
+  }, [mobileWidth])
+
+  useEffect(() => {
+    if (isIncomplete) setIsOpen(true)
+  }, [isIncomplete])
 
   useEffect(() => {
     if (isOpen && !isBrowser) {
@@ -458,7 +479,7 @@ const Builder = ({
                 </BuilderGroupsNav>
                 <BuilderGroupContainer>
                   {groups.map((group, index) => {
-                    const chunked = chunkArray(group.options, 3)
+                    const chunked = chunkArray(group.options, perRow)
                     return (
                       <BuilderGroup isActive={index === activeGroup}>
                         {chunked.map((options) => {
@@ -483,6 +504,7 @@ const Builder = ({
                                 {options.map((option) => {
                                   const key = `${group.id}-${option.id}`
                                   const props = {
+                                    perRow,
                                     group,
                                     option,
                                     allergens,
