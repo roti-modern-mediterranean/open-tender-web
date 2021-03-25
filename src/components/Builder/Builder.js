@@ -18,6 +18,8 @@ import BuilderOption from './BuilderOption'
 import BuilderMadeFor from './BuilderMadeFor'
 import BuilderNotes from './BuilderNotes'
 import BuilderOptionToggle from './BuilderOptionToggle'
+import BuilderItemQuantiy from './BuilderItemQuantity'
+import { isBrowser } from 'react-device-detect'
 
 export const makePriceCals = (item, showCals, hidePrice) => {
   const zeroPrice = !!(item.price === '0.00' || item.price === 0)
@@ -164,7 +166,7 @@ const BuilderDescription = styled('p')`
 `
 
 const BuilderIngredients = styled('div')`
-  flex: 0 0 48rem;
+  flex: 0 0 50rem;
   margin: 0 0 0 6rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     flex: 1;
@@ -325,8 +327,6 @@ const Builder = ({
   cancel,
   soldOut,
   allergens,
-  renderHeader,
-  renderOption,
   displaySettings,
   cartId,
   windowRef,
@@ -338,9 +338,6 @@ const Builder = ({
     setQuantity,
     setMadeFor,
     setNotes,
-    toggleOption,
-    incrementOption,
-    decrementOption,
     setOptionQuantity,
   } = useBuilder(menuItem, soldOut)
   const ingredientsRef = useRef(null)
@@ -348,7 +345,6 @@ const Builder = ({
   const [activeGroup, setActiveGroup] = useState(0)
   const [activeOption, setActiveOption] = useState(null)
   const { groups, notes, madeFor, totalPrice } = item
-  console.log(item)
   const imageUrl = item.imageUrl ? item.imageUrl : null
   const {
     calories: showCals,
@@ -366,7 +362,7 @@ const Builder = ({
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !isBrowser) {
       const topOffset = ingredientsRef.current.getBoundingClientRect().top
       animateScroll.scrollTo(topOffset, {
         container: windowRef.current,
@@ -379,12 +375,16 @@ const Builder = ({
   const toggleIngredients = (evt) => {
     evt.preventDefault()
     if (isOpen) {
-      animateScroll.scrollTo(0, {
-        container: windowRef.current,
-        duration: 500,
-        smooth: true,
-      })
-      setTimeout(() => setIsOpen(false), 500)
+      if (!isBrowser) {
+        animateScroll.scrollTo(0, {
+          container: windowRef.current,
+          duration: 500,
+          smooth: true,
+        })
+        setTimeout(() => setIsOpen(false), 500)
+      } else {
+        setIsOpen(false)
+      }
     } else {
       setIsOpen(true)
     }
@@ -458,7 +458,6 @@ const Builder = ({
                 </BuilderGroupsNav>
                 <BuilderGroupContainer>
                   {groups.map((group, index) => {
-                    console.log(group)
                     const chunked = chunkArray(group.options, 3)
                     return (
                       <BuilderGroup isActive={index === activeGroup}>
@@ -468,16 +467,18 @@ const Builder = ({
                           )
                           const show = active ? true : false
                           const props = {
+                            show,
                             group,
                             option: active,
                             setOptionQuantity,
-                            incrementOption,
-                            decrementOption,
                             setActiveOption,
+                            setActiveGroup,
+                            index,
+                            lastIndex: groups.length - 1,
                           }
                           return (
                             <>
-                              <BuilderOptionToggle show={show} {...props} />
+                              <BuilderOptionToggle {...props} />
                               <div>
                                 {options.map((option) => {
                                   const key = `${group.id}-${option.id}`
@@ -518,9 +519,17 @@ const Builder = ({
       </BuilderIngredients>
       <BuilderFooter>
         <CartFooter
-          label={<span>Total Price</span>}
+          label={
+            <BuilderItemQuantiy
+              item={item}
+              increment={increment}
+              decrement={decrement}
+              setQuantity={setQuantity}
+            />
+          }
           total={
             <span>
+              Total Price
               <span>{priceTotal}</span>
             </span>
           }

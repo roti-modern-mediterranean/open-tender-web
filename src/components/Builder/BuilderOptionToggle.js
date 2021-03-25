@@ -7,7 +7,7 @@ import BuilderNutrition from './BuilderNutrition'
 const BotView = styled('span')`
   display: block;
   position: relative;
-  z-index: 2;
+  // z-index: 2;
   border-radius: 1.4rem;
   overflow: hidden;
   transition: all 250ms ease;
@@ -50,6 +50,9 @@ const BotIcon = styled(BotButton)`
   align-items: center;
   border-radius: 1.5rem;
   border: 0.1rem solid ${(props) => props.theme.colors.beet};
+  color: ${(props) => props.theme.colors[props.isOpen ? 'light' : 'beet']};
+  background-color: ${(props) =>
+    props.theme.colors[props.isOpen ? 'beet' : 'light']};
 
   span {
     text-transform: none;
@@ -75,14 +78,28 @@ const BuilderOptionToggleContent = ({
   option,
   setOptionQuantity,
   setActiveOption,
+  setActiveGroup,
+  index,
+  lastIndex,
 }) => {
   const [showInfo, setShowInfo] = useState(false)
-  const { nutritionalInfo, min = 0, max = 0 } = option || {}
+  const { nutritionalInfo, min = 0, max = 0, quantity: qty = 0 } = option || {}
+  const { max: groupMax = 0, quantity: groupQty = 0 } = group
+  const remaining = groupMax === 0 ? 1000 : groupMax - groupQty + qty
   const hasNutrition = checkHasNutritionalInfo(nutritionalInfo)
+
+  // if (show) {
+  //   console.log(min, max, qty)
+  //   console.log(groupMin, groupMax, groupQty)
+  //   console.log(remaining)
+  // }
 
   const setQuantity = (evt, quantity) => {
     evt.preventDefault()
     setOptionQuantity(group.id, option.id, quantity)
+    if (quantity === remaining && index + 1 <= lastIndex) {
+      setActiveGroup(index + 1)
+    }
     setActiveOption(null)
   }
 
@@ -105,7 +122,7 @@ const BuilderOptionToggleContent = ({
         <BotButton
           as="button"
           onClick={(evt) => setQuantity(evt, 1)}
-          disabled={min > 1 || max < 1}
+          disabled={min > 1 || remaining < 1}
         >
           Single
         </BotButton>
@@ -113,12 +130,17 @@ const BuilderOptionToggleContent = ({
         <BotButton
           as="button"
           onClick={(evt) => setQuantity(evt, 2)}
-          disabled={max < 2 || min >= 2}
+          disabled={max < 2 || remaining < 2}
         >
           Double
         </BotButton>
         <BotSeparator />
-        <BotIcon as="button" onClick={toggleNutrition} disabled={!hasNutrition}>
+        <BotIcon
+          as="button"
+          onClick={toggleNutrition}
+          disabled={!hasNutrition}
+          isOpen={showInfo}
+        >
           <span>i</span>
         </BotIcon>
       </BotButtons>
@@ -134,9 +156,10 @@ BuilderOptionToggleContent.propTypes = {
   group: propTypes.object,
   option: propTypes.object,
   setOptionQuantity: propTypes.func,
-  incrementOption: propTypes.func,
-  decrementOption: propTypes.func,
   setActiveOption: propTypes.func,
+  setActiveGroup: propTypes.func,
+  index: propTypes.number,
+  lastIndex: propTypes.number,
 }
 
 const BuilderOptionToggle = (props) => {

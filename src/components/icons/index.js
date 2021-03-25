@@ -1,4 +1,5 @@
 import ArrowLeft from './ArrowLeft'
+import Checkmark from './Checkmark'
 import ChevronDown from './ChevronDown'
 import ChevronLeft from './ChevronLeft'
 import ChevronUp from './ChevronUp'
@@ -14,6 +15,7 @@ export {
   ArrowLeft,
   CartEmpty,
   CartFull,
+  Checkmark,
   ChevronDown,
   ChevronLeft,
   ChevronUp,

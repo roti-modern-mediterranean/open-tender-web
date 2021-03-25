@@ -16,6 +16,7 @@ import CartButton from './CartButton'
 import CartClose from './CartClose'
 import CartFooter from './CartFooter'
 import CartItem from './CartItem'
+import CartItemQuantity from './CartItemQuantity'
 import Content from './Content'
 import Container from './Container'
 import Deals from './Deals'
@@ -116,6 +117,7 @@ export {
   CartClose,
   CartFooter,
   CartItem,
+  CartItemQuantity,
   Container,
   Content,
   Deals,

@@ -5,6 +5,7 @@ import { Heading } from '@open-tender/components'
 import { ImageSpinner } from '..'
 import { makePriceCals } from './Builder'
 import BuilderOptionImage from './BuilderOptionImage'
+import { Checkmark } from '../icons'
 
 const BuilderOptionView = styled('button')`
   position: relative;
@@ -71,6 +72,45 @@ const BuilderOptionArrow = styled('span')`
   visiblity: ${(props) => (props.show ? 'visible' : 'hidden')};
 `
 
+const BuilderOptionCountView = styled('span')`
+  display: block;
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  width: ${(props) => (props.quantity === 2 ? '4rem' : '2.6rem')};
+  height: ${(props) => (props.quantity === 2 ? '4rem' : '2.6rem')};
+  border-radius: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.beet};
+  transition: all 250ms ease;
+  opacity: ${(props) => (props.show ? '1' : '0')};
+  visiblity: ${(props) => (props.show ? 'visible' : 'hidden')};
+  transform: ${(props) => (props.show ? 'scale(1)' : 'scale(0)')};
+
+  & > span {
+    display: block;
+    font-family: 'Barlow', sans-serif;
+    font-size: 1.8rem;
+  }
+`
+
+const BuilderOptionCount = ({ quantity }) => {
+  return (
+    <BuilderOptionCountView show={quantity > 0} quantity={quantity}>
+      <span>{quantity === 2 ? '2X' : <Checkmark />}</span>
+    </BuilderOptionCountView>
+  )
+}
+
+BuilderOptionCount.displayName = 'BuilderOptionCount'
+BuilderOptionCount.propTypes = {
+  quantity: propTypes.number,
+}
+
 const BuilderOption = ({
   group,
   option,
@@ -86,6 +126,7 @@ const BuilderOption = ({
     group.included !== 0 &&
     (group.included === group.max || group.quantity < group.included)
   const priceCals = makePriceCals(option, showCals, hidePrice)
+  const { quantity } = option
   // const isCheckbox = group.options.filter((i) => i.max !== 1).length === 0
   // const groupAtMax = group.max !== 0 && group.quantity === group.max
   // const optionAtMax = option.max !== 0 && option.quantity === option.max
@@ -108,6 +149,7 @@ const BuilderOption = ({
   return (
     <BuilderOptionView onClick={onClick}>
       <BuilderOptionArrow show={isActive} />
+      <BuilderOptionCount quantity={quantity} />
       <BuilderOptionImage
         imageUrl={option.imageUrl}
         spinner={<ImageSpinner />}

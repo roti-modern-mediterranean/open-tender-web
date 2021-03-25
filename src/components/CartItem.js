@@ -5,6 +5,7 @@ import { formatDollars } from '@open-tender/js'
 import { Preface } from '@open-tender/components'
 
 import iconMap from './iconMap'
+import { CartItemQuantity } from '.'
 
 const CartItemView = styled('div')`
   display: flex;
@@ -21,46 +22,9 @@ const CartItemName = styled(Preface)`
   font-weight: normal;
   font-size: ${(props) => props.theme.fonts.sizes.big};
   line-height: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`
-
-const CartItemQuantity = styled('div')`
-  flex: 0 0 10rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  & > div {
-    background-color: transparent;
-    border-radius: 0;
-    min-height: 0;
-
-    button {
-      width: 3rem;
-      height: 3rem;
-      padding: 0;
-      border-radius: 1.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: ${(props) => props.theme.colors.beet};
-    }
-
-    input {
-      width: 3.6rem;
-      height: auto;
-      padding: 0;
-      border: 0;
-      line-height: 1;
-      font-family: ${(props) => props.theme.fonts.preface.family};
-      font-weight: 600;
-      font-size: ${(props) => props.theme.fonts.sizes.big};
-      color: ${(props) => props.theme.colors.primary};
-      background-color: transparent;
-    }
-  }
+  // white-space: nowrap;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
 `
 
 const CartItemPrice = styled(Preface)`

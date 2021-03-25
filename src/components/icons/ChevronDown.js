@@ -15,7 +15,7 @@ const ChevronDownView = styled('span')`
 const ChevronDown = ({ size = '1.2rem', color = null }) => {
   return (
     <ChevronDownView size={size} color={color}>
-      <svg width="12" height="6" viewBox="0 0 12 6" fill="none">
+      <svg viewBox="0 0 12 6" fill="none">
         <path d="M5.76953 6L0.269531 0.478236L0.745883 0L5.76953 5.04353L10.7932 0L11.2695 0.478236L5.76953 6Z" />
       </svg>
     </ChevronDownView>
