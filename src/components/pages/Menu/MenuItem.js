@@ -15,6 +15,7 @@ import iconMap from '../../iconMap'
 import { CardButton, CardButtons, CardImage, Tag } from '../..'
 import { MenuContext } from './Menu'
 import { useHistory } from 'react-router-dom'
+import { setTopOffset } from '../../../slices/miscSlice'
 
 const MenuItemView = styled('div')`
   cursor: pointer;
@@ -195,9 +196,11 @@ const MenuItem = ({ item, isInverted }) => {
     evt.preventDefault()
     evt.stopPropagation()
     if (!isSoldOut) {
+      const mainElement = document.getElementById('main')
+      const mainOffset = mainElement.getBoundingClientRect().top
+      dispatch(setTopOffset(-mainOffset))
       dispatch(setCurrentItem(item))
       history.push(`${menuSlug}/item/${slugify(item.name)}`)
-      // dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
     }
   }
 

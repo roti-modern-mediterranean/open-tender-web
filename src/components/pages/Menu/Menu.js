@@ -1,4 +1,10 @@
-import React, { useEffect, createContext, useContext, useMemo } from 'react'
+import React, {
+  useEffect,
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+} from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -24,13 +30,16 @@ import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Content, HeaderDefault, Main, ScreenreaderTitle } from '../..'
 import MenuContent from './MenuContent'
+import { selectTopOffset, setTopOffset } from '../../../slices/miscSlice'
 
 export const MenuContext = createContext(null)
 
 const Menu = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const [init, setInit] = useState(true)
   const { windowRef } = useContext(AppContext)
+  const topOffset = useSelector(selectTopOffset)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { menu: menuConfig } = useSelector(selectConfig)
   const { loadingMessage } = menuConfig
@@ -56,16 +65,21 @@ const Menu = () => {
   )
 
   useEffect(() => {
-    windowRef.current.scrollTop = 0
-    maybeRefreshVersion()
-  }, [windowRef])
+    if (init) {
+      windowRef.current.scrollTop = topOffset || 0
+      maybeRefreshVersion()
+      setInit(false)
+    }
+  }, [windowRef, topOffset, init])
 
   useEffect(() => {
     if (!revenueCenterId) {
       return history.push('/locations')
     } else if (groupOrderClosed) {
       return history.push('/review')
-    } else {
+    } else if (topOffset) {
+      dispatch(setTopOffset(null))
+    } else if (init) {
       const requested = orderType === 'CATERING' ? requestedAt : null
       dispatch(fetchAllergens())
       dispatch(fetchRevenueCenter(revenueCenterId, requested))
@@ -79,6 +93,8 @@ const Menu = () => {
     dispatch,
     history,
     groupOrderClosed,
+    topOffset,
+    init,
   ])
 
   useEffect(() => {
