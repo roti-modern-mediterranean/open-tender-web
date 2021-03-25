@@ -355,6 +355,25 @@ const makeGlobalStyles = (theme) => css`
     }
   }
 
+  .tooltip-enter,
+  .tooltip-exit.tooltip-exit-active {
+    transition: all 250ms ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10%);
+    // transform: scale(0);
+    // max-height: 0;
+  }
+
+  .tooltip-enter.tooltip-enter-active,
+  .tooltip-exit {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    // transform: scale(1);
+    // max-height: 5rem;
+  }
+
   .md-enter,
   .md-exit.md-exit-active {
     transition: all 250ms ease;

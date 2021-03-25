@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import { animateScroll } from 'react-scroll'
 import {
@@ -8,15 +9,33 @@ import {
   useBuilder,
 } from '@open-tender/components'
 import { formatDollars } from '@open-tender/js'
-import { useEffect, useRef, useState } from 'react'
 
 import { CartFooter, ImageSpinner } from '..'
 import { ButtonSmall } from '../buttons'
 import { ChevronDown, ChevronLeft, ChevronUp } from '../icons'
 import BuilderImage from './BuilderImage'
+import BuilderOption from './BuilderOption'
 import BuilderMadeFor from './BuilderMadeFor'
 import BuilderNotes from './BuilderNotes'
-import BuilderOptionImage from './BuilderOptionImage'
+import BuilderOptionToggle from './BuilderOptionToggle'
+
+export const makePriceCals = (item, showCals) => {
+  const zeroPrice = !!(item.price === '0.00' || item.price === 0)
+  const price = zeroPrice ? null : `${formatDollars(item.price)}`
+  const cals = showCals && item.cals ? `${item.cals.toFixed(0)} cal` : null
+  const separator = price && cals ? ' / ' : ''
+  const priceCals = `${cals || ''}${separator}${price || ''}`
+  return priceCals || null
+}
+
+const chunkArray = (array, size) => {
+  let result = []
+  for (let i = 0; i < array.length; i += size) {
+    let chunk = array.slice(i, i + size)
+    result.push(chunk)
+  }
+  return result
+}
 
 const BuilderView = styled('form')`
   position: relative;
@@ -258,62 +277,19 @@ const BuilderGroupContainer = styled('div')`
 `
 
 const BuilderGroup = styled('div')`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  overflow: hidden;
   transition: all 0.25s ease-in-out;
   opacity: ${(props) => (props.isActive ? '1' : '0')};
   visibility: ${(props) => (props.isActive ? 'visible' : 'hidden')};
   max-height: ${(props) => (props.isActive ? 'none' : '0')};
-  margin: 0 -0.5rem;
-`
+  overflow: ${(props) => (props.isActive ? 'visible' : 'hidden')};
 
-const BuilderOption = styled('button')`
-  display: block;
-  flex: 0 0 25%;
-  padding: 0 0.5rem;
-  margin: 0 0 1.5rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    flex: 0 0 16.66667%;
-    padding: 0;
-    margin: 0 0 1.5rem;
+  & > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    // flex-wrap: wrap;
+    margin: 0 -0.5rem;
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex: 0 0 20%;
-    padding: 0;
-    margin: 0 0 1.5rem;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex: 0 0 33.33333%;
-    padding: 0;
-    margin: 0 0 1.5rem;
-  }
-`
-
-const BuilderOptionInfo = styled('span')`
-  display: block;
-  width: 100%;
-  margin: 1rem 0 0;
-  text-align: center;
-  line-height: 1;
-`
-
-const BuilderOptionName = styled(Heading)`
-  display: block;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: ${(props) => props.theme.colors.primary};
-`
-
-const BuilderOptionPrice = styled(Heading)`
-  display: block;
-  font-size: 1rem;
-  font-weight: normal;
-  text-transform: none;
-  margin: 0.5rem 0 0;
-  color: ${(props) => props.theme.colors.primary};
 `
 
 const BuilderNameNotes = styled('div')`
@@ -339,15 +315,6 @@ const BuilderFooter = styled('div')`
   height: 14.5rem;
 `
 
-const makePriceCals = (item, showCals) => {
-  const zeroPrice = !!(item.price === '0.00' || item.price === 0)
-  const price = zeroPrice ? null : `${formatDollars(item.price)}`
-  const cals = showCals && item.cals ? `${item.cals.toFixed(0)} cal` : null
-  const separator = price && cals ? ' / ' : ''
-  const priceCals = `${cals || ''}${separator}${price || ''}`
-  return priceCals || null
-}
-
 const Builder = ({
   menuItem,
   addItemToCart,
@@ -372,10 +339,10 @@ const Builder = ({
     decrementOption,
     setOptionQuantity,
   } = useBuilder(menuItem, soldOut)
-  const scrollRef = useRef(null)
   const ingredientsRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const [activeGroup, setActiveGroup] = useState(0)
+  const [activeOption, setActiveOption] = useState(null)
   const { groups, notes, madeFor, totalPrice } = item
   console.log(item)
   const imageUrl = item.imageUrl ? item.imageUrl : null
@@ -487,25 +454,60 @@ const Builder = ({
                 <BuilderGroupContainer>
                   {groups.map((group, index) => {
                     console.log(group)
+                    const chunked = chunkArray(group.options, 3)
                     return (
                       <BuilderGroup isActive={index === activeGroup}>
-                        {group.options.map((option) => {
-                          const priceCals = makePriceCals(option, showCals)
+                        {chunked.map((options) => {
+                          const active = options.find(
+                            (i) => `${group.id}-${i.id}` === activeOption
+                          )
+                          console.log('active', active)
+                          // const props = {
+                          //   group,
+                          //   active,
+                          //   adjust: (quantity) =>
+                          //     setOptionQuantity(group.id, active.id, quantity),
+                          //   increment: () =>
+                          //     incrementOption(group.id, active.id),
+                          //   decrement: () =>
+                          //     decrementOption(group.id, active.id),
+                          //   allergens,
+                          //   displaySettings,
+                          //   activeOption,
+                          //   setActiveOption,
+                          // }
                           return (
-                            <BuilderOption>
-                              <BuilderOptionImage
-                                imageUrl={option.imageUrl}
-                                spinner={<ImageSpinner />}
-                              />
-                              <BuilderOptionInfo>
-                                <BuilderOptionName>
-                                  {option.name}
-                                </BuilderOptionName>
-                                <BuilderOptionPrice>
-                                  {priceCals}
-                                </BuilderOptionPrice>
-                              </BuilderOptionInfo>
-                            </BuilderOption>
+                            <>
+                              <BuilderOptionToggle option={active} />
+                              <div>
+                                {options.map((option) => {
+                                  const props = {
+                                    group,
+                                    option,
+                                    adjust: (quantity) =>
+                                      setOptionQuantity(
+                                        group.id,
+                                        option.id,
+                                        quantity
+                                      ),
+                                    increment: () =>
+                                      incrementOption(group.id, option.id),
+                                    decrement: () =>
+                                      decrementOption(group.id, option.id),
+                                    allergens,
+                                    displaySettings,
+                                    activeOption,
+                                    setActiveOption,
+                                  }
+                                  return (
+                                    <BuilderOption
+                                      key={`${group.id}-${option.id}`}
+                                      {...props}
+                                    />
+                                  )
+                                })}
+                              </div>
+                            </>
                           )
                         })}
                       </BuilderGroup>
