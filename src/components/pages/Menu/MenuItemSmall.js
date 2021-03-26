@@ -5,7 +5,7 @@ import { Heading } from '@open-tender/components'
 import { CardButton, CardButtons, CardImage } from '../..'
 import MenuItemDetails from './MenuItemDetails'
 
-const MenuItemView = styled('div')`
+const MenuItemSmallView = styled('div')`
   cursor: pointer;
   position: relative;
   width: 100%;
@@ -17,32 +17,33 @@ const MenuItemView = styled('div')`
     margin: 0;
   }
 
-  &.item-active {
-    margin: 0 0 2rem;
-  }
-
   &:hover .item-content-bg {
     transform: scaleY(1.15);
   }
+
+  &.item-active:hover .item-content-bg {
+    transform: scaleY(1);
+  }
 `
 
-const MenuItemImageView = styled('div')`
+const MenuItemSmallImageView = styled('div')`
   position: absolute;
   z-index: 3;
   top: -10.5rem;
   left: -2.5rem;
   width: 17.4rem;
   height: 17.4rem;
-  transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
-  transform-origin: top left;
+  transition: transform 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+  transform-origin: top center;
   transform: scale(1) translate3D(0, 0, 0);
 
   .item-active & {
-    transform: scale(0.57) translate3D(0, 8rem, 0);
+    top: -6.5rem;
+    transform: scale(0.57) translate3D(0, 0, 0);
   }
 `
 
-const MenuItemOverlay = styled('div')`
+const MenuItemSmallOverlay = styled('div')`
   position: absolute;
   z-index: 3;
   top: 0;
@@ -60,31 +61,29 @@ const MenuItemOverlay = styled('div')`
     props.isSoldOut ? props.theme.overlay.dark : 'transparent'};
 `
 
-const MenuItemContent = styled('div')`
+const MenuItemSmallContent = styled('div')`
   position: relative;
   z-index: 1;
   width: 12.4rem;
   height: 13rem;
-  padding: 6rem 1rem 0.5rem;
+  padding: 6rem 1rem 1.3rem;
   margin: 9rem 1rem 0;
   text-align: center;
   transition: background-color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
   // background-color: ${(props) => props.theme.bgColors.light};
 
   .item-active & {
-    height: auto;
-    min-height: 11.5rem;
-    padding: 2rem 2rem 2rem 7.5rem;
-    margin: 0 0 0 2rem;
-    background-color: ${(props) => props.theme.colors.light};
-
-    &:hover {
-      background-color: ${(props) => props.theme.colors.light};
-    }
+    height: 17rem;
+    padding: 3rem 1rem 1.3rem;
+    margin: 5rem 1rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
 `
 
-const MenuItemContentBackground = styled('div')`
+const MenuItemSmallContentBackground = styled('div')`
   position: absolute;
   z-index: 2;
   top: 0;
@@ -97,7 +96,8 @@ const MenuItemContentBackground = styled('div')`
   background-color: ${(props) => props.theme.bgColors.light};
 `
 
-const MenuItemContentHeader = styled('div')`
+const MenuItemSmallContentHeader = styled('div')`
+  flex-grow: 1;
   position: relative;
   z-index: 2;
   display: flex;
@@ -112,13 +112,13 @@ const MenuItemContentHeader = styled('div')`
     }
   }
 
-  .item-active & {
-    flex-direction: row;
-    justify-content: space-between;
-  }
+  // .item-active & {
+  //   flex-direction: row;
+  //   justify-content: space-between;
+  // }
 `
 
-const MenuItemName = styled(Heading)`
+const MenuItemSmallName = styled(Heading)`
   line-height: 1.1;
   font-size: 1.4rem;
   font-weight: 600;
@@ -131,6 +131,19 @@ const MenuItemName = styled(Heading)`
   // .item-active & span {
   //   color: ${(props) => props.theme.fonts.body.color};
   // }
+`
+
+const MenuItemSmallButtons = styled(CardButtons)`
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  flex-direction: column;
+  // justify-content: center;
+
+  button {
+    margin: 0.5rem 0 0;
+  }
 `
 
 const MenuItemSmall = ({
@@ -152,23 +165,26 @@ const MenuItemSmall = ({
   setIsActive,
 }) => {
   return (
-    <MenuItemView onClick={onClick} className={isActive ? 'item-active' : ''}>
-      <MenuItemContent isInverted={isInverted}>
-        <MenuItemImageView>
+    <MenuItemSmallView
+      onClick={onClick}
+      className={isActive ? 'item-active' : ''}
+    >
+      <MenuItemSmallContent isInverted={isInverted}>
+        <MenuItemSmallImageView>
           <CardImage imageUrl={imageUrl} isInverted={isInverted}>
             {itemTag && (
-              <MenuItemOverlay isSoldOut={isSoldOut}>
+              <MenuItemSmallOverlay isSoldOut={isSoldOut}>
                 <div>{itemTag}</div>
-              </MenuItemOverlay>
+              </MenuItemSmallOverlay>
             )}
           </CardImage>
-        </MenuItemImageView>
-        <MenuItemContentBackground className="item-content-bg" />
-        <MenuItemContentHeader>
-          <MenuItemName>{item.name}</MenuItemName>
+        </MenuItemSmallImageView>
+        <MenuItemSmallContentBackground className="item-content-bg" />
+        <MenuItemSmallContentHeader>
+          <MenuItemSmallName>{item.name}</MenuItemSmallName>
           <MenuItemDetails price={price} cals={cals} />
-        </MenuItemContentHeader>
-        <CardButtons>
+        </MenuItemSmallContentHeader>
+        <MenuItemSmallButtons>
           <CardButton
             ref={viewRef}
             onClick={handleView}
@@ -190,9 +206,9 @@ const MenuItemSmall = ({
               Add
             </CardButton>
           )}
-        </CardButtons>
-      </MenuItemContent>
-    </MenuItemView>
+        </MenuItemSmallButtons>
+      </MenuItemSmallContent>
+    </MenuItemSmallView>
   )
 }
 
