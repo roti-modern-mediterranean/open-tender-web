@@ -1,9 +1,11 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import iconMap from './iconMap'
 import { isBrowser } from 'react-device-detect'
 import { BackgroundContent, BackgroundImage } from '.'
+
+import { useTouchableObject, TouchDirection } from './SliderEvents'
 
 const ArrowView = styled('div')`
   position: absolute;
@@ -82,6 +84,27 @@ const SliderView = styled('div')`
   // display: flex;
 `
 
+const SliderWrapper = styled('div')`
+  display: flex;
+  height: 100%; 
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    transform: translate3D(${(props) => {
+      if(props.moveX){
+        return `${props.moveX*-1}px`
+      }
+      return `${props.index*-80}%`
+    }}, 0, 0);
+    transition: transform ${(props) => {
+      if(!props.moveX){
+        return `${props.transition}ms ease`;
+      } else {
+        return 'all 0s ease 0s'
+      }
+    }};
+  }
+`
+
 const Slide = styled('div')`
   position: absolute;
   z-index: ${(props) => props.index};
@@ -90,9 +113,18 @@ const Slide = styled('div')`
   left: 0;
   right: 0;
   display: flex;
-  transition: transform ${(props) => props.transition}ms ease;
   opacity: ${(props) => (props.active ? '1' : '0')};
-  transform: translate3D(${(props) => props.shift.toFixed(2)}%, 0, 0);
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 80%;
+    border-radius: 0.15rem;
+    opacity: 1;
+    padding: 0.5em 0 0.5em 0.5em;
+    transform: translate3D(${(props) => props.index*100}%, 0, 0);
+    transition: transform ${(props) => {
+      return `${props.transition}ms ease`;
+    }};
+  }
 `
 
 const defaultSettings = {
@@ -113,6 +145,7 @@ const SliderNew = ({ settings = {}, slides }) => {
   const [pause, setPause] = useState(false)
   const [index, setIndex] = useState(0)
   const [lastIndex, setLastIndex] = useState(0)
+  const [touchMove, setTouchMove] = useState(null)
   const {
     autoplay,
     transition,
@@ -137,6 +170,14 @@ const SliderNew = ({ settings = {}, slides }) => {
     (index > lastIndex && !(index === last && lastIndex === 0)) ||
     (index === 0 && lastIndex === last)
   const moveRight = !moveLeft
+
+  const onTouch = useCallback((direction, move) => {
+    if(direction === TouchDirection.right || direction === TouchDirection.left) {
+      setTouchMove(move)
+    }
+  }, [])
+
+  const touchProps = useTouchableObject(onTouch)
 
   useEffect(() => {
     if (autoplay) {
@@ -168,6 +209,7 @@ const SliderNew = ({ settings = {}, slides }) => {
     evt.preventDefault()
     evt.target.blur()
     if (idx >= 0 && idx <= count - 1) {
+      setTouchMove(null)
       setLastIndex(index)
       setIndex(idx)
     }
@@ -175,26 +217,29 @@ const SliderNew = ({ settings = {}, slides }) => {
 
   return (
     <SliderView ref={slider}>
-      {slides.map((slide, idx) => {
-        const shift = idx === index ? 0 : idx === prevIndex ? -100 : 100
-        const active =
-          idx === index ||
-          (moveLeft && idx === prevIndex) ||
-          (moveRight && idx === nextIndex)
-        return (
-          <Slide
-            key={slide.imageUrl}
-            transition={transitionSpeed}
-            index={idx}
-            shift={shift}
-            active={active}
-          >
-            <BackgroundImage {...slide}>
-              <BackgroundContent {...slide} />
-            </BackgroundImage>
-          </Slide>
-        )
-      })}
+      <SliderWrapper index={index} moveX={touchMove}
+      transition={transitionSpeed} {...touchProps}>
+        {slides.map((slide, idx) => {
+          const shift = idx
+          const active =
+            idx === index ||
+            (moveLeft && idx === prevIndex) ||
+            (moveRight && idx === nextIndex)
+          return (
+            <Slide
+              key={slide.imageUrl}
+              transition={transitionSpeed}
+              index={idx}
+              shift={shift}
+              active={active}
+            >
+              <BackgroundImage {...slide}>
+                <BackgroundContent {...slide} />
+              </BackgroundImage>
+            </Slide>
+          )
+        })}
+      </SliderWrapper>
       {showArrows && (
         <>
           <Arrow

@@ -9,6 +9,12 @@ const BackgroundImageView = styled('div')`
   position: relative;
   flex-grow: 1;
   background-color: ${(props) => props.theme.bgColors.secondary};
+  
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    overflow: hidden;
+    border-radius: 1em;
+    margin-left: 1em;
+  }
 `
 
 const BackgroundImageImage = styled(BgImage)`

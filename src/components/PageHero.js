@@ -16,6 +16,9 @@ const PageHeroView = styled('div')`
     // max-height: 100%;
     // min-height: 0;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 1em 0;
+  }
 `
 
 const PageHeroGreeting = styled('div')`
