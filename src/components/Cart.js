@@ -1,16 +1,18 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import {
   setCurrentItem,
   incrementItemInCart,
   decrementItemInCart,
   selectCart,
   removeItemFromCart,
+  selectMenuSlug,
 } from '@open-tender/redux'
 import { BuilderQuantity } from '@open-tender/components'
+import { slugify } from '@open-tender/js'
 
-import { openModal, selectDisplaySettings } from '../slices'
-
+import { selectDisplaySettings, toggleSidebar } from '../slices'
 import { MinusSign, PlusSign } from './icons'
 import { CartItem } from '.'
 
@@ -21,12 +23,15 @@ const quantityIconMap = {
 
 const Cart = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const cart = useSelector(selectCart)
   const displaySettings = useSelector(selectDisplaySettings)
+  const menuSlug = useSelector(selectMenuSlug)
 
   const editItem = (item) => {
     dispatch(setCurrentItem(item))
-    dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
+    dispatch(toggleSidebar())
+    history.push(`${menuSlug}/item/${slugify(item.name)}`)
   }
 
   const removeItem = (item) => {

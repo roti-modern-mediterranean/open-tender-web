@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { setCurrentItem, selectMenuSlug } from '@open-tender/redux'
 import {
@@ -10,12 +11,10 @@ import {
 } from '@open-tender/js'
 import { Heading, Preface } from '@open-tender/components'
 
-import { selectDisplaySettings, openModal } from '../../../slices'
+import { selectDisplaySettings, openModal, setTopOffset } from '../../../slices'
 import iconMap from '../../iconMap'
 import { CardButton, CardButtons, CardImage, Tag } from '../..'
 import { MenuContext } from './Menu'
-import { useHistory } from 'react-router-dom'
-import { setTopOffset } from '../../../slices/miscSlice'
 
 const MenuItemView = styled('div')`
   cursor: pointer;

@@ -371,6 +371,7 @@ const Builder = ({
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
   const theme = useSelector(selectTheme)
   const mobileWidth = parseInt(theme.breakpoints.mobile.replace('px', ''))
+  const isEdit = item.index !== undefined
 
   useEffect(() => {
     const width = getWidth()
@@ -379,8 +380,8 @@ const Builder = ({
   }, [mobileWidth])
 
   useEffect(() => {
-    if (isIncomplete) setIsOpen(true)
-  }, [isIncomplete])
+    if (isIncomplete || isEdit) setIsOpen(true)
+  }, [isIncomplete, isEdit])
 
   useEffect(() => {
     if (isOpen && !isBrowser) {

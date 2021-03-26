@@ -9,7 +9,6 @@ import {
   addItemToCart,
   selectSoldOut,
   selectSelectedAllergenNames,
-  // showNotification,
   selectGroupOrder,
   selectMenuSlug,
 } from '@open-tender/redux'
@@ -46,7 +45,6 @@ const MenuItem = () => {
 
   const addItem = (item) => {
     dispatch(addItemToCart(item))
-    // dispatch(showNotification(`${item.name} added to cart`))
     dispatch(setCurrentItem(null))
   }
 
