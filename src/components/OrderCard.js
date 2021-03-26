@@ -53,7 +53,7 @@ const OrderCard = ({ order, isLast }) => {
     .flat()
     .sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
     .reverse()
-  const imageUrl = images ? images[0].imageUrl : null
+  const imageUrl = images & images.length ? images[0].imageUrl : null
   const title = cart.map((i) => `${i.quantity} ${i.name}`).join(', ')
 
   const handleReorder = () => {

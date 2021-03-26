@@ -20,6 +20,12 @@ const CartItemQuantity = styled('div')`
       justify-content: center;
       align-items: center;
       background-color: ${(props) => props.theme.colors.beet};
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: ${(props) => props.theme.colors.primary};
+      }
     }
 
     input {

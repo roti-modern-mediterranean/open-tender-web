@@ -61,12 +61,20 @@ const MenuItemContent = styled('div')`
   background-color: ${(props) =>
     props.theme.bgColors[props.isInverted ? 'primary' : 'secondary']};
 
+  &:hover {
+    background-color: ${(props) => props.theme.colors.cardHover};
+  }
+
   .item-active & {
     height: auto;
     min-height: 11.5rem;
     padding: 2rem 2rem 2rem 7.5rem;
     margin: 0 0 0 2rem;
     background-color: ${(props) => props.theme.colors.light};
+
+    &:hover {
+      background-color: ${(props) => props.theme.colors.light};
+    }
   }
 `
 

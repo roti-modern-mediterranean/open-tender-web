@@ -72,7 +72,7 @@ const MenuItem = ({ item, category, isInverted }) => {
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete =
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
-  const { appearance } = category
+  const { appearance } = category || {}
 
   const handleView = (evt) => {
     evt.preventDefault()

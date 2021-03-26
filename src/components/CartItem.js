@@ -55,6 +55,13 @@ const CartItemEditButton = styled('button')`
   color: ${(props) => props.theme.colors.beet};
   border: 0.1rem solid ${(props) => props.theme.colors.beet};
 
+  &:hover,
+  &:active,
+  &:focus {
+    color: ${(props) => props.theme.colors.primary};
+    border: 0.1rem solid ${(props) => props.theme.colors.primary};
+  }
+
   span {
     display: block;
     width: 1.4rem;
