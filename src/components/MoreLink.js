@@ -2,7 +2,9 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { ButtonLink } from '@open-tender/components'
 import { isBrowser } from 'react-device-detect'
-import iconMap from './iconMap'
+import { ChevronRight, ArrowRight } from './icons'
+import { selectTheme } from '../slices'
+import { useSelector } from 'react-redux'
 
 const MoreLinkView = styled('span')`
   display: block;
@@ -29,21 +31,22 @@ const MoreLinkView = styled('span')`
     }
 
     span + span {
-      width: 2.2rem;
-      height: 2.2rem;
       line-height: 0;
-      margin: 0 0 0 0.5rem;
-
+      margin: 0 0 0 1rem;
       @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-        width: 1.5rem;
-        height: 1.5rem;
+        margin: 0 0 0 0.7rem;
       }
     }
   }
 `
 
 const MoreLink = ({ onClick, text = 'View all', icon, style = null }) => {
-  const defaultIcon = isBrowser ? iconMap.ChevronRight : iconMap.ArrowRight
+  const theme = useSelector(selectTheme)
+  const defaultIcon = isBrowser ? (
+    <ChevronRight color={theme.colors.paprika} size="0.9rem" />
+  ) : (
+    <ArrowRight color={theme.colors.beet} size="1.2rem" />
+  )
 
   return (
     <MoreLinkView style={style}>

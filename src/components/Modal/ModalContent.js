@@ -1,7 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Heading } from '@open-tender/components'
 
 import { ModalClose } from '.'
 
@@ -16,8 +15,12 @@ const ModalHeader = styled('div')`
 const ModalTitle = styled('p')`
   margin: 0;
   line-height: 1;
-  font-size: ${(props) => props.theme.fonts.sizes.h3};
-  color: ${(props) => props.theme.colors.secondary};
+  font-family: ${(props) => props.theme.fonts.preface.family};
+  font-size: 2.2rem;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: ${(props) => props.theme.colors.primary};
 
   span {
     color: ${(props) => props.theme.colors.secondary};
@@ -97,11 +100,7 @@ const ModalContent = ({
         {close && <ModalClose />}
         {hasHeader && (
           <ModalHeader>
-            {title && (
-              <ModalTitle id="dialogTitle">
-                <Heading>{title}</Heading>
-              </ModalTitle>
-            )}
+            {title && <ModalTitle id="dialogTitle">{title}</ModalTitle>}
             {subtitle && <ModalSubtitle>{subtitle}</ModalSubtitle>}
           </ModalHeader>
         )}

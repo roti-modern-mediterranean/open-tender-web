@@ -1,9 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 
-import { openModal } from '../../../slices'
 import {
   CardList,
   CardListItem,
@@ -11,10 +9,9 @@ import {
   CardListItemSmall,
   Container,
   PageTitle,
-  MoreLink,
 } from '../..'
 import MenuItem from './MenuItem'
-import iconMap from '../../iconMap'
+import MenuAllergenFilter from './MenuAllergenFilter'
 
 export const MenuCategoryView = styled('div')`
   opacity: 0;
@@ -33,13 +30,7 @@ export const MenuCategoryView = styled('div')`
   }
 `
 
-const AllergenFilterView = styled('div')`
-  margin: 0 0 0.5rem;
-`
-
 const MenuCategory = ({ category, isChild, index }) => {
-  const dispatch = useDispatch()
-
   return (
     <MenuCategoryView isChild={isChild} index={index}>
       <Container>
@@ -48,13 +39,7 @@ const MenuCategory = ({ category, isChild, index }) => {
           subtitle={category.description}
           style={{ alignItems: 'flex-end' }}
         >
-          <AllergenFilterView>
-            <MoreLink
-              onClick={() => dispatch(openModal({ type: 'allergens' }))}
-              text="Filter"
-              icon={iconMap.Sliders}
-            />
-          </AllergenFilterView>
+          <MenuAllergenFilter />
         </PageTitle>
         {category.appearance === 'small' ? (
           <CardListSmall>
