@@ -22,6 +22,7 @@ export const MenuCategoryView = styled('div')`
 `
 
 const MenuCategory = ({ category, isChild, index }) => {
+  console.log(category)
   return (
     <MenuCategoryView isChild={isChild} index={index}>
       <Container>
@@ -32,7 +33,7 @@ const MenuCategory = ({ category, isChild, index }) => {
         <CardList>
           {category.items.map((item) => (
             <CardListItem key={item.id}>
-              <MenuItem item={item} />
+              <MenuItem item={item} category={category} />
             </CardListItem>
           ))}
         </CardList>
