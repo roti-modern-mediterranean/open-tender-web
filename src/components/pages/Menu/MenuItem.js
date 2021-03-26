@@ -3,15 +3,19 @@ import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styled from '@emotion/styled'
-import { setCurrentItem, selectMenuSlug } from '@open-tender/redux'
+import {
+  setCurrentItem,
+  selectMenuSlug,
+  addItemToCart,
+} from '@open-tender/redux'
 import {
   convertStringToArray,
   makeDisplayPrice,
   slugify,
 } from '@open-tender/js'
-import { Heading, Preface } from '@open-tender/components'
+import { Heading, Preface, useBuilder } from '@open-tender/components'
 
-import { selectDisplaySettings, openModal, setTopOffset } from '../../../slices'
+import { selectDisplaySettings, setTopOffset } from '../../../slices'
 import iconMap from '../../iconMap'
 import { CardButton, CardButtons, CardImage, Tag } from '../..'
 import { MenuContext } from './Menu'
@@ -190,6 +194,11 @@ const MenuItem = ({ item, isInverted }) => {
       bgColor="error"
     />
   ) : null
+  const { item: builtItem } = useBuilder(item, soldOut)
+  const { groups, totalPrice } = builtItem
+  const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
+  const isIncomplete =
+    totalPrice === 0 || item.quantity === '' || groupsBelowMin
 
   const handleView = (evt) => {
     evt.preventDefault()
@@ -206,9 +215,8 @@ const MenuItem = ({ item, isInverted }) => {
   const handleAdd = (evt) => {
     evt.preventDefault()
     evt.stopPropagation()
-    if (!isSoldOut) {
-      dispatch(setCurrentItem(item))
-      dispatch(openModal({ type: 'item', args: { focusFirst: true } }))
+    if (!isSoldOut && !isIncomplete) {
+      dispatch(addItemToCart(builtItem))
     }
   }
 
@@ -271,7 +279,7 @@ const MenuItem = ({ item, isInverted }) => {
               onClick={handleAdd}
               onFocus={() => setIsActive(true)}
               // onBlur={() => setIsActive(false)}
-              disabled={isSoldOut}
+              disabled={isSoldOut || isIncomplete}
             >
               Add
             </CardButton>
