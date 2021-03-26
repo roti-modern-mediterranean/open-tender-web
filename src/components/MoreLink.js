@@ -1,3 +1,4 @@
+import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { ButtonLink } from '@open-tender/components'
 import { isBrowser } from 'react-device-detect'
@@ -41,17 +42,24 @@ const MoreLinkView = styled('span')`
   }
 `
 
-const MoreLink = ({ onClick, text = 'View all', icon }) => {
+const MoreLink = ({ onClick, text = 'View all', icon, style = null }) => {
   const defaultIcon = isBrowser ? iconMap.ChevronRight : iconMap.ArrowRight
 
   return (
-    <MoreLinkView>
+    <MoreLinkView style={style}>
       <ButtonLink onClick={onClick}>
         <span>{text}</span>
         <span>{icon || defaultIcon}</span>
       </ButtonLink>
     </MoreLinkView>
   )
+}
+
+MoreLink.displayName = 'MoreLink'
+MoreLink.propTypes = {
+  category: propTypes.object,
+  isChild: propTypes.bool,
+  index: propTypes.bool,
 }
 
 export default MoreLink

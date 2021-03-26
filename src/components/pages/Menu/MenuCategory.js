@@ -1,15 +1,20 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import MenuItem from './MenuItem'
+import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
+
+import { openModal } from '../../../slices'
 import {
   CardList,
   CardListItem,
   CardListSmall,
   CardListItemSmall,
   Container,
-  PageSectionHeader,
+  PageTitle,
+  MoreLink,
 } from '../..'
+import MenuItem from './MenuItem'
+import iconMap from '../../iconMap'
 
 export const MenuCategoryView = styled('div')`
   opacity: 0;
@@ -28,14 +33,29 @@ export const MenuCategoryView = styled('div')`
   }
 `
 
+const AllergenFilterView = styled('div')`
+  margin: 0 0 0.5rem;
+`
+
 const MenuCategory = ({ category, isChild, index }) => {
+  const dispatch = useDispatch()
+
   return (
     <MenuCategoryView isChild={isChild} index={index}>
       <Container>
-        <PageSectionHeader>
-          {isChild ? <h3>{category.name}</h3> : <h2>{category.name}</h2>}
-          {category.description && <p>{category.description}</p>}
-        </PageSectionHeader>
+        <PageTitle
+          title={category.name}
+          subtitle={category.description}
+          style={{ alignItems: 'flex-end' }}
+        >
+          <AllergenFilterView>
+            <MoreLink
+              onClick={() => dispatch(openModal({ type: 'allergens' }))}
+              text="Filter"
+              icon={iconMap.Sliders}
+            />
+          </AllergenFilterView>
+        </PageTitle>
         {category.appearance === 'small' ? (
           <CardListSmall>
             {category.items.map((item) => (

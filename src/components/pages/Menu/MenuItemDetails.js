@@ -21,22 +21,30 @@ const MenuItemCals = styled(Preface)`
   color: ${(props) => props.theme.fonts.body.color};
   font-weight: normal;
   font-size: 1.5rem;
-  margin: 0 0 0 0.3rem;
+  margin: 0 0 0 0.2rem;
+  text-transform: none;
 
   span {
     font-size: 1.1rem;
   }
 `
 
+const MenuItemDetailsSeparator = styled(Preface)`
+  color: ${(props) => props.theme.fonts.body.color};
+  font-weight: normal;
+  font-size: 1.5rem;
+  font-size: 1.1rem;
+  margin: 0 0 0 0.3rem;
+`
+
 const MenuItemDetails = ({ price, cals }) => {
   return (
     <MenuItemDetailsView>
       {price && <MenuItemPrice>{price}</MenuItemPrice>}
-      {cals && (
-        <MenuItemCals>
-          <span>/</span> {cals} cals
-        </MenuItemCals>
-      )}
+      {price && cals ? (
+        <MenuItemDetailsSeparator>/</MenuItemDetailsSeparator>
+      ) : null}
+      {cals && <MenuItemCals>{cals} Cal</MenuItemCals>}
     </MenuItemDetailsView>
   )
 }
