@@ -401,6 +401,21 @@ const makeGlobalStyles = (theme) => css`
     transform: translateX(0);
   }
 
+  .slide-up-enter,
+  .slide-up-exit.slide-up-exit-active {
+    transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3D(0, 100%, 0);
+  }
+
+  .slide-up-enter.slide-up-enter-active,
+  .slide-up-exit {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3D(0, 0, 0);
+  }
+
   .overlay-enter,
   .overlay-exit.overlay-exit-active {
     transition: all 250ms ease;

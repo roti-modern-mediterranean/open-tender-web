@@ -38,7 +38,7 @@ const OrderCardItem = ({ item }) => {
     } else {
       const orderItem = rehydrateOrderItem(menuItem, item)
       dispatch(addItemToCart(orderItem))
-      dispatch(showNotification('Item added to cart!'))
+      // dispatch(showNotification('Item added to cart!'))
     }
   }
 

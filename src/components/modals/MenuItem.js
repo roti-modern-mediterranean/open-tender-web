@@ -8,7 +8,7 @@ import {
   addItemToCart,
   selectSoldOut,
   selectSelectedAllergenNames,
-  showNotification,
+  // showNotification,
   selectGroupOrder,
 } from '@open-tender/redux'
 import { BuilderOption, BuilderHeader } from '@open-tender/components'
@@ -58,7 +58,7 @@ const MenuItem = () => {
 
   const handleAddItem = (item) => {
     dispatch(addItemToCart(item))
-    dispatch(showNotification(`${item.name} added to cart`))
+    // dispatch(showNotification(`${item.name} added to cart`))
     dispatch(closeModal())
     setTimeout(() => {
       dispatch(setCurrentItem(null))
