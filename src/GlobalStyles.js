@@ -489,6 +489,11 @@ const makeGlobalStyles = (theme) => css`
     transform: translateY(0);
   }
 
+  .scale-up {
+    transition: all 250ms ease;
+    transform: scale(1.1);
+  }
+
   .react-datepicker__navigation--previous {
     border-right-color: ${theme.links.primary.color};
   }

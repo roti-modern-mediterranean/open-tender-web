@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -32,6 +32,7 @@ const CartCount = styled('span')`
 const Cart = ({ text = 'Order Now' }) => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const [className, setClassName] = useState('')
   const { orderType, serviceType } = useSelector(selectOrder)
   const canOrder = useSelector(selectCanOrder)
   const cartQuantity = useSelector(selectCartQuantity)
@@ -42,6 +43,14 @@ const Cart = ({ text = 'Order Now' }) => {
   const size = isBrowser ? 36 : 24
   const fontSize = isBrowser ? '1.5rem' : '1.0rem'
   const style = isBrowser ? null : { backgroundColor: 'transparent' }
+
+  useEffect(() => {
+    setClassName('scale-up')
+    const timer = setTimeout(() => {
+      setClassName('')
+    }, 250)
+    return () => clearTimeout(timer)
+  }, [cartQuantity])
 
   const onClick = () => {
     if (!orderType || !serviceType) {
@@ -57,6 +66,7 @@ const Cart = ({ text = 'Order Now' }) => {
       offset="right"
       label="View Cart"
       onClick={() => dispatch(toggleSidebar())}
+      style={className ? { transform: 'scale(1.1)' } : null}
     >
       {cartQuantity > 0 && (
         <CartCount fontSize={fontSize}>{cartQuantity}</CartCount>
