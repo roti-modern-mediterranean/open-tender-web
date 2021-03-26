@@ -2,7 +2,6 @@ import React, { useContext, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import styled from '@emotion/styled'
 import {
   setCurrentItem,
   selectMenuSlug,
@@ -14,13 +13,14 @@ import {
   makeDisplayPrice,
   slugify,
 } from '@open-tender/js'
-import { Heading, Preface, useBuilder } from '@open-tender/components'
+import { useBuilder } from '@open-tender/components'
 
 import { selectDisplaySettings, setTopOffset } from '../../../slices'
 import iconMap from '../../iconMap'
-import { CardButton, CardButtons, CardImage, Tag } from '../..'
+import { Tag } from '../..'
 import { MenuContext } from './Menu'
 import MenuItemDefault from './MenuItemDefault'
+import MenuItemSmall from './MenuItemSmall'
 
 const MenuItem = ({ item, category, isInverted }) => {
   const dispatch = useDispatch()
@@ -106,6 +106,7 @@ const MenuItem = ({ item, category, isInverted }) => {
   }
 
   const props = {
+    menuConfig,
     onClick: (evt) => handleClick(evt),
     isActive,
     isInverted,
@@ -120,11 +121,14 @@ const MenuItem = ({ item, category, isInverted }) => {
     addRef,
     handleView,
     handleAdd,
-    menuConfig,
     setIsActive,
   }
 
-  return <MenuItemDefault ref={container} {...props} />
+  return appearance === 'small' ? (
+    <MenuItemSmall ref={container} {...props} />
+  ) : (
+    <MenuItemDefault ref={container} {...props} />
+  )
 }
 
 MenuItem.displayName = 'MenuItem'

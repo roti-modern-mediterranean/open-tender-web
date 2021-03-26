@@ -10,7 +10,12 @@ import Card from './Card'
 import CardButton from './CardButton'
 import CardButtons from './CardButtons'
 import CardImage from './CardImage'
-import { CardList, CardListItem } from './CardList'
+import {
+  CardList,
+  CardListItem,
+  CardListSmall,
+  CardListItemSmall,
+} from './CardList'
 import Cart from './Cart'
 import CartButton from './CartButton'
 import CartClose from './CartClose'
@@ -113,6 +118,8 @@ export {
   CardImage,
   CardList,
   CardListItem,
+  CardListSmall,
+  CardListItemSmall,
   Cart,
   CartButton,
   CartClose,

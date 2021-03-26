@@ -10,22 +10,29 @@ const MenuItemView = styled('div')`
   position: relative;
   width: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  margin: 0 0 5rem;
+  margin: 0 0 2rem;
+  // border: 0.1rem solid ${(props) => props.theme.colors.light};
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0;
+  }
 
   &.item-active {
     margin: 0 0 2rem;
+  }
+
+  &:hover .item-content-bg {
+    transform: scaleY(1.15);
   }
 `
 
 const MenuItemImageView = styled('div')`
   position: absolute;
-  z-index: 1;
-  top: -4rem;
-  left: -2rem;
-  width: 19rem;
-  height: 19rem;
+  z-index: 3;
+  top: -10.5rem;
+  left: -2.5rem;
+  width: 17.4rem;
+  height: 17.4rem;
   transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
   transform-origin: top left;
   transform: scale(1) translate3D(0, 0, 0);
@@ -54,17 +61,15 @@ const MenuItemOverlay = styled('div')`
 `
 
 const MenuItemContent = styled('div')`
-  height: 11.5rem;
-  padding: 2rem 2rem 2rem 6rem;
-  margin: 0 0 0 10.5rem;
+  position: relative;
+  z-index: 1;
+  width: 12.4rem;
+  height: 13rem;
+  padding: 6rem 1rem 0.5rem;
+  margin: 9rem 1rem 0;
+  text-align: center;
   transition: background-color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
-  border-radius: ${(props) => props.theme.border.radius};
-  background-color: ${(props) =>
-    props.theme.bgColors[props.isInverted ? 'primary' : 'secondary']};
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.cardHover};
-  }
+  // background-color: ${(props) => props.theme.bgColors.light};
 
   .item-active & {
     height: auto;
@@ -79,9 +84,33 @@ const MenuItemContent = styled('div')`
   }
 `
 
+const MenuItemContentBackground = styled('div')`
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 1.4rem;
+  transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+  transform-origin: top center;
+  background-color: ${(props) => props.theme.bgColors.light};
+`
+
 const MenuItemContentHeader = styled('div')`
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
+
+  p span {
+    font-size: 1.4rem;
+    font-family: ${(props) => props.theme.fonts.headings.family};
+
+    &:first-of-type {
+      font-weight: 600;
+    }
+  }
 
   .item-active & {
     flex-direction: row;
@@ -89,33 +118,22 @@ const MenuItemContentHeader = styled('div')`
   }
 `
 
-const MenuItemName = styled('p')`
+const MenuItemName = styled(Heading)`
   line-height: 1.1;
-  font-size: 2rem;
-  color: ${(props) => props.theme.fonts.headings.color};
+  font-size: 1.4rem;
+  font-weight: 600;
+  max-height: 3.1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: ${(props) => props.theme.fonts.body.color};
   transition: color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
 
-  .item-active & span {
-    color: ${(props) => props.theme.fonts.body.color};
-  }
+  // .item-active & span {
+  //   color: ${(props) => props.theme.fonts.body.color};
+  // }
 `
 
-const MenuItemDescription = styled('p')`
-  opacity: 0;
-  max-height: 0;
-  padding: 0;
-  line-height: ${(props) => props.theme.lineHeight};
-  color: ${(props) => props.theme.fonts.body.color};
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-
-  .item-active & {
-    opacity: 1;
-    max-height: none;
-    padding: 0.5rem 0 2rem;
-  }
-`
-
-const MenuItemDefault = ({
+const MenuItemSmall = ({
   onClick,
   isActive,
   isInverted,
@@ -135,25 +153,21 @@ const MenuItemDefault = ({
 }) => {
   return (
     <MenuItemView onClick={onClick} className={isActive ? 'item-active' : ''}>
-      <MenuItemImageView>
-        <CardImage imageUrl={imageUrl} isInverted={isInverted}>
-          {itemTag && (
-            <MenuItemOverlay isSoldOut={isSoldOut}>
-              <div>{itemTag}</div>
-            </MenuItemOverlay>
-          )}
-        </CardImage>
-      </MenuItemImageView>
       <MenuItemContent isInverted={isInverted}>
+        <MenuItemImageView>
+          <CardImage imageUrl={imageUrl} isInverted={isInverted}>
+            {itemTag && (
+              <MenuItemOverlay isSoldOut={isSoldOut}>
+                <div>{itemTag}</div>
+              </MenuItemOverlay>
+            )}
+          </CardImage>
+        </MenuItemImageView>
+        <MenuItemContentBackground className="item-content-bg" />
         <MenuItemContentHeader>
-          <MenuItemName>
-            <Heading>{item.name}</Heading>
-          </MenuItemName>
+          <MenuItemName>{item.name}</MenuItemName>
           <MenuItemDetails price={price} cals={cals} />
         </MenuItemContentHeader>
-        {item.description && (
-          <MenuItemDescription>{item.description}</MenuItemDescription>
-        )}
         <CardButtons>
           <CardButton
             ref={viewRef}
@@ -182,8 +196,8 @@ const MenuItemDefault = ({
   )
 }
 
-MenuItemDefault.displayName = 'MenuItemDefault'
-MenuItemDefault.propTypes = {
+MenuItemSmall.displayName = 'MenuItemSmall'
+MenuItemSmall.propTypes = {
   menuConfig: propTypes.object,
   onClick: propTypes.func,
   isActive: propTypes.bool,
@@ -208,4 +222,4 @@ MenuItemDefault.propTypes = {
   setIsActive: propTypes.func,
 }
 
-export default MenuItemDefault
+export default MenuItemSmall
