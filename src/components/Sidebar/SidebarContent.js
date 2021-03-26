@@ -44,6 +44,7 @@ const SidebarView = styled('aside')`
 `
 
 const SidebarHeader = styled('div')`
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;

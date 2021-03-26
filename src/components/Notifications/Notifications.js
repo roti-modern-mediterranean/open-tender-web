@@ -14,7 +14,7 @@ const NotificationsView = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     left: ${(props) => props.theme.layout.paddingMobile};
     right: auto;
-    bottom: 2rem;
+    bottom: 2.5rem;
   }
 `
 

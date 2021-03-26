@@ -7,6 +7,7 @@ import {
   setCurrentItem,
   selectMenuSlug,
   addItemToCart,
+  showNotification,
 } from '@open-tender/redux'
 import {
   convertStringToArray,
@@ -217,6 +218,7 @@ const MenuItem = ({ item, isInverted }) => {
     evt.stopPropagation()
     if (!isSoldOut && !isIncomplete) {
       dispatch(addItemToCart(builtItem))
+      dispatch(showNotification(`${builtItem.name} added to cart!`))
     }
   }
 
