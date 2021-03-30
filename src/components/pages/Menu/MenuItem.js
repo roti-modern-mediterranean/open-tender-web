@@ -57,16 +57,6 @@ const MenuItem = ({ item, category, isInverted }) => {
     allergenAlerts && allergens.length
       ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
       : []
-  const hasAllergens = allergenAlert.length > 0
-  const itemTag = isSoldOut ? (
-    <Tag icon={iconMap.Slash} text={soldOutMsg} bgColor="alert" />
-  ) : hasAllergens ? (
-    <Tag
-      icon={iconMap.AlertCircle}
-      text={`Contains ${allergenAlert.join(', ')}`}
-      bgColor="error"
-    />
-  ) : null
   const { item: builtItem } = useBuilder(item, soldOut)
   const { groups, totalPrice } = builtItem
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
@@ -96,6 +86,7 @@ const MenuItem = ({ item, category, isInverted }) => {
   }
 
   const handleClick = () => {
+    if (isSoldOut) return
     if (isActive) {
       viewRef.current.blur()
       addRef.current && addRef.current.blur()
@@ -114,7 +105,7 @@ const MenuItem = ({ item, category, isInverted }) => {
     isIncomplete,
     item,
     imageUrl,
-    itemTag,
+    allergenAlert,
     price,
     cals,
     viewRef,

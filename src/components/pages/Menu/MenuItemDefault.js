@@ -1,12 +1,13 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Heading } from '@open-tender/components'
+import { Heading, Preface } from '@open-tender/components'
 
 import { CardButton, CardButtons, CardImage } from '../..'
 import MenuItemDetails from './MenuItemDetails'
+import MenuItemAllergens from './MenuItemAllergens'
 
 const MenuItemView = styled('div')`
-  cursor: pointer;
+  cursor: ${(props) => (props.isSoldOut ? 'default' : 'pointer')};
   position: relative;
   width: 100%;
   display: flex;
@@ -29,32 +30,21 @@ const MenuItemImageView = styled('div')`
   transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
   transform-origin: top left;
   transform: scale(1) translate3D(0, 0, 0);
+  opacity: ${(props) => (props.isSoldOut ? '0.5' : '1.0')};
 
   .item-active & {
     transform: scale(0.57) translate3D(0, 8rem, 0);
   }
 `
 
-const MenuItemOverlay = styled('div')`
-  position: absolute;
-  z-index: 3;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border-radius: ${(props) => props.theme.border.radius};
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-  background-color: ${(props) =>
-    props.isSoldOut ? props.theme.overlay.dark : 'transparent'};
+const MenuItemSoldOut = styled(Preface)`
+  color: ${(props) => props.theme.colors.alert};
+  font-size: 1.6rem;
+  font-weight: 500;
 `
 
 const MenuItemContent = styled('div')`
-  height: 11.5rem;
+  min-height: 11.5rem;
   padding: 2rem 2rem 2rem 6rem;
   margin: 0 0 0 10.5rem;
   transition: background-color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
@@ -63,13 +53,16 @@ const MenuItemContent = styled('div')`
     props.theme.bgColors[props.isInverted ? 'primary' : 'secondary']};
 
   &:hover {
-    background-color: ${(props) => props.theme.colors.cardHover};
+    background-color: ${(props) =>
+      props.isSoldOut
+        ? props.theme.bgColors[props.isInverted ? 'primary' : 'secondary']
+        : props.theme.colors.cardHover};
   }
 
   .item-active & {
     height: auto;
     min-height: 11.5rem;
-    padding: 2rem 2rem 2rem 7.5rem;
+    padding: 2rem 2rem 1rem 7.5rem;
     margin: 0 0 0 2rem;
     background-color: ${(props) => props.theme.colors.light};
 
@@ -111,7 +104,7 @@ const MenuItemDescription = styled('p')`
   .item-active & {
     opacity: 1;
     max-height: none;
-    padding: 0.5rem 0 2rem;
+    padding: 0.5rem 0 0;
   }
 `
 
@@ -123,7 +116,7 @@ const MenuItemDefault = ({
   isIncomplete,
   item,
   imageUrl,
-  itemTag,
+  allergenAlert,
   price,
   cals,
   viewRef,
@@ -134,27 +127,29 @@ const MenuItemDefault = ({
   setIsActive,
 }) => {
   return (
-    <MenuItemView onClick={onClick} className={isActive ? 'item-active' : ''}>
-      <MenuItemImageView>
-        <CardImage imageUrl={imageUrl} isInverted={isInverted}>
-          {itemTag && (
-            <MenuItemOverlay isSoldOut={isSoldOut}>
-              <div>{itemTag}</div>
-            </MenuItemOverlay>
-          )}
-        </CardImage>
+    <MenuItemView
+      onClick={onClick}
+      isSoldOut={isSoldOut}
+      className={isActive ? 'item-active' : ''}
+    >
+      <MenuItemImageView isSoldOut={isSoldOut}>
+        <CardImage imageUrl={imageUrl} isInverted={isInverted} />
       </MenuItemImageView>
-      <MenuItemContent isInverted={isInverted}>
+      <MenuItemContent isInverted={isInverted} isSoldOut={isSoldOut}>
         <MenuItemContentHeader>
           <MenuItemName>
             <Heading>{item.name}</Heading>
           </MenuItemName>
           <MenuItemDetails price={price} cals={cals} />
+          {isSoldOut && (
+            <MenuItemSoldOut as="p">Sold out for the day</MenuItemSoldOut>
+          )}
         </MenuItemContentHeader>
         {item.description && (
           <MenuItemDescription>{item.description}</MenuItemDescription>
         )}
-        <CardButtons>
+        <MenuItemAllergens allergens={allergenAlert} />
+        <CardButtons style={isActive ? { margin: '2rem 0 0' } : null}>
           <CardButton
             ref={viewRef}
             onClick={handleView}
@@ -192,7 +187,7 @@ MenuItemDefault.propTypes = {
   isIncomplete: propTypes.bool,
   item: propTypes.object,
   imageUrl: propTypes.string,
-  itemTag: propTypes.element,
+  allergenAlert: propTypes.array,
   price: propTypes.string,
   cals: propTypes.number,
   viewRef: propTypes.oneOfType([
