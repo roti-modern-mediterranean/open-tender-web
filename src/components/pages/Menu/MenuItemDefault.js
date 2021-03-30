@@ -37,12 +37,6 @@ const MenuItemImageView = styled('div')`
   }
 `
 
-const MenuItemSoldOut = styled(Preface)`
-  color: ${(props) => props.theme.colors.alert};
-  font-size: 1.6rem;
-  font-weight: 500;
-`
-
 const MenuItemContent = styled('div')`
   min-height: 11.5rem;
   padding: 2rem 2rem 2rem 6rem;
@@ -62,7 +56,7 @@ const MenuItemContent = styled('div')`
   .item-active & {
     height: auto;
     min-height: 11.5rem;
-    padding: 2rem 2rem 1rem 7.5rem;
+    padding: 2rem 2rem 2rem 7.5rem;
     margin: 0 0 0 2rem;
     background-color: ${(props) => props.theme.colors.light};
 
@@ -108,6 +102,12 @@ const MenuItemDescription = styled('p')`
   }
 `
 
+const MenuItemSoldOut = styled(Preface)`
+  color: ${(props) => props.theme.colors.alert};
+  font-size: 1.6rem;
+  font-weight: 500;
+`
+
 const MenuItemDefault = ({
   onClick,
   isActive,
@@ -149,7 +149,7 @@ const MenuItemDefault = ({
           <MenuItemDescription>{item.description}</MenuItemDescription>
         )}
         <MenuItemAllergens allergens={allergenAlert} />
-        <CardButtons style={isActive ? { margin: '2rem 0 0' } : null}>
+        <CardButtons style={isActive ? { margin: '1.5rem 0 0' } : null}>
           <CardButton
             ref={viewRef}
             onClick={handleView}

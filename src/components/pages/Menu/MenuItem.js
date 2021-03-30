@@ -16,8 +16,6 @@ import {
 import { useBuilder } from '@open-tender/components'
 
 import { selectDisplaySettings, setTopOffset } from '../../../slices'
-import iconMap from '../../iconMap'
-import { Tag } from '../..'
 import { MenuContext } from './Menu'
 import MenuItemDefault from './MenuItemDefault'
 import MenuItemSmall from './MenuItemSmall'
@@ -37,9 +35,6 @@ const MenuItem = ({ item, category, isInverted }) => {
     // tags: showTags,
     allergens: showAllergens,
   } = useSelector(selectDisplaySettings)
-  const soldOutMsg = menuConfig
-    ? menuConfig.soldOutMessage || 'Sold out for day'
-    : null
   const isSoldOut = soldOut ? soldOut.includes(item.id) : false
   // const cartCounts = useSelector(selectCartCounts)
   // const cartCount = cartCounts[item.id] || 0

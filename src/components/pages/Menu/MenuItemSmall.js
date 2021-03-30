@@ -1,12 +1,13 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Heading } from '@open-tender/components'
+import { Heading, Preface } from '@open-tender/components'
 
 import { CardButton, CardButtons, CardImage } from '../..'
 import MenuItemDetails from './MenuItemDetails'
+import MenuItemAllergens from './MenuItemAllergens'
 
 const MenuItemSmallView = styled('div')`
-  cursor: pointer;
+  cursor: ${(props) => (props.isSoldOut ? 'default' : 'pointer')};
   position: relative;
   width: 100%;
   display: flex;
@@ -36,6 +37,7 @@ const MenuItemSmallImageView = styled('div')`
   transition: transform 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
   transform-origin: top center;
   transform: scale(1) translate3D(0, 0, 0);
+  opacity: ${(props) => (props.isSoldOut ? '0.5' : '1.0')};
 
   .item-active & {
     top: -6.5rem;
@@ -43,29 +45,11 @@ const MenuItemSmallImageView = styled('div')`
   }
 `
 
-const MenuItemSmallOverlay = styled('div')`
-  position: absolute;
-  z-index: 3;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border-radius: ${(props) => props.theme.border.radius};
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-  background-color: ${(props) =>
-    props.isSoldOut ? props.theme.overlay.dark : 'transparent'};
-`
-
 const MenuItemSmallContent = styled('div')`
   position: relative;
   z-index: 1;
   width: 12.4rem;
-  height: 13rem;
+  min-height: 13rem;
   padding: 6rem 1rem 1.3rem;
   margin: 9rem 1rem 0;
   text-align: center;
@@ -73,7 +57,7 @@ const MenuItemSmallContent = styled('div')`
   // background-color: ${(props) => props.theme.bgColors.light};
 
   .item-active & {
-    height: 17rem;
+    min-height: 17rem;
     padding: 3rem 1rem 1.3rem;
     margin: 5rem 1rem 0;
     display: flex;
@@ -133,6 +117,12 @@ const MenuItemSmallName = styled(Heading)`
   // }
 `
 
+const MenuItemSmallSoldOut = styled(Preface)`
+  color: ${(props) => props.theme.colors.alert};
+  font-size: 1.6rem;
+  font-weight: 500;
+`
+
 const MenuItemSmallButtons = styled(CardButtons)`
   flex-grow: 0;
   flex-shrink: 0;
@@ -154,7 +144,7 @@ const MenuItemSmall = ({
   isIncomplete,
   item,
   imageUrl,
-  itemTag,
+  allergenAlert,
   price,
   cals,
   viewRef,
@@ -167,22 +157,25 @@ const MenuItemSmall = ({
   return (
     <MenuItemSmallView
       onClick={onClick}
+      isSoldOut={isSoldOut}
       className={isActive ? 'item-active' : ''}
     >
-      <MenuItemSmallContent isInverted={isInverted}>
-        <MenuItemSmallImageView>
-          <CardImage imageUrl={imageUrl} isInverted={isInverted}>
-            {itemTag && (
-              <MenuItemSmallOverlay isSoldOut={isSoldOut}>
-                <div>{itemTag}</div>
-              </MenuItemSmallOverlay>
-            )}
-          </CardImage>
+      <MenuItemSmallContent isInverted={isInverted} isSoldOut={isSoldOut}>
+        <MenuItemSmallImageView isSoldOut={isSoldOut}>
+          <CardImage imageUrl={imageUrl} isInverted={isInverted} />
         </MenuItemSmallImageView>
         <MenuItemSmallContentBackground className="item-content-bg" />
         <MenuItemSmallContentHeader>
           <MenuItemSmallName>{item.name}</MenuItemSmallName>
           <MenuItemDetails price={price} cals={cals} />
+          {isSoldOut && (
+            <MenuItemSmallSoldOut as="p">Sold out</MenuItemSmallSoldOut>
+          )}
+          <MenuItemAllergens
+            allergens={allergenAlert}
+            includeText={false}
+            style={{ textAlign: 'center', marginLeft: '1.5rem' }}
+          />
         </MenuItemSmallContentHeader>
         <MenuItemSmallButtons>
           <CardButton
@@ -222,7 +215,7 @@ MenuItemSmall.propTypes = {
   isIncomplete: propTypes.bool,
   item: propTypes.object,
   imageUrl: propTypes.string,
-  itemTag: propTypes.element,
+  allergenAlert: propTypes.array,
   price: propTypes.string,
   cals: propTypes.number,
   viewRef: propTypes.oneOfType([

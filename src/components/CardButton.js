@@ -10,6 +10,8 @@ const CardButton = styled(ButtonSmall)`
   border: 0.1rem solid ${(props) => props.theme.links.primary.color};
   background-color: ${(props) =>
     props.secondary ? 'transparent' : props.theme.links.primary.color};
+  box-shadow: ${(props) =>
+    props.secondary ? 'none' : '0px 4px 20px rgba(0, 0, 0, 0.25)'};
 
   &:hover:enabled,
   &:active:enabled {
@@ -21,7 +23,7 @@ const CardButton = styled(ButtonSmall)`
   &:focus {
     outline: none;
     box-shadow: ${(props) =>
-      props.secondary ? 'none' : '0px 4px 20px rgba(0, 0, 0, 0.25)'};
+      props.secondary ? 'none' : '0px 4px 20px rgba(0, 0, 0, 0.5)'};
   }
 `
 

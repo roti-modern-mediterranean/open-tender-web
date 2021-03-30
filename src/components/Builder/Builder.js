@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import { animateScroll } from 'react-scroll'
+import { formatDollars, getWidth } from '@open-tender/js'
 import {
   ButtonLink,
   ButtonStyled,
@@ -8,7 +9,6 @@ import {
   Preface,
   useBuilder,
 } from '@open-tender/components'
-import { formatDollars, getWidth } from '@open-tender/js'
 
 import { CartFooter, ImageSpinner } from '..'
 import { ButtonSmall } from '../buttons'
@@ -22,6 +22,7 @@ import BuilderItemQuantiy from './BuilderItemQuantity'
 import { isBrowser } from 'react-device-detect'
 import { selectTheme } from '../../slices'
 import { useSelector } from 'react-redux'
+import BuilderAllergens from './BuilderAllergens'
 
 export const makePriceCals = (item, showCals, hidePrice) => {
   const zeroPrice = !!(item.price === '0.00' || item.price === 0)
@@ -127,6 +128,10 @@ const BuilderNameView = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 ${(props) => props.theme.layout.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  }
 `
 
 const BuilderName = styled(Heading)`
@@ -334,7 +339,7 @@ const Builder = ({
   addItemToCart,
   cancel,
   soldOut,
-  allergens,
+  allergenAlerts,
   displaySettings,
   cartId,
   windowRef,
@@ -361,7 +366,7 @@ const Builder = ({
     notes: showNotes,
     // builderImages: showImage,
     // tags: showTags,
-    // allergens: showAllergens,
+    allergens: showAllergens,
   } = displaySettings
   const priceCals = makePriceCals(item, showCals)
   const priceTotal = formatDollars(item.totalPrice)
@@ -372,6 +377,11 @@ const Builder = ({
   const theme = useSelector(selectTheme)
   const mobileWidth = parseInt(theme.breakpoints.mobile.replace('px', ''))
   const isEdit = item.index !== undefined
+  console.log(item.allergens)
+  const allergenAlert =
+    showAllergens && allergenAlerts && item.allergens.length
+      ? item.allergens.filter((allergen) => allergenAlerts.includes(allergen))
+      : []
 
   useEffect(() => {
     const width = getWidth()
@@ -437,6 +447,7 @@ const Builder = ({
             <BuilderPrice as="p">&nbsp;</BuilderPrice>
           )}
           <BuilderDescription>{item.description}</BuilderDescription>
+          <BuilderAllergens allergens={allergenAlert} />
         </BuilderHeader>
       </BuilderInfo>
       <BuilderIngredients ref={ingredientsRef}>
@@ -508,7 +519,7 @@ const Builder = ({
                                     perRow,
                                     group,
                                     option,
-                                    allergens,
+                                    allergenAlerts,
                                     displaySettings,
                                     activeOption,
                                     setActiveOption,

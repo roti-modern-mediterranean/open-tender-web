@@ -1,6 +1,8 @@
+import propTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { Heading } from '@open-tender/components'
-import { useSelector } from 'react-redux'
+
 import { selectTheme } from '../../../slices'
 import { allergenIconMap } from '../../icons/allergens'
 
@@ -9,14 +11,12 @@ const MenuItemAllergensView = styled('p')`
     display: inline-block;
     vertical-align: middle;
     margin: 0 1rem 0 0;
+
+    // &:last-of-type {
+    //   margin: 0;
+    // }
   }
 `
-
-// const MenuItemAllergensContainer = styled('span')`
-//   display: flex;
-//   align-items: center;
-//   height: 1.7rem;
-// `
 
 const MenuItemAllergensIcon = styled('span')`
   display: inline-block;
@@ -34,24 +34,31 @@ const MenuItemAllergensName = styled(Heading)`
   color: ${(props) => props.theme.colors.alert};
 `
 
-const MenuItemAllergens = ({ allergens }) => {
+const MenuItemAllergens = ({ allergens, includeText = true, style = null }) => {
   const theme = useSelector(selectTheme)
   if (!allergens.length) return null
 
   return (
-    <MenuItemAllergensView>
+    <MenuItemAllergensView style={style}>
       {allergens.map((allergen) => (
         <span>
-          {/* <MenuItemAllergensContainer> */}
           <MenuItemAllergensIcon>
             {allergenIconMap[allergen]({ color: theme.colors.alert })}
           </MenuItemAllergensIcon>
-          <MenuItemAllergensName>{allergen}</MenuItemAllergensName>
-          {/* </MenuItemAllergensContainer> */}
+          {includeText && (
+            <MenuItemAllergensName>{allergen}</MenuItemAllergensName>
+          )}
         </span>
       ))}
     </MenuItemAllergensView>
   )
+}
+
+MenuItemAllergens.displayName = 'MenuItemAllergens'
+MenuItemAllergens.propTypes = {
+  allergens: propTypes.array,
+  includeText: propTypes.bool,
+  style: propTypes.object,
 }
 
 export default MenuItemAllergens

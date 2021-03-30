@@ -25,7 +25,7 @@ const MenuItem = () => {
   const { windowRef } = useContext(AppContext)
   const item = useSelector(selectCurrentItem)
   const soldOut = useSelector(selectSoldOut)
-  const allergens = useSelector(selectSelectedAllergenNames)
+  const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const displaySettings = useSelector(selectDisplaySettings)
   const menuSlug = useSelector(selectMenuSlug)
   const { cartId } = useSelector(selectGroupOrder)
@@ -77,7 +77,7 @@ const MenuItem = () => {
             addItemToCart={addItem}
             cancel={cancel}
             soldOut={soldOut}
-            allergens={allergens}
+            allergenAlerts={allergenAlerts}
             showImage={true}
             displaySettings={displaySettings}
             cartId={cartId}
