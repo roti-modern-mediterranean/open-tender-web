@@ -1,4 +1,5 @@
 import Alerts from './Alerts'
+import AllergenForm from './AllergenForm'
 import Background from './Background'
 import BackgroundContent from './BackgroundContent'
 import BackgroundImage from './BackgroundImage'
@@ -105,6 +106,7 @@ import VerifyAccount from './VerifyAccount'
 
 export {
   Alerts,
+  AllergenForm,
   Background,
   BackgroundContent,
   BackgroundImage,

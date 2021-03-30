@@ -10,13 +10,13 @@ import {
   setSelectedAllergens,
   updateCustomerAllergens,
 } from '@open-tender/redux'
-import { AllergenForm, FormWrapper } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
+  AllergenForm,
   Content,
   HeaderDefault,
   Loading,
@@ -28,15 +28,25 @@ import {
 import styled from '@emotion/styled'
 import AccountTabs from '../Account/AccountTabs'
 
-const AllergenFormView = styled('div')`
-  label {
-    padding: 1.25rem 0 1rem !important;
+const AccountAllergensView = styled('div')`
+  width: 48rem;
+  max-width: 90%;
+  padding: 3rem;
+  background-color: ${(props) => props.theme.colors.light};
+  border-radius: ${(props) => props.theme.border.radius};
+  margin: 0 auto;
+  text-align: left;
+`
 
-    & > span > span:last-of-type {
-      text-align: right;
-      line-height: 1;
-    }
-  }
+const AccountAllergensTitle = styled('p')`
+  margin: 0;
+  line-height: 1;
+  font-family: ${(props) => props.theme.fonts.preface.family};
+  font-size: 2.2rem;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: ${(props) => props.theme.colors.primary};
 `
 
 const AccountAllergens = () => {
@@ -86,21 +96,22 @@ const AccountAllergens = () => {
         <Main>
           {!isBrowser && <AccountTabs />}
           <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...account.allergens} />
+            <PageTitle {...account.allergens} style={{ textAlign: 'center' }} />
             <PageContent>
-              {brandAllergens.entities.length ? (
-                <FormWrapper>
-                  <AllergenFormView>
-                    <AllergenForm
-                      allergens={brandAllergens.entities}
-                      selectedAllergens={customerAllergens.entities}
-                      isLoading={isLoading}
-                      error={error}
-                      setAllergens={setAllergens}
-                      updateAllergens={updateAllergens}
-                    />
-                  </AllergenFormView>
-                </FormWrapper>
+              {brandAllergens.entities.length > 0 ? (
+                <AccountAllergensView>
+                  <AccountAllergensTitle>
+                    Anything you'd like to avoid?
+                  </AccountAllergensTitle>
+                  <AllergenForm
+                    allergens={brandAllergens.entities}
+                    selectedAllergens={customerAllergens.entities}
+                    isLoading={isLoading}
+                    error={error}
+                    setAllergens={setAllergens}
+                    updateAllergens={updateAllergens}
+                  />
+                </AccountAllergensView>
               ) : isLoading ? (
                 <Loading text="Retrieving your order history..." />
               ) : (
