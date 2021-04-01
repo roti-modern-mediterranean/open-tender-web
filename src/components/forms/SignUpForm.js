@@ -1,13 +1,9 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import { optionsOrderNotificationsTemp } from '@open-tender/js'
-import {
-  ButtonSubmit,
-  RadioButtonGroup,
-  useSignUpForm,
-} from '@open-tender/components'
+import { ButtonSubmit, useSignUpForm } from '@open-tender/components'
 
-import { Checkbox, ErrMsg, Input, FormSubmit } from '../inputs'
+import { Checkbox, ErrMsg, Input, FormSubmit, RadioGroup } from '../inputs'
 import { Lock, Mail, Phone, User } from '../icons'
 import { Link } from 'react-router-dom'
 import styled from '@emotion/styled'
@@ -79,7 +75,7 @@ const SignUpForm = ({
           />
         ))}
         {order_notifications && (
-          <RadioButtonGroup
+          <RadioGroup
             label={order_notifications.title}
             name="order_notifications"
             value={data.order_notifications}
@@ -113,7 +109,7 @@ const SignUpForm = ({
           submitRef={submitRef}
           submitting={submitting}
         >
-          {submitting ? 'Submitting...' : 'Submit'}
+          {submitting ? 'Submitting...' : 'Register'}
         </ButtonSubmit>
       </FormSubmit>
     </form>

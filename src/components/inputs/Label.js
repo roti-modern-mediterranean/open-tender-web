@@ -19,7 +19,7 @@ const LabelView = styled('label')`
     // display: block;
     // border: 0;
     font-size: inherit;
-    padding-left: 3rem;
+    padding-left: 3.4rem;
 
     &::placeholder {
       opacity: 0;
@@ -56,7 +56,7 @@ const LabelIcon = styled('span')`
 const LabelText = styled('span')`
   position: absolute;
   top: 0;
-  left: 3rem;
+  left: 3.4rem;
   width: 90%;
   font-size: inherit;
   color: ${(props) => props.theme.inputs.borderColor};
@@ -67,7 +67,7 @@ const LabelText = styled('span')`
   input:focus + &,
   textarea:focus + &,
   select:focus + & {
-    transform: translate(-3rem, -2.5rem);
+    transform: translate(-3.4rem, -2.5rem);
     font-weight: 300;
     font-size: 1.8rem;
     cursor: default;
@@ -75,7 +75,7 @@ const LabelText = styled('span')`
 
   ${(props) =>
     props.hasValue
-      ? `    transform: translate(-3rem, -2.5rem);
+      ? `    transform: translate(-3.4rem, -2.5rem);
     font-weight: 300;
     font-size: 1.8rem;
     cursor: default;`

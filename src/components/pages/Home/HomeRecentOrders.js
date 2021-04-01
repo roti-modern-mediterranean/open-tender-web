@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { fetchCustomerOrders, selectCustomerOrders } from '@open-tender/redux'
 
-import { Loading, OrderCard, PageContent, PageSection } from '../..'
+import { OrderCard, PageSection } from '../..'
 import { selectConfig } from '../../../slices'
 
 const OrdersView = styled('div')`
@@ -45,7 +45,7 @@ const HomeRecentOrders = ({ style }) => {
   const dispatch = useDispatch()
   const { entities: orders, loading, error } = useSelector(selectCustomerOrders)
   const { account } = useSelector(selectConfig)
-  const { title, subtitle, empty } = account.recentOrders
+  const { title, subtitle } = account.recentOrders
   const hasOrders = orders.length > 0 && !error
   const filtered = orders
     .map((i) => ({ ...i, key: i.order_id }))
@@ -58,34 +58,22 @@ const HomeRecentOrders = ({ style }) => {
     dispatch(fetchCustomerOrders(20))
   }, [dispatch])
 
-  return (
+  return isLoading ? null : hasOrders ? (
     <PageSection
       title={title}
       subtitle={subtitle}
       to={isMore ? '/orders' : null}
       style={style}
     >
-      {isLoading ? (
-        <PageContent style={{ margin: '0 auto' }}>
-          <Loading text="Retrieving your recent orders..." />
-        </PageContent>
-      ) : hasOrders ? (
-        <OrdersView>
-          {displayed.map((order) => (
-            <Order key={order.order_id}>
-              <OrderCard order={order} />
-            </Order>
-          ))}
-        </OrdersView>
-      ) : (
-        <PageContent style={{ margin: '0 auto' }}>
-          <div>
-            <p>{empty}</p>
-          </div>
-        </PageContent>
-      )}
+      <OrdersView>
+        {displayed.map((order) => (
+          <Order key={order.order_id}>
+            <OrderCard order={order} />
+          </Order>
+        ))}
+      </OrdersView>
     </PageSection>
-  )
+  ) : null
 }
 
 HomeRecentOrders.displayName = 'HomeRecentOrders'

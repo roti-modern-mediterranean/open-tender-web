@@ -7,6 +7,7 @@ const CheckboxLabel = styled('label')`
   display: block;
   width: 100%;
   margin: 0 0 2rem;
+  cursor: pointer;
 `
 
 const CheckboxInput = styled('input')`
