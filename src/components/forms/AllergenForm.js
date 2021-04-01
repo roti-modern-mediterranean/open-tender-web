@@ -9,7 +9,7 @@ import {
   ButtonSubmit,
   Heading,
 } from '@open-tender/components'
-import { allergenIconMap } from './icons/allergens'
+import { allergenIconMap } from '../icons/allergens'
 
 const AllergenFormView = styled('div')`
   // label {

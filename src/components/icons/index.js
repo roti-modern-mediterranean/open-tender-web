@@ -10,9 +10,13 @@ import CartFull from './CartFull'
 import CurbsidePickup from './CurbsidePickup'
 import DetourSign from './DetourSign'
 import Filter from './Filter'
+import Lock from './Lock'
+import Mail from './Mail'
 import MapMarker from './MapMarker'
 import MinusSign from './MinusSign'
+import Phone from './Phone'
 import PlusSign from './PlusSign'
+import User from './User'
 
 export {
   ArrowLeft,
@@ -27,7 +31,11 @@ export {
   CurbsidePickup,
   DetourSign,
   Filter,
+  Lock,
+  Mail,
   MapMarker,
   MinusSign,
+  Phone,
   PlusSign,
+  User,
 }

@@ -1,5 +1,4 @@
 import Alerts from './Alerts'
-import AllergenForm from './AllergenForm'
 import Background from './Background'
 import BackgroundContent from './BackgroundContent'
 import BackgroundImage from './BackgroundImage'
@@ -104,6 +103,8 @@ import SliderKeen from './SliderKeen'
 import Tag from './Tag'
 import VerifyAccount from './VerifyAccount'
 
+import { AllergenForm, SignUpForm } from './forms'
+
 export {
   Alerts,
   AllergenForm,
@@ -207,6 +208,7 @@ export {
   SectionTitle,
   Sidebar,
   SkipLink,
+  SignUpForm,
   Slider,
   SliderKeen,
   Tag,

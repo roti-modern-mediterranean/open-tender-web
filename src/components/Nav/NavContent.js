@@ -35,15 +35,15 @@ const guestLinks = [
       },
     ],
   },
-  {
-    title: 'Food Preferences',
-    links: [
-      {
-        title: 'Dietary Preferences',
-        path: '/nutrition',
-      },
-    ],
-  },
+  // {
+  //   title: 'Food Preferences',
+  //   links: [
+  //     {
+  //       title: 'Dietary Preferences',
+  //       path: '/nutrition',
+  //     },
+  //   ],
+  // },
   {
     title: 'Other',
     links: [

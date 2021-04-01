@@ -255,25 +255,24 @@ const makeGlobalStyles = (theme) => css`
     // background-color: ${theme.inputs.bgColor};
     background-color: transparent;
     box-shadow: ${theme.inputs.boxShadow};
-    font-family: ${theme.fonts.body.family};
-    font-size: ${theme.fonts.sizes.main};
+    font-family: ${theme.inputs.family};
+    font-size: ${theme.inputs.fontSize};
     transition: ${theme.links.transition};
 
     &::placeholder {
-      color: ${theme.inputs.color};
-      opacity: 0.5;
+      color: ${theme.inputs.placeholderColor};
     }
 
     &::selection {
       color: ${theme.bgColors.primary};
-      background-color: ${theme.fonts.body.color};
+      background-color: ${theme.inputs.placeholderColor};
     }
 
     &:active,
     &:focus {
       color: ${theme.inputs.color};
-      background-color: ${theme.inputs.bgColor};
-      border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+      background-color: transparent;
+      border-bottom: 0.2rem solid ${theme.inputs.borderColor};
     }
 
     &:disabled,
@@ -281,8 +280,9 @@ const makeGlobalStyles = (theme) => css`
       cursor: default;
       opacity: 0.5;
       color: ${theme.inputs.color};
-      background-color: ${theme.inputs.bgColor};
-      border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+      background-color: transparent;
+      border-bottom: ${theme.inputs.borderWidth} solid
+        ${theme.inputs.borderColor};
     }
   }
 
