@@ -48,6 +48,7 @@ const MenuItemSmallImageView = styled('div')`
 const MenuItemSmallContent = styled('div')`
   position: relative;
   z-index: 1;
+  flex-shrink: 0;
   width: 12.4rem;
   min-height: 13rem;
   padding: 6rem 1rem 1.3rem;

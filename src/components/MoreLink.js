@@ -21,7 +21,7 @@ const MoreLinkView = styled('span')`
       font-size: ${(props) => props.theme.fonts.sizes.big};
       text-transform: uppercase;
       line-height: 1;
-      @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
         font-family: ${(props) => props.theme.fonts.body.family};
         font-weight: 500;
         font-size: 1.3rem;
@@ -33,7 +33,7 @@ const MoreLinkView = styled('span')`
     span + span {
       line-height: 0;
       margin: 0 0 0 1rem;
-      @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
         margin: 0 0 0 0.7rem;
       }
     }

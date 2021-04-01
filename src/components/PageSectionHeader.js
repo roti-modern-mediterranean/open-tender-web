@@ -6,6 +6,7 @@ const PageSectionHeaderView = styled('div')`
   margin: 0 0 5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     text-align: center;
+    margin: 0 0 3rem;
   }
 
   h1,

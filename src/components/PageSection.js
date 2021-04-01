@@ -17,7 +17,8 @@ const PageSectionFooter = styled('div')`
   justify-content: flex-end;
   margin: 1rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 1rem 0 0;
+    max-width: 40rem;
+    margin: -1rem auto 0;
   }
 `
 

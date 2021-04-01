@@ -16,6 +16,7 @@ import HomeMenu from '../Home/HomeMenu'
 import HomeJourneys from '../Home/HomeJourneys'
 import HomeRecentOrders from './HomeRecentOrders'
 import HomeLifestyle from './HomeLifestyle'
+import HomeApp from './HomeApp'
 
 const Home = () => {
   const dispatch = useDispatch()
@@ -54,6 +55,7 @@ const Home = () => {
             />
             {auth && <HomeRecentOrders style={{ marginBottom: '0' }} />}
             <HomeMenu />
+            <HomeApp />
             <HomeJourneys />
             <HomeLifestyle />
           </PageView>

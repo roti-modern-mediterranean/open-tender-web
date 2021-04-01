@@ -44,6 +44,9 @@ const HomeMenuCategoryFooter = styled('div')`
   margin: 1.5rem 0 0;
   display: flex;
   justify-content: flex-end;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    margin: 0rem 0 0;
+  }
 `
 
 const HomeMenuCategory = ({ category, isInverted = false }) => {
