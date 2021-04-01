@@ -1,25 +1,25 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { FormError } from '@open-tender/components'
+import { ErrMsg } from '.'
 
 const LabelView = styled('label')`
   position: relative;
   display: block;
   width: 100%;
-  padding: 0 0 0 3rem;
   margin: 0 0 2rem;
   font-family: ${(props) => props.theme.inputs.family};
   font-size: ${(props) => props.theme.inputs.fontSize};
-  border-bottom: ${(props) => props.theme.inputs.borderWidth} solid
-    ${(props) => props.theme.inputs.borderColor};
+  // border-bottom: ${(props) => props.theme.inputs.borderWidth} solid
+  //   ${(props) => props.theme.inputs.borderColor};
 
   input,
   textarea,
   select {
     // display: block;
-    border: 0;
+    // border: 0;
     font-size: inherit;
+    padding-left: 3rem;
 
     &::placeholder {
       opacity: 0;
@@ -40,7 +40,7 @@ const LabelIcon = styled('span')`
   top: 0;
   left: 0;
   width: 3rem;
-  height: 100%;
+  height: 4.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,7 +94,7 @@ const Label = ({ icon, text, required, value, errMsg, children }) => (
       {text}
       {required ? <LabelRequired>&nbsp;*</LabelRequired> : null}
     </LabelText>
-    <FormError errMsg={errMsg} />
+    <ErrMsg errMsg={errMsg} />
   </LabelView>
 )
 

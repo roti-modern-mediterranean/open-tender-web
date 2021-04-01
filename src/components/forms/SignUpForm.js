@@ -1,18 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import { optionsOrderNotificationsTemp } from '@open-tender/js'
 import {
   ButtonSubmit,
-  Checkbox,
-  FormError,
-  FormInputs,
-  FormSubmit,
   RadioButtonGroup,
   useSignUpForm,
 } from '@open-tender/components'
 
-import { Input } from '../inputs'
+import { Checkbox, ErrMsg, Input, FormSubmit } from '../inputs'
 import { Lock, Mail, Phone, User } from '../icons'
+import { Link } from 'react-router-dom'
+import styled from '@emotion/styled'
 
 const iconMap = {
   first_name: <User />,
@@ -22,6 +20,21 @@ const iconMap = {
   phone: <Phone />,
 }
 
+const TermsLabelView = styled('span')`
+  a {
+    font-weight: 600;
+    color: ${(props) => props.theme.colors.primary};
+  }
+`
+
+const TermsLabel = () => (
+  <TermsLabelView>
+    By creating an account, you agree to the{' '}
+    <Link to="/terms">Terms & Conditions</Link> and{' '}
+    <Link to="/privacy">Privacy Policy</Link>
+  </TermsLabelView>
+)
+
 const SignUpForm = ({
   loading,
   error,
@@ -30,6 +43,7 @@ const SignUpForm = ({
   optIns = {},
   hasThanx = false,
 }) => {
+  const [disabled, setDisabled] = useState(false)
   const {
     submitRef,
     formRef,
@@ -47,8 +61,8 @@ const SignUpForm = ({
 
   return (
     <form id="signup-form" ref={formRef} onSubmit={handleSubmit} noValidate>
-      <FormError errMsg={errMsg} style={{ margin: '0 0 2rem' }} />
-      <FormInputs>
+      <ErrMsg errMsg={errMsg} style={{ margin: '0 0 2rem' }} />
+      <div>
         {formfields.map((field) => (
           <Input
             key={field.name}
@@ -78,18 +92,27 @@ const SignUpForm = ({
         )}
         {accepts_marketing && (
           <Checkbox
-            showLabel={true}
-            required={true}
-            label={accepts_marketing.title}
+            label={accepts_marketing.description}
             id="accepts_marketing"
             on={data.accepts_marketing}
             onChange={handleChange}
-            description={accepts_marketing.description}
           />
         )}
-      </FormInputs>
+        <Checkbox
+          label={<TermsLabel />}
+          id="terms"
+          on={!disabled}
+          onChange={() => setDisabled(!disabled)}
+        />
+      </div>
       <FormSubmit>
-        <ButtonSubmit submitRef={submitRef} submitting={submitting}>
+        <ButtonSubmit
+          size="big"
+          color="secondary"
+          disabled={disabled}
+          submitRef={submitRef}
+          submitting={submitting}
+        >
           {submitting ? 'Submitting...' : 'Submit'}
         </ButtonSubmit>
       </FormSubmit>

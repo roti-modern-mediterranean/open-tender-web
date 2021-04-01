@@ -251,12 +251,16 @@ const makeGlobalStyles = (theme) => css`
     border: 0;
     border-bottom: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
     border-radius: ${theme.inputs.radius};
+    font-family: ${theme.inputs.family};
+    font-weight: ${theme.inputs.weight};
+    letter-spacing: ${theme.inputs.letterSpacing};
+    text-transform: ${theme.inputs.textTransform};
+    -webkit-font-smoothing: ${theme.inputs.fontSmoothing};
+    font-size: ${theme.inputs.fontSize};
     color: ${theme.inputs.color};
     // background-color: ${theme.inputs.bgColor};
     background-color: transparent;
     box-shadow: ${theme.inputs.boxShadow};
-    font-family: ${theme.inputs.family};
-    font-size: ${theme.inputs.fontSize};
     transition: ${theme.links.transition};
 
     &::placeholder {
@@ -268,12 +272,12 @@ const makeGlobalStyles = (theme) => css`
       background-color: ${theme.inputs.placeholderColor};
     }
 
-    &:active,
-    &:focus {
-      color: ${theme.inputs.color};
-      background-color: transparent;
-      border-bottom: 0.2rem solid ${theme.inputs.borderColor};
-    }
+    // &:active,
+    // &:focus {
+    //   color: ${theme.inputs.color};
+    //   background-color: transparent;
+    //   border-bottom: 0.1rem solid ${theme.inputs.borderColor};
+    // }
 
     &:disabled,
     &:read-only {

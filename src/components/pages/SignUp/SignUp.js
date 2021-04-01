@@ -10,7 +10,7 @@ import {
   resetSignUp,
   linkPosToken,
 } from '@open-tender/redux'
-import { ButtonLink, FormWrapper } from '@open-tender/components'
+import { ButtonLink } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import {
@@ -26,10 +26,10 @@ import {
   HeaderDefault,
   Main,
   PageContainer,
-  PageContent,
-  PageTitle,
+  // PageTitle,
   SignUpForm,
 } from '../..'
+import { FormFooter, FormHeader, FormWrapper } from '../../inputs'
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search)
@@ -87,25 +87,29 @@ const SignUp = () => {
       <Content>
         <HeaderDefault title={isBrowser ? null : signupConfig.title} />
         <Main>
-          <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...signupConfig} />
+          <PageContainer>
             <FormWrapper>
+              {/* <PageTitle {...signupConfig} /> */}
+              <FormHeader>
+                <h1>{signupConfig.title}</h1>
+                <p>{signupConfig.subtitle}</p>
+              </FormHeader>
               <SignUpForm
                 loading={loading}
                 error={error}
                 signUp={signUp}
                 optIns={optIns}
               />
+              <FormFooter>
+                <p style={{ margin: '2rem 0' }}>
+                  Already a member?{' '}
+                  <ButtonLink onClick={login}>Log In</ButtonLink>
+                </p>
+                <p>
+                  <Link to="/">{signupConfig.back}</Link>
+                </p>
+              </FormFooter>
             </FormWrapper>
-            <PageContent>
-              <p style={{ margin: '2rem 0' }}>
-                Already have an account?{' '}
-                <ButtonLink onClick={login}>Click here to log in.</ButtonLink>
-              </p>
-              <p>
-                <Link to="/">{signupConfig.back}</Link>
-              </p>
-            </PageContent>
           </PageContainer>
         </Main>
       </Content>

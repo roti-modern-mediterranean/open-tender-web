@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 const PageContent = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  text-align: center;
   max-width: ${(props) => props.theme.layout.maxWidth};
   margin: ${(props) => props.theme.layout.padding} auto;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
