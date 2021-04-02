@@ -14,6 +14,7 @@ const iconMap = {
   email: <Mail />,
   password: <Lock />,
   phone: <Phone />,
+  company: <User />,
 }
 
 const TermsLabelView = styled('span')`
@@ -37,7 +38,7 @@ const SignUpForm = ({
   signUp,
   callback,
   optIns = {},
-  hasThanx = false,
+  checkConfig = {},
 }) => {
   const [disabled, setDisabled] = useState(false)
   const {
@@ -53,7 +54,7 @@ const SignUpForm = ({
     handleChange,
     handleRadio,
     handleSubmit,
-  } = useSignUpForm(loading, error, signUp, callback, optIns, hasThanx)
+  } = useSignUpForm(loading, error, signUp, callback, optIns, checkConfig)
 
   return (
     <form id="signup-form" ref={formRef} onSubmit={handleSubmit} noValidate>
@@ -123,7 +124,7 @@ SignUpForm.propTypes = {
   signUp: propTypes.func,
   callback: propTypes.func,
   optIns: propTypes.object,
-  hasThanx: propTypes.bool,
+  checkConfig: propTypes.object,
 }
 
 export default SignUpForm

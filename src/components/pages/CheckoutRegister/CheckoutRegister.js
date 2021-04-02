@@ -8,8 +8,11 @@ import {
   signUpCustomer,
   resetSignUp,
   selectMenuSlug,
+  selectCartValidate,
+  selectCheckout,
+  validateOrder,
 } from '@open-tender/redux'
-import { ButtonLink, ButtonStyled } from '@open-tender/components'
+import { ButtonLink, ButtonStyled, useCheckout } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
@@ -33,13 +36,20 @@ const CheckoutGuestView = styled(ButtonGroupBig)`
 const CheckoutRegister = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const { windowRef } = useContext(AppContext)
   const { signUp: signupConfig } = useSelector(selectConfig)
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const { loading, error } = useSelector(selectSignUp)
   const optIns = useSelector(selectOptIns)
   const menuSlug = useSelector(selectMenuSlug)
-  const { windowRef } = useContext(AppContext)
+  const cartValidate = useSelector(selectCartValidate)
+  const validate = useCallback((order) => dispatch(validateOrder(order)), [
+    dispatch,
+  ])
+  useCheckout(validate, cartValidate)
+  const { check } = useSelector(selectCheckout)
+  const checkConfig = check ? check.config : {}
   const signUp = useCallback(
     (data, callback) => dispatch(signUpCustomer(data, callback)),
     [dispatch]
@@ -91,8 +101,8 @@ const CheckoutRegister = () => {
                 loading={loading}
                 error={error}
                 signUp={signUp}
-                // callback={() => history.push('/checkout/details')}
                 optIns={optIns}
+                checkConfig={checkConfig}
               />
               <FormFooter>
                 <p style={{ margin: '2rem 0' }}>

@@ -9,7 +9,7 @@ const PageTitleView = styled('div')`
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   margin: 0 0 5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     flex-direction: column;

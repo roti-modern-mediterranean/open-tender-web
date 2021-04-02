@@ -34,6 +34,9 @@ const SwitchLabel = styled('label')`
   width: 33.33333%;
   padding: 0.5rem;
   cursor: pointer;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 50%;
+  }
 `
 
 const SwitchInput = styled('input')`

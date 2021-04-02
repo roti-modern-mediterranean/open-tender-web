@@ -101,7 +101,7 @@ const Label = ({ icon, text, required, value, errMsg, children }) => (
 Label.displayName = 'Label'
 Label.propTypes = {
   icon: propTypes.element,
-  text: propTypes.string,
+  text: propTypes.oneOfType([propTypes.string, propTypes.element]),
   required: propTypes.bool,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),

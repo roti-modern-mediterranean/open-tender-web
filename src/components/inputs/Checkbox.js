@@ -107,7 +107,7 @@ const Checkbox = ({ label, id, on, onChange, disabled = false }) => {
 
 Checkbox.displayName = 'Checkbox'
 Checkbox.propTypes = {
-  label: propTypes.string,
+  label: propTypes.oneOfType([propTypes.string, propTypes.element]),
   id: propTypes.string,
   on: propTypes.bool,
   onChange: propTypes.func,
