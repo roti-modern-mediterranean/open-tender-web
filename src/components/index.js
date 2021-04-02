@@ -103,7 +103,7 @@ import SliderKeen from './SliderKeen'
 import Tag from './Tag'
 import VerifyAccount from './VerifyAccount'
 
-import { AllergenForm, SignUpForm } from './forms'
+import { AllergenForm, LoginForm, SignUpForm } from './forms'
 
 export {
   Alerts,
@@ -156,6 +156,7 @@ export {
   LinkIcon,
   LinkSeparator,
   Loading,
+  LoginForm,
   Logo,
   LoyaltyProgram,
   Main,

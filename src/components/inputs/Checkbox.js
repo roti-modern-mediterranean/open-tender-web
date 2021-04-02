@@ -28,7 +28,7 @@ const CheckboxContainer = styled('span')`
   flex-grow: 1;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  // align-items: center;
 `
 
 const CheckboxView = styled('span')`

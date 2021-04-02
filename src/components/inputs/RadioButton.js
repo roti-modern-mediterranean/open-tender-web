@@ -30,8 +30,8 @@ const RadioButtonView = styled('span')`
   content: '';
   display: block;
   position: relative;
-  width: 2.3rem;
-  height: 2.3rem;
+  width: 2.1rem;
+  height: 2.1rem;
   padding: 0;
   border-radius: 100%;
   transition: all 0.15s ease;
@@ -49,8 +49,8 @@ const RadioButtonView = styled('span')`
     position: absolute;
     top: 0.2rem;
     left: 0.2rem;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.3rem;
+    height: 1.3rem;
     border-radius: 100%;
     background-color: ${(props) => props.theme.colors.beet};
   }

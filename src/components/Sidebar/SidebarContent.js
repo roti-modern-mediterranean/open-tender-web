@@ -116,7 +116,7 @@ const Sidebar = React.forwardRef((props, ref) => {
     dispatch(toggleSidebar())
     if (!isCheckout) {
       dispatch(checkout())
-      history.push(`/checkout`)
+      history.push(`/checkout/register`)
     }
   }
 

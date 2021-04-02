@@ -72,7 +72,7 @@ const MenuFooter = () => {
 
   const handleCheckout = () => {
     dispatch(checkout())
-    history.push(`/checkout`)
+    history.push(`/checkout/register`)
   }
 
   return (

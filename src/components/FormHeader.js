@@ -13,6 +13,11 @@ const FormHeader = styled('div')`
       line-height: 1;
       font-size: ${(props) => props.theme.fonts.sizes.h3};
     }
+
+    button {
+      font-weight: 600;
+      color: ${(props) => props.theme.colors.primary};
+    }
   }
 `
 

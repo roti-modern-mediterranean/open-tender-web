@@ -8,6 +8,9 @@ import {
   AccountGiftCards,
   Catering,
   Checkout,
+  CheckoutDetails,
+  CheckoutLogin,
+  CheckoutRegister,
   Confirmation,
   Deals,
   Donations,
@@ -21,6 +24,7 @@ import {
   HouseAccounts,
   LevelUp,
   Menu,
+  MenuItem,
   NotFound,
   Order,
   Orders,
@@ -33,10 +37,9 @@ import {
   RevenueCenter,
   Rewards,
   SignUp,
+  Terms,
   Thanx,
   VerifyAccount,
-  MenuItem,
-  Terms,
 } from './pages'
 
 const Routes = () => {
@@ -95,6 +98,15 @@ const Routes = () => {
       </Route>
       <Route exact path="/checkout">
         <Checkout />
+      </Route>
+      <Route exact path="/checkout/login">
+        <CheckoutLogin />
+      </Route>
+      <Route exact path="/checkout/register">
+        <CheckoutRegister />
+      </Route>
+      <Route exact path="/checkout/details">
+        <CheckoutDetails />
       </Route>
       <Route exact path="/confirmation">
         <Confirmation />

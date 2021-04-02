@@ -1,5 +1,6 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { isBrowser } from 'react-device-detect'
 
 const MainView = styled('main')`
   width: 100%;
@@ -26,18 +27,21 @@ const Main = ({
   imageUrl,
   style,
   children,
-}) => (
-  <MainView
-    role="main"
-    id="main"
-    padding={padding}
-    bgColor={bgColor}
-    imageUrl={imageUrl}
-    style={style}
-  >
-    {children}
-  </MainView>
-)
+}) => {
+  const mainPadding = padding || isBrowser ? '7.6rem 0 0' : '6.4rem 0 0'
+  return (
+    <MainView
+      role="main"
+      id="main"
+      padding={mainPadding}
+      bgColor={bgColor}
+      imageUrl={imageUrl}
+      style={style}
+    >
+      {children}
+    </MainView>
+  )
+}
 
 Main.displayName = 'Main'
 Main.propTypes = {
