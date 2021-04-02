@@ -43,12 +43,14 @@ const CheckoutRegister = () => {
   const { loading, error } = useSelector(selectSignUp)
   const optIns = useSelector(selectOptIns)
   const menuSlug = useSelector(selectMenuSlug)
+
+  const { check, form } = useSelector(selectCheckout)
   const cartValidate = useSelector(selectCartValidate)
   const validate = useCallback((order) => dispatch(validateOrder(order)), [
     dispatch,
   ])
-  useCheckout(validate, cartValidate)
-  const { check } = useSelector(selectCheckout)
+  const cartWithCustomer = { ...cartValidate, customer: form.customer }
+  useCheckout(validate, cartWithCustomer)
   const checkConfig = check ? check.config : {}
   const signUp = useCallback(
     (data, callback) => dispatch(signUpCustomer(data, callback)),

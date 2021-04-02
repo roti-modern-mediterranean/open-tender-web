@@ -55,6 +55,8 @@ const SignUpForm = ({
     handleRadio,
     handleSubmit,
   } = useSignUpForm(loading, error, signUp, callback, optIns, checkConfig)
+  const emptyRequired =
+    formfields.filter((i) => i.required && !data[i.name]).length > 0
 
   return (
     <form id="signup-form" ref={formRef} onSubmit={handleSubmit} noValidate>
@@ -106,7 +108,7 @@ const SignUpForm = ({
         <ButtonSubmit
           size="big"
           color="secondary"
-          disabled={disabled}
+          disabled={disabled || emptyRequired}
           submitRef={submitRef}
           submitting={submitting}
         >
