@@ -8,7 +8,7 @@ export const FormWrapper = styled('div')`
 
 export const FormHeader = styled('div')`
   max-width: ${(props) => props.theme.layout.maxWidth};
-  margin: 0 0 2rem;
+  margin: 0 0 4rem;
 
   h1,
   h2,
@@ -23,6 +23,23 @@ export const FormHeader = styled('div')`
     font-size: 2.2rem;
     line-height: 1.181818;
     color: ${(props) => props.theme.colors.primary};
+
+    button {
+      font-family: ${(props) => props.theme.inputs.family};
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      font-size: 2.3rem;
+      line-height: 1;
+      color: ${(props) => props.theme.colors.primary};
+      margin: 0 0 0 1.5rem;
+
+      &:hover,
+      &:active,
+      &:focus {
+        color: ${(props) => props.theme.colors.beet};
+      }
+    }
   }
 
   p {
@@ -35,7 +52,8 @@ export const FormSubmit = styled('div')`
 
   button {
     background-color: transparent;
-    min-width: 20rem;
+    // min-width: 20rem;
+    width: 100%;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       width: 100%;
     }

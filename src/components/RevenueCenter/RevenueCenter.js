@@ -2,13 +2,19 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { stripTags } from '@open-tender/js'
+import { useTheme } from '@emotion/react'
 import { BgImage, ButtonStyled, Preface } from '@open-tender/components'
 
 import iconMap from '../iconMap'
 import RevenueCenterOrder from './RevenueCenterOrder'
 import { PrefaceTitle } from '..'
-import { DetourSign } from '../icons'
+import { CurbsidePickup, DetourSign } from '../icons'
 import RevenueCentersAlert from '../pages/RevenueCenters/RevenueCentersAlert'
+
+const RevenueCenterContainer = styled('span')`
+  position: relative;
+  display: block;
+`
 
 const RevenueCenterView = styled('button')`
   display: block;
@@ -26,12 +32,18 @@ const RevenueCenterHeader = styled('span')`
     display: block;
     line-height: 1;
   }
+`
 
-  span {
-    position: relative;
-    top: 0.1rem;
+const RevenueCenterHeaderIcons = styled('span')`
+  position: absolute;
+  z-index: 1;
+  top: 0.2rem;
+  right: 0;
+  width: 2rem;
+
+  span + a {
     display: block;
-    flex: 0 0 2rem;
+    margin: 0.8rem 0 0;
   }
 `
 
@@ -129,9 +141,11 @@ const RevenueCenter = ({
   setActive,
   activeMarker,
   hasService,
+  type = null,
   style = null,
 }) => {
-  const { address, images, hours, is_outpost } = revenueCenter
+  const theme = useTheme()
+  const { address, images, hours, is_outpost, has_curbside } = revenueCenter
   const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const largeImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const bgImage = smallImg.url || largeImg.url
@@ -142,45 +156,58 @@ const RevenueCenter = ({
 
   const makeActive = (evt) => {
     evt.target.blur()
-    setActive(revenueCenter)
+    if (setActive) setActive(revenueCenter)
   }
 
   return (
-    <RevenueCenterView
-      style={style}
-      as={isActive ? 'div' : 'button'}
-      onClick={(evt) => makeActive(evt)}
-    >
-      <RevenueCenterHeader>
-        <PrefaceTitle as="h2">{revenueCenter.name}</PrefaceTitle>
-        <DetourSign />
-      </RevenueCenterHeader>
-      <RevenueCenterContent>
-        <RevenueCenterImage as="span" style={bgStyle} />
-        <RevenueCenterDetails>
-          <RevenueCenterDetail icon={iconMap.MapPin} text={address.street} />
-          {address.phone && (
-            <RevenueCenterDetail icon={iconMap.Phone} text={address.phone} />
-          )}
-          {hoursDesc && (
-            <RevenueCenterDetail icon={hoursDescIcon} text={hoursDesc} />
-          )}
-        </RevenueCenterDetails>
-      </RevenueCenterContent>
-      {activeMarker && (
-        <>
-          {hasService ? (
-            <RevenueCenterOrder revenueCenter={revenueCenter} />
-          ) : (
-            <RevenueCentersAlert
-              title="This location doesn't deliver to your address"
-              subtitle="Please go back and choose a different location."
-            />
-          )}
-          <ChangeLocation onClick={() => setActive(null)} />
-        </>
-      )}
-    </RevenueCenterView>
+    <RevenueCenterContainer>
+      <RevenueCenterHeaderIcons>
+        {has_curbside && (
+          <CurbsidePickup color={theme.colors.paprika} size="2rem" />
+        )}
+        <a
+          href={revenueCenter.directions_url}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <DetourSign />
+        </a>
+      </RevenueCenterHeaderIcons>
+      <RevenueCenterView
+        style={style}
+        as={type || (isActive ? 'span' : 'button')}
+        onClick={(evt) => makeActive(evt)}
+      >
+        <RevenueCenterHeader>
+          <PrefaceTitle as="h2">{revenueCenter.name}</PrefaceTitle>
+        </RevenueCenterHeader>
+        <RevenueCenterContent>
+          <RevenueCenterImage as="span" style={bgStyle} />
+          <RevenueCenterDetails>
+            <RevenueCenterDetail icon={iconMap.MapPin} text={address.street} />
+            {address.phone && (
+              <RevenueCenterDetail icon={iconMap.Phone} text={address.phone} />
+            )}
+            {hoursDesc && (
+              <RevenueCenterDetail icon={hoursDescIcon} text={hoursDesc} />
+            )}
+          </RevenueCenterDetails>
+        </RevenueCenterContent>
+        {activeMarker && (
+          <>
+            {hasService ? (
+              <RevenueCenterOrder revenueCenter={revenueCenter} />
+            ) : (
+              <RevenueCentersAlert
+                title="This location doesn't deliver to your address"
+                subtitle="Please go back and choose a different location."
+              />
+            )}
+            <ChangeLocation onClick={() => setActive(null)} />
+          </>
+        )}
+      </RevenueCenterView>
+    </RevenueCenterContainer>
   )
 }
 

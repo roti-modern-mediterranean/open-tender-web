@@ -6,7 +6,7 @@ import { serviceTypeNamesMap } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
-import { ModalContent, ModalView } from '..'
+import { ButtonGroupBig, ModalContent, ModalView } from '..'
 
 const OrderType = () => {
   const dispatch = useDispatch()
@@ -29,14 +29,19 @@ const OrderType = () => {
       <ModalContent
         title="Change your order type"
         footer={
-          <div>
-            <ButtonStyled onClick={cancel} color="cart">
+          <ButtonGroupBig>
+            <ButtonStyled onClick={cancel} size="big">
               Keep {serviceTypeName}
             </ButtonStyled>
-            <ButtonStyled onClick={changeOrderType}>
+            <ButtonStyled
+              onClick={changeOrderType}
+              color="secondary"
+              size="big"
+              style={{ backgroundColor: 'transparent' }}
+            >
               Change Order Type
             </ButtonStyled>
-          </div>
+          </ButtonGroupBig>
         }
       >
         <div>

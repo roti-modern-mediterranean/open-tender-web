@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
   selectCustomer,
-  resetSignUp,
   selectMenuSlug,
   selectCartValidate,
   selectCheckout,
@@ -83,8 +82,6 @@ const CheckoutGuest = () => {
   useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
-    dispatch(resetSignUp())
-    return () => dispatch(resetSignUp())
   }, [windowRef, dispatch])
 
   useEffect(() => {
@@ -127,7 +124,7 @@ const CheckoutGuest = () => {
                 <h1>Contact Info</h1>
                 <p>The bare minimum we need in order to fulfill your order.</p>
               </FormHeader>
-              <form id="signup-form" onSubmit={handleSubmit} noValidate>
+              <form id="guest-form" onSubmit={handleSubmit} noValidate>
                 <ErrMsg errMsg={errMsg} style={{ margin: '0 0 2rem' }} />
                 <div>
                   {fields.map((field) => (
@@ -152,7 +149,9 @@ const CheckoutGuest = () => {
                     disabled={emptyRequired || loading === 'pending'}
                     submitRef={submitRef}
                   >
-                    {loading === 'pending' ? 'Submitting...' : 'Submit'}
+                    {loading === 'pending'
+                      ? 'Proceed to Order Details'
+                      : 'Proceed to Order Details'}
                   </ButtonSubmit>
                 </FormSubmit>
               </form>

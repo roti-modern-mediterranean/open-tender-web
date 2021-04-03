@@ -6,11 +6,11 @@ import {
   selectCustomer,
   selectSignUp,
   signUpCustomer,
-  resetSignUp,
   selectMenuSlug,
   selectCartValidate,
   selectCheckout,
   validateOrder,
+  setGuest,
 } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled, useCheckout } from '@open-tender/components'
 
@@ -43,8 +43,7 @@ const CheckoutRegister = () => {
   const { loading, error } = useSelector(selectSignUp)
   const optIns = useSelector(selectOptIns)
   const menuSlug = useSelector(selectMenuSlug)
-
-  const { check, form } = useSelector(selectCheckout)
+  const { check, form, isGuest } = useSelector(selectCheckout)
   const cartValidate = useSelector(selectCartValidate)
   const validate = useCallback((order) => dispatch(validateOrder(order)), [
     dispatch,
@@ -60,19 +59,26 @@ const CheckoutRegister = () => {
   useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
-    dispatch(resetSignUp())
-    return () => dispatch(resetSignUp())
+    // dispatch(resetSignUp())
+    // return () => dispatch(resetSignUp())
   }, [windowRef, dispatch])
 
   useEffect(() => {
     if (auth) {
       history.push('/checkout/details')
+    } else if (isGuest) {
+      history.push('/checkout/guest')
     }
-  }, [auth, history])
+  }, [auth, history, isGuest])
 
   useEffect(() => {
     if (error) windowRef.current.scrollTop = 0
   }, [error, windowRef])
+
+  const guestCheckout = () => {
+    dispatch(setGuest(true))
+    history.push('/checkout/guest')
+  }
 
   return (
     <>
@@ -88,10 +94,7 @@ const CheckoutRegister = () => {
           <PageContainer style={{ marginTop: '0' }}>
             <FormWrapper>
               <CheckoutGuestView>
-                <ButtonStyled
-                  onClick={() => history.push('/checkout/guest')}
-                  size="big"
-                >
+                <ButtonStyled onClick={guestCheckout} size="big">
                   Checkout as a Guest
                 </ButtonStyled>
               </CheckoutGuestView>

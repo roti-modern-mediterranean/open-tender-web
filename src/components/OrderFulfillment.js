@@ -6,16 +6,11 @@ import {
   updateOrderFulfillment,
   resetOrderFulfillment,
 } from '@open-tender/redux'
-import {
-  FormHeader,
-  FormWrapper,
-  Heading,
-  Message,
-  OrderFulfillmentForm,
-} from '@open-tender/components'
+import { Message, OrderFulfillmentForm } from '@open-tender/components'
 
 import { selectFulfillment } from '../slices'
 import { Loading } from '.'
+import { FormHeader, FormWrapper } from './inputs'
 
 const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
   const dispatch = useDispatch()
@@ -47,9 +42,7 @@ const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
   return (
     <FormWrapper>
       <FormHeader>
-        <p>
-          <Heading>{fulfillmentSettings.title}</Heading>
-        </p>
+        <h2>{fulfillmentSettings.title}</h2>
         <p>{subtitle}</p>
       </FormHeader>
       {isLoading ? (

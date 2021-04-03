@@ -8,6 +8,7 @@ import {
   selectMenuSlug,
   resetPasswordReset,
   resetLoginError,
+  setGuest,
 } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled } from '@open-tender/components'
 
@@ -29,6 +30,12 @@ import {} from '../../forms'
 
 const CheckoutGuestView = styled(ButtonGroupBig)`
   margin: 0 0 4.5rem;
+`
+
+const CheckoutLoginView = styled('div')`
+  button {
+    width: 100%;
+  }
 `
 
 const CheckoutLogin = () => {
@@ -62,6 +69,11 @@ const CheckoutLogin = () => {
     if (error) windowRef.current.scrollTop = 0
   }, [error, windowRef])
 
+  const guestCheckout = () => {
+    dispatch(setGuest(true))
+    history.push('/checkout/guest')
+  }
+
   return (
     <>
       <Helmet>
@@ -76,10 +88,7 @@ const CheckoutLogin = () => {
           <PageContainer style={{ marginTop: '0' }}>
             <FormWrapper>
               <CheckoutGuestView>
-                <ButtonStyled
-                  onClick={() => history.push('/checkout/guest')}
-                  size="big"
-                >
+                <ButtonStyled onClick={guestCheckout} size="big">
                   Checkout as a Guest
                 </ButtonStyled>
               </CheckoutGuestView>
@@ -87,7 +96,9 @@ const CheckoutLogin = () => {
                 <h1>Login</h1>
                 <p>Already a member? This will speed things up.</p>
               </FormHeader>
-              <LoginForm loading={loading} error={error} login={login} />
+              <CheckoutLoginView>
+                <LoginForm loading={loading} error={error} login={login} />
+              </CheckoutLoginView>
               <FormFooter>
                 <p style={{ margin: '2rem 0' }}>
                   Don't have an account yet?{' '}
