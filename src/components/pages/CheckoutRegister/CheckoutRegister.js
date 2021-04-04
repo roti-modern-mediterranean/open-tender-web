@@ -76,8 +76,8 @@ const CheckoutRegister = () => {
   }, [error, windowRef])
 
   const guestCheckout = () => {
-    dispatch(setGuest(true))
-    history.push('/checkout/guest')
+    // dispatch(setGuest(true))
+    history.push('/checkout/details')
   }
 
   return (

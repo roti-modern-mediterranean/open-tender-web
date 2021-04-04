@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useContext, useState, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -8,6 +8,10 @@ import {
   selectCheckout,
   selectCustomer,
   selectTimezone,
+  resetCheckout,
+  selectCartValidate,
+  validateOrder,
+  updateForm,
 } from '@open-tender/redux'
 import {
   makeServiceTypeName,
@@ -16,7 +20,7 @@ import {
   todayDate,
   tomorrowDate,
 } from '@open-tender/js'
-import { Preface } from '@open-tender/components'
+import { Preface, useCheckout } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { openModal, selectBrand, selectOutpostName } from '../../../slices'
@@ -33,6 +37,7 @@ import { Back, Cart } from '../../buttons'
 import styled from '@emotion/styled'
 import {} from '../../forms'
 import { FormHeader, FormWrapper } from '../../inputs'
+import CheckoutContact from './CheckoutContact'
 
 const CheckoutTitle = styled(Preface)`
   display: block;
@@ -105,6 +110,8 @@ const makeOrderTypeName = (order, outpostName) => {
 const CheckoutDetails = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const [contact, setContact] = useState({})
+  const [details, setDetails] = useState({})
   const [quickOptions, setQuickOptions] = useState([])
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
@@ -119,11 +126,23 @@ const CheckoutDetails = () => {
   const otherServiceType = serviceType === 'PICKUP' ? 'Delivery' : 'Pickup'
   const { auth } = useSelector(selectCustomer)
   const { check, form, loading, isGuest } = useSelector(selectCheckout)
-  const backSlug = isGuest
-    ? '/checkout/guest'
-    : auth
-    ? menuSlug
-    : '/checkout/register'
+  // const backSlug = isGuest
+  //   ? '/checkout/guest'
+  //   : auth
+  //   ? menuSlug
+  //   : '/checkout/register'
+  const backSlug = auth ? menuSlug : '/checkout/register'
+  const cartValidate = useSelector(selectCartValidate)
+  const validate = useCallback((order) => dispatch(validateOrder(order)), [
+    dispatch,
+  ])
+  // const cartWithCustomer = { ...cartValidate, customer: form.customer }
+  useCheckout(validate, cartValidate)
+
+  // const data = {
+  //   customer: contact,
+  //   details:
+  // }
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -161,6 +180,10 @@ const CheckoutDetails = () => {
           <PageContainer style={{ marginTop: '0' }}>
             <CheckoutTitle as="h1">{orderTypeName} Details</CheckoutTitle>
             <FormWrapper>
+              <CheckoutLink
+                onClick={() => dispatch(resetCheckout())}
+                text="Reset Checkout"
+              />
               <FormHeader style={{ marginBottom: '2rem' }}>
                 <h2>{orderTypeName} Location</h2>
               </FormHeader>
@@ -187,6 +210,7 @@ const CheckoutDetails = () => {
                   </h2>
                 </FormHeader>
               </CheckoutOrderType>
+              <CheckoutContact contact={contact} setContact={setContact} />
               <FormHeader style={{ marginBottom: '2rem' }}>
                 <h2>Quick Options</h2>
               </FormHeader>

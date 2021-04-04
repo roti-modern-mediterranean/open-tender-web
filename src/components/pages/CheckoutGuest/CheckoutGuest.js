@@ -64,7 +64,6 @@ const CheckoutGuest = () => {
     form,
     errors
   )
-  console.log('formErrors', formErrors)
   const emptyRequired =
     fields.filter((i) => i.required && !data[i.name]).length > 0
   const errMsg = !isEmpty(formErrors)
