@@ -26,6 +26,7 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { openModal, selectBrand, selectOutpostName } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
+  CheckoutHeader,
   CheckoutLink,
   Content,
   Header,
@@ -38,17 +39,6 @@ import styled from '@emotion/styled'
 import {} from '../../forms'
 import { FormHeader, FormWrapper } from '../../inputs'
 import CheckoutContact from './CheckoutContact'
-
-const CheckoutTitle = styled(Preface)`
-  display: block;
-  width: 100%;
-  margin: 0 0 3rem;
-  text-align: center;
-  font-weight: 500;
-  font-size: 2.8rem;
-  line-height: 1;
-  letter-spacing: 0.01em;
-`
 
 const CheckoutRevenueCenter = styled('div')`
   margin: 0 0 3rem;
@@ -166,6 +156,11 @@ const CheckoutDetails = () => {
     dispatch(openModal({ type: 'orderType' }))
   }
 
+  const reset = () => {
+    dispatch(resetCheckout())
+    history.push(backSlug)
+  }
+
   return (
     <>
       <Helmet>
@@ -178,12 +173,10 @@ const CheckoutDetails = () => {
         />
         <Main>
           <PageContainer style={{ marginTop: '0' }}>
-            <CheckoutTitle as="h1">{orderTypeName} Details</CheckoutTitle>
+            <CheckoutHeader title={`${orderTypeName} Details`}>
+              <CheckoutLink onClick={reset} text="Reset Checkout" />
+            </CheckoutHeader>
             <FormWrapper>
-              <CheckoutLink
-                onClick={() => dispatch(resetCheckout())}
-                text="Reset Checkout"
-              />
               <FormHeader style={{ marginBottom: '2rem' }}>
                 <h2>{orderTypeName} Location</h2>
               </FormHeader>

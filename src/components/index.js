@@ -23,6 +23,7 @@ import CartFooter from './CartFooter'
 import CartFooterButtons from './CartFooterButtons'
 import CartItem from './CartItem'
 import CartItemQuantity from './CartItemQuantity'
+import CheckoutHeader from './CheckoutHeader'
 import CheckoutLink from './CheckoutLink'
 import Content from './Content'
 import Container from './Container'
@@ -131,6 +132,7 @@ export {
   CartFooterButtons,
   CartItem,
   CartItemQuantity,
+  CheckoutHeader,
   CheckoutLink,
   Container,
   Content,
