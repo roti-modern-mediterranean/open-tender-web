@@ -140,7 +140,6 @@ const AllergenForm = ({
     const { allergen_id, name } = i
     return { allergen_id, name, imageUrl }
   })
-  console.log(displayed)
 
   return (
     <AllergenFormView>

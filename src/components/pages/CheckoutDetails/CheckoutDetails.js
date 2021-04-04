@@ -6,7 +6,6 @@ import {
   selectMenuSlug,
   selectOrder,
   selectCheckout,
-  selectCustomer,
   selectTimezone,
   resetCheckout,
   selectCartValidate,
@@ -18,8 +17,10 @@ import {
   currentLocalDateStr,
   todayDate,
   tomorrowDate,
+  handleCheckoutErrors,
+  isEmpty,
 } from '@open-tender/js'
-import { useCheckout } from '@open-tender/components'
+import { ButtonStyled, useCheckout } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { openModal, selectBrand, selectOutpostName } from '../../../slices'
@@ -36,7 +37,7 @@ import {
 import { Back, Cart } from '../../buttons'
 import styled from '@emotion/styled'
 import {} from '../../forms'
-import { FormHeader, FormWrapper } from '../../inputs'
+import { ErrMsg, FormHeader, FormSubmit, FormWrapper } from '../../inputs'
 import CheckoutContact from './CheckoutContact'
 import CheckoutOptions from './CheckoutOptions'
 
@@ -100,6 +101,8 @@ const makeOrderTypeName = (order, outpostName) => {
 const CheckoutDetails = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const [details, setDetails] = useState({})
+  const [hasSubmit, setHasSubmit] = useState(false)
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
   const menuSlug = useSelector(selectMenuSlug)
@@ -110,34 +113,34 @@ const CheckoutDetails = () => {
   const tz = useSelector(selectTimezone)
   const requestedAtStr = makeOrderTimeStr(requestedAt, tz)
   const otherServiceType = serviceType === 'PICKUP' ? 'Delivery' : 'Pickup'
-  const { auth } = useSelector(selectCustomer)
-  const { check, form, loading, isGuest } = useSelector(selectCheckout)
-  // const backSlug = isGuest
-  //   ? '/checkout/guest'
-  //   : auth
-  //   ? menuSlug
-  //   : '/checkout/register'
-  // const backSlug = auth ? menuSlug : '/checkout/register'
+  const { check, form, loading } = useSelector(selectCheckout)
+  const hasDetails = !isEmpty(details)
+  const errors =
+    hasDetails && check.errors
+      ? handleCheckoutErrors({ params: check.errors })
+      : {}
   const cartValidate = useSelector(selectCartValidate)
   const validate = useCallback((order) => dispatch(validateOrder(order)), [
     dispatch,
   ])
-  // const cartWithCustomer = { ...cartValidate, customer: form.customer }
-  useCheckout(validate, cartValidate)
-
-  // const data = {
-  //   customer: contact,
-  //   details:
-  // }
+  const cartWithDetails = { ...cartValidate, ...details }
+  useCheckout(validate, cartWithDetails)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
   }, [windowRef, dispatch])
 
-  // useEffect(() => {
-  //   if (error) windowRef.current.scrollTop = 0
-  // }, [error, windowRef])
+  useEffect(() => {
+    if (loading === 'idle') {
+      setHasSubmit(false)
+      if (errors.form) {
+        windowRef.current.scrollTop = 0
+      } else if (hasDetails) {
+        history.push('/checkout/payment')
+      }
+    }
+  }, [errors.form, hasSubmit, hasDetails, history, loading, windowRef])
 
   const changeRevenueCenter = () => {
     history.push('/locations')
@@ -157,6 +160,15 @@ const CheckoutDetails = () => {
     history.push(menuSlug)
   }
 
+  const handleSubmit = () => {
+    setHasSubmit(true)
+    const data = {
+      customer: form.customer,
+      details: form.details,
+    }
+    setDetails(data)
+  }
+
   return (
     <>
       <Helmet>
@@ -173,6 +185,7 @@ const CheckoutDetails = () => {
               <CheckoutLink onClick={reset} text="Reset Checkout" />
             </CheckoutHeader>
             <FormWrapper>
+              <ErrMsg errMsg={errors.form} style={{ margin: '0 0 2rem' }} />
               <FormHeader style={{ marginBottom: '2rem' }}>
                 <h2>{orderTypeName} Location</h2>
               </FormHeader>
@@ -199,8 +212,18 @@ const CheckoutDetails = () => {
                   </h2>
                 </FormHeader>
               </CheckoutOrderType>
-              <CheckoutContact />
-              <CheckoutOptions />
+              <CheckoutContact errors={errors.customer} />
+              <CheckoutOptions errors={errors.details} />
+              <FormSubmit>
+                <ButtonStyled
+                  size="big"
+                  color="secondary"
+                  disabled={loading === 'pending'}
+                  onClick={handleSubmit}
+                >
+                  Proceed to Payment
+                </ButtonStyled>
+              </FormSubmit>
             </FormWrapper>
           </PageContainer>
         </Main>

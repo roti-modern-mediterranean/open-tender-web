@@ -377,7 +377,6 @@ const Builder = ({
   const theme = useSelector(selectTheme)
   const mobileWidth = parseInt(theme.breakpoints.mobile.replace('px', ''))
   const isEdit = item.index !== undefined
-  console.log(item.allergens)
   const allergenAlert =
     showAllergens && allergenAlerts && item.allergens.length
       ? item.allergens.filter((allergen) => allergenAlerts.includes(allergen))

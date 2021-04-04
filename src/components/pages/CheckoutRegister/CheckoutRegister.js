@@ -10,7 +10,6 @@ import {
   selectCartValidate,
   selectCheckout,
   validateOrder,
-  setGuest,
 } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled, useCheckout } from '@open-tender/components'
 

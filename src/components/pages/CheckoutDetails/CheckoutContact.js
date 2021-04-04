@@ -66,12 +66,12 @@ const makeContact = (customer) => {
   }
 }
 
-const CheckoutContact = () => {
+const CheckoutContact = ({ errors = {} }) => {
   const dispatch = useDispatch()
   const { profile } = useSelector(selectCustomer)
   const { first_name, last_name, email, phone, company } = profile || {}
-  const { check, errors, form } = useSelector(selectCheckout)
-  const contactErrors = errors.customer || {}
+  const { check, form } = useSelector(selectCheckout)
+  // const contactErrors = errors.customer || {}
   const [contact, setContact] = useState(makeContact(form.customer))
   const config = check ? check.config : {}
   const required = config.required ? config.required.customer : []
@@ -99,6 +99,7 @@ const CheckoutContact = () => {
     }
   }, [dispatch, first_name, last_name, email, phone, company])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedUpdate = useCallback(
     debounce((customer) => dispatch(updateForm({ customer })), 500),
     []
@@ -136,7 +137,7 @@ const CheckoutContact = () => {
           type={field.type}
           value={contact[field.name] || ''}
           onChange={handleChange}
-          error={contactErrors[field.name]}
+          error={errors[field.name]}
           required={field.required}
           autoComplete={field.autoComplete}
         />

@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import debounce from 'lodash/debounce'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { selectCheckout, selectOrder, updateForm } from '@open-tender/redux'
+import { selectCheckout, updateForm } from '@open-tender/redux'
 
 import { FormHeader, Input, Switch } from '../../inputs'
 import { User } from '../../icons'
@@ -46,14 +46,11 @@ const CheckoutOptionsView = styled('div')`
   margin: 0 0 3rem;
 `
 
-const CheckoutOptions = () => {
+const CheckoutOptions = ({ errors = {} }) => {
   const dispatch = useDispatch()
-  const { check, errors, form } = useSelector(selectCheckout)
-  const detailsErrors = errors.details || {}
-  const { isCurbside } = useSelector(selectOrder)
+  const { check, form } = useSelector(selectCheckout)
   const [details, setDetails] = useState(form.details)
   const config = check ? check.config : {}
-  console.log(config)
   const required = config.required ? config.required.details : []
   let displayed = config.displayed ? config.displayed.details : []
   if (config.allow_tax_exempt) displayed.push('taxExempt')
@@ -62,6 +59,7 @@ const CheckoutOptions = () => {
     .map((i) => ({ ...i, required: required.includes(i.config) }))
   const showNotes = displayed.includes('notes') || required.includes('notes')
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedUpdate = useCallback(
     debounce((details) => dispatch(updateForm({ details })), 500),
     []
@@ -86,12 +84,10 @@ const CheckoutOptions = () => {
         field.type === 'checkbox' ? (
           <Switch
             key={field.name}
-            // icon={iconMap[field.name]}
             label={field.label}
             name={field.name}
             value={details[field.name] || false}
             onChange={handleChange}
-            error={detailsErrors[field.name]}
           />
         ) : (
           <Input
@@ -102,7 +98,7 @@ const CheckoutOptions = () => {
             type={field.type}
             value={details[field.name] || ''}
             onChange={handleChange}
-            error={detailsErrors[field.name]}
+            error={errors[field.name]}
             required={field.required}
             autoComplete={field.autoComplete}
           />

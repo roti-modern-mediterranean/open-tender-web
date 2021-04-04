@@ -81,7 +81,7 @@ const SwitchToggle = styled('span')`
   }
 `
 
-const Switch = ({ disabled = false, label, name, value, onChange }) => {
+const Switch = ({ label, name, value, onChange, disabled = false }) => {
   return (
     <SwitchLabel htmlFor={name}>
       <SwitchText on={value}>{label}</SwitchText>
@@ -91,8 +91,8 @@ const Switch = ({ disabled = false, label, name, value, onChange }) => {
           id={name}
           type="checkbox"
           checked={value}
-          disabled={disabled}
           onChange={onChange}
+          disabled={disabled}
         />
         <SwitchToggle />
       </SwitchView>
