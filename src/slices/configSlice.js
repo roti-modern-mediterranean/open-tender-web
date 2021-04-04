@@ -48,6 +48,7 @@ const decorateTheme = (theme) => {
       cartItemBorder: '#E3DFC9',
       cardHover: '#ADB8C6',
       navHover: '#F3EDD2',
+      switch: '#979EA7',
     },
     layout: {
       ...theme.layout,

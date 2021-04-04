@@ -11,7 +11,6 @@ import {
   resetCheckout,
   selectCartValidate,
   validateOrder,
-  updateForm,
 } from '@open-tender/redux'
 import {
   makeServiceTypeName,
@@ -20,7 +19,7 @@ import {
   todayDate,
   tomorrowDate,
 } from '@open-tender/js'
-import { Preface, useCheckout } from '@open-tender/components'
+import { useCheckout } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { openModal, selectBrand, selectOutpostName } from '../../../slices'
@@ -39,6 +38,7 @@ import styled from '@emotion/styled'
 import {} from '../../forms'
 import { FormHeader, FormWrapper } from '../../inputs'
 import CheckoutContact from './CheckoutContact'
+import CheckoutOptions from './CheckoutOptions'
 
 const CheckoutRevenueCenter = styled('div')`
   margin: 0 0 3rem;
@@ -100,16 +100,12 @@ const makeOrderTypeName = (order, outpostName) => {
 const CheckoutDetails = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const [contact, setContact] = useState({})
-  const [details, setDetails] = useState({})
-  const [quickOptions, setQuickOptions] = useState([])
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
-  const { serviceType, orderType, revenueCenter, requestedAt } = order
+  const { serviceType, revenueCenter, requestedAt } = order
   const outpostName = useSelector(selectOutpostName)
-  const isCatering = orderType === 'CATERING'
   const orderTypeName = makeOrderTypeName(order, outpostName)
   const tz = useSelector(selectTimezone)
   const requestedAtStr = makeOrderTimeStr(requestedAt, tz)
@@ -203,10 +199,8 @@ const CheckoutDetails = () => {
                   </h2>
                 </FormHeader>
               </CheckoutOrderType>
-              <CheckoutContact contact={contact} setContact={setContact} />
-              <FormHeader style={{ marginBottom: '2rem' }}>
-                <h2>Quick Options</h2>
-              </FormHeader>
+              <CheckoutContact />
+              <CheckoutOptions />
             </FormWrapper>
           </PageContainer>
         </Main>

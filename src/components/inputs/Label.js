@@ -10,14 +10,10 @@ const LabelView = styled('label')`
   margin: 0 0 2rem;
   font-family: ${(props) => props.theme.inputs.family};
   font-size: ${(props) => props.theme.inputs.fontSize};
-  // border-bottom: ${(props) => props.theme.inputs.borderWidth} solid
-  //   ${(props) => props.theme.inputs.borderColor};
 
   input,
   textarea,
   select {
-    // display: block;
-    // border: 0;
     font-size: inherit;
     padding-left: 3.4rem;
 
@@ -49,7 +45,7 @@ const LabelIcon = styled('span')`
     fill: ${(props) =>
       props.hasValue
         ? props.theme.inputs.color
-        : props.theme.inputs.placeholderColor};
+        : props.theme.inputs.placeholderColor} !important;
   }
 `
 
@@ -86,27 +82,44 @@ const LabelRequired = styled('span')`
   color: ${(props) => props.theme.colors.error};
 `
 
-const Label = ({ icon, text, required, value, errMsg, children }) => (
-  <LabelView>
-    {icon && <LabelIcon hasValue={!!value}>{icon}</LabelIcon>}
-    {children}
-    <LabelText hasValue={!!value}>
-      {text}
-      {required ? <LabelRequired>&nbsp;*</LabelRequired> : null}
-    </LabelText>
-    <ErrMsg errMsg={errMsg} />
-  </LabelView>
-)
+const Label = ({
+  icon,
+  text,
+  required,
+  value,
+  errMsg,
+  children,
+  style = null,
+}) => {
+  return (
+    <LabelView style={style}>
+      {icon && <LabelIcon hasValue={!!value}>{icon}</LabelIcon>}
+      {children}
+      <LabelText hasValue={!!value}>
+        {text}
+        {required ? <LabelRequired>&nbsp;*</LabelRequired> : null}
+      </LabelText>
+      <ErrMsg errMsg={errMsg} />
+    </LabelView>
+  )
+}
 
 Label.displayName = 'Label'
 Label.propTypes = {
   icon: propTypes.element,
   text: propTypes.oneOfType([propTypes.string, propTypes.element]),
   required: propTypes.bool,
+  value: propTypes.oneOfType([
+    propTypes.string,
+    propTypes.number,
+    propTypes.bool,
+  ]),
+  errMsg: propTypes.string,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node,
   ]),
+  style: propTypes.object,
 }
 
 export default Label

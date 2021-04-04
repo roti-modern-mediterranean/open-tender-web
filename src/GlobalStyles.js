@@ -301,7 +301,11 @@ const makeGlobalStyles = (theme) => css`
   }
 
   textarea {
-    height: 5em;
+    height: 4.4rem;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   select {

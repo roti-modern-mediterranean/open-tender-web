@@ -6,11 +6,11 @@ import { makePhone } from '@open-tender/js'
 import { selectCustomer, selectCheckout, updateForm } from '@open-tender/redux'
 
 import { FormHeader, Input } from '../../inputs'
-import { Mail, Phone, User } from '../../icons'
+import { Mail, Phone, User, UserId } from '../../icons'
 import { useCallback, useEffect, useState } from 'react'
 
 const iconMap = {
-  name: <User />,
+  name: <UserId />,
   email: <Mail />,
   phone: <Phone />,
   company: <User />,
@@ -71,6 +71,7 @@ const CheckoutContact = () => {
   const { profile } = useSelector(selectCustomer)
   const { first_name, last_name, email, phone, company } = profile || {}
   const { check, errors, form } = useSelector(selectCheckout)
+  const contactErrors = errors.customer || {}
   const [contact, setContact] = useState(makeContact(form.customer))
   const config = check ? check.config : {}
   const required = config.required ? config.required.customer : []
@@ -88,14 +89,12 @@ const CheckoutContact = () => {
   useEffect(() => {
     if (first_name) {
       const customer = {
-        // name: `${first_name} ${last_name}`,
         first_name,
         last_name,
         email,
         phone,
         company,
       }
-      // setContact(customer)
       dispatch(updateForm({ customer }))
     }
   }, [dispatch, first_name, last_name, email, phone, company])
@@ -120,7 +119,6 @@ const CheckoutContact = () => {
     }
     const data = { ...contact, [id]: val }
     setContact(data)
-    // dispatch(updateForm({ customer }))
     debouncedUpdate(customer)
   }
 
@@ -138,7 +136,7 @@ const CheckoutContact = () => {
           type={field.type}
           value={contact[field.name] || ''}
           onChange={handleChange}
-          error={errors[field.name]}
+          error={contactErrors[field.name]}
           required={field.required}
           autoComplete={field.autoComplete}
         />

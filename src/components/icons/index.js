@@ -17,6 +17,7 @@ import MinusSign from './MinusSign'
 import Phone from './Phone'
 import PlusSign from './PlusSign'
 import User from './User'
+import UserId from './UserId'
 
 export {
   ArrowLeft,
@@ -38,4 +39,5 @@ export {
   Phone,
   PlusSign,
   User,
+  UserId,
 }

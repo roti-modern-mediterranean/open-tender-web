@@ -5,6 +5,7 @@ import Input from './Input'
 import Label from './Label'
 import RadioButton from './RadioButton'
 import RadioGroup from './RadioGroup'
+import Switch from './Switch'
 
 export {
   Checkbox,
@@ -17,4 +18,5 @@ export {
   Label,
   RadioButton,
   RadioGroup,
+  Switch,
 }
