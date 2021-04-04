@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import { makePhone } from '@open-tender/js'
 import { selectCustomer, selectCheckout, updateForm } from '@open-tender/redux'
 
-import { Input } from '../../inputs'
+import { FormHeader, Input } from '../../inputs'
 import { Mail, Phone, User } from '../../icons'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -126,6 +126,9 @@ const CheckoutContact = () => {
 
   return (
     <CheckoutContactView>
+      <FormHeader>
+        <h2>Contact Info</h2>
+      </FormHeader>
       {formFields.map((field) => (
         <Input
           key={field.name}
