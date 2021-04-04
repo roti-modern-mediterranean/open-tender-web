@@ -3,19 +3,21 @@ import { useSelector } from 'react-redux'
 import { selectOrder } from '@open-tender/redux'
 
 import { FormHeader } from '../../inputs'
+import CheckoutQuickOptions from './CheckoutQuickOptions'
+import { AddCondiments, DressingOnTheSide, LeaveAtDoor } from '../../icons'
 
 const optionButtons = [
   {
     text: 'Leave at door',
-    icon: null,
+    icon: <LeaveAtDoor />,
   },
   {
     text: 'Add condiments',
-    icon: null,
+    icon: <AddCondiments />,
   },
   {
     text: 'Dressing on the side',
-    icon: null,
+    icon: <DressingOnTheSide />,
   },
 ]
 
@@ -34,8 +36,6 @@ const makeInitState = (notes) => {
 
 const CheckoutNotes = ({ notes, handleChange }) => {
   const [initOptions, initText] = makeInitState(notes)
-  console.log(initOptions)
-  console.log(initText)
   const [options, setOptions] = useState(initOptions)
   const [text, setText] = useState(initText)
   const { serviceType } = useSelector(selectOrder)
@@ -43,7 +43,7 @@ const CheckoutNotes = ({ notes, handleChange }) => {
   const handleOption = (evt, option) => {
     evt.preventDefault()
     const newOptions = options.includes(option)
-      ? options.filter((i) => i === option)
+      ? options.filter((i) => i !== option)
       : [...options, option]
     setOptions(newOptions)
     const target = {
@@ -66,9 +66,11 @@ const CheckoutNotes = ({ notes, handleChange }) => {
 
   return (
     <>
-      <FormHeader style={{ marginBottom: '2rem' }}>
-        <h2>Quick Options</h2>
-      </FormHeader>
+      <CheckoutQuickOptions
+        buttons={optionButtons}
+        options={options}
+        handleOption={handleOption}
+      />
       <FormHeader style={{ marginBottom: '0' }}>
         <h2>{serviceType.toLowerCase()} Notes</h2>
       </FormHeader>

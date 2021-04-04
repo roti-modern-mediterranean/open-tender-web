@@ -117,7 +117,7 @@ const CheckoutDetails = () => {
   //   : auth
   //   ? menuSlug
   //   : '/checkout/register'
-  const backSlug = auth ? menuSlug : '/checkout/register'
+  // const backSlug = auth ? menuSlug : '/checkout/register'
   const cartValidate = useSelector(selectCartValidate)
   const validate = useCallback((order) => dispatch(validateOrder(order)), [
     dispatch,
@@ -154,7 +154,7 @@ const CheckoutDetails = () => {
 
   const reset = () => {
     dispatch(resetCheckout())
-    history.push(backSlug)
+    history.push(menuSlug)
   }
 
   return (
@@ -164,7 +164,7 @@ const CheckoutDetails = () => {
       </Helmet>
       <Content>
         <Header
-          left={<Back onClick={() => history.push(backSlug)} />}
+          left={<Back onClick={() => history.push(menuSlug)} />}
           right={<Cart />}
         />
         <Main>

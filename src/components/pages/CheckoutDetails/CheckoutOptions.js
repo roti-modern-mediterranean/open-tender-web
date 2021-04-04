@@ -77,9 +77,11 @@ const CheckoutOptions = () => {
 
   return (
     <CheckoutOptionsView>
-      <FormHeader>
-        <h2>Order Details</h2>
-      </FormHeader>
+      {formFields.length > 0 && (
+        <FormHeader>
+          <h2>Order Details</h2>
+        </FormHeader>
+      )}
       {formFields.map((field) =>
         field.type === 'checkbox' ? (
           <Switch
