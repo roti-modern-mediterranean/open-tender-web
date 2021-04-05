@@ -5,11 +5,12 @@ import styled from '@emotion/styled'
 import { BarLoader, ClipLoader } from 'react-spinners'
 
 const loader = (type, props) => {
+  console.log(props)
   switch (type) {
     case 'Clip':
       return <ClipLoader {...props} loading={true} />
     default:
-      return <BarLoader {...props} loading={true} />
+      return <BarLoader width={props.size} {...props} loading={true} />
   }
 }
 

@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-import CheckoutCartItem from './CheckooutCartItem'
+import CheckoutCartItem from './CheckoutCartItem'
 
 const CheckoutCartView = styled('div')`
   margin: 0 0 5rem;
@@ -17,6 +17,7 @@ const CheckoutLine = styled('span')`
 
 const CheckoutCart = ({ check }) => {
   const { cart, surcharges, discounts, taxes, totals, details } = check
+  console.log(details)
   const { subtotal, gift_card, surcharge, discount, tip, total } = totals
   const totalBeforeTax = [subtotal, gift_card, surcharge, discount]
     .reduce((t, i) => (t += parseFloat(i)), 0.0)
@@ -45,8 +46,8 @@ const CheckoutCart = ({ check }) => {
           <CheckoutCartItem name="Total before Tax" amount={totalBeforeTax} />
         </>
       )}
-      {details.is_tax_exempt ? (
-        <CheckoutCartItem name="Tax (tax exempt)" amount="$0.00" />
+      {details.tax_exempt_id ? (
+        <CheckoutCartItem name="Tax (exempt)" amount="0.00" />
       ) : (
         taxes.map((tax) => <CheckoutCartItem key={tax.id} {...tax} />)
       )}

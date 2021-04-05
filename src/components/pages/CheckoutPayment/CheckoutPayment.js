@@ -26,6 +26,7 @@ import {
   CheckoutHeader,
   Content,
   Header,
+  Loading,
   Main,
   PageContainer,
 } from '../..'
@@ -34,6 +35,8 @@ import styled from '@emotion/styled'
 import {} from '../../forms'
 import { ErrMsg, FormHeader, FormWrapper } from '../../inputs'
 import CheckoutCart from './CheckoutCart'
+import CheckoutPromoCode from './CheckoutPromoCode'
+import { useTheme } from '@emotion/react'
 
 const CheckoutPaymentFooter = styled('div')`
   position: fixed;
@@ -53,6 +56,7 @@ const CheckoutPaymentTitle = styled(Heading)`
 const CheckoutPayment = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const theme = useTheme()
   const submitRef = useRef(null)
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
@@ -102,16 +106,19 @@ const CheckoutPayment = () => {
             <FormWrapper>
               <ErrMsg errMsg={errors.form} style={{ margin: '0 0 2rem' }} />
               <CheckoutCart check={check} />
+              <CheckoutPromoCode />
             </FormWrapper>
           </PageContainer>
           <CheckoutPaymentFooter>
             <CartFooter
-              back={null}
+              back={
+                loading === 'pending' && <Loading color={theme.colors.light} />
+              }
               add={
                 <ButtonStyled
                   btnRef={submitRef}
                   onClick={handleSubmit}
-                  disabled={submitting}
+                  disabled={loading === 'pending'}
                   size="big"
                   color="cart"
                 >

@@ -24,6 +24,7 @@ import Phone from './Phone'
 import PlusSign from './PlusSign'
 import Scooter from './Scooter'
 import SUV from './SUV'
+import Tag from './Tag'
 import User from './User'
 import UserId from './UserId'
 
@@ -54,6 +55,7 @@ export {
   PlusSign,
   Scooter,
   SUV,
+  Tag,
   User,
   UserId,
 }
