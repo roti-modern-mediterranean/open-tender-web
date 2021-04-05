@@ -1,4 +1,10 @@
-import React, { useEffect, useContext, useState, useCallback } from 'react'
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  useCallback,
+  useRef,
+} from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -10,6 +16,7 @@ import {
   resetCheckout,
   selectCartValidate,
   validateOrder,
+  selectCartTotal,
 } from '@open-tender/redux'
 import {
   makeServiceTypeName,
@@ -19,6 +26,7 @@ import {
   tomorrowDate,
   handleCheckoutErrors,
   isEmpty,
+  formatDollars,
 } from '@open-tender/js'
 import { ButtonStyled, useCheckout } from '@open-tender/components'
 
@@ -26,6 +34,7 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { openModal, selectBrand, selectOutpostName } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
+  CartFooter,
   CheckoutHeader,
   CheckoutLink,
   Content,
@@ -37,7 +46,7 @@ import {
 import { Back, Cart } from '../../buttons'
 import styled from '@emotion/styled'
 import {} from '../../forms'
-import { ErrMsg, FormHeader, FormSubmit, FormWrapper } from '../../inputs'
+import { ErrMsg, FormHeader, FormWrapper } from '../../inputs'
 import CheckoutContact from './CheckoutContact'
 import CheckoutOptions from './CheckoutOptions'
 
@@ -59,16 +68,24 @@ const CheckoutRevenueCenter = styled('div')`
 
 const CheckoutOrderType = styled('div')`
   text-align: center;
-  margin: 0 0 4rem;
+  margin: 0 0 3rem;
 
   & > span {
     display: inline-block;
-    margin: 0 0 2rem;
   }
 
   p {
     margin: 0 0 1rem;
   }
+`
+
+const CheckoutDetailsFooter = styled('div')`
+  position: fixed;
+  z-index: 10;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 14.5rem;
 `
 
 const makeOrderTimeStr = (requestedAt, tz) => {
@@ -82,7 +99,7 @@ const makeOrderTimeStr = (requestedAt, tz) => {
     requestedAt === 'asap'
       ? `ASAP / ${currentLocalDateStr(tz, 'MMMM d')}`
       : isoToDateStr(requestedAt, tz, 'h:mma / MMMM d')
-  const parenthetical = isToday ? ' (today)' : isTomorrow ? ' (tomorrow)' : ''
+  const parenthetical = isToday ? ' (today)' : isTomorrow ? ' (tmrw)' : ''
   return `${requestedAtText}${parenthetical}`
 }
 
@@ -101,10 +118,12 @@ const makeOrderTypeName = (order, outpostName) => {
 const CheckoutDetails = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const submitRef = useRef(null)
   const [details, setDetails] = useState({})
-  const [hasSubmit, setHasSubmit] = useState(false)
+  // const [hasSubmit, setHasSubmit] = useState(false)
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
+  const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
   const { serviceType, revenueCenter, requestedAt } = order
@@ -133,14 +152,13 @@ const CheckoutDetails = () => {
 
   useEffect(() => {
     if (loading === 'idle') {
-      setHasSubmit(false)
       if (errors.form) {
         windowRef.current.scrollTop = 0
       } else if (hasDetails) {
         history.push('/checkout/payment')
       }
     }
-  }, [errors.form, hasSubmit, hasDetails, history, loading, windowRef])
+  }, [errors.form, hasDetails, history, loading, windowRef])
 
   const changeRevenueCenter = () => {
     history.push('/locations')
@@ -161,12 +179,12 @@ const CheckoutDetails = () => {
   }
 
   const handleSubmit = () => {
-    setHasSubmit(true)
     const data = {
       customer: form.customer,
       details: form.details,
     }
     setDetails(data)
+    submitRef.current.blur()
   }
 
   return (
@@ -174,13 +192,13 @@ const CheckoutDetails = () => {
       <Helmet>
         <title>Checkout Details | {siteTitle}</title>
       </Helmet>
-      <Content>
+      <Content hasFooter={false}>
         <Header
           left={<Back onClick={() => history.push(menuSlug)} />}
           right={<Cart />}
         />
         <Main>
-          <PageContainer style={{ marginTop: '0' }}>
+          <PageContainer style={{ margin: '0 0 14.5rem' }}>
             <CheckoutHeader title={`${orderTypeName} Details`}>
               <CheckoutLink onClick={reset} text="Reset Checkout" />
             </CheckoutHeader>
@@ -205,7 +223,7 @@ const CheckoutDetails = () => {
                   onClick={changeServiceType}
                   text={`Switch to ${otherServiceType}`}
                 />
-                <FormHeader>
+                <FormHeader style={{ margin: '3rem 0 0' }}>
                   <h2>
                     {orderTypeName.replace('Curbside ', '')} Time
                     <button onClick={changeTime}>{requestedAtStr}</button>
@@ -214,18 +232,30 @@ const CheckoutDetails = () => {
               </CheckoutOrderType>
               <CheckoutContact errors={errors.customer} />
               <CheckoutOptions errors={errors.details} />
-              <FormSubmit>
-                <ButtonStyled
-                  size="big"
-                  color="secondary"
-                  disabled={loading === 'pending'}
-                  onClick={handleSubmit}
-                >
-                  Proceed to Payment
-                </ButtonStyled>
-              </FormSubmit>
             </FormWrapper>
           </PageContainer>
+          <CheckoutDetailsFooter>
+            <CartFooter
+              label={<span>Subtotal</span>}
+              total={
+                <span>
+                  <span>{formatDollars(cartTotal)}</span>
+                </span>
+              }
+              back={null}
+              add={
+                <ButtonStyled
+                  btnRef={submitRef}
+                  onClick={handleSubmit}
+                  disabled={loading === 'pending'}
+                  size="big"
+                  color="cart"
+                >
+                  Go To Pay
+                </ButtonStyled>
+              }
+            />
+          </CheckoutDetailsFooter>
         </Main>
       </Content>
     </>

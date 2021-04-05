@@ -6,12 +6,11 @@ import { FormHeader } from '../../inputs'
 const CheckoutQuickOptionsView = styled('div')`
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
   margin: 0 -0.5rem 2rem;
 `
 
 const CheckoutQuickOption = styled('div')`
-  width: 11.6rem;
+  width: 11.5rem;
   padding: 0 0.5rem 1rem;
 `
 
@@ -20,8 +19,8 @@ const CheckoutQuickOptionButton = styled('button')`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 10.6rem;
-  height: 10.6rem;
+  width: 10.5rem;
+  height: 10.5rem;
   padding: 0.75rem 1.25rem;
   border-radius: 1.4rem;
   background-color: ${(props) =>
