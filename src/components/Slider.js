@@ -5,7 +5,7 @@ import iconMap from './iconMap'
 import { isBrowser } from 'react-device-detect'
 import { BackgroundContent, BackgroundImage } from '.'
 
-import { useTouchableObject, TouchDirection } from './SliderEvents'
+import { useTouchableObject, TouchDirection, TouchEvents } from './SliderEvents'
 
 const ArrowView = styled('div')`
   position: absolute;
@@ -45,7 +45,7 @@ Arrow.propTypes = {
 const Dots = styled('div')`
   position: absolute;
   z-index: 100;
-  bottom: 0;
+  bottom: -1rem;
   left: 0;
   right: 0;
   display: flex;
@@ -63,17 +63,14 @@ const Dots = styled('div')`
 `
 
 const Dot = styled('button')`
-  width: 100%;
-  margin: 0 0.2rem;
-  height: 0.4rem;
-  border-radius: 0.2rem;
-  background-color: ${(props) => props.theme.colors.light};
-  max-width: ${(props) => (props.active ? '2rem' : '0.4rem')};
-  opacity: ${(props) => (props.active ? '1' : '0.5')};
+  margin: 0 0.5rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: ${(props) => props.active ? props.theme.colors.pepper:props.theme.colors.light};
+
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    max-width: ${(props) => (props.active ? '1.5rem' : '0.3rem')};
-    height: 0.3rem;
-    border-radius: 0.15rem;
+    border-radius: 50%;
   }
 `
 
@@ -81,7 +78,6 @@ const SliderView = styled('div')`
   position: relative;
   flex-grow: 1;
   overflow: hidden;
-  // display: flex;
 `
 
 const SliderWrapper = styled('div')`
@@ -93,7 +89,7 @@ const SliderWrapper = styled('div')`
       if(props.moveX){
         return `${props.moveX*-1}px`
       }
-      return `${props.index*-80}%`
+      return (props.index>0)?`calc(${props.index*-80}% + 4em)`:0
     }}, 0, 0);
     transition: transform ${(props) => {
       if(!props.moveX){
@@ -107,12 +103,16 @@ const SliderWrapper = styled('div')`
 
 const Slide = styled('div')`
   position: absolute;
-  z-index: ${(props) => props.index};
+  transform: translate3D(0, 0, 0);
+  height: calc(100% - 1.5rem);
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   display: flex;
+  transition: opacity ${(props) => {
+    return `${props.transition}ms ease`;
+  }};
   opacity: ${(props) => (props.active ? '1' : '0')};
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -170,14 +170,37 @@ const SliderNew = ({ settings = {}, slides }) => {
     (index > lastIndex && !(index === last && lastIndex === 0)) ||
     (index === 0 && lastIndex === last)
   const moveRight = !moveLeft
+  const sliderWrapper = useRef()
 
-  const onTouch = useCallback((direction, move) => {
-    if(direction === TouchDirection.right || direction === TouchDirection.left) {
-      setTouchMove(move)
+  const onTouch = useCallback((direction, move, _, position, eventName) => {
+    if (eventName !== TouchEvents.end) {
+      if (direction && move) {
+        if(direction === TouchDirection.right || direction === TouchDirection.left) {
+          setTouchMove((position.left * -1) + move)
+        }
+      }
+    } else {
+      const wrapper = sliderWrapper.current
+      const offsetLeft = wrapper.getBoundingClientRect().x
+      if(offsetLeft > 0) {
+        setTouchMove(0)
+      } else {
+        const slides = wrapper.querySelectorAll(':scope > div')
+        let currentIndex = 0
+        slides.forEach((slide, index) => {
+          //console.log(offsetLeft, slide.getBoundingClientRect().left)
+          if (Math.abs(slide.getBoundingClientRect().left) <= 150) {
+            currentIndex = index
+          }
+        });
+        setTouchMove(null)
+        setLastIndex(index)
+        setIndex(currentIndex)
+      }    
     }
   }, [])
 
-  const touchProps = useTouchableObject(onTouch)
+  const touchProps = useTouchableObject(onTouch, sliderWrapper)
 
   useEffect(() => {
     if (autoplay) {
@@ -217,7 +240,7 @@ const SliderNew = ({ settings = {}, slides }) => {
 
   return (
     <SliderView ref={slider}>
-      <SliderWrapper index={index} moveX={touchMove}
+      <SliderWrapper ref={sliderWrapper} index={index} moveX={touchMove}
       transition={transitionSpeed} {...touchProps}>
         {slides.map((slide, idx) => {
           const shift = idx

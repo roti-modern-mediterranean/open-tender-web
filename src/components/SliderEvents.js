@@ -9,8 +9,21 @@ export const TouchDirection = {
   unknown: 'unknown'
 }
 
-export const useTouchableObject = (onTouch) => {
+export const TouchEvents = {
+	start: 'start',
+	move: 'move',
+  end: 'end',
+  unknown: 'unknown'
+}
+
+export const useTouchableObject = (onTouch, element) => {
+  const { current } = element
+  const [eventName, setEventName] = useState(TouchEvents.unknown)
   const [touchState, setTouchState] = useState({
+    position: {
+      top: 0,
+      left: 0
+    },
     dragging: false,
     touchObject: {
       startX: null,
@@ -21,8 +34,12 @@ export const useTouchableObject = (onTouch) => {
   })
 
   const createTouchState = useCallback((dragging, startX, startY, 
-    currentX, currentY) => {
+    currentX, currentY, elementPosition) => {
     return {
+      position: {
+        left: (elementPosition)?elementPosition.left:touchState.position.left,
+        top: (elementPosition)?elementPosition.top:touchState.position.left,
+      },
       dragging,
       touchObject: {
         startX: (startX)?startX:touchState.touchObject.startX,
@@ -63,25 +80,39 @@ export const useTouchableObject = (onTouch) => {
   }, [touchState])
 
   useEffect(() => {
-    onTouch(getDirection(true), 
-      touchState.touchObject.startX - touchState.touchObject.curX,
-      touchState.touchObject.startY - touchState.touchObject.curY)
-  }, [touchState, getDirection, onTouch])
+    if (eventName !== TouchEvents.end && eventName !== TouchEvents.unknown) {
+      onTouch(getDirection(true), 
+      (touchState.touchObject.startX - touchState.touchObject.curX),
+      (touchState.touchObject.startY - touchState.touchObject.curY), touchState.position, eventName)
+    } else if (eventName === TouchEvents.end) {
+      onTouch(null, null, null, null, eventName);
+    }
+  }, [touchState, getDirection, onTouch, eventName])
 
   return {
     onTouchStart: event => {
+      setEventName(TouchEvents.start)
+      let elementPosition = {
+        left: 0,
+        top: 0
+      }
+      if (current) {
+        const objectRect = current.getBoundingClientRect()
+        elementPosition.left = objectRect.left
+        elementPosition.top = objectRect.top
+      }
       setTouchState(createTouchState(false, 
         (event.touches ? event.touches[0].pageX : event.clientX),
-        (event.touches ? event.touches[0].pageY : event.clientY), null, null))
+        (event.touches ? event.touches[0].pageY : event.clientY), null, null, elementPosition))
     },
     onTouchMove: event => {
+      setEventName(TouchEvents.move)
       setTouchState(createTouchState(true, null, null,
         (event.touches ? event.touches[0].pageX : event.clientX),
         (event.touches ? event.touches[0].pageY : event.clientY)))
     },
     onTouchEnd: event => {
-      //setTouchState(createTouchState(event))
-      onTouch()
+      setEventName(TouchEvents.end)
     }
   }
 }

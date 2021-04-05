@@ -42,7 +42,7 @@ const PageHeroContent = styled('div')`
   min-height: 44rem;
   // min-height: 50vh;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    min-height: 32rem;
+    min-height: 37rem;
   }
 `
 
