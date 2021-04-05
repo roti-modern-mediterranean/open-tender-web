@@ -16,7 +16,7 @@ import {
   resetCompletedOrder,
   resetOrder,
 } from '@open-tender/redux'
-import { ButtonStyled, Check, useCheckout } from '@open-tender/components'
+import { ButtonStyled, Heading } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
@@ -33,6 +33,7 @@ import { Back, Cart } from '../../buttons'
 import styled from '@emotion/styled'
 import {} from '../../forms'
 import { ErrMsg, FormHeader, FormWrapper } from '../../inputs'
+import CheckoutCart from './CheckoutCart'
 
 const CheckoutPaymentFooter = styled('div')`
   position: fixed;
@@ -40,7 +41,13 @@ const CheckoutPaymentFooter = styled('div')`
   bottom: 0;
   left: 0;
   right: 0;
-  height: 14.5rem;
+  height: 8rem;
+`
+
+const CheckoutPaymentTitle = styled(Heading)`
+  color: ${(props) => props.theme.colors.primary};
+  font-size: 3.8rem;
+  line-height: 1;
 `
 
 const CheckoutPayment = () => {
@@ -88,11 +95,13 @@ const CheckoutPayment = () => {
         <Main>
           <PageContainer style={{ margin: '0 auto 8rem' }}>
             <CheckoutHeader title="Confirm & Pay">
-              <p>{form.customer.first_name}'s Order</p>
+              <CheckoutPaymentTitle>
+                {form.customer.first_name}'s Order
+              </CheckoutPaymentTitle>
             </CheckoutHeader>
             <FormWrapper>
               <ErrMsg errMsg={errors.form} style={{ margin: '0 0 2rem' }} />
-              <Check check={check} tenders={[]} />
+              <CheckoutCart check={check} />
             </FormWrapper>
           </PageContainer>
           <CheckoutPaymentFooter>
