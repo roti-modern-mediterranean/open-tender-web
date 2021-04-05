@@ -96,7 +96,7 @@ const CheckoutDetailsErrors = styled('span')`
   font-family: ${(props) => props.theme.fonts.preface.family};
   text-transform: uppercase;
   font-size: 2.1rem;
-  color: ${(props) => props.theme.colors.light};
+  color: ${(props) => props.theme.colors.paprika};
 `
 
 const makeOrderTimeStr = (requestedAt, tz) => {

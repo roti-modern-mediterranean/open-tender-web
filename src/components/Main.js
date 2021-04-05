@@ -21,14 +21,8 @@ const MainView = styled('main')`
   }
 `
 
-const Main = ({
-  padding = '6rem 0 0',
-  bgColor = 'primary',
-  imageUrl,
-  style,
-  children,
-}) => {
-  const mainPadding = padding || isBrowser ? '7.6rem 0 0' : '6.4rem 0 0'
+const Main = ({ padding, bgColor = 'primary', imageUrl, style, children }) => {
+  const mainPadding = padding || (isBrowser ? '7.6rem 0 0' : '6.4rem 0 0')
   return (
     <MainView
       role="main"

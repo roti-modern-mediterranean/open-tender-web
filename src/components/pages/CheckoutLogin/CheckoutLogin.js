@@ -8,7 +8,6 @@ import {
   selectMenuSlug,
   resetPasswordReset,
   resetLoginError,
-  setGuest,
 } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled } from '@open-tender/components'
 
@@ -70,8 +69,7 @@ const CheckoutLogin = () => {
   }, [error, windowRef])
 
   const guestCheckout = () => {
-    dispatch(setGuest(true))
-    history.push('/checkout/guest')
+    history.push('/checkout/details')
   }
 
   return (

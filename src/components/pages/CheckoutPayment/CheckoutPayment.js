@@ -16,7 +16,7 @@ import {
   resetCompletedOrder,
   resetOrder,
 } from '@open-tender/redux'
-import { ButtonStyled, useCheckout } from '@open-tender/components'
+import { ButtonStyled, Check, useCheckout } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
@@ -92,6 +92,7 @@ const CheckoutPayment = () => {
             </CheckoutHeader>
             <FormWrapper>
               <ErrMsg errMsg={errors.form} style={{ margin: '0 0 2rem' }} />
+              <Check check={check} tenders={[]} />
             </FormWrapper>
           </PageContainer>
           <CheckoutPaymentFooter>

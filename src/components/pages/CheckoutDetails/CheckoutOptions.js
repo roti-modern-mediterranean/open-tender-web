@@ -8,6 +8,7 @@ import { selectCheckout, updateForm } from '@open-tender/redux'
 import { FormHeader, Input, Switch } from '../../inputs'
 import { User } from '../../icons'
 import CheckoutNotes from './CheckoutNotes'
+import CheckoutCurbside from './CheckoutCurbside'
 
 const iconMap = {
   person_count: <User />,
@@ -51,6 +52,7 @@ const CheckoutOptions = ({ errors = {} }) => {
   const { check, form } = useSelector(selectCheckout)
   const [details, setDetails] = useState(form.details)
   const config = check ? check.config : {}
+  const curbside = config.order_fulfillment
   const required = config.required ? config.required.details : []
   let displayed = config.displayed ? config.displayed.details : []
   if (config.allow_tax_exempt) displayed.push('taxExempt')
@@ -69,6 +71,7 @@ const CheckoutOptions = ({ errors = {} }) => {
     const { id, type, value, checked } = evt.target
     const val = type === 'checkbox' ? checked : value
     const data = { ...details, [id]: val }
+    console.log(data)
     setDetails(data)
     debouncedUpdate(data)
   }
@@ -110,15 +113,20 @@ const CheckoutOptions = ({ errors = {} }) => {
           handleChange={handleChange}
         />
       )}
+      {curbside && (
+        <CheckoutCurbside
+          details={details}
+          errors={errors}
+          handleChange={handleChange}
+        />
+      )}
     </CheckoutOptionsView>
   )
 }
 
 CheckoutOptions.displayName = 'CheckoutOptions'
 CheckoutOptions.propTypes = {
-  revenueCenter: propTypes.object,
-  setActive: propTypes.func,
-  style: propTypes.object,
+  errors: propTypes.object,
 }
 
 export default CheckoutOptions
