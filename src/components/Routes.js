@@ -41,6 +41,7 @@ import {
   Thanx,
   VerifyAccount,
   CheckoutGuest,
+  CheckoutPayment,
 } from './pages'
 
 const Routes = () => {
@@ -111,6 +112,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/checkout/details">
         <CheckoutDetails />
+      </Route>
+      <Route exact path="/checkout/payment">
+        <CheckoutPayment />
       </Route>
       <Route exact path="/confirmation">
         <Confirmation />

@@ -10,6 +10,7 @@ import Checkout from './Checkout'
 import CheckoutDetails from './CheckoutDetails'
 import CheckoutGuest from './CheckoutGuest'
 import CheckoutLogin from './CheckoutLogin'
+import CheckoutPayment from './CheckoutPayment'
 import CheckoutRegister from './CheckoutRegister'
 import Confirmation from './Confirmation'
 import Deals from './Deals'
@@ -57,6 +58,7 @@ export {
   CheckoutDetails,
   CheckoutGuest,
   CheckoutLogin,
+  CheckoutPayment,
   CheckoutRegister,
   Confirmation,
   Deals,

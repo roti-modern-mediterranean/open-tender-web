@@ -39,6 +39,7 @@ import {
   CheckoutLink,
   Content,
   Header,
+  Loading,
   Main,
   PageContainer,
   RevenueCenter,
@@ -49,6 +50,7 @@ import {} from '../../forms'
 import { ErrMsg, FormHeader, FormWrapper } from '../../inputs'
 import CheckoutContact from './CheckoutContact'
 import CheckoutOptions from './CheckoutOptions'
+import { useTheme } from '@emotion/react'
 
 const CheckoutRevenueCenter = styled('div')`
   margin: 0 0 3rem;
@@ -88,6 +90,14 @@ const CheckoutDetailsFooter = styled('div')`
   height: 14.5rem;
 `
 
+const CheckoutDetailsErrors = styled('span')`
+  display: block;
+  font-family: ${(props) => props.theme.fonts.preface.family};
+  text-transform: uppercase;
+  font-size: 2.1rem;
+  color: ${(props) => props.theme.colors.light};
+`
+
 const makeOrderTimeStr = (requestedAt, tz) => {
   const orderDate =
     requestedAt === 'asap'
@@ -119,8 +129,10 @@ const CheckoutDetails = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const submitRef = useRef(null)
+  const theme = useTheme()
   const [details, setDetails] = useState({})
-  // const [hasSubmit, setHasSubmit] = useState(false)
+  const [errors, setErrors] = useState(null)
+  const [submitting, setSubmitting] = useState(false)
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
   const cartTotal = useSelector(selectCartTotal)
@@ -134,10 +146,7 @@ const CheckoutDetails = () => {
   const otherServiceType = serviceType === 'PICKUP' ? 'Delivery' : 'Pickup'
   const { check, form, loading } = useSelector(selectCheckout)
   const hasDetails = !isEmpty(details)
-  const errors =
-    hasDetails && check.errors
-      ? handleCheckoutErrors({ params: check.errors })
-      : {}
+  const formErrors = errors ? handleCheckoutErrors({ params: errors }) : {}
   const cartValidate = useSelector(selectCartValidate)
   const validate = useCallback((order) => dispatch(validateOrder(order)), [
     dispatch,
@@ -152,13 +161,20 @@ const CheckoutDetails = () => {
 
   useEffect(() => {
     if (loading === 'idle') {
-      if (errors.form) {
+      setSubmitting(false)
+    }
+  }, [loading])
+
+  useEffect(() => {
+    if (hasDetails && !submitting) {
+      if (check.errors) {
+        setErrors(check.errors)
         windowRef.current.scrollTop = 0
-      } else if (hasDetails) {
+      } else {
         history.push('/checkout/payment')
       }
     }
-  }, [errors.form, hasDetails, history, loading, windowRef])
+  }, [hasDetails, submitting, check.errors, windowRef, history])
 
   const changeRevenueCenter = () => {
     history.push('/locations')
@@ -179,6 +195,7 @@ const CheckoutDetails = () => {
   }
 
   const handleSubmit = () => {
+    setSubmitting(true)
     const data = {
       customer: form.customer,
       details: form.details,
@@ -198,12 +215,12 @@ const CheckoutDetails = () => {
           right={<Cart />}
         />
         <Main>
-          <PageContainer style={{ margin: '0 0 14.5rem' }}>
+          <PageContainer style={{ margin: '0 auto 14.5rem' }}>
             <CheckoutHeader title={`${orderTypeName} Details`}>
               <CheckoutLink onClick={reset} text="Reset Checkout" />
             </CheckoutHeader>
             <FormWrapper>
-              <ErrMsg errMsg={errors.form} style={{ margin: '0 0 2rem' }} />
+              <ErrMsg errMsg={formErrors.form} style={{ margin: '0 0 2rem' }} />
               <FormHeader style={{ marginBottom: '2rem' }}>
                 <h2>{orderTypeName} Location</h2>
               </FormHeader>
@@ -230,8 +247,8 @@ const CheckoutDetails = () => {
                   </h2>
                 </FormHeader>
               </CheckoutOrderType>
-              <CheckoutContact errors={errors.customer} />
-              <CheckoutOptions errors={errors.details} />
+              <CheckoutContact errors={formErrors.customer} />
+              <CheckoutOptions errors={formErrors.details} />
             </FormWrapper>
           </PageContainer>
           <CheckoutDetailsFooter>
@@ -242,12 +259,20 @@ const CheckoutDetails = () => {
                   <span>{formatDollars(cartTotal)}</span>
                 </span>
               }
-              back={null}
+              back={
+                submitting ? (
+                  <Loading color={theme.colors.light} />
+                ) : formErrors.form ? (
+                  <CheckoutDetailsErrors>
+                    1 or more errors
+                  </CheckoutDetailsErrors>
+                ) : null
+              }
               add={
                 <ButtonStyled
                   btnRef={submitRef}
                   onClick={handleSubmit}
-                  disabled={loading === 'pending'}
+                  disabled={submitting}
                   size="big"
                   color="cart"
                 >
