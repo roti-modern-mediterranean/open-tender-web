@@ -27,6 +27,7 @@ import {
   handleCheckoutErrors,
   isEmpty,
   formatDollars,
+  prepareOrder,
 } from '@open-tender/js'
 import { ButtonStyled, useCheckout } from '@open-tender/components'
 
@@ -132,7 +133,7 @@ const CheckoutDetails = () => {
   const theme = useTheme()
   const [details, setDetails] = useState({})
   const [errors, setErrors] = useState(null)
-  const [submitting, setSubmitting] = useState(false)
+  // const [submitting, setSubmitting] = useState(false)
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
   const cartTotal = useSelector(selectCartTotal)
@@ -151,22 +152,22 @@ const CheckoutDetails = () => {
   const validate = useCallback((order) => dispatch(validateOrder(order)), [
     dispatch,
   ])
-  const cartWithDetails = { ...cartValidate, ...details }
-  useCheckout(validate, cartWithDetails)
+  // const cartWithDetails = { ...cartValidate, ...details }
+  useCheckout(validate, cartValidate)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
   }, [windowRef, dispatch])
 
-  useEffect(() => {
-    if (loading === 'idle') {
-      setSubmitting(false)
-    }
-  }, [loading])
+  // useEffect(() => {
+  //   if (loading === 'idle') {
+  //     setSubmitting(false)
+  //   }
+  // }, [loading])
 
   useEffect(() => {
-    if (hasDetails && !submitting) {
+    if (hasDetails && loading === 'idle') {
       if (check.errors) {
         setErrors(check.errors)
         windowRef.current.scrollTop = 0
@@ -174,7 +175,7 @@ const CheckoutDetails = () => {
         history.push('/checkout/payment')
       }
     }
-  }, [hasDetails, submitting, check.errors, windowRef, history])
+  }, [hasDetails, loading, check.errors, windowRef, history])
 
   const changeRevenueCenter = () => {
     history.push('/locations')
@@ -195,11 +196,13 @@ const CheckoutDetails = () => {
   }
 
   const handleSubmit = () => {
-    setSubmitting(true)
+    // setSubmitting(true)
     const data = {
       customer: form.customer,
       details: form.details,
     }
+    const order = prepareOrder({ ...cartValidate, ...data })
+    dispatch(validateOrder(order))
     setDetails(data)
     submitRef.current.blur()
   }
@@ -260,7 +263,7 @@ const CheckoutDetails = () => {
                 </span>
               }
               back={
-                submitting ? (
+                loading === 'pending' ? (
                   <Loading color={theme.colors.light} />
                 ) : formErrors.form ? (
                   <CheckoutDetailsErrors>
@@ -272,7 +275,7 @@ const CheckoutDetails = () => {
                 <ButtonStyled
                   btnRef={submitRef}
                   onClick={handleSubmit}
-                  disabled={submitting}
+                  disabled={loading === 'pending'}
                   size="big"
                   color="cart"
                 >
