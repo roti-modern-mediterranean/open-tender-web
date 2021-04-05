@@ -2,6 +2,7 @@ import AddCondiments from './AddCondiments'
 import ArrowLeft from './ArrowLeft'
 import ArrowRight from './ArrowRight'
 import Car from './Car'
+import Calendar from './Calendar'
 import CartEmpty from './CartEmpty'
 import CartFull from './CartFull'
 import Checkmark from './Checkmark'
@@ -9,6 +10,7 @@ import ChevronDown from './ChevronDown'
 import ChevronLeft from './ChevronLeft'
 import ChevronRight from './ChevronRight'
 import ChevronUp from './ChevronUp'
+import CreditCard from './CreditCard'
 import CurbsidePickup from './CurbsidePickup'
 import DetourSign from './DetourSign'
 import DressingOnTheSide from './DressingOnTheSide'
@@ -22,6 +24,7 @@ import Motorcycle from './Motorcycle'
 import Palette from './Palette'
 import Phone from './Phone'
 import PlusSign from './PlusSign'
+import Roti from './Roti'
 import Scooter from './Scooter'
 import SUV from './SUV'
 import Tag from './Tag'
@@ -32,6 +35,7 @@ export {
   AddCondiments,
   ArrowLeft,
   ArrowRight,
+  Calendar,
   Car,
   CartEmpty,
   CartFull,
@@ -40,6 +44,7 @@ export {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  CreditCard,
   CurbsidePickup,
   DetourSign,
   DressingOnTheSide,
@@ -53,6 +58,7 @@ export {
   Palette,
   Phone,
   PlusSign,
+  Roti,
   Scooter,
   SUV,
   Tag,

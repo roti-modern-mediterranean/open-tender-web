@@ -117,6 +117,7 @@ const Curbside = ({ details, errors = {}, handleChange }) => {
           {vehicleTypes.map((button) => (
             <CurbsideButtonView key={button.text}>
               <CurbsideButton
+                aria-label={button.text}
                 onClick={(evt) => handleButton(evt, button.text)}
                 checked={vehicleType === button.text}
               >

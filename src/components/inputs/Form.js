@@ -48,6 +48,7 @@ export const FormHeader = styled('div')`
 `
 
 export const FormSubmit = styled('div')`
+  width: 100%;
   margin: 3rem 0 0;
 
   button {

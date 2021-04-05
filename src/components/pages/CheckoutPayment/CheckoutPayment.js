@@ -37,6 +37,7 @@ import { ErrMsg, FormHeader, FormWrapper } from '../../inputs'
 import CheckoutCart from './CheckoutCart'
 import CheckoutPromoCode from './CheckoutPromoCode'
 import { useTheme } from '@emotion/react'
+import CheckoutTenders from './CheckoutTenders'
 
 const CheckoutPaymentFooter = styled('div')`
   position: fixed;
@@ -107,6 +108,7 @@ const CheckoutPayment = () => {
               <ErrMsg errMsg={errors.form} style={{ margin: '0 0 2rem' }} />
               <CheckoutCart check={check} />
               <CheckoutPromoCode />
+              <CheckoutTenders />
             </FormWrapper>
           </PageContainer>
           <CheckoutPaymentFooter>

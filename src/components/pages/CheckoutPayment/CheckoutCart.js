@@ -17,11 +17,10 @@ const CheckoutLine = styled('span')`
 
 const CheckoutCart = ({ check }) => {
   const { cart, surcharges, discounts, taxes, totals, details } = check
-  console.log(details)
-  const { subtotal, gift_card, surcharge, discount, tip, total } = totals
-  const totalBeforeTax = [subtotal, gift_card, surcharge, discount]
-    .reduce((t, i) => (t += parseFloat(i)), 0.0)
-    .toFixed(2)
+  const { subtotal, tip, total } = totals
+  // const totalBeforeTax = [subtotal, gift_card, surcharge, discount]
+  //   .reduce((t, i) => (t += parseFloat(i)), 0.0)
+  //   .toFixed(2)
   return (
     <CheckoutCartView>
       {cart.map((item, index) => (
@@ -40,12 +39,12 @@ const CheckoutCart = ({ check }) => {
       {discounts.map((discount) => (
         <CheckoutCartItem key={discount.id} {...discount} />
       ))}
-      {subtotal !== totalBeforeTax && (
+      {/* {subtotal !== totalBeforeTax && (
         <>
           <CheckoutLine />
           <CheckoutCartItem name="Total before Tax" amount={totalBeforeTax} />
         </>
-      )}
+      )} */}
       {details.tax_exempt_id ? (
         <CheckoutCartItem name="Tax (exempt)" amount="0.00" />
       ) : (

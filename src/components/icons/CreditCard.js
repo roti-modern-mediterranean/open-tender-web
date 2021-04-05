@@ -12,7 +12,7 @@ const CreditCardView = styled('span')`
   }
 `
 
-const CreditCard = ({ size = '2.0rem', color = null }) => {
+const CreditCard = ({ size = '1.7rem', color = null }) => {
   return (
     <CreditCardView size={size} color={color}>
       <svg viewBox="0 0 17 14">

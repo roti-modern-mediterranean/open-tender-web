@@ -10,6 +10,7 @@ const LabelView = styled('label')`
   margin: 0 0 2rem;
   font-family: ${(props) => props.theme.inputs.family};
   font-size: ${(props) => props.theme.inputs.fontSize};
+  // overflow: hidden;
 
   input,
   textarea,
@@ -53,7 +54,7 @@ const LabelText = styled('span')`
   position: absolute;
   top: 0;
   left: 3.4rem;
-  width: 90%;
+  // width: 90%;
   font-size: inherit;
   color: ${(props) => props.theme.inputs.borderColor};
   padding: ${(props) => props.theme.inputs.padding};
