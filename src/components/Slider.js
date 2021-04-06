@@ -221,7 +221,6 @@ const SliderNew = ({ settings = {}, slides }) => {
   const showSlide = (evt, idx) => {
     evt.preventDefault()
     evt.target.blur()
-    console.log(idx, index)
     if (idx >= 0 && idx <= count - 1) {
       setTouchMove(null)
       setIndex(idx)
