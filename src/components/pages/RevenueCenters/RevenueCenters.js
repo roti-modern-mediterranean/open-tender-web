@@ -25,7 +25,7 @@ import { Content, Header, Main, ScreenreaderTitle } from '../..'
 // import mapMarkerRed from '../../../assets/mapMarkerRed.svg'
 // import mapMarkerDarkRed from '../../../assets/mapMarkerDarkRed.svg'
 
-import { Back } from '../../buttons'
+import { Back, Cart } from '../../buttons'
 import RevenueCenterMap from './RevenueCenterMap'
 import MapsAutocomplete from './MapsAutocomplete'
 import RevenueCentersOrderType from './RevenueCentersOrderType'
@@ -138,7 +138,7 @@ const RevenueCenters = () => {
           style={{ boxShadow: 'none' }}
           title={navTitle}
           left={<Back />}
-          right={null}
+          right={<Cart />}
         />
         <Main style={{ paddingTop: '0' }}>
           <ScreenreaderTitle>Locations</ScreenreaderTitle>

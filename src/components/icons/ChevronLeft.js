@@ -15,7 +15,7 @@ const ChevronLeftView = styled('span')`
 const ChevronLeft = ({ size = '0.9rem', color = null }) => {
   return (
     <ChevronLeftView size={size} color={color}>
-      <svg width="9" height="14" viewBox="0 0 9 14" fill="none">
+      <svg viewBox="0 0 9 14" fill="none">
         <path d="M7.36361 13.8404L8.26953 13.0117L2.08138 7.34476L8.26953 1.68416L7.36361 0.855469L0.269531 7.34476L7.36361 13.8404Z" />
       </svg>
     </ChevronLeftView>

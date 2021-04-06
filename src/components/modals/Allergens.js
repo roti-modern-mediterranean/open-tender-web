@@ -5,22 +5,9 @@ import {
   setSelectedAllergens,
   updateCustomerAllergens,
 } from '@open-tender/redux'
-import { AllergenForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
-import { ModalContent, ModalView } from '..'
-import styled from '@emotion/styled'
-
-const AllergenFormView = styled('div')`
-  label {
-    padding: 1.25rem 0;
-
-    & > span > span:last-of-type {
-      text-align: right;
-      line-height: 1;
-    }
-  }
-`
+import { AllergenForm, ModalContent, ModalView } from '..'
 
 const Allergens = () => {
   const dispatch = useDispatch()
@@ -38,20 +25,18 @@ const Allergens = () => {
   return (
     <ModalView>
       <ModalContent
-        title="Allergen Alerts"
-        subtitle={<p>Selected allergens will be highlighted on the menu</p>}
+        title="Anything you'd like to avoid?"
+        // subtitle={<p>Selected allergens will be highlighted on the menu</p>}
       >
-        <AllergenFormView>
-          <AllergenForm
-            allergens={brandAllergens.entities}
-            selectedAllergens={brandAllergens.selectedAllergens}
-            isLoading={false}
-            error={null}
-            setAllergens={setAllergens}
-            updateAllergens={updateAllergens}
-            callback={callback}
-          />
-        </AllergenFormView>
+        <AllergenForm
+          allergens={brandAllergens.entities}
+          selectedAllergens={brandAllergens.selectedAllergens}
+          isLoading={false}
+          error={null}
+          setAllergens={setAllergens}
+          updateAllergens={updateAllergens}
+          callback={callback}
+        />
       </ModalContent>
     </ModalView>
   )

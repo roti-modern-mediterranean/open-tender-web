@@ -42,7 +42,7 @@ const CardImageBackground = styled(BgImage)`
 // TODO: remove this
 const placeholder = {
   backgroundImage:
-    'url(//s3.amazonaws.com/betterboh/u/img/local/46/1616277717_chicken-kabob-bowl-top-down_02_400x400.png)',
+    'url(//s3.amazonaws.com/betterboh/u/img/staging/46/1616711001_Hummus_Bowl_Beetlovers_Overhead.png)',
 }
 
 const CardImage = ({ imageUrl, children }) => {

@@ -36,6 +36,7 @@ import RevenueCenters from './RevenueCenters'
 import RevenueCenter from './RevenueCenter'
 import Rewards from './Rewards'
 import SignUp from './SignUp'
+import Terms from './Terms'
 import Thanx from './Thanx'
 import VerifyAccount from './VerifyAccount'
 
@@ -78,6 +79,7 @@ export {
   RevenueCenter,
   Rewards,
   SignUp,
+  Terms,
   Thanx,
   VerifyAccount,
 }

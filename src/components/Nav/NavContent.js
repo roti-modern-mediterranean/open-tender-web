@@ -39,7 +39,7 @@ const guestLinks = [
     title: 'Food Preferences',
     links: [
       {
-        title: 'Nutrition & Allergen Info',
+        title: 'Dietary Preferences',
         path: '/nutrition',
       },
     ],
@@ -114,7 +114,7 @@ const userLinks = [
         path: '/favorites',
       },
       {
-        title: 'Nutrition & Allergen Info',
+        title: 'Dietary Preferences',
         path: '/nutrition',
       },
     ],

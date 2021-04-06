@@ -36,6 +36,7 @@ import {
   Thanx,
   VerifyAccount,
   MenuItem,
+  Terms,
 } from './pages'
 
 const Routes = () => {
@@ -137,12 +138,6 @@ const Routes = () => {
       <Route exact path="/house-accounts">
         <HouseAccounts />
       </Route>
-      <Route exact path="/accessibility">
-        <Accessibility />
-      </Route>
-      <Route exact path="/refunds">
-        <Refunds />
-      </Route>
       <Route exact path="/gift-cards">
         <GiftCards />
       </Route>
@@ -151,6 +146,15 @@ const Routes = () => {
       </Route>
       <Route exact path="/deals">
         <Deals />
+      </Route>
+      <Route exact path="/terms">
+        <Terms />
+      </Route>
+      <Route exact path="/refunds">
+        <Refunds />
+      </Route>
+      <Route exact path="/accessibility">
+        <Accessibility />
       </Route>
       <Route>
         <NotFound />

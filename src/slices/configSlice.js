@@ -46,6 +46,8 @@ const decorateTheme = (theme) => {
       paprika: '#E73C3E',
       beet: '#621C27',
       cartItemBorder: '#E3DFC9',
+      cardHover: '#ADB8C6',
+      navHover: '#F3EDD2',
     },
     layout: {
       ...theme.layout,

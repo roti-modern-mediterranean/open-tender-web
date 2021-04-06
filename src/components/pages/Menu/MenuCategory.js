@@ -1,8 +1,17 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import MenuItem from './MenuItem'
 import styled from '@emotion/styled'
-import { CardList, CardListItem, Container, PageSectionHeader } from '../..'
+
+import {
+  CardList,
+  CardListItem,
+  CardListSmall,
+  CardListItemSmall,
+  Container,
+  PageTitle,
+} from '../..'
+import MenuItem from './MenuItem'
+import MenuAllergenFilter from './MenuAllergenFilter'
 
 export const MenuCategoryView = styled('div')`
   opacity: 0;
@@ -25,17 +34,30 @@ const MenuCategory = ({ category, isChild, index }) => {
   return (
     <MenuCategoryView isChild={isChild} index={index}>
       <Container>
-        <PageSectionHeader>
-          {isChild ? <h3>{category.name}</h3> : <h2>{category.name}</h2>}
-          {category.description && <p>{category.description}</p>}
-        </PageSectionHeader>
-        <CardList>
-          {category.items.map((item) => (
-            <CardListItem key={item.id}>
-              <MenuItem item={item} />
-            </CardListItem>
-          ))}
-        </CardList>
+        <PageTitle
+          title={category.name}
+          subtitle={category.description}
+          style={{ alignItems: 'flex-end' }}
+        >
+          <MenuAllergenFilter />
+        </PageTitle>
+        {category.appearance === 'small' ? (
+          <CardListSmall>
+            {category.items.map((item) => (
+              <CardListItemSmall key={item.id}>
+                <MenuItem item={item} category={category} />
+              </CardListItemSmall>
+            ))}
+          </CardListSmall>
+        ) : (
+          <CardList>
+            {category.items.map((item) => (
+              <CardListItem key={item.id}>
+                <MenuItem item={item} category={category} />
+              </CardListItem>
+            ))}
+          </CardList>
+        )}
       </Container>
     </MenuCategoryView>
   )

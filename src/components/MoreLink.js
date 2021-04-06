@@ -1,7 +1,10 @@
+import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { ButtonLink } from '@open-tender/components'
 import { isBrowser } from 'react-device-detect'
-import iconMap from './iconMap'
+import { ChevronRight, ArrowRight } from './icons'
+import { selectTheme } from '../slices'
+import { useSelector } from 'react-redux'
 
 const MoreLinkView = styled('span')`
   display: block;
@@ -18,7 +21,7 @@ const MoreLinkView = styled('span')`
       font-size: ${(props) => props.theme.fonts.sizes.big};
       text-transform: uppercase;
       line-height: 1;
-      @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
         font-family: ${(props) => props.theme.fonts.body.family};
         font-weight: 500;
         font-size: 1.3rem;
@@ -28,30 +31,38 @@ const MoreLinkView = styled('span')`
     }
 
     span + span {
-      width: 2.2rem;
-      height: 2.2rem;
       line-height: 0;
-      margin: 0 0 0 0.5rem;
-
-      @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-        width: 1.5rem;
-        height: 1.5rem;
+      margin: 0 0 0 1rem;
+      @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+        margin: 0 0 0 0.7rem;
       }
     }
   }
 `
 
-const MoreLink = ({ onClick, text = 'View all', icon }) => {
-  const defaultIcon = isBrowser ? iconMap.ChevronRight : iconMap.ArrowRight
+const MoreLink = ({ onClick, text = 'View all', icon, style = null }) => {
+  const theme = useSelector(selectTheme)
+  const defaultIcon = isBrowser ? (
+    <ChevronRight color={theme.colors.paprika} size="0.9rem" />
+  ) : (
+    <ArrowRight color={theme.colors.beet} size="1.2rem" />
+  )
 
   return (
-    <MoreLinkView>
+    <MoreLinkView style={style}>
       <ButtonLink onClick={onClick}>
         <span>{text}</span>
         <span>{icon || defaultIcon}</span>
       </ButtonLink>
     </MoreLinkView>
   )
+}
+
+MoreLink.displayName = 'MoreLink'
+MoreLink.propTypes = {
+  category: propTypes.object,
+  isChild: propTypes.bool,
+  index: propTypes.bool,
 }
 
 export default MoreLink

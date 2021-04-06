@@ -8,26 +8,36 @@ import { Loading, OrderCard, PageContent, PageSection } from '../..'
 import { selectConfig } from '../../../slices'
 
 const OrdersView = styled('div')`
-  margin: -1rem;
   display: flex;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  justify-content: center;
+  margin: 0 -1.2rem;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0s forwards;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: -0.5rem;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
   }
 `
 
 const Order = styled('div')`
   width: 33.33333%;
-  padding: 1rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  padding: 0 1.2rem 1.2rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
     width: 50%;
-    padding: 0.5rem;
+    &:nth-child(3) {
+      display: none;
+    }
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0 0 1.2rem;
+    max-width: 40rem;
+    // &:nth-child(3) {
+    //   display: block;
+    // }
   }
 `
 

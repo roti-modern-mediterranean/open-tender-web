@@ -45,6 +45,10 @@ const CardContent = styled('div')`
     padding: 2.5rem 2.5rem 2.5rem 11.5rem;
   }
 
+  &:hover {
+    background-color: ${(props) => props.theme.colors.cardHover};
+  }
+
   .item-active & {
     height: auto;
     min-height: 14rem;
@@ -52,6 +56,10 @@ const CardContent = styled('div')`
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       min-height: 11.5rem;
       padding: 2rem 2rem 2rem 11.5rem;
+    }
+
+    &:hover {
+      background-color: ${(props) => props.theme.colors.light};
     }
   }
 `
