@@ -1,23 +1,36 @@
+import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { creditCardTypeMap } from './icons/creditCardTypes'
 
 const CreditCardView = styled('div')`
-  width: 22rem;
-  height: 14rem;
-  padding: 2.4rem 1.6rem 1.9rem 1.9rem;
+  position: relative;
+  width: 100%;
+  padding: 31.81818% 0;
   border-radius: 1rem;
+  transition: all 0.15s ease;
+  box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.13);
   background: linear-gradient(
       0deg,
       rgba(0, 0, 0, 0.1) 0.5%,
       rgba(0, 0, 0, 0.042) 49.48%,
       rgba(0, 0, 0, 0) 99.5%
     ),
-    ${(props) => props.theme.bgColors.secondary};
-  // background-color: ${(props) => props.theme.bgColors.secondary};
-  box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.13);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    ${(props) =>
+      props.isApplied
+        ? props.theme.colors.blue
+        : props.theme.bgColors.secondary};
+
+  & > div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10% 7% 7% 9%;
+  }
 `
 
 const Ellipsis = styled('span')`
@@ -81,22 +94,31 @@ const MaskedCardNumber = ({ acct }) => {
   )
 }
 
-const CreditCard = ({ card, cardType }) => {
+const CreditCard = ({ card, cardType, isApplied }) => {
   const { acct, exp } = card
   // const cardType = acct ? getCardType(acct.replace(/\s/g, '')) : null
   // const expiration = exp ? formatCardField('exp', exp) : '00 / 00'
   const expiration = exp || '00 / 00'
   return (
-    <CreditCardView>
+    <CreditCardView isApplied={isApplied}>
       <div>
-        {cardType ? creditCardTypeMap[cardType]() : <span>&nbsp;</span>}
-      </div>
-      <div>
-        <MaskedCardNumber acct={acct} />
-        <CreditCardText>{expiration}</CreditCardText>
+        <div>
+          {cardType ? creditCardTypeMap[cardType]() : <span>&nbsp;</span>}
+        </div>
+        <div>
+          <MaskedCardNumber acct={acct} />
+          <CreditCardText>{expiration}</CreditCardText>
+        </div>
       </div>
     </CreditCardView>
   )
+}
+
+CreditCard.displayName = 'CreditCard'
+CreditCard.propTypes = {
+  card: propTypes.object,
+  cardType: propTypes.string,
+  isApplied: propTypes.bool,
 }
 
 export default CreditCard

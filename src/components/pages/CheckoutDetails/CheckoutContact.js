@@ -79,7 +79,6 @@ const CheckoutContact = ({ errors = {} }) => {
   const { customer_id, first_name, last_name, email, phone, company } =
     profile || {}
   const { check, form } = useSelector(selectCheckout)
-  // const contactErrors = errors.customer || {}
   const [contact, setContact] = useState(makeContact(form.customer))
   const config = check ? check.config : {}
   const required = config.required ? config.required.customer : []
@@ -159,9 +158,7 @@ const CheckoutContact = ({ errors = {} }) => {
 
 CheckoutContact.displayName = 'CheckoutContact'
 CheckoutContact.propTypes = {
-  revenueCenter: propTypes.object,
-  setActive: propTypes.func,
-  style: propTypes.object,
+  errors: propTypes.object,
 }
 
 export default CheckoutContact

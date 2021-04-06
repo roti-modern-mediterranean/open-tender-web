@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import {
   getCardType,
   formatCardField,
+  formatCard,
   validateCreditCard,
 } from '@open-tender/js'
 import { ButtonSubmit } from '@open-tender/components'
@@ -59,26 +60,14 @@ const initState = {
   save: true,
 }
 
-const makeInitValues = (card) => {
-  if (!card) return [null, null]
-  const initCardType = getCardType(card.acct.replace(/\s/g, ''))
-  const initCard = {
-    acct: formatCardField('acct', card.acct),
-    exp: formatCardField('exp', card.exp),
-    cvv: formatCardField('cvv', card.cvv),
-    zip: formatCardField('zip', card.zip),
-    save: card.save || true,
-  }
-  return [initCard, initCardType]
-}
-
 const CreditCardFormWrapper = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
 
   & > div:first-of-type {
-    margin: 0 0 2rem;
+    width: 22rem;
+    margin: 0 auto 2rem;
   }
 `
 
@@ -104,7 +93,7 @@ const CreditCardFormView = styled('form')`
 `
 
 const CreditCardForm = ({ apply, remove, init }) => {
-  const [initCard, initCardType] = makeInitValues(init)
+  const [initCard, initCardType] = formatCard(init)
   const submitRef = useRef(null)
   const [data, setData] = useState(initCard || initState)
   const [cardType, setCardType] = useState(initCardType || null)
@@ -148,7 +137,9 @@ const CreditCardForm = ({ apply, remove, init }) => {
 
   return (
     <CreditCardFormWrapper>
-      <CreditCard card={data} cardType={cardType} />
+      <div>
+        <CreditCard card={data} cardType={cardType} />
+      </div>
       <CreditCardFormView
         id="credit-card-form"
         onSubmit={applied ? removeCard : applyCard}

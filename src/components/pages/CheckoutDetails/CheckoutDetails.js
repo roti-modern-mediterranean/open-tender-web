@@ -132,7 +132,6 @@ const CheckoutDetails = () => {
   const { check, form, loading } = useSelector(selectCheckout)
   const hasDetails = !isEmpty(details)
   const formErrors = errors ? handleCheckoutErrors({ params: errors }) : {}
-  console.log(formErrors)
   const cartValidate = useSelector(selectCartValidate)
   const validate = useCallback((order) => dispatch(validateOrder(order)), [
     dispatch,
