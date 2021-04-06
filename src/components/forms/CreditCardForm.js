@@ -79,32 +79,60 @@ const initState = {
   save: true,
 }
 
-const CreditCardForm = ({ apply, remove, init }) => {
-  console.log(init)
-  const submitRef = useRef(null)
-  const [data, setData] = useState(init || initState)
-  const [cardType, setCardType] = useState(null)
-  const [errors, setErrors] = useState({})
-  const [applied, setApplied] = useState(false)
-
-  const handleChange = (evt) => {
-    let { id, checked, value } = evt.target
-    const cleanValue = makeNumeric(value)
-    if (id === 'acct') {
+const formatCardField = (field, value) => {
+  const cleanValue = makeNumeric(value)
+  switch (field) {
+    case 'acct': {
       const currentType = getCardType(value.replace(/\s/g, ''))
-      setCardType(currentType)
-      value = makeAcctNumber(value, currentType)
-    } else if (id === 'exp') {
+      return makeAcctNumber(value, currentType)
+    }
+    case 'exp': {
       value = cleanValue.slice(0, 4)
       if (value.length > 2) {
         value = `${value.slice(0, 2)} / ${value.slice(2, 4)}`
       }
-    } else if (id === 'cvv') {
-      value = cleanValue.slice(0, 4)
-    } else if (id === 'zip') {
-      value = cleanValue.slice(0, 5)
-    } else if (id === 'save') {
+      return value
+    }
+    case 'cvv':
+      return cleanValue.slice(0, 4)
+    case 'zip':
+      return cleanValue.slice(0, 5)
+    default:
+      return cleanValue
+  }
+}
+
+const makeInitValues = (card) => {
+  if (!card) return [null, null]
+  const initCardType = getCardType(card.acct.replace(/\s/g, ''))
+  const initCard = {
+    acct: formatCardField('acct', card.acct),
+    exp: formatCardField('exp', card.exp),
+    cvv: formatCardField('cvv', card.cvv),
+    zip: formatCardField('zip', card.zip),
+    save: card.save || true,
+  }
+  return [initCard, initCardType]
+}
+
+const CreditCardForm = ({ apply, remove, init }) => {
+  const [initCard, initCardType] = makeInitValues(init)
+  const submitRef = useRef(null)
+  const [data, setData] = useState(initCard || initState)
+  const [cardType, setCardType] = useState(initCardType || null)
+  const [applied, setApplied] = useState(initCard ? true : false)
+  const [errors, setErrors] = useState({})
+
+  const handleChange = (evt) => {
+    let { id, checked, value } = evt.target
+    if (id === 'acct') {
+      const currentType = getCardType(value.replace(/\s/g, ''))
+      setCardType(currentType)
+    }
+    if (id === 'save') {
       value = checked
+    } else {
+      value = formatCardField(id, value)
     }
     setData({ ...data, [id]: value })
   }
@@ -127,12 +155,12 @@ const CreditCardForm = ({ apply, remove, init }) => {
     remove()
     setErrors({})
     setApplied(false)
+    submitRef.current.blur()
   }
 
   return (
     <CreditCardFormView
-      id="signup-form"
-      // ref={formRef}
+      id="credit-card-form"
       onSubmit={applied ? removeCard : applyCard}
       noValidate
     >
@@ -150,7 +178,6 @@ const CreditCardForm = ({ apply, remove, init }) => {
           onChange={handleChange}
           error={errors[field.name]}
           disabled={applied}
-          // required={field.required}
         />
       ))}
       <Switch
@@ -158,6 +185,7 @@ const CreditCardForm = ({ apply, remove, init }) => {
         name="save"
         value={data.save || false}
         onChange={handleChange}
+        disabled={applied}
       />
       <FormSubmit style={{ margin: '1.5rem 0 0' }}>
         <ButtonSubmit size="big" color="secondary" submitRef={submitRef}>
@@ -170,11 +198,9 @@ const CreditCardForm = ({ apply, remove, init }) => {
 
 CreditCardForm.displayName = 'CreditCardForm'
 CreditCardForm.propTypes = {
-  // data: propTypes.object,
-  // errors: propTypes.object,
-  // update: propTypes.func,
   apply: propTypes.func,
   remove: propTypes.func,
+  init: propTypes.object,
 }
 
 export default CreditCardForm

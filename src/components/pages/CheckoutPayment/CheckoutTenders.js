@@ -16,7 +16,7 @@ const tenderTypes = [
 ]
 
 const CheckoutTendersView = styled('div')`
-  margin: 0 0 40rem;
+  margin: 0 0 4rem;
 `
 
 const CheckoutTendersHeader = styled('div')`

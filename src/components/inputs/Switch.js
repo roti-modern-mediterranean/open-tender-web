@@ -15,6 +15,7 @@ const SwitchText = styled('span')`
   display: block;
   padding: 0 0 0.2rem;
   color: ${(props) => props.theme.colors[props.on ? 'primary' : 'switch']};
+  opacity: ${(props) => (props.disabled ? '0.5' : '1.0')};
 `
 
 const SwitchView = styled('span')`
@@ -64,13 +65,17 @@ const SwitchToggle = styled('span')`
   }
 
   input:checked + & {
-    // background-color: ${(props) => props.theme.links.primary.color};
     border-color: ${(props) => props.theme.colors.primary};
   }
 
   input:checked + &:before {
     left: 2.8rem;
     background-color: ${(props) => props.theme.colors.primary};
+  }
+
+  input:disabled + &,
+  input:disabled + &:before {
+    opacity: 0.5;
   }
 
   input:focus + & {
@@ -84,7 +89,9 @@ const SwitchToggle = styled('span')`
 const Switch = ({ label, name, value, onChange, disabled = false }) => {
   return (
     <SwitchLabel htmlFor={name}>
-      <SwitchText on={value}>{label}</SwitchText>
+      <SwitchText on={value} disabled={disabled}>
+        {label}
+      </SwitchText>
       <SwitchView>
         <SwitchInput
           aria-label={label}

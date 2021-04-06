@@ -33,9 +33,11 @@ const CheckoutPromoCode = () => {
   const [promoCode, setPromoCode] = useState(form.promoCodes[0] || '')
   const [applying, setApplying] = useState(false)
   const errMsg = errors.promo_codes ? errors.promo_codes['0'] : null
-  const applied = check.discounts.find(
-    (i) => i.name.toLowerCase() === promoCode.toLowerCase()
-  )
+  const applied = check
+    ? check.discounts.find(
+        (i) => i.name.toLowerCase() === promoCode.toLowerCase()
+      )
+    : false
 
   useEffect(() => {
     if (loading === 'idle') setApplying(false)
