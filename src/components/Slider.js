@@ -9,7 +9,6 @@ import { useTouchableObject, TouchDirection, TouchEvents } from './SliderEvents'
 
 const ArrowView = styled('div')`
   position: absolute;
-  z-index: 100;
   top: 50%;
   transform: translateY(-50%);
   width: ${(props) => props.size};
@@ -44,7 +43,6 @@ Arrow.propTypes = {
 
 const Dots = styled('div')`
   position: absolute;
-  z-index: 100;
   bottom: -1rem;
   left: 0;
   right: 0;
@@ -104,19 +102,20 @@ const SliderWrapper = styled('div')`
 const Slide = styled('div')`
   position: absolute;
   transform: translate3D(0, 0, 0);
-  height: calc(100% - 1.5rem);
+  height: calc(100% - 2.5rem);
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   display: flex;
+  z-index: ${(props) => props.index};
   transition: opacity ${(props) => {
     return `${props.transition}ms ease`;
   }};
   opacity: ${(props) => (props.active ? '1' : '0')};
-
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 80%;
+    height: calc(100% - 1.5rem);
     border-radius: 0.15rem;
     opacity: 1;
     padding: 0.5em 0 0.5em 0.5em;
@@ -144,7 +143,6 @@ const SliderNew = ({ settings = {}, slides }) => {
   const slider = useRef()
   const [pause, setPause] = useState(false)
   const [index, setIndex] = useState(0)
-  const [lastIndex, setLastIndex] = useState(0)
   const [touchMove, setTouchMove] = useState(null)
   const {
     autoplay,
@@ -164,12 +162,6 @@ const SliderNew = ({ settings = {}, slides }) => {
   const size = isBrowser ? '3rem' : '2rem'
   const count = slides.length
   const last = count - 1
-  const prevIndex = index === 0 ? last : index - 1
-  const nextIndex = index === last ? 0 : index + 1
-  const moveLeft =
-    (index > lastIndex && !(index === last && lastIndex === 0)) ||
-    (index === 0 && lastIndex === last)
-  const moveRight = !moveLeft
   const sliderWrapper = useRef()
 
   const onTouch = useCallback((direction, move, _, position, eventName) => {
@@ -194,7 +186,6 @@ const SliderNew = ({ settings = {}, slides }) => {
           }
         });
         setTouchMove(null)
-        setLastIndex(index)
         setIndex(currentIndex)
       }    
     }
@@ -207,7 +198,6 @@ const SliderNew = ({ settings = {}, slides }) => {
       timer.current = setInterval(() => {
         const idx = index === count - 1 ? 0 : index + 1
         if (!pause) {
-          setLastIndex(index)
           setIndex(idx)
         }
       }, interval)
@@ -231,9 +221,9 @@ const SliderNew = ({ settings = {}, slides }) => {
   const showSlide = (evt, idx) => {
     evt.preventDefault()
     evt.target.blur()
+    console.log(idx, index)
     if (idx >= 0 && idx <= count - 1) {
       setTouchMove(null)
-      setLastIndex(index)
       setIndex(idx)
     }
   }
@@ -244,10 +234,7 @@ const SliderNew = ({ settings = {}, slides }) => {
       transition={transitionSpeed} {...touchProps}>
         {slides.map((slide, idx) => {
           const shift = idx
-          const active =
-            idx === index ||
-            (moveLeft && idx === prevIndex) ||
-            (moveRight && idx === nextIndex)
+          const active = idx === index 
           return (
             <Slide
               key={slide.imageUrl}

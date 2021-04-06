@@ -39,8 +39,8 @@ const PageHeroContent = styled('div')`
   flex-grow: 1;
   position: relative;
   display: flex;
-  min-height: 44rem;
-  // min-height: 50vh;
+  min-height: 50rem;
+  min-height: 50vh;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     min-height: 37rem;
   }

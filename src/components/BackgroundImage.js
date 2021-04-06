@@ -9,7 +9,6 @@ const BackgroundImageView = styled('div')`
   position: relative;
   flex-grow: 1;
   background-color: ${(props) => props.theme.bgColors.secondary};
-  
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     overflow: hidden;
     border-radius: 1em;
@@ -35,7 +34,8 @@ const BackgroundOverlay = styled('div')`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: ${(props) => props.color || 'rgba(0, 0, 0, 0.3)'};
+  background: ${(props) => props.color || 'rgba(0, 0, 0, 0.3)'};
+  background: linear-gradient(0deg, ${(props) => props.color || 'rgba(0, 0, 0, 0.3)'} 7%, rgba(0,0,0,0) 100%);
 `
 
 const makeOverlayColor = (color, opacity) => {
