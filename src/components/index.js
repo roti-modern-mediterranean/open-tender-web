@@ -28,6 +28,7 @@ import CheckoutLink from './CheckoutLink'
 import CheckoutTitle from './CheckoutTitle'
 import Content from './Content'
 import Container from './Container'
+import CreditCard from './CreditCard'
 import Deals from './Deals'
 import DealsSection from './DealsSection'
 import DealsScrollable from './DealsScrollable'
@@ -138,6 +139,7 @@ export {
   CheckoutTitle,
   Container,
   Content,
+  CreditCard,
   Deals,
   DealsSection,
   DealsScrollable,

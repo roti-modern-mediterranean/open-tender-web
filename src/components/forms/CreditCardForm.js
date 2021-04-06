@@ -3,18 +3,18 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import {
   getCardType,
-  makeAcctNumber,
-  makeNumeric,
+  formatCardField,
   validateCreditCard,
 } from '@open-tender/js'
 import { ButtonSubmit } from '@open-tender/components'
 
 import { FormSubmit, Input, Switch } from '../inputs'
-import { CreditCard, Calendar, MapMarker } from '../icons'
+import { CreditCard as CreditCardIcon, Calendar, MapMarker } from '../icons'
+import { CreditCard } from '..'
 
 const fields = [
   {
-    icon: <CreditCard />,
+    icon: <CreditCardIcon />,
     label: 'Number',
     placeholder: '#### #### #### ####',
     name: 'acct',
@@ -32,7 +32,7 @@ const fields = [
     autoComplete: 'cc-exp',
   },
   {
-    icon: <CreditCard />,
+    icon: <CreditCardIcon />,
     label: 'CVV',
     placeholder: '###',
     name: 'cvv',
@@ -51,7 +51,39 @@ const fields = [
   },
 ]
 
+const initState = {
+  acct: '',
+  exp: '',
+  cvv: '',
+  zip: '',
+  save: true,
+}
+
+const makeInitValues = (card) => {
+  if (!card) return [null, null]
+  const initCardType = getCardType(card.acct.replace(/\s/g, ''))
+  const initCard = {
+    acct: formatCardField('acct', card.acct),
+    exp: formatCardField('exp', card.exp),
+    cvv: formatCardField('cvv', card.cvv),
+    zip: formatCardField('zip', card.zip),
+    save: card.save || true,
+  }
+  return [initCard, initCardType]
+}
+
+const CreditCardFormWrapper = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > div:first-of-type {
+    margin: 0 0 2rem;
+  }
+`
+
 const CreditCardFormView = styled('form')`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -70,50 +102,6 @@ const CreditCardFormView = styled('form')`
     }
   }
 `
-
-const initState = {
-  acct: '',
-  exp: '',
-  cvv: '',
-  zip: '',
-  save: true,
-}
-
-const formatCardField = (field, value) => {
-  const cleanValue = makeNumeric(value)
-  switch (field) {
-    case 'acct': {
-      const currentType = getCardType(value.replace(/\s/g, ''))
-      return makeAcctNumber(value, currentType)
-    }
-    case 'exp': {
-      value = cleanValue.slice(0, 4)
-      if (value.length > 2) {
-        value = `${value.slice(0, 2)} / ${value.slice(2, 4)}`
-      }
-      return value
-    }
-    case 'cvv':
-      return cleanValue.slice(0, 4)
-    case 'zip':
-      return cleanValue.slice(0, 5)
-    default:
-      return cleanValue
-  }
-}
-
-const makeInitValues = (card) => {
-  if (!card) return [null, null]
-  const initCardType = getCardType(card.acct.replace(/\s/g, ''))
-  const initCard = {
-    acct: formatCardField('acct', card.acct),
-    exp: formatCardField('exp', card.exp),
-    cvv: formatCardField('cvv', card.cvv),
-    zip: formatCardField('zip', card.zip),
-    save: card.save || true,
-  }
-  return [initCard, initCardType]
-}
 
 const CreditCardForm = ({ apply, remove, init }) => {
   const [initCard, initCardType] = makeInitValues(init)
@@ -159,40 +147,43 @@ const CreditCardForm = ({ apply, remove, init }) => {
   }
 
   return (
-    <CreditCardFormView
-      id="credit-card-form"
-      onSubmit={applied ? removeCard : applyCard}
-      noValidate
-    >
-      {fields.map((field) => (
-        <Input
-          key={field.name}
-          icon={field.icon}
-          label={field.label}
-          name={field.name}
-          type={field.type}
-          pattern={field.pattern}
-          autoComplete={field.autoComplete}
-          value={data[field.name]}
-          placeholder={field.placeholder}
+    <CreditCardFormWrapper>
+      <CreditCard card={data} cardType={cardType} />
+      <CreditCardFormView
+        id="credit-card-form"
+        onSubmit={applied ? removeCard : applyCard}
+        noValidate
+      >
+        {fields.map((field) => (
+          <Input
+            key={field.name}
+            icon={field.icon}
+            label={field.label}
+            name={field.name}
+            type={field.type}
+            pattern={field.pattern}
+            autoComplete={field.autoComplete}
+            value={data[field.name]}
+            placeholder={field.placeholder}
+            onChange={handleChange}
+            error={errors[field.name]}
+            disabled={applied}
+          />
+        ))}
+        <Switch
+          label="Save card?"
+          name="save"
+          value={data.save || false}
           onChange={handleChange}
-          error={errors[field.name]}
           disabled={applied}
         />
-      ))}
-      <Switch
-        label="Save card?"
-        name="save"
-        value={data.save || false}
-        onChange={handleChange}
-        disabled={applied}
-      />
-      <FormSubmit style={{ margin: '1.5rem 0 0' }}>
-        <ButtonSubmit size="big" color="secondary" submitRef={submitRef}>
-          {applied ? 'Remove' : 'Apply'}
-        </ButtonSubmit>
-      </FormSubmit>
-    </CreditCardFormView>
+        <FormSubmit style={{ margin: '1.5rem 0 0' }}>
+          <ButtonSubmit size="big" color="secondary" submitRef={submitRef}>
+            {applied ? 'Remove' : 'Apply'}
+          </ButtonSubmit>
+        </FormSubmit>
+      </CreditCardFormView>
+    </CreditCardFormWrapper>
   )
 }
 
