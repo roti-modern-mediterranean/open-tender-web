@@ -11,6 +11,7 @@ import {
   CheckoutDetails,
   CheckoutLogin,
   CheckoutRegister,
+  CheckoutReset,
   Confirmation,
   Deals,
   Donations,
@@ -101,11 +102,14 @@ const Routes = () => {
       <Route exact path="/checkout">
         <Checkout />
       </Route>
+      <Route exact path="/checkout/register">
+        <CheckoutRegister />
+      </Route>
       <Route exact path="/checkout/login">
         <CheckoutLogin />
       </Route>
-      <Route exact path="/checkout/register">
-        <CheckoutRegister />
+      <Route exact path="/checkout/reset">
+        <CheckoutReset />
       </Route>
       <Route exact path="/checkout/guest">
         <CheckoutGuest />

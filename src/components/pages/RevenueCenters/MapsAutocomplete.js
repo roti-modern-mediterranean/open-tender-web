@@ -46,9 +46,9 @@ const MapsAutocompleteHeader = styled('div')`
 const MapsAutocompleteInput = styled('div')`
   margin: 0 0 2.5rem;
 
-  & > div {
-    border-bottom: 0.1rem solid #7f8692;
-  }
+  // & > div {
+  //   border-bottom: 0.1rem solid #7f8692;
+  // }
 `
 
 const MapsAutocomplete = ({

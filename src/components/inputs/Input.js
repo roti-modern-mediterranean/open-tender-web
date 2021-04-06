@@ -21,6 +21,7 @@ const Input = React.forwardRef(
       pattern = null,
       min = null,
       max = null,
+      children,
     },
     ref
   ) => {
@@ -51,6 +52,7 @@ const Input = React.forwardRef(
           onChange={onChange}
           ref={ref}
         />
+        {children}
       </Label>
     )
   }

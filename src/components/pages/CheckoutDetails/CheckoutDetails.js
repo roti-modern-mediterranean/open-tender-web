@@ -43,7 +43,6 @@ import {
   Loading,
   Main,
   PageContainer,
-  RevenueCenter,
 } from '../..'
 import { Back, Cart } from '../../buttons'
 import styled from '@emotion/styled'
@@ -52,22 +51,7 @@ import { ErrMsg, FormHeader, FormWrapper } from '../../inputs'
 import CheckoutContact from './CheckoutContact'
 import CheckoutOptions from './CheckoutOptions'
 import { useTheme } from '@emotion/react'
-
-const CheckoutRevenueCenter = styled('div')`
-  margin: 0 0 3rem;
-
-  & > div:first-of-type {
-    padding: 2rem;
-    margin: 0 0 1rem;
-    border-radius: ${(props) => props.theme.border.radius};
-    background-color: ${(props) => props.theme.bgColors.secondary};
-  }
-
-  & > div:last-of-type {
-    display: flex;
-    justify-content: flex-end;
-  }
-`
+import CheckoutAddress from './CheckoutAddress'
 
 const CheckoutOrderType = styled('div')`
   text-align: center;
@@ -83,12 +67,12 @@ const CheckoutOrderType = styled('div')`
 `
 
 const CheckoutDetailsFooter = styled('div')`
-  position: fixed;
-  z-index: 10;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 14.5rem;
+  // position: fixed;
+  // z-index: 10;
+  // bottom: 0;
+  // left: 0;
+  // right: 0;
+  // height: 14.5rem;
 `
 
 const CheckoutDetailsErrors = styled('span')`
@@ -139,7 +123,7 @@ const CheckoutDetails = () => {
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
-  const { serviceType, revenueCenter, requestedAt } = order
+  const { serviceType, requestedAt, address } = order
   const outpostName = useSelector(selectOutpostName)
   const orderTypeName = makeOrderTypeName(order, outpostName)
   const tz = useSelector(selectTimezone)
@@ -178,10 +162,6 @@ const CheckoutDetails = () => {
     }
   }, [hasDetails, loading, check.errors, windowRef, history])
 
-  const changeRevenueCenter = () => {
-    history.push('/locations')
-  }
-
   const changeTime = (evt) => {
     evt.preventDefault()
     dispatch(openModal({ type: 'requestedAt' }))
@@ -197,8 +177,9 @@ const CheckoutDetails = () => {
   }
 
   const handleSubmit = () => {
-    // setSubmitting(true)
+    const fullAddress = { ...address, ...form.address }
     const data = {
+      address: isEmpty(fullAddress) ? null : fullAddress,
       customer: form.customer,
       details: form.details,
     }
@@ -219,23 +200,16 @@ const CheckoutDetails = () => {
           right={<Cart />}
         />
         <Main>
-          <PageContainer style={{ margin: '0 auto 14.5rem' }}>
+          <PageContainer style={{ margin: '0 auto' }}>
             <CheckoutHeader title={`${orderTypeName} Details`}>
               <CheckoutLink onClick={reset} text="Reset Checkout" />
             </CheckoutHeader>
             <FormWrapper>
               <ErrMsg errMsg={formErrors.form} style={{ margin: '0 0 2rem' }} />
-              <FormHeader style={{ marginBottom: '2rem' }}>
-                <h2>{orderTypeName} Location</h2>
-              </FormHeader>
-              <CheckoutRevenueCenter>
-                <div>
-                  <RevenueCenter revenueCenter={revenueCenter} type="div" />
-                </div>
-                <div>
-                  <CheckoutLink onClick={changeRevenueCenter} text="Change" />
-                </div>
-              </CheckoutRevenueCenter>
+              <CheckoutAddress
+                orderTypeName={orderTypeName}
+                errors={formErrors.address}
+              />
               <CheckoutOrderType>
                 <p>
                   Currently your order is set to {orderTypeName.toLowerCase()}

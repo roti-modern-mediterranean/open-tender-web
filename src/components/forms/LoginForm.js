@@ -4,7 +4,13 @@ import { ButtonSubmit, useLoginForm } from '@open-tender/components'
 import { ErrMsg, FormSubmit, Input } from '../inputs'
 import { Lock, Mail } from '../icons'
 
-const LoginForm = ({ loading, error, login, callback }) => {
+const LoginForm = ({
+  loading,
+  error,
+  login,
+  callback,
+  forgotPassword = null,
+}) => {
   const {
     submitRef,
     inputRef,
@@ -36,7 +42,9 @@ const LoginForm = ({ loading, error, login, callback }) => {
           value={data.password}
           onChange={handleChange}
           required={true}
-        />
+        >
+          {forgotPassword}
+        </Input>
       </div>
       <FormSubmit>
         <ButtonSubmit
@@ -58,6 +66,7 @@ LoginForm.propTypes = {
   error: propTypes.string,
   login: propTypes.func,
   callback: propTypes.func,
+  forgotPassword: propTypes.element,
 }
 
 export default LoginForm

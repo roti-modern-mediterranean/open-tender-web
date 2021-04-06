@@ -21,6 +21,7 @@ const CheckoutLinkView = styled('span')`
       font-size: 2rem;
       text-transform: uppercase;
       line-height: 1;
+      transition: ${(props) => props.theme.links.transition};
       color: ${(props) => props.theme.colors.paprika};
       @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
         color: ${(props) => props.theme.colors.beet};
@@ -32,6 +33,19 @@ const CheckoutLinkView = styled('span')`
       margin: 0 0 0 1rem;
       @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
         margin: 0 0 0 0.7rem;
+      }
+    }
+
+    &:hover {
+      span {
+        color: ${(props) => props.theme.links.primary.hover};
+        @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+          color: ${(props) => props.theme.colors.beet};
+        }
+      }
+
+      span + span svg {
+        fill: ${(props) => props.theme.links.primary.hover};
       }
     }
   }

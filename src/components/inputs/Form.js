@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 
 export const FormWrapper = styled('div')`
-  // max-width: ${(props) => props.theme.layout.maxWidth};
+  max-width: ${(props) => props.theme.layout.maxWidth};
   max-width: 64rem;
   margin: 0 auto;
 `

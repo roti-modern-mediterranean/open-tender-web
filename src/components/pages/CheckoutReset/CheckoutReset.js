@@ -4,57 +4,42 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import {
   selectCustomer,
-  loginCustomer,
   selectMenuSlug,
   resetPasswordReset,
-  resetLoginError,
+  selectResetPassword,
+  sendPasswordResetEmail,
 } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
-import {
-  ButtonGroupBig,
-  Content,
-  Header,
-  LoginForm,
-  Main,
-  PageContainer,
-} from '../..'
+import { ButtonGroupBig, Content, Header, Main, PageContainer } from '../..'
 import { FormFooter, FormHeader, FormWrapper } from '../../inputs'
 import { Back, Cart } from '../../buttons'
 import styled from '@emotion/styled'
-import {} from '../../forms'
+import { SendResetForm } from '../../forms'
 
 const CheckoutGuestView = styled(ButtonGroupBig)`
   margin: 0 0 4.5rem;
 `
 
-const CheckoutLoginView = styled('div')`
+const CheckoutResetView = styled('div')`
   div > button {
     width: 100%;
   }
 `
 
-const ForgotPassword = styled('button')`
-  display: inline-block;
-  padding: 0.5rem;
-  margin: 1rem 0 0;
-  color: ${(props) => props.theme.colors.primary};
-  font-weight: 600;
-  font-size: 1.3rem;
-`
-
-const CheckoutLogin = () => {
+const CheckoutReset = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
-  const { auth, loading, error } = useSelector(selectCustomer)
+  const { auth } = useSelector(selectCustomer)
   const menuSlug = useSelector(selectMenuSlug)
+  const { loading, error, resetSent } = useSelector(selectResetPassword)
   const { windowRef } = useContext(AppContext)
-  const login = useCallback(
-    (email, password) => dispatch(loginCustomer(email, password)),
+  const sendReset = useCallback(
+    (email, linkUrl) => dispatch(sendPasswordResetEmail(email, linkUrl)),
     [dispatch]
   )
 
@@ -63,7 +48,6 @@ const CheckoutLogin = () => {
     maybeRefreshVersion()
     return () => {
       dispatch(resetPasswordReset())
-      dispatch(resetLoginError())
     }
   }, [windowRef, dispatch])
 
@@ -79,10 +63,6 @@ const CheckoutLogin = () => {
 
   const guestCheckout = () => {
     history.push('/checkout/details')
-  }
-
-  const forgotPassword = () => {
-    history.push('/checkout/reset')
   }
 
   return (
@@ -104,28 +84,32 @@ const CheckoutLogin = () => {
                 </ButtonStyled>
               </CheckoutGuestView>
               <FormHeader>
-                <h1>Login</h1>
-                <p>Already a member? This will speed things up.</p>
+                {resetSent ? (
+                  <>
+                    <h1>Password reset link sent!</h1>
+                    <p>Please check your email.</p>
+                  </>
+                ) : (
+                  <>
+                    <h1>Reset your password</h1>
+                    <p>Please submit your email address below.</p>
+                  </>
+                )}
               </FormHeader>
-              <CheckoutLoginView>
-                <LoginForm
-                  loading={loading}
-                  error={error}
-                  login={login}
-                  forgotPassword={
-                    <ForgotPassword onClick={forgotPassword}>
-                      Forgot password?
-                    </ForgotPassword>
-                  }
-                />
-              </CheckoutLoginView>
+              <CheckoutResetView>
+                {!resetSent && (
+                  <SendResetForm
+                    loading={loading}
+                    error={error}
+                    sendReset={sendReset}
+                  />
+                )}
+              </CheckoutResetView>
               <FormFooter>
                 <p style={{ margin: '2rem 0' }}>
-                  Don't have an account yet?{' '}
-                  <ButtonLink
-                    onClick={() => history.push('/checkout/register')}
-                  >
-                    Register here
+                  Remember your password?{' '}
+                  <ButtonLink onClick={() => history.push('/checkout/login')}>
+                    Log In
                   </ButtonLink>
                 </p>
               </FormFooter>
@@ -137,5 +121,5 @@ const CheckoutLogin = () => {
   )
 }
 
-CheckoutLogin.displayName = 'CheckoutLogin'
-export default CheckoutLogin
+CheckoutReset.displayName = 'CheckoutReset'
+export default CheckoutReset

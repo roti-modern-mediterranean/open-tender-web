@@ -71,7 +71,6 @@ const CheckoutOptions = ({ errors = {} }) => {
     const { id, type, value, checked } = evt.target
     const val = type === 'checkbox' ? checked : value
     const data = { ...details, [id]: val }
-    console.log(data)
     setDetails(data)
     debouncedUpdate(data)
   }

@@ -39,11 +39,12 @@ import CheckoutPromoCode from './CheckoutPromoCode'
 import CheckoutTenders from './CheckoutTenders'
 
 const CheckoutPaymentFooter = styled('div')`
-  position: fixed;
-  z-index: 10;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  // position: fixed;
+  // z-index: 10;
+  // bottom: 0;
+  // left: 0;
+  // right: 0;
+  width: 100%;
   height: 8rem;
   background-color: ${(props) => props.theme.bgColors.dark};
 
@@ -121,7 +122,7 @@ const CheckoutPayment = () => {
           right={<Cart />}
         />
         <Main>
-          <PageContainer style={{ margin: '0 auto 8rem' }}>
+          <PageContainer style={{ margin: '0 auto' }}>
             <CheckoutHeader title="Confirm & Pay">
               <CheckoutTitle>{form.customer.first_name}'s Order</CheckoutTitle>
             </CheckoutHeader>
