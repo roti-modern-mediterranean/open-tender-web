@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { selectCheckout, updateForm, validateOrder } from '@open-tender/redux'
-import { ButtonStyled } from '@open-tender/components'
+import { ButtonSubmit } from '@open-tender/components'
 
 import { Tag } from '../../icons'
 import { Input } from '../../inputs'
 
-const CheckoutPromoCodeView = styled('div')`
+const CheckoutPromoCodeView = styled('form')`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,9 +29,10 @@ const CheckoutPromoCodeView = styled('div')`
 
 const CheckoutPromoCode = () => {
   const dispatch = useDispatch()
+  const submitRef = useRef(null)
   const { check, errors, form, loading } = useSelector(selectCheckout)
   const [promoCode, setPromoCode] = useState(form.promoCodes[0] || '')
-  const [applying, setApplying] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   const errMsg = errors.promo_codes ? errors.promo_codes['0'] : null
   const applied = check
     ? check.discounts.find(
@@ -41,27 +42,29 @@ const CheckoutPromoCode = () => {
 
   useEffect(() => {
     if (loading === 'idle') {
-      setApplying(false)
+      setSubmitting(false)
       if (errMsg) {
         dispatch(updateForm({ promoCodes: [] }))
       }
     }
   }, [loading, errMsg, dispatch])
 
-  const apply = () => {
-    setApplying(true)
-    dispatch(updateForm({ promoCodes: [promoCode] }))
-    dispatch(validateOrder())
-  }
-
-  const remove = () => {
-    setPromoCode('')
-    dispatch(updateForm({ promoCodes: [] }))
-    dispatch(validateOrder())
+  const handleSubmit = (evt) => {
+    evt.preventDefault()
+    if (applied) {
+      setPromoCode('')
+      dispatch(updateForm({ promoCodes: [] }))
+      dispatch(validateOrder())
+    } else {
+      setSubmitting(true)
+      dispatch(updateForm({ promoCodes: [promoCode] }))
+      dispatch(validateOrder())
+    }
+    submitRef.current.blur()
   }
 
   return (
-    <CheckoutPromoCodeView>
+    <CheckoutPromoCodeView id="login-form" onSubmit={handleSubmit} noValidate>
       <Input
         icon={<Tag />}
         label="Add promo code"
@@ -72,26 +75,15 @@ const CheckoutPromoCode = () => {
         error={errMsg}
         disabled={applied}
       />
-      {applied ? (
-        <ButtonStyled
-          onClick={remove}
-          color="secondary"
-          size="big"
-          style={{ backgroundColor: 'transparent' }}
-        >
-          Remove
-        </ButtonStyled>
-      ) : (
-        <ButtonStyled
-          onClick={apply}
-          color="secondary"
-          size="big"
-          disabled={applying || promoCode === ''}
-          style={{ backgroundColor: 'transparent' }}
-        >
-          Apply
-        </ButtonStyled>
-      )}
+      <ButtonSubmit
+        size="big"
+        color="secondary"
+        submitRef={submitRef}
+        submitting={submitting}
+        disabled={promoCode === ''}
+      >
+        {applied ? 'Rmove' : 'Apply'}
+      </ButtonSubmit>
     </CheckoutPromoCodeView>
   )
 }

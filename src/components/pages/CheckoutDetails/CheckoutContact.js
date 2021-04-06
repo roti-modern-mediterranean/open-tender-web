@@ -76,7 +76,8 @@ const convertErrors = (errors) => {
 const CheckoutContact = ({ errors = {} }) => {
   const dispatch = useDispatch()
   const { profile } = useSelector(selectCustomer)
-  const { first_name, last_name, email, phone, company } = profile || {}
+  const { customer_id, first_name, last_name, email, phone, company } =
+    profile || {}
   const { check, form } = useSelector(selectCheckout)
   // const contactErrors = errors.customer || {}
   const [contact, setContact] = useState(makeContact(form.customer))
@@ -97,15 +98,17 @@ const CheckoutContact = ({ errors = {} }) => {
   useEffect(() => {
     if (first_name) {
       const customer = {
+        customer_id,
         first_name,
         last_name,
         email,
         phone,
         company,
       }
+      setContact(makeContact(customer))
       dispatch(updateForm({ customer }))
     }
-  }, [dispatch, first_name, last_name, email, phone, company])
+  }, [dispatch, customer_id, first_name, last_name, email, phone, company])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedUpdate = useCallback(
@@ -131,7 +134,7 @@ const CheckoutContact = ({ errors = {} }) => {
     debouncedUpdate(customer)
   }
 
-  return (
+  return !profile ? (
     <CheckoutContactView>
       <FormHeader>
         <h2>Contact Info</h2>
@@ -151,7 +154,7 @@ const CheckoutContact = ({ errors = {} }) => {
         />
       ))}
     </CheckoutContactView>
-  )
+  ) : null
 }
 
 CheckoutContact.displayName = 'CheckoutContact'
