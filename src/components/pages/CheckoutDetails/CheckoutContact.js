@@ -66,6 +66,13 @@ const makeContact = (customer) => {
   }
 }
 
+const convertErrors = (errors) => {
+  const { first_name, last_name } = errors
+  const name =
+    first_name || last_name ? 'Please enter both a first and last name' : null
+  return name ? { name, ...errors } : errors
+}
+
 const CheckoutContact = ({ errors = {} }) => {
   const dispatch = useDispatch()
   const { profile } = useSelector(selectCustomer)
@@ -85,6 +92,7 @@ const CheckoutContact = ({ errors = {} }) => {
     : showCompany
     ? [...fields, companyField]
     : fields
+  const formErrors = convertErrors(errors)
 
   useEffect(() => {
     if (first_name) {
@@ -137,7 +145,7 @@ const CheckoutContact = ({ errors = {} }) => {
           type={field.type}
           value={contact[field.name] || ''}
           onChange={handleChange}
-          error={errors[field.name]}
+          error={formErrors[field.name]}
           required={field.required}
           autoComplete={field.autoComplete}
         />

@@ -78,10 +78,9 @@ const CurbsideButton = styled('button')`
 `
 
 const Curbside = ({ details, errors = {}, handleChange }) => {
-  const [hasCurbside, setHasCurbside] = useState(
-    details.order_fulfillment || false
-  )
-  const [vehicleType, setVehicleType] = useState(details.vehicle_type || null)
+  const { order_fulfillment, vehicle_type } = details
+  const [hasCurbside, setHasCurbside] = useState(order_fulfillment || false)
+  const [vehicleType, setVehicleType] = useState(vehicle_type || null)
 
   const handleButton = (evt, type) => {
     evt.preventDefault()

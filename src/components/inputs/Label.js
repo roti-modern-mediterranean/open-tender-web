@@ -16,7 +16,7 @@ const LabelView = styled('label')`
   textarea,
   select {
     font-size: inherit;
-    padding-left: 3.4rem;
+    padding-left: ${(props) => (props.icon ? '3.4rem' : '0')};
 
     &::placeholder {
       opacity: 0;
@@ -89,17 +89,20 @@ const Label = ({
   required,
   value,
   errMsg,
+  showLabel = true,
   children,
   style = null,
 }) => {
   return (
-    <LabelView style={style}>
+    <LabelView style={style} icon={icon}>
       {icon && <LabelIcon hasValue={!!value}>{icon}</LabelIcon>}
       {children}
-      <LabelText hasValue={!!value}>
-        {text}
-        {required ? <LabelRequired>&nbsp;*</LabelRequired> : null}
-      </LabelText>
+      {showLabel && (
+        <LabelText hasValue={!!value}>
+          {text}
+          {required ? <LabelRequired>&nbsp;*</LabelRequired> : null}
+        </LabelText>
+      )}
       <ErrMsg errMsg={errMsg} />
     </LabelView>
   )
@@ -116,6 +119,7 @@ Label.propTypes = {
     propTypes.bool,
   ]),
   errMsg: propTypes.string,
+  showLabel: propTypes.bool,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node,

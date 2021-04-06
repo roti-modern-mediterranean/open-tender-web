@@ -111,6 +111,7 @@ const CheckoutOptions = ({ errors = {} }) => {
         <CheckoutNotes
           notes={details.notes || ''}
           handleChange={handleChange}
+          errors={errors}
         />
       )}
       {curbside && (

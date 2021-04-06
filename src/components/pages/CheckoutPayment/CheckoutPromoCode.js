@@ -40,8 +40,13 @@ const CheckoutPromoCode = () => {
     : false
 
   useEffect(() => {
-    if (loading === 'idle') setApplying(false)
-  }, [loading])
+    if (loading === 'idle') {
+      setApplying(false)
+      if (errMsg) {
+        dispatch(updateForm({ promoCodes: [] }))
+      }
+    }
+  }, [loading, errMsg, dispatch])
 
   const apply = () => {
     setApplying(true)

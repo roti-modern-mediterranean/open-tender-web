@@ -2,13 +2,12 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { Label } from '.'
 
-const Input = React.forwardRef(
+const Textarea = React.forwardRef(
   (
     {
       icon = null,
       label,
       name,
-      type,
       value,
       onChange,
       error,
@@ -17,10 +16,6 @@ const Input = React.forwardRef(
       disabled = false,
       readOnly = false,
       required = false,
-      autoComplete = null,
-      pattern = null,
-      min = null,
-      max = null,
     },
     ref
   ) => {
@@ -34,15 +29,10 @@ const Input = React.forwardRef(
         errMsg={error}
         showLabel={showLabel}
       >
-        <input
+        <textarea
           aria-label={label}
           id={name}
           name={name}
-          type={type}
-          pattern={pattern}
-          min={min}
-          max={max}
-          autoComplete={autoComplete || null}
           value={value || ''}
           placeholder={placeholder || ''}
           disabled={disabled}
@@ -56,11 +46,11 @@ const Input = React.forwardRef(
   }
 )
 
-Input.displayName = 'Input'
-Input.propTypes = {
+Textarea.displayName = 'Textarea'
+Textarea.propTypes = {
   icon: propTypes.element,
-  label: propTypes.string,
   showLabel: propTypes.bool,
+  label: propTypes.string,
   name: propTypes.string,
   type: propTypes.string,
   value: propTypes.oneOfType([propTypes.string, propTypes.number]),
@@ -69,10 +59,6 @@ Input.propTypes = {
   disabled: propTypes.bool,
   readOnly: propTypes.bool,
   required: propTypes.bool,
-  autoComplete: propTypes.string,
-  pattern: propTypes.string,
-  min: propTypes.number,
-  max: propTypes.number,
   placeholder: propTypes.string,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
@@ -80,4 +66,4 @@ Input.propTypes = {
   ]),
 }
 
-export default Input
+export default Textarea

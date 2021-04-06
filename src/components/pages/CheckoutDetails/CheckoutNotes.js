@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectOrder } from '@open-tender/redux'
 
-import { FormHeader } from '../../inputs'
+import { FormHeader, Textarea } from '../../inputs'
 import CheckoutQuickOptions from './CheckoutQuickOptions'
 import { AddCondiments, DressingOnTheSide, LeaveAtDoor } from '../../icons'
 
@@ -34,11 +34,12 @@ const makeInitState = (notes) => {
   return [options, text]
 }
 
-const CheckoutNotes = ({ notes, handleChange }) => {
+const CheckoutNotes = ({ notes, handleChange, errors = {} }) => {
   const [initOptions, initText] = makeInitState(notes)
   const [options, setOptions] = useState(initOptions)
   const [text, setText] = useState(initText)
   const { serviceType } = useSelector(selectOrder)
+  const label = `${serviceType.toLowerCase()} Notes`
 
   const handleOption = (evt, option) => {
     evt.preventDefault()
@@ -72,9 +73,16 @@ const CheckoutNotes = ({ notes, handleChange }) => {
         handleOption={handleOption}
       />
       <FormHeader style={{ marginBottom: '0' }}>
-        <h2>{serviceType.toLowerCase()} Notes</h2>
+        <h2>{label}</h2>
       </FormHeader>
-      <textarea value={text} onChange={handleNotes} />
+      <Textarea
+        label={label}
+        name="notes"
+        showLabel={false}
+        value={text}
+        onChange={handleNotes}
+        error={errors.notes}
+      />
     </>
   )
 }

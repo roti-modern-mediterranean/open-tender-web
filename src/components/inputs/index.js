@@ -6,6 +6,7 @@ import Label from './Label'
 import RadioButton from './RadioButton'
 import RadioGroup from './RadioGroup'
 import Switch from './Switch'
+import Textarea from './Textarea'
 
 export {
   Checkbox,
@@ -19,4 +20,5 @@ export {
   RadioButton,
   RadioGroup,
   Switch,
+  Textarea,
 }
