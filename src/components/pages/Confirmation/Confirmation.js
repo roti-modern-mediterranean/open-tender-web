@@ -10,6 +10,7 @@ import {
   resetGroupOrder,
   resetOrderFulfillment,
 } from '@open-tender/redux'
+import { ButtonStyled, Preface } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
@@ -17,24 +18,67 @@ import { AppContext } from '../../../App'
 import {
   Content,
   Main,
-  Order,
   OrderFulfillment,
-  PageTitle,
-  PageContent,
   HeaderDefault,
   PageContainer,
+  CheckoutHeader,
+  CheckoutTitle,
+  Loading,
 } from '../..'
 import ConfirmationProfile from './ConfirmationProfile'
-import ConfirmationLinks from './ConfirmationLinks'
+import CheckoutCart from '../CheckoutPayment/CheckoutCart'
+import { FormHeader, FormSubmit, FormWrapper } from '../../inputs'
+import styled from '@emotion/styled'
+import { useTheme } from '@emotion/react'
+
+const ConfirmationSubtitle = styled('div')`
+  margin: 2rem 0 0;
+  text-align: center;
+  line-height: 1;
+
+  p:first-of-type {
+    font-weight: normal;
+    font-size: 2.3rem;
+    margin: 0 0 0.5rem;
+  }
+
+  p:last-of-type {
+    font-weight: 500;
+    font-size: 2.8rem;
+    margin: 0 0 2.5rem;
+  }
+`
 
 const Confirmation = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const theme = useTheme()
   const { confirmation: config } = useSelector(selectConfig)
   const brand = useSelector(selectBrand)
   const order = useSelector(selectConfirmationOrder)
-  const { order_fulfillment, order_id, revenue_center, service_type } =
-    order || {}
+  const {
+    order_fulfillment,
+    order_id,
+    revenue_center,
+    service_type,
+    customer,
+    cart,
+    gift_cards,
+    surcharges,
+    discounts,
+    taxes,
+    totals,
+    details,
+  } = order || {}
+  const check = {
+    cart,
+    gift_cards,
+    surcharges,
+    discounts,
+    taxes,
+    totals,
+    details,
+  }
   const { auth, profile } = useSelector(selectCustomer)
   const isNew = auth && profile && profile.order_notifications === 'NEW'
   const optIns = useSelector(selectOptIns)
@@ -64,7 +108,7 @@ const Confirmation = () => {
     if (!hasFulfillment) dispatch(resetOrderFulfillment())
   }, [hasFulfillment, dispatch])
 
-  return (
+  return order ? (
     <>
       <Helmet>
         <title>Confirmation | {brand.title}</title>
@@ -75,11 +119,19 @@ const Confirmation = () => {
           isLogo={false}
         />
         <Main>
-          <PageContainer>
-            <PageTitle {...config}>
-              <ConfirmationLinks auth={auth} brand={brand} />
-            </PageTitle>
-            <PageContent style={{ margin: '2.5rem auto' }}>
+          <PageContainer style={{ margin: '4rem auto 8rem' }}>
+            <CheckoutHeader title="Confirm & Pay">
+              <CheckoutTitle>{config.title}</CheckoutTitle>
+              <CheckoutTitle>{customer.first_name}'s Order</CheckoutTitle>
+              <ConfirmationSubtitle>
+                <Preface as="p">Payment Approved</Preface>
+                <Preface as="p">{config.subtitle}</Preface>
+                <div>
+                  <Loading type="Puff" size={60} color={theme.colors.light} />
+                </div>
+              </ConfirmationSubtitle>
+            </CheckoutHeader>
+            <FormWrapper>
               {showOptIns && <ConfirmationProfile />}
               {hasFulfillment && (
                 <OrderFulfillment
@@ -87,13 +139,25 @@ const Confirmation = () => {
                   order_fulfillment={order_fulfillment}
                 />
               )}
-            </PageContent>
-            <Order order={order} isConfirmation={true} />
+              <FormHeader style={{ margin: '4rem 0 2rem' }}>
+                <h2>Order Summary</h2>
+              </FormHeader>
+              {order && <CheckoutCart check={check} />}
+              <FormSubmit style={{ margin: '-2rem 0 0' }}>
+                <ButtonStyled
+                  size="big"
+                  color="secondary"
+                  onClick={() => history.push('/')}
+                >
+                  Back Home
+                </ButtonStyled>
+              </FormSubmit>
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>
     </>
-  )
+  ) : null
 }
 
 Confirmation.displayName = 'Confirmation'

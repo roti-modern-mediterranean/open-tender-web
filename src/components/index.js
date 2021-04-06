@@ -25,6 +25,7 @@ import CartItem from './CartItem'
 import CartItemQuantity from './CartItemQuantity'
 import CheckoutHeader from './CheckoutHeader'
 import CheckoutLink from './CheckoutLink'
+import CheckoutTitle from './CheckoutTitle'
 import Content from './Content'
 import Container from './Container'
 import Deals from './Deals'
@@ -134,6 +135,7 @@ export {
   CartItemQuantity,
   CheckoutHeader,
   CheckoutLink,
+  CheckoutTitle,
   Container,
   Content,
   Deals,

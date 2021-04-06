@@ -17,13 +17,14 @@ import {
   checkAmountRemaining,
   updateTenders,
 } from '@open-tender/js'
-import { ButtonStyled, Heading } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   CheckoutHeader,
+  CheckoutTitle,
   Container,
   Content,
   Header,
@@ -55,6 +56,8 @@ const CheckoutPaymentFooter = styled('div')`
 
   button {
     width: 100%;
+    max-width: 40rem;
+    margin: 0 auto;
     border-radius: 2.4rem;
 
     span span:first-of-type {
@@ -62,12 +65,6 @@ const CheckoutPaymentFooter = styled('div')`
       padding-right: 1rem;
     }
   }
-`
-
-const CheckoutPaymentTitle = styled(Heading)`
-  color: ${(props) => props.theme.colors.primary};
-  font-size: 3.8rem;
-  line-height: 1;
 `
 
 const CheckoutPayment = () => {
@@ -126,9 +123,7 @@ const CheckoutPayment = () => {
         <Main>
           <PageContainer style={{ margin: '0 auto 8rem' }}>
             <CheckoutHeader title="Confirm & Pay">
-              <CheckoutPaymentTitle>
-                {form.customer.first_name}'s Order
-              </CheckoutPaymentTitle>
+              <CheckoutTitle>{form.customer.first_name}'s Order</CheckoutTitle>
             </CheckoutHeader>
             {check && (
               <FormWrapper>

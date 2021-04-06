@@ -11,11 +11,12 @@ const CheckoutHeaderView = styled('div')`
   & > div {
     margin: 1.5rem 0 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 `
 
-const CheckoutTitle = styled(Preface)`
+const CheckoutHeaderTitle = styled(Preface)`
   font-weight: 500;
   font-size: 2.8rem;
   line-height: 1;
@@ -25,7 +26,7 @@ const CheckoutTitle = styled(Preface)`
 const CheckoutHeader = ({ title, children }) => {
   return (
     <CheckoutHeaderView>
-      <CheckoutTitle as="h1">{title}</CheckoutTitle>
+      <CheckoutHeaderTitle as="h1">{title}</CheckoutHeaderTitle>
       {children && <div>{children}</div>}
     </CheckoutHeaderView>
   )

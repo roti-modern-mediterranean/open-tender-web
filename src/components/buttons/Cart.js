@@ -29,7 +29,7 @@ const CartCount = styled('span')`
   font-weight: 600;
 `
 
-const Cart = ({ text = 'Order Now' }) => {
+const Cart = ({ text = 'Order Now', showOrder = true }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const [className, setClassName] = useState('')
@@ -72,7 +72,7 @@ const Cart = ({ text = 'Order Now' }) => {
         <CartCount fontSize={fontSize}>{cartQuantity}</CartCount>
       )}
     </ButtonIcon>
-  ) : (
+  ) : showOrder ? (
     <ButtonStyled
       onClick={onClick}
       color={isBrowser ? 'primary' : 'header'}
@@ -81,7 +81,7 @@ const Cart = ({ text = 'Order Now' }) => {
     >
       {text}
     </ButtonStyled>
-  )
+  ) : null
 }
 
 Cart.displayName = 'Cart'
