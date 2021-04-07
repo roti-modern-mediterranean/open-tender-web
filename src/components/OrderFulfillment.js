@@ -6,11 +6,12 @@ import {
   updateOrderFulfillment,
   resetOrderFulfillment,
 } from '@open-tender/redux'
-import { Message, OrderFulfillmentForm } from '@open-tender/components'
+import { Message } from '@open-tender/components'
 
 import { selectFulfillment } from '../slices'
 import { Loading } from '.'
 import { FormHeader, FormWrapper } from './inputs'
+import { OrderFulfillmentForm } from './forms'
 
 const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
   const dispatch = useDispatch()
@@ -19,6 +20,7 @@ const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
     selectOrderFulfillment
   )
   const fulfillment = orderFulfillment || order_fulfillment || {}
+  console.log(fulfillment)
   const empty = Object.values(fulfillment).every((i) => !i)
   const arrivalInfo = fulfillmentSettings.fields.find(
     (i) => i.name === 'arrival_info'
@@ -59,6 +61,7 @@ const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
           error={error}
           update={update}
           settings={fulfillmentSettings}
+          showAllFields={true}
         />
       )}
     </FormWrapper>

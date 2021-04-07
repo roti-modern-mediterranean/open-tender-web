@@ -52,19 +52,27 @@ export const FormSubmit = styled('div')`
   margin: 3rem 0 0;
 
   button {
-    background-color: transparent;
-    // min-width: 20rem;
     width: 100%;
+    // color: ${(props) => props.theme.links.primary.color};
+    // border-color: ${(props) => props.theme.links.primary.color};
+    // background-color: transparent;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       width: 100%;
     }
 
-    &:hover,
-    &:active,
-    &:focus,
-    &:disabled {
-      background-color: transparent;
-    }
+    // &:disabled {
+    //   color: ${(props) => props.theme.links.primary.color};
+    //   border-color: ${(props) => props.theme.links.primary.color};
+    //   background-color: transparent;
+    // }
+
+    // &:hover,
+    // &:active,
+    // &:focus {
+    //   color: ${(props) => props.theme.links.primary.hover};
+    //   border-color: ${(props) => props.theme.links.primary.hover};
+    //   background-color: transparent;
+    // }
   }
 `
 

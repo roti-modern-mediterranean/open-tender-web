@@ -115,7 +115,8 @@ const CheckoutOptions = ({ errors = {} }) => {
       )}
       {curbside && (
         <CheckoutCurbside
-          details={details}
+          fields={curbside.fields}
+          data={details}
           errors={errors}
           handleChange={handleChange}
         />

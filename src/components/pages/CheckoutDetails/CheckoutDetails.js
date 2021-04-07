@@ -13,7 +13,7 @@ import {
   selectOrder,
   selectCheckout,
   selectTimezone,
-  resetCheckout,
+  // resetCheckout,
   selectCartValidate,
   validateOrder,
   selectCartTotal,
@@ -117,7 +117,6 @@ const CheckoutDetails = () => {
   const theme = useTheme()
   const [details, setDetails] = useState({})
   const [errors, setErrors] = useState(null)
-  // const [submitting, setSubmitting] = useState(false)
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
   const cartTotal = useSelector(selectCartTotal)
@@ -145,12 +144,6 @@ const CheckoutDetails = () => {
     maybeRefreshVersion()
   }, [windowRef, dispatch])
 
-  // useEffect(() => {
-  //   if (loading === 'idle') {
-  //     setSubmitting(false)
-  //   }
-  // }, [loading])
-
   useEffect(() => {
     if (hasDetails && loading === 'idle') {
       if (validationErrors) {
@@ -171,10 +164,10 @@ const CheckoutDetails = () => {
     dispatch(openModal({ type: 'orderType' }))
   }
 
-  const reset = () => {
-    dispatch(resetCheckout())
-    history.push(menuSlug)
-  }
+  // const reset = () => {
+  //   dispatch(resetCheckout())
+  //   history.push(menuSlug)
+  // }
 
   const handleSubmit = () => {
     const fullAddress = { ...address, ...form.address }
@@ -202,7 +195,7 @@ const CheckoutDetails = () => {
         <Main>
           <PageContainer style={{ margin: '0 auto' }}>
             <CheckoutHeader title={`${orderTypeName} Details`}>
-              <CheckoutLink onClick={reset} text="Reset Checkout" />
+              {/* <CheckoutLink onClick={reset} text="Reset Checkout" /> */}
             </CheckoutHeader>
             <FormWrapper>
               <ErrMsg errMsg={formErrors.form} style={{ margin: '0 0 2rem' }} />
