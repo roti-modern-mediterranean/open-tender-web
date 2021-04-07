@@ -16,6 +16,9 @@ const PageHeroView = styled('div')`
     // max-height: 100%;
     // min-height: 0;
   }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 1em 0;
+  }
 `
 
 const PageHeroGreeting = styled('div')`
@@ -36,10 +39,10 @@ const PageHeroContent = styled('div')`
   flex-grow: 1;
   position: relative;
   display: flex;
-  min-height: 44rem;
-  // min-height: 50vh;
+  min-height: 50rem;
+  min-height: 50vh;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    min-height: 32rem;
+    min-height: 37rem;
   }
 `
 
