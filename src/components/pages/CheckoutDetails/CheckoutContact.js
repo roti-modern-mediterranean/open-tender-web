@@ -3,11 +3,18 @@ import debounce from 'lodash/debounce'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { makePhone } from '@open-tender/js'
-import { selectCustomer, selectCheckout, updateForm } from '@open-tender/redux'
+import {
+  selectCustomer,
+  selectCheckout,
+  updateForm,
+  logoutCustomer,
+} from '@open-tender/redux'
 
 import { FormHeader, Input } from '../../inputs'
 import { Mail, Phone, User, UserId } from '../../icons'
 import { useCallback, useEffect, useState } from 'react'
+import { InlineLink } from '../..'
+import { useHistory } from 'react-router-dom'
 
 const iconMap = {
   name: <UserId />,
@@ -75,6 +82,7 @@ const convertErrors = (errors) => {
 
 const CheckoutContact = ({ errors = {} }) => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { profile } = useSelector(selectCustomer)
   const { customer_id, first_name, last_name, email, phone, company } =
     profile || {}
@@ -133,10 +141,28 @@ const CheckoutContact = ({ errors = {} }) => {
     debouncedUpdate(customer)
   }
 
-  return !profile ? (
+  const logout = () => {
+    dispatch(logoutCustomer()).then(() => {
+      const customer = {}
+      setContact(customer)
+      dispatch(updateForm({ customer }))
+    })
+  }
+
+  const update = () => {
+    history.push('/profile')
+  }
+
+  return (
     <CheckoutContactView>
       <FormHeader>
         <h2>Contact Info</h2>
+        {profile && (
+          <p>
+            <InlineLink onClick={logout}>Logout</InlineLink> or{' '}
+            <InlineLink onClick={update}>update your contact info</InlineLink>.
+          </p>
+        )}
       </FormHeader>
       {formFields.map((field) => (
         <Input
@@ -150,10 +176,11 @@ const CheckoutContact = ({ errors = {} }) => {
           error={formErrors[field.name]}
           required={field.required}
           autoComplete={field.autoComplete}
+          disabled={!!profile}
         />
       ))}
     </CheckoutContactView>
-  ) : null
+  )
 }
 
 CheckoutContact.displayName = 'CheckoutContact'

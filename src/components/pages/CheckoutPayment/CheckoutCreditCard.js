@@ -22,7 +22,7 @@ const CheckoutCreditCard = () => {
   const { check, form, errors } = useSelector(selectCheckout)
   const total = check.totals ? check.totals.total : 0.0
   const cards = check.customer ? check.customer.credit_cards : []
-  const hasCards = cards.length > 0
+  const hasCards = cards && cards.length > 0
   const amount = checkAmountRemaining(total, form.tenders).toFixed(2)
   const newCard = form.tenders.find((i) => i.acct)
   const existingCard = form.tenders.find((i) => i.customer_card_id)

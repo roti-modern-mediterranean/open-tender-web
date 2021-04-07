@@ -34,6 +34,7 @@ const Input = React.forwardRef(
         required={required}
         errMsg={error}
         showLabel={showLabel}
+        disabled={disabled}
       >
         <input
           aria-label={label}

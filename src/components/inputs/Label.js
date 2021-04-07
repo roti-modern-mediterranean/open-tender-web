@@ -44,7 +44,7 @@ const LabelIcon = styled('span')`
 
   svg {
     fill: ${(props) =>
-      props.hasValue
+      props.hasValue && !props.disabled
         ? props.theme.inputs.color
         : props.theme.inputs.placeholderColor} !important;
   }
@@ -90,12 +90,17 @@ const Label = ({
   value,
   errMsg,
   showLabel = true,
+  disabled = false,
   children,
   style = null,
 }) => {
   return (
     <LabelView style={style} icon={icon}>
-      {icon && <LabelIcon hasValue={!!value}>{icon}</LabelIcon>}
+      {icon && (
+        <LabelIcon hasValue={!!value} disabled={disabled}>
+          {icon}
+        </LabelIcon>
+      )}
       {children}
       {showLabel && (
         <LabelText hasValue={!!value}>

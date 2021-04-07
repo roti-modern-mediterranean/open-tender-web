@@ -5,6 +5,7 @@ import { Preface } from '@open-tender/components'
 
 import { CreditCard, Roti } from '../../icons'
 import CheckoutCreditCard from './CheckoutCreditCard'
+import CheckoutLevelUp from './CheckoutLevelUp'
 
 const tenderTypes = [
   {
@@ -102,7 +103,11 @@ const CheckoutTenders = () => {
           ))}
         </CheckoutTendersButtons>
       </CheckoutTendersTypes>
-      {tenderType === 'CREDIT' ? <CheckoutCreditCard /> : null}
+      {tenderType === 'CREDIT' ? (
+        <CheckoutCreditCard />
+      ) : tenderType === 'LEVELUP' ? (
+        <CheckoutLevelUp />
+      ) : null}
     </CheckoutTendersView>
   )
 }

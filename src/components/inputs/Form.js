@@ -8,7 +8,7 @@ export const FormWrapper = styled('div')`
 
 export const FormHeader = styled('div')`
   max-width: ${(props) => props.theme.layout.maxWidth};
-  margin: 0 0 3rem;
+  margin: 0 0 2rem;
 
   h1,
   h2,
@@ -43,7 +43,7 @@ export const FormHeader = styled('div')`
   }
 
   p {
-    margin: 0.5rem 0 0;
+    margin: 0.5rem 0 3rem;
   }
 `
 
