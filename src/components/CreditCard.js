@@ -1,37 +1,7 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { creditCardTypeMap } from './icons/creditCardTypes'
-
-const CreditCardView = styled('div')`
-  position: relative;
-  width: 100%;
-  padding: 31.81818% 0;
-  border-radius: 1rem;
-  transition: all 0.15s ease;
-  box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.13);
-  background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.1) 0.5%,
-      rgba(0, 0, 0, 0.042) 49.48%,
-      rgba(0, 0, 0, 0) 99.5%
-    ),
-    ${(props) =>
-      props.isApplied
-        ? props.theme.colors.blue
-        : props.theme.bgColors.secondary};
-
-  & > div {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10% 7% 7% 9%;
-  }
-`
+import { Checkmark } from './icons'
 
 const Ellipsis = styled('span')`
   display: block;
@@ -94,14 +64,83 @@ const MaskedCardNumber = ({ acct }) => {
   )
 }
 
-const CreditCard = ({ card, cardType, isApplied }) => {
+const CreditCardCheckmarkView = styled('span')`
+  display: block;
+  position: absolute;
+  z-index: 3;
+  top: 1rem;
+  right: 1rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0.1rem 0 0;
+  border-radius: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.beet};
+  transition: all 250ms ease;
+  opacity: ${(props) => (props.show ? '1' : '0')};
+  visiblity: ${(props) => (props.show ? 'visible' : 'hidden')};
+  transform: ${(props) => (props.show ? 'scale(1)' : 'scale(0)')};
+  box-shadow: 0 0.4rem 2rem rgba(0, 0, 0, 0.25);
+  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  //   top: 1rem;
+  //   right: 1rem;
+  // }
+  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  //   top: 0;
+  //   right: 0;
+  // }
+`
+
+const CreditCardCheckmark = ({ show }) => {
+  return (
+    <CreditCardCheckmarkView show={show}>
+      <span>
+        <Checkmark />
+      </span>
+    </CreditCardCheckmarkView>
+  )
+}
+
+const CreditCardView = styled('div')`
+  position: relative;
+  width: 100%;
+  padding: 31.81818% 0;
+  border-radius: 1rem;
+  transition: all 250ms ease;
+  box-shadow: 0 0.6rem 2rem rgba(0, 0, 0, 0.13);
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.1) 0.5%,
+      rgba(0, 0, 0, 0.042) 49.48%,
+      rgba(0, 0, 0, 0) 99.5%
+    ),
+    ${(props) =>
+      props.applied ? props.theme.colors.blue : props.theme.bgColors.secondary};
+`
+
+const CreditCardContent = styled('div')`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10% 7% 7% 9%;
+`
+
+const CreditCard = ({ card, cardType, applied }) => {
   const { acct, exp } = card
   // const cardType = acct ? getCardType(acct.replace(/\s/g, '')) : null
   // const expiration = exp ? formatCardField('exp', exp) : '00 / 00'
   const expiration = exp || '00 / 00'
   return (
-    <CreditCardView isApplied={isApplied}>
-      <div>
+    <CreditCardView applied={applied}>
+      <CreditCardContent>
         <div>
           {cardType ? creditCardTypeMap[cardType]() : <span>&nbsp;</span>}
         </div>
@@ -109,7 +148,8 @@ const CreditCard = ({ card, cardType, isApplied }) => {
           <MaskedCardNumber acct={acct} />
           <CreditCardText>{expiration}</CreditCardText>
         </div>
-      </div>
+      </CreditCardContent>
+      <CreditCardCheckmark show={applied} />
     </CreditCardView>
   )
 }
@@ -118,7 +158,7 @@ CreditCard.displayName = 'CreditCard'
 CreditCard.propTypes = {
   card: propTypes.object,
   cardType: propTypes.string,
-  isApplied: propTypes.bool,
+  applied: propTypes.bool,
 }
 
 export default CreditCard

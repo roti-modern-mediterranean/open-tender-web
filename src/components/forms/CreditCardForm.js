@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import {
@@ -92,13 +92,21 @@ const CreditCardFormView = styled('form')`
   }
 `
 
-const CreditCardForm = ({ apply, remove, init }) => {
+const CreditCardForm = ({ apply, remove, init, tenderErrors }) => {
   const [initCard, initCardType] = formatCard(init)
   const submitRef = useRef(null)
   const [data, setData] = useState(initCard || initState)
   const [cardType, setCardType] = useState(initCardType || null)
   const [applied, setApplied] = useState(initCard ? true : false)
   const [errors, setErrors] = useState({})
+
+  useEffect(() => {
+    if (tenderErrors) {
+      remove()
+      setApplied(false)
+      setErrors(tenderErrors)
+    }
+  }, [tenderErrors, remove])
 
   const handleChange = (evt) => {
     let { id, checked, value } = evt.target
@@ -138,7 +146,7 @@ const CreditCardForm = ({ apply, remove, init }) => {
   return (
     <CreditCardFormWrapper>
       <div>
-        <CreditCard card={data} cardType={cardType} />
+        <CreditCard card={data} cardType={cardType} applied={applied} />
       </div>
       <CreditCardFormView
         id="credit-card-form"

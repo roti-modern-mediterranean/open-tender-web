@@ -2,6 +2,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 import { CreditCard } from '../..'
+import { ErrMsg } from '../../inputs'
 
 const CheckoutCreditCardsView = styled('div')`
   display: flex;
@@ -28,38 +29,47 @@ const CheckoutCreditCard = styled('button')`
   }
 `
 
-const CheckoutCreditCards = ({ cards, existingCard, apply, remove }) => {
-  console.log(existingCard)
+const CheckoutCreditCards = ({
+  cards,
+  apply,
+  remove,
+  existingCard,
+  tenderErrors,
+}) => {
+  const errMsg = tenderErrors ? Object.values(tenderErrors).join(', ') : null
 
   const handleClick = (evt, customer_card_id) => {
     evt.preventDefault()
-    const isApplied =
+    const applied =
       existingCard && customer_card_id === existingCard.customer_card_id
-    isApplied ? remove() : apply({ customer_card_id })
+    applied ? remove() : apply({ customer_card_id })
     evt.target.blur()
   }
 
   return (
-    <CheckoutCreditCardsView>
-      {cards.map((card) => {
-        const data = { acct: `xxxx xxxx xxxx ${card.last4}` }
-        const isApplied =
-          existingCard &&
-          card.customer_card_id === existingCard.customer_card_id
-        return (
-          <CheckoutCreditCard
-            key={card.customer_card_id}
-            onClick={(evt) => handleClick(evt, card.customer_card_id)}
-          >
-            <CreditCard
-              card={data}
-              cardType={card.card_type}
-              isApplied={isApplied}
-            />
-          </CheckoutCreditCard>
-        )
-      })}
-    </CheckoutCreditCardsView>
+    <>
+      <ErrMsg errMsg={errMsg} style={{ margin: '0 0 2rem' }} />
+      <CheckoutCreditCardsView>
+        {cards.map((card) => {
+          const data = { acct: `xxxx xxxx xxxx ${card.last4}` }
+          const applied =
+            existingCard &&
+            card.customer_card_id === existingCard.customer_card_id
+          return (
+            <CheckoutCreditCard
+              key={card.customer_card_id}
+              onClick={(evt) => handleClick(evt, card.customer_card_id)}
+            >
+              <CreditCard
+                card={data}
+                cardType={card.card_type}
+                applied={applied}
+              />
+            </CheckoutCreditCard>
+          )
+        })}
+      </CheckoutCreditCardsView>
+    </>
   )
 }
 
@@ -68,6 +78,8 @@ CheckoutCreditCards.propTypes = {
   cards: propTypes.array,
   apply: propTypes.func,
   remove: propTypes.func,
+  existingCard: propTypes.object,
+  tenderErrors: propTypes.object,
 }
 
 export default CheckoutCreditCards

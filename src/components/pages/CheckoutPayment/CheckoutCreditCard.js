@@ -19,13 +19,14 @@ const CheckoutCreditCardNew = styled('div')`
 const CheckoutCreditCard = () => {
   const dispatch = useDispatch()
   const [showNew, setShowNew] = useState(false)
-  const { check, form } = useSelector(selectCheckout)
+  const { check, form, errors } = useSelector(selectCheckout)
   const total = check.totals ? check.totals.total : 0.0
   const cards = check.customer ? check.customer.credit_cards : []
   const hasCards = cards.length > 0
   const amount = checkAmountRemaining(total, form.tenders).toFixed(2)
   const newCard = form.tenders.find((i) => i.acct)
   const existingCard = form.tenders.find((i) => i.customer_card_id)
+  const tenderErrors = errors.tenders ? errors.tenders[0] : null
 
   useEffect(() => {
     if (!hasCards) setShowNew(true)
@@ -51,13 +52,19 @@ const CheckoutCreditCard = () => {
       {hasCards && (
         <CheckoutCreditCards
           cards={cards}
-          existingCard={existingCard}
           apply={apply}
           remove={remove}
+          existingCard={existingCard}
+          tenderErrors={existingCard ? tenderErrors : null}
         />
       )}
       {showNew ? (
-        <CreditCardForm apply={apply} remove={remove} init={newCard} />
+        <CreditCardForm
+          apply={apply}
+          remove={remove}
+          init={newCard}
+          tenderErrors={newCard ? tenderErrors : null}
+        />
       ) : (
         <CheckoutCreditCardNew>
           <ButtonStyled size="big" color="secondary" onClick={addNew}>

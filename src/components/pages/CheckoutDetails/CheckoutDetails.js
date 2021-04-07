@@ -130,6 +130,7 @@ const CheckoutDetails = () => {
   const requestedAtStr = makeOrderTimeStr(requestedAt, tz)
   const otherServiceType = serviceType === 'PICKUP' ? 'Delivery' : 'Pickup'
   const { check, form, loading } = useSelector(selectCheckout)
+  const validationErrors = check ? check.errors : null
   const hasDetails = !isEmpty(details)
   const formErrors = errors ? handleCheckoutErrors({ params: errors }) : {}
   const cartValidate = useSelector(selectCartValidate)
@@ -152,14 +153,14 @@ const CheckoutDetails = () => {
 
   useEffect(() => {
     if (hasDetails && loading === 'idle') {
-      if (check.errors) {
-        setErrors(check.errors)
+      if (validationErrors) {
+        setErrors(validationErrors)
         windowRef.current.scrollTop = 0
       } else {
         history.push('/checkout/payment')
       }
     }
-  }, [hasDetails, loading, check.errors, windowRef, history])
+  }, [hasDetails, loading, validationErrors, windowRef, history])
 
   const changeTime = (evt) => {
     evt.preventDefault()
