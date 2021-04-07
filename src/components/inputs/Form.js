@@ -58,6 +58,13 @@ export const FormSubmit = styled('div')`
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       width: 100%;
     }
+
+    &:hover,
+    &:active,
+    &:focus,
+    &:disabled {
+      background-color: transparent;
+    }
   }
 `
 

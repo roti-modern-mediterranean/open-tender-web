@@ -10,15 +10,11 @@ import {
   resetPasswordReset,
   resetLoginError,
 } from '@open-tender/redux'
-import {
-  SendResetForm,
-  ButtonLink,
-  ButtonStyled,
-} from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
-import { ModalContent, ModalView } from '..'
-import { LoginForm } from '../forms'
+import { InlineLink, ModalContent, ModalView } from '..'
+import { LoginForm, SendResetForm } from '../forms'
 
 const messaging = {
   login: {
@@ -88,16 +84,16 @@ const LoginModal = ({ callback }) => {
           <p>
             {msg.subtitle}{' '}
             {mode === 'login' && (
-              <ButtonLink onClick={signUp}>Sign up here.</ButtonLink>
+              <InlineLink onClick={signUp}>Sign up here.</InlineLink>
             )}
           </p>
         }
         footer={
-          <div>
-            <ButtonLink onClick={resetSent ? toggleResetSent : toggleReset}>
+          <p>
+            <InlineLink onClick={resetSent ? toggleResetSent : toggleReset}>
               {msg.reset}
-            </ButtonLink>
-          </div>
+            </InlineLink>
+          </p>
         }
       >
         {resetSent ? (
