@@ -23,13 +23,11 @@ import {
   PageContainer,
   CheckoutHeader,
   CheckoutTitle,
-  Loading,
 } from '../..'
 import ConfirmationProfile from './ConfirmationProfile'
 import CheckoutCart from '../CheckoutPayment/CheckoutCart'
 import { FormHeader, FormSubmit, FormWrapper } from '../../inputs'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
 
 const ConfirmationSubtitle = styled('div')`
   margin: 2rem 0 0;
@@ -52,7 +50,6 @@ const ConfirmationSubtitle = styled('div')`
 const Confirmation = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const theme = useTheme()
   const { confirmation: config } = useSelector(selectConfig)
   const brand = useSelector(selectBrand)
   const order = useSelector(selectConfirmationOrder)
@@ -126,9 +123,6 @@ const Confirmation = () => {
               <ConfirmationSubtitle>
                 <Preface as="p">Payment Approved</Preface>
                 <Preface as="p">{config.subtitle}</Preface>
-                <div>
-                  <Loading type="Puff" size={60} color={theme.colors.light} />
-                </div>
               </ConfirmationSubtitle>
             </CheckoutHeader>
             <FormWrapper>

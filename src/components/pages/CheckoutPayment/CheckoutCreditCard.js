@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { checkAmountRemaining } from '@open-tender/js'
-import { selectCheckout, updateForm } from '@open-tender/redux'
+import { selectCheckout, selectCustomer, updateForm } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
 import { CreditCardForm } from '../../forms'
@@ -19,6 +19,7 @@ const CheckoutCreditCardNew = styled('div')`
 const CheckoutCreditCard = () => {
   const dispatch = useDispatch()
   const [showNew, setShowNew] = useState(false)
+  const { auth } = useSelector(selectCustomer)
   const { check, form, errors } = useSelector(selectCheckout)
   const total = check.totals ? check.totals.total : 0.0
   const cards = check.customer ? check.customer.credit_cards : []
@@ -64,6 +65,7 @@ const CheckoutCreditCard = () => {
           remove={remove}
           init={newCard}
           tenderErrors={newCard ? tenderErrors : null}
+          hideSave={auth ? null : false}
         />
       ) : (
         <CheckoutCreditCardNew>

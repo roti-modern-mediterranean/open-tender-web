@@ -11,8 +11,8 @@ const CheckoutCreditCardsView = styled('div')`
 `
 
 const CheckoutCreditCard = styled('button')`
-  flex: 1 1 50%;
-  max-width: 20rem;
+  flex: 1 1 20rem;
+  max-width: 50%;
   padding: 0 1rem 2rem;
   text-align: left;
 
@@ -64,6 +64,7 @@ const CheckoutCreditCards = ({
                 card={data}
                 cardType={card.card_type}
                 applied={applied}
+                style={{ boxShadow: 'none' }}
               />
             </CheckoutCreditCard>
           )

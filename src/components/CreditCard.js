@@ -133,13 +133,13 @@ const CreditCardContent = styled('div')`
   padding: 10% 7% 7% 9%;
 `
 
-const CreditCard = ({ card, cardType, applied }) => {
+const CreditCard = ({ card, cardType, applied, style = null }) => {
   const { acct, exp } = card
   // const cardType = acct ? getCardType(acct.replace(/\s/g, '')) : null
   // const expiration = exp ? formatCardField('exp', exp) : '00 / 00'
   const expiration = exp || '00 / 00'
   return (
-    <CreditCardView applied={applied}>
+    <CreditCardView applied={applied} style={style}>
       <CreditCardContent>
         <div>
           {cardType ? creditCardTypeMap[cardType]() : <span>&nbsp;</span>}
@@ -159,6 +159,7 @@ CreditCard.propTypes = {
   card: propTypes.object,
   cardType: propTypes.string,
   applied: propTypes.bool,
+  style: propTypes.object,
 }
 
 export default CreditCard

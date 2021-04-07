@@ -80,8 +80,8 @@ const CreditCardFormView = styled('form')`
   label {
     flex: 0 0 33.33333%;
 
-    &:first-of-type,
-    &:last-of-type {
+    &:nth-of-type(1),
+    &:nth-of-type(5) {
       flex: 0 0 100%;
     }
 
@@ -92,13 +92,14 @@ const CreditCardFormView = styled('form')`
   }
 `
 
-const CreditCardForm = ({ apply, remove, init, tenderErrors }) => {
+const CreditCardForm = ({ apply, remove, init, tenderErrors, hideSave }) => {
   const [initCard, initCardType] = formatCard(init)
   const submitRef = useRef(null)
   const [data, setData] = useState(initCard || initState)
   const [cardType, setCardType] = useState(initCardType || null)
   const [applied, setApplied] = useState(initCard ? true : false)
   const [errors, setErrors] = useState({})
+  const showSave = hideSave === undefined || hideSave === null
 
   useEffect(() => {
     if (tenderErrors) {
@@ -124,7 +125,9 @@ const CreditCardForm = ({ apply, remove, init, tenderErrors }) => {
 
   const applyCard = (evt) => {
     evt.preventDefault()
-    const { card, errors } = validateCreditCard(data, cardType)
+    const cardData = showSave ? data : { ...data, save: hideSave }
+    console.log(cardData)
+    const { card, errors } = validateCreditCard(cardData, cardType)
     if (errors) {
       setErrors(errors)
     } else {
@@ -169,13 +172,15 @@ const CreditCardForm = ({ apply, remove, init, tenderErrors }) => {
             disabled={applied}
           />
         ))}
-        <Switch
-          label="Save card?"
-          name="save"
-          value={data.save || false}
-          onChange={handleChange}
-          disabled={applied}
-        />
+        {showSave && (
+          <Switch
+            label="Save card?"
+            name="save"
+            value={data.save || false}
+            onChange={handleChange}
+            disabled={applied}
+          />
+        )}
         <FormSubmit style={{ margin: '1.5rem 0 0' }}>
           <ButtonSubmit size="big" color="secondary" submitRef={submitRef}>
             {applied ? 'Remove' : 'Apply'}
