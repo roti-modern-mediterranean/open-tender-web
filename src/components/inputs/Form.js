@@ -47,6 +47,7 @@ export const FormHeader = styled('div')`
 
   p {
     margin: 0.5rem 0 3rem;
+    line-height: ${(props) => props.theme.lineHeight};
   }
 `
 

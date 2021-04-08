@@ -32,6 +32,8 @@ import { FormWrapper } from '../../inputs'
 import { CreditCard, Roti } from '../../icons'
 import LevelUpLoyalty from '../Rewards/LevelUpLoyalty'
 import PaymentCreditCards from './PaymentCreditCards'
+import PaymentLinkedCards from './PaymentLinkedCards'
+import { useTheme } from '@emotion/react'
 
 const CreditCardMessage = styled('div')`
   text-align: center;
@@ -53,6 +55,7 @@ const tenderTypes = [
 const Payment = () => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const theme = useTheme()
   const [tenderType, setTenderType] = useState('CREDIT')
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle, applePayMerchantId, has_levelup } = useSelector(
@@ -62,13 +65,14 @@ const Payment = () => {
   const account = useSelector(selectAccountConfig)
   const ccConfig = account.creditCards
   const { entities, loading } = useSelector(selectCustomerCreditCards)
-  const isLoading = loading === 'pending'
   const savedCards = entities.filter((i) => i.has_profile)
   const linkedCards = entities.filter((i) => !i.has_profile)
   const hasLinkedCards = !!applePayMerchantId || linkedCards.length > 0
   const filteredTenderTypes = !has_levelup
     ? tenderTypes.filter((i) => i.tender_type !== 'LEVELUP')
     : tenderTypes
+  const showLoading =
+    loading === 'pending' && savedCards.length === 0 && !hasLinkedCards
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -103,41 +107,16 @@ const Payment = () => {
                 setTenderType={setTenderType}
               />
               {tenderType === 'CREDIT' ? (
-                <>
-                  <PaymentCreditCards savedCards={savedCards} />
-                  {hasLinkedCards && (
-                    <PageSection
-                      title="Linked Cards"
-                      subtitle="These are cards you have saved in either Apple Pay or
-                        Google Pay that have been linked with your account for
-                        loyalty recognition at the point of sale in our
-                        restaurants."
-                    >
-                      <PageTitleButtons>
-                        <ButtonStyled
-                          onClick={() =>
-                            dispatch(openModal({ type: 'creditCardLinked' }))
-                          }
-                        >
-                          Add a New Linked Card
-                        </ButtonStyled>
-                      </PageTitleButtons>
-                      {linkedCards.length > 0 && (
-                        <CreditCardMessage>
-                          <Message color="alert" size="small" as="div">
-                            PLEASE NOTE: To pay with these cards ONLINE, use the
-                            Apple Pay or Google Pay option on the checkout page.
-                          </Message>
-                        </CreditCardMessage>
-                      )}
-                      {/* <CreditCards
-                    creditCards={linkedCards}
-                    isLoading={isLoading}
-                    showDefault={false}
-                  /> */}
-                    </PageSection>
-                  )}
-                </>
+                showLoading ? (
+                  <Loading type="Puff" size={60} color={theme.colors.light} />
+                ) : (
+                  <>
+                    <PaymentCreditCards savedCards={savedCards} />
+                    {hasLinkedCards && (
+                      <PaymentLinkedCards linkedCards={linkedCards} />
+                    )}
+                  </>
+                )
               ) : tenderType === 'LEVELUP' ? (
                 <LevelUpLoyalty />
               ) : null}

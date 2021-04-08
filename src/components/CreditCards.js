@@ -37,7 +37,7 @@ const CreditCards = ({ creditCards, selectedId, apply, remove }) => {
         return (
           <CreditCardView
             key={card.customer_card_id}
-            onClick={(evt) => apply(evt, card.customer_card_id)}
+            onClick={apply ? (evt) => apply(evt, card.customer_card_id) : null}
           >
             <CreditCard
               card={data}
