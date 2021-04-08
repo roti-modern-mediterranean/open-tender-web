@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
+import { useTheme } from '@emotion/react'
 import {
   selectCustomer,
   fetchCustomerCreditCards,
   selectCustomerCreditCards,
 } from '@open-tender/redux'
-import { ButtonStyled, Message } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectAccountConfig, selectBrand, openModal } from '../../../slices'
+import { selectAccountConfig, selectBrand } from '../../../slices'
 import {
   CheckoutHeader,
   Content,
@@ -19,29 +18,14 @@ import {
   Loading,
   Main,
   PageContainer,
-  PageContent,
-  PageSection,
-  PageTitle,
-  PageTitleButtons,
   PaymentTypes,
 } from '../..'
 import { AppContext } from '../../../App'
-// import CreditCards from './CreditCards'
-import styled from '@emotion/styled'
 import { FormWrapper } from '../../inputs'
 import { CreditCard, Roti } from '../../icons'
 import LevelUpLoyalty from '../Rewards/LevelUpLoyalty'
 import PaymentCreditCards from './PaymentCreditCards'
 import PaymentLinkedCards from './PaymentLinkedCards'
-import { useTheme } from '@emotion/react'
-
-const CreditCardMessage = styled('div')`
-  text-align: center;
-  margin: ${(props) => props.theme.layout.padding} auto;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: ${(props) => props.theme.layout.paddingMobile} auto;
-  }
-`
 
 const tenderTypes = [
   {

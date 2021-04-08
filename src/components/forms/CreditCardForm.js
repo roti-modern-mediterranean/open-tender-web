@@ -11,7 +11,8 @@ import { ButtonSubmit } from '@open-tender/components'
 
 import { FormSubmit, Input, Switch } from '../inputs'
 import { CreditCard as CreditCardIcon, Calendar, MapMarker } from '../icons'
-import { CreditCard } from '..'
+import { CreditCard, Loading } from '..'
+import { useTheme } from '@emotion/react'
 
 const fields = [
   {
@@ -92,7 +93,16 @@ const CreditCardFormView = styled('form')`
   }
 `
 
-const CreditCardForm = ({ apply, remove, init, tenderErrors, hideSave }) => {
+const CreditCardForm = ({
+  apply,
+  remove,
+  init,
+  tenderErrors,
+  hideSave,
+  submitting = false,
+  submitText = 'Apply',
+}) => {
+  const theme = useTheme()
   const [initCard, initCardType] = formatCard(init)
   const submitRef = useRef(null)
   const [data, setData] = useState(initCard || initState)
@@ -103,7 +113,7 @@ const CreditCardForm = ({ apply, remove, init, tenderErrors, hideSave }) => {
 
   useEffect(() => {
     if (tenderErrors) {
-      remove()
+      if (remove) remove()
       setApplied(false)
       setErrors(tenderErrors)
     }
@@ -126,14 +136,13 @@ const CreditCardForm = ({ apply, remove, init, tenderErrors, hideSave }) => {
   const applyCard = (evt) => {
     evt.preventDefault()
     const cardData = showSave ? data : { ...data, save: hideSave }
-    console.log(cardData)
     const { card, errors } = validateCreditCard(cardData, cardType)
     if (errors) {
       setErrors(errors)
     } else {
       apply(card)
       setErrors({})
-      setApplied(true)
+      if (remove) setApplied(true)
     }
     submitRef.current.blur()
   }
@@ -182,8 +191,19 @@ const CreditCardForm = ({ apply, remove, init, tenderErrors, hideSave }) => {
           />
         )}
         <FormSubmit style={{ margin: '1.5rem 0 0' }}>
-          <ButtonSubmit size="big" color="secondary" submitRef={submitRef}>
-            {applied ? 'Remove' : 'Apply'}
+          <ButtonSubmit
+            size="big"
+            color="secondary"
+            submitRef={submitRef}
+            disabled={submitting}
+          >
+            {applied ? (
+              'Remove'
+            ) : submitting ? (
+              <Loading type="Clip" size={18} color={theme.colors.paprika} />
+            ) : (
+              submitText
+            )}
           </ButtonSubmit>
         </FormSubmit>
       </CreditCardFormView>
@@ -196,6 +216,10 @@ CreditCardForm.propTypes = {
   apply: propTypes.func,
   remove: propTypes.func,
   init: propTypes.object,
+  tenderErrors: propTypes.object,
+  hideSave: propTypes.bool,
+  callback: propTypes.func,
+  submitting: propTypes.bool,
 }
 
 export default CreditCardForm

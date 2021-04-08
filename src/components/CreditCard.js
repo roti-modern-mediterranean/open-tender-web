@@ -84,14 +84,6 @@ const CreditCardCheckmarkView = styled('span')`
   visiblity: ${(props) => (props.show ? 'visible' : 'hidden')};
   transform: ${(props) => (props.show ? 'scale(1)' : 'scale(0)')};
   box-shadow: 0 0.4rem 2rem rgba(0, 0, 0, 0.25);
-  // @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-  //   top: 1rem;
-  //   right: 1rem;
-  // }
-  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-  //   top: 0;
-  //   right: 0;
-  // }
 `
 
 const CreditCardCheckmark = ({ show }) => {

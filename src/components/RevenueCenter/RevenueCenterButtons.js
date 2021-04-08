@@ -37,7 +37,6 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
     address,
     has_curbside,
   } = revenueCenter
-  console.log(has_curbside)
   const { first_times: ft, order_times: ot } = settings
   const hasGroupOrdering =
     revenueCenter && revenueCenter.settings.group_ordering

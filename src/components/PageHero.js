@@ -68,7 +68,6 @@ const PageHero = ({
   children,
 }) => {
   const { settings, entities, loading, error } = announcements || {}
-  console.log('error', error)
   const slides = error ? null : makeSlides(entities)
   const isLoading = loading === 'pending'
   const hasHero = imageUrl && showHero
