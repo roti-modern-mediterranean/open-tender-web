@@ -5,37 +5,51 @@ import {
   selectOrderFulfillment,
   updateOrderFulfillment,
   resetOrderFulfillment,
+  fetchRevenueCenter,
+  selectRevenueCenter,
 } from '@open-tender/redux'
-import { Message } from '@open-tender/components'
 
 import { selectFulfillment } from '../slices'
-import { Loading } from '.'
 import { FormHeader, FormWrapper } from './inputs'
 import { OrderFulfillmentForm } from './forms'
+import { Loading, RevenueCenter } from '.'
+import styled from '@emotion/styled'
+import CheckoutOrderTime from './pages/CheckoutDetails/CheckoutOrderTime'
+import { useTheme } from '@emotion/react'
 
-const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
+const OrderFulfillmentRevenueCenter = styled('div')`
+  padding: 1.5rem 2rem 2rem;
+  margin: 0 0 1rem;
+  border-radius: ${(props) => props.theme.border.radius};
+  background-color: ${(props) => props.theme.bgColors.secondary};
+`
+
+const OrderFulfillment = ({ order }) => {
   const dispatch = useDispatch()
+  const theme = useTheme()
+  const {
+    order_id,
+    revenue_center,
+    order_fulfillment = {},
+    service_type,
+    requested_at,
+    timezone,
+  } = order
+  const { revenue_center_id } = revenue_center
   const fulfillmentSettings = useSelector(selectFulfillment)
+  const revenueCenter = useSelector(selectRevenueCenter)
   const { orderFulfillment, loading, error } = useSelector(
     selectOrderFulfillment
   )
   const fulfillment = orderFulfillment || order_fulfillment || {}
-  console.log(fulfillment)
-  const empty = Object.values(fulfillment).every((i) => !i)
-  const arrivalInfo = fulfillmentSettings.fields.find(
-    (i) => i.name === 'arrival_info'
-  )
-  const subtitle = empty
-    ? fulfillmentSettings.description
-    : arrivalInfo
-    ? `Please submit your ${arrivalInfo.label.toLowerCase()} below to let us know when you've arrived`
-    : 'Please let us know when you arrive'
-  const isLoading = loading === 'pending'
-  const errMsg = error ? error.message || null : null
   const update = useCallback(
     (orderId, data) => dispatch(updateOrderFulfillment(orderId, data)),
     [dispatch]
   )
+
+  useEffect(() => {
+    dispatch(fetchRevenueCenter(revenue_center_id))
+  }, [dispatch, revenue_center_id])
 
   useEffect(() => {
     return () => dispatch(resetOrderFulfillment())
@@ -45,25 +59,29 @@ const OrderFulfillment = ({ orderId, order_fulfillment = {} }) => {
     <FormWrapper>
       <FormHeader>
         <h2>{fulfillmentSettings.title}</h2>
-        <p>{subtitle}</p>
+        <p>{fulfillmentSettings.description}</p>
       </FormHeader>
-      {isLoading ? (
-        <Loading text="Retrieving..." />
-      ) : errMsg ? (
-        <Message color="error" style={{ width: '100%' }}>
-          {errMsg}
-        </Message>
+      {revenueCenter ? (
+        <OrderFulfillmentRevenueCenter>
+          <RevenueCenter revenueCenter={revenueCenter} type="div" />
+        </OrderFulfillmentRevenueCenter>
       ) : (
-        <OrderFulfillmentForm
-          orderId={orderId}
-          fulfillment={fulfillment}
-          loading={loading}
-          error={error}
-          update={update}
-          settings={fulfillmentSettings}
-          showAllFields={true}
-        />
+        <Loading type="Puff" size={60} color={theme.colors.light} />
       )}
+      <CheckoutOrderTime
+        serviceType={service_type}
+        requestedAt={requested_at}
+        tz={timezone}
+      />
+      <OrderFulfillmentForm
+        orderId={order_id}
+        fulfillment={fulfillment}
+        loading={loading}
+        error={error}
+        update={update}
+        settings={fulfillmentSettings}
+        showAllFields={true}
+      />
     </FormWrapper>
   )
 }

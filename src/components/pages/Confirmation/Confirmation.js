@@ -54,7 +54,6 @@ const Confirmation = () => {
   const brand = useSelector(selectBrand)
   const order = useSelector(selectConfirmationOrder)
   const {
-    order_fulfillment,
     order_id,
     revenue_center,
     service_type,
@@ -96,10 +95,11 @@ const Confirmation = () => {
   useEffect(() => {
     if (!order) history.push('/')
     dispatch(resetGroupOrder())
-    return () => {
-      dispatch(resetConfirmation())
-    }
-  }, [order, auth, dispatch, history])
+  }, [order, dispatch, history])
+
+  useEffect(() => {
+    return () => dispatch(resetConfirmation())
+  }, [dispatch])
 
   useEffect(() => {
     if (!hasFulfillment) dispatch(resetOrderFulfillment())
@@ -127,14 +127,9 @@ const Confirmation = () => {
             </CheckoutHeader>
             <FormWrapper>
               {showOptIns && <ConfirmationProfile />}
-              {hasFulfillment && (
-                <OrderFulfillment
-                  orderId={order_id}
-                  order_fulfillment={order_fulfillment}
-                />
-              )}
+              {hasFulfillment && <OrderFulfillment order={order} />}
               <FormHeader style={{ margin: '4rem 0 2rem' }}>
-                <h2>Order Summary</h2>
+                <h2>Order #{order_id} Summary</h2>
               </FormHeader>
               {order && <CheckoutCart check={check} />}
               <FormSubmit style={{ margin: '-2rem 0 0' }}>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { checkAmountRemaining } from '@open-tender/js'
@@ -28,16 +28,23 @@ const CheckoutCreditCard = () => {
   const newCard = form.tenders.find((i) => i.acct)
   const existingCard = form.tenders.find((i) => i.customer_card_id)
   const tenderErrors = errors.tenders ? errors.tenders[0] : null
+  // const defaultCardId = hasCards ? cards[0].customer_card_id : null
+  // const noTender = form.tenders.length === 0
 
-  useEffect(() => {
-    if (!hasCards) setShowNew(true)
-  }, [hasCards])
+  // const apply = (creditCard) => {
+  //   if (creditCard.customer_card_id) setShowNew(false)
+  //   const tender = { tender_type: 'CREDIT', amount, ...creditCard }
+  //   dispatch(updateForm({ tenders: [tender] }))
+  // }
 
-  const apply = (creditCard) => {
-    if (creditCard.customer_card_id) setShowNew(false)
-    const tender = { tender_type: 'CREDIT', amount, ...creditCard }
-    dispatch(updateForm({ tenders: [tender] }))
-  }
+  const apply = useCallback(
+    (creditCard) => {
+      if (creditCard.customer_card_id) setShowNew(false)
+      const tender = { tender_type: 'CREDIT', amount, ...creditCard }
+      dispatch(updateForm({ tenders: [tender] }))
+    },
+    [dispatch, amount]
+  )
 
   const remove = () => {
     dispatch(updateForm({ tenders: [] }))
@@ -47,6 +54,18 @@ const CheckoutCreditCard = () => {
     dispatch(updateForm({ tenders: [] }))
     setShowNew(true)
   }
+
+  useEffect(() => {
+    if (!hasCards) {
+      setShowNew(true)
+    }
+  }, [hasCards])
+
+  // useEffect(() => {
+  //   if (hasCards) {
+  //     apply({ customer_card_id: defaultCardId })
+  //   }
+  // }, [hasCards, defaultCardId, apply])
 
   return (
     <CheckoutCreditCardView>

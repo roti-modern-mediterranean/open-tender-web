@@ -56,7 +56,7 @@ const CurbsideButton = styled('button')`
   background-color: ${(props) =>
     props.theme.bgColors[props.checked ? 'dark' : 'secondary']};
 
-  &:hover {
+  &:hover:enabled {
     background-color: ${(props) =>
       props.theme.colors[props.checked ? 'primary' : 'cardHover']};
   }
@@ -71,19 +71,15 @@ const CurbsideButton = styled('button')`
 `
 
 const Curbside = ({ fields, data, errors = {}, handleChange }) => {
-  const { order_fulfillment, vehicle_type } = data
-  const [hasCurbside, setHasCurbside] = useState(false)
   const [vehicleType, setVehicleType] = useState(null)
   const inputFields = fields.filter((i) => i.name !== 'vehicle_type')
   const hasVehicleType = fields.find((i) => i.name === 'vehicle_type') || false
 
   useEffect(() => {
-    if (!vehicleType) setVehicleType(vehicle_type)
-  }, [vehicle_type, vehicleType])
-
-  useEffect(() => {
-    if (!hasCurbside) setHasCurbside(order_fulfillment)
-  }, [order_fulfillment, hasCurbside])
+    if (!vehicleType && data.vehicle_type) {
+      setVehicleType(data.vehicle_type)
+    }
+  }, [vehicleType, data.vehicle_type])
 
   const handleButton = (evt, type) => {
     evt.preventDefault()
@@ -94,15 +90,6 @@ const Curbside = ({ fields, data, errors = {}, handleChange }) => {
       value: type,
     }
     handleChange({ target })
-    if (!hasCurbside) {
-      setHasCurbside(true)
-      const target = {
-        id: 'order_fulfillment',
-        type: 'checkbox',
-        checked: true,
-      }
-      handleChange({ target })
-    }
   }
 
   return (
@@ -117,6 +104,7 @@ const Curbside = ({ fields, data, errors = {}, handleChange }) => {
                   aria-label={button.text}
                   onClick={(evt) => handleButton(evt, button.text)}
                   checked={vehicleType === button.text}
+                  disabled={data.has_arrived}
                 >
                   {button.icon}
                 </CurbsideButton>

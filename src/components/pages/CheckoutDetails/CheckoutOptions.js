@@ -71,6 +71,11 @@ const CheckoutOptions = ({ errors = {} }) => {
     const { id, type, value, checked } = evt.target
     const val = type === 'checkbox' ? checked : value
     const data = { ...details, [id]: val }
+    if (data.vehicle_type || data.vehicle_color) {
+      data.order_fulfillment = true
+    } else {
+      data.order_fulfillment = false
+    }
     setDetails(data)
     debouncedUpdate(data)
   }

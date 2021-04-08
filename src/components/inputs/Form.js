@@ -24,7 +24,8 @@ export const FormHeader = styled('div')`
     line-height: 1.181818;
     color: ${(props) => props.theme.colors.primary};
 
-    button {
+    button,
+    span {
       font-family: ${(props) => props.theme.inputs.family};
       font-weight: 400;
       letter-spacing: 0.01em;
@@ -33,7 +34,9 @@ export const FormHeader = styled('div')`
       line-height: 1;
       color: ${(props) => props.theme.colors.primary};
       margin: 0 0 0 1.5rem;
+    }
 
+    button {
       &:hover,
       &:active,
       &:focus {

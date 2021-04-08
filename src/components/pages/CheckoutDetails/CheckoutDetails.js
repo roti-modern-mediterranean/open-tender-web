@@ -20,10 +20,6 @@ import {
 } from '@open-tender/redux'
 import {
   makeServiceTypeName,
-  isoToDateStr,
-  currentLocalDateStr,
-  todayDate,
-  tomorrowDate,
   handleCheckoutErrors,
   isEmpty,
   formatDollars,
@@ -47,11 +43,12 @@ import {
 import { Back, Cart } from '../../buttons'
 import styled from '@emotion/styled'
 import {} from '../../forms'
-import { ErrMsg, FormHeader, FormWrapper } from '../../inputs'
+import { ErrMsg, FormWrapper } from '../../inputs'
 import CheckoutContact from './CheckoutContact'
 import CheckoutOptions from './CheckoutOptions'
 import { useTheme } from '@emotion/react'
 import CheckoutAddress from './CheckoutAddress'
+import CheckoutOrderTime from './CheckoutOrderTime'
 
 const CheckoutOrderType = styled('div')`
   text-align: center;
@@ -83,21 +80,6 @@ const CheckoutDetailsErrors = styled('span')`
   color: ${(props) => props.theme.colors.paprika};
 `
 
-const makeOrderTimeStr = (requestedAt, tz) => {
-  const orderDate =
-    requestedAt === 'asap'
-      ? currentLocalDateStr(tz, 'yyyy-MM-dd')
-      : isoToDateStr(requestedAt, tz, 'yyyy-MM-dd')
-  const isToday = todayDate() === orderDate
-  const isTomorrow = tomorrowDate() === orderDate
-  const requestedAtText =
-    requestedAt === 'asap'
-      ? `ASAP / ${currentLocalDateStr(tz, 'MMMM d')}`
-      : isoToDateStr(requestedAt, tz, 'h:mma / MMMM d')
-  const parenthetical = isToday ? ' (today)' : isTomorrow ? ' (tmrw)' : ''
-  return `${requestedAtText}${parenthetical}`
-}
-
 const makeOrderTypeName = (order, outpostName) => {
   const { serviceType, orderType, isOutpost, isCurbside } = order
   const isCatering = orderType === 'CATERING'
@@ -126,7 +108,6 @@ const CheckoutDetails = () => {
   const outpostName = useSelector(selectOutpostName)
   const orderTypeName = makeOrderTypeName(order, outpostName)
   const tz = useSelector(selectTimezone)
-  const requestedAtStr = makeOrderTimeStr(requestedAt, tz)
   const otherServiceType = serviceType === 'PICKUP' ? 'Delivery' : 'Pickup'
   const { check, form, loading } = useSelector(selectCheckout)
   const validationErrors = check ? check.errors : null
@@ -211,12 +192,12 @@ const CheckoutDetails = () => {
                   onClick={changeServiceType}
                   text={`Switch to ${otherServiceType}`}
                 />
-                <FormHeader style={{ margin: '3rem 0 0' }}>
-                  <h2>
-                    {orderTypeName.replace('Curbside ', '')} Time
-                    <button onClick={changeTime}>{requestedAtStr}</button>
-                  </h2>
-                </FormHeader>
+                <CheckoutOrderTime
+                  serviceType={serviceType}
+                  requestedAt={requestedAt}
+                  tz={tz}
+                  changeTime={changeTime}
+                />
               </CheckoutOrderType>
               <CheckoutContact errors={formErrors.customer} />
               <CheckoutOptions errors={formErrors.details} />

@@ -12,6 +12,7 @@ import ChevronRight from './ChevronRight'
 import ChevronUp from './ChevronUp'
 import CreditCard from './CreditCard'
 import CurbsidePickup from './CurbsidePickup'
+import CurbsidePickupArrival from './CurbsidePickupArrival'
 import DetourSign from './DetourSign'
 import DressingOnTheSide from './DressingOnTheSide'
 import Filter from './Filter'
@@ -46,6 +47,7 @@ export {
   ChevronUp,
   CreditCard,
   CurbsidePickup,
+  CurbsidePickupArrival,
   DetourSign,
   DressingOnTheSide,
   Filter,
