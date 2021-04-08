@@ -45,7 +45,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prebuild": "node generate-version",
-    "deploy": "env-cmd -f .env yarn build && node ./deploy/upload.js && node ./deploy/invalidate.js"
+    "deploy": "yarn build && node ./deploy/upload.js && node ./deploy/invalidate.js"
   },
   "eslintConfig": {
     "extends": "react-app"
