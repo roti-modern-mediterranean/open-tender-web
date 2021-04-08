@@ -1,11 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 // import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { selectCheckout, updateForm } from '@open-tender/redux'
+import { checkAmountRemaining } from '@open-tender/js'
 import { Preface } from '@open-tender/components'
 
 import { CreditCard, Roti } from '../../icons'
 import CheckoutCreditCard from './CheckoutCreditCard'
 import CheckoutLevelUp from './CheckoutLevelUp'
+import { useDispatch, useSelector } from 'react-redux'
 
 const tenderTypes = [
   {
@@ -75,13 +78,32 @@ const CheckoutTendersButton = styled('button')`
 `
 
 const CheckoutTenders = () => {
+  const dispatch = useDispatch()
   const [tenderType, setTenderType] = useState('CREDIT')
+  const [hasTender, setHasTender] = useState(false)
+  const { check, form } = useSelector(selectCheckout)
+  const total = check.totals ? check.totals.total : 0.0
+  const cards = check.customer ? check.customer.credit_cards : []
+  const hasCards = cards && cards.length > 0
+  const noTender = form.tenders.length === 0
+  const customer_card_id =
+    hasCards && noTender ? cards[0].customer_card_id : null
+  const amount = checkAmountRemaining(total, form.tenders).toFixed(2)
 
   const handleButton = (evt, tenderType) => {
     evt.preventDefault()
     evt.target.blur()
     setTenderType(tenderType)
   }
+
+  useEffect(() => {
+    setHasTender(true)
+    if (customer_card_id && !hasTender) {
+      const tender = { tender_type: 'CREDIT', amount, customer_card_id }
+      dispatch(updateForm({ tenders: [tender] }))
+      setHasTender(true)
+    }
+  }, [hasTender, customer_card_id, amount, dispatch])
 
   return (
     <CheckoutTendersView>

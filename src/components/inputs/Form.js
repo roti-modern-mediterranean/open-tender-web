@@ -54,28 +54,28 @@ export const FormSubmit = styled('div')`
   width: 100%;
   margin: 3rem 0 0;
 
-  button {
+  & > button {
     width: 100%;
     // color: ${(props) => props.theme.links.primary.color};
     // border-color: ${(props) => props.theme.links.primary.color};
-    // background-color: transparent;
+    background-color: transparent;
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       width: 100%;
     }
 
-    // &:disabled {
-    //   color: ${(props) => props.theme.links.primary.color};
-    //   border-color: ${(props) => props.theme.links.primary.color};
-    //   background-color: transparent;
-    // }
+    &:disabled {
+      // color: ${(props) => props.theme.links.primary.color};
+      // border-color: ${(props) => props.theme.links.primary.color};
+      background-color: transparent;
+    }
 
-    // &:hover,
-    // &:active,
-    // &:focus {
-    //   color: ${(props) => props.theme.links.primary.hover};
-    //   border-color: ${(props) => props.theme.links.primary.hover};
-    //   background-color: transparent;
-    // }
+    &:hover,
+    &:active,
+    &:focus {
+      // color: ${(props) => props.theme.links.primary.hover};
+      // border-color: ${(props) => props.theme.links.primary.hover};
+      background-color: transparent;
+    }
   }
 `
 
