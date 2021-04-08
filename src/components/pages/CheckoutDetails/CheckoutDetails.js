@@ -35,12 +35,12 @@ import {
   CheckoutHeader,
   CheckoutLink,
   Content,
-  Header,
+  HeaderCheckout,
   Loading,
   Main,
   PageContainer,
 } from '../..'
-import { Back, Cart } from '../../buttons'
+import { Back } from '../../buttons'
 import styled from '@emotion/styled'
 import {} from '../../forms'
 import { ErrMsg, FormWrapper } from '../../inputs'
@@ -169,9 +169,8 @@ const CheckoutDetails = () => {
         <title>Checkout Details | {siteTitle}</title>
       </Helmet>
       <Content hasFooter={false}>
-        <Header
+        <HeaderCheckout
           left={<Back onClick={() => history.push(menuSlug)} />}
-          right={<Cart />}
         />
         <Main>
           <PageContainer style={{ margin: '0 auto' }}>

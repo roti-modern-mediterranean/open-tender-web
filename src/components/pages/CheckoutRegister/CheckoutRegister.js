@@ -19,13 +19,13 @@ import { AppContext } from '../../../App'
 import {
   ButtonGroupBig,
   Content,
-  Header,
+  HeaderCheckout,
   Main,
   PageContainer,
   SignUpForm,
 } from '../..'
 import { FormFooter, FormHeader, FormWrapper } from '../../inputs'
-import { Back, Cart } from '../../buttons'
+import { Back } from '../../buttons'
 import styled from '@emotion/styled'
 
 const CheckoutGuestView = styled(ButtonGroupBig)`
@@ -85,9 +85,8 @@ const CheckoutRegister = () => {
         <title>Checkout Register | {siteTitle}</title>
       </Helmet>
       <Content>
-        <Header
+        <HeaderCheckout
           left={<Back onClick={() => history.push(menuSlug)} />}
-          right={<Cart />}
         />
         <Main>
           <PageContainer style={{ marginTop: '0' }}>

@@ -17,13 +17,13 @@ import { AppContext } from '../../../App'
 import {
   ButtonGroupBig,
   Content,
-  Header,
+  HeaderCheckout,
   LoginForm,
   Main,
   PageContainer,
 } from '../..'
 import { FormFooter, FormHeader, FormWrapper } from '../../inputs'
-import { Back, Cart } from '../../buttons'
+import { Back } from '../../buttons'
 import styled from '@emotion/styled'
 import {} from '../../forms'
 
@@ -91,9 +91,8 @@ const CheckoutLogin = () => {
         <title>Checkout Login | {siteTitle}</title>
       </Helmet>
       <Content>
-        <Header
+        <HeaderCheckout
           left={<Back onClick={() => history.push(menuSlug)} />}
-          right={<Cart />}
         />
         <Main>
           <PageContainer style={{ marginTop: '0' }}>

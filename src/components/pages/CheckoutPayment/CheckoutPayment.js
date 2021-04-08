@@ -2,15 +2,18 @@ import React, { useEffect, useContext, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
+import { deviceType } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
   selectCheckout,
-  setSubmitting,
+  updateForm,
+  setDeviceType,
   submitOrder,
+  setSubmitting,
   setConfirmationOrder,
   resetCompletedOrder,
   resetOrder,
-  updateForm,
+  resetErrors,
 } from '@open-tender/redux'
 import {
   formatDollars,
@@ -27,11 +30,11 @@ import {
   CheckoutTitle,
   Container,
   Content,
-  Header,
+  HeaderCheckout,
   Main,
   PageContainer,
 } from '../..'
-import { Back, Cart } from '../../buttons'
+import { Back } from '../../buttons'
 import {} from '../../forms'
 import { ErrMsg, FormWrapper } from '../../inputs'
 import CheckoutCart from './CheckoutCart'
@@ -68,6 +71,19 @@ const CheckoutPaymentFooter = styled('div')`
   }
 `
 
+const makeDeviceType = (deviceType) => {
+  switch (deviceType) {
+    case 'tablet':
+      return 'TABLET'
+    case 'mobile':
+      return 'MOBILE'
+    case 'browser':
+      return 'DESKTOP'
+    default:
+      return 'DESKTOP'
+  }
+}
+
 const CheckoutPayment = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -80,11 +96,20 @@ const CheckoutPayment = () => {
   let amountRemaining = checkAmountRemaining(total, form.tenders)
   const submitDisabled =
     submitting || amountRemaining > 0 || loading === 'pending'
+  const deviceTypeName = makeDeviceType(deviceType)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
   }, [windowRef, dispatch])
+
+  useEffect(() => {
+    dispatch(setDeviceType(deviceTypeName))
+    return () => {
+      dispatch(resetErrors())
+      // dispatch(resetTip())
+    }
+  }, [dispatch, deviceTypeName])
 
   useEffect(() => {
     const tenders = updateTenders(form.tenders, total)
@@ -117,9 +142,8 @@ const CheckoutPayment = () => {
         <title>Checkout Payment | {siteTitle}</title>
       </Helmet>
       <Content hasFooter={false}>
-        <Header
+        <HeaderCheckout
           left={<Back onClick={() => history.push('/checkout/details')} />}
-          right={<Cart />}
         />
         <Main>
           <PageContainer style={{ margin: '0 auto' }}>

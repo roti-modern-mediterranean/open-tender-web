@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import {
   selectCustomer,
@@ -16,13 +15,13 @@ import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, selectOptIns } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Content,
-  Main,
-  OrderFulfillment,
-  HeaderDefault,
-  PageContainer,
   CheckoutHeader,
   CheckoutTitle,
+  Content,
+  HeaderContent,
+  Main,
+  OrderFulfillment,
+  PageContainer,
 } from '../..'
 import ConfirmationProfile from './ConfirmationProfile'
 import CheckoutCart from '../CheckoutPayment/CheckoutCart'
@@ -111,10 +110,7 @@ const Confirmation = () => {
         <title>Confirmation | {brand.title}</title>
       </Helmet>
       <Content>
-        <HeaderDefault
-          title={isBrowser ? null : 'Confirmation'}
-          isLogo={false}
-        />
+        <HeaderContent />
         <Main>
           <PageContainer style={{ margin: '4rem auto 8rem' }}>
             <CheckoutHeader title="Confirm & Pay">

@@ -48,6 +48,10 @@ const CheckoutAddressChange = styled('div')`
   top: 0;
   right: 0;
   padding: ${(props) => props.theme.inputs.padding};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0;
+    top: -1.3rem;
+  }
 `
 
 const CheckoutAddress = ({ orderTypeName, errors = {} }) => {
