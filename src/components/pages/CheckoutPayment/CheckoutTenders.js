@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-// import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { selectCheckout, updateForm } from '@open-tender/redux'
 import { checkAmountRemaining } from '@open-tender/js'
@@ -9,6 +8,7 @@ import { CreditCard, Roti } from '../../icons'
 import CheckoutCreditCard from './CheckoutCreditCard'
 import CheckoutLevelUp from './CheckoutLevelUp'
 import { useDispatch, useSelector } from 'react-redux'
+import { PaymentTypes } from '../..'
 
 const tenderTypes = [
   {
@@ -35,48 +35,6 @@ const CheckoutTendersHeader = styled('div')`
   }
 `
 
-const CheckoutTendersTypes = styled('div')`
-  margin: 2rem 0 0;
-`
-
-const CheckoutTendersButtons = styled('div')`
-  display: flex;
-  justify-content: center;
-  margin: 0 -0.5rem 3rem;
-`
-
-const CheckoutTendersButtonView = styled('div')`
-  flex: 0 0 25%;
-  max-width: 8.8rem;
-  padding: 0 0.5rem;
-`
-
-const CheckoutTendersButton = styled('button')`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  height: 4.6rem;
-  padding: 0;
-  border-radius: 1.1rem;
-  background-color: ${(props) =>
-    props.theme.bgColors[props.checked ? 'dark' : 'secondary']};
-
-  &:hover {
-    background-color: ${(props) =>
-      props.theme.colors[props.checked ? 'primary' : 'cardHover']};
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  & > span {
-    flex-shrink: 0;
-  }
-`
-
 const CheckoutTenders = () => {
   const dispatch = useDispatch()
   const [tenderType, setTenderType] = useState('CREDIT')
@@ -89,12 +47,6 @@ const CheckoutTenders = () => {
   const customer_card_id =
     hasCards && noTender ? cards[0].customer_card_id : null
   const amount = checkAmountRemaining(total, form.tenders).toFixed(2)
-
-  const handleButton = (evt, tenderType) => {
-    evt.preventDefault()
-    evt.target.blur()
-    setTenderType(tenderType)
-  }
 
   useEffect(() => {
     setHasTender(true)
@@ -110,21 +62,11 @@ const CheckoutTenders = () => {
       <CheckoutTendersHeader>
         <Preface as="h2">Select Payment</Preface>
       </CheckoutTendersHeader>
-      <CheckoutTendersTypes>
-        <CheckoutTendersButtons>
-          {tenderTypes.map((button) => (
-            <CheckoutTendersButtonView key={button.text}>
-              <CheckoutTendersButton
-                aria-label={button.text}
-                onClick={(evt) => handleButton(evt, button.tenderType)}
-                checked={tenderType === button.tenderType}
-              >
-                {button.icon}
-              </CheckoutTendersButton>
-            </CheckoutTendersButtonView>
-          ))}
-        </CheckoutTendersButtons>
-      </CheckoutTendersTypes>
+      <PaymentTypes
+        tenderTypes={tenderTypes}
+        tenderType={tenderType}
+        setTenderType={setTenderType}
+      />
       {tenderType === 'CREDIT' ? (
         <CheckoutCreditCard />
       ) : tenderType === 'LEVELUP' ? (
@@ -135,6 +77,5 @@ const CheckoutTenders = () => {
 }
 
 CheckoutTenders.displayName = 'CheckoutTenders'
-CheckoutTenders.propTypes = {}
 
 export default CheckoutTenders

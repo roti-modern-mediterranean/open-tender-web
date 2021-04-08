@@ -34,6 +34,7 @@ import NotFound from './NotFound'
 import Order from './Order'
 import Orders from './Orders'
 import OrderType from './OrderType'
+import Payment from './Payment'
 import Profile from './Profile'
 import Rating from './Rating'
 import Refunds from './Refunds'
@@ -83,6 +84,7 @@ export {
   Order,
   Orders,
   OrderType,
+  Payment,
   Profile,
   Rating,
   Refunds,

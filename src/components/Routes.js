@@ -30,6 +30,7 @@ import {
   Order,
   Orders,
   OrderType,
+  Payment,
   Profile,
   Rating,
   Refunds,
@@ -155,6 +156,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/credit-cards">
         <AccountCreditCards />
+      </Route>
+      <Route exact path="/payment">
+        <Payment />
       </Route>
       <Route exact path="/gift-cards">
         <AccountGiftCards />

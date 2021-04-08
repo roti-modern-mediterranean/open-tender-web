@@ -28,6 +28,7 @@ import CheckoutLink from './CheckoutLink'
 import CheckoutTitle from './CheckoutTitle'
 import Content from './Content'
 import Container from './Container'
+import CreditCards from './CreditCards'
 import CreditCard from './CreditCard'
 import Curbside from './Curbside'
 import Deals from './Deals'
@@ -90,6 +91,7 @@ import PageSectionHeader from './PageSectionHeader'
 import PageTitle from './PageTitle'
 import PageTitleButtons from './PageTitleButtons'
 import PageView from './PageView'
+import PaymentTypes from './PaymentTypes'
 import PrefaceTitle from './PrefaceTitle'
 import ProgressBar from './ProgressBar'
 import ProgressCircle from './ProgressCircle'
@@ -143,6 +145,7 @@ export {
   CheckoutTitle,
   Container,
   Content,
+  CreditCards,
   CreditCard,
   Curbside,
   Deals,
@@ -209,6 +212,7 @@ export {
   PageTitle,
   PageTitleButtons,
   PageView,
+  PaymentTypes,
   PrefaceTitle,
   ProgressBar,
   ProgressCircle,

@@ -85,7 +85,7 @@ const userLinks = [
       },
       {
         title: 'Payment',
-        path: '/credit-cards',
+        path: '/payment',
       },
       {
         title: 'Gift Cards',
