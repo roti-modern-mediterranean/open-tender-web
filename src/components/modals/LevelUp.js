@@ -7,10 +7,38 @@ import {
   selectCustomerLevelUp,
   selectCustomer,
 } from '@open-tender/redux'
-import { LevelUpForm, Text } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import { ModalContent, ModalView } from '..'
+import { LevelUpForm } from '../forms'
+import styled from '@emotion/styled'
+
+const LevelUpContent = styled('div')`
+  margin: 0 0 3rem;
+
+  p {
+    line-height: ${(props) => props.theme.lineHeight};
+
+    span {
+      font-weight: 600;
+    }
+
+    a {
+      color: ${(props) => props.theme.colors.primary};
+      font-weight: 600;
+
+      &:hover,
+      &:active,
+      &:focus {
+        color: ${(props) => props.theme.links.primary.hover};
+      }
+    }
+
+    &:last-of-type {
+      font-weight: 600;
+    }
+  }
+`
 
 const LevelUp = ({ windowRef, validate }) => {
   const dispatch = useDispatch()
@@ -45,8 +73,8 @@ const LevelUp = ({ windowRef, validate }) => {
           </p>
         }
       >
-        <div>
-          <Text as="p" size="small">
+        <LevelUpContent>
+          <p>
             Don't have a LevelUp account?{' '}
             <a
               href="https://www.thelevelup.com/users/new"
@@ -55,12 +83,12 @@ const LevelUp = ({ windowRef, validate }) => {
             >
               Click here to create one.
             </a>
-          </Text>
-          <Text as="p" size="small" color="alert">
+          </p>
+          <p>
             Please update the email address below if you use a different email
             address with your LevelUp account.
-          </Text>
-        </div>
+          </p>
+        </LevelUpContent>
         <LevelUpForm
           email={email}
           loading={loading}
