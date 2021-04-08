@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - echo done!
+  pre_build:
+    commands: 
+      - echo Installing dependencies...
+      - yarn install
+      - aws --version
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Compiling...
+      - yarn deploy
+  post_build:
+    commands:
+      - echo Build completed on `date`

@@ -1,5 +1,4 @@
-import { useCallback, useState } from "react"
-import { useEffect } from "react/cjs/react.development"
+import { useCallback, useState, useEffect } from "react"
 
 export const TouchDirection = {
 	up: 'up',
