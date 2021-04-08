@@ -1,36 +1,35 @@
 import React, { useCallback, useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   fetchCustomer,
   updateCustomer,
   resetLoginError,
 } from '@open-tender/redux'
-import { FormWrapper, ProfileForm } from '@open-tender/components'
 import { Helmet } from 'react-helmet'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand, selectOptIns } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
+  CheckoutHeader,
   Content,
   Loading,
   Main,
   PageContainer,
-  PageContent,
-  PageTitle,
   VerifyAccount,
 } from '../..'
-import AccountTabs from '../Account/AccountTabs'
 import HeaderDefault from '../../HeaderDefault'
+import { FormWrapper } from '../../inputs'
+import { ProfileForm } from '../../forms'
 
 const AccountProfile = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { title: siteTitle } = useSelector(selectBrand)
   const account = useSelector(selectAccountConfig)
+  const { title, subtitle } = account.profile
   const { profile, loading, error } = useSelector(selectCustomer)
   const { customer_id } = profile || {}
   const isLoading = loading === 'pending'
@@ -66,30 +65,27 @@ const AccountProfile = () => {
       <Content>
         <HeaderDefault />
         <Main>
-          {!isBrowser && <AccountTabs />}
-          <PageContainer style={{ maxWidth: '72rem' }}>
-            <PageTitle {...account.profile}>
-              <VerifyAccount style={{ margin: '2rem 0 0' }} />
-            </PageTitle>
-            {profile ? (
-              <FormWrapper>
-                <ProfileForm
-                  profile={profile}
-                  loading={loading}
-                  error={error}
-                  update={update}
-                  optIns={optIns}
-                />
-              </FormWrapper>
-            ) : (
-              <PageContent>
-                {isLoading ? (
-                  <Loading text="Retrieving your profile & preferences..." />
-                ) : errMsg ? (
-                  <p>{errMsg}</p>
-                ) : null}
-              </PageContent>
-            )}
+          <PageContainer>
+            <CheckoutHeader title={title} />
+            <FormWrapper>
+              {subtitle && <p>{subtitle}</p>}
+              {profile ? (
+                <>
+                  <VerifyAccount style={{ margin: '2rem 0 0' }} />
+                  <ProfileForm
+                    profile={profile}
+                    loading={loading}
+                    error={error}
+                    update={update}
+                    optIns={optIns}
+                  />
+                </>
+              ) : isLoading ? (
+                <Loading text="Retrieving your profile & preferences..." />
+              ) : errMsg ? (
+                <p>{errMsg}</p>
+              ) : null}
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>

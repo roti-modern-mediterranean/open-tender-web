@@ -3,6 +3,7 @@ import CreditCardForm from './CreditCardForm'
 import LoginForm from './LoginForm'
 import LevelUpForm from './LevelUpForm'
 import OrderFulfillmentForm from './OrderFulfillmentForm'
+import ProfileForm from './ProfileForm'
 import SendResetForm from './SendResetForm'
 import SignUpForm from './SignUpForm'
 
@@ -12,6 +13,7 @@ export {
   LoginForm,
   LevelUpForm,
   OrderFulfillmentForm,
+  ProfileForm,
   SendResetForm,
   SignUpForm,
 }

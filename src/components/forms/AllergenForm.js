@@ -10,6 +10,7 @@ import {
   Heading,
 } from '@open-tender/components'
 import { allergenIconMap } from '../icons/allergens'
+import { FormSubmit } from '../inputs'
 
 const AllergenFormView = styled('div')`
   // label {
@@ -159,9 +160,15 @@ const AllergenForm = ({
             />
           ))}
         </AllergenInputs>
-        <ButtonSubmit submitRef={submitRef} submitting={submitting}>
-          {submitting ? 'Submitting...' : 'Submit Updates'}
-        </ButtonSubmit>
+        <FormSubmit>
+          <ButtonSubmit
+            submitRef={submitRef}
+            submitting={submitting}
+            color="secondary"
+          >
+            {submitting ? 'Submitting...' : 'Submit Updates'}
+          </ButtonSubmit>
+        </FormSubmit>
       </form>
     </AllergenFormView>
   )
