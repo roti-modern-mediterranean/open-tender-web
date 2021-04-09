@@ -5,7 +5,6 @@ import {
   Accessibility,
   AccountAddresses,
   AccountAllergens,
-  AccountCreditCards,
   AccountGiftCards,
   Careers,
   Catering,
@@ -33,7 +32,6 @@ import {
   NotFound,
   Order,
   Orders,
-  OrderType,
   Payment,
   Profile,
   Rating,
@@ -72,7 +70,7 @@ const Routes = () => {
         <Thanx />
       </Route>
       <Route exact path="/order-type">
-        <OrderType />
+        <Redirect to="/locations" />
       </Route>
       <Route exact path="/signup">
         <SignUp />
@@ -161,13 +159,10 @@ const Routes = () => {
       <Route exact path="/addresses">
         <AccountAddresses />
       </Route>
-      <Route exact path="/credit-cards">
-        <AccountCreditCards />
-      </Route>
       <Route exact path="/payment">
         <Payment />
       </Route>
-      <Route exact path="/gift-cards">
+      <Route exact path="/account-gift-cards">
         <AccountGiftCards />
       </Route>
       <Route exact path="/house-accounts">

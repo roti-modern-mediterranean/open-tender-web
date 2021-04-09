@@ -2,14 +2,6 @@ import propTypes from 'prop-types'
 import { orderTypeNamesMap, serviceTypeNamesMap } from '@open-tender/js'
 
 import { QRCode, Row } from '../..'
-import styled from '@emotion/styled'
-
-const HouseAccountFinePrint = styled('div')`
-  & > p:first-of-type {
-    margin: 1rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.xSmall};
-  }
-`
 
 const HouseAccountsList = ({ houseAccounts }) => {
   return (
@@ -32,23 +24,22 @@ const HouseAccountsList = ({ houseAccounts }) => {
                 />
               ) : null
             }
-            content={
-              <>
-                <p>{houseAccount.name}</p>
-                <p>
-                  {houseAccount.approved_contact
-                    ? 'Your account has been specifically approved for this house account'
-                    : `This house account is approved for all email addresses ending in ${houseAccount.domain}`}
-                </p>
-                <HouseAccountFinePrint>
-                  <p>
-                    Approved for <span>{orderTypes}</span> and{' '}
-                    <span>{serviceTypes}</span>
-                  </p>
-                </HouseAccountFinePrint>
-              </>
-            }
-          />
+            title={houseAccount.name}
+          >
+            <div>
+              <p>
+                {houseAccount.approved_contact
+                  ? 'Your account has been specifically approved for this house account'
+                  : `This house account is approved for all email addresses ending in ${houseAccount.domain}`}
+              </p>
+            </div>
+            <div>
+              <p>
+                Approved for <span>{orderTypes}</span> and{' '}
+                <span>{serviceTypes}</span>
+              </p>
+            </div>
+          </Row>
         )
       })}
     </div>

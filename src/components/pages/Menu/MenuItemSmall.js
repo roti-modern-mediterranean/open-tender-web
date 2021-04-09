@@ -1,3 +1,4 @@
+import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Heading, Preface } from '@open-tender/components'
@@ -137,74 +138,80 @@ const MenuItemSmallButtons = styled(CardButtons)`
   }
 `
 
-const MenuItemSmall = ({
-  onClick,
-  isActive,
-  isInverted,
-  isSoldOut,
-  isIncomplete,
-  item,
-  imageUrl,
-  allergenAlert,
-  price,
-  cals,
-  viewRef,
-  addRef,
-  handleView,
-  handleAdd,
-  menuConfig,
-  setIsActive,
-}) => {
-  return (
-    <MenuItemSmallView
-      onClick={onClick}
-      isSoldOut={isSoldOut}
-      className={isActive ? 'item-active' : ''}
-    >
-      <MenuItemSmallContent isInverted={isInverted} isSoldOut={isSoldOut}>
-        <MenuItemSmallImageView isSoldOut={isSoldOut}>
-          <CardImage imageUrl={imageUrl} isInverted={isInverted} />
-        </MenuItemSmallImageView>
-        <MenuItemSmallContentBackground className="item-content-bg" />
-        <MenuItemSmallContentHeader>
-          <MenuItemSmallName>{item.name}</MenuItemSmallName>
-          <MenuItemDetails price={price} cals={cals} />
-          {isSoldOut && (
-            <MenuItemSmallSoldOut as="p">Sold out</MenuItemSmallSoldOut>
-          )}
-          <MenuItemAllergens
-            allergens={allergenAlert}
-            includeText={false}
-            style={{ textAlign: 'center', marginLeft: '1.5rem' }}
-          />
-        </MenuItemSmallContentHeader>
-        <MenuItemSmallButtons>
-          <CardButton
-            ref={viewRef}
-            onClick={handleView}
-            onFocus={() => setIsActive(true)}
-            // onBlur={() => setIsActive(false)}
-            disabled={isSoldOut}
-            secondary={true}
-          >
-            View
-          </CardButton>
-          {menuConfig && (
+const MenuItemSmall = React.forwardRef(
+  (
+    {
+      onClick,
+      isActive,
+      isInverted,
+      isSoldOut,
+      isIncomplete,
+      item,
+      imageUrl,
+      allergenAlert,
+      price,
+      cals,
+      viewRef,
+      addRef,
+      handleView,
+      handleAdd,
+      menuConfig,
+      setIsActive,
+    },
+    ref
+  ) => {
+    return (
+      <MenuItemSmallView
+        ref={ref}
+        onClick={onClick}
+        isSoldOut={isSoldOut}
+        className={isActive ? 'item-active' : ''}
+      >
+        <MenuItemSmallContent isInverted={isInverted} isSoldOut={isSoldOut}>
+          <MenuItemSmallImageView isSoldOut={isSoldOut}>
+            <CardImage imageUrl={imageUrl} isInverted={isInverted} />
+          </MenuItemSmallImageView>
+          <MenuItemSmallContentBackground className="item-content-bg" />
+          <MenuItemSmallContentHeader>
+            <MenuItemSmallName>{item.name}</MenuItemSmallName>
+            <MenuItemDetails price={price} cals={cals} />
+            {isSoldOut && (
+              <MenuItemSmallSoldOut as="p">Sold out</MenuItemSmallSoldOut>
+            )}
+            <MenuItemAllergens
+              allergens={allergenAlert}
+              includeText={false}
+              style={{ textAlign: 'center', marginLeft: '1.5rem' }}
+            />
+          </MenuItemSmallContentHeader>
+          <MenuItemSmallButtons>
             <CardButton
-              ref={addRef}
-              onClick={handleAdd}
+              ref={viewRef}
+              onClick={handleView}
               onFocus={() => setIsActive(true)}
               // onBlur={() => setIsActive(false)}
-              disabled={isSoldOut || isIncomplete}
+              disabled={isSoldOut}
+              secondary={true}
             >
-              Add
+              View
             </CardButton>
-          )}
-        </MenuItemSmallButtons>
-      </MenuItemSmallContent>
-    </MenuItemSmallView>
-  )
-}
+            {menuConfig && (
+              <CardButton
+                ref={addRef}
+                onClick={handleAdd}
+                onFocus={() => setIsActive(true)}
+                // onBlur={() => setIsActive(false)}
+                disabled={isSoldOut || isIncomplete}
+              >
+                Add
+              </CardButton>
+            )}
+          </MenuItemSmallButtons>
+        </MenuItemSmallContent>
+      </MenuItemSmallView>
+    )
+  }
+)
 
 MenuItemSmall.displayName = 'MenuItemSmall'
 MenuItemSmall.propTypes = {

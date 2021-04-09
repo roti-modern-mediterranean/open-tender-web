@@ -8,13 +8,19 @@ const CheckoutCreditCardsView = styled('div')`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin: 0 -1rem;
 `
 
 const CheckoutCreditCard = styled('button')`
-  flex: 1 1 20rem;
-  max-width: 50%;
+  position: relative;
+  display: block;
+  flex: 0 0 20rem;
   padding: 0 1rem 2rem;
   text-align: left;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex: 0 0 20rem;
+    max-width: 48%;
+  }
 
   &:hover {
     & > div {

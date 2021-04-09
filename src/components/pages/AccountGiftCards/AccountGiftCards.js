@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerGiftCards,
   fetchCustomerGiftCards,
+  fetchCustomerCreditCards,
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
@@ -18,19 +18,19 @@ import {
   HeaderDefault,
   Loading,
   Main,
-  PageTitle,
   PageContainer,
-  PageContent,
-  PageTitleButtons,
+  CheckoutHeader,
+  ButtonGroupBig,
 } from '../..'
 import GiftCardsList from './GiftCardsList'
-import AccountTabs from '../Account/AccountTabs'
+import { FormWrapper } from '../../inputs'
 
 const AccountGiftCards = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const config = useSelector(selectAccountConfig)
+  const { title, subtitle } = config.giftCards
   const { entities, loading } = useSelector(selectCustomerGiftCards)
   const isLoading = loading === 'pending'
   const { auth } = useSelector(selectCustomer)
@@ -47,6 +47,7 @@ const AccountGiftCards = () => {
 
   useEffect(() => {
     dispatch(fetchCustomerGiftCards())
+    dispatch(fetchCustomerCreditCards())
   }, [dispatch])
 
   return (
@@ -59,38 +60,42 @@ const AccountGiftCards = () => {
       <Content>
         <HeaderDefault />
         <Main>
-          {!isBrowser && <AccountTabs />}
-          <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config.giftCards}>
-              <PageTitleButtons>
+          <PageContainer>
+            <CheckoutHeader title={title} />
+            <FormWrapper>
+              {subtitle && <p>{subtitle}</p>}
+              {entities.length ? (
+                <GiftCardsList giftCards={entities} isLoading={isLoading} />
+              ) : isLoading ? (
+                <Loading text="Retrieving your gift cards..." />
+              ) : (
+                <p>{config.giftCards.empty}</p>
+              )}
+              <ButtonGroupBig>
                 <ButtonStyled
+                  size="big"
                   onClick={() => dispatch(openModal({ type: 'giftCard' }))}
                 >
                   Buy a New Gift Card
                 </ButtonStyled>
-                <ButtonStyled onClick={() => history.push('/gift-cards')}>
+                <ButtonStyled
+                  onClick={() => history.push('/gift-cards')}
+                  size="big"
+                  color="secondary"
+                >
                   Buy Gift Cards For Others
                 </ButtonStyled>
                 <ButtonStyled
                   onClick={() =>
                     dispatch(openModal({ type: 'giftCardAssign' }))
                   }
+                  size="big"
+                  color="secondary"
                 >
                   Add Gift Card To Account
                 </ButtonStyled>
-              </PageTitleButtons>
-            </PageTitle>
-            {entities.length ? (
-              <GiftCardsList giftCards={entities} isLoading={isLoading} />
-            ) : (
-              <PageContent>
-                {isLoading ? (
-                  <Loading text="Retrieving your gift cards..." />
-                ) : (
-                  <p>{config.giftCards.empty}</p>
-                )}
-              </PageContent>
-            )}
+              </ButtonGroupBig>
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>

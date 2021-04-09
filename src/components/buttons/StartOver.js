@@ -41,7 +41,7 @@ const StartOver = ({
   const startOver = () => {
     // if (!auth) dispatch(resetOrderType())
     // dispatch(resetCheckout())
-    history.push(`/order-type`)
+    history.push(`/locations`)
   }
 
   return isBrowser ? (

@@ -112,12 +112,12 @@ const AccountActions = () => {
 
   const startNewOrder = () => {
     dispatch(resetOrder())
-    history.push(`/order-type`)
+    history.push(`/locations`)
   }
 
   const switchOrderType = () => {
     dispatch(resetOrderType())
-    history.push(`/order-type`)
+    history.push(`/locations`)
   }
 
   const continueCurrent = () => {

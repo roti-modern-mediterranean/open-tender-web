@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerHouseAccounts,
@@ -12,18 +11,16 @@ import { Helmet } from 'react-helmet'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
 import {
+  CheckoutHeader,
   Content,
   HeaderDefault,
   Loading,
   Main,
   PageContainer,
-  PageContent,
-  PageError,
-  PageTitle,
 } from '../..'
 import { AppContext } from '../../../App'
 import HouseAccountsList from './HouseAccountsList'
-import AccountTabs from '../Account/AccountTabs'
+import { ErrMsg, FormWrapper } from '../../inputs'
 
 const AccountHouseAccounts = () => {
   const dispatch = useDispatch()
@@ -31,6 +28,7 @@ const AccountHouseAccounts = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const account = useSelector(selectAccountConfig)
+  const { title, subtitle } = account.houseAccounts
   const { entities, loading, error } = useSelector(selectCustomerHouseAccounts)
   const isLoading = loading === 'pending'
   const { windowRef } = useContext(AppContext)
@@ -58,21 +56,19 @@ const AccountHouseAccounts = () => {
       <Content>
         <HeaderDefault />
         <Main>
-          {!isBrowser && <AccountTabs />}
-          <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...account.houseAccounts} />
-            <PageError error={error} />
-            {entities.length ? (
-              <HouseAccountsList houseAccounts={entities} />
-            ) : (
-              <PageContent>
-                {isLoading ? (
-                  <Loading text="Retrieving your house accounts..." />
-                ) : (
-                  <p>{account.houseAccounts.empty}</p>
-                )}
-              </PageContent>
-            )}
+          <PageContainer>
+            <CheckoutHeader title={title} />
+            <FormWrapper>
+              {subtitle && <p>{subtitle}</p>}
+              <ErrMsg errMsg={error} />
+              {entities.length ? (
+                <HouseAccountsList houseAccounts={entities} />
+              ) : isLoading ? (
+                <Loading text="Retrieving your house accounts..." />
+              ) : (
+                <p>{account.houseAccounts.empty}</p>
+              )}
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>

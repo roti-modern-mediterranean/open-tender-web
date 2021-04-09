@@ -175,7 +175,7 @@ const CateringPage = () => {
 
   const startOver = () => {
     dispatch(resetOrder())
-    history.push(`/order-type`)
+    history.push(`/locations`)
   }
 
   return (

@@ -4,10 +4,12 @@ import styled from '@emotion/styled'
 const CloseView = styled('span')`
   display: block;
   width: ${(props) => props.size};
+  height: ${(props) => props.size};
   line-height: 0;
 
   svg {
     width: 100%;
+    height: 100%;
     fill: ${(props) => props.color || props.theme.colors.primary};
   }
 `

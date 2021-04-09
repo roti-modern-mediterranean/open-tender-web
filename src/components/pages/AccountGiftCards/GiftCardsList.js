@@ -2,19 +2,36 @@ import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { removeCustomerGiftCard } from '@open-tender/redux'
 import { formatDateStr, dateStrToDate } from '@open-tender/js'
-import { ButtonLink, ButtonStyled } from '@open-tender/components'
 
 import { openModal } from '../../../slices'
-import iconMap from '../../iconMap'
-import { LinkSeparator, QRCode, Row } from '../..'
+import { QRCode, Row } from '../..'
 import styled from '@emotion/styled'
+import { Plus, X } from 'react-feather'
+import { User } from '../../icons'
+import { useTheme } from '@emotion/react'
 
 const GiftCardButton = styled('button')`
   width: 8rem;
 `
 
+const CircleIcon = styled('button')`
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.8rem;
+  border: 0.1rem solid ${(props) => props.theme.colors.primary};
+
+  & > span {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`
+
 const GiftCardsList = ({ giftCards, isLoading }) => {
   const dispatch = useDispatch()
+  const theme = useTheme()
 
   const handleAddValue = (giftCard) => {
     dispatch(openModal({ type: 'giftCard', args: { giftCard } }))
@@ -58,50 +75,51 @@ const GiftCardsList = ({ giftCards, isLoading }) => {
           <Row
             key={giftCard.card_number}
             icon={icon}
-            content={
+            title={giftCard.card_number}
+            actions={
               <>
-                <p>{giftCard.card_number}</p>
-                <p>${giftCard.balance} remaining balance</p>
-                {giftCard.expiration && (
-                  <p>
-                    {expired ? 'Expired ' : 'Expires '}
-                    {formatDateStr(giftCard.expiration, 'MMM d, yyyy')}
-                  </p>
-                )}
-                <p>
-                  <ButtonLink
-                    onClick={() => handleAssign(giftCard.gift_card_id)}
+                {!expired && (
+                  <CircleIcon
+                    onClick={() => handleAddValue(giftCard)}
                     disabled={isLoading}
                   >
-                    Assign to someone else
-                  </ButtonLink>
-                  {removeable && (
-                    <>
-                      <LinkSeparator />
-                      <ButtonLink
-                        onClick={() => handleDelete(giftCard)}
-                        disabled={isLoading}
-                      >
-                        remove
-                      </ButtonLink>
-                    </>
-                  )}
-                </p>
-              </>
-            }
-            actions={
-              !expired ? (
-                <ButtonStyled
-                  onClick={() => handleAddValue(giftCard)}
-                  icon={iconMap.PlusCircle}
-                  size="small"
+                    <span>
+                      <Plus size={12} color={theme.colors.primary} />
+                      {/* <PlusSign size={8} color={theme.colors.primary} /> */}
+                    </span>
+                  </CircleIcon>
+                )}
+                <button
+                  onClick={() => handleAssign(giftCard.gift_card_id)}
                   disabled={isLoading}
                 >
-                  Add Value
-                </ButtonStyled>
-              ) : null
+                  <User size="1.6rem" color={theme.colors.primary} />
+                </button>
+                {removeable && (
+                  <CircleIcon
+                    onClick={() => handleDelete(giftCard)}
+                    disabled={isLoading}
+                  >
+                    <span>
+                      <X size={12} color={theme.colors.primary} />
+                    </span>
+                  </CircleIcon>
+                )}
+              </>
             }
-          ></Row>
+          >
+            <div>
+              <p>${giftCard.balance} remaining balance</p>
+              {giftCard.expiration ? (
+                <p>
+                  {expired ? 'Expired ' : 'Expires '}
+                  {formatDateStr(giftCard.expiration, 'MMM d, yyyy')}
+                </p>
+              ) : (
+                <p>Expires never</p>
+              )}
+            </div>
+          </Row>
         )
       })}
     </div>

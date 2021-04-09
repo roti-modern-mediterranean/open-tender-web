@@ -1,10 +1,11 @@
 import AddCondiments from './AddCondiments'
 import ArrowLeft from './ArrowLeft'
 import ArrowRight from './ArrowRight'
-import Car from './Car'
 import Calendar from './Calendar'
+import Car from './Car'
 import CartEmpty from './CartEmpty'
 import CartFull from './CartFull'
+import Cash from './Cash'
 import Checkmark from './Checkmark'
 import ChevronDown from './ChevronDown'
 import ChevronLeft from './ChevronLeft'
@@ -43,6 +44,7 @@ export {
   Car,
   CartEmpty,
   CartFull,
+  Cash,
   Checkmark,
   ChevronDown,
   ChevronLeft,
