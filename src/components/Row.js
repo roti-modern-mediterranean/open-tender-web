@@ -6,7 +6,7 @@ import { Preface } from '@open-tender/components'
 const RowView = styled('div')`
   display: flex;
   align-items: center;
-  padding: 2rem;
+  padding: 1.8rem 2rem 1.6rem;
   margin: 0 0 2rem;
   border-radius: ${(props) => props.theme.border.radius};
   background-color: ${(props) => props.theme.bgColors.secondary};

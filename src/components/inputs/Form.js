@@ -7,6 +7,7 @@ export const FormWrapper = styled('div')`
 
   & > p:first-of-type {
     margin: 0 0 3rem;
+    line-height: ${(props) => props.theme.lineHeight};
   }
 `
 
