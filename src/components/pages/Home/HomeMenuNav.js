@@ -33,15 +33,14 @@ const HomeMenuNav = ({ categories }) => {
     <HomeMenuNavView>
       <Container>
         <HomeMenuNavButtons>
-          {navItems.map((item) => {
-            return (
-              <NavScrollButton
-                container={windowRef.current}
-                item={item}
-                offset={-50}
-              />
-            )
-          })}
+          {navItems.map((item) => (
+            <NavScrollButton
+              key={item.id}
+              container={windowRef.current}
+              item={item}
+              offset={-50}
+            />
+          ))}
         </HomeMenuNavButtons>
       </Container>
     </HomeMenuNavView>

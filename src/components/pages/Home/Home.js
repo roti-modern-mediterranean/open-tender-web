@@ -7,9 +7,17 @@ import {
   fetchAnnouncementPage,
   selectCustomer,
 } from '@open-tender/redux'
+import { useGeolocation } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectConfig, closeModal, selectBrand } from '../../../slices'
+import {
+  selectConfig,
+  closeModal,
+  selectBrand,
+  setGeoLatLng,
+  setGeoError,
+  setGeoLoading,
+} from '../../../slices'
 import { AppContext } from '../../../App'
 import { Content, HeaderDefault, Main, PageHero, PageView } from '../..'
 import HomeMenu from '../Home/HomeMenu'
@@ -22,6 +30,7 @@ const Home = () => {
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
   const announcements = useSelector(selectAnnouncements)
+  const { geoLatLng, geoError } = useGeolocation()
   const { auth } = useSelector(selectCustomer)
   const brand = useSelector(selectBrand)
   const { home } = useSelector(selectConfig)
@@ -37,6 +46,18 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchAnnouncementPage(page))
   }, [dispatch, page])
+
+  useEffect(() => {
+    dispatch(setGeoLoading())
+  }, [dispatch])
+
+  useEffect(() => {
+    if (geoLatLng) {
+      dispatch(setGeoLatLng(geoLatLng))
+    } else if (geoError) {
+      dispatch(setGeoError(geoError))
+    }
+  }, [geoLatLng, geoError, dispatch])
 
   return (
     <>

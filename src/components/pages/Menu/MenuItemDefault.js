@@ -1,3 +1,4 @@
+import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Heading, Preface } from '@open-tender/components'
@@ -108,74 +109,80 @@ const MenuItemSoldOut = styled(Preface)`
   font-weight: 500;
 `
 
-const MenuItemDefault = ({
-  onClick,
-  isActive,
-  isInverted,
-  isSoldOut,
-  isIncomplete,
-  item,
-  imageUrl,
-  allergenAlert,
-  price,
-  cals,
-  viewRef,
-  addRef,
-  handleView,
-  handleAdd,
-  menuConfig,
-  setIsActive,
-}) => {
-  return (
-    <MenuItemView
-      onClick={onClick}
-      isSoldOut={isSoldOut}
-      className={isActive ? 'item-active' : ''}
-    >
-      <MenuItemImageView isSoldOut={isSoldOut}>
-        <CardImage imageUrl={imageUrl} isInverted={isInverted} />
-      </MenuItemImageView>
-      <MenuItemContent isInverted={isInverted} isSoldOut={isSoldOut}>
-        <MenuItemContentHeader>
-          <MenuItemName>
-            <Heading>{item.name}</Heading>
-          </MenuItemName>
-          <MenuItemDetails price={price} cals={cals} />
-          {isSoldOut && (
-            <MenuItemSoldOut as="p">Sold out for the day</MenuItemSoldOut>
+const MenuItemDefault = React.forwardRef(
+  (
+    {
+      onClick,
+      isActive,
+      isInverted,
+      isSoldOut,
+      isIncomplete,
+      item,
+      imageUrl,
+      allergenAlert,
+      price,
+      cals,
+      viewRef,
+      addRef,
+      handleView,
+      handleAdd,
+      menuConfig,
+      setIsActive,
+    },
+    ref
+  ) => {
+    return (
+      <MenuItemView
+        ref={ref}
+        onClick={onClick}
+        isSoldOut={isSoldOut}
+        className={isActive ? 'item-active' : ''}
+      >
+        <MenuItemImageView isSoldOut={isSoldOut}>
+          <CardImage imageUrl={imageUrl} isInverted={isInverted} />
+        </MenuItemImageView>
+        <MenuItemContent isInverted={isInverted} isSoldOut={isSoldOut}>
+          <MenuItemContentHeader>
+            <MenuItemName>
+              <Heading>{item.name}</Heading>
+            </MenuItemName>
+            <MenuItemDetails price={price} cals={cals} />
+            {isSoldOut && (
+              <MenuItemSoldOut as="p">Sold out for the day</MenuItemSoldOut>
+            )}
+          </MenuItemContentHeader>
+          {item.description && (
+            <MenuItemDescription>{item.description}</MenuItemDescription>
           )}
-        </MenuItemContentHeader>
-        {item.description && (
-          <MenuItemDescription>{item.description}</MenuItemDescription>
-        )}
-        <MenuItemAllergens allergens={allergenAlert} />
-        <CardButtons style={isActive ? { margin: '1.5rem 0 0' } : null}>
-          <CardButton
-            ref={viewRef}
-            onClick={handleView}
-            onFocus={() => setIsActive(true)}
-            // onBlur={() => setIsActive(false)}
-            disabled={isSoldOut}
-            secondary={true}
-          >
-            View
-          </CardButton>
-          {menuConfig && (
+          <MenuItemAllergens allergens={allergenAlert} />
+          <CardButtons style={isActive ? { margin: '1.5rem 0 0' } : null}>
             <CardButton
-              ref={addRef}
-              onClick={handleAdd}
+              ref={viewRef}
+              onClick={handleView}
               onFocus={() => setIsActive(true)}
               // onBlur={() => setIsActive(false)}
-              disabled={isSoldOut || isIncomplete}
+              disabled={isSoldOut}
+              secondary={true}
             >
-              Add
+              View
             </CardButton>
-          )}
-        </CardButtons>
-      </MenuItemContent>
-    </MenuItemView>
-  )
-}
+            {menuConfig && (
+              <CardButton
+                ref={addRef}
+                onClick={handleAdd}
+                onFocus={() => setIsActive(true)}
+                // onBlur={() => setIsActive(false)}
+                disabled={isSoldOut || isIncomplete}
+              >
+                Add
+              </CardButton>
+            )}
+          </CardButtons>
+        </MenuItemContent>
+      </MenuItemView>
+    )
+  }
+)
 
 MenuItemDefault.displayName = 'MenuItemDefault'
 MenuItemDefault.propTypes = {

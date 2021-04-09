@@ -179,7 +179,7 @@ const RevenueCenters = () => {
                   />
                 )
               })}
-              {address && (
+              {(address || geoLatLng) && (
                 <GoogleMapsMarker
                   title="Your Location"
                   position={{

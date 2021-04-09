@@ -24,7 +24,6 @@ import GiftCards from './GiftCards'
 import GroupOrderGuest from './GroupOrderGuest'
 import GroupOrderReview from './GroupOrderReview'
 import GroupOrders from './GroupOrders'
-import Guest from './Guest'
 import Home from './Home'
 import HouseAccounts from './HouseAccounts'
 import LevelUp from './LevelUp'
@@ -74,7 +73,6 @@ export {
   GroupOrderGuest,
   GroupOrderReview,
   GroupOrders,
-  Guest,
   Home,
   HouseAccounts,
   LevelUp,

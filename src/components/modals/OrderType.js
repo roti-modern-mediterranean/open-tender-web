@@ -17,7 +17,7 @@ const OrderType = () => {
   const changeOrderType = () => {
     dispatch(resetOrderType())
     dispatch(closeModal())
-    history.push(`/order-type`)
+    history.push(`/locations`)
   }
 
   const cancel = () => {
