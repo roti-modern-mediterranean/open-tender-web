@@ -6,10 +6,10 @@ import {
   updateCustomerAddress,
   resetCustomerAddressesError,
 } from '@open-tender/redux'
-import { AddressForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import { ModalContent, ModalView } from '..'
+import { AddressForm } from '../forms'
 
 const Address = ({ windowRef, address }) => {
   const dispatch = useDispatch()

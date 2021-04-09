@@ -10,11 +10,14 @@ import ChevronDown from './ChevronDown'
 import ChevronLeft from './ChevronLeft'
 import ChevronRight from './ChevronRight'
 import ChevronUp from './ChevronUp'
+import Clock from './Clock'
+import Close from './Close'
 import CreditCard from './CreditCard'
 import CurbsidePickup from './CurbsidePickup'
 import CurbsidePickupArrival from './CurbsidePickupArrival'
 import DetourSign from './DetourSign'
 import DressingOnTheSide from './DressingOnTheSide'
+import Edit from './Edit'
 import Filter from './Filter'
 import LeaveAtDoor from './LeaveAtDoor'
 import Lock from './Lock'
@@ -45,11 +48,14 @@ export {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  Clock,
+  Close,
   CreditCard,
   CurbsidePickup,
   CurbsidePickupArrival,
   DetourSign,
   DressingOnTheSide,
+  Edit,
   Filter,
   LeaveAtDoor,
   Lock,
