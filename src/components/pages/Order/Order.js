@@ -6,23 +6,20 @@ import {
   fetchCustomerOrder,
   selectCustomerOrder,
 } from '@open-tender/redux'
-import { isMobile } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
+  CheckoutHeader,
   Content,
-  HeaderDefault,
-  LinkIcon,
+  HeaderBack,
   Main,
   Order as OrderSummary,
   PageContainer,
-  PageTitle,
 } from '../..'
-import AccountTabs from '../Account/AccountTabs'
-import iconMap from '../../iconMap'
+import { FormWrapper } from '../../inputs'
 
 const Order = () => {
   const dispatch = useDispatch()
@@ -31,7 +28,7 @@ const Order = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const customerOrder = useSelector(selectCustomerOrder)
-  const title = `Order #${orderId}`
+  const title = 'Order Detail'
   const { windowRef } = useContext(AppContext)
 
   useEffect(() => {
@@ -55,19 +52,13 @@ const Order = () => {
         </title>
       </Helmet>
       <Content>
-        <HeaderDefault />
+        <HeaderBack slug="/orders" />
         <Main>
-          {isMobile && <AccountTabs />}
           <PageContainer>
-            <PageTitle>
-              <LinkIcon
-                to="/orders"
-                icon={iconMap.ArrowLeft}
-                text="Back to all orders"
-                isBefore={true}
-              />
-            </PageTitle>
-            <OrderSummary {...customerOrder} />
+            <CheckoutHeader title={title} />
+            <FormWrapper>
+              <OrderSummary {...customerOrder} />
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>

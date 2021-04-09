@@ -5,6 +5,27 @@ import CheckoutCartItem from './CheckoutCartItem'
 
 const CheckoutCartView = styled('div')`
   margin: 0 0 5rem;
+
+  & > div {
+    border: 0;
+    border-style: solid;
+    border-color: ${(props) => props.theme.colors.cartItemBorder};
+    border-top-width: ${(props) => (props.showBorder ? '0.1rem' : '0')};
+    padding-top: ${(props) => (props.showBorder ? '1.1rem' : '0')};
+    margin-top: ${(props) => (props.showBorder ? '0.6rem' : '0')};
+
+    &:first-of-type {
+      border: 0;
+      padding-top: 0.8rem;
+      margin: 0;
+    }
+  }
+
+  & > span + div {
+    border: 0;
+    padding-top: 0.8rem;
+    margin: 0;
+  }
 `
 
 const CheckoutLine = styled('span')`
@@ -15,20 +36,21 @@ const CheckoutLine = styled('span')`
   margin: 1.5rem 0 1rem;
 `
 
-const CheckoutCart = ({ check }) => {
+const CheckoutCart = ({ check, showBorder = false, style }) => {
   const { cart, surcharges, discounts, taxes, totals, details } = check
   const { subtotal, tip, total } = totals
   // const totalBeforeTax = [subtotal, gift_card, surcharge, discount]
   //   .reduce((t, i) => (t += parseFloat(i)), 0.0)
   //   .toFixed(2)
   return (
-    <CheckoutCartView>
+    <CheckoutCartView showBorder={showBorder} style={style}>
       {cart.map((item, index) => (
         <CheckoutCartItem
           key={`${item.id}-${index}`}
           name={item.name}
           quantity={item.quantity}
           amount={item.price_total}
+          item={item}
         />
       ))}
       <CheckoutLine />
@@ -60,6 +82,8 @@ const CheckoutCart = ({ check }) => {
 CheckoutCart.displayName = 'CheckoutCart'
 CheckoutCart.propTypes = {
   check: propTypes.object,
+  showBorder: propTypes.bool,
+  style: propTypes.object,
 }
 
 export default CheckoutCart

@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { formatDollars } from '@open-tender/js'
 import { Preface } from '@open-tender/components'
+import { OrderContext } from '../../Order/Order'
+import { Favorite } from '../../buttons'
 
 const CheckoutCartItemView = styled('div')`
   display: flex;
@@ -34,10 +36,24 @@ const CheckoutCartItemPrice = styled(CheckoutCartItemQuantity)`
   flex: 0 0 7rem;
 `
 
-const CheckoutCartItem = ({ name, quantity, amount }) => {
+const CheckoutCartItem = ({ name, quantity, amount, item }) => {
+  const orderContext = useContext(OrderContext)
+  const { lookup } = orderContext || {}
+  const { signature } = item || {}
+  const favoriteId = lookup && signature ? lookup[signature] || null : null
+
   return (
     <CheckoutCartItemView>
-      <CheckoutCartItemName>{name}</CheckoutCartItemName>
+      <CheckoutCartItemName>
+        {name}
+        {signature && (
+          <Favorite
+            item={item}
+            favoriteId={favoriteId}
+            style={{ marginLeft: '1.5rem' }}
+          />
+        )}
+      </CheckoutCartItemName>
       {quantity && (
         <CheckoutCartItemQuantity>{quantity}</CheckoutCartItemQuantity>
       )}

@@ -41,6 +41,7 @@ import Greeting from './Greeting'
 import GroupOrderLink from './GroupOrderLink'
 import GroupOrderTime from './GroupOrderTime'
 import HeaderAccount from './HeaderAccount'
+import HeaderBack from './HeaderBack'
 import HeaderCheckout from './HeaderCheckout'
 import HeaderContent from './HeaderContent'
 import HeaderDefault from './HeaderDefault'
@@ -159,6 +160,7 @@ export {
   GroupOrderTime,
   Header,
   HeaderAccount,
+  HeaderBack,
   HeaderCheckout,
   HeaderContent,
   HeaderDefault,

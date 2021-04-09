@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
@@ -11,33 +11,25 @@ import {
   editOrder,
 } from '@open-tender/redux'
 import {
-  makeOrderTypeName,
-  makeDisplayItem,
   isEmpty,
   isoToDate,
+  makeDisplayItem,
+  makeServiceTypeName,
+  makeTenderName,
 } from '@open-tender/js'
-import {
-  Box,
-  ButtonStyled,
-  CartItem,
-  Check,
-  Preface,
-} from '@open-tender/components'
+import { ButtonStyled, Preface } from '@open-tender/components'
 
-import { openModal, selectDisplaySettings } from '../../slices'
-import iconMap from '../iconMap'
+import { openModal, selectOutpostName } from '../../slices'
 import { Loading } from '..'
-import OrderAddress from '../OrderAddress'
-import OrderQuantity from '../OrderQuantity'
-import OrderRating from './OrderRating'
 import OrderRequestedAt from './OrderRequestedAt'
-import OrderRevenueCenter from './OrderRevenueCenter'
-import OrderSection from './OrderSection'
+import CheckoutCart from '../pages/CheckoutPayment/CheckoutCart'
 
-const OrderView = styled(Box)`
-  margin: 4rem auto;
+const OrderView = styled('div')`
+  margin: 0 auto;
   max-width: ${(props) => props.theme.breakpoints.tablet};
   padding: ${(props) => props.theme.layout.padding};
+  border-radius: ${(props) => props.theme.border.radius};
+  background-color: ${(props) => props.theme.bgColors.light};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
     padding: ${(props) => props.theme.layout.paddingMobile};
@@ -54,19 +46,17 @@ const OrderView = styled(Box)`
 `
 
 const OrderButtons = styled(`div`)`
+  display: flex;
+  justify-content: center;
   margin: 3rem 0;
+
+  button {
+    display: block;
+    min-width: 12rem;
+  }
 
   button + button {
     margin-left: 1rem;
-  }
-`
-
-const OrderSectionHeader = styled('h2')`
-  margin: 4rem 0 1rem -0.1rem;
-  line-height: 1;
-  font-size: ${(props) => props.theme.fonts.sizes.h3};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    font-size: ${(props) => props.theme.fonts.sizes.h4};
   }
 `
 
@@ -78,6 +68,69 @@ const OrderCentered = styled('div')`
   text-align: center;
 `
 
+const OrderPreface = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    display: block;
+    font-family: ${(props) => props.theme.fonts.preface.family};
+    font-size: 1.5rem;
+    line-height: 1.53333;
+  }
+`
+
+const OrderStatus = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+
+  span {
+    display: block;
+    font-weight: 500;
+    font-size: 2.8rem;
+  }
+`
+
+const OrderDetails = styled('div')`
+  margin: 3rem 0 2rem;
+`
+
+const OrderDetail = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem 0;
+  flex-wrap: wrap;
+  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {}
+
+  span,
+  a {
+    display: block;
+    font-family: ${(props) => props.theme.fonts.preface.family};
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 1.277778;
+  }
+
+  span + span {
+    font-weight: normal;
+  }
+`
+
+const OrderNotes = styled('div')`
+  margin: 2rem 0 0;
+
+  p {
+    display: block;
+    font-family: ${(props) => props.theme.fonts.preface.family};
+    font-size: 1.8rem;
+    line-height: 1.277778;
+  }
+`
+
 const handleOrderError = (error) => {
   switch (error) {
     case 'The requested object does not exist.':
@@ -86,6 +139,23 @@ const handleOrderError = (error) => {
       return error
   }
 }
+
+const makeOrderStatus = (status, serviceType, isUpcoming) => {
+  switch (status) {
+    case 'OPEN':
+      return 'In Process'
+    case 'CLOSED':
+      return isUpcoming
+        ? 'In Process'
+        : serviceType === 'DELIVERY'
+        ? 'Delivered'
+        : 'Picked Up'
+    default:
+      return status
+  }
+}
+
+export const OrderContext = createContext(null)
 
 const Order = ({ order, loading, error, isConfirmation }) => {
   const {
@@ -111,29 +181,46 @@ const Order = ({ order, loading, error, isConfirmation }) => {
     tenders,
     rating,
   } = order || {}
+  console.log(order)
   const dispatch = useDispatch()
   const isLoading = loading === 'pending'
   const isMerch = order_type === 'MERCH'
   const errMsg = handleOrderError(error)
-  const orderTypeName = makeOrderTypeName(order_type, service_type)
   const isUpcoming = isoToDate(requested_at) > new Date()
-  const displayedItems = cart ? cart.map((i) => makeDisplayItem(i)) : []
+  const displayedItems = cart
+    ? cart
+        .map((i) => makeDisplayItem(i))
+        .map((i) => ({ ...i, price_total: i.totalPrice }))
+    : []
   const { lookup = {} } = useSelector(selectCustomerFavorites)
   const { auth } = useSelector(selectCustomer)
-  const displaySettings = useSelector(selectDisplaySettings)
-  const check = { gift_cards, surcharges, discounts, taxes, totals, details }
-  const {
-    eating_utensils,
-    serving_utensils,
-    person_count,
-    notes,
-    tax_exempt_id,
-  } = details || {}
-  const hasDetails =
-    eating_utensils || serving_utensils || person_count || tax_exempt_id
-  const orderTitle = revenue_center
-    ? `${orderTypeName} from ${revenue_center.name}`
-    : ''
+  const check = {
+    cart: displayedItems,
+    gift_cards,
+    surcharges,
+    discounts,
+    taxes,
+    totals,
+    details,
+  }
+  const { notes } = details || {}
+  const orderStatus = makeOrderStatus(status, service_type, isUpcoming)
+  const outpostName = useSelector(selectOutpostName)
+  const isCatering = order_type === 'CATERING'
+  const isOutpost = revenue_center ? revenue_center.is_outpost : false
+  const serviceTypeName = makeServiceTypeName(
+    service_type,
+    isCatering,
+    isOutpost,
+    outpostName
+  )
+  const { street, unit, city, state, postal_code, company, contact, phone } =
+    address || {}
+  const deliveryContact = [company, contact, phone].filter((i) => i).join(' / ')
+  const trackingUrl = status === 'OPEN' && delivery && delivery.tracking_url
+  const payment = tenders
+    ? tenders.map((i) => makeTenderName(i)).join(', ')
+    : null
 
   const handleReorder = () => {
     const { revenue_center_id: revenueCenterId } = revenue_center
@@ -149,115 +236,98 @@ const Order = ({ order, loading, error, isConfirmation }) => {
   }
 
   return !isEmpty(order) ? (
-    <OrderView>
-      <div>
-        <Preface>Order #{order_id}</Preface>
-        {isConfirmation ? <h2>{orderTitle}</h2> : <h1>{orderTitle}</h1>}
-        {!isMerch && (
-          <OrderButtons>
-            {auth && order.is_editable && (
-              <ButtonStyled
-                icon={iconMap.Edit}
-                onClick={() => dispatch(editOrder(order))}
-                size="small"
-              >
-                Edit
-              </ButtonStyled>
-            )}
+    <OrderContext.Provider value={{ lookup }}>
+      {!isMerch && (
+        <OrderButtons>
+          {auth && order.is_editable && (
             <ButtonStyled
-              icon={iconMap.RefreshCw}
-              onClick={handleReorder}
+              onClick={() => dispatch(editOrder(order))}
               size="small"
             >
-              Reorder
+              Edit
             </ButtonStyled>
-            {!isUpcoming && (
-              <ButtonStyled
-                icon={iconMap.Star}
-                onClick={updateRating}
-                size="small"
-              >
-                {rating ? 'Update Rating' : 'Add Rating'}
-              </ButtonStyled>
-            )}
-          </OrderButtons>
-        )}
-      </div>
-      <div>
-        <OrderSection label="Location">
-          <OrderRevenueCenter revenueCenter={revenue_center} />
-        </OrderSection>
-        <OrderSection label="Requested Time">
-          <OrderRequestedAt
-            estimated_at={estimated_at || requested_at}
-            requested_time={requested_time}
-            timezone={timezone}
-            is_asap={is_asap}
-            status={status}
-          />
-        </OrderSection>
-        {service_type === 'DELIVERY' && address && (
-          <OrderSection label="Delivery Address">
-            <OrderAddress
-              address={address}
-              delivery={delivery}
+          )}
+          <ButtonStyled onClick={handleReorder} size="small">
+            Reorder
+          </ButtonStyled>
+          {!isUpcoming && (
+            <ButtonStyled onClick={updateRating} size="small">
+              {rating ? 'Update Rating' : 'Add Rating'}
+            </ButtonStyled>
+          )}
+        </OrderButtons>
+      )}
+      <OrderView>
+        <OrderPreface>
+          <span>Order #{order_id}</span>
+          <span>
+            <OrderRequestedAt
+              estimated_at={estimated_at || requested_at}
+              requested_time={requested_time}
+              timezone={timezone}
+              is_asap={is_asap}
               status={status}
             />
-          </OrderSection>
-        )}
-        {notes && notes.length ? (
-          <OrderSection label="Notes" noTitle={true}>
-            <p>{notes}</p>
-          </OrderSection>
-        ) : null}
-        {hasDetails && (
-          <OrderSection label="Other Details" noTitle={true}>
-            {eating_utensils ? (
-              <p>
-                Eating utensils included
-                {person_count && ` for ${person_count} people`}
-              </p>
-            ) : (
-              person_count && <p>30 people to be accommodated</p>
-            )}
-            {serving_utensils && <p>Serving utensils included</p>}
-            {tax_exempt_id && <p>Tax exempt ID of {tax_exempt_id}</p>}
-          </OrderSection>
-        )}
-        {rating ? (
-          <OrderSection label="Rating">
-            <OrderRating {...rating} />
-          </OrderSection>
-        ) : null}
-      </div>
-      {displayedItems.length > 0 && (
-        <>
-          <OrderSectionHeader>Items in Your Order</OrderSectionHeader>
-          <ul>
-            {displayedItems.map((item, index) => {
-              const favoriteId = lookup ? lookup[item.signature] || null : null
-              return (
-                <li key={`${item.id}-${index}`}>
-                  <CartItem
-                    item={item}
-                    showModifiers={true}
-                    displaySettings={displaySettings}
-                  >
-                    <OrderQuantity
-                      item={item}
-                      show={auth && lookup ? true : false}
-                      favoriteId={favoriteId}
-                    />
-                  </CartItem>
-                </li>
-              )
-            })}
-          </ul>
-        </>
-      )}
-      <OrderSectionHeader>Your Receipt</OrderSectionHeader>
-      <Check check={check} tenders={tenders} />
-    </OrderView>
+          </span>
+        </OrderPreface>
+        <OrderStatus>
+          <Preface>Status</Preface>
+          <Preface>{orderStatus}</Preface>
+        </OrderStatus>
+        <OrderDetails>
+          <OrderDetail>
+            <span>Restaurant</span>
+            <span>{revenue_center.name}</span>
+          </OrderDetail>
+          <OrderDetail>
+            <span>Service Type</span>
+            <span>{serviceTypeName}</span>
+          </OrderDetail>
+          {deliveryContact && (
+            <OrderDetail>
+              <span>Company / Contact</span>
+              <span>{deliveryContact}</span>
+            </OrderDetail>
+          )}
+          {service_type === 'DELIVERY' && (
+            <OrderDetail>
+              <span>Delivery Address</span>
+              <span>
+                {street}, {unit}, {city}, {state} {postal_code}
+              </span>
+            </OrderDetail>
+          )}
+          {payment && (
+            <OrderDetail>
+              <span>Payment</span>
+              <span>{payment}</span>
+            </OrderDetail>
+          )}
+          {trackingUrl && (
+            <OrderDetail>
+              <span>&nbsp;</span>
+              <a
+                href={trackingUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+                title="Check delivery status"
+              >
+                Check delivery status
+              </a>
+            </OrderDetail>
+          )}
+          {notes && (
+            <OrderNotes>
+              <OrderDetail>
+                <span>Order Notes</span>
+              </OrderDetail>
+              <p>{notes}</p>
+            </OrderNotes>
+          )}
+        </OrderDetails>
+        <CheckoutCart check={check} showBorder={true} style={{ margin: '0' }} />
+      </OrderView>
+    </OrderContext.Provider>
   ) : isLoading ? (
     <OrderCentered>
       <Loading text="Retrieving your order..." />

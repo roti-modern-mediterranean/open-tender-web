@@ -44,7 +44,7 @@ const OrderCard = ({ order, isLast }) => {
   const isUpcoming = isoToDate(requested_at) > new Date()
   const streetAddress = makeOrderAddress(address)
   const trackingUrl = isOpen && delivery && delivery.tracking_url
-  const images = cart
+  const items = cart
     .map((i) =>
       i.images
         .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
@@ -53,7 +53,7 @@ const OrderCard = ({ order, isLast }) => {
     .flat()
     .sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
     .reverse()
-  const imageUrl = images & images.length ? images[0].imageUrl : null
+  const imageUrl = items && items.length ? items[0].imageUrl : null
   const title = cart.map((i) => `${i.quantity} ${i.name}`).join(', ')
 
   const handleReorder = () => {
