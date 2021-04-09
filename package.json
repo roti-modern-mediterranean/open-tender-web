@@ -44,7 +44,8 @@
     "build:staging": "env-cmd -f .env.staging yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prebuild": "node generate-version"
+    "prebuild": "node generate-version",
+    "deploy": "yarn build && node ./deploy/upload.js && node ./deploy/invalidate.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -61,5 +62,10 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "aws-sdk": "^2.883.0",
+    "dotenv": "^8.2.0",
+    "rimraf": "^3.0.2",
+    "s3-uploading": "^0.0.6"
+  }
 }

@@ -1,11 +1,13 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import {
+  About,
   Accessibility,
   AccountAddresses,
   AccountAllergens,
   AccountCreditCards,
   AccountGiftCards,
+  Careers,
   Catering,
   Checkout,
   CheckoutDetails,
@@ -13,6 +15,7 @@ import {
   CheckoutRegister,
   CheckoutReset,
   Confirmation,
+  Contact,
   Deals,
   Donations,
   Favorites,
@@ -23,6 +26,7 @@ import {
   GroupOrders,
   Home,
   HouseAccounts,
+  Location,
   LevelUp,
   Menu,
   MenuItem,
@@ -78,6 +82,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/verify">
         <VerifyAccount />
+      </Route>
+      <Route exact path="/careers">
+        <Careers />
       </Route>
       <Route exact path="/catering">
         <Catering />
@@ -174,6 +181,15 @@ const Routes = () => {
       </Route>
       <Route exact path="/deals">
         <Deals />
+      </Route>
+      <Route exact path="/about">
+        <About />
+      </Route>
+      <Route exact path="/contact">
+        <Contact />
+      </Route>
+      <Route exact path="/location/:name">
+        <Location />
       </Route>
       <Route exact path="/terms">
         <Terms />
