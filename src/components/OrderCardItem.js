@@ -31,14 +31,16 @@ const OrderCardItem = ({ item }) => {
     }, [])
     .join(', ')
 
-  const addToCart = (item) => {
+  const addToCart = (evt, item) => {
+    evt.preventDefault()
+    evt.stopPropagation()
     const menuItem = menuItems.find((i) => i.id === item.id)
     if (!menuItem) {
       dispatch(showNotification('Item not currently available'))
     } else {
       const orderItem = rehydrateOrderItem(menuItem, item)
       dispatch(addItemToCart(orderItem))
-      // dispatch(showNotification('Item added to cart!'))
+      dispatch(showNotification('Item added to cart!'))
     }
   }
 
@@ -71,7 +73,7 @@ const OrderCardItem = ({ item }) => {
         </CardButton>
       )}
       add={(props) => (
-        <CardButton {...props} onClick={() => addToCart(item)}>
+        <CardButton {...props} onClick={(evt) => addToCart(evt, item)}>
           Add
         </CardButton>
       )}

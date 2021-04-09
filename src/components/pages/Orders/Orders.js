@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
@@ -8,8 +8,9 @@ import {
   selectCustomer,
   selectCustomerOrders,
   fetchCustomerOrders,
+  fetchMenuItems,
 } from '@open-tender/redux'
-import { makeUniqueDisplayItems } from '@open-tender/js'
+import { makeUniqueDisplayItems, getLastOrder } from '@open-tender/js'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
@@ -65,6 +66,7 @@ const Orders = () => {
   const [items, setItems] = useState([])
   const orders = useSelector(selectCustomerOrders)
   const { entities, loading, error } = orders
+  const lastOrder = useMemo(() => getLastOrder(entities), [entities])
   const [recentOrders, setRecentOrders] = useState(entities.slice(0, count))
   const { title: siteTitle } = useSelector(selectBrand)
   const config = useSelector(selectAccountConfig)
@@ -94,6 +96,14 @@ const Orders = () => {
     const recentItems = displayItems.slice(0, 100)
     setItems(recentItems)
   }, [entities])
+
+  useEffect(() => {
+    if (lastOrder) {
+      const { revenue_center, service_type: serviceType } = lastOrder
+      const { revenue_center_id: revenueCenterId } = revenue_center
+      dispatch(fetchMenuItems({ revenueCenterId, serviceType }))
+    }
+  }, [lastOrder, dispatch])
 
   const loadMore = () => {
     setCount(Math.min(count + increment, limit))

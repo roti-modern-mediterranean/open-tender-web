@@ -157,7 +157,7 @@ const makeOrderStatus = (status, serviceType, isUpcoming) => {
 
 export const OrderContext = createContext(null)
 
-const Order = ({ order, loading, error, isConfirmation }) => {
+const Order = ({ order, loading, error }) => {
   const {
     order_id,
     status,
@@ -181,7 +181,6 @@ const Order = ({ order, loading, error, isConfirmation }) => {
     tenders,
     rating,
   } = order || {}
-  console.log(order)
   const dispatch = useDispatch()
   const isLoading = loading === 'pending'
   const isMerch = order_type === 'MERCH'
@@ -344,7 +343,6 @@ Order.propTypes = {
   order: propTypes.object,
   loading: propTypes.string,
   error: propTypes.string,
-  goToAccount: propTypes.func,
 }
 
 export default Order
