@@ -1,3 +1,4 @@
+import About from './About'
 import Accessibility from './Accessibility'
 import Account from './Account'
 import AccountAddresses from './AccountAddresses'
@@ -5,9 +6,11 @@ import AccountAllergens from './AccountAllergens'
 import AccountCreditCards from './AccountCreditCards'
 import AccountGiftCards from './AccountGiftCards'
 import AccountSettings from './AccountSettings'
+import Careers from './Careers'
 import Catering from './Catering'
 import Checkout from './Checkout'
 import Confirmation from './Confirmation'
+import Contact from './Contact'
 import Deals from './Deals'
 import Donations from './Donations'
 import ErrorReport from './ErrorReport'
@@ -21,6 +24,7 @@ import GroupOrders from './GroupOrders'
 import Guest from './Guest'
 import Home from './Home'
 import HouseAccounts from './HouseAccounts'
+import Location from './Location'
 import LevelUp from './LevelUp'
 import Menu from './Menu'
 import MenuItem from './MenuItem'
@@ -41,6 +45,7 @@ import Thanx from './Thanx'
 import VerifyAccount from './VerifyAccount'
 
 export {
+  About,
   Accessibility,
   Account,
   AccountAddresses,
@@ -48,9 +53,11 @@ export {
   AccountCreditCards,
   AccountGiftCards,
   AccountSettings,
+  Careers,
   Catering,
   Checkout,
   Confirmation,
+  Contact,
   Deals,
   Donations,
   ErrorReport,
@@ -64,6 +71,7 @@ export {
   Guest,
   Home,
   HouseAccounts,
+  Location,
   LevelUp,
   Menu,
   MenuItem,

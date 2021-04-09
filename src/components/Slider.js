@@ -43,18 +43,20 @@ Arrow.propTypes = {
 
 const Dots = styled('div')`
   position: absolute;
-  bottom: -1rem;
+  bottom: 0;
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 16px;
   padding: 0 ${(props) => props.theme.layout.padding};
   height: ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     // height: ${(props) => props.theme.layout.paddingMobile};
     height: 3rem;
     padding: 0;
+    bottom: -0.25em;
     justify-content: center;
     align-items: center;
   }
@@ -62,13 +64,15 @@ const Dots = styled('div')`
 
 const Dot = styled('button')`
   margin: 0 0.5rem;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
+  width: 0.75em;
+  height: 0.75em;
+  border-radius: 100%;
   background-color: ${(props) => props.active ? props.theme.colors.pepper:props.theme.colors.light};
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    border-radius: 50%;
+    border-radius: 100%;
+    width: 0.5em;
+    height: 0.5em;
   }
 `
 
