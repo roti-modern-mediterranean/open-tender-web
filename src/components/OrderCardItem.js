@@ -64,7 +64,7 @@ const OrderCardItem = ({ item }) => {
       title={name}
       description={
         <>
-          <p>{optionNames}</p>
+          <p style={{ fontWeight: '400' }}>{optionNames}</p>
         </>
       }
       view={(props) => (

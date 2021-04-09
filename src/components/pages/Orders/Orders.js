@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   selectCustomerOrders,
@@ -28,7 +27,6 @@ import {
   PageTitle,
 } from '../..'
 import OrdersList from './OrdersList'
-import AccountTabs from '../Account/AccountTabs'
 import { ButtonToggle } from '../../buttons'
 
 const ToggleView = styled('div')`
@@ -119,7 +117,6 @@ const Orders = () => {
       <Content>
         <HeaderDefault />
         <Main>
-          {!isBrowser && <AccountTabs />}
           <PageContainer>
             <PageTitle {...config.recentOrders}>
               {recentOrders.length > 0 && (
