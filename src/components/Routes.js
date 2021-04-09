@@ -4,7 +4,6 @@ import {
   Accessibility,
   AccountAddresses,
   AccountAllergens,
-  AccountCreditCards,
   AccountGiftCards,
   Catering,
   Checkout,
@@ -152,9 +151,6 @@ const Routes = () => {
       </Route>
       <Route exact path="/addresses">
         <AccountAddresses />
-      </Route>
-      <Route exact path="/credit-cards">
-        <AccountCreditCards />
       </Route>
       <Route exact path="/payment">
         <Payment />

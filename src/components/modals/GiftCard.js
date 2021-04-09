@@ -8,10 +8,10 @@ import {
   addCustomerGiftCard,
   resetCustomerGiftCardsError,
 } from '@open-tender/redux'
-import { GiftCardForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import { ModalContent, ModalView } from '..'
+import { GiftCardForm } from '../forms'
 
 const GiftCard = ({ windowRef, giftCard }) => {
   const dispatch = useDispatch()

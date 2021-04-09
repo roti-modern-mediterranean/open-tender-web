@@ -13,7 +13,7 @@ const QRCodeView = styled('div')`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 1rem 0 0;
+  margin: 0;
   text-align: center;
 `
 
@@ -23,8 +23,13 @@ const QRCodeHeader = styled('div')`
   }
 
   p:first-of-type {
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
-    line-height: 1.2;
+    line-height: 1;
+    font-family: ${(props) => props.theme.fonts.preface.family};
+    font-size: 2.2rem;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: ${(props) => props.theme.colors.primary};
     margin: 0;
   }
 

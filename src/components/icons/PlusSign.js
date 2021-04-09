@@ -4,10 +4,12 @@ import styled from '@emotion/styled'
 const PlusSignView = styled('span')`
   display: block;
   width: ${(props) => props.width};
+  height: ${(props) => props.width};
   line-height: 0;
 
   svg {
     width: 100%;
+    height: 100%;
     fill: ${(props) => props.color || props.theme.colors.light};
   }
 `

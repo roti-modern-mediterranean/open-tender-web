@@ -4,6 +4,10 @@ export const FormWrapper = styled('div')`
   max-width: ${(props) => props.theme.layout.maxWidth};
   max-width: 64rem;
   margin: 0 auto;
+
+  & > p:first-of-type {
+    margin: 0 0 3rem;
+  }
 `
 
 export const FormHeader = styled('div')`

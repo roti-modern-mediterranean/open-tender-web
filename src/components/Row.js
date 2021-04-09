@@ -1,14 +1,15 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Box } from '@open-tender/components'
+import { Preface } from '@open-tender/components'
 
-const RowView = styled(Box)`
+const RowView = styled('div')`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
-  margin: 0 0 ${(props) => props.theme.layout.paddingMobile};
+  padding: 2rem;
+  margin: 0 0 2rem;
+  border-radius: ${(props) => props.theme.border.radius};
+  background-color: ${(props) => props.theme.bgColors.secondary};
 `
 
 const RowIcon = styled('div')`
@@ -17,45 +18,70 @@ const RowIcon = styled('div')`
 `
 
 const RowContent = styled('div')`
-  padding: 0;
-  flex: 1;
+  flex: 1 1 auto;
+`
+
+const RowHeader = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    flex-direction: column;
-    align-items: flex-start;
+`
+
+const RowLines = styled('div')`
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  p {
+    display: block;
+    font-family: ${(props) => props.theme.fonts.preface.family};
+    font-size: 1.7rem;
+    line-height: 1.35;
   }
 `
 
-const RowText = styled('div')`
-  flex: 1;
+const RowTitle = styled(Preface)`
+  font-size: 2.2rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+`
 
-  p {
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-    line-height: ${(props) => props.theme.lineHeight};
+const RowActions = styled('div')`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
-    &:first-of-type {
-      font-size: ${(props) => props.theme.fonts.sizes.main};
-      color: ${(props) => props.theme.fonts.headings.color};
+  button {
+    display: block;
+    margin: 0 0 0 1rem;
+    transform: scale(1)
+    transition: ${(props) => props.theme.links.transition};
+
+    &:hover,
+    &:active,
+    &:focus {
+      transform: scale(1.2)
+      // svg {
+      //   fill: ${(props) => props.theme.links.primary.hover};
+      // }
     }
   }
 `
 
-const RowActions = styled('div')`
-  flex-shrink: 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 1rem 0 0;
-  }
-`
-
-const Row = ({ icon, content, actions }) => {
+const Row = ({ icon, title, actions, children }) => {
   return (
     <RowView>
       {icon && <RowIcon>{icon}</RowIcon>}
       <RowContent>
-        <RowText>{content}</RowText>
-        {actions && <RowActions>{actions}</RowActions>}
+        <RowHeader>
+          <div>
+            <RowTitle as="h2">{title}</RowTitle>
+          </div>
+          <RowActions>{actions}</RowActions>
+        </RowHeader>
+        <RowLines>{children}</RowLines>
       </RowContent>
     </RowView>
   )
@@ -64,8 +90,12 @@ const Row = ({ icon, content, actions }) => {
 Row.displayName = 'Row'
 Row.propTypes = {
   icon: propTypes.element,
-  content: propTypes.element,
+  title: propTypes.string,
   actions: propTypes.element,
+  children: propTypes.oneOfType([
+    propTypes.arrayOf(propTypes.node),
+    propTypes.node,
+  ]),
 }
 
 export default Row
