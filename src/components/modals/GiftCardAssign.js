@@ -6,10 +6,10 @@ import {
   assignCustomerGiftCard,
   resetCustomerGiftCardsError,
 } from '@open-tender/redux'
-import { GiftCardAssignForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import { ModalContent, ModalView } from '..'
+import { GiftCardAssignForm } from '../forms'
 
 const GiftCardAssign = ({ windowRef, validate }) => {
   const dispatch = useDispatch()

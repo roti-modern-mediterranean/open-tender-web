@@ -155,7 +155,7 @@ const Routes = () => {
       <Route exact path="/payment">
         <Payment />
       </Route>
-      <Route exact path="/gift-cards">
+      <Route exact path="/account-gift-cards">
         <AccountGiftCards />
       </Route>
       <Route exact path="/house-accounts">

@@ -63,7 +63,7 @@ const AccountGiftCards = () => {
           <PageContainer>
             <CheckoutHeader title={title} />
             <FormWrapper>
-              {/* {subtitle && <p>{subtitle}</p>} */}
+              {subtitle && <p>{subtitle}</p>}
               {entities.length ? (
                 <GiftCardsList giftCards={entities} isLoading={isLoading} />
               ) : isLoading ? (

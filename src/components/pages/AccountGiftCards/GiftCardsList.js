@@ -2,14 +2,12 @@ import propTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { removeCustomerGiftCard } from '@open-tender/redux'
 import { formatDateStr, dateStrToDate } from '@open-tender/js'
-import { ButtonLink, ButtonStyled } from '@open-tender/components'
 
 import { openModal } from '../../../slices'
-import iconMap from '../../iconMap'
 import { QRCode, Row } from '../..'
 import styled from '@emotion/styled'
-import { Plus, X, XCircle } from 'react-feather'
-import { Close, PlusSign, User } from '../../icons'
+import { Plus, X } from 'react-feather'
+import { User } from '../../icons'
 import { useTheme } from '@emotion/react'
 
 const GiftCardButton = styled('button')`

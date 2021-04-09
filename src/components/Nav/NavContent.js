@@ -24,6 +24,10 @@ const guestLinks = [
         title: 'Login',
         button: 'login',
       },
+      {
+        title: 'Gift Cards',
+        path: '/gift-cards',
+      },
     ],
   },
   {
@@ -89,7 +93,7 @@ const userLinks = [
       },
       {
         title: 'Gift Cards',
-        path: '/gift-cards',
+        path: '/account-gift-cards',
       },
     ],
   },
