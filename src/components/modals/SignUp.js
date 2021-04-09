@@ -2,15 +2,12 @@ import React, { useCallback, useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectSignUp, signUpCustomer, resetSignUp } from '@open-tender/redux'
-import { SignUpForm } from '@open-tender/components'
 
-import { closeModal, selectBrand, selectOptIns } from '../../slices'
-import { ModalContent, ModalView } from '..'
-import { ThanxTerms } from '../pages/SignUp/SignUp'
+import { closeModal, selectOptIns } from '../../slices'
+import { ModalContent, ModalView, SignUpForm } from '..'
 
 const SignUp = ({ windowRef }) => {
   const dispatch = useDispatch()
-  const { has_thanx } = useSelector(selectBrand)
   const { loading, error } = useSelector(selectSignUp)
   const signUp = useCallback(
     (data, callback) => dispatch(signUpCustomer(data, callback)),
@@ -37,14 +34,12 @@ const SignUp = ({ windowRef }) => {
           <p>Please provide the info below, and you'll be off to the races!</p>
         }
       >
-        {has_thanx && <ThanxTerms />}
         <SignUpForm
           loading={loading}
           error={error}
           signUp={signUp}
           callback={close}
           optIns={optIns}
-          hasThanx={has_thanx}
         />
       </ModalContent>
     </ModalView>

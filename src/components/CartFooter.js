@@ -7,7 +7,7 @@ import { Container, CartFooterButtons } from '.'
 const CartFooterView = styled('div')`
   flex-shrink: 0;
   width: 100%;
-  height: 14.5rem;
+  height: ${(props) => (props.hasTotals ? '14.5rem' : '8rem')};
 `
 
 const CartFooterTotals = styled('div')`
@@ -50,14 +50,17 @@ const CartFooterSubtotal = styled('div')`
 `
 
 const CartFooter = ({ label, total, back, add }) => {
+  const hasTotals = label || total
   return (
-    <CartFooterView>
-      <CartFooterTotals>
-        <Container>
-          <CartFooterQuantity>{label}</CartFooterQuantity>
-          <CartFooterSubtotal>{total}</CartFooterSubtotal>
-        </Container>
-      </CartFooterTotals>
+    <CartFooterView hasTotals={hasTotals}>
+      {hasTotals && (
+        <CartFooterTotals>
+          <Container>
+            <CartFooterQuantity>{label}</CartFooterQuantity>
+            <CartFooterSubtotal>{total}</CartFooterSubtotal>
+          </Container>
+        </CartFooterTotals>
+      )}
       <CartFooterButtons add={add} back={back} />
     </CartFooterView>
   )

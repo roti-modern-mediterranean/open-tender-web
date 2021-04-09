@@ -9,6 +9,12 @@ import AccountSettings from './AccountSettings'
 import Careers from './Careers'
 import Catering from './Catering'
 import Checkout from './Checkout'
+import CheckoutDetails from './CheckoutDetails'
+import CheckoutGuest from './CheckoutGuest'
+import CheckoutLogin from './CheckoutLogin'
+import CheckoutPayment from './CheckoutPayment'
+import CheckoutRegister from './CheckoutRegister'
+import CheckoutReset from './CheckoutReset'
 import Confirmation from './Confirmation'
 import Contact from './Contact'
 import Deals from './Deals'
@@ -32,6 +38,7 @@ import NotFound from './NotFound'
 import Order from './Order'
 import Orders from './Orders'
 import OrderType from './OrderType'
+import Payment from './Payment'
 import Profile from './Profile'
 import Rating from './Rating'
 import Refunds from './Refunds'
@@ -56,6 +63,12 @@ export {
   Careers,
   Catering,
   Checkout,
+  CheckoutDetails,
+  CheckoutGuest,
+  CheckoutLogin,
+  CheckoutPayment,
+  CheckoutRegister,
+  CheckoutReset,
   Confirmation,
   Contact,
   Deals,
@@ -79,6 +92,7 @@ export {
   Order,
   Orders,
   OrderType,
+  Payment,
   Profile,
   Rating,
   Refunds,

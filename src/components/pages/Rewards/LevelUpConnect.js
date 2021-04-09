@@ -1,16 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
 import {
   selectCustomerLevelUp,
   removeCustomerLevelUp,
   fetchCustomerLevelUp,
   showNotification,
 } from '@open-tender/redux'
-import { ButtonLink, ButtonStyled } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { openModal } from '../../../slices'
-import iconMap from '../../iconMap'
-import { Loading, PageContent, Row } from '../..'
+import { InlineLink, Loading } from '../..'
+import { FormHeader, FormSubmit } from '../../inputs'
+
+const LevelUpConnectView = styled('div')`
+  p {
+    line-height: ${(props) => props.theme.lineHeight};
+
+    span {
+      font-weight: 600;
+    }
+
+    a {
+      color: ${(props) => props.theme.colors.primary};
+      font-weight: 600;
+    }
+  }
+`
 
 const LevelUpConnect = () => {
   const [checking, setChecking] = useState(false)
@@ -41,80 +57,74 @@ const LevelUpConnect = () => {
   }
 
   return (
-    <PageContent style={{ maxWidth: '76.8rem' }}>
+    <LevelUpConnectView>
       {isLoading ? (
         <Loading text="Retrieving your LevelUp account status..." />
       ) : levelup ? (
         levelup.status === 'ACCEPTED' ? (
-          <Row
-            content={
-              <div style={{ marginRight: '2rem', textAlign: 'left' }}>
-                <p>Account connected!</p>
-                <p>
-                  Your LevelUp account is currently connected via your{' '}
-                  <span>{levelup.email}</span> email address. If you need to
-                  change this, disconnect your account and then connect it
-                  again.
-                </p>
-              </div>
-            }
-            actions={
+          <>
+            <FormHeader style={{ margin: '0 0 1.5rem' }}>
+              <h2>LevelUp Connected</h2>
+            </FormHeader>
+            <p>
+              Your LevelUp account is currently connected via your{' '}
+              <span>{levelup.email}</span> email address. If you need to change
+              this, disconnect your account and then connect it again.
+            </p>
+            <FormSubmit style={{ margin: '1.5rem 0 0' }}>
               <ButtonStyled
-                icon={iconMap.XCircle}
+                size="big"
+                color="secondary"
                 onClick={handleDisconnect}
-                size="small"
                 disabled={isLoading}
               >
                 Disconnect
               </ButtonStyled>
-            }
-          />
+            </FormSubmit>
+          </>
         ) : (
-          <Row
-            content={
-              <>
-                <p>Account Connection Pending</p>
-                <p>
-                  A LevelUp connection request was sent to your{' '}
-                  <span>{levelup.email}</span> email address. Please check your
-                  inbox and accept the connection request, and then come back
-                  here (sometimes it can take a few minutes to receive an email
-                  from LevelUp).{' '}
-                </p>
-                <p>
-                  If you didn't receive an email from LevelUp or if the
-                  connection request expired, please use the button to the right
-                  to give it another try.
-                </p>
-                <p>
-                  Already accepted the connection request?{' '}
-                  <ButtonLink onClick={handleCheckStatus} disabled={isLoading}>
-                    Click here to check your connection status.
-                  </ButtonLink>
-                </p>
-              </>
-            }
-            actions={
+          <>
+            <FormHeader style={{ margin: '0 0 1.5rem' }}>
+              <h2>Account Connection Pending</h2>
+            </FormHeader>
+            <p>
+              A LevelUp connection request was sent to your{' '}
+              <span>{levelup.email}</span> email address. Please check your
+              inbox and accept the connection request, and then come back here
+              (sometimes it can take a few minutes to receive an email from
+              LevelUp).{' '}
+            </p>
+            <p>
+              If you didn't receive an email from LevelUp or if the connection
+              request expired, please use the button to the right to give it
+              another try.
+            </p>
+            <p>
+              Already accepted the connection request?{' '}
+              <InlineLink onClick={handleCheckStatus} disabled={isLoading}>
+                Click here to check your connection status.
+              </InlineLink>
+            </p>
+            <FormSubmit style={{ margin: '1.5rem 0 0' }}>
               <ButtonStyled
-                icon={iconMap.RefreshCw}
+                size="big"
+                color="secondary"
                 onClick={handleConnect}
-                size="small"
                 disabled={isLoading}
               >
                 Connect Again
               </ButtonStyled>
-            }
-          />
+            </FormSubmit>
+          </>
         )
       ) : (
         <>
+          <FormHeader style={{ margin: '0 0 1.5rem' }}>
+            <h2>Connect your LevelUp account</h2>
+          </FormHeader>
           <p>
-            <ButtonStyled icon={iconMap.Link} onClick={handleConnect}>
-              Connect your LevelUp account
-            </ButtonStyled>
-          </p>
-          <p>
-            Don't have a LevelUp account?{' '}
+            Click the button below to connect your LevelUp account to your Roti
+            account. Don't have a LevelUp account?{' '}
             <a
               href="https://www.thelevelup.com/users/new"
               rel="noopener noreferrer"
@@ -123,9 +133,19 @@ const LevelUpConnect = () => {
               Click here to create one.
             </a>
           </p>
+          <FormSubmit style={{ margin: '1.5rem 0 0' }}>
+            <ButtonStyled
+              size="big"
+              color="secondary"
+              onClick={handleConnect}
+              disabled={isLoading}
+            >
+              Connect
+            </ButtonStyled>
+          </FormSubmit>
         </>
       )}
-    </PageContent>
+    </LevelUpConnectView>
   )
 }
 

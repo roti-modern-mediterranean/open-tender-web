@@ -35,6 +35,7 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
     revenue_center_type: rcType,
     is_outpost: isOutpost,
     address,
+    has_curbside,
   } = revenueCenter
   const { first_times: ft, order_times: ot } = settings
   const hasGroupOrdering =
@@ -105,13 +106,17 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
     )
   ) : isPickup ? (
     hasPickup ? (
-      <RevenueCenterButtonsView>
+      <RevenueCenterButtonsView
+        style={has_curbside ? null : { padding: '0 0 5.5rem' }}
+      >
         <ButtonStyled onClick={handlePickup} size="big">
           Pickup from this Location
         </ButtonStyled>
-        <ButtonStyled onClick={handleCurbside} color="secondary" size="big">
-          Curbside Pickup
-        </ButtonStyled>
+        {has_curbside && (
+          <ButtonStyled onClick={handleCurbside} color="secondary" size="big">
+            Curbside Pickup
+          </ButtonStyled>
+        )}
       </RevenueCenterButtonsView>
     ) : (
       <RevenueCentersAlert

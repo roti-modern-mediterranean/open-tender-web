@@ -130,10 +130,8 @@ const HomeLifestyle = () => {
     .filter((i) => homeCategories.includes(i.name))
     .reduce((arr, i) => [...arr, ...i.items], [])
     .map((i) => ({ ...i, tagsArr: i.tags.split(', ') }))
-    // .map((i) => console.log(i.tagsArr) || { ...i })
     .filter((i) => contains(i.tagsArr, homeTags))
     .slice(0, 5)
-  console.log(filtered)
 
   return (
     <HomeLifestyleView>

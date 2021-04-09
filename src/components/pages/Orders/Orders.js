@@ -23,7 +23,6 @@ import {
   MoreLink,
   OrderCardItem,
   PageContainer,
-  PageContent,
   PageError,
   PageTitle,
 } from '../..'
@@ -150,14 +149,13 @@ const Orders = () => {
                   />
                 )}
               </>
+            ) : isLoading ? (
+              <Loading
+                text="Retrieving your order history..."
+                style={{ textAlign: 'left' }}
+              />
             ) : (
-              <PageContent>
-                {isLoading ? (
-                  <Loading text="Retrieving your order history..." />
-                ) : (
-                  <p>Looks like you don't have any orders yet.</p>
-                )}
-              </PageContent>
+              <p>Looks like you don't have any orders yet.</p>
             )}
           </PageContainer>
         </Main>

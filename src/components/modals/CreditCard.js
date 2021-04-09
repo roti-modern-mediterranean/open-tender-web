@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -6,27 +6,43 @@ import {
   resetCustomerCreditCardsError,
   selectCustomerCreditCards,
 } from '@open-tender/redux'
-import { CreditCardForm } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
 import { ModalContent, ModalView } from '..'
+import { CreditCardForm } from '../forms'
+import { ErrMsg } from '../inputs'
 
 const CreditCard = ({ windowRef }) => {
   const dispatch = useDispatch()
+  const [hasSubmit, setHasSubmit] = useState(false)
   const { loading, error } = useSelector(selectCustomerCreditCards)
-  const addCard = useCallback(
-    (data, callback) => dispatch(addCustomerCreditCard(data, callback)),
-    [dispatch]
-  )
-  const callback = useCallback(() => dispatch(closeModal()), [dispatch])
+  const errMsg = error
+    ? error.form.includes('parameters')
+      ? 'There are one or more errors below'
+      : error.form
+    : null
+  const addCard = useCallback((data) => dispatch(addCustomerCreditCard(data)), [
+    dispatch,
+  ])
 
   useEffect(() => {
     return () => dispatch(resetCustomerCreditCardsError())
   }, [dispatch])
 
   useEffect(() => {
-    if (error) windowRef.current.scrollTop = 0
-  }, [error, windowRef])
+    if (loading === 'pending') setHasSubmit(true)
+  }, [dispatch, loading])
+
+  useEffect(() => {
+    if (hasSubmit && loading === 'idle') {
+      if (error) {
+        setHasSubmit(false)
+        windowRef.current.scrollTop = 0
+      } else {
+        dispatch(closeModal())
+      }
+    }
+  }, [hasSubmit, loading, error, windowRef, dispatch])
 
   return (
     <ModalView>
@@ -39,12 +55,20 @@ const CreditCard = ({ windowRef }) => {
           </p>
         }
       >
-        <CreditCardForm
+        {/* <CreditCardForm
           windowRef={windowRef}
           loading={loading}
           error={error}
           addCard={addCard}
           callback={callback}
+        /> */}
+        <ErrMsg errMsg={errMsg} style={{ margin: '0 0 2rem' }} />
+        <CreditCardForm
+          apply={addCard}
+          tenderErrors={error}
+          hideSave={true}
+          submitting={loading === 'pending'}
+          submitText="Save"
         />
       </ModalContent>
     </ModalView>

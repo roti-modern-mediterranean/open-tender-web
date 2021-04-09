@@ -251,38 +251,42 @@ const makeGlobalStyles = (theme) => css`
     border: 0;
     border-bottom: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
     border-radius: ${theme.inputs.radius};
+    font-family: ${theme.inputs.family};
+    font-weight: ${theme.inputs.weight};
+    letter-spacing: ${theme.inputs.letterSpacing};
+    text-transform: ${theme.inputs.textTransform};
+    -webkit-font-smoothing: ${theme.inputs.fontSmoothing};
+    font-size: ${theme.inputs.fontSize};
     color: ${theme.inputs.color};
     // background-color: ${theme.inputs.bgColor};
     background-color: transparent;
     box-shadow: ${theme.inputs.boxShadow};
-    font-family: ${theme.fonts.body.family};
-    font-size: ${theme.fonts.sizes.main};
     transition: ${theme.links.transition};
 
     &::placeholder {
-      color: ${theme.inputs.color};
-      opacity: 0.5;
+      color: ${theme.inputs.placeholderColor};
     }
 
     &::selection {
       color: ${theme.bgColors.primary};
-      background-color: ${theme.fonts.body.color};
+      background-color: ${theme.inputs.placeholderColor};
     }
 
-    &:active,
-    &:focus {
-      color: ${theme.inputs.color};
-      background-color: ${theme.inputs.bgColor};
-      border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
-    }
+    // &:active,
+    // &:focus {
+    //   color: ${theme.inputs.color};
+    //   background-color: transparent;
+    //   border-bottom: 0.1rem solid ${theme.inputs.borderColor};
+    // }
 
     &:disabled,
     &:read-only {
       cursor: default;
       opacity: 0.5;
       color: ${theme.inputs.color};
-      background-color: ${theme.inputs.bgColor};
-      border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
+      background-color: transparent;
+      border-bottom: ${theme.inputs.borderWidth} solid
+        ${theme.inputs.borderColor};
     }
   }
 
@@ -297,7 +301,11 @@ const makeGlobalStyles = (theme) => css`
   }
 
   textarea {
-    height: 5em;
+    height: 4.4rem;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   select {

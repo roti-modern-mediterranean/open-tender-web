@@ -2,14 +2,16 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { BarLoader, ClipLoader } from 'react-spinners'
+import { BarLoader, ClipLoader, PuffLoader } from 'react-spinners'
 
 const loader = (type, props) => {
   switch (type) {
     case 'Clip':
       return <ClipLoader {...props} loading={true} />
+    case 'Puff':
+      return <PuffLoader {...props} loading={true} />
     default:
-      return <BarLoader {...props} loading={true} />
+      return <BarLoader width={props.size} {...props} loading={true} />
   }
 }
 

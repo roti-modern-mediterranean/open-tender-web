@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
 import {
   fetchAllergens,
   selectAllergens,
@@ -17,36 +16,19 @@ import { selectAccountConfig, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   AllergenForm,
+  CheckoutHeader,
   Content,
   HeaderDefault,
   Loading,
   Main,
   PageContainer,
-  PageContent,
-  PageTitle,
 } from '../..'
 import styled from '@emotion/styled'
-import AccountTabs from '../Account/AccountTabs'
+import { FormWrapper } from '../../inputs'
 
 const AccountAllergensView = styled('div')`
-  width: 48rem;
-  max-width: 90%;
-  padding: 3rem;
-  background-color: ${(props) => props.theme.colors.light};
-  border-radius: ${(props) => props.theme.border.radius};
+  max-width: 48rem;
   margin: 0 auto;
-  text-align: left;
-`
-
-const AccountAllergensTitle = styled('p')`
-  margin: 0;
-  line-height: 1;
-  font-family: ${(props) => props.theme.fonts.preface.family};
-  font-size: 2.2rem;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: ${(props) => props.theme.colors.primary};
 `
 
 const AccountAllergens = () => {
@@ -55,6 +37,7 @@ const AccountAllergens = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const account = useSelector(selectAccountConfig)
+  const { title, subtitle } = account.allergens
   const brandAllergens = useSelector(selectAllergens)
   const customerAllergens = useSelector(selectCustomerAllergens)
   const isLoading =
@@ -94,15 +77,12 @@ const AccountAllergens = () => {
       <Content>
         <HeaderDefault />
         <Main>
-          {!isBrowser && <AccountTabs />}
-          <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...account.allergens} style={{ textAlign: 'center' }} />
-            <PageContent>
+          <PageContainer>
+            <CheckoutHeader title={title} />
+            <FormWrapper>
               {brandAllergens.entities.length > 0 ? (
                 <AccountAllergensView>
-                  <AccountAllergensTitle>
-                    Anything you'd like to avoid?
-                  </AccountAllergensTitle>
+                  {subtitle && <p>{subtitle}</p>}
                   <AllergenForm
                     allergens={brandAllergens.entities}
                     selectedAllergens={customerAllergens.entities}
@@ -113,11 +93,11 @@ const AccountAllergens = () => {
                   />
                 </AccountAllergensView>
               ) : isLoading ? (
-                <Loading text="Retrieving your order history..." />
+                <Loading text="Retrieving your dietary preferences..." />
               ) : (
                 <p>Allergens aren't currently listed on our menu.</p>
               )}
-            </PageContent>
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>

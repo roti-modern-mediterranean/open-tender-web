@@ -1,16 +1,11 @@
 import React, { useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectCustomer, updateCustomer } from '@open-tender/redux'
-import {
-  FormHeader,
-  FormWrapper,
-  Heading,
-  Message,
-  ProfileForm,
-} from '@open-tender/components'
+import { Message, ProfileForm } from '@open-tender/components'
 
 import { selectOptIns } from '../../../slices'
 import { Loading } from '../..'
+import { FormHeader, FormWrapper } from '../../inputs'
 
 const ConfirmationProfile = () => {
   const dispatch = useDispatch()
@@ -31,9 +26,7 @@ const ConfirmationProfile = () => {
   ) : (
     <FormWrapper>
       <FormHeader>
-        <p>
-          <Heading>Update your communication preferences</Heading>
-        </p>
+        <h2>Update your communication preferences</h2>
         <p>Please let us know how you'd like to hear from us</p>
       </FormHeader>
       <ProfileForm

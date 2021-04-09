@@ -60,9 +60,10 @@ const MoreLink = ({ onClick, text = 'View all', icon, style = null }) => {
 
 MoreLink.displayName = 'MoreLink'
 MoreLink.propTypes = {
-  category: propTypes.object,
-  isChild: propTypes.bool,
-  index: propTypes.bool,
+  onClick: propTypes.func,
+  text: propTypes.string,
+  icon: propTypes.element,
+  style: propTypes.object,
 }
 
 export default MoreLink

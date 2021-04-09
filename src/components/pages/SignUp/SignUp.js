@@ -10,7 +10,7 @@ import {
   resetSignUp,
   linkPosToken,
 } from '@open-tender/redux'
-import { ButtonLink, FormWrapper, SignUpForm } from '@open-tender/components'
+import { ButtonLink } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import {
@@ -23,34 +23,13 @@ import {
 import { AppContext } from '../../../App'
 import {
   Content,
-  Main,
-  PageTitle,
   HeaderDefault,
+  Main,
   PageContainer,
-  PageContent,
+  // PageTitle,
+  SignUpForm,
 } from '../..'
-
-export const ThanxTerms = () => (
-  <p>
-    By signing up you agree to our{' '}
-    <a
-      href="https://app.thanx.com/privacy"
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      privacy policy
-    </a>{' '}
-    and our{' '}
-    <a
-      href="https://app.thanx.com/terms"
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      terms of service
-    </a>
-    .
-  </p>
-)
+import { FormFooter, FormHeader, FormWrapper } from '../../inputs'
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search)
@@ -62,7 +41,7 @@ const SignUp = () => {
   const posToken = useQuery().get('pos-token')
   const api = useSelector(selectAPI)
   const { signUp: signupConfig } = useSelector(selectConfig)
-  const { title: siteTitle, has_thanx } = useSelector(selectBrand)
+  const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const token = auth ? auth.access_token : null
   const { loading, error } = useSelector(selectSignUp)
@@ -108,28 +87,29 @@ const SignUp = () => {
       <Content>
         <HeaderDefault title={isBrowser ? null : signupConfig.title} />
         <Main>
-          <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...signupConfig}>
-              <p style={{ margin: '2rem 0' }}>
-                Already have an account?{' '}
-                <ButtonLink onClick={login}>Click here to log in.</ButtonLink>
-              </p>
-              {has_thanx && <ThanxTerms />}
-            </PageTitle>
+          <PageContainer>
             <FormWrapper>
+              {/* <PageTitle {...signupConfig} /> */}
+              <FormHeader>
+                <h1>{signupConfig.title}</h1>
+                <p>{signupConfig.subtitle}</p>
+              </FormHeader>
               <SignUpForm
                 loading={loading}
                 error={error}
                 signUp={signUp}
                 optIns={optIns}
-                hasThanx={has_thanx}
               />
+              <FormFooter>
+                <p style={{ margin: '2rem 0' }}>
+                  Already a member?{' '}
+                  <ButtonLink onClick={login}>Log In</ButtonLink>
+                </p>
+                <p>
+                  <Link to="/">{signupConfig.back}</Link>
+                </p>
+              </FormFooter>
             </FormWrapper>
-            <PageContent>
-              <p>
-                <Link to="/">{signupConfig.back}</Link>
-              </p>
-            </PageContent>
           </PageContainer>
         </Main>
       </Content>

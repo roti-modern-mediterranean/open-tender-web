@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
 import {
   selectCustomer,
   fetchCustomerAddresses,
@@ -11,26 +10,32 @@ import { Helmet } from 'react-helmet'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
-import Addresses from './Addresses'
 import {
+  CheckoutHeader,
   Content,
   HeaderDefault,
   Loading,
   Main,
   PageContainer,
-  PageContent,
-  PageTitle,
 } from '../..'
 import { AppContext } from '../../../App'
-import AccountTabs from '../Account/AccountTabs'
+import { FormWrapper } from '../../inputs'
+import styled from '@emotion/styled'
+import Address from './Address'
+
+const AddressesView = styled('div')`
+  margin: 3rem auto;
+`
 
 const AccountAddresses = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { title: siteTitle } = useSelector(selectBrand)
   const config = useSelector(selectConfig)
+  const { title, subtitle } = config.addresses
   const { auth } = useSelector(selectCustomer)
   const { entities, loading } = useSelector(selectCustomerAddresses)
+  const addresses = entities.filter((i) => i.street)
   const isLoading = loading === 'pending'
   const limit = 50
   const { windowRef } = useContext(AppContext)
@@ -52,30 +57,34 @@ const AccountAddresses = () => {
     <>
       <Helmet>
         <title>
-          {config.addresses.title} | {siteTitle}
+          {title} | {siteTitle}
         </title>
       </Helmet>
       <Content>
         <HeaderDefault />
         <Main>
-          {!isBrowser && <AccountTabs />}
-          <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config.addresses} />
-
-            {entities.length ? (
-              <Addresses addresses={entities} isLoading={isLoading} />
-            ) : (
-              <PageContent>
-                {isLoading ? (
-                  <Loading text="Retrieving your order history..." />
-                ) : (
-                  <p>
-                    Looks like you haven't added any addresses yet. Please place
-                    an order to add one.
-                  </p>
-                )}
-              </PageContent>
-            )}
+          <PageContainer>
+            <CheckoutHeader title={title} />
+            <FormWrapper>
+              {subtitle && <p>{subtitle}</p>}
+              {entities.length ? (
+                <AddressesView>
+                  {addresses.map((address) => (
+                    <Address
+                      key={address.customer_address_id}
+                      address={address}
+                    />
+                  ))}
+                </AddressesView>
+              ) : isLoading ? (
+                <Loading text="Retrieving your order history..." />
+              ) : (
+                <p>
+                  Looks like you haven't added any addresses yet. Please place
+                  an order to add one.
+                </p>
+              )}
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>

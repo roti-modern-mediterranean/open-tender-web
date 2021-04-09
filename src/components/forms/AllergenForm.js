@@ -9,7 +9,8 @@ import {
   ButtonSubmit,
   Heading,
 } from '@open-tender/components'
-import { allergenIconMap } from './icons/allergens'
+import { allergenIconMap } from '../icons/allergens'
+import { FormSubmit } from '../inputs'
 
 const AllergenFormView = styled('div')`
   // label {
@@ -34,6 +35,9 @@ const SwitchLabel = styled('label')`
   width: 33.33333%;
   padding: 0.5rem;
   cursor: pointer;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 50%;
+  }
 `
 
 const SwitchInput = styled('input')`
@@ -56,9 +60,15 @@ const SwitchToggle = styled(`span`)`
   width: 100%;
   height: 4.6rem;
   padding: 0 0.5rem 0 1.75rem;
+  transition: ${(props) => props.theme.links.transition};
   border-radius: ${(props) => props.theme.border.radius};
   background-color: ${(props) =>
     props.theme.bgColors[props.on ? 'dark' : 'secondary']};
+
+  &:hover {
+    background-color: ${(props) =>
+      props.theme.colors[props.on ? 'dark' : 'cardHover']};
+  }
 `
 
 const SwitchToggleIcon = styled('span')`
@@ -137,7 +147,6 @@ const AllergenForm = ({
     const { allergen_id, name } = i
     return { allergen_id, name, imageUrl }
   })
-  console.log(displayed)
 
   return (
     <AllergenFormView>
@@ -157,9 +166,15 @@ const AllergenForm = ({
             />
           ))}
         </AllergenInputs>
-        <ButtonSubmit submitRef={submitRef} submitting={submitting}>
-          {submitting ? 'Submitting...' : 'Submit Updates'}
-        </ButtonSubmit>
+        <FormSubmit>
+          <ButtonSubmit
+            submitRef={submitRef}
+            submitting={submitting}
+            color="secondary"
+          >
+            {submitting ? 'Submitting...' : 'Submit Updates'}
+          </ButtonSubmit>
+        </FormSubmit>
       </form>
     </AllergenFormView>
   )

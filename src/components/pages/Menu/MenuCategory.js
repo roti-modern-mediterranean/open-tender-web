@@ -34,11 +34,7 @@ const MenuCategory = ({ category, isChild, index }) => {
   return (
     <MenuCategoryView isChild={isChild} index={index}>
       <Container>
-        <PageTitle
-          title={category.name}
-          subtitle={category.description}
-          style={{ alignItems: 'flex-end' }}
-        >
+        <PageTitle title={category.name} subtitle={category.description}>
           <MenuAllergenFilter />
         </PageTitle>
         {category.appearance === 'small' ? (

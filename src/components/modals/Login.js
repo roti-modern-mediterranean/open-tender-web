@@ -6,31 +6,21 @@ import {
   selectCustomer,
   selectResetPassword,
   loginCustomer,
-  loginCustomerThanx,
   sendPasswordResetEmail,
   resetPasswordReset,
   resetLoginError,
 } from '@open-tender/redux'
-import {
-  LoginForm,
-  SendResetForm,
-  ButtonLink,
-  ButtonStyled,
-} from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
-import { closeModal, selectBrand } from '../../slices'
-import { ModalContent, ModalView } from '..'
+import { closeModal } from '../../slices'
+import { InlineLink, ModalContent, ModalView } from '..'
+import { LoginForm, SendResetForm } from '../forms'
 
 const messaging = {
   login: {
     title: 'Log into your account',
     subtitle: "Don't have an account?",
     reset: 'Forget your password?',
-  },
-  thanx: {
-    title: 'Log into your account',
-    subtitle:
-      "Please enter your email address, and we'll send you an email with a magic link that logs you into your account automatically.",
   },
   reset: {
     title: 'Reset your password',
@@ -49,18 +39,11 @@ const LoginModal = ({ callback }) => {
   const [isReset, setIsReset] = useState(false)
   const dispatch = useDispatch()
   const history = useHistory()
-  const { has_thanx } = useSelector(selectBrand)
   const customer = useSelector(selectCustomer)
   const { profile } = customer
   const resetPassword = useSelector(selectResetPassword)
   const { resetSent } = resetPassword
-  const mode = has_thanx
-    ? 'thanx'
-    : resetSent
-    ? 'resetSent'
-    : isReset
-    ? 'reset'
-    : 'login'
+  const mode = resetSent ? 'resetSent' : isReset ? 'reset' : 'login'
   const msg = messaging[mode]
   const login = useCallback(
     (email, password) => dispatch(loginCustomer(email, password)),
@@ -68,10 +51,6 @@ const LoginModal = ({ callback }) => {
   )
   const sendReset = useCallback(
     (email, linkUrl) => dispatch(sendPasswordResetEmail(email, linkUrl)),
-    [dispatch]
-  )
-  const loginThanx = useCallback(
-    (email) => dispatch(loginCustomerThanx(email)),
     [dispatch]
   )
 
@@ -102,29 +81,19 @@ const LoginModal = ({ callback }) => {
       <ModalContent
         title={msg.title}
         subtitle={
-          <>
-            <p>
-              {msg.subtitle}{' '}
-              {mode === 'login' && (
-                <ButtonLink onClick={signUp}>Sign up here.</ButtonLink>
-              )}
-            </p>
-            {mode === 'thanx' && (
-              <p>
-                Don't have an account yet?{' '}
-                <ButtonLink onClick={signUp}>Sign up here.</ButtonLink>
-              </p>
+          <p>
+            {msg.subtitle}{' '}
+            {mode === 'login' && (
+              <InlineLink onClick={signUp}>Sign up here.</InlineLink>
             )}
-          </>
+          </p>
         }
         footer={
-          !has_thanx && (
-            <div>
-              <ButtonLink onClick={resetSent ? toggleResetSent : toggleReset}>
-                {msg.reset}
-              </ButtonLink>
-            </div>
-          )
+          <p>
+            <InlineLink onClick={resetSent ? toggleResetSent : toggleReset}>
+              {msg.reset}
+            </InlineLink>
+          </p>
         }
       >
         {resetSent ? (
@@ -138,12 +107,7 @@ const LoginModal = ({ callback }) => {
             callback={callback}
           />
         ) : (
-          <LoginForm
-            {...customer}
-            login={has_thanx ? loginThanx : login}
-            callback={callback}
-            hasThanx={has_thanx}
-          />
+          <LoginForm {...customer} login={login} callback={callback} />
         )}
       </ModalContent>
     </ModalView>

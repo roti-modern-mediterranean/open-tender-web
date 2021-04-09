@@ -138,7 +138,7 @@ const RevenueCenters = () => {
           style={{ boxShadow: 'none' }}
           title={navTitle}
           left={<Back />}
-          right={<Cart />}
+          right={<Cart showOrder={false} />}
         />
         <Main style={{ paddingTop: '0' }}>
           <ScreenreaderTitle>Locations</ScreenreaderTitle>
