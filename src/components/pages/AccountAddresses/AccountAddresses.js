@@ -35,6 +35,7 @@ const AccountAddresses = () => {
   const { title, subtitle } = config.addresses
   const { auth } = useSelector(selectCustomer)
   const { entities, loading } = useSelector(selectCustomerAddresses)
+  const addresses = entities.filter((i) => i.street)
   const isLoading = loading === 'pending'
   const limit = 50
   const { windowRef } = useContext(AppContext)
@@ -68,7 +69,7 @@ const AccountAddresses = () => {
               {subtitle && <p>{subtitle}</p>}
               {entities.length ? (
                 <AddressesView>
-                  {entities.map((address) => (
+                  {addresses.map((address) => (
                     <Address
                       key={address.customer_address_id}
                       address={address}

@@ -60,9 +60,15 @@ const SwitchToggle = styled(`span`)`
   width: 100%;
   height: 4.6rem;
   padding: 0 0.5rem 0 1.75rem;
+  transition: ${(props) => props.theme.links.transition};
   border-radius: ${(props) => props.theme.border.radius};
   background-color: ${(props) =>
     props.theme.bgColors[props.on ? 'dark' : 'secondary']};
+
+  &:hover {
+    background-color: ${(props) =>
+      props.theme.colors[props.on ? 'dark' : 'cardHover']};
+  }
 `
 
 const SwitchToggleIcon = styled('span')`
