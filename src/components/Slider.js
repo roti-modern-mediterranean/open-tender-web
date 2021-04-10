@@ -63,11 +63,12 @@ const Dots = styled('div')`
 `
 
 const Dot = styled('button')`
-  margin: 0 0.5rem;
-  width: 0.75em;
-  height: 0.75em;
-  border-radius: 100%;
-  background-color: ${(props) => props.active ? props.theme.colors.pepper:props.theme.colors.light};
+  margin: 0 0.7rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.5rem;
+  background-color: ${(props) =>
+    props.active ? props.theme.colors.pepper : props.theme.colors.light};
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     border-radius: 100%;
@@ -84,38 +85,44 @@ const SliderView = styled('div')`
 
 const SliderWrapper = styled('div')`
   display: flex;
-  height: 100%; 
+  height: 100%;
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    transform: translate3D(${(props) => {
-      if(props.moveX){
-        return `${props.moveX*-1}px`
-      }
-      return (props.index>0)?`calc(${props.index*-80}% + 4em)`:0
-    }}, 0, 0);
-    transition: transform ${(props) => {
-      if(!props.moveX){
-        return `${props.transition}ms ease`;
-      } else {
-        return 'all 0s ease 0s'
-      }
-    }};
+    transform: translate3D(
+      ${(props) => {
+        if (props.moveX) {
+          return `${props.moveX * -1}px`
+        }
+        return props.index > 0 ? `calc(${props.index * -80}% + 4em)` : 0
+      }},
+      0,
+      0
+    );
+    transition: transform
+      ${(props) => {
+        if (!props.moveX) {
+          return `${props.transition}ms ease`
+        } else {
+          return 'all 0s ease 0s'
+        }
+      }};
   }
 `
 
 const Slide = styled('div')`
   position: absolute;
   transform: translate3D(0, 0, 0);
-  height: calc(100% - 2.5rem);
+  height: calc(100% - 4.5rem);
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   display: flex;
   z-index: ${(props) => props.index};
-  transition: opacity ${(props) => {
-    return `${props.transition}ms ease`;
-  }};
+  transition: opacity
+    ${(props) => {
+      return `${props.transition}ms ease`
+    }};
   opacity: ${(props) => (props.active ? '1' : '0')};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 80%;
@@ -123,10 +130,11 @@ const Slide = styled('div')`
     border-radius: 0.15rem;
     opacity: 1;
     padding: 0.5em 0 0.5em 0.5em;
-    transform: translate3D(${(props) => props.index*100}%, 0, 0);
-    transition: transform ${(props) => {
-      return `${props.transition}ms ease`;
-    }};
+    transform: translate3D(${(props) => props.index * 100}%, 0, 0);
+    transition: transform
+      ${(props) => {
+        return `${props.transition}ms ease`
+      }};
   }
 `
 
@@ -171,14 +179,17 @@ const SliderNew = ({ settings = {}, slides }) => {
   const onTouch = useCallback((direction, move, _, position, eventName) => {
     if (eventName !== TouchEvents.end) {
       if (direction && move) {
-        if(direction === TouchDirection.right || direction === TouchDirection.left) {
-          setTouchMove((position.left * -1) + move)
+        if (
+          direction === TouchDirection.right ||
+          direction === TouchDirection.left
+        ) {
+          setTouchMove(position.left * -1 + move)
         }
       }
     } else {
       const wrapper = sliderWrapper.current
       const offsetLeft = wrapper.getBoundingClientRect().x
-      if(offsetLeft > 0) {
+      if (offsetLeft > 0) {
         setTouchMove(0)
       } else {
         const slides = wrapper.querySelectorAll(':scope > div')
@@ -188,10 +199,10 @@ const SliderNew = ({ settings = {}, slides }) => {
           if (Math.abs(slide.getBoundingClientRect().left) <= 150) {
             currentIndex = index
           }
-        });
+        })
         setTouchMove(null)
         setIndex(currentIndex)
-      }    
+      }
     }
   }, [])
 
@@ -233,11 +244,16 @@ const SliderNew = ({ settings = {}, slides }) => {
 
   return (
     <SliderView ref={slider}>
-      <SliderWrapper ref={sliderWrapper} index={index} moveX={touchMove}
-      transition={transitionSpeed} {...touchProps}>
+      <SliderWrapper
+        ref={sliderWrapper}
+        index={index}
+        moveX={touchMove}
+        transition={transitionSpeed}
+        {...touchProps}
+      >
         {slides.map((slide, idx) => {
           const shift = idx
-          const active = idx === index 
+          const active = idx === index
           return (
             <Slide
               key={slide.imageUrl}
