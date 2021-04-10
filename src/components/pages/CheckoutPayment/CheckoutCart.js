@@ -9,7 +9,7 @@ const CheckoutCartView = styled('div')`
   & > div {
     border: 0;
     border-style: solid;
-    border-color: ${(props) => props.theme.colors.cartItemBorder};
+    border-color: ${(props) => props.theme.colors.line};
     border-top-width: ${(props) => (props.showBorder ? '0.1rem' : '0')};
     padding-top: ${(props) => (props.showBorder ? '1.1rem' : '0')};
     margin-top: ${(props) => (props.showBorder ? '0.6rem' : '0')};

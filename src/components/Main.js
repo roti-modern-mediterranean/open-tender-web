@@ -11,14 +11,11 @@ const MainView = styled('main')`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: ${(props) => props.theme.bgColors[props.bgColor]};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    ${(props) =>
-      props.imageUrl
-        ? `background-image: url(${props.imageUrl});
+  ${(props) =>
+    props.imageUrl
+      ? `background-image: url(${props.imageUrl});
     background-color: ${props.theme.bgColors.dark};`
-        : null}
-  }
+      : `background-color: ${(props) => props.theme.bgColors[props.bgColor]}`}
 `
 
 const Main = ({ padding, bgColor = 'primary', imageUrl, style, children }) => {

@@ -45,7 +45,7 @@ const decorateTheme = (theme) => {
       tahini: '#FBF8EA',
       paprika: '#E73C3E',
       beet: '#621C27',
-      cartItemBorder: '#E3DFC9',
+      line: '#E3DFC9',
       cardHover: '#ADB8C6',
       navHover: '#F3EDD2',
       switch: '#979EA7',

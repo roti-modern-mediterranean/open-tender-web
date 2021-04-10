@@ -24,13 +24,7 @@ import {
   todayDate,
   makeWeekdayIndices,
 } from '@open-tender/js'
-import {
-  BgImage,
-  Box,
-  ButtonLink,
-  ButtonStyled,
-  Message,
-} from '@open-tender/components'
+import { Box, ButtonLink, ButtonStyled, Message } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
@@ -48,73 +42,52 @@ import {
 } from '../..'
 import { Account, StartOver } from '../../buttons'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
-import TimePicker from '../../TimePicker'
 
-const CateringView = styled(BgImage)`
-  width: 100%;
-  flex-grow: 1;
-  min-height: 50rem;
-  // background-color: ${(props) => props.theme.bgColors.secondary};
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const CateringDatepicker = styled(Box)`
+  max-width: 48rem;
+  margin: 0 auto;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
 `
 
-const CateringContent = styled('div')`
-  display: flex;
-  justify-content: space-between;
-  width: 108rem;
-  max-width: 100%;
-  padding: 4rem 4.5rem;
-  border-radius: 2.2rem;
-  // background-color: ${(props) => props.theme.colors.primary};
-  background-color: rgba(37, 39, 42, 0.6);
+const CateringButtons = styled('div')`
+  margin: 3rem 0 1.5rem;
+  button {
+    margin: 0 1rem 1rem 0;
+    &:last-child {
+      margin: 0;
+    }
+  }
+`
+
+const CateringPolicy = styled('div')`
+  margin: 3rem 0;
 
   h2 {
-    margin: 0 0 1rem;
-    font-size: 9rem;
-    line-height: 0.9;
-    color: ${(props) => props.theme.colors.light};
+    font-size: ${(props) => props.theme.fonts.sizes.h3};
   }
 
-  p {
-    font-size: 2.7rem;
-    line-height: 1.33333;
-    color: ${(props) => props.theme.colors.light};
+  h2 + p {
+    margin: 0.5rem 0 2rem;
+    // font-size: ${(props) => props.theme.fonts.sizes.main};
   }
-`
 
-const CateringMessage = styled('div')`
-  flex: 1 1 auto;
-  padding: 0 3rem 0 0;
-`
+  div {
+    text-align: left;
+  }
 
-const CateringCalendar = styled('div')`
-  flex: 0 0 36rem;
-  min-height: 35rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const CateringDatepicker = styled('div')`
-  position: relative;
-  width: 100%;
-  height: 35rem;
-  padding: 1rem;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  border-radius: ${(props) => props.theme.border.radius};
-  background-color: ${(props) => props.theme.colors.light};
+  div p {
+    margin: 1em 0;
+    // font-size: ${(props) => props.theme.fonts.sizes.small};
+    line-height: ${(props) => props.theme.lineHeight};
+  }
 `
 
 const CateringPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const theme = useTheme()
   const { title: siteTitle } = useSelector(selectBrand)
   const { catering: config } = useSelector(selectConfig)
-  const { title, subtitle, policy, background } = config
+  const { policy } = config
   const { orderType, serviceType, requestedAt, revenueCenter } = useSelector(
     selectOrder
   )
@@ -127,8 +100,6 @@ const CateringPage = () => {
   const { entity: validTimes, loading, error } = useSelector(selectValidTimes)
   const isLoading = loading === 'pending'
   const { windowRef } = useContext(AppContext)
-
-  console.log(date)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -154,14 +125,14 @@ const CateringPage = () => {
         closed_weekdays,
       } = validTimes
       if (!first_time) {
-        // setDate(requestedAtDate)
+        setDate(requestedAtDate)
       } else {
         const firstDate = isoToDate(first_time.utc, tz)
         const newDate =
           !requestedAtDate || firstDate > requestedAtDate
             ? firstDate
             : requestedAtDate
-        // setDate(newDate)
+        setDate(newDate)
         const closedWeekdays = makeWeekdayIndices(closed_weekdays)
         const isClosed = (date) => {
           return !closedWeekdays.includes(date.getDay())
@@ -177,7 +148,7 @@ const CateringPage = () => {
         setSettings(newSettings)
       }
     } else {
-      // setDate(requestedAtDate)
+      setDate(requestedAtDate)
     }
   }, [validTimes, requestedAt, tz])
 
@@ -217,45 +188,85 @@ const CateringPage = () => {
       </Helmet>
       <Content>
         <HeaderDefault />
-        <Main
-          imageUrl={background}
-          style={{ backgroundPosition: 'center top' }}
-        >
-          <CateringView>
-            <CateringContent>
-              <CateringMessage>
-                <h2>{title}</h2>
-                <p>{subtitle}</p>
-              </CateringMessage>
-              <CateringCalendar>
-                {isLoading || !settings ? (
-                  <Loading type="Clip" color={theme.colors.light} size={50} />
-                ) : (
+        <Main>
+          <PageContainer>
+            <PageTitle {...config} />
+            <PageContent>
+              {isLoading ? (
+                <Loading text="Loading calendar..." />
+              ) : error ? (
+                <>
+                  <Message color="error" style={{ width: '100%' }}>
+                    {error}
+                  </Message>
+                  <p>
+                    <ButtonStyled icon={iconMap.RefreshCw} onClick={startOver}>
+                      Start Over
+                    </ButtonStyled>
+                  </p>
+                </>
+              ) : settings ? (
+                <>
                   <CateringDatepicker>
                     <DatePicker
                       showPopperArrow={false}
-                      // showTimeSelect
-                      // timeCaption="Time"
-                      // timeFormat="h:mm aa"
-                      // timeIntervals={settings.interval || 15}
-                      // minTime={minTime || settings.minTime}
-                      // maxTime={settings.maxTime}
-                      // excludeTimes={excludeTimes}
+                      showTimeSelect
+                      timeCaption="Time"
+                      timeFormat="h:mm aa"
                       dateFormat="yyyy-MM-dd h:mm aa"
+                      timeIntervals={settings.interval || 15}
                       minDate={settings.minDate}
+                      minTime={minTime || settings.minTime}
+                      maxTime={settings.maxTime}
                       excludeDates={settings.excludeDates}
+                      // excludeTimes={excludeTimes}
                       filterDate={settings.isClosed}
                       selected={date}
                       onChange={(date) => setDate(date)}
                       inline
                       shouldCloseOnSelect={false}
                     />
-                    <TimePicker date={date} setDate={setDate} />
                   </CateringDatepicker>
+                  <CateringButtons>
+                    <ButtonStyled
+                      icon={iconMap.Truck}
+                      onClick={() => chooseServiceType('DELIVERY')}
+                      disabled={!date}
+                    >
+                      Order Delivery
+                    </ButtonStyled>
+                    <ButtonStyled
+                      icon={iconMap.ShoppingBag}
+                      onClick={() => chooseServiceType('PICKUP')}
+                      disabled={!date}
+                    >
+                      Order Pickup
+                    </ButtonStyled>
+                  </CateringButtons>
+                  <div>
+                    <ButtonLink onClick={startOver}>
+                      Or switch to a regular Pickup or Delivery order
+                    </ButtonLink>
+                  </div>
+                </>
+              ) : (
+                <Message color="error" style={{ width: '100%' }}>
+                  This order type isn't currently available
+                </Message>
+              )}
+              <CateringPolicy>
+                {policy.title && <h2>{policy.title}</h2>}
+                {policy.subtitle && <p>{policy.subtitle}</p>}
+                {policy.content.length > 0 && (
+                  <div>
+                    {policy.content.map((i, index) => (
+                      <p key={index}>{i}</p>
+                    ))}
+                  </div>
                 )}
-              </CateringCalendar>
-            </CateringContent>
-          </CateringView>
+              </CateringPolicy>
+            </PageContent>
+          </PageContainer>
         </Main>
       </Content>
     </>
