@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback, useContext } from 'react'
-import { useHistory, useLocation, Link } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import {
   selectCustomer,
@@ -9,23 +8,20 @@ import {
   resetPassword,
   resetPasswordReset,
 } from '@open-tender/redux'
-import {
-  ButtonLink,
-  FormWrapper,
-  ResetPasswordForm,
-} from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig, openModal } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
+  CheckoutHeader,
   Content,
   HeaderDefault,
+  InlineLink,
   Main,
   PageContainer,
-  PageContent,
-  PageTitle,
 } from '../..'
+import { FormWrapper } from '../../inputs'
+import { ResetPasswordForm } from '../../forms'
 
 const ResetPassword = () => {
   const history = useHistory()
@@ -34,6 +30,7 @@ const ResetPassword = () => {
   const resetToken = hash.includes('#') ? hash.split('#')[1] : ''
   const { auth } = useSelector(selectCustomer)
   const { resetPassword: config } = useSelector(selectConfig)
+  const { title, subtitle } = config
   const { title: siteTitle } = useSelector(selectBrand)
   const { success, loading, error } = useSelector(selectResetPassword)
   const { windowRef } = useContext(AppContext)
@@ -66,45 +63,42 @@ const ResetPassword = () => {
     <>
       <Helmet>
         <title>
-          {config.title} | {siteTitle}
+          {title} | {siteTitle}
         </title>
       </Helmet>
       <Content>
-        <HeaderDefault title={isBrowser ? null : config.title} />
+        <HeaderDefault />
         <Main>
-          <PageContainer style={{ maxWidth: '76.8rem' }}>
-            {success ? (
-              <>
-                <PageTitle
-                  title="Success!"
-                  subtitle={
-                    <ButtonLink onClick={handleLogin}>
-                      Click here to log into your account
-                    </ButtonLink>
-                  }
-                />
-              </>
-            ) : (
-              <>
-                <PageTitle {...config} />
-                <PageContent>
-                  <FormWrapper>
-                    <ResetPasswordForm
-                      loading={loading}
-                      error={error}
-                      reset={reset}
-                      resetForm={resetForm}
-                      resetToken={resetToken}
-                    />
-                  </FormWrapper>
+          <PageContainer>
+            <CheckoutHeader title={title} />
+            <FormWrapper>
+              {subtitle && <p>{subtitle}</p>}
+              {success ? (
+                <p>
+                  Success!{' '}
+                  <InlineLink onClick={handleLogin}>
+                    Click here to log into your account
+                  </InlineLink>
+                </p>
+              ) : (
+                <>
+                  <ResetPasswordForm
+                    loading={loading}
+                    error={error}
+                    reset={reset}
+                    resetForm={resetForm}
+                    resetToken={resetToken}
+                  />
                   <div style={{ margin: '3rem 0' }}>
                     <p>
-                      <Link to="/">{config.back}</Link>
+                      <InlineLink onClick={() => history.push('/')}>
+                        {config.back}
+                      </InlineLink>
                     </p>
                   </div>
-                </PageContent>
-              </>
-            )}
+                </>
+              )}
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>

@@ -8,6 +8,7 @@ import LoginForm from './LoginForm'
 import LevelUpForm from './LevelUpForm'
 import OrderFulfillmentForm from './OrderFulfillmentForm'
 import ProfileForm from './ProfileForm'
+import ResetPasswordForm from './ResetPasswordForm'
 import SendResetForm from './SendResetForm'
 import SignUpForm from './SignUpForm'
 
@@ -22,6 +23,7 @@ export {
   LevelUpForm,
   OrderFulfillmentForm,
   ProfileForm,
+  ResetPasswordForm,
   SendResetForm,
   SignUpForm,
 }
