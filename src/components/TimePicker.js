@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 import { makeTimeIntervals } from '@open-tender/js'
 import { Preface } from '@open-tender/components'
 import { Checkmark } from './icons'
+import { useState } from 'react'
 
 const TimePickerContainer = styled('div')`
   position: absolute;
@@ -50,8 +51,19 @@ const TimePickerSelect = styled('div')`
   text-align: center;
 `
 
-const TimePickerSelectText = styled(Preface)`
-  display: inline-block;
+const TimePickerConfirm = styled('div')`
+  width: 20%;
+  display: flex;
+  justify-content: center;
+`
+
+const TimePickerTimes = styled('div')`
+  width: 100%;
+  height: 6rem;
+  overflow-y: scroll;
+`
+
+const TimePickerTimeText = styled(Preface)`
   font-weight: 500;
   font-size: 5rem;
   letter-spacing: 0.4rem;
@@ -59,11 +71,44 @@ const TimePickerSelectText = styled(Preface)`
   color: ${(props) => props.theme.colors.beet};
 `
 
-const TimePickerConfirm = styled('div')`
-  width: 20%;
+const TimePickerTimeView = styled('button')`
+  width: 100%;
+  height: 6rem;
+  padding: 0 0 0.5rem;
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  span {
+    display: block;
+  }
+
+  span + span {
+    font-size: 4rem;
+    margin: 0 0 0 1rem;
+  }
 `
+
+const TimePickerTime = ({ label, onClick, disabled }) => {
+  const [hour, ampm] = label.split(' ')
+  return (
+    <TimePickerTimeView onClick={onClick} disabled={disabled}>
+      <TimePickerTimeText>{hour}</TimePickerTimeText>
+      <TimePickerTimeText>{ampm}</TimePickerTimeText>
+    </TimePickerTimeView>
+  )
+}
+
+TimePickerTime.displayName = 'TimePickerTime'
+TimePickerTime.propTypes = {
+  label: propTypes.string,
+  onClick: propTypes.func,
+  disabled: propTypes.bool,
+}
 
 const TimePickerButtonView = styled('button')`
   display: flex;
@@ -73,34 +118,56 @@ const TimePickerButtonView = styled('button')`
   height: 4.6rem;
   padding: 0.1rem 0 0;
   border-radius: 2.3rem;
-  color: ${(props) => props.theme.colors.light};
   border: 0.2rem solid ${(props) => props.theme.colors.beet};
   background-color: transparent;
   transition: all 250ms ease;
+
+  &:disabled {
+    border: 0.2rem solid ${(props) => props.theme.colors.beet};
+    background-color: ${(props) => props.theme.colors.beet};
+  }
 `
 
-const TimePickerButton = ({ onClick }) => {
+const TimePickerButton = ({ onClick, disabled }) => {
   const theme = useTheme()
 
   return (
-    <TimePickerButtonView onClick={onClick}>
+    <TimePickerButtonView onClick={onClick} disabled={disabled}>
       <span>
-        <Checkmark size="2.2rem" color={theme.colors.beet} />
+        <Checkmark
+          size="2.2rem"
+          color={disabled ? theme.colors.light : theme.colors.beet}
+        />
       </span>
     </TimePickerButtonView>
   )
 }
 
-const TimePicker = ({ date, minTime, maxTime, interval, setDate }) => {
+const TimePicker = ({
+  date,
+  minTime,
+  maxTime,
+  interval,
+  setDate,
+  selectTime,
+}) => {
+  const [time, setTime] = useState(null)
   const hasDate = !!date
   // console.log(date, minTime, maxTime, interval)
   const intervals = makeTimeIntervals(date, minTime, maxTime, interval)
-  console.log(intervals)
 
   const handleClose = (evt) => {
     if (evt.target.id === 'time-picker-container') {
       setDate(null)
+      setTime(null)
     }
+  }
+
+  const chooseTime = (evt, time) => {
+    evt.preventDefault()
+    setTime(time)
+    selectTime(time)
+    evt.target.blur()
   }
 
   return (
@@ -114,13 +181,21 @@ const TimePicker = ({ date, minTime, maxTime, interval, setDate }) => {
           <TimePickerContainer id="time-picker-container" onClick={handleClose}>
             <TimePickerView>
               <TimePickerLabel>
-                <TimePickerLabelText>Hour</TimePickerLabelText>
+                <TimePickerLabelText>Time</TimePickerLabelText>
               </TimePickerLabel>
               <TimePickerSelect>
-                <TimePickerSelectText>12:50 PM</TimePickerSelectText>
+                <TimePickerTimes>
+                  {intervals.map((t) => (
+                    <TimePickerTime
+                      label={t.label}
+                      onClick={(evt) => chooseTime(evt, t.value)}
+                      disabled={time ? true : false}
+                    />
+                  ))}
+                </TimePickerTimes>
               </TimePickerSelect>
               <TimePickerConfirm>
-                <TimePickerButton />
+                <TimePickerButton disabled={time ? true : false} />
               </TimePickerConfirm>
             </TimePickerView>
           </TimePickerContainer>

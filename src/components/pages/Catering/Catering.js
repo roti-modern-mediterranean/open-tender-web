@@ -2,13 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import {
   selectOrder,
   setServiceType,
   setRequestedAt,
-  resetOrder,
   setOrderServiceType,
   fetchValidTimes,
   selectValidTimes,
@@ -24,29 +22,12 @@ import {
   todayDate,
   makeWeekdayIndices,
 } from '@open-tender/js'
-import {
-  BgImage,
-  Box,
-  ButtonLink,
-  ButtonStyled,
-  Message,
-} from '@open-tender/components'
+import { BgImage } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
-import iconMap from '../../iconMap'
-import {
-  Content,
-  Header,
-  Loading,
-  Main,
-  PageTitle,
-  PageContainer,
-  PageContent,
-  HeaderDefault,
-} from '../..'
-import { Account, StartOver } from '../../buttons'
+import { Content, Loading, Main, HeaderDefault } from '../..'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import TimePicker from '../../TimePicker'
@@ -114,7 +95,7 @@ const CateringPage = () => {
   const theme = useTheme()
   const { title: siteTitle } = useSelector(selectBrand)
   const { catering: config } = useSelector(selectConfig)
-  const { title, subtitle, policy, background } = config
+  const { title, subtitle, background } = config
   const { orderType, serviceType, requestedAt, revenueCenter } = useSelector(
     selectOrder
   )
@@ -124,7 +105,7 @@ const CateringPage = () => {
   const [date, setDate] = useState(null)
   const [minTime, setMinTime] = useState(new Date())
   const [settings, setSettings] = useState(null)
-  const { entity: validTimes, loading, error } = useSelector(selectValidTimes)
+  const { entity: validTimes, loading } = useSelector(selectValidTimes)
   const isLoading = loading === 'pending'
   const { windowRef } = useContext(AppContext)
 
@@ -141,8 +122,6 @@ const CateringPage = () => {
   }, [hasTypes, dispatch])
 
   useEffect(() => {
-    const requestedAtDate =
-      !requestedAt || requestedAt === 'asap' ? null : isoToDate(requestedAt, tz)
     if (validTimes) {
       const {
         first_time,
@@ -151,31 +130,20 @@ const CateringPage = () => {
         interval,
         closed_weekdays,
       } = validTimes
-      if (!first_time) {
-        // setDate(requestedAtDate)
-      } else {
-        const firstDate = isoToDate(first_time.utc, tz)
-        const newDate =
-          !requestedAtDate || firstDate > requestedAtDate
-            ? firstDate
-            : requestedAtDate
-        // setDate(newDate)
-        const closedWeekdays = makeWeekdayIndices(closed_weekdays)
-        const isClosed = (date) => {
-          return !closedWeekdays.includes(date.getDay())
-        }
-        const newSettings = {
-          minDate: firstDate,
-          minTime: time24ToDate(hours.open),
-          maxTime: time24ToDate(hours.close),
-          excludeDates: holidays.map((i) => makeLocalDate(i)),
-          interval: interval,
-          isClosed: isClosed,
-        }
-        setSettings(newSettings)
+      const firstDate = isoToDate(first_time.utc, tz)
+      const closedWeekdays = makeWeekdayIndices(closed_weekdays)
+      const isClosed = (date) => {
+        return !closedWeekdays.includes(date.getDay())
       }
-    } else {
-      // setDate(requestedAtDate)
+      const newSettings = {
+        minDate: firstDate,
+        minTime: time24ToDate(hours.open),
+        maxTime: time24ToDate(hours.close),
+        excludeDates: holidays.map((i) => makeLocalDate(i)),
+        interval: interval,
+        isClosed: isClosed,
+      }
+      setSettings(newSettings)
     }
   }, [validTimes, requestedAt, tz])
 
@@ -194,16 +162,14 @@ const CateringPage = () => {
     }
   }, [date, settings])
 
-  const chooseServiceType = (serviceType) => {
-    dispatch(setServiceType(serviceType))
-    const reqestedAtIso = date ? dateToIso(date, tz) : 'asap'
-    dispatch(setRequestedAt(reqestedAtIso))
-    history.push('/locations')
-  }
-
-  const startOver = () => {
-    dispatch(resetOrder())
-    history.push(`/locations`)
+  const selectTime = (time) => {
+    setDate(null)
+    setTimeout(() => {
+      dispatch(setServiceType('DELIVERY'))
+      const reqestedAtIso = time ? dateToIso(time, tz) : 'asap'
+      dispatch(setRequestedAt(reqestedAtIso))
+      history.push('/locations')
+    }, 300)
   }
 
   return (
@@ -232,13 +198,6 @@ const CateringPage = () => {
                   <CateringDatepicker>
                     <DatePicker
                       showPopperArrow={false}
-                      // showTimeSelect
-                      // timeCaption="Time"
-                      // timeFormat="h:mm aa"
-                      // timeIntervals={settings.interval || 15}
-                      // minTime={minTime || settings.minTime}
-                      // maxTime={settings.maxTime}
-                      // excludeTimes={excludeTimes}
                       dateFormat="yyyy-MM-dd h:mm aa"
                       minDate={settings.minDate}
                       excludeDates={settings.excludeDates}
@@ -251,10 +210,10 @@ const CateringPage = () => {
                     <TimePicker
                       date={date}
                       setDate={setDate}
+                      selectTime={selectTime}
                       interval={settings.interval || 15}
                       minTime={minTime || settings.minTime}
                       maxTime={settings.maxTime}
-                      // excludeTimes={excludeTimes}
                     />
                   </CateringDatepicker>
                 )}
