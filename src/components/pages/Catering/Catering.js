@@ -128,8 +128,6 @@ const CateringPage = () => {
   const isLoading = loading === 'pending'
   const { windowRef } = useContext(AppContext)
 
-  console.log(date)
-
   useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
@@ -250,7 +248,14 @@ const CateringPage = () => {
                       inline
                       shouldCloseOnSelect={false}
                     />
-                    <TimePicker date={date} setDate={setDate} />
+                    <TimePicker
+                      date={date}
+                      setDate={setDate}
+                      interval={settings.interval || 15}
+                      minTime={minTime || settings.minTime}
+                      maxTime={settings.maxTime}
+                      // excludeTimes={excludeTimes}
+                    />
                   </CateringDatepicker>
                 )}
               </CateringCalendar>

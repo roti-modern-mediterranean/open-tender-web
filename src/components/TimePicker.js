@@ -1,6 +1,8 @@
+import propTypes from 'prop-types'
 import { useTheme } from '@emotion/react'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import styled from '@emotion/styled'
+import { makeTimeIntervals } from '@open-tender/js'
 import { Preface } from '@open-tender/components'
 import { Checkmark } from './icons'
 
@@ -89,8 +91,11 @@ const TimePickerButton = ({ onClick }) => {
   )
 }
 
-const TimePicker = ({ date, minTime, maxTime, intervals, setDate }) => {
+const TimePicker = ({ date, minTime, maxTime, interval, setDate }) => {
   const hasDate = !!date
+  // console.log(date, minTime, maxTime, interval)
+  const intervals = makeTimeIntervals(date, minTime, maxTime, interval)
+  console.log(intervals)
 
   const handleClose = (evt) => {
     if (evt.target.id === 'time-picker-container') {
@@ -123,6 +128,15 @@ const TimePicker = ({ date, minTime, maxTime, intervals, setDate }) => {
       ) : null}
     </TransitionGroup>
   )
+}
+
+TimePicker.displayName = 'TimePicker'
+TimePicker.propTypes = {
+  date: propTypes.object,
+  minTime: propTypes.object,
+  maxTime: propTypes.object,
+  intervals: propTypes.number,
+  setDate: propTypes.func,
 }
 
 export default TimePicker
