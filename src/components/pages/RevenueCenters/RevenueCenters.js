@@ -126,6 +126,10 @@ const RevenueCenters = () => {
     }
   }, [loading, error, setActive, revenueCenters])
 
+  const back = () => {
+    history.push(orderType === 'CATERING' ? '/catering' : '/')
+  }
+
   return (
     <>
       <Helmet>
@@ -137,7 +141,7 @@ const RevenueCenters = () => {
           borderColor="transparent"
           style={{ boxShadow: 'none' }}
           title={navTitle}
-          left={<Back />}
+          left={<Back onClick={back} />}
           right={<Cart showOrder={false} />}
         />
         <Main style={{ paddingTop: '0' }}>
