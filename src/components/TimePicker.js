@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import { makeTimeIntervals } from '@open-tender/js'
 import { Preface } from '@open-tender/components'
 import { Checkmark } from './icons'
-import { useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 const TimePickerContainer = styled('div')`
   position: absolute;
@@ -75,9 +75,18 @@ const TimePickerTimeView = styled('button')`
   width: 100%;
   height: 6rem;
   padding: 0 0 0.5rem;
+  // margin: 0.5rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  // &:hover,
+  // &:active,
+  // &:focus {
+  //   span {
+  //     color: ${(props) => props.theme.colors.primary};
+  //   }
+  // }
 
   &:disabled {
     opacity: 0.5;
@@ -93,10 +102,15 @@ const TimePickerTimeView = styled('button')`
   }
 `
 
-const TimePickerTime = ({ label, onClick, disabled }) => {
+const TimePickerTime = ({ label, onClick, disabled, index }) => {
   const [hour, ampm] = label.split(' ')
   return (
-    <TimePickerTimeView onClick={onClick} disabled={disabled}>
+    <TimePickerTimeView
+      onClick={onClick}
+      disabled={disabled}
+      name="time-slot"
+      id={`time-${index}`}
+    >
       <TimePickerTimeText>{hour}</TimePickerTimeText>
       <TimePickerTimeText>{ampm}</TimePickerTimeText>
     </TimePickerTimeView>
@@ -143,6 +157,20 @@ const TimePickerButton = ({ onClick, disabled }) => {
   )
 }
 
+const getActiveElement = (elements, topOffset) => {
+  const filtered = elements.filter(
+    (i) => i.getBoundingClientRect().top <= topOffset
+  )
+  const active = filtered.reduce(
+    (max, i) =>
+      max && max.getBoundingClientRect().top > i.getBoundingClientRect().top
+        ? max
+        : i,
+    null
+  )
+  return active
+}
+
 const TimePicker = ({
   date,
   minTime,
@@ -151,10 +179,19 @@ const TimePicker = ({
   setDate,
   selectTime,
 }) => {
+  const scrollRef = useRef(null)
   const [time, setTime] = useState(null)
+  const [active, setActive] = useState(0)
+  const [offset, setOffset] = useState(0)
   const hasDate = !!date
-  // console.log(date, minTime, maxTime, interval)
-  const intervals = makeTimeIntervals(date, minTime, maxTime, interval)
+  const intervals = useMemo(
+    () => makeTimeIntervals(date, minTime, maxTime, interval),
+    [date, minTime, maxTime, interval]
+  )
+  const parent = scrollRef.current
+  // const topOffset = scrollRef.current
+  //   ? scrollRef.current.getBoundingClientRect().top
+  //   : 0
 
   const handleClose = (evt) => {
     if (evt.target.id === 'time-picker-container') {
@@ -170,6 +207,51 @@ const TimePicker = ({
     evt.target.blur()
   }
 
+  useEffect(() => {
+    console.log('setting interval')
+    const selected = intervals.find((i, idx) => idx === active)
+    console.log(selected.value)
+    setTime(selected.value)
+    if (parent) {
+      const parentOffset = parent.getBoundingClientRect().height * active
+      console.log(parentOffset)
+      // parent.scrollTop = parentOffset
+      setOffset(parentOffset)
+    }
+  }, [active, intervals, parent])
+
+  useEffect(() => {
+    console.log('setting scroll position')
+    if (parent) parent.scrollTop = offset
+  }, [parent, offset])
+
+  useEffect(() => {
+    console.log(parent)
+    let timer = null
+    const handleScroll = () => {
+      if (timer !== null) {
+        clearTimeout(timer)
+      }
+      timer = setTimeout(function () {
+        const elements = Array.from(document.getElementsByName('time-slot'))
+        const topOffset =
+          parent.getBoundingClientRect().top +
+          parent.getBoundingClientRect().height / 2
+        const activeElement = getActiveElement(elements, topOffset)
+        const activeIndex = activeElement
+          ? parseInt(activeElement.id.split('-')[1])
+          : 0
+        setActive(activeIndex)
+      }, 500)
+    }
+    if (parent) {
+      parent.addEventListener('scroll', handleScroll)
+      return () => {
+        parent.removeEventListener('scroll', () => handleScroll)
+      }
+    }
+  }, [parent])
+
   return (
     <TransitionGroup component={null}>
       {hasDate ? (
@@ -184,12 +266,13 @@ const TimePicker = ({
                 <TimePickerLabelText>Time</TimePickerLabelText>
               </TimePickerLabel>
               <TimePickerSelect>
-                <TimePickerTimes>
-                  {intervals.map((t) => (
+                <TimePickerTimes ref={scrollRef}>
+                  {intervals.map((t, index) => (
                     <TimePickerTime
                       label={t.label}
                       onClick={(evt) => chooseTime(evt, t.value)}
                       disabled={time ? true : false}
+                      index={index}
                     />
                   ))}
                 </TimePickerTimes>
