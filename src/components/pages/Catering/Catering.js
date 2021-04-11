@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import DatePicker from 'react-datepicker'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -21,16 +20,16 @@ import {
   makeLocalDateStr,
   todayDate,
   makeWeekdayIndices,
+  getMinutesfromDate,
 } from '@open-tender/js'
 import { BgImage } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Content, Loading, Main, HeaderDefault } from '../..'
+import { Content, Loading, Main, HeaderDefault, RequestedAtPicker } from '../..'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
-import TimePicker from '../../TimePicker'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -79,15 +78,15 @@ const CateringCalendar = styled('div')`
   align-items: center;
 `
 
-const CateringDatepicker = styled('div')`
-  position: relative;
-  width: 100%;
-  height: 35rem;
-  padding: 1rem;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  border-radius: ${(props) => props.theme.border.radius};
-  background-color: ${(props) => props.theme.colors.light};
-`
+// const CateringDatepicker = styled('div')`
+//   position: relative;
+//   width: 100%;
+//   height: 35rem;
+//   padding: 1rem;
+//   font-size: ${(props) => props.theme.fonts.sizes.small};
+//   border-radius: ${(props) => props.theme.border.radius};
+//   background-color: ${(props) => props.theme.colors.light};
+// `
 
 const CateringPage = () => {
   const history = useHistory()
@@ -172,6 +171,9 @@ const CateringPage = () => {
     }, 300)
   }
 
+  const startMin = getMinutesfromDate(minTime || settings.minTime)
+  const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
+
   return (
     <>
       <Helmet>
@@ -195,27 +197,20 @@ const CateringPage = () => {
                 {isLoading || !settings ? (
                   <Loading type="Clip" color={theme.colors.light} size={50} />
                 ) : (
-                  <CateringDatepicker>
-                    <DatePicker
-                      showPopperArrow={false}
-                      dateFormat="yyyy-MM-dd h:mm aa"
-                      minDate={settings.minDate}
-                      excludeDates={settings.excludeDates}
-                      filterDate={settings.isClosed}
-                      selected={date}
-                      onChange={(date) => setDate(date)}
-                      inline
-                      shouldCloseOnSelect={false}
-                    />
-                    <TimePicker
-                      date={date}
-                      setDate={setDate}
-                      selectTime={selectTime}
-                      interval={settings.interval || 15}
-                      minTime={minTime || settings.minTime}
-                      maxTime={settings.maxTime}
-                    />
-                  </CateringDatepicker>
+                  <RequestedAtPicker
+                    tz={tz}
+                    date={date}
+                    setDate={(date) => setDate(date)}
+                    minDate={settings.minDate}
+                    maxDate={null}
+                    excludeDates={settings.excludeDates}
+                    filterDate={settings.isClosed}
+                    minTime={startMin}
+                    maxTime={endMin}
+                    interval={settings.interval || 15}
+                    excludeTimes={[]}
+                    selectTime={selectTime}
+                  />
                 )}
               </CateringCalendar>
             </CateringContent>

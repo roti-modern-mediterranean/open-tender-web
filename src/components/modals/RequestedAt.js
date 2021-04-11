@@ -8,15 +8,10 @@ import {
   serviceTypeNamesMap,
 } from '@open-tender/js'
 import { selectOrder, setRequestedAt } from '@open-tender/redux'
-import {
-  ButtonLink,
-  RequestedAtCalendar,
-  RequestedAtTimes,
-  Text,
-} from '@open-tender/components'
+import { ButtonLink, RequestedAtTimes, Text } from '@open-tender/components'
 
 import { closeModal, toggleSidebar } from '../../slices'
-import { ModalContent, ModalView } from '..'
+import { ModalContent, ModalView, RequestedAtCalendar } from '..'
 
 const RequestedAt = ({
   forcedUpdate = false,

@@ -166,11 +166,12 @@ const getActiveElement = (elements, topOffset) => {
 
 const TimePicker = ({
   date,
+  setDate,
+  selectTime,
   minTime,
   maxTime,
   interval,
-  setDate,
-  selectTime,
+  excludeTimes,
 }) => {
   const scrollRef = useRef(null)
   const [time, setTime] = useState(null)
@@ -179,8 +180,8 @@ const TimePicker = ({
   const [selected, setSelected] = useState(false)
   const hasDate = !!date
   const intervals = useMemo(
-    () => makeTimeIntervals(date, minTime, maxTime, interval),
-    [date, minTime, maxTime, interval]
+    () => makeTimeIntervals(date, minTime, maxTime, interval, excludeTimes),
+    [date, minTime, maxTime, interval, excludeTimes]
   )
   const parent = scrollRef.current
   // const topOffset = scrollRef.current
