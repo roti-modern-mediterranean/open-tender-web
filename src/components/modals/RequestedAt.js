@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
+import styled from '@emotion/styled'
 import {
   timezoneMap,
   makeRequestedAtStr,
@@ -11,8 +12,8 @@ import { selectOrder, setRequestedAt } from '@open-tender/redux'
 import { RequestedAtTimes } from '@open-tender/components'
 
 import { closeModal, toggleSidebar } from '../../slices'
-import { ModalContent, ModalView, RequestedAtCalendar } from '..'
-import styled from '@emotion/styled'
+import { ModalContent, RequestedAtCalendar } from '..'
+import ModalView from '../Modal/ModalView'
 
 const RequestedAtModalView = styled(ModalView)`
   width: 42rem;
