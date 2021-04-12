@@ -8,6 +8,7 @@ const RequestedAtPickerView = styled('div')`
   width: 100%;
   height: 35rem;
   padding: 1rem;
+  overflow: hidden;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   border-radius: ${(props) => props.theme.border.radius};
   background-color: ${(props) => props.theme.colors.light};

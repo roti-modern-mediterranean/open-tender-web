@@ -8,10 +8,25 @@ import {
   serviceTypeNamesMap,
 } from '@open-tender/js'
 import { selectOrder, setRequestedAt } from '@open-tender/redux'
-import { ButtonLink, RequestedAtTimes, Text } from '@open-tender/components'
+import { RequestedAtTimes } from '@open-tender/components'
 
 import { closeModal, toggleSidebar } from '../../slices'
 import { ModalContent, ModalView, RequestedAtCalendar } from '..'
+import styled from '@emotion/styled'
+
+const RequestedAtModalView = styled(ModalView)`
+  width: 42rem;
+`
+
+const RequestedAtMessage = styled('p')`
+  margin: 0 0 2rem;
+  font-size: ${(props) => props.theme.fonts.sizes.small};
+  line-height: ${(props) => props.theme.lineHeight};
+
+  span {
+    font-weight: 600;
+  }
+`
 
 const RequestedAt = ({
   forcedUpdate = false,
@@ -46,7 +61,7 @@ const RequestedAt = ({
   }
 
   return (
-    <ModalView>
+    <RequestedAtModalView>
       {firstTimes ? (
         <ModalContent
           title={
@@ -54,23 +69,19 @@ const RequestedAt = ({
               ? 'Order date & time updated'
               : 'Choose an order date & time'
           }
-          subtitle={
-            <Text as="p" color="alert" bold={true}>
-              {forcedUpdate
-                ? `Your previous order time is no longer available and has been updated
-            to ${requestedTime}.`
-                : `Your current order time is ${requestedTime}.`}
-            </Text>
-          }
         >
-          <div>
-            <Text as="p" size="small">
-              <ButtonLink onClick={() => dispatch(closeModal())}>
-                Keep this time
-              </ButtonLink>{' '}
-              or use the calendar below to choose a different day & time.
-            </Text>
-          </div>
+          {forcedUpdate ? (
+            <RequestedAtMessage>
+              Your previous order time is no longer available and has been
+              updated to <span>{requestedTime}</span>. Use the calendar below to
+              change this.
+            </RequestedAtMessage>
+          ) : (
+            <RequestedAtMessage>
+              Your current order time is <span>{requestedTime}</span>. Use the
+              calendar below to change this.
+            </RequestedAtMessage>
+          )}
           <RequestedAtCalendar
             requestedAt={requestedAt}
             serviceType={serviceType}
@@ -95,7 +106,7 @@ const RequestedAt = ({
           />
         </ModalContent>
       ) : null}
-    </ModalView>
+    </RequestedAtModalView>
   )
 }
 

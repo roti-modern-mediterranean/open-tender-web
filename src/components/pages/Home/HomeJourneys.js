@@ -134,15 +134,15 @@ const HomeJourneys = () => {
       subtitle: 'Parturient dictumst vitae, arcu posuere massa duis',
       footer: (
         <>
-          <ButtonStyled
+          {/* <ButtonStyled
             onClick={() => history.push('/locations')}
             color="secondary"
             size="big"
             style={{ backgroundColor: 'transparent' }}
           >
             Build Your Experience
-          </ButtonStyled>
-          <ButtonStyled onClick={() => history.push('/locations')} size="big">
+          </ButtonStyled> */}
+          <ButtonStyled onClick={() => history.push('/catering')} size="big">
             Recommended Packs
           </ButtonStyled>
         </>

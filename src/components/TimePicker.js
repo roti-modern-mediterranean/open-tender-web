@@ -6,6 +6,7 @@ import { makeTimeIntervals } from '@open-tender/js'
 import { Preface } from '@open-tender/components'
 import { Checkmark } from './icons'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { format } from 'date-fns'
 
 const TimePickerContainer = styled('div')`
   position: absolute;
@@ -179,6 +180,7 @@ const TimePicker = ({
   const [offset, setOffset] = useState(0)
   const [selected, setSelected] = useState(false)
   const hasDate = !!date
+  const dateStr = date ? format(date, 'M/d') : null
   const intervals = useMemo(
     () => makeTimeIntervals(date, minTime, maxTime, interval, excludeTimes),
     [date, minTime, maxTime, interval, excludeTimes]
@@ -204,10 +206,12 @@ const TimePicker = ({
 
   useEffect(() => {
     const selected = intervals.find((i, idx) => idx === active)
-    setTime(selected.value)
-    if (parent) {
-      const parentOffset = parent.getBoundingClientRect().height * active
-      setOffset(parentOffset)
+    if (selected) {
+      setTime(selected.value)
+      if (parent) {
+        const parentOffset = parent.getBoundingClientRect().height * active
+        setOffset(parentOffset)
+      }
     }
   }, [active, intervals, parent])
 
@@ -252,7 +256,7 @@ const TimePicker = ({
           <TimePickerContainer id="time-picker-container" onClick={handleClose}>
             <TimePickerView>
               <TimePickerLabel>
-                <TimePickerLabelText>Time</TimePickerLabelText>
+                <TimePickerLabelText>{dateStr}</TimePickerLabelText>
               </TimePickerLabel>
               <TimePickerSelect>
                 <TimePickerTimes ref={scrollRef}>
