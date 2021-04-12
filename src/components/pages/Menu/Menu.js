@@ -32,6 +32,7 @@ import { Content, HeaderDefault, Main, ScreenreaderTitle } from '../..'
 import MenuContent from './MenuContent'
 import { selectTopOffset, setTopOffset } from '../../../slices/miscSlice'
 import MenuFooter from './MenuFooter'
+import MenuCatering from './MenuCatering'
 
 export const MenuContext = createContext(null)
 
@@ -132,7 +133,7 @@ const Menu = () => {
             }}
           >
             <ScreenreaderTitle>Menu</ScreenreaderTitle>
-            <MenuContent />
+            {orderType === 'CATERING' ? <MenuCatering /> : <MenuContent />}
             <MenuFooter />
           </MenuContext.Provider>
         </Main>
