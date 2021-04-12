@@ -26,6 +26,7 @@ import {
 } from '../..'
 import { Back, Cart } from '../../buttons'
 import MenuAllergenFilter from '../Menu/MenuAllergenFilter'
+import MenuFooter from '../Menu/MenuFooter'
 import {
   MenuCateringView,
   MenuCateringCategories,
@@ -41,6 +42,10 @@ const MenuCategoryChild = styled('div')`
 
 const MenuCategoryChildHeader = styled('div')`
   margin: 0 0 3rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    text-align: center;
+    margin: 0 0 5rem;
+  }
 
   h3 {
     font-size: 3.8rem;
@@ -83,7 +88,7 @@ const MenuCategory = () => {
       <Helmet>
         <title>Menu | {name}</title>
       </Helmet>
-      <Content hasFooter={false}>
+      <Content>
         <Header
           bgColor={isBrowser ? 'dark' : 'transparent'}
           borderColor={isBrowser ? 'dark' : 'transparent'}
@@ -142,6 +147,7 @@ const MenuCategory = () => {
           </MenuCateringView>
         </Main>
       </Content>
+      <MenuFooter />
       <SidebarModal>
         <Builder menuItem={item} soldOut={soldOut} />
       </SidebarModal>
