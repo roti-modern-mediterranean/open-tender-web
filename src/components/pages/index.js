@@ -32,6 +32,7 @@ import HouseAccounts from './HouseAccounts'
 import Location from './Location'
 import LevelUp from './LevelUp'
 import Menu from './Menu'
+import MenuCategory from './MenuCategory'
 import MenuItem from './MenuItem'
 import NotFound from './NotFound'
 import Order from './Order'
@@ -85,6 +86,7 @@ export {
   Location,
   LevelUp,
   Menu,
+  MenuCategory,
   MenuItem,
   NotFound,
   Order,

@@ -28,6 +28,7 @@ import {
   Location,
   LevelUp,
   Menu,
+  MenuCategory,
   MenuItem,
   NotFound,
   Order,
@@ -95,6 +96,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/menu/:slug">
         <Menu />
+      </Route>
+      <Route path="/menu/:slug/category/:categorySlug">
+        <MenuCategory />
       </Route>
       <Route path="/menu/:slug/item/:itemSlug">
         <MenuItem />

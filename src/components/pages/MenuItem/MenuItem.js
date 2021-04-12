@@ -71,7 +71,7 @@ const MenuItem = () => {
           right={<Cart />}
         />
         <Main style={isBrowser ? null : { padding: '0' }}>
-          <ScreenreaderTitle>Menu</ScreenreaderTitle>
+          <ScreenreaderTitle>{item.name}</ScreenreaderTitle>
           <Builder
             menuItem={item}
             addItemToCart={addItem}

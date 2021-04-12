@@ -261,7 +261,11 @@ const TimePicker = ({
               <TimePickerSelect>
                 <TimePickerTimes ref={scrollRef}>
                   {intervals.map((t, index) => (
-                    <TimePickerTime label={t.label} index={index} />
+                    <TimePickerTime
+                      key={t.label}
+                      label={t.label}
+                      index={index}
+                    />
                   ))}
                 </TimePickerTimes>
               </TimePickerSelect>
@@ -282,8 +286,8 @@ const TimePicker = ({
 TimePicker.displayName = 'TimePicker'
 TimePicker.propTypes = {
   date: propTypes.object,
-  minTime: propTypes.object,
-  maxTime: propTypes.object,
+  minTime: propTypes.number,
+  maxTime: propTypes.number,
   intervals: propTypes.number,
   setDate: propTypes.func,
 }

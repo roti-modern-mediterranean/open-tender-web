@@ -20,6 +20,7 @@ const PageTitleView = styled('div')`
 
   > div:first-of-type {
     flex: 1;
+    max-width: 96rem;
   }
 
   > div + div {

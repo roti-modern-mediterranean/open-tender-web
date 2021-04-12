@@ -13,7 +13,7 @@ const MenuView = styled('div')`
   position: relative;
 `
 
-const MenuCateringView = styled('div')`
+export const MenuCateringView = styled('div')`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.125s forwards;
   margin: ${(props) => props.theme.layout.margin} 0;
@@ -22,7 +22,7 @@ const MenuCateringView = styled('div')`
   }
 `
 
-const MenuCateringCategories = styled('div')`
+export const MenuCateringCategories = styled('div')`
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
@@ -36,7 +36,8 @@ const MenuCateringCategories = styled('div')`
     margin: -2rem 0 0;
   }
 `
-const MenuCateringCategoryItem = styled('div')`
+
+export const MenuCateringCategoryItem = styled('div')`
   width: 33.33333%;
   padding: 0 1.6rem 3.2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
