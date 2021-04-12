@@ -2,7 +2,7 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { setCurrentCategory, selectMenuSlug } from '@open-tender/redux'
 import { slugify } from '@open-tender/js'
-import { BgImage, Preface, useImage } from '@open-tender/components'
+import { BgImage, Heading, Preface, useImage } from '@open-tender/components'
 import { BackgroundLoading } from '../..'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -50,7 +50,7 @@ export const MenuCateringContent = styled('div')`
   )`};
 `
 
-export const MenuCateringCategoryTitle = styled('h3')`
+export const MenuCateringCategoryTitle = styled(Heading)`
   color: ${(props) => props.theme.colors.light};
   font-size: 2.6rem;
   line-height: 1;
@@ -108,7 +108,7 @@ const MenuCateringCategory = ({ category }) => {
     <MenuCateringCategoryView style={bgStyle} as="button" onClick={onClick}>
       <MenuCateringContent>
         <MenuCateringCategoryTitle>{name}</MenuCateringCategoryTitle>
-        <p>{short_description}</p>
+        {short_description && <p>{short_description}</p>}
       </MenuCateringContent>
       {isLoading && <BackgroundLoading />}
     </MenuCateringCategoryView>

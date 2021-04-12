@@ -33,6 +33,24 @@ import {
 } from '../Menu/MenuCatering'
 import MenuCategoryItem from './MenuCategoryItem'
 import { Builder } from '../../sidebarModals'
+import styled from '@emotion/styled'
+
+const MenuCategoryChild = styled('div')`
+  margin: 0 0 4rem;
+`
+
+const MenuCategoryChildHeader = styled('div')`
+  margin: 0 0 3rem;
+
+  h3 {
+    font-size: 3.8rem;
+    line-height: 1;
+  }
+
+  p {
+    margin: 1rem 0 0;
+  }
+`
 
 const MenuCategory = () => {
   const history = useHistory()
@@ -42,7 +60,7 @@ const MenuCategory = () => {
   const item = useSelector(selectCurrentItem)
   const soldOut = useSelector(selectSoldOut)
   const menuSlug = useSelector(selectMenuSlug)
-  const { name, description, items } = category || {}
+  const { name, description, items, children } = category || {}
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -69,7 +87,7 @@ const MenuCategory = () => {
         <Header
           bgColor={isBrowser ? 'dark' : 'transparent'}
           borderColor={isBrowser ? 'dark' : 'transparent'}
-          style={isBrowser ? null : { position: 'absolute' }}
+          // style={isBrowser ? null : { position: 'absolute' }}
           title={
             isBrowser ? (
               <Link to="/">
@@ -80,7 +98,7 @@ const MenuCategory = () => {
           left={<Back text="Back to menu" onClick={cancel} />}
           right={<Cart />}
         />
-        <Main style={isBrowser ? null : { padding: '0' }}>
+        <Main>
           <MenuCateringView>
             <Container>
               <PageTitle title={name} subtitle={description}>
@@ -92,10 +110,34 @@ const MenuCategory = () => {
                     <MenuCategoryItem category={category} item={item} />
                   </MenuCateringCategoryItem>
                 ))}
-                <MenuCateringCategoryItem>
-                  <CateringContact />
-                </MenuCateringCategoryItem>
+                {children.length === 0 && (
+                  <MenuCateringCategoryItem>
+                    <CateringContact />
+                  </MenuCateringCategoryItem>
+                )}
               </MenuCateringCategories>
+              {children.map((child) => (
+                <MenuCategoryChild>
+                  <MenuCategoryChildHeader>
+                    <h3>{child.name}</h3>
+                    {child.description && <p>{child.description}</p>}
+                  </MenuCategoryChildHeader>
+                  <MenuCateringCategories>
+                    {child.items.map((item) => (
+                      <MenuCateringCategoryItem key={item.id}>
+                        <MenuCategoryItem category={category} item={item} />
+                      </MenuCateringCategoryItem>
+                    ))}
+                  </MenuCateringCategories>
+                </MenuCategoryChild>
+              ))}
+              {children.length > 0 && (
+                <MenuCateringCategories>
+                  <MenuCateringCategoryItem>
+                    <CateringContact />
+                  </MenuCateringCategoryItem>
+                </MenuCateringCategories>
+              )}
             </Container>
           </MenuCateringView>
         </Main>

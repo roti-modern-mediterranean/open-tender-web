@@ -20,6 +20,7 @@ const BuilderGroupTitle = styled(Preface)`
   font-weight: 500;
   font-size: 2.2rem;
   letter-spacing: 0.01em;
+  line-height: 1;
 `
 
 const BuilderGroupCount = styled(Preface)`

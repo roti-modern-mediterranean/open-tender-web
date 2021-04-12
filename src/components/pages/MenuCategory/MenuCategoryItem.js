@@ -88,11 +88,13 @@ const MenuCategoryItem = ({ category, item }) => {
       isSoldOut={isSoldOut}
     >
       <MenuCateringContent isSoldOut={isSoldOut}>
-        <MenuCateringCategoryTitle>{name}</MenuCateringCategoryTitle>
+        <MenuCateringCategoryTitle as="p">{name}</MenuCateringCategoryTitle>
         <MenuCateringCategoryDescription>
-          <MenuCateringCategoryPrice>
-            {formatDollars(price, '', 0)}
-          </MenuCateringCategoryPrice>
+          {price !== '0.00' && (
+            <MenuCateringCategoryPrice>
+              {formatDollars(price, '', 0)}
+            </MenuCateringCategoryPrice>
+          )}
           <MenuCateringCategoryShorthand>
             {shorthand}
           </MenuCateringCategoryShorthand>
