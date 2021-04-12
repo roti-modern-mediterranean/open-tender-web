@@ -3,10 +3,11 @@ import styled from '@emotion/styled'
 
 import { Container, PageTitle } from '../..'
 import { MenuContext } from './Menu'
-import MenuLoading from './MenuLoading'
+// import MenuLoading from './MenuLoading'
 import MenuError from './MenuError'
 import MenuAllergenFilter from './MenuAllergenFilter'
 import MenuCateringCategory from './MenuCateringCategory'
+import CateringContact from '../../CateringContact'
 
 const MenuView = styled('div')`
   position: relative;
@@ -32,7 +33,7 @@ const MenuCateringCategories = styled('div')`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    margin: 0;
+    margin: -2rem 0 0;
   }
 `
 const MenuCateringCategoryItem = styled('div')`
@@ -43,7 +44,7 @@ const MenuCateringCategoryItem = styled('div')`
   }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
-    padding: 0 0 1.2rem;
+    padding: 0 0 2rem;
     max-width: 40rem;
   }
 `
@@ -56,7 +57,7 @@ const MenuCatering = () => {
     <MenuError />
   ) : (
     <MenuView>
-      <MenuLoading />
+      {/* <MenuLoading /> */}
       <MenuCateringView>
         <Container>
           <PageTitle
@@ -71,6 +72,9 @@ const MenuCatering = () => {
                 <MenuCateringCategory category={category} />
               </MenuCateringCategoryItem>
             ))}
+            <MenuCateringCategoryItem>
+              <CateringContact />
+            </MenuCateringCategoryItem>
           </MenuCateringCategories>
         </Container>
       </MenuCateringView>
