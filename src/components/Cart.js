@@ -8,11 +8,16 @@ import {
   selectCart,
   removeItemFromCart,
   selectMenuSlug,
+  selectOrder,
 } from '@open-tender/redux'
 import { BuilderQuantity } from '@open-tender/components'
 import { slugify } from '@open-tender/js'
 
-import { selectDisplaySettings, toggleSidebar } from '../slices'
+import {
+  selectDisplaySettings,
+  toggleSidebar,
+  toggleSidebarModal,
+} from '../slices'
 import { MinusSign, PlusSign } from './icons'
 import { CartItem } from '.'
 
@@ -24,6 +29,7 @@ const quantityIconMap = {
 const Cart = () => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const { orderType } = useSelector(selectOrder)
   const cart = useSelector(selectCart)
   const displaySettings = useSelector(selectDisplaySettings)
   const menuSlug = useSelector(selectMenuSlug)
@@ -31,7 +37,9 @@ const Cart = () => {
   const editItem = (item) => {
     dispatch(setCurrentItem(item))
     dispatch(toggleSidebar())
-    history.push(`${menuSlug}/item/${slugify(item.name)}`)
+    orderType === 'CATERING'
+      ? dispatch(toggleSidebarModal())
+      : history.push(`${menuSlug}/item/${slugify(item.name)}`)
   }
 
   const removeItem = (item) => {

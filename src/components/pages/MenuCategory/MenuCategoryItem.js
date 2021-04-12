@@ -1,16 +1,14 @@
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import {
   setCurrentItem,
   selectSoldOut,
   selectSelectedAllergenNames,
-  selectMenuSlug,
 } from '@open-tender/redux'
-import { slugify, formatDollars, convertStringToArray } from '@open-tender/js'
+import { formatDollars, convertStringToArray } from '@open-tender/js'
 import { Preface, useImage } from '@open-tender/components'
 
-import { selectDisplaySettings } from '../../../slices'
+import { selectDisplaySettings, toggleSidebarModal } from '../../../slices'
 import { BackgroundLoading } from '../..'
 import {
   MenuCateringCategoryView,
@@ -52,7 +50,6 @@ const MenuCategoryItemAllergens = styled('div')`
 
 const MenuCategoryItem = ({ category, item }) => {
   const dispatch = useDispatch()
-  const history = useHistory()
   const soldOut = useSelector(selectSoldOut)
   const allergenAlerts = useSelector(selectSelectedAllergenNames)
   const { allergens: showAllergens } = useSelector(selectDisplaySettings)
@@ -64,18 +61,12 @@ const MenuCategoryItem = ({ category, item }) => {
     price,
     shorthand,
   } = item
-  console.log(item)
   const imageUrl = small_image_url || big_image_url || app_image_url
   const bgStyle = imageUrl ? { backgroundImage: `url(${imageUrl}` } : null
   const { hasLoaded, hasError } = useImage(imageUrl)
   const isLoading = imageUrl && !hasLoaded && !hasError
-  const menuSlug = useSelector(selectMenuSlug)
-  const itemSlug = `${menuSlug}/category/${slugify(
-    category.name
-  )}/items/${slugify(name)}`
   const isSoldOut = soldOut ? soldOut.includes(item.id) : false
   const allergens = showAllergens ? convertStringToArray(item.allergens) : []
-  console.log(allergenAlerts)
   const allergenAlert =
     allergenAlerts && allergens.length
       ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
@@ -85,7 +76,7 @@ const MenuCategoryItem = ({ category, item }) => {
     if (!isSoldOut) {
       evt.preventDefault()
       dispatch(setCurrentItem(item))
-      history.push(itemSlug)
+      dispatch(toggleSidebarModal())
     }
   }
 

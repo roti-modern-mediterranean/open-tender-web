@@ -18,7 +18,7 @@ import BuilderOption from './BuilderOption'
 import BuilderMadeFor from './BuilderMadeFor'
 import BuilderNotes from './BuilderNotes'
 import BuilderOptionToggle from './BuilderOptionToggle'
-import BuilderItemQuantiy from './BuilderItemQuantity'
+import BuilderItemQuantity from './BuilderItemQuantity'
 import { isBrowser } from 'react-device-detect'
 import { selectTheme } from '../../slices'
 import { useSelector } from 'react-redux'
@@ -553,7 +553,7 @@ const Builder = ({
       <BuilderFooter>
         <CartFooter
           label={
-            <BuilderItemQuantiy
+            <BuilderItemQuantity
               item={item}
               increment={increment}
               decrement={decrement}

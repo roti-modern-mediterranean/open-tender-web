@@ -5,9 +5,11 @@ import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
 import {
   selectCurrentCategory,
+  selectCurrentItem,
   setCurrentCategory,
   setCurrentItem,
   selectMenuSlug,
+  selectSoldOut,
 } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
@@ -20,6 +22,7 @@ import {
   Logo,
   Main,
   PageTitle,
+  SidebarModal,
 } from '../..'
 import { Back, Cart } from '../../buttons'
 import MenuAllergenFilter from '../Menu/MenuAllergenFilter'
@@ -29,12 +32,15 @@ import {
   MenuCateringCategoryItem,
 } from '../Menu/MenuCatering'
 import MenuCategoryItem from './MenuCategoryItem'
+import { Builder } from '../../sidebarModals'
 
 const MenuCategory = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
   const category = useSelector(selectCurrentCategory)
+  const item = useSelector(selectCurrentItem)
+  const soldOut = useSelector(selectSoldOut)
   const menuSlug = useSelector(selectMenuSlug)
   const { name, description, items } = category || {}
 
@@ -94,6 +100,9 @@ const MenuCategory = () => {
           </MenuCateringView>
         </Main>
       </Content>
+      <SidebarModal>
+        <Builder menuItem={item} soldOut={soldOut} />
+      </SidebarModal>
     </>
   )
 }

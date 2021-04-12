@@ -2,10 +2,10 @@ import React from 'react'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { selectSidebar, toggleSidebar } from '../../slices'
+import { selectSidebarModal, toggleSidebarModal } from '../../slices'
 import styled from '@emotion/styled'
 
-const SidebarOverlayView = styled('div')`
+const SidebarModalOverlayView = styled('div')`
   position: fixed;
   z-index: 16;
   top: 0;
@@ -15,20 +15,22 @@ const SidebarOverlayView = styled('div')`
   background-color: ${(props) => props.theme.overlay.dark};
 `
 
-const SidebarOverlay = () => {
+const SidebarModalOverlay = () => {
   const dispatch = useDispatch()
-  const { isOpen } = useSelector(selectSidebar)
+  const { isOpen } = useSelector(selectSidebarModal)
   return (
     <TransitionGroup component={null}>
       {isOpen ? (
         <CSSTransition key="sidebar-overlay" classNames="overlay" timeout={500}>
-          <SidebarOverlayView onClick={() => dispatch(toggleSidebar())} />
+          <SidebarModalOverlayView
+            onClick={() => dispatch(toggleSidebarModal())}
+          />
         </CSSTransition>
       ) : null}
     </TransitionGroup>
   )
 }
 
-SidebarOverlay.displayName = 'SidebarOverlay'
+SidebarModalOverlay.displayName = 'SidebarModalOverlay'
 
-export default SidebarOverlay
+export default SidebarModalOverlay
