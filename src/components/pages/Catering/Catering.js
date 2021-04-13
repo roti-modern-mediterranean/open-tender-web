@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import {
   selectOrder,
-  // setServiceType,
   setRequestedAt,
   setOrderServiceType,
   fetchValidTimes,
@@ -281,7 +280,7 @@ const CateringPage = () => {
   const selectTime = (time) => {
     setDate(null)
     setTimeout(() => {
-      // dispatch(setServiceType('DELIVERY'))
+      dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
       const reqestedAtIso = time ? dateToIso(time, tz) : 'asap'
       dispatch(setRequestedAt(reqestedAtIso))
       history.push('/locations')
