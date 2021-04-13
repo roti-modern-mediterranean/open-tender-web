@@ -13,10 +13,11 @@ import {
   selectOrder,
   selectCheckout,
   selectTimezone,
-  // resetCheckout,
+  resetCheckout,
   selectCartValidate,
   validateOrder,
   selectCartTotal,
+  selectCustomer,
 } from '@open-tender/redux'
 import {
   makeServiceTypeName,
@@ -101,6 +102,7 @@ const CheckoutDetails = () => {
   const [errors, setErrors] = useState(null)
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
+  const { profile: customer } = useSelector(selectCustomer) || {}
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
@@ -117,8 +119,9 @@ const CheckoutDetails = () => {
   const validate = useCallback((order) => dispatch(validateOrder(order)), [
     dispatch,
   ])
-  // const cartWithDetails = { ...cartValidate, ...details }
-  useCheckout(validate, cartValidate)
+  const withCustomer = customer ? { ...cartValidate, customer } : cartValidate
+  const withAddress = address ? { ...withCustomer, address } : withCustomer
+  useCheckout(validate, withAddress)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -145,10 +148,10 @@ const CheckoutDetails = () => {
     dispatch(openModal({ type: 'orderType' }))
   }
 
-  // const reset = () => {
-  //   dispatch(resetCheckout())
-  //   history.push(menuSlug)
-  // }
+  const reset = () => {
+    dispatch(resetCheckout())
+    history.push(menuSlug)
+  }
 
   const handleSubmit = () => {
     const fullAddress = { ...address, ...form.address }
@@ -175,7 +178,7 @@ const CheckoutDetails = () => {
         <Main>
           <PageContainer style={{ margin: '0 auto' }}>
             <CheckoutHeader title={`${orderTypeName} Details`}>
-              {/* <CheckoutLink onClick={reset} text="Reset Checkout" /> */}
+              <CheckoutLink onClick={reset} text="Reset Checkout" />
             </CheckoutHeader>
             <FormWrapper>
               <ErrMsg errMsg={formErrors.form} style={{ margin: '0 0 2rem' }} />

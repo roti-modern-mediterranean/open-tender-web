@@ -8,7 +8,7 @@ import { isString, makeFullAddress, makePhone } from '@open-tender/js'
 
 import { CheckoutLink, RevenueCenter } from '../..'
 import { FormHeader, Input } from '../../inputs'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { MapMarker, Phone, User } from '../../icons'
 
 const iconMap = {
@@ -61,6 +61,8 @@ const CheckoutAddress = ({ orderTypeName, errors = {} }) => {
   const { revenueCenter, serviceType } = order
   const fullAddress = makeFullAddress(order.address)
   const { check, form } = useSelector(selectCheckout)
+  const checkAddress = check ? check.address || {} : {}
+  const { unit, company, contact, phone } = checkAddress
   const [address, setAddress] = useState(form.address)
   const config = check ? check.config : {}
   const required = config.required ? config.required.address : []
@@ -69,6 +71,19 @@ const CheckoutAddress = ({ orderTypeName, errors = {} }) => {
     .filter((i) => displayed.includes(i.config) || required.includes(i.config))
     .map((i) => ({ ...i, required: required.includes(i.config) }))
   const errMsg = isString(errors) ? errors : null
+
+  useEffect(() => {
+    if (unit !== undefined) {
+      const address = {
+        unit,
+        company,
+        contact,
+        phone,
+      }
+      setAddress(address)
+      dispatch(updateForm({ address }))
+    }
+  }, [dispatch, unit, company, contact, phone])
 
   const changeRevenueCenter = () => {
     history.push('/locations')

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import debounce from 'lodash/debounce'
 import propTypes from 'prop-types'
@@ -50,6 +50,14 @@ const CheckoutOptionsView = styled('div')`
 const CheckoutOptions = ({ errors = {} }) => {
   const dispatch = useDispatch()
   const { check, form } = useSelector(selectCheckout)
+  const checkDetails = check ? check.details || {} : {}
+  const {
+    person_count,
+    tax_exempt_id,
+    eating_utensils,
+    serving_utensils,
+    notes,
+  } = checkDetails
   const [details, setDetails] = useState(form.details)
   const config = check ? check.config : {}
   const curbside = config.order_fulfillment
@@ -60,6 +68,27 @@ const CheckoutOptions = ({ errors = {} }) => {
     .filter((i) => displayed.includes(i.config) || required.includes(i.config))
     .map((i) => ({ ...i, required: required.includes(i.config) }))
   const showNotes = displayed.includes('notes') || required.includes('notes')
+
+  useEffect(() => {
+    if (eating_utensils !== undefined) {
+      const details = {
+        person_count,
+        tax_exempt_id,
+        eating_utensils,
+        serving_utensils,
+        notes,
+      }
+      setDetails(details)
+      dispatch(updateForm({ details }))
+    }
+  }, [
+    dispatch,
+    person_count,
+    tax_exempt_id,
+    eating_utensils,
+    serving_utensils,
+    notes,
+  ])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedUpdate = useCallback(

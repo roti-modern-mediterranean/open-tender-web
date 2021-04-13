@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectOrder } from '@open-tender/redux'
 
@@ -40,6 +40,15 @@ const CheckoutNotes = ({ notes, handleChange, errors = {} }) => {
   const [text, setText] = useState(initText)
   const { serviceType } = useSelector(selectOrder)
   const label = `${serviceType.toLowerCase()} Notes`
+  const noNotes = !text && options.length === 0
+
+  useEffect(() => {
+    if (noNotes && notes) {
+      const [initOptions, initText] = makeInitState(notes)
+      setOptions(initOptions)
+      setText(initText)
+    }
+  }, [noNotes, notes])
 
   const handleOption = (evt, option) => {
     evt.preventDefault()

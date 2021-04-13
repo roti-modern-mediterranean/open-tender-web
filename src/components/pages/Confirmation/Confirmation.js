@@ -96,9 +96,9 @@ const Confirmation = () => {
     dispatch(resetGroupOrder())
   }, [order, dispatch, history])
 
-  useEffect(() => {
-    return () => dispatch(resetConfirmation())
-  }, [dispatch])
+  // useEffect(() => {
+  //   return () => dispatch(resetConfirmation())
+  // }, [dispatch])
 
   useEffect(() => {
     if (!hasFulfillment) dispatch(resetOrderFulfillment())

@@ -16,7 +16,7 @@ import {
 import { ButtonStyled } from '@open-tender/components'
 
 import { closeModal } from '../../slices'
-import { ModalContent, ModalView } from '..'
+import { ButtonGroupBig, ModalContent, ModalView } from '..'
 
 const AdjustRequestedAt = ({ firstTimes, revenueCenter }) => {
   const dispatch = useDispatch()
@@ -50,21 +50,29 @@ const AdjustRequestedAt = ({ firstTimes, revenueCenter }) => {
       <ModalContent
         title="Order time not currently available"
         footer={
-          <div>
+          <ButtonGroupBig>
+            <ButtonStyled onClick={changeLocation} size="big">
+              Change Location
+            </ButtonStyled>
             {current && (
-              <ButtonStyled onClick={() => handleUpdate(current)}>
+              <ButtonStyled
+                onClick={() => handleUpdate(current)}
+                size="big"
+                color="secondary"
+              >
                 {currentStr}
               </ButtonStyled>
             )}
             {other && (
-              <ButtonStyled onClick={() => handleUpdate(other)}>
+              <ButtonStyled
+                onClick={() => handleUpdate(other)}
+                size="big"
+                color="secondary"
+              >
                 {otherStr}
               </ButtonStyled>
             )}
-            <ButtonStyled onClick={changeLocation}>
-              Change Location
-            </ButtonStyled>
-          </div>
+          </ButtonGroupBig>
         }
       >
         <div>
