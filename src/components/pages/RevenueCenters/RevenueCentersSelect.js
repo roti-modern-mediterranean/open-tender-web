@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import propTypes from 'prop-types'
+import styled from '@emotion/styled'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import {
@@ -10,13 +11,12 @@ import {
   fetchRevenueCenters,
   selectRevenueCenters,
   resetCheckout,
+  setServiceType,
 } from '@open-tender/redux'
 import { makeDisplayedRevenueCenters } from '@open-tender/js'
-import { ButtonLink } from '@open-tender/components'
 
 import { selectSettings, selectGeoLatLng } from '../../../slices'
-import { Loading, RevenueCenter } from '../..'
-import styled from '@emotion/styled'
+import { InlineLink, Loading, RevenueCenter } from '../..'
 import RevenueCentersAlert from './RevenueCentersAlert'
 
 const RevenueCentersSelectView = styled('div')``
@@ -137,7 +137,11 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
         <RevenueCentersAlert
           title="Please enter an address"
           subtitle="A full address with street number is required for delivery orders."
-        />
+        >
+          <InlineLink onClick={() => dispatch(setServiceType('PICKUP'))}>
+            Switch to pickup
+          </InlineLink>
+        </RevenueCentersAlert>
       ) : (
         <RevenueCentersAlert
           title="No locations near you"
@@ -145,7 +149,7 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
                     enter a different address or head back to our home page.
                     orders."
         >
-          <ButtonLink onClick={handleStartOver}>Return to homepage</ButtonLink>
+          <InlineLink onClick={handleStartOver}>Return to homepage</InlineLink>
         </RevenueCentersAlert>
       )}
     </RevenueCentersSelectView>

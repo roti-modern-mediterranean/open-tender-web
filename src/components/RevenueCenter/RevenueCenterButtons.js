@@ -28,7 +28,9 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { cartId, cartGuest } = useSelector(selectGroupOrder)
-  const { orderType, serviceType } = useSelector(selectOrder)
+  const { orderType, serviceType, address: orderAddress } = useSelector(
+    selectOrder
+  )
   const {
     slug,
     settings,
@@ -36,7 +38,9 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
     is_outpost: isOutpost,
     address,
     has_curbside,
+    inZone,
   } = revenueCenter
+  console.log(revenueCenter)
   const { first_times: ft, order_times: ot } = settings
   const hasGroupOrdering =
     revenueCenter && revenueCenter.settings.group_ordering
@@ -143,9 +147,23 @@ export const RevenueCenterButtons = ({ revenueCenter }) => {
   ) : isCatering ? (
     hasDelivery || hasPickup ? (
       <RevenueCenterButtonsView>
-        {hasDelivery && (
-          <ButtonStyled onClick={handleDelivery} size="big">
-            Order Catering Delivery
+        {hasDelivery ? (
+          !orderAddress ? (
+            <ButtonStyled size="big" disabled={true}>
+              Address Required for Delivery
+            </ButtonStyled>
+          ) : !inZone ? (
+            <ButtonStyled size="big" disabled={true}>
+              Does Not Deliver To Your Address
+            </ButtonStyled>
+          ) : (
+            <ButtonStyled onClick={handleDelivery} size="big">
+              Order Catering Delivery
+            </ButtonStyled>
+          )
+        ) : (
+          <ButtonStyled size="big" disabled={true}>
+            Location Does Not Offer Delivery
           </ButtonStyled>
         )}
         {hasPickup && (

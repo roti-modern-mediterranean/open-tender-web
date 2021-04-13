@@ -1,6 +1,12 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchMenuDisplay, selectMenuDisplay } from '@open-tender/redux'
+import {
+  fetchMenuDisplay,
+  selectMenuDisplay,
+  setOrderServiceType,
+  resetOrderType,
+  selectOrder,
+} from '@open-tender/redux'
 
 import { Container } from '../..'
 import { selectConfig } from '../../../slices'
@@ -92,6 +98,7 @@ const HomeMenu = () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { home } = useSelector(selectConfig)
+  const { orderType } = useSelector(selectOrder)
   const { title, subtitle } = home
   const revenueCenterId = 508
   const serviceType = 'PICKUP'
@@ -106,6 +113,24 @@ const HomeMenu = () => {
     dispatch(fetchMenuDisplay(menuDisplayVars))
   }, [dispatch, revenueCenterId, weekday, minutes])
 
+  const handlePickup = () => {
+    dispatch(resetOrderType())
+    dispatch(setOrderServiceType('OLO', 'PICKUP'))
+    history.push('/locations')
+  }
+
+  const handleDelivery = () => {
+    dispatch(resetOrderType())
+    dispatch(setOrderServiceType('OLO', 'DELIVERY'))
+    history.push('/locations')
+  }
+
+  const handleCatering = () => {
+    if (orderType !== 'CATERING') dispatch(resetOrderType())
+    dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
+    history.push('/catering')
+  }
+
   return (
     <HomeMenuView>
       <Container>
@@ -116,15 +141,9 @@ const HomeMenu = () => {
             <p>{subtitle}</p>
           </HomeMenuTitle>
           <HomeMenuButtons>
-            <ButtonToggle onClick={() => history.push('/locations')}>
-              Pickup
-            </ButtonToggle>
-            <ButtonToggle onClick={() => history.push('/locations')}>
-              Delivery
-            </ButtonToggle>
-            <ButtonToggle onClick={() => history.push('/catering')}>
-              Catering
-            </ButtonToggle>
+            <ButtonToggle onClick={handlePickup}>Pickup</ButtonToggle>
+            <ButtonToggle onClick={handleDelivery}>Delivery</ButtonToggle>
+            <ButtonToggle onClick={handleCatering}>Catering</ButtonToggle>
           </HomeMenuButtons>
         </HomeMenuHeader>
         <HomeMenuCategories>

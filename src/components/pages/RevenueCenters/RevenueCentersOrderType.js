@@ -1,7 +1,13 @@
 import propTypes from 'prop-types'
-import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectOrder, setOrderServiceType } from '@open-tender/redux'
+import { useHistory } from 'react-router-dom'
+import styled from '@emotion/styled'
+import {
+  selectOrder,
+  setOrderServiceType,
+  resetOrderType,
+} from '@open-tender/redux'
+
 import { ButtonToggle } from '../../buttons'
 
 const RevenueCentersOrderTypeView = styled('div')`
@@ -40,11 +46,16 @@ const RevenueCentersOrderTypeButtons = styled('div')`
 
 const RevenueCentersOrderType = ({ setActive }) => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { orderType, serviceType } = useSelector(selectOrder)
 
   const setType = (orderType, serviceType) => {
     setActive(null)
+    dispatch(resetOrderType())
     dispatch(setOrderServiceType(orderType, serviceType))
+    if (orderType === 'CATERING') {
+      history.push('/catering')
+    }
   }
 
   return (

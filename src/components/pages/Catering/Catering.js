@@ -4,11 +4,12 @@ import { useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import {
   selectOrder,
-  setServiceType,
+  // setServiceType,
   setRequestedAt,
   setOrderServiceType,
   fetchValidTimes,
   selectValidTimes,
+  selectMenuSlug,
 } from '@open-tender/redux'
 import {
   isoToDate,
@@ -21,13 +22,21 @@ import {
   todayDate,
   makeWeekdayIndices,
   getMinutesfromDate,
+  makeReadableDateStrFromIso,
 } from '@open-tender/js'
-import { BgImage } from '@open-tender/components'
+import { BgImage, Preface } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand, selectConfig } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Content, Loading, Main, HeaderDefault, RequestedAtPicker } from '../..'
+import {
+  Content,
+  Loading,
+  Main,
+  HeaderDefault,
+  RequestedAtPicker,
+  InlineLink,
+} from '../..'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { isBrowser } from 'react-device-detect'
@@ -90,7 +99,7 @@ const CateringMessage = styled('div')`
     }
   }
 
-  p {
+  & > p {
     font-size: 2.7rem;
     line-height: 1.33333;
     color: ${(props) => props.theme.colors.light};
@@ -144,6 +153,56 @@ const CateringCalendar = styled('div')`
   }
 `
 
+const CateringCurrentOrder = styled('div')`
+  margin: 2.5rem 0 0;
+  border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
+  padding: 2.5rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 1.5rem 0 0;
+    border: 0;
+    padding: 0;
+  }
+
+  p {
+    font-size: 1.8rem;
+    line-height: 1.4;
+    color: ${(props) => props.theme.colors.light};
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      color: ${(props) => props.theme.colors.primary};
+      font-size: 1.3rem;
+      line-height: 1.6;
+    }
+
+    button {
+      color: ${(props) => props.theme.colors.paprika};
+    }
+  }
+`
+
+const CateringCurrentOrderTitle = styled(Preface)`
+  color: ${(props) => props.theme.colors.light};
+  font-weight: 500;
+  font-size: 3rem;
+  letter-spacing: 0.01em;
+  margin: 0 0 0.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: 2.2rem;
+    color: ${(props) => props.theme.colors.primary};
+  }
+`
+
+const makeOrderMessage = (orderType, requestedAt, revenueCenter) => {
+  const hasCateringOrder =
+    orderType === 'CATERING' &&
+    requestedAt &&
+    requestedAt !== 'asap' &&
+    revenueCenter
+  if (!hasCateringOrder) return null
+  const { timezone, name } = revenueCenter
+  const requestedAtStr = makeReadableDateStrFromIso(requestedAt, timezone, true)
+  return `You currently have a catering order in process for ${requestedAtStr} from our ${name} location.`
+}
+
 const CateringPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -163,6 +222,8 @@ const CateringPage = () => {
   const { entity: validTimes, loading } = useSelector(selectValidTimes)
   const isLoading = loading === 'pending'
   const { windowRef } = useContext(AppContext)
+  const orderMsg = makeOrderMessage(orderType, requestedAt, revenueCenter)
+  const menuSlug = useSelector(selectMenuSlug)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -220,7 +281,7 @@ const CateringPage = () => {
   const selectTime = (time) => {
     setDate(null)
     setTimeout(() => {
-      dispatch(setServiceType('DELIVERY'))
+      // dispatch(setServiceType('DELIVERY'))
       const reqestedAtIso = time ? dateToIso(time, tz) : 'asap'
       dispatch(setRequestedAt(reqestedAtIso))
       history.push('/locations')
@@ -251,6 +312,19 @@ const CateringPage = () => {
               <CateringMessage>
                 <h2>{title}</h2>
                 <p>{subtitle}</p>
+                {orderMsg && (
+                  <CateringCurrentOrder>
+                    <CateringCurrentOrderTitle as="h3">
+                      Continue Current Order
+                    </CateringCurrentOrderTitle>
+                    <p>
+                      {orderMsg}{' '}
+                      <InlineLink onClick={() => history.push(menuSlug)}>
+                        Continue this order.
+                      </InlineLink>
+                    </p>
+                  </CateringCurrentOrder>
+                )}
               </CateringMessage>
               <CateringCalendar imageUrl={background}>
                 {isLoading || !settings ? (
