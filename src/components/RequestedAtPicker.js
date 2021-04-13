@@ -5,9 +5,12 @@ import { TimePicker } from '.'
 
 const RequestedAtPickerView = styled('div')`
   position: relative;
+  z-index: 1;
   width: 100%;
+  max-width: 37rem;
   height: 35rem;
   padding: 1rem;
+  margin: 0 auto;
   overflow: hidden;
   font-size: ${(props) => props.theme.fonts.sizes.small};
   border-radius: ${(props) => props.theme.border.radius};
