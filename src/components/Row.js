@@ -40,6 +40,10 @@ const RowLines = styled('div')`
     font-size: 1.7rem;
     line-height: 1.35;
   }
+
+  p + p {
+    text-align: right;
+  }
 `
 
 const RowTitle = styled(Preface)`

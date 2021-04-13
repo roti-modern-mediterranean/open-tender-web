@@ -17,6 +17,18 @@ import ModalView from '../Modal/ModalView'
 
 const RequestedAtModalView = styled(ModalView)`
   width: 42rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    max-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  & > div {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      padding: 3rem ${(props) => props.theme.layout.paddingMobile};
+    }
+  }
 `
 
 const RequestedAtMessage = styled('p')`

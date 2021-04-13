@@ -55,6 +55,7 @@ const LevelUp = ({ windowRef, validate }) => {
   }, [dispatch, validate])
 
   useEffect(() => {
+    dispatch(resetCustomerLevelUpError())
     return () => dispatch(resetCustomerLevelUpError())
   }, [dispatch])
 

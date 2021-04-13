@@ -67,7 +67,7 @@ const AccountAddresses = () => {
             <CheckoutHeader title={title} />
             <FormWrapper>
               {subtitle && <p>{subtitle}</p>}
-              {entities.length ? (
+              {addresses.length ? (
                 <AddressesView>
                   {addresses.map((address) => (
                     <Address

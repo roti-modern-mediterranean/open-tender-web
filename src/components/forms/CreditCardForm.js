@@ -44,7 +44,7 @@ const fields = [
   },
   {
     icon: <MapMarker />,
-    label: 'Zip Code',
+    label: 'Zip',
     placeholder: '#####',
     name: 'zip',
     type: 'text',

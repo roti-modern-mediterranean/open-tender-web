@@ -21,10 +21,6 @@ const guestLinks = [
         path: '/signup',
       },
       {
-        title: 'Login',
-        button: 'login',
-      },
-      {
         title: 'Gift Cards',
         path: '/gift-cards',
       },

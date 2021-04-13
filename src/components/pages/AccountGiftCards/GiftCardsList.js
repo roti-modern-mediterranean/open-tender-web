@@ -12,6 +12,9 @@ import { useTheme } from '@emotion/react'
 
 const GiftCardButton = styled('button')`
   width: 8rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 6rem;
+  }
 `
 
 const CircleIcon = styled('button')`
@@ -109,7 +112,7 @@ const GiftCardsList = ({ giftCards, isLoading }) => {
             }
           >
             <div>
-              <p>${giftCard.balance} remaining balance</p>
+              <p>${giftCard.balance} balance</p>
               {giftCard.expiration ? (
                 <p>
                   {expired ? 'Expired ' : 'Expires '}

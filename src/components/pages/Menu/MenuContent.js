@@ -8,7 +8,7 @@ import { selectDisplaySettings } from '../../../slices'
 import { NavSticky } from '../..'
 import { MenuContext } from './Menu'
 import MenuCategories from './MenuCategories'
-import MenuLoading from './MenuLoading'
+// import MenuLoading from './MenuLoading'
 import MenuError from './MenuError'
 import MenuHero from './MenuHero'
 
@@ -56,7 +56,7 @@ const MenuContent = () => {
       )}
       {!error ? (
         <MenuView>
-          <MenuLoading />
+          {/* <MenuLoading /> */}
           <div ref={topRef}>
             <NavSticky items={navItems} scrollOffset={heroHeight - 60} />
             {!cartGuest && <MenuDeals deals={deals} />}

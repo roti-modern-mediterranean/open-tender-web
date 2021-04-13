@@ -69,7 +69,7 @@ const AccountGiftCards = () => {
               ) : isLoading ? (
                 <Loading text="Retrieving your gift cards..." />
               ) : (
-                <p>{config.giftCards.empty}</p>
+                <p style={{ margin: '0 0 3rem' }}>{config.giftCards.empty}</p>
               )}
               <ButtonGroupBig>
                 <ButtonStyled
