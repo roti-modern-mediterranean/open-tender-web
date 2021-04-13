@@ -6,6 +6,7 @@ import { deviceType } from 'react-device-detect'
 import styled from '@emotion/styled'
 import {
   selectCheckout,
+  selectOrder,
   updateForm,
   setDeviceType,
   submitOrder,
@@ -13,6 +14,7 @@ import {
   setConfirmationOrder,
   resetCompletedOrder,
   resetOrder,
+  resetCheckout,
   resetErrors,
 } from '@open-tender/redux'
 import {
@@ -20,13 +22,15 @@ import {
   checkAmountRemaining,
   updateTenders,
 } from '@open-tender/js'
-import { ButtonStyled } from '@open-tender/components'
+import { ButtonStyled, Preface } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   CheckoutHeader,
+  CheckoutLink,
+  CheckoutSubtitle,
   CheckoutTitle,
   Container,
   Content,
@@ -90,6 +94,7 @@ const CheckoutPayment = () => {
   const submitRef = useRef(null)
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
+  const { orderId } = useSelector(selectOrder)
   const checkout = useSelector(selectCheckout)
   const { check, form, completedOrder, errors, submitting, loading } = checkout
   const total = check && check.totals ? check.totals.total : 0.0
@@ -136,6 +141,12 @@ const CheckoutPayment = () => {
     dispatch(submitOrder())
   }
 
+  const cancelEdit = () => {
+    dispatch(resetOrder())
+    dispatch(resetCheckout())
+    history.push(`/`)
+  }
+
   return (
     <>
       <Helmet>
@@ -149,6 +160,14 @@ const CheckoutPayment = () => {
           <PageContainer style={{ margin: '0 auto' }}>
             <CheckoutHeader title="Confirm & Pay">
               <CheckoutTitle>{form.customer.first_name}'s Order</CheckoutTitle>
+              {orderId && (
+                <>
+                  <CheckoutSubtitle style={{ margin: '1rem 0 0' }}>
+                    <Preface as="p">Editing Order #{orderId}</Preface>
+                  </CheckoutSubtitle>
+                  <CheckoutLink onClick={cancelEdit} text="Cancel Edit" />
+                </>
+              )}
             </CheckoutHeader>
             {check && (
               <FormWrapper>
@@ -175,7 +194,7 @@ const CheckoutPayment = () => {
                   </>
                 ) : (
                   <>
-                    <span>Place Order:</span>
+                    <span>{orderId ? 'Update' : 'Place'} Order:</span>
                     <span>{formatDollars(total)}</span>
                   </>
                 )}

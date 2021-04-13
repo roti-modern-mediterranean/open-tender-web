@@ -20,6 +20,7 @@ import {
   Content,
   HeaderContent,
   Main,
+  OrderDetails,
   OrderFulfillment,
   PageContainer,
 } from '../..'
@@ -96,9 +97,9 @@ const Confirmation = () => {
     dispatch(resetGroupOrder())
   }, [order, dispatch, history])
 
-  // useEffect(() => {
-  //   return () => dispatch(resetConfirmation())
-  // }, [dispatch])
+  useEffect(() => {
+    return () => dispatch(resetConfirmation())
+  }, [dispatch])
 
   useEffect(() => {
     if (!hasFulfillment) dispatch(resetOrderFulfillment())
@@ -127,7 +128,12 @@ const Confirmation = () => {
               <FormHeader style={{ margin: '4rem 0 2rem' }}>
                 <h2>Order #{order_id} Summary</h2>
               </FormHeader>
-              {order && <CheckoutCart check={check} />}
+              <OrderDetails
+                order={order}
+                includeTime={true}
+                style={{ margin: '2rem 0' }}
+              />
+              <CheckoutCart check={check} />
               <FormSubmit style={{ margin: '-2rem 0 0' }}>
                 <ButtonStyled
                   size="big"

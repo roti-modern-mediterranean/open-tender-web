@@ -27,6 +27,7 @@ import CateringContact from './CateringContact'
 import CheckoutHeader from './CheckoutHeader'
 import CheckoutLink from './CheckoutLink'
 import CheckoutTitle from './CheckoutTitle'
+import CheckoutSubtitle from './CheckoutSubtitle'
 import Content from './Content'
 import Container from './Container'
 import CreditCards from './CreditCards'
@@ -71,7 +72,7 @@ import NavScroll from './NavScroll'
 import NavScrollButton from './NavScrollButton'
 import NavSticky from './NavSticky'
 import Notifications from './Notifications'
-import Order from './Order'
+import Order, { OrderDetails } from './Order'
 import OrderAddress from './OrderAddress'
 import OrderCard from './OrderCard'
 import OrderCardCurrent from './OrderCardCurrent'
@@ -150,6 +151,7 @@ export {
   CheckoutHeader,
   CheckoutLink,
   CheckoutTitle,
+  CheckoutSubtitle,
   Container,
   Content,
   CreditCards,
@@ -204,6 +206,7 @@ export {
   OrderCardCurrent,
   OrderCardGroup,
   OrderCardItem,
+  OrderDetails,
   OrderFulfillment,
   OrderImages,
   OrderImage,

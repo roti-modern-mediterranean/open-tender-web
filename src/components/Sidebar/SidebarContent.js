@@ -14,7 +14,12 @@ import {
   checkout,
 } from '@open-tender/redux'
 import { formatDollars } from '@open-tender/js'
-import { ButtonLink, ButtonStyled, Preface } from '@open-tender/components'
+import {
+  ButtonLink,
+  ButtonStyled,
+  Heading,
+  Preface,
+} from '@open-tender/components'
 
 import { toggleSidebar } from '../../slices'
 import Cart from '../Cart'
@@ -61,12 +66,17 @@ const SidebarHeader = styled('div')`
     width: 100%;
     text-align: center;
   }
+`
 
-  h2 {
-    line-height: 1;
-    color: ${(props) => props.theme.colors.primary};
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
-  }
+const SidebarTitle = styled(Heading)`
+  margin: 0.2rem 0 0;
+  line-height: 1;
+  color: ${(props) => props.theme.colors.primary};
+  font-size: ${(props) => props.theme.fonts.sizes.h3};
+`
+
+const SidebarTitleSmall = styled(SidebarTitle)`
+  font-size: ${(props) => props.theme.fonts.sizes.h5};
 `
 
 const SidebarCart = styled('div')`
@@ -138,7 +148,13 @@ const Sidebar = React.forwardRef((props, ref) => {
         />
         <SidebarHeader>
           <Container>
-            <h2>{orderId ? `Editing Order ${orderId}` : 'Your Order'}</h2>
+            {orderId ? (
+              <SidebarTitleSmall as="p">
+                Editing Order #{orderId}
+              </SidebarTitleSmall>
+            ) : (
+              <SidebarTitle as="p">Your Order</SidebarTitle>
+            )}
           </Container>
         </SidebarHeader>
         <SidebarCart>

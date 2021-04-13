@@ -5,7 +5,8 @@ import { Preface } from '@open-tender/components'
 const CheckoutHeaderView = styled('div')`
   display: block;
   width: 100%;
-  margin: 0 0 3rem;
+  max-width: 64rem;
+  margin: 0 auto 3rem;
   text-align: center;
 
   & > div {

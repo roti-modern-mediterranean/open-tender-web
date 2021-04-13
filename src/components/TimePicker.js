@@ -78,6 +78,10 @@ const TimePickerTimes = styled('div')`
   width: 100%;
   height: 6rem;
   overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const TimePickerTimeText = styled(Preface)`

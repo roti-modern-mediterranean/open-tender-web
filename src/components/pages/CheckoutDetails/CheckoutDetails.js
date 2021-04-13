@@ -13,7 +13,7 @@ import {
   selectOrder,
   selectCheckout,
   selectTimezone,
-  resetCheckout,
+  // resetCheckout,
   selectCartValidate,
   validateOrder,
   selectCartTotal,
@@ -26,7 +26,7 @@ import {
   formatDollars,
   prepareOrder,
 } from '@open-tender/js'
-import { ButtonStyled, useCheckout } from '@open-tender/components'
+import { ButtonStyled, Preface, useCheckout } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { openModal, selectBrand, selectOutpostName } from '../../../slices'
@@ -35,6 +35,7 @@ import {
   CartFooter,
   CheckoutHeader,
   CheckoutLink,
+  CheckoutSubtitle,
   Content,
   HeaderCheckout,
   Loading,
@@ -106,7 +107,7 @@ const CheckoutDetails = () => {
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
-  const { serviceType, requestedAt, address } = order
+  const { serviceType, requestedAt, address, orderId } = order
   const outpostName = useSelector(selectOutpostName)
   const orderTypeName = makeOrderTypeName(order, outpostName)
   const tz = useSelector(selectTimezone)
@@ -148,10 +149,10 @@ const CheckoutDetails = () => {
     dispatch(openModal({ type: 'orderType' }))
   }
 
-  const reset = () => {
-    dispatch(resetCheckout())
-    history.push(menuSlug)
-  }
+  // const reset = () => {
+  //   dispatch(resetCheckout())
+  //   history.push(menuSlug)
+  // }
 
   const handleSubmit = () => {
     const fullAddress = { ...address, ...form.address }
@@ -178,7 +179,12 @@ const CheckoutDetails = () => {
         <Main>
           <PageContainer style={{ margin: '0 auto' }}>
             <CheckoutHeader title={`${orderTypeName} Details`}>
-              <CheckoutLink onClick={reset} text="Reset Checkout" />
+              {/* <CheckoutLink onClick={reset} text="Reset Checkout" /> */}
+              {orderId && (
+                <CheckoutSubtitle style={{ margin: '0' }}>
+                  <Preface as="p">Editing Order #{orderId}</Preface>
+                </CheckoutSubtitle>
+              )}
             </CheckoutHeader>
             <FormWrapper>
               <ErrMsg errMsg={formErrors.form} style={{ margin: '0 0 2rem' }} />
