@@ -35,6 +35,8 @@ import Roti from './Roti'
 import Scooter from './Scooter'
 import SUV from './SUV'
 import Tag from './Tag'
+import TriangleDown from './TriangleDown'
+import TriangleUp from './TriangleUp'
 import User from './User'
 import UserId from './UserId'
 
@@ -76,6 +78,8 @@ export {
   Scooter,
   SUV,
   Tag,
+  TriangleDown,
+  TriangleUp,
   User,
   UserId,
 }

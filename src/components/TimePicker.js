@@ -4,7 +4,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import styled from '@emotion/styled'
 import { makeTimeIntervals } from '@open-tender/js'
 import { Preface } from '@open-tender/components'
-import { Checkmark } from './icons'
+import { Checkmark, TriangleDown, TriangleUp } from './icons'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { format } from 'date-fns'
 
@@ -26,7 +26,7 @@ const TimePickerContainer = styled('div')`
 
 const TimePickerView = styled('div')`
   width: 100%;
-  padding: 2.5rem 1rem 2.5rem;
+  padding: 1.5rem 1rem 1.5rem;
   border-radius: 1.4rem;
   background-color: ${(props) => props.theme.colors.light};
   display: flex;
@@ -50,6 +50,22 @@ const TimePickerLabelText = styled(Preface)`
 const TimePickerSelect = styled('div')`
   width: 60%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  span svg {
+    transition: all 0.15s ease;
+  }
+
+  span:first-of-type {
+    margin: 0 0 0.5rem;
+  }
+
+  span:last-of-type {
+    margin: 0.5rem 0 0;
+  }
 `
 
 const TimePickerConfirm = styled('div')`
@@ -174,11 +190,13 @@ const TimePicker = ({
   minTime,
   maxTime,
 }) => {
+  const theme = useTheme()
   const scrollRef = useRef(null)
   const [time, setTime] = useState(null)
   const [active, setActive] = useState(0)
   const [offset, setOffset] = useState(0)
   const [selected, setSelected] = useState(false)
+  const [showTop, setShowTop] = useState(false)
   const hasDate = !!date
   const dateStr = date ? format(date, 'M/d') : null
   const intervals = useMemo(
@@ -221,6 +239,7 @@ const TimePicker = ({
   useEffect(() => {
     let timer = null
     const handleScroll = () => {
+      setShowTop(parent.scrollTop > 0)
       if (timer !== null) {
         clearTimeout(timer)
       }
@@ -258,6 +277,7 @@ const TimePicker = ({
                 <TimePickerLabelText>{dateStr}</TimePickerLabelText>
               </TimePickerLabel>
               <TimePickerSelect>
+                <TriangleUp color={!showTop ? theme.colors.light : null} />
                 <TimePickerTimes ref={scrollRef}>
                   {intervals.map((t, index) => (
                     <TimePickerTime
@@ -267,6 +287,7 @@ const TimePicker = ({
                     />
                   ))}
                 </TimePickerTimes>
+                <TriangleDown />
               </TimePickerSelect>
               <TimePickerConfirm>
                 <TimePickerButton
