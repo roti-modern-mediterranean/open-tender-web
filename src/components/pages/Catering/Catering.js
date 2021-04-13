@@ -330,18 +330,17 @@ const CateringPage = () => {
                   <Loading type="Clip" color={theme.colors.light} size={50} />
                 ) : (
                   <RequestedAtPicker
-                    tz={tz}
                     date={date}
                     setDate={(date) => setDate(date)}
+                    selectTime={selectTime}
                     minDate={settings.minDate}
                     maxDate={null}
                     excludeDates={settings.excludeDates}
                     filterDate={settings.isClosed}
-                    minTime={startMin}
-                    maxTime={endMin}
                     interval={settings.interval || 15}
                     excludeTimes={[]}
-                    selectTime={selectTime}
+                    minTime={startMin}
+                    maxTime={endMin}
                   />
                 )}
               </CateringCalendar>

@@ -18,23 +18,24 @@ const RequestedAtPickerView = styled('div')`
 `
 
 const RequestedAtPicker = ({
-  tz,
   date,
   setDate,
+  selectTime,
   minDate,
-  maxDate = null,
+  maxDate,
   excludeDates,
   filterDate,
-  minTime,
-  maxTime,
   interval,
   excludeTimes,
-  selectTime,
+  minTime = 0,
+  maxTime = 1425,
 }) => {
   return (
     <RequestedAtPickerView>
       <DatePicker
+        inline
         showPopperArrow={false}
+        shouldCloseOnSelect={false}
         dateFormat="yyyy-MM-dd h:mm aa"
         minDate={minDate}
         maxDate={maxDate}
@@ -42,14 +43,12 @@ const RequestedAtPicker = ({
         filterDate={filterDate}
         selected={date}
         onChange={(date) => setDate(date)}
-        inline
-        shouldCloseOnSelect={false}
       />
       <TimePicker
         date={date}
         setDate={setDate}
         selectTime={selectTime}
-        interval={interval || 15}
+        interval={interval}
         excludeTimes={excludeTimes}
         minTime={minTime}
         maxTime={maxTime}

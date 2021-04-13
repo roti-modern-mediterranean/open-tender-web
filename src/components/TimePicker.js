@@ -169,10 +169,10 @@ const TimePicker = ({
   date,
   setDate,
   selectTime,
-  minTime,
-  maxTime,
   interval,
   excludeTimes,
+  minTime,
+  maxTime,
 }) => {
   const scrollRef = useRef(null)
   const [time, setTime] = useState(null)
@@ -186,14 +186,13 @@ const TimePicker = ({
     [date, minTime, maxTime, interval, excludeTimes]
   )
   const parent = scrollRef.current
-  // const topOffset = scrollRef.current
-  //   ? scrollRef.current.getBoundingClientRect().top
-  //   : 0
 
   const handleClose = (evt) => {
     if (evt.target.id === 'time-picker-container') {
       setDate(null)
       setTime(null)
+      setActive(0)
+      setOffset(0)
     }
   }
 

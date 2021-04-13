@@ -2,8 +2,12 @@ import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useDispatch } from 'react-redux'
-import { dateToIso } from '@open-tender/js'
-import { ButtonStyled, useDatePicker } from '@open-tender/components'
+import {
+  dateToIso,
+  makeDatePickerDates,
+  makeDatePickerTimes,
+} from '@open-tender/js'
+import { ButtonStyled } from '@open-tender/components'
 
 import { closeModal } from '../slices'
 import { ButtonGroupBig, RequestedAtPicker } from '.'
@@ -19,26 +23,20 @@ const RequestedAtCalendarView = styled('div')`
 `
 
 const RequestedAtCalendar = ({
-  requestedAt,
   serviceType,
   revenueCenter,
   setRequestedAt,
 }) => {
   const dispatch = useDispatch()
   const [date, setDate] = useState(null)
-  const {
-    tz,
-    minDate,
-    maxDate,
-    excludeDates,
-    filterDate,
-    interval,
-    excludeTimes,
-    hasAsap,
-    // date,
-    // setDate,
-    // error,
-  } = useDatePicker(revenueCenter, serviceType, requestedAt, setRequestedAt)
+  const { settings, timezone: tz } = revenueCenter || {}
+  const st = serviceType === 'WALKIN' ? 'PICKUP' : serviceType
+  const firstTimes = settings.first_times[st]
+  const hasAsap = firstTimes.has_asap
+  const dateArgs = makeDatePickerDates(settings, serviceType)
+  const { minDate, maxDate, excludeDates, filterDate } = dateArgs
+  const timeArgs = makeDatePickerTimes(settings, serviceType, date)
+  const { interval, excludeTimes } = timeArgs
 
   const selectTime = (time) => {
     setDate(null)
@@ -51,18 +49,15 @@ const RequestedAtCalendar = ({
   return tz ? (
     <RequestedAtCalendarView>
       <RequestedAtPicker
-        tz={tz}
         date={date}
         setDate={(date) => setDate(date)}
+        selectTime={selectTime}
         minDate={minDate}
         maxDate={maxDate}
         excludeDates={excludeDates}
         filterDate={filterDate}
-        minTime={0}
-        maxTime={1425}
         interval={interval}
         excludeTimes={excludeTimes}
-        selectTime={selectTime}
       />
       <ButtonGroupBig>
         <ButtonStyled onClick={() => dispatch(closeModal())} size="big">

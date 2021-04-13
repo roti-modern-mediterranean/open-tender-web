@@ -96,7 +96,6 @@ const RequestedAt = ({
             </RequestedAtMessage>
           )}
           <RequestedAtCalendar
-            requestedAt={requestedAt}
             serviceType={serviceType}
             revenueCenter={revenueCenter}
             setRequestedAt={handleRequestedAt}

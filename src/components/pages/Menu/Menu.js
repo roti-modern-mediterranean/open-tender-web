@@ -82,7 +82,8 @@ const Menu = () => {
     } else if (topOffset) {
       dispatch(setTopOffset(null))
     } else if (init) {
-      const requested = orderType === 'CATERING' ? requestedAt : null
+      // const requested = orderType === 'CATERING' ? requestedAt : null
+      const requested = null
       dispatch(fetchAllergens())
       dispatch(fetchRevenueCenter(revenueCenterId, requested))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
