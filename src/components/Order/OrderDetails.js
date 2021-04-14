@@ -106,7 +106,7 @@ const OrderDetails = ({ order, includeTime = false, style = null }) => {
           <span>{deliveryContact}</span>
         </OrderDetail>
       )}
-      {service_type === 'DELIVERY' && (
+      {service_type === 'DELIVERY' && address && (
         <OrderDetail>
           <span>Delivery Address</span>
           <span>

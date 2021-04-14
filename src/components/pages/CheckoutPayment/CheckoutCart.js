@@ -53,7 +53,15 @@ const CheckoutLineLink = styled('button')`
 `
 
 const CheckoutCart = ({ check, showBorder = false, editTip, style }) => {
-  const { cart, surcharges, discounts, taxes, totals, details } = check
+  const {
+    cart,
+    gift_cards = [],
+    surcharges,
+    discounts,
+    taxes,
+    totals,
+    details,
+  } = check
   const { subtotal, tip, total } = totals
   // const totalBeforeTax = [subtotal, gift_card, surcharge, discount]
   //   .reduce((t, i) => (t += parseFloat(i)), 0.0)
@@ -84,6 +92,13 @@ const CheckoutCart = ({ check, showBorder = false, editTip, style }) => {
       ))}
       {discounts.map((discount) => (
         <CheckoutCartItem key={discount.id} {...discount} />
+      ))}
+      {gift_cards.map((giftCard) => (
+        <CheckoutCartItem
+          key={giftCard.id}
+          name={`Gift Card ${giftCard.card_number}`}
+          amount={giftCard.amount}
+        />
       ))}
       {/* {subtotal !== totalBeforeTax && (
         <>

@@ -14,6 +14,7 @@ import {
   isoToDate,
   makeOrderAddress,
   makeOrderTypeName,
+  formatDollars,
 } from '@open-tender/js'
 import { DeliveryLink } from '@open-tender/components'
 
@@ -35,6 +36,7 @@ const OrderCard = ({ order, isLast }) => {
     address,
     totals,
     delivery,
+    gift_cards,
   } = order
   const isOpen = status === 'OPEN'
   const isMerch = order_type === 'MERCH'
@@ -54,7 +56,11 @@ const OrderCard = ({ order, isLast }) => {
     .sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
     .reverse()
   const imageUrl = items && items.length ? items[0].imageUrl : null
-  const title = cart.map((i) => `${i.quantity} ${i.name}`).join(', ')
+  const cartItems = cart.map((i) => `${i.quantity} ${i.name}`).join(', ')
+  const giftCards = gift_cards
+    .map((i) => `${formatDollars(i.amount, '', 0)} gift card`)
+    .join(', ')
+  const title = isMerch ? giftCards : cartItems
 
   const handleReorder = () => {
     const { revenue_center_id: revenueCenterId } = revenue_center
@@ -66,6 +72,7 @@ const OrderCard = ({ order, isLast }) => {
 
   return (
     <Card
+      isOlo={order_type === 'OLO'}
       imageUrl={imageUrl}
       preface={
         <>

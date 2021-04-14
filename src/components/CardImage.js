@@ -40,10 +40,10 @@ const CardImageBackground = styled(BgImage)`
 `
 
 // TODO: remove this
-const placeholder = {
-  backgroundImage:
-    'url(//s3.amazonaws.com/betterboh/u/img/staging/46/1616711001_Hummus_Bowl_Beetlovers_Overhead.png)',
-}
+// const placeholder = {
+//   backgroundImage:
+//     'url(//s3.amazonaws.com/betterboh/u/img/staging/46/1616711001_Hummus_Bowl_Beetlovers_Overhead.png)',
+// }
 
 const CardImage = ({ imageUrl, children }) => {
   const { hasLoaded, hasError } = useImage(imageUrl)
@@ -57,9 +57,9 @@ const CardImage = ({ imageUrl, children }) => {
           <ImageSpinner size={isBrowser ? 24 : 16} />
         </CardImageLoading>
       )}
-      {hasError && (
+      {/* {hasError && (
         <CardImageBackground style={placeholder}>&nbsp;</CardImageBackground>
-      )}
+      )} */}
       {hasLoaded && (
         <CardImageBackground style={bgStyle}>&nbsp;</CardImageBackground>
       )}

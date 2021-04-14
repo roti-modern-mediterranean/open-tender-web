@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Heading } from '@open-tender/components'
+import { BgImage, Heading } from '@open-tender/components'
 import { CardButtons, CardImage } from '.'
 
 const CardView = styled('div')`
@@ -30,6 +30,19 @@ const CardImageView = styled('div')`
     width: 16.5rem;
     height: 16.5rem;
   }
+`
+
+const CardBgImage = styled(BgImage)`
+  position: absolute;
+  z-index: 1;
+  top: -1rem;
+  left: 1rem;
+  width: 14rem;
+  height: 13.5rem;
+  border-radius: ${(props) => props.theme.border.radius};
+  background-color: ${(props) => props.theme.bgColors.primary};
+  background-image: url(${(props) => props.imageUrl});
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
 `
 
 const CardContent = styled('div')`
@@ -138,7 +151,15 @@ const CardDescription = styled('div')`
   }
 `
 
-const Card = ({ imageUrl, preface, title, description, view, add }) => {
+const Card = ({
+  imageUrl,
+  preface,
+  title,
+  description,
+  view,
+  add,
+  isOlo = true,
+}) => {
   const container = useRef(null)
   const viewButton = useRef(null)
   const addButton = useRef(null)
@@ -162,9 +183,15 @@ const Card = ({ imageUrl, preface, title, description, view, add }) => {
       onClick={handleClick}
       className={isActive ? 'item-active' : ''}
     >
-      <CardImageView>
-        <CardImage imageUrl={imageUrl} />
-      </CardImageView>
+      {imageUrl ? (
+        isOlo ? (
+          <CardImageView>
+            <CardImage imageUrl={imageUrl} />
+          </CardImageView>
+        ) : (
+          <CardBgImage imageUrl={imageUrl} />
+        )
+      ) : null}
       <CardContent>
         {preface && <CardPreface>{preface}</CardPreface>}
         {title && (
