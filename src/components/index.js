@@ -75,7 +75,6 @@ import Notifications from './Notifications'
 import Order, { OrderDetails } from './Order'
 import OrderAddress from './OrderAddress'
 import OrderCard from './OrderCard'
-import OrderCardCurrent from './OrderCardCurrent'
 import OrderCardGroup from './OrderCardGroup'
 import OrderCardItem from './OrderCardItem'
 import OrderFulfillment from './OrderFulfillment'
@@ -203,7 +202,6 @@ export {
   Order,
   OrderAddress,
   OrderCard,
-  OrderCardCurrent,
   OrderCardGroup,
   OrderCardItem,
   OrderDetails,

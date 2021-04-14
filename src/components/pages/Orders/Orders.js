@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
@@ -28,6 +34,8 @@ import {
 } from '../..'
 import OrdersList from './OrdersList'
 import { ButtonToggle } from '../../buttons'
+
+export const CardActiveContext = createContext(null)
 
 const ToggleView = styled('div')`
   display: flex;
@@ -62,6 +70,7 @@ const Orders = () => {
   const [toggle, setToggle] = useState('orders')
   const [count, setCount] = useState(increment)
   const [items, setItems] = useState([])
+  const [activeCard, setActiveCard] = useState(null)
   const orders = useSelector(selectCustomerOrders)
   const { entities, loading, error } = orders
   const lastOrder = useMemo(() => getLastOrder(entities), [entities])
@@ -138,7 +147,12 @@ const Orders = () => {
             </PageTitle>
             <PageError error={error} />
             {recentOrders.length ? (
-              <>
+              <CardActiveContext.Provider
+                value={{
+                  activeCard,
+                  setActiveCard,
+                }}
+              >
                 {toggle === 'orders' ? (
                   <>
                     <OrdersList orders={recentOrders} delay={0} />
@@ -155,7 +169,7 @@ const Orders = () => {
                     renderItem={(props) => <OrderCardItem {...props} />}
                   />
                 )}
-              </>
+              </CardActiveContext.Provider>
             ) : isLoading ? (
               <Loading
                 text="Retrieving your order history..."

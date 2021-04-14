@@ -30,7 +30,7 @@ const ItemCards = ({ items, renderItem }) => {
       {items.map((item, index) => {
         return (
           <ItemCardsItem key={`${item.id}-${index}`}>
-            {renderItem({ item })}
+            {renderItem({ item, index })}
           </ItemCardsItem>
         )
       })}

@@ -17,7 +17,7 @@ import {
 
 import { Card, CardButton } from '.'
 
-const OrderCardItem = ({ item }) => {
+const OrderCardItem = ({ item, index }) => {
   const dispatch = useDispatch()
   const { lookup } = useSelector(selectCustomerFavorites)
   const { entities: menuItems } = useSelector(selectMenuItems)
@@ -59,6 +59,7 @@ const OrderCardItem = ({ item }) => {
 
   return (
     <Card
+      id={`${item.id}-${index}`}
       imageUrl={imageUrl}
       preface={<span>{price}</span>}
       title={name}
@@ -84,6 +85,7 @@ const OrderCardItem = ({ item }) => {
 OrderCardItem.displayName = 'OrderCardItem'
 OrderCardItem.propTypes = {
   item: propTypes.object,
+  index: propTypes.number,
 }
 
 export default OrderCardItem

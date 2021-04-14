@@ -72,6 +72,7 @@ const OrderCard = ({ order, isLast }) => {
 
   return (
     <Card
+      id={order_id}
       isOlo={order_type === 'OLO'}
       imageUrl={imageUrl}
       preface={

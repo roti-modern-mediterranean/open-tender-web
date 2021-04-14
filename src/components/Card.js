@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { BgImage, Heading } from '@open-tender/components'
 import { CardButtons, CardImage } from '.'
+import { CardActiveContext } from './pages/Orders/Orders'
 
 const CardView = styled('div')`
   cursor: pointer;
@@ -152,6 +153,7 @@ const CardDescription = styled('div')`
 `
 
 const Card = ({
+  id,
   imageUrl,
   preface,
   title,
@@ -163,13 +165,14 @@ const Card = ({
   const container = useRef(null)
   const viewButton = useRef(null)
   const addButton = useRef(null)
-  const [isActive, setIsActive] = useState(false)
+  const { activeCard, setActiveCard } = useContext(CardActiveContext) || {}
+  const isActive = activeCard === id
 
   const handleClick = () => {
     if (isActive) {
       viewButton.current && viewButton.current.blur()
       addButton.current && addButton.current.blur()
-      setIsActive(false)
+      setActiveCard(null)
     } else {
       viewButton.current
         ? viewButton.current.focus()
@@ -205,15 +208,13 @@ const Card = ({
             {view &&
               view({
                 ref: viewButton,
-                onFocus: () => setIsActive(true),
-                // onBlur: () => setIsActive(false),
+                onFocus: () => setActiveCard(id),
                 secondary: true,
               })}
             {add &&
               add({
                 ref: addButton,
-                onFocus: () => setIsActive(true),
-                // onBlur: () => setIsActive(false),
+                onFocus: () => setActiveCard(id),
               })}
           </CardButtons>
         )}
@@ -224,7 +225,9 @@ const Card = ({
 
 Card.displayName = 'Card'
 Card.propTypes = {
+  id: propTypes.oneOfType([propTypes.string, propTypes.number]),
   imageUrl: propTypes.string,
+  isOlo: propTypes.bool,
   preface: propTypes.oneOfType([propTypes.string, propTypes.element]),
   title: propTypes.oneOfType([propTypes.string, propTypes.element]),
   subtitle: propTypes.oneOfType([propTypes.string, propTypes.element]),

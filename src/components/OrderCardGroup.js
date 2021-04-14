@@ -8,43 +8,49 @@ import {
   selectMenuSlug,
   updateOrder,
 } from '@open-tender/redux'
-import {
-  timezoneMap,
-  isoToDateStr,
-  makeOrderAddress,
-  makeOrderTypeName,
-} from '@open-tender/js'
-import { ButtonStyled } from '@open-tender/components'
+import { timezoneMap, isoToDateStr, makeOrderAddress } from '@open-tender/js'
 
-import iconMap from './iconMap'
-import { Card } from '.'
+import { Card, CardButton } from '.'
 
 const OrderCardGroup = ({ order }) => {
   const [open, setOpen] = useState(false)
   const history = useHistory()
   const dispatch = useDispatch()
   const {
+    order_id,
     cart_id,
     revenue_center: revenueCenter,
     service_type: serviceType,
+    order_type,
     requested_at,
     address,
     guest_count,
     guest_limit,
     spending_limit,
+    cart,
+    totals,
   } = order
   const {
     revenue_center_type: orderType,
     timezone,
     is_outpost: isOutpost,
   } = revenueCenter
-  const orderTypeName = makeOrderTypeName(orderType, serviceType)
   const tz = timezoneMap[timezone]
   const requestedAt =
     requested_at === 'asap'
       ? 'ASAP'
       : isoToDateStr(requested_at, tz, 'MMMM d, yyyy @ h:mma')
   const menuSlug = useSelector(selectMenuSlug)
+  const items = cart
+    .map((i) =>
+      i.images
+        .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
+        .map((image) => ({ ...i, imageUrl: image.url }))
+    )
+    .flat()
+    .sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
+    .reverse()
+  const imageUrl = items && items.length ? items[0].imageUrl : null
 
   const handleDelete = () => {
     dispatch(removeCustomerGroupOrder(cart_id))
@@ -65,35 +71,34 @@ const OrderCardGroup = ({ order }) => {
 
   return (
     <Card
-      preface={`${guest_count || 0} Guests`}
-      title={`${orderTypeName} from ${revenueCenter.name}`}
-      content={
+      id={order_id}
+      isOlo={order_type === 'OLO'}
+      imageUrl={imageUrl}
+      preface={
         <>
-          <p>{requestedAt}</p>
+          <span>{requestedAt}</span>
+          <span>${totals.total}</span>
+        </>
+      }
+      title={`Group Order from ${revenueCenter.name}`}
+      description={
+        <>
           {address && <p>{makeOrderAddress(address)}</p>}
+          {guest_count || 0} Guests
           {guest_limit && <p>Guest limit: {guest_limit}</p>}
           {spending_limit && <p>Spending limit: ${spending_limit}</p>}
         </>
       }
-      footer={
-        <>
-          <ButtonStyled
-            icon={iconMap.RefreshCw}
-            onClick={handleReopen}
-            size="small"
-          >
-            Reopen
-          </ButtonStyled>
-          <ButtonStyled
-            icon={iconMap.Trash2}
-            onClick={handleDelete}
-            size="small"
-            color="secondary"
-          >
-            Delete
-          </ButtonStyled>
-        </>
-      }
+      view={(props) => (
+        <CardButton {...props} onClick={handleDelete}>
+          Delete
+        </CardButton>
+      )}
+      add={(props) => (
+        <CardButton {...props} onClick={handleReopen}>
+          Edit
+        </CardButton>
+      )}
     />
   )
 }
@@ -101,7 +106,6 @@ const OrderCardGroup = ({ order }) => {
 OrderCardGroup.displayName = 'OrderCardGroup'
 OrderCardGroup.propTypes = {
   order: propTypes.object,
-  menuItems: propTypes.array,
 }
 
 export default OrderCardGroup

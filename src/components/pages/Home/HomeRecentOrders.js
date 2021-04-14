@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
@@ -6,6 +6,7 @@ import { fetchCustomerOrders, selectCustomerOrders } from '@open-tender/redux'
 
 import { OrderCard, PageSection } from '../..'
 import { selectConfig } from '../../../slices'
+import { CardActiveContext } from '../Orders/Orders'
 
 const OrdersView = styled('div')`
   display: flex;
@@ -43,6 +44,7 @@ const Order = styled('div')`
 
 const HomeRecentOrders = ({ style }) => {
   const dispatch = useDispatch()
+  const [activeCard, setActiveCard] = useState(null)
   const { entities: orders, loading, error } = useSelector(selectCustomerOrders)
   const { account } = useSelector(selectConfig)
   const { title, subtitle } = account.recentOrders
@@ -66,11 +68,18 @@ const HomeRecentOrders = ({ style }) => {
       style={style}
     >
       <OrdersView>
-        {displayed.map((order) => (
-          <Order key={order.order_id}>
-            <OrderCard order={order} />
-          </Order>
-        ))}
+        <CardActiveContext.Provider
+          value={{
+            activeCard,
+            setActiveCard,
+          }}
+        >
+          {displayed.map((order) => (
+            <Order key={order.order_id}>
+              <OrderCard order={order} />
+            </Order>
+          ))}
+        </CardActiveContext.Provider>
       </OrdersView>
     </PageSection>
   ) : null

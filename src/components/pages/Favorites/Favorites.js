@@ -23,13 +23,14 @@ import {
   OrderCardItem,
   PageError,
   PageContainer,
-  PageContent,
   PageTitle,
 } from '../..'
+import { CardActiveContext } from '../Orders/Orders'
 
 const Favorites = () => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const [activeCard, setActiveCard] = useState(null)
   const { entities, loading, error } = useSelector(selectCustomerFavorites)
   const { entities: orders } = useSelector(selectCustomerOrders)
   const lastOrder = useMemo(() => getLastOrder(orders), [orders])
@@ -83,23 +84,26 @@ const Favorites = () => {
             <PageTitle {...config.favorites} />
             <PageError error={error} />
             {items.length ? (
-              <ItemCards
-                items={items}
-                delay={0}
-                sequential={false}
-                renderItem={(props) => <OrderCardItem {...props} />}
-              />
+              <CardActiveContext.Provider
+                value={{
+                  activeCard,
+                  setActiveCard,
+                }}
+              >
+                <ItemCards
+                  items={items}
+                  delay={0}
+                  sequential={false}
+                  renderItem={(props) => <OrderCardItem {...props} />}
+                />
+              </CardActiveContext.Provider>
+            ) : isLoading ? (
+              <Loading text="Retrieving your favorites..." />
             ) : (
-              <PageContent>
-                {isLoading ? (
-                  <Loading text="Retrieving your favorites..." />
-                ) : (
-                  <p>
-                    Looks like you don't have any favorites yet. Please visit
-                    the Recent Orders page to add some.
-                  </p>
-                )}
-              </PageContent>
+              <p>
+                Looks like you don't have any favorites yet. Please visit the
+                Recent Orders page to add some.
+              </p>
             )}
           </PageContainer>
         </Main>
