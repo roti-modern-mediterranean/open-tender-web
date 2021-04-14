@@ -31,7 +31,7 @@ const RevenueCentersSelectList = styled('ul')`
   }
 `
 
-const RevenueCentersSelectPickup = styled(Preface)`
+const RevenueCentersSelectLink = styled(Preface)`
   font-weight: 500;
   font-size: 1.8rem;
 
@@ -149,9 +149,9 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
           subtitle="A full address with street number is required for delivery orders."
         >
           <InlineLink onClick={() => dispatch(setServiceType('PICKUP'))}>
-            <RevenueCentersSelectPickup>
+            <RevenueCentersSelectLink>
               Switch to pickup
-            </RevenueCentersSelectPickup>
+            </RevenueCentersSelectLink>
           </InlineLink>
         </RevenueCentersAlert>
       ) : (
@@ -161,7 +161,11 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
                     enter a different address or head back to our home page.
                     orders."
         >
-          <InlineLink onClick={handleStartOver}>Return to homepage</InlineLink>
+          <InlineLink onClick={handleStartOver}>
+            <RevenueCentersSelectLink>
+              Return to homepage
+            </RevenueCentersSelectLink>
+          </InlineLink>
         </RevenueCentersAlert>
       )}
     </RevenueCentersSelectView>
