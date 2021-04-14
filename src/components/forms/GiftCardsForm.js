@@ -19,9 +19,6 @@ import { CreditCards } from '..'
 import { CreditCardInputs } from '.'
 import { Mail, User } from '../icons'
 
-// import { CreditCardInputs } from '..'
-// import { ButtonStyled, ButtonSubmit, Input } from '../..'
-
 const GiftCardsView = styled('div')`
   margin: 0 0 3rem;
 `
@@ -55,6 +52,10 @@ const GiftCardsRow = styled('span')`
       &:last-of-type {
         flex-grow: 1;
         margin: 0 0 0 1rem;
+
+        input::placeholder {
+          opacity: 1;
+        }
       }
     }
   }
@@ -84,10 +85,9 @@ const GiftCardsForm = ({
     formRef,
     inputRef,
     submitRef,
-    recaptchaRef,
+    // recaptchaRef,
     cardType,
     setCardType,
-    creditCardOptions,
     handleName,
     handleEmail,
     handleChange,
@@ -99,7 +99,6 @@ const GiftCardsForm = ({
     name,
     email,
     cards,
-    isNewCard,
     creditCard,
     setCreditCard,
     errors,
@@ -132,6 +131,14 @@ const GiftCardsForm = ({
         : {},
     [errors]
   )
+  const disabled = creditCards.length > 0 && !creditCard.customer_card_id
+
+  const applyCard = (evt, cardId) => {
+    evt.preventDefault()
+    const target = { value: cardId }
+    handleCreditCard({ target })
+    evt.target.blur()
+  }
 
   return success ? (
     <>
@@ -245,7 +252,7 @@ const GiftCardsForm = ({
                     iconMap={iconMap}
                   />
                   <span>
-                    <input
+                    {/* <input
                       aria-label={`Gift card ${index} email recipient`}
                       id={`email-${index}`}
                       name={`email-${index}`}
@@ -255,6 +262,18 @@ const GiftCardsForm = ({
                       placeholder="enter email address (optional)"
                       disabled={submitting}
                       onChange={handleChange}
+                    /> */}
+                    <Input
+                      icon={<Mail />}
+                      aria-label={`Gift card ${index} email recipient`}
+                      name={`email-${index}`}
+                      type="email"
+                      autoComplete={null}
+                      value={card.email}
+                      placeholder="enter email address (optional)"
+                      disabled={submitting}
+                      onChange={handleChange}
+                      style={{ margin: '0' }}
                     />
                   </span>
                 </div>
@@ -297,8 +316,8 @@ const GiftCardsForm = ({
               </div> */}
             <CreditCards
               creditCards={creditCards}
-              selectedId={creditCard}
-              apply={handleCreditCard}
+              selectedId={creditCard.customer_card_id}
+              apply={applyCard}
             />
           </>
         ) : (
@@ -325,6 +344,7 @@ const GiftCardsForm = ({
             color="secondary"
             submitRef={submitRef}
             submitting={submitting}
+            disabled={disabled}
           >
             {submitting ? 'Submitting...' : 'Purchase Gift Cards'}
           </ButtonSubmit>

@@ -1,16 +1,11 @@
 import React from 'react'
 import propTypes from 'prop-types'
-import {
-  getCardType,
-  formatCardField,
-  formatCard,
-  validateCreditCard,
-} from '@open-tender/js'
+import styled from '@emotion/styled'
+import { getCardType, formatCardField } from '@open-tender/js'
 
 import { Input } from '../inputs'
 import { CreditCard as CreditCardIcon, Calendar, MapMarker } from '../icons'
-import { CreditCard, Loading } from '..'
-import styled from '@emotion/styled'
+import { CreditCard } from '..'
 
 const fields = [
   {
@@ -50,14 +45,6 @@ const fields = [
     autoComplete: 'postal-code',
   },
 ]
-
-const initState = {
-  acct: '',
-  exp: '',
-  cvv: '',
-  zip: '',
-  save: true,
-}
 
 const CreditCardFormWrapper = styled('div')`
   display: flex;

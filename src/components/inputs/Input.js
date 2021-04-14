@@ -22,6 +22,7 @@ const Input = React.forwardRef(
       min = null,
       max = null,
       children,
+      style = null,
     },
     ref
   ) => {
@@ -35,6 +36,7 @@ const Input = React.forwardRef(
         errMsg={error}
         showLabel={showLabel}
         disabled={disabled}
+        style={style}
       >
         <input
           aria-label={label}
@@ -81,6 +83,7 @@ Input.propTypes = {
     propTypes.arrayOf(propTypes.node),
     propTypes.node,
   ]),
+  style: propTypes.object,
 }
 
 export default Input
