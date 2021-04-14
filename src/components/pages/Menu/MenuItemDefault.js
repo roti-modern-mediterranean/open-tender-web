@@ -39,10 +39,12 @@ const MenuItemImageView = styled('div')`
 `
 
 const MenuItemContent = styled('div')`
+  overflow: hidden;
   min-height: 11.5rem;
   padding: 2rem 2rem 2rem 6rem;
   margin: 0 0 0 10.5rem;
   transition: background-color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+  transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
   border-radius: ${(props) => props.theme.border.radius};
   background-color: ${(props) =>
     props.theme.bgColors[props.isInverted ? 'primary' : 'secondary']};
@@ -55,7 +57,6 @@ const MenuItemContent = styled('div')`
   }
 
   .item-active & {
-    height: auto;
     min-height: 11.5rem;
     padding: 2rem 2rem 2rem 7.5rem;
     margin: 0 0 0 2rem;
@@ -95,10 +96,11 @@ const MenuItemDescription = styled('p')`
   line-height: ${(props) => props.theme.lineHeight};
   color: ${(props) => props.theme.fonts.body.color};
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  // transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
 
   .item-active & {
     opacity: 1;
-    max-height: none;
+    max-height: 20rem;
     padding: 0.5rem 0 0;
   }
 `
@@ -126,6 +128,7 @@ const MenuItemDefault = React.forwardRef(
       addRef,
       handleView,
       handleAdd,
+      handleOrder,
       menuConfig,
       setIsActive,
     },
@@ -156,25 +159,36 @@ const MenuItemDefault = React.forwardRef(
           )}
           <MenuItemAllergens allergens={allergenAlert} />
           <CardButtons style={isActive ? { margin: '1.5rem 0 0' } : null}>
-            <CardButton
-              ref={viewRef}
-              onClick={handleView}
-              onFocus={() => setIsActive(true)}
-              // onBlur={() => setIsActive(false)}
-              disabled={isSoldOut}
-              secondary={true}
-            >
-              View
-            </CardButton>
-            {menuConfig && (
+            {menuConfig ? (
+              <>
+                <CardButton
+                  ref={viewRef}
+                  onClick={handleView}
+                  onFocus={() => setIsActive(true)}
+                  onBlur={() => setIsActive(false)}
+                  disabled={isSoldOut}
+                  secondary={true}
+                >
+                  View
+                </CardButton>
+                <CardButton
+                  ref={addRef}
+                  onClick={handleAdd}
+                  onFocus={() => setIsActive(true)}
+                  onBlur={() => setIsActive(false)}
+                  disabled={isSoldOut || isIncomplete}
+                >
+                  Add
+                </CardButton>
+              </>
+            ) : (
               <CardButton
-                ref={addRef}
-                onClick={handleAdd}
+                ref={viewRef}
+                onClick={handleOrder}
                 onFocus={() => setIsActive(true)}
-                // onBlur={() => setIsActive(false)}
-                disabled={isSoldOut || isIncomplete}
+                onBlur={() => setIsActive(false)}
               >
-                Add
+                Order Now
               </CardButton>
             )}
           </CardButtons>

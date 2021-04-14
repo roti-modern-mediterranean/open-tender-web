@@ -155,6 +155,7 @@ const MenuItemSmall = React.forwardRef(
       addRef,
       handleView,
       handleAdd,
+      handleOrder,
       menuConfig,
       setIsActive,
     },
@@ -185,25 +186,37 @@ const MenuItemSmall = React.forwardRef(
             />
           </MenuItemSmallContentHeader>
           <MenuItemSmallButtons>
-            <CardButton
-              ref={viewRef}
-              onClick={handleView}
-              onFocus={() => setIsActive(true)}
-              // onBlur={() => setIsActive(false)}
-              disabled={isSoldOut}
-              secondary={true}
-            >
-              View
-            </CardButton>
-            {menuConfig && (
+            {menuConfig ? (
+              <>
+                <CardButton
+                  ref={viewRef}
+                  onClick={handleView}
+                  onFocus={() => setIsActive(true)}
+                  onBlur={() => setIsActive(false)}
+                  disabled={isSoldOut}
+                  secondary={true}
+                >
+                  View
+                </CardButton>
+
+                <CardButton
+                  ref={addRef}
+                  onClick={handleAdd}
+                  onFocus={() => setIsActive(true)}
+                  onBlur={() => setIsActive(false)}
+                  disabled={isSoldOut || isIncomplete}
+                >
+                  Add
+                </CardButton>
+              </>
+            ) : (
               <CardButton
-                ref={addRef}
-                onClick={handleAdd}
+                ref={viewRef}
+                onClick={handleOrder}
                 onFocus={() => setIsActive(true)}
-                // onBlur={() => setIsActive(false)}
-                disabled={isSoldOut || isIncomplete}
+                onBlur={() => setIsActive(false)}
               >
-                Add
+                Order
               </CardButton>
             )}
           </MenuItemSmallButtons>

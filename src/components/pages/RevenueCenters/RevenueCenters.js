@@ -96,7 +96,10 @@ const RevenueCenters = () => {
         if (paramOrderType[0] === 'CATERING') history.push('/catering')
       }
     }
-    if (!hasTypes && !paramOrderType) history.push('/')
+    if (!hasTypes && !paramOrderType) {
+      // history.push('/')
+      dispatch(setOrderServiceType('OLO', 'PICKUP'))
+    }
   }, [hasTypes, param, dispatch, history])
 
   const setActive = useCallback(

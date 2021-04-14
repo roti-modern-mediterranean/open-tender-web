@@ -80,6 +80,12 @@ const MenuItem = ({ item, category, isInverted }) => {
     }
   }
 
+  const handleOrder = (evt) => {
+    evt.preventDefault()
+    evt.stopPropagation()
+    history.push(`/locations`)
+  }
+
   const handleClick = () => {
     if (isSoldOut) return
     if (isActive) {
@@ -107,6 +113,7 @@ const MenuItem = ({ item, category, isInverted }) => {
     addRef,
     handleView,
     handleAdd,
+    handleOrder,
     setIsActive,
   }
 
