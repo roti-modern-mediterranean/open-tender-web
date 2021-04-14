@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 import * as Sentry from '@sentry/react'
 import packageJson from '../package.json'
+import { Intercom } from './components'
 
 global.appVersion = packageJson.version
 
@@ -25,6 +26,7 @@ ReactDOM.render(
     <Provider store={store}>
       <App />
     </Provider>
+    <Intercom />
   </React.StrictMode>,
   document.getElementById('root')
 )

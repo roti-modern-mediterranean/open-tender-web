@@ -55,6 +55,7 @@ import HeroContent from './HeroContent'
 import HeroSlides from './HeroSlides'
 import ImageSpinner from './ImageSpinner'
 import InlineLink from './InlineLink'
+import Intercom from './Intercom'
 import ItemCards from './ItemCards'
 import ItemsScrollable from './ItemsScrollable'
 import ItemsStacked from './ItemsStacked'
@@ -178,6 +179,7 @@ export {
   HeroSlides,
   ImageSpinner,
   InlineLink,
+  Intercom,
   ItemCards,
   ItemsScrollable,
   ItemsStacked,
