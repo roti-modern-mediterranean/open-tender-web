@@ -1,9 +1,11 @@
 import AddressForm from './AddressForm'
 import AllergenForm from './AllergenForm'
 import CreditCardForm from './CreditCardForm'
+import CreditCardInputs from './CreditCardInputs'
 import GiftCardForm from './GiftCardForm'
 import GiftCardAssignForm from './GiftCardAssignForm'
 import GiftCardAssignOtherForm from './GiftCardAssignOtherForm'
+import GiftCardsForm from './GiftCardsForm'
 import LoginForm from './LoginForm'
 import LevelUpForm from './LevelUpForm'
 import OrderFulfillmentForm from './OrderFulfillmentForm'
@@ -16,9 +18,11 @@ export {
   AddressForm,
   AllergenForm,
   CreditCardForm,
+  CreditCardInputs,
   GiftCardForm,
   GiftCardAssignForm,
   GiftCardAssignOtherForm,
+  GiftCardsForm,
   LoginForm,
   LevelUpForm,
   OrderFulfillmentForm,

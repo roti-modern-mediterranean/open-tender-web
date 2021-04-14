@@ -114,6 +114,13 @@ const makeGlobalStyles = (theme) => css`
     border-collapse: collapse;
     border-spacing: 0;
     width: 100%;
+    border-radius: ${theme.border.radius};
+    background-color: ${theme.bgColors.light};
+
+    thead {
+      padding: 1rem;
+      padding-bottom: 0;
+    }
 
     tr {
       border-bottom-width: 0.1rem;
@@ -124,7 +131,13 @@ const makeGlobalStyles = (theme) => css`
     th,
     td {
       text-align: center;
-      padding: 1rem 0;
+      padding: 1rem;
+      font-size: 1.8rem;
+      font-family: ${theme.fonts.preface.family};
+      font-weight: ${theme.fonts.preface.weight};
+      letter-spacing: ${theme.fonts.preface.letterSpacing};
+      text-transform: ${theme.fonts.preface.textTransform};
+      -webkit-font-smoothing: ${theme.fonts.preface.fontSmoothing};
 
       &:first-of-type {
         text-align: left;
@@ -135,9 +148,12 @@ const makeGlobalStyles = (theme) => css`
       }
     }
 
-    thead th {
+    td {
       font-weight: normal;
-      color: ${theme.colors.primary};
+    }
+
+    thead th {
+      font-weight: 500;
     }
 
     tbody tr:last-child {
@@ -243,8 +259,7 @@ const makeGlobalStyles = (theme) => css`
   }
 
   input,
-  textarea,
-  select {
+  textarea {
     width: 100%;
     line-height: ${theme.inputs.lineHeight};
     padding: ${theme.inputs.padding};
@@ -314,13 +329,29 @@ const makeGlobalStyles = (theme) => css`
     -moz-appearance: none;
     appearance: none;
     cursor: pointer;
-  }
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: 0;
+    border-radius: ${theme.border.radius};
+    line-height: ${theme.inputs.lineHeight};
+    font-family: ${theme.inputs.family};
+    font-weight: ${theme.inputs.weight};
+    letter-spacing: ${theme.inputs.letterSpacing};
+    text-transform: ${theme.inputs.textTransform};
+    -webkit-font-smoothing: ${theme.inputs.fontSmoothing};
+    font-size: ${theme.inputs.fontSize};
+    color: ${theme.inputs.color};
+    background-color: ${theme.bgColors.secondary};
+    transition: ${theme.links.transition};
 
-  select:read-only {
-    opacity: 1;
-    cursor: pointer;
-    border: ${theme.inputs.borderWidth} solid ${theme.inputs.borderColor};
-    background-color: ${theme.bgColors.primary};
+    &:focus {
+      outline: none;
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
   }
 
   @keyframes fade-in {

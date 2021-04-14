@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
+import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 import {
   getCardType,
@@ -12,7 +13,6 @@ import { ButtonSubmit } from '@open-tender/components'
 import { FormSubmit, Input, Switch } from '../inputs'
 import { CreditCard as CreditCardIcon, Calendar, MapMarker } from '../icons'
 import { CreditCard, Loading } from '..'
-import { useTheme } from '@emotion/react'
 
 const fields = [
   {

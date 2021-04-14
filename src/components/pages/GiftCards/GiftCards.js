@@ -1,10 +1,8 @@
 import React, { useCallback, useContext, useEffect } from 'react'
-import { isBrowser } from 'react-device-detect'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { Minus, Plus } from 'react-feather'
-import { Link } from 'react-router-dom'
-import { GiftCardsForm, FormWrapper } from '@open-tender/components'
+import { useHistory } from 'react-router-dom'
 import {
   selectGiftCards,
   resetGiftCards,
@@ -21,11 +19,13 @@ import { AppContext } from '../../../App'
 import {
   Content,
   Main,
-  PageTitle,
-  PageContent,
   HeaderDefault,
   PageContainer,
+  CheckoutHeader,
+  InlineLink,
 } from '../..'
+import { FormWrapper } from '../../inputs'
+import { GiftCardsForm } from '../../forms'
 
 const iconMap = {
   plus: <Plus size={null} />,
@@ -34,10 +34,13 @@ const iconMap = {
 
 const GiftCards = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { giftCards: config } = useSelector(selectConfig)
-  const { title } = useSelector(selectBrand)
+  const { title, subtitle } = config
+  const { title: siteTitle } = useSelector(selectBrand)
   const { profile: customer } = useSelector(selectCustomer) || {}
   const creditCards = useSelector(selectCustomerCreditCardsForPayment)
+  console.log(creditCards)
   const { success, loading, error, giftCards } = useSelector(selectGiftCards)
   const purchase = useCallback(
     (data, callback) => dispatch(purchaseGiftCards(data, callback)),
@@ -64,15 +67,16 @@ const GiftCards = () => {
     <>
       <Helmet>
         <title>
-          {config.title} | {title}
+          {title} | {siteTitle}
         </title>
       </Helmet>
       <Content>
-        <HeaderDefault title={isBrowser ? null : config.title} />
+        <HeaderDefault />
         <Main>
-          <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...config} />
+          <PageContainer>
+            <CheckoutHeader title={title} />
             <FormWrapper>
+              {subtitle && <p>{subtitle}</p>}
               <GiftCardsForm
                 customer={customer}
                 creditCards={creditCards}
@@ -86,20 +90,16 @@ const GiftCards = () => {
                 iconMap={iconMap}
                 windowRef={windowRef}
               />
-            </FormWrapper>
-            {success && (
-              <PageContent>
-                <p>
-                  {customer ? (
-                    <Link to="/">Head back to your account page</Link>
-                  ) : (
-                    <Link to="/">
-                      Head back to the home page to start an order
-                    </Link>
-                  )}
+              {success && (
+                <p style={{ margin: '3rem 0 0' }}>
+                  <InlineLink onClick={() => history.push('/')}>
+                    {customer
+                      ? 'Head back to your account page'
+                      : 'Head back to the home page to start an order'}
+                  </InlineLink>
                 </p>
-              </PageContent>
-            )}
+              )}
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>
