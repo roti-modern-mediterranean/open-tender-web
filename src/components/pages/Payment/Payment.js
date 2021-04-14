@@ -47,7 +47,7 @@ const Payment = () => {
   )
   const { auth } = useSelector(selectCustomer)
   const account = useSelector(selectAccountConfig)
-  const ccConfig = account.creditCards
+  const { title, subtitle } = account.creditCards
   const { entities, loading } = useSelector(selectCustomerCreditCards)
   const savedCards = entities.filter((i) => i.has_profile)
   const linkedCards = entities.filter((i) => !i.has_profile)
@@ -83,8 +83,9 @@ const Payment = () => {
         <HeaderDefault />
         <Main>
           <PageContainer>
-            <CheckoutHeader title={ccConfig.title} />
+            <CheckoutHeader title={title} />
             <FormWrapper>
+              {subtitle && <p>{subtitle}</p>}
               <PaymentTypes
                 tenderTypes={filteredTenderTypes}
                 tenderType={tenderType}
