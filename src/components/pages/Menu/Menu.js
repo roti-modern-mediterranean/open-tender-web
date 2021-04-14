@@ -40,7 +40,6 @@ export const MenuActiveContext = createContext(null)
 const Menu = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const [init, setInit] = useState(true)
   const [activeItem, setActiveItem] = useState(null)
   const { windowRef } = useContext(AppContext)
   const topOffset = useSelector(selectTopOffset)
@@ -67,15 +66,11 @@ const Menu = () => {
     () => makeValidDeals(deals, orderType, serviceType, revenueCenterId),
     [deals, orderType, serviceType, revenueCenterId]
   )
-  console.log('Menu', activeItem)
 
   useEffect(() => {
-    if (init) {
-      windowRef.current.scrollTop = topOffset || 0
-      maybeRefreshVersion()
-      setInit(false)
-    }
-  }, [windowRef, topOffset, init])
+    windowRef.current.scrollTop = topOffset || 0
+    maybeRefreshVersion()
+  }, [windowRef, topOffset])
 
   useEffect(() => {
     if (!revenueCenterId) {
@@ -84,11 +79,9 @@ const Menu = () => {
       return history.push('/review')
     } else if (topOffset) {
       dispatch(setTopOffset(null))
-    } else if (init) {
-      // const requested = orderType === 'CATERING' ? requestedAt : null
-      const requested = null
+    } else {
       dispatch(fetchAllergens())
-      dispatch(fetchRevenueCenter(revenueCenterId, requested))
+      dispatch(fetchRevenueCenter(revenueCenterId))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
     }
   }, [
@@ -100,7 +93,6 @@ const Menu = () => {
     history,
     groupOrderClosed,
     topOffset,
-    init,
   ])
 
   useEffect(() => {
