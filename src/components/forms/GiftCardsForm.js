@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { isMobileOnly } from 'react-device-detect'
 // import ReCAPTCHA from 'react-google-recaptcha'
 import {
   ButtonStyled,
@@ -155,7 +156,7 @@ const GiftCardsForm = ({
             <thead>
               <tr>
                 <th>Card Number</th>
-                <th>Recipient</th>
+                {!isMobileOnly && <th>Recipient</th>}
                 <th>Balance</th>
               </tr>
             </thead>
@@ -163,7 +164,7 @@ const GiftCardsForm = ({
               {purchasedCards.map((i) => (
                 <tr key={i.card_number}>
                   <td>{i.card_number}</td>
-                  <td>{i.email || 'none'}</td>
+                  {!isMobileOnly && <td>{i.email || 'none'}</td>}
                   <td>${i.balance}</td>
                 </tr>
               ))}
