@@ -5,6 +5,7 @@ import { selectOrder } from '@open-tender/redux'
 import { FormHeader, Textarea } from '../../inputs'
 import CheckoutQuickOptions from './CheckoutQuickOptions'
 import { AddCondiments, DressingOnTheSide, LeaveAtDoor } from '../../icons'
+import styled from '@emotion/styled'
 
 const optionButtons = [
   {
@@ -21,6 +22,10 @@ const optionButtons = [
   },
 ]
 
+const LabelRequired = styled('span')`
+  color: ${(props) => props.theme.colors.error} !important;
+`
+
 const makeNotes = (options, notes) => {
   const optionsStr = options.length ? `${options.join(', ')}, ` : ''
   return optionsStr + notes
@@ -34,7 +39,7 @@ const makeInitState = (notes) => {
   return [options, text]
 }
 
-const CheckoutNotes = ({ notes, handleChange, errors = {} }) => {
+const CheckoutNotes = ({ notes, required, handleChange, errors = {} }) => {
   const [initOptions, initText] = makeInitState(notes)
   const [options, setOptions] = useState(initOptions)
   const [text, setText] = useState(initText)
@@ -82,7 +87,10 @@ const CheckoutNotes = ({ notes, handleChange, errors = {} }) => {
         handleOption={handleOption}
       />
       <FormHeader style={{ marginBottom: '0' }}>
-        <h2>{label}</h2>
+        <h2>
+          {label}
+          {required && <LabelRequired>*</LabelRequired>}
+        </h2>
       </FormHeader>
       <Textarea
         label={label}
@@ -91,6 +99,7 @@ const CheckoutNotes = ({ notes, handleChange, errors = {} }) => {
         value={text}
         onChange={handleNotes}
         error={errors.notes}
+        required={required}
       />
     </>
   )

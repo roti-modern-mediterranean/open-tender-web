@@ -44,6 +44,12 @@ const CardBgImage = styled(BgImage)`
   background-color: ${(props) => props.theme.bgColors.primary};
   background-image: url(${(props) => props.imageUrl});
   box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    top: -0.5rem;
+    left: 0.5rem;
+    width: 12rem;
+    height: 12.5rem;
+  }
 `
 
 const CardContent = styled('div')`

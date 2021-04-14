@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import debounce from 'lodash/debounce'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { makePhone } from '@open-tender/js'
+import { makePhone, isEmpty } from '@open-tender/js'
 import {
   selectCustomer,
   selectCheckout,
@@ -101,9 +101,10 @@ const CheckoutContact = ({ errors = {} }) => {
     ? [...fields, companyField]
     : fields
   const formErrors = convertErrors(errors)
+  const emptyCustomer = !form.customer || isEmpty(form.customer)
 
   useEffect(() => {
-    if (first_name) {
+    if (emptyCustomer && first_name) {
       const customer = {
         customer_id,
         first_name,
@@ -115,7 +116,16 @@ const CheckoutContact = ({ errors = {} }) => {
       setContact(makeContact(customer))
       dispatch(updateForm({ customer }))
     }
-  }, [dispatch, customer_id, first_name, last_name, email, phone, company])
+  }, [
+    dispatch,
+    emptyCustomer,
+    customer_id,
+    first_name,
+    last_name,
+    email,
+    phone,
+    company,
+  ])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedUpdate = useCallback(
@@ -176,7 +186,7 @@ const CheckoutContact = ({ errors = {} }) => {
           error={formErrors[field.name]}
           required={field.required}
           autoComplete={field.autoComplete}
-          disabled={!!profile}
+          disabled={!!profile && !missingCompany}
         />
       ))}
     </CheckoutContactView>

@@ -73,6 +73,13 @@ const RequestedAt = ({
     if (openSidebar) dispatch(toggleSidebar())
   }
 
+  const handleKeepCurrent = () => {
+    dispatch(setRequestedAt(requestedAt))
+    dispatch(closeModal())
+    if (onCloseAction) dispatch(onCloseAction())
+    if (openSidebar) dispatch(toggleSidebar())
+  }
+
   return (
     <RequestedAtModalView>
       {firstTimes ? (
@@ -99,6 +106,7 @@ const RequestedAt = ({
             serviceType={serviceType}
             revenueCenter={revenueCenter}
             setRequestedAt={handleRequestedAt}
+            keepCurrent={handleKeepCurrent}
           />
         </ModalContent>
       ) : orderTimes ? (

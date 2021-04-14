@@ -9,7 +9,7 @@ import { fetchConfig } from './slices/configSlice'
 import GlobalStyles from './GlobalStyles'
 import Routes from './components/Routes'
 import {
-  Alerts,
+  // Alerts,
   ErrorBoundary,
   Modal,
   Nav,
@@ -78,7 +78,7 @@ class App extends React.Component {
                 <ErrorBoundary>
                   <Router>
                     <Modal />
-                    <Alerts />
+                    {/* <Alerts /> */}
                     <Notifications />
                     <Routes />
                     <Sidebar />

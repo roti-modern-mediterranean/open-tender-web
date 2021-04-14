@@ -284,7 +284,7 @@ const Nav = React.forwardRef((props, ref) => {
         <NavClose />
         <NavItems>
           {filteredLinks.map((section) => (
-            <NavSection>
+            <NavSection key={section.title}>
               <NavSectionTitle>
                 <Heading size="h6">{section.title}</Heading>
               </NavSectionTitle>

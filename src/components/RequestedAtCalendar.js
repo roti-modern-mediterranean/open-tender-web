@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { useDispatch } from 'react-redux'
 import {
   dateToIso,
   makeDatePickerDates,
@@ -9,7 +8,6 @@ import {
 } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
 
-import { closeModal } from '../slices'
 import { ButtonGroupBig, RequestedAtPicker } from '.'
 
 const RequestedAtCalendarView = styled('div')`
@@ -26,8 +24,8 @@ const RequestedAtCalendar = ({
   serviceType,
   revenueCenter,
   setRequestedAt,
+  keepCurrent,
 }) => {
-  const dispatch = useDispatch()
   const [date, setDate] = useState(null)
   const { settings, timezone: tz } = revenueCenter || {}
   const st = serviceType === 'WALKIN' ? 'PICKUP' : serviceType
@@ -60,7 +58,7 @@ const RequestedAtCalendar = ({
         excludeTimes={excludeTimes}
       />
       <ButtonGroupBig>
-        <ButtonStyled onClick={() => dispatch(closeModal())} size="big">
+        <ButtonStyled onClick={keepCurrent} size="big">
           Keep Current Time
         </ButtonStyled>
         {hasAsap && (
@@ -83,6 +81,7 @@ RequestedAtCalendar.propTypes = {
   serviceType: propTypes.string,
   revenueCenter: propTypes.object,
   setRequestedAt: propTypes.func,
+  keepCurrent: propTypes.func,
 }
 
 export default RequestedAtCalendar

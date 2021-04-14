@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import debounce from 'lodash/debounce'
 import { selectOrder, selectCheckout, updateForm } from '@open-tender/redux'
-import { isString, makeFullAddress, makePhone } from '@open-tender/js'
+import { isString, makeFullAddress, makePhone, isEmpty } from '@open-tender/js'
 
 import { CheckoutLink, RevenueCenter } from '../..'
 import { FormHeader, Input } from '../../inputs'
@@ -71,9 +71,10 @@ const CheckoutAddress = ({ orderTypeName, errors = {} }) => {
     .filter((i) => displayed.includes(i.config) || required.includes(i.config))
     .map((i) => ({ ...i, required: required.includes(i.config) }))
   const errMsg = isString(errors) ? errors : null
+  const emptyAddress = !form.address || isEmpty(form.address)
 
   useEffect(() => {
-    if (unit !== undefined) {
+    if (emptyAddress && unit !== undefined) {
       const address = {
         unit,
         company,
@@ -83,7 +84,7 @@ const CheckoutAddress = ({ orderTypeName, errors = {} }) => {
       setAddress(address)
       dispatch(updateForm({ address }))
     }
-  }, [dispatch, unit, company, contact, phone])
+  }, [dispatch, emptyAddress, unit, company, contact, phone])
 
   const changeRevenueCenter = () => {
     history.push('/locations')

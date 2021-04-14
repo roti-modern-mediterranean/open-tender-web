@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import debounce from 'lodash/debounce'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { isEmpty } from '@open-tender/js'
 import { selectCheckout, updateForm } from '@open-tender/redux'
 
 import { FormHeader, Input, Switch } from '../../inputs'
@@ -47,6 +48,12 @@ const CheckoutOptionsView = styled('div')`
   margin: 0 0 3rem;
 `
 
+const checkEmptyDetails = (form) => {
+  if (!form.details || isEmpty(form.details)) return true
+  const { person_count, tax_exempt_id, notes } = form.details
+  return person_count === null && tax_exempt_id === null && notes == null
+}
+
 const CheckoutOptions = ({ errors = {} }) => {
   const dispatch = useDispatch()
   const { check, form } = useSelector(selectCheckout)
@@ -68,9 +75,10 @@ const CheckoutOptions = ({ errors = {} }) => {
     .filter((i) => displayed.includes(i.config) || required.includes(i.config))
     .map((i) => ({ ...i, required: required.includes(i.config) }))
   const showNotes = displayed.includes('notes') || required.includes('notes')
+  const emptyDetails = checkEmptyDetails(form)
 
   useEffect(() => {
-    if (eating_utensils !== undefined) {
+    if (emptyDetails && eating_utensils !== undefined) {
       const details = {
         person_count,
         tax_exempt_id,
@@ -83,6 +91,7 @@ const CheckoutOptions = ({ errors = {} }) => {
     }
   }, [
     dispatch,
+    emptyDetails,
     person_count,
     tax_exempt_id,
     eating_utensils,
@@ -143,6 +152,7 @@ const CheckoutOptions = ({ errors = {} }) => {
       {showNotes && (
         <CheckoutNotes
           notes={details.notes || ''}
+          required={required.includes('notes')}
           handleChange={handleChange}
           errors={errors}
         />
