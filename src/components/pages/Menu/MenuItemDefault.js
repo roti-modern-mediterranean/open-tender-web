@@ -39,7 +39,6 @@ const MenuItemImageView = styled('div')`
 `
 
 const MenuItemContent = styled('div')`
-  overflow: hidden;
   min-height: 11.5rem;
   padding: 2rem 2rem 2rem 6rem;
   margin: 0 0 0 10.5rem;
