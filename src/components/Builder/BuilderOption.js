@@ -1,11 +1,12 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Heading } from '@open-tender/components'
+import { Heading, Preface } from '@open-tender/components'
 
 import { ImageSpinner } from '..'
 import { makePriceCals } from './Builder'
 import BuilderOptionImage from './BuilderOptionImage'
 import { Checkmark } from '../icons'
+import MenuItemAllergens from '../pages/Menu/MenuItemAllergens'
 
 const BuilderOptionView = styled('button')`
   position: relative;
@@ -99,6 +100,13 @@ const BuilderOptionCountView = styled('span')`
   }
 `
 
+const BuilderOptionSoldOut = styled(Preface)`
+  margin: 0.5rem 0 0;
+  color: ${(props) => props.theme.colors.alert};
+  font-size: 1.6rem;
+  font-weight: 500;
+`
+
 const BuilderOptionCount = ({ quantity }) => {
   return (
     <BuilderOptionCountView show={quantity > 0} quantity={quantity}>
@@ -116,12 +124,13 @@ const BuilderOption = ({
   perRow,
   group,
   option,
-  allergens,
+  soldOut,
+  allergenAlerts,
   displaySettings,
   activeOption,
   setActiveOption,
 }) => {
-  const { calories: showCals } = displaySettings
+  const { calories: showCals, allergens: showAllergens } = displaySettings
   const optionKey = `${group.id}-${option.id}`
   const isActive = activeOption === optionKey
   const hidePrice =
@@ -130,6 +139,12 @@ const BuilderOption = ({
   const priceCals = makePriceCals(option, showCals, hidePrice)
   const { quantity } = option
   const width = `${parseFloat((1 / perRow) * 100).toFixed(5)}%`
+  const isSoldOut = soldOut ? soldOut.includes(option.id) : false
+  const allergens = showAllergens ? option.allergens : []
+  const allergenAlert =
+    allergenAlerts && allergens.length
+      ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
+      : []
   // const isCheckbox = group.options.filter((i) => i.max !== 1).length === 0
   // const groupAtMax = group.max !== 0 && group.quantity === group.max
   // const optionAtMax = option.max !== 0 && option.quantity === option.max
@@ -141,6 +156,7 @@ const BuilderOption = ({
 
   const onClick = (evt) => {
     evt.preventDefault()
+    if (isSoldOut) return
     if (isActive) {
       setActiveOption(null)
     } else {
@@ -150,7 +166,7 @@ const BuilderOption = ({
   }
 
   return (
-    <BuilderOptionView onClick={onClick} width={width}>
+    <BuilderOptionView onClick={onClick} width={width} disabled={isSoldOut}>
       <BuilderOptionArrow show={isActive} />
       <BuilderOptionCount quantity={quantity} />
       <BuilderOptionImage
@@ -160,6 +176,14 @@ const BuilderOption = ({
       <BuilderOptionInfo>
         <BuilderOptionName>{option.name}</BuilderOptionName>
         <BuilderOptionPrice>{priceCals}</BuilderOptionPrice>
+        {isSoldOut && (
+          <BuilderOptionSoldOut as="p">Sold out</BuilderOptionSoldOut>
+        )}
+        <MenuItemAllergens
+          allergens={allergenAlert}
+          includeText={false}
+          style={{ textAlign: 'center', margin: '0.5rem 0 0 1.5rem' }}
+        />
       </BuilderOptionInfo>
     </BuilderOptionView>
   )

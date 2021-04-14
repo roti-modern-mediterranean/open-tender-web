@@ -518,6 +518,7 @@ const Builder = ({
                                     perRow,
                                     group,
                                     option,
+                                    soldOut,
                                     allergenAlerts,
                                     displaySettings,
                                     activeOption,
