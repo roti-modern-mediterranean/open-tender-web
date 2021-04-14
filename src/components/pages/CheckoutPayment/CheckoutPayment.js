@@ -25,7 +25,7 @@ import {
 import { ButtonStyled, Preface } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand } from '../../../slices'
+import { openModal, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   CheckoutHeader,
@@ -98,6 +98,7 @@ const CheckoutPayment = () => {
   const checkout = useSelector(selectCheckout)
   const { check, form, completedOrder, errors, submitting, loading } = checkout
   const total = check && check.totals ? check.totals.total : 0.0
+  const { has_tip } = check ? check.config.gratuity : {}
   let amountRemaining = checkAmountRemaining(total, form.tenders)
   const submitDisabled =
     submitting || amountRemaining > 0 || loading === 'pending'
@@ -147,6 +148,10 @@ const CheckoutPayment = () => {
     history.push(`/`)
   }
 
+  const editTip = () => {
+    dispatch(openModal({ type: 'gratuity', args: { focusFirst: true } }))
+  }
+
   return (
     <>
       <Helmet>
@@ -172,7 +177,10 @@ const CheckoutPayment = () => {
             {check && (
               <FormWrapper>
                 <ErrMsg errMsg={errors.form} style={{ margin: '0 0 2rem' }} />
-                <CheckoutCart check={check} />
+                <CheckoutCart
+                  check={check}
+                  editTip={has_tip ? editTip : null}
+                />
                 <CheckoutPromoCode />
                 <CheckoutTenders />
               </FormWrapper>

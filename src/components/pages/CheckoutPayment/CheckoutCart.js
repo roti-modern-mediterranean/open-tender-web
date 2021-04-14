@@ -36,12 +36,36 @@ const CheckoutLine = styled('span')`
   margin: 1.5rem 0 1rem;
 `
 
-const CheckoutCart = ({ check, showBorder = false, style }) => {
+const CheckoutLineLink = styled('button')`
+  padding: 0 0 0 0.5rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-transform: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: ${(props) => props.theme.links.primary.color};
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: ${(props) => props.theme.links.primary.hover};
+  }
+`
+
+const CheckoutCart = ({ check, showBorder = false, editTip, style }) => {
   const { cart, surcharges, discounts, taxes, totals, details } = check
   const { subtotal, tip, total } = totals
   // const totalBeforeTax = [subtotal, gift_card, surcharge, discount]
   //   .reduce((t, i) => (t += parseFloat(i)), 0.0)
   //   .toFixed(2)
+  const tipName = editTip ? (
+    <span>
+      Tip <CheckoutLineLink onClick={editTip}>Change</CheckoutLineLink>
+    </span>
+  ) : (
+    'Tip'
+  )
+
   return (
     <CheckoutCartView showBorder={showBorder} style={style}>
       {cart.map((item, index) => (
@@ -72,7 +96,9 @@ const CheckoutCart = ({ check, showBorder = false, style }) => {
       ) : (
         taxes.map((tax) => <CheckoutCartItem key={tax.id} {...tax} />)
       )}
-      {tip !== '0.00' && <CheckoutCartItem name="Tip" amount={tip} />}
+      {(tip !== '0.00' || editTip) && (
+        <CheckoutCartItem name={tipName} amount={tip} />
+      )}
       <CheckoutLine />
       <CheckoutCartItem name="Total" amount={total} />
     </CheckoutCartView>

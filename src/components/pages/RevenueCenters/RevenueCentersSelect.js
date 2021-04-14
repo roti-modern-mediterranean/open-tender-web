@@ -14,6 +14,7 @@ import {
   setServiceType,
 } from '@open-tender/redux'
 import { makeDisplayedRevenueCenters } from '@open-tender/js'
+import { Preface } from '@open-tender/components'
 
 import { selectSettings, selectGeoLatLng } from '../../../slices'
 import { InlineLink, Loading, RevenueCenter } from '../..'
@@ -27,6 +28,15 @@ const RevenueCentersSelectList = styled('ul')`
     &:first-of-type {
       margin: 0;
     }
+  }
+`
+
+const RevenueCentersSelectPickup = styled(Preface)`
+  font-weight: 500;
+  font-size: 1.8rem;
+
+  button:hover & {
+    color: ${(props) => props.theme.colors.paprika};
   }
 `
 
@@ -139,7 +149,9 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
           subtitle="A full address with street number is required for delivery orders."
         >
           <InlineLink onClick={() => dispatch(setServiceType('PICKUP'))}>
-            Switch to pickup
+            <RevenueCentersSelectPickup>
+              Switch to pickup
+            </RevenueCentersSelectPickup>
           </InlineLink>
         </RevenueCentersAlert>
       ) : (

@@ -10,6 +10,7 @@ import Curbside from './Curbside'
 import GiftCard from './GiftCard'
 import GiftCardAssign from './GiftCardAssign'
 import GiftCardAssignOther from './GiftCardAssignOther'
+import Gratuity from './Gratuity'
 import GroupOrder from './GroupOrder'
 import LevelUp from './LevelUp'
 import Login from './Login'
@@ -35,6 +36,7 @@ export {
   GiftCard,
   GiftCardAssign,
   GiftCardAssignOther,
+  Gratuity,
   GroupOrder,
   LevelUp,
   Login,

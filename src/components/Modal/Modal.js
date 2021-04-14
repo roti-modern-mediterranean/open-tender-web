@@ -21,6 +21,7 @@ import {
   GiftCardAssign,
   GiftCardAssignOther,
   GroupOrder,
+  Gratuity,
   LevelUp,
   Login,
   MenuItem,
@@ -59,6 +60,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <GiftCardAssignOther windowRef={windowRef} {...args} />
     case 'groupOrder':
       return <GroupOrder {...args} />
+    case 'gratuity':
+      return <Gratuity {...args} />
     case 'item':
       return <MenuItem {...args} />
     case 'levelup':
@@ -95,6 +98,7 @@ const containerStyleMap = {
   cartCounts: { alignItems: 'flex-start' },
   groupOrder: { alignItems: 'flex-start' },
   signUp: { alignItems: 'flex-start' },
+  gratuity: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`

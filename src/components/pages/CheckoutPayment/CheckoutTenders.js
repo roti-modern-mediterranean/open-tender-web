@@ -10,7 +10,7 @@ import CheckoutLevelUp from './CheckoutLevelUp'
 import { useDispatch, useSelector } from 'react-redux'
 import { PaymentTypes } from '../..'
 
-const tenderTypes = [
+const allTenderTypes = [
   {
     icon: <CreditCard size="3.4rem" color="#FBF8EA" />,
     text: 'Credit Card',
@@ -40,6 +40,10 @@ const CheckoutTenders = () => {
   const [tenderType, setTenderType] = useState('CREDIT')
   const [hasTender, setHasTender] = useState(false)
   const { check, form } = useSelector(selectCheckout)
+  const { tender_types } = check.config
+  const tenderTypes = allTenderTypes.filter((i) =>
+    tender_types.includes(i.tenderType)
+  )
   const total = check.totals ? check.totals.total : 0.0
   const cards = check.customer ? check.customer.credit_cards : []
   const hasCards = cards && cards.length > 0
