@@ -114,7 +114,6 @@ const MenuItemDefault = React.forwardRef(
   (
     {
       onClick,
-      isActive,
       isInverted,
       isSoldOut,
       isIncomplete,
@@ -129,10 +128,12 @@ const MenuItemDefault = React.forwardRef(
       handleAdd,
       handleOrder,
       menuConfig,
-      setIsActive,
+      activeItem,
+      setActiveItem,
     },
     ref
   ) => {
+    const isActive = activeItem === item.id
     return (
       <MenuItemView
         ref={ref}
@@ -163,8 +164,7 @@ const MenuItemDefault = React.forwardRef(
                 <CardButton
                   ref={viewRef}
                   onClick={handleView}
-                  onFocus={() => setIsActive(true)}
-                  // onBlur={() => setIsActive(false)}
+                  onFocus={() => setActiveItem(item.id)}
                   disabled={isSoldOut}
                   secondary={true}
                 >
@@ -173,8 +173,7 @@ const MenuItemDefault = React.forwardRef(
                 <CardButton
                   ref={addRef}
                   onClick={handleAdd}
-                  onFocus={() => setIsActive(true)}
-                  // onBlur={() => setIsActive(false)}
+                  onFocus={() => setActiveItem(item.id)}
                   disabled={isSoldOut || isIncomplete}
                 >
                   Add
@@ -184,8 +183,7 @@ const MenuItemDefault = React.forwardRef(
               <CardButton
                 ref={viewRef}
                 onClick={handleOrder}
-                onFocus={() => setIsActive(true)}
-                // onBlur={() => setIsActive(false)}
+                onFocus={() => setActiveItem(item.id)}
               >
                 Order Now
               </CardButton>

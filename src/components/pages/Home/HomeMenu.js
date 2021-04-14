@@ -1,5 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { isBrowser } from 'react-device-detect'
+import styled from '@emotion/styled'
 import {
   fetchMenuDisplay,
   selectMenuDisplay,
@@ -10,12 +13,10 @@ import {
 
 import { Container } from '../..'
 import { selectConfig } from '../../../slices'
-import styled from '@emotion/styled'
-import HomeMenuCategory from './HomeMenuCategory'
-import { isBrowser } from 'react-device-detect'
-import HomeMenuNav from './HomeMenuNav'
 import { ButtonToggle } from '../../buttons'
-import { useHistory } from 'react-router-dom'
+import HomeMenuCategory from './HomeMenuCategory'
+import HomeMenuNav from './HomeMenuNav'
+import { MenuActiveContext } from '../Menu/Menu'
 
 const homeCategories = ['Bowls', 'Salads', 'Pitas']
 
@@ -97,6 +98,7 @@ const HomeMenuCategories = styled('div')`
 const HomeMenu = () => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const [activeItem, setActiveItem] = useState(null)
   const { home } = useSelector(selectConfig)
   const { orderType } = useSelector(selectOrder)
   const { title, subtitle } = home
@@ -146,15 +148,22 @@ const HomeMenu = () => {
             <ButtonToggle onClick={handleCatering}>Catering</ButtonToggle>
           </HomeMenuButtons>
         </HomeMenuHeader>
-        <HomeMenuCategories>
-          {filtered.map((category, index) => (
-            <HomeMenuCategory
-              key={category.id}
-              category={category}
-              isInverted={!isBrowser && index % 2 === 0}
-            />
-          ))}
-        </HomeMenuCategories>
+        <MenuActiveContext.Provider
+          value={{
+            activeItem,
+            setActiveItem,
+          }}
+        >
+          <HomeMenuCategories>
+            {filtered.map((category, index) => (
+              <HomeMenuCategory
+                key={category.id}
+                category={category}
+                isInverted={!isBrowser && index % 2 === 0}
+              />
+            ))}
+          </HomeMenuCategories>
+        </MenuActiveContext.Provider>
       </Container>
     </HomeMenuView>
   )

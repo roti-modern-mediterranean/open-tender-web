@@ -35,11 +35,13 @@ import MenuFooter from './MenuFooter'
 import MenuCatering from './MenuCatering'
 
 export const MenuContext = createContext(null)
+export const MenuActiveContext = createContext(null)
 
 const Menu = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const [init, setInit] = useState(true)
+  const [activeItem, setActiveItem] = useState(null)
   const { windowRef } = useContext(AppContext)
   const topOffset = useSelector(selectTopOffset)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
@@ -65,6 +67,7 @@ const Menu = () => {
     () => makeValidDeals(deals, orderType, serviceType, revenueCenterId),
     [deals, orderType, serviceType, revenueCenterId]
   )
+  console.log('Menu', activeItem)
 
   useEffect(() => {
     if (init) {
@@ -133,9 +136,16 @@ const Menu = () => {
               deals: validDeals,
             }}
           >
-            <ScreenreaderTitle>Menu</ScreenreaderTitle>
-            {orderType === 'CATERING' ? <MenuCatering /> : <MenuContent />}
-            <MenuFooter />
+            <MenuActiveContext.Provider
+              value={{
+                activeItem,
+                setActiveItem,
+              }}
+            >
+              <ScreenreaderTitle>Menu</ScreenreaderTitle>
+              {orderType === 'CATERING' ? <MenuCatering /> : <MenuContent />}
+              <MenuFooter />
+            </MenuActiveContext.Provider>
           </MenuContext.Provider>
         </Main>
       </Content>

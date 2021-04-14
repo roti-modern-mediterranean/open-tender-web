@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useRef } from 'react'
 import propTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -16,7 +16,7 @@ import {
 import { useBuilder } from '@open-tender/components'
 
 import { selectDisplaySettings, setTopOffset } from '../../../slices'
-import { MenuContext } from './Menu'
+import { MenuContext, MenuActiveContext } from './Menu'
 import MenuItemDefault from './MenuItemDefault'
 import MenuItemSmall from './MenuItemSmall'
 
@@ -26,8 +26,8 @@ const MenuItem = ({ item, category, isInverted }) => {
   const container = useRef(null)
   const viewRef = useRef(null)
   const addRef = useRef(null)
-  const [isActive, setIsActive] = useState(false)
   const { soldOut, menuConfig, allergenAlerts } = useContext(MenuContext) || {}
+  const { activeItem, setActiveItem } = useContext(MenuActiveContext) || {}
   const menuSlug = useSelector(selectMenuSlug)
   const {
     menuImages: showImage,
@@ -88,10 +88,10 @@ const MenuItem = ({ item, category, isInverted }) => {
 
   const handleClick = () => {
     if (isSoldOut) return
-    if (isActive) {
+    if (activeItem === item.id) {
       viewRef.current.blur()
       addRef.current && addRef.current.blur()
-      setIsActive(false)
+      setActiveItem(null)
     } else {
       viewRef.current.focus()
     }
@@ -100,7 +100,6 @@ const MenuItem = ({ item, category, isInverted }) => {
   const props = {
     menuConfig,
     onClick: (evt) => handleClick(evt),
-    isActive,
     isInverted,
     isSoldOut,
     isIncomplete,
@@ -114,7 +113,8 @@ const MenuItem = ({ item, category, isInverted }) => {
     handleView,
     handleAdd,
     handleOrder,
-    setIsActive,
+    activeItem,
+    setActiveItem,
   }
 
   return appearance === 'small' ? (
