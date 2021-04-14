@@ -126,7 +126,7 @@ const Slide = styled('div')`
   opacity: ${(props) => (props.active ? '1' : '0')};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: 80%;
-    height: calc(100% - 1.5rem);
+    height: calc(100% - 3rem);
     border-radius: 0.15rem;
     opacity: 1;
     padding: 0.5em 0 0.5em 0.5em;
@@ -157,24 +157,25 @@ const SliderNew = ({ settings = {}, slides }) => {
   const [index, setIndex] = useState(0)
   const [touchMove, setTouchMove] = useState(null)
   const {
-    autoplay,
+    autoplay: autoplayDesktop,
     transition,
     transition_mobile,
     duration,
     duration_mobile,
-    show_arrows,
-    show_arrows_mobile,
+    // show_arrows,
+    // show_arrows_mobile,
     show_dots,
     show_dots_mobile,
   } = settings || defaultSettings
+  const autoplay = isBrowser ? autoplayDesktop : false
   const transitionSpeed = isBrowser ? transition : transition_mobile
   const interval = isBrowser ? duration : duration_mobile
-  const showArrows = isBrowser ? show_arrows : show_arrows_mobile
   const showDots = isBrowser ? show_dots : show_dots_mobile
-  const size = isBrowser ? '3rem' : '2rem'
   const count = slides.length
-  const last = count - 1
   const sliderWrapper = useRef()
+  // const showArrows = isBrowser ? show_arrows : show_arrows_mobile
+  // const size = isBrowser ? '3rem' : '2rem'
+  // const last = count - 1
 
   const onTouch = useCallback((direction, move, _, position, eventName) => {
     if (eventName !== TouchEvents.end) {
@@ -269,7 +270,7 @@ const SliderNew = ({ settings = {}, slides }) => {
           )
         })}
       </SliderWrapper>
-      {showArrows && (
+      {/* {showArrows && (
         <>
           <Arrow
             direction="left"
@@ -284,7 +285,7 @@ const SliderNew = ({ settings = {}, slides }) => {
             // disabled={!autoplay && index === count - 1}
           />
         </>
-      )}
+      )} */}
       {showDots && (
         <Dots>
           {slides.map((slide, idx) => (

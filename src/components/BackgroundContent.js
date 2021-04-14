@@ -25,7 +25,7 @@ const BackgroundContentView = styled('div')`
 `
 
 const BackgroundContentText = styled('div')`
-  max-width: 44rem;
+  // max-width: 44rem;
 
   p {
     color: ${(props) => props.color || props.theme.colors.light};
@@ -33,22 +33,29 @@ const BackgroundContentText = styled('div')`
   }
 
   p:first-of-type {
-    line-height: 1.2;
-    font-size: ${(props) => props.theme.fonts.sizes.h2};
+    line-height: 0.9;
+    font-size: 19rem;
     color: ${(props) => props.color || props.theme.colors.light};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: ${(props) => props.theme.fonts.sizes.xBig};
+    @media (max-width: 1200px) {
+      font-size: 12rem;
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: 4rem;
     }
   }
 
   p + p {
-    line-height: ${(props) => props.theme.lineHeight};
-    margin: 0.3rem 0 0;
-    font-size: ${(props) => props.theme.fonts.sizes.main};
-    // font-weight: ${(props) => props.theme.boldWeight};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      margin: 0.2rem 0 0;
-      font-size: ${(props) => props.theme.fonts.sizes.small};
+    font-family: ${(props) => props.theme.fonts.preface.family};
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    font-size: 5.6rem;
+    line-height: 1;
+    margin: 0;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: 2.7rem;
+      text-transform: none;
+      margin: 0.5rem 0 0;
     }
   }
 `

@@ -9,12 +9,8 @@ const PageHeroView = styled('div')`
   position: relative;
   display: flex;
   flex-direction: column;
-  // min-height: 42rem;
-  // max-height: ${(props) => props.maxHeight || '100%'};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex-direction: column;
-    // max-height: 100%;
-    // min-height: 0;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     margin: 1em 0;
@@ -40,7 +36,7 @@ const PageHeroContent = styled('div')`
   position: relative;
   display: flex;
   height: 50vh;
-  min-height: 50rem;
+  min-height: ${(props) => props.minHeight || '54rem'};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     min-height: 37rem;
   }
@@ -64,7 +60,7 @@ const PageHero = ({
   announcements,
   imageUrl,
   showHero,
-  maxHeight,
+  minHeight,
   children,
 }) => {
   const { settings, entities, loading, error } = announcements || {}
@@ -73,9 +69,9 @@ const PageHero = ({
   const hasHero = imageUrl && showHero
 
   return (
-    <PageHeroView maxHeight={maxHeight}>
+    <PageHeroView>
       {(slides || hasHero) && (
-        <PageHeroContent>
+        <PageHeroContent minHeight={minHeight}>
           {isLoading ? (
             <BackgroundLoading />
           ) : slides ? (
@@ -95,7 +91,7 @@ PageHero.propTypes = {
   imageUrl: propTypes.string,
   announcements: propTypes.object,
   showHero: propTypes.bool,
-  maxHeight: propTypes.string,
+  minHeight: propTypes.string,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node,

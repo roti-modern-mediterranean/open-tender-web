@@ -1,16 +1,17 @@
-import React, { useRef, useContext } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useRef, useContext, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 import { isMobile } from 'react-device-detect'
 import { selectGroupOrder } from '@open-tender/redux'
 import styled from '@emotion/styled'
 
 import { selectDisplaySettings } from '../../../slices'
-import { NavSticky } from '../..'
+import { NavSticky, PageHero } from '../..'
 import { MenuContext } from './Menu'
 import MenuCategories from './MenuCategories'
 // import MenuLoading from './MenuLoading'
 import MenuError from './MenuError'
-import MenuHero from './MenuHero'
+// import MenuHero from './MenuHero'
 
 import MenuDeals from './MenuDeals'
 
@@ -19,6 +20,7 @@ const MenuView = styled('div')`
 `
 
 const MenuContent = () => {
+  const dispatch = useDispatch()
   const {
     revenueCenter,
     categories,
@@ -29,6 +31,7 @@ const MenuContent = () => {
   } = useContext(MenuContext)
   const { menuHero, menuHeroMobile } = useSelector(selectDisplaySettings)
   const { cartGuest } = useSelector(selectGroupOrder)
+  const announcements = useSelector(selectAnnouncements)
   const showHero =
     menuHero === undefined ? true : isMobile ? menuHeroMobile : menuHero
   const topRef = useRef()
@@ -47,11 +50,21 @@ const MenuContent = () => {
       ? [{ name: 'Deals', imageUrl: null }, ...navItems]
       : navItems
 
+  useEffect(() => {
+    dispatch(fetchAnnouncementPage('MENU'))
+  }, [dispatch])
+
   return (
     <>
       {revenueCenter && showHero && (
         <div ref={heroRef}>
-          <MenuHero imageUrl={menuConfig.background} />
+          {/* <MenuHero imageUrl={menuConfig.background} /> */}
+          <PageHero
+            announcements={announcements}
+            imageUrl={menuConfig.background}
+            showHero={showHero}
+            minHeight="44rem"
+          />
         </div>
       )}
       {!error ? (

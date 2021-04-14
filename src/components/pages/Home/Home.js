@@ -72,7 +72,6 @@ const Home = () => {
               announcements={announcements}
               imageUrl={isBrowser ? background : mobile}
               showHero={showHero}
-              maxHeight="36rem"
             />
             {auth && <HomeRecentOrders style={{ marginBottom: '0' }} />}
             <HomeMenu />
