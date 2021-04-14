@@ -44,7 +44,7 @@ const MenuItemContent = styled('div')`
   padding: 2rem 2rem 2rem 6rem;
   margin: 0 0 0 10.5rem;
   transition: background-color 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
-  transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+  // transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
   border-radius: ${(props) => props.theme.border.radius};
   background-color: ${(props) =>
     props.theme.bgColors[props.isInverted ? 'primary' : 'secondary']};
@@ -165,7 +165,7 @@ const MenuItemDefault = React.forwardRef(
                   ref={viewRef}
                   onClick={handleView}
                   onFocus={() => setIsActive(true)}
-                  onBlur={() => setIsActive(false)}
+                  // onBlur={() => setIsActive(false)}
                   disabled={isSoldOut}
                   secondary={true}
                 >
@@ -175,7 +175,7 @@ const MenuItemDefault = React.forwardRef(
                   ref={addRef}
                   onClick={handleAdd}
                   onFocus={() => setIsActive(true)}
-                  onBlur={() => setIsActive(false)}
+                  // onBlur={() => setIsActive(false)}
                   disabled={isSoldOut || isIncomplete}
                 >
                   Add
@@ -186,7 +186,7 @@ const MenuItemDefault = React.forwardRef(
                 ref={viewRef}
                 onClick={handleOrder}
                 onFocus={() => setIsActive(true)}
-                onBlur={() => setIsActive(false)}
+                // onBlur={() => setIsActive(false)}
               >
                 Order Now
               </CardButton>
