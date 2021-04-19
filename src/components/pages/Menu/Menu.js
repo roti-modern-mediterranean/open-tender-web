@@ -22,6 +22,8 @@ import {
   fetchMenu,
   fetchAllergens,
   fetchDeals,
+  selectAnnouncementsPage,
+  fetchAnnouncementPage,
 } from '@open-tender/redux'
 import { makeValidDeals } from '@open-tender/js'
 
@@ -43,9 +45,11 @@ const Menu = () => {
   const [activeItem, setActiveItem] = useState(null)
   const { windowRef } = useContext(AppContext)
   const topOffset = useSelector(selectTopOffset)
+  const [init, setInit] = useState(true)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
   const { menu: menuConfig } = useSelector(selectConfig)
   const { loadingMessage } = menuConfig
+  const announcements = useSelector(selectAnnouncementsPage('MENU'))
   const order = useSelector(selectOrder)
   const { orderType, revenueCenter } = order
   const { revenueCenterId, serviceType, requestedAt } = useSelector(
@@ -68,9 +72,11 @@ const Menu = () => {
   )
 
   useEffect(() => {
-    windowRef.current.scrollTop = topOffset || 0
-    maybeRefreshVersion()
-  }, [windowRef, topOffset])
+    if (init) {
+      windowRef.current.scrollTop = topOffset || 0
+      maybeRefreshVersion()
+    }
+  }, [windowRef, topOffset, init])
 
   useEffect(() => {
     if (!revenueCenterId) {
@@ -79,10 +85,12 @@ const Menu = () => {
       return history.push('/review')
     } else if (topOffset) {
       dispatch(setTopOffset(null))
-    } else {
+      setInit(false)
+    } else if (init) {
       dispatch(fetchAllergens())
       dispatch(fetchRevenueCenter(revenueCenterId))
       dispatch(fetchMenu({ revenueCenterId, serviceType, requestedAt }))
+      dispatch(fetchAnnouncementPage('MENU'))
     }
   }, [
     revenueCenterId,
@@ -93,6 +101,7 @@ const Menu = () => {
     history,
     groupOrderClosed,
     topOffset,
+    init,
   ])
 
   useEffect(() => {
@@ -126,6 +135,7 @@ const Menu = () => {
               loadingMessage,
               error,
               deals: validDeals,
+              announcements,
             }}
           >
             <MenuActiveContext.Provider

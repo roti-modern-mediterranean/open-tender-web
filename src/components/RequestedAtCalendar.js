@@ -21,6 +21,7 @@ const RequestedAtCalendarView = styled('div')`
 `
 
 const RequestedAtCalendar = ({
+  requestedAt,
   serviceType,
   revenueCenter,
   setRequestedAt,
@@ -61,7 +62,7 @@ const RequestedAtCalendar = ({
         <ButtonStyled onClick={keepCurrent} size="big">
           Keep Current Time
         </ButtonStyled>
-        {hasAsap && (
+        {hasAsap && requestedAt !== 'asap' && (
           <ButtonStyled
             onClick={() => setRequestedAt('asap')}
             color="secondary"

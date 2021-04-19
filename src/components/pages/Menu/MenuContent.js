@@ -1,6 +1,5 @@
-import React, { useRef, useContext, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
+import React, { useRef, useContext } from 'react'
+import { useSelector } from 'react-redux'
 import { isMobile } from 'react-device-detect'
 import { selectGroupOrder } from '@open-tender/redux'
 import styled from '@emotion/styled'
@@ -20,7 +19,6 @@ const MenuView = styled('div')`
 `
 
 const MenuContent = () => {
-  const dispatch = useDispatch()
   const {
     revenueCenter,
     categories,
@@ -28,10 +26,10 @@ const MenuContent = () => {
     error,
     menuConfig,
     deals,
+    announcements,
   } = useContext(MenuContext)
   const { menuHero, menuHeroMobile } = useSelector(selectDisplaySettings)
   const { cartGuest } = useSelector(selectGroupOrder)
-  const announcements = useSelector(selectAnnouncements)
   const showHero =
     menuHero === undefined ? true : isMobile ? menuHeroMobile : menuHero
   const topRef = useRef()
@@ -49,10 +47,6 @@ const MenuContent = () => {
     deals && deals.length > 0
       ? [{ name: 'Deals', imageUrl: null }, ...navItems]
       : navItems
-
-  useEffect(() => {
-    dispatch(fetchAnnouncementPage('MENU'))
-  }, [dispatch])
 
   return (
     <>
