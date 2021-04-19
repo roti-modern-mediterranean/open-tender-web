@@ -5,7 +5,12 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { selectCartQuantity } from '@open-tender/redux'
 import { contains } from '@open-tender/js'
 
-import { selectModal, selectSidebar, toggleSidebar } from '../../slices'
+import {
+  selectModal,
+  selectSidebar,
+  selectSidebarModal,
+  toggleSidebar,
+} from '../../slices'
 import SidebarOverlay from './SidebarOverlay'
 import SidebarContent from './SidebarContent'
 
@@ -17,12 +22,13 @@ const Sidebar = () => {
   const [elements, setElements] = useState([])
   const { type } = useSelector(selectModal)
   const { isOpen } = useSelector(selectSidebar)
+  const { isOpen: sidebarModalOpen } = useSelector(selectSidebarModal)
   const cartQuantity = useSelector(selectCartQuantity)
   const showEmptyCart = contains(pathname, ['menu', 'checkout'])
   const hideCart =
     (cartQuantity === 0 && !showEmptyCart) ||
     contains(pathname, ['review', 'gift-cards'])
-  const canToggle = !type && !hideCart
+  const canToggle = !type && !hideCart && !sidebarModalOpen
 
   const handleExit = () => {
     if (active) active.focus()

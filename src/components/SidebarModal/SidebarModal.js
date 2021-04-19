@@ -1,18 +1,16 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
-import { selectSidebarModal, toggleSidebarModal } from '../../slices'
+import { selectSidebarModal } from '../../slices'
 import SidebarModalOverlay from './SidebarModalOverlay'
 // import SidebarModalContent from './SidebarModalContent'
 
 const SidebarModal = ({ children }) => {
-  const dispatch = useDispatch()
   const sidebarRef = useRef(null)
   const [active, setActive] = useState(null)
   const [elements, setElements] = useState([])
   const { isOpen } = useSelector(selectSidebarModal)
-  const canToggle = true
 
   const handleExit = () => {
     if (active) active.focus()
@@ -47,11 +45,9 @@ const SidebarModal = ({ children }) => {
           lastElement.focus()
           evt.preventDefault()
         }
-      } else if (evt.keyCode === 27 && canToggle) {
-        dispatch(toggleSidebarModal())
       }
     },
-    [elements, canToggle, dispatch]
+    [elements]
   )
 
   useEffect(() => {

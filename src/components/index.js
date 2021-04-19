@@ -112,7 +112,7 @@ import Section from './Section'
 import SectionHeader from './SectionHeader'
 import SectionTitle from './SectionTitle'
 import Sidebar from './Sidebar'
-import SidebarModal from './SidebarModal'
+import SidebarModal, { SidebarModalClose } from './SidebarModal'
 import SkipLink from './SkipLink'
 import Slider from './Slider'
 import SliderKeen from './SliderKeen'
@@ -242,6 +242,7 @@ export {
   SectionTitle,
   Sidebar,
   SidebarModal,
+  SidebarModalClose,
   SkipLink,
   SignUpForm,
   Slider,

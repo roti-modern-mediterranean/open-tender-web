@@ -11,7 +11,7 @@ import {
 
 import { toggleSidebarModal, selectDisplaySettings } from '../../../slices'
 import styled from '@emotion/styled'
-import { CartClose, CartFooter, Container } from '../..'
+import { CartFooter, Container, SidebarModalClose } from '../..'
 import BuilderItemQuantity from '../../Builder/BuilderItemQuantity'
 import { ChevronLeft } from '../../icons'
 import BuilderGroup from './BuilderGroup'
@@ -128,7 +128,7 @@ const Builder = React.forwardRef(({ menuItem, soldOut }, ref) => {
   return (
     <BuilderView ref={ref}>
       <div>
-        <CartClose label="Cancel" onClick={cancel} />
+        <SidebarModalClose label="Cancel" onClick={cancel} />
         <BuilderGroups>
           <Container>
             <BuilderHeader>

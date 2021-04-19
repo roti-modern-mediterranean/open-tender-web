@@ -7,7 +7,7 @@ import {
   selectCustomer,
   fetchCustomer,
   fetchCustomerCreditCards,
-  selectAnnouncements,
+  selectAnnouncementsPage,
   fetchAnnouncementPage,
 } from '@open-tender/redux'
 
@@ -41,7 +41,7 @@ const AccountLinks = () => (
 const Account = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const announcements = useSelector(selectAnnouncements)
+  const announcements = useSelector(selectAnnouncementsPage('ACCOUNT'))
   const { title: siteTitle } = useSelector(selectBrand)
   const { account: accountConfig } = useSelector(selectConfig)
   const { background, mobile, title, subtitle, showHero } = accountConfig

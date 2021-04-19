@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectCustomer } from '@open-tender/redux'
 import { isBrowser } from 'react-device-detect'
 import Helmet from 'react-helmet'
-// import { selectAnnouncements, fetchAnnouncementPage } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectConfig, closeModal, selectBrand } from '../../../slices'
@@ -19,17 +18,12 @@ const OrderType = () => {
   const { orderType } = useSelector(selectConfig)
   const { title, subtitle } = orderType
   const { windowRef } = useContext(AppContext)
-  // const announcements = useSelector(selectAnnouncements)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
     dispatch(closeModal())
   }, [windowRef, dispatch])
-
-  // useEffect(() => {
-  //   dispatch(fetchAnnouncementPage('ORDER_TYPE'))
-  // }, [dispatch])
 
   return (
     <>

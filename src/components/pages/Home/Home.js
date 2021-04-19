@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import {
-  selectAnnouncements,
+  selectAnnouncementsPage,
   fetchAnnouncementPage,
   selectCustomer,
 } from '@open-tender/redux'
@@ -29,13 +29,13 @@ import HomeApp from './HomeApp'
 const Home = () => {
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
-  const announcements = useSelector(selectAnnouncements)
   const { geoLatLng, geoError } = useGeolocation()
   const { auth } = useSelector(selectCustomer)
   const brand = useSelector(selectBrand)
   const { home } = useSelector(selectConfig)
   const { background, mobile, showHero } = home
   const page = auth ? 'ACCOUNT' : 'HOME'
+  const announcements = useSelector(selectAnnouncementsPage(page))
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
