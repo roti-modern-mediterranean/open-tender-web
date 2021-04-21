@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
@@ -18,6 +18,9 @@ import { selectDisplaySettings } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Builder, Content, Header, Logo, Main, ScreenreaderTitle } from '../..'
 import { Back, Cart } from '../../buttons'
+import styled from '@emotion/styled'
+
+const MenuItemLogo = styled('a')``
 
 const MenuItem = () => {
   const history = useHistory()
@@ -62,9 +65,9 @@ const MenuItem = () => {
           style={isBrowser ? null : { position: 'absolute' }}
           title={
             isBrowser ? (
-              <Link to="/">
+              <MenuItemLogo onClick={cancel}>
                 <Logo />
-              </Link>
+              </MenuItemLogo>
             ) : null
           }
           left={<Back text="Close item & return to menu" onClick={cancel} />}

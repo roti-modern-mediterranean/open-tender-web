@@ -24,6 +24,7 @@ import {
   fetchDeals,
   selectAnnouncementsPage,
   fetchAnnouncementPage,
+  selectMenuSlug,
 } from '@open-tender/redux'
 import { makeValidDeals } from '@open-tender/js'
 
@@ -44,6 +45,7 @@ const Menu = () => {
   const dispatch = useDispatch()
   const [activeItem, setActiveItem] = useState(null)
   const { windowRef } = useContext(AppContext)
+  const menuSlug = useSelector(selectMenuSlug)
   const topOffset = useSelector(selectTopOffset)
   const [init, setInit] = useState(true)
   const { title: siteTitle, has_deals } = useSelector(selectBrand)
@@ -120,7 +122,7 @@ const Menu = () => {
         <title>Menu | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderDefault />
+        <HeaderDefault path={menuSlug} />
         <Main>
           <MenuContext.Provider
             value={{

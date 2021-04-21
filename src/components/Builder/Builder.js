@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { animateScroll } from 'react-scroll'
 import { formatDollars, getWidth } from '@open-tender/js'
@@ -354,7 +355,7 @@ const Builder = ({
     setOptionQuantity,
   } = useBuilder(menuItem, soldOut)
   const ingredientsRef = useRef(null)
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
   const [activeGroup, setActiveGroup] = useState(0)
   const [activeOption, setActiveOption] = useState(null)
   const [perRow, setPerRow] = useState(3)
@@ -376,7 +377,7 @@ const Builder = ({
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
   const theme = useSelector(selectTheme)
   const mobileWidth = parseInt(theme.breakpoints.mobile.replace('px', ''))
-  const isEdit = item.index !== undefined
+  // const isEdit = item.index !== undefined
   const allergenAlert =
     showAllergens && allergenAlerts && item.allergens.length
       ? item.allergens.filter((allergen) => allergenAlerts.includes(allergen))
@@ -388,9 +389,9 @@ const Builder = ({
     setPerRow(count)
   }, [mobileWidth])
 
-  useEffect(() => {
-    if (isIncomplete || isEdit) setIsOpen(true)
-  }, [isIncomplete, isEdit])
+  // useEffect(() => {
+  //   if (isIncomplete || isEdit) setIsOpen(true)
+  // }, [isIncomplete, isEdit])
 
   useEffect(() => {
     if (isOpen && !isBrowser) {
@@ -587,6 +588,21 @@ const Builder = ({
       </BuilderFooter>
     </BuilderView>
   )
+}
+
+Builder.displayName = 'Builder'
+Builder.propTypes = {
+  menuItem: propTypes.object,
+  addItemToCart: propTypes.func,
+  cancel: propTypes.func,
+  soldOut: propTypes.array,
+  allergenAlerts: propTypes.array,
+  displaySettings: propTypes.object,
+  cartId: propTypes.number,
+  windowRef: propTypes.oneOfType([
+    propTypes.func,
+    propTypes.shape({ current: propTypes.instanceOf(Element) }),
+  ]),
 }
 
 export default Builder
