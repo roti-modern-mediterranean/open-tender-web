@@ -3,11 +3,11 @@ import styled from '@emotion/styled'
 
 import { Container, PageTitle } from '../..'
 import { MenuContext } from './Menu'
-// import MenuLoading from './MenuLoading'
 import MenuError from './MenuError'
 import MenuAllergenFilter from './MenuAllergenFilter'
 import MenuCateringCategory from './MenuCateringCategory'
 import CateringContact from '../../CateringContact'
+import MenuLoading from './MenuLoading'
 
 const MenuView = styled('div')`
   position: relative;
@@ -52,13 +52,13 @@ export const MenuCateringCategoryItem = styled('div')`
 
 const MenuCatering = () => {
   const { categories, isLoading, error } = useContext(MenuContext)
-  const showError = error && !isLoading
 
-  return showError ? (
+  return isLoading ? (
+    <MenuLoading />
+  ) : error ? (
     <MenuError />
   ) : (
     <MenuView>
-      {/* <MenuLoading /> */}
       <MenuCateringView>
         <Container>
           <PageTitle

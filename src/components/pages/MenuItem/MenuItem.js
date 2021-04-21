@@ -18,9 +18,6 @@ import { selectDisplaySettings } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Builder, Content, Header, Logo, Main, ScreenreaderTitle } from '../..'
 import { Back, Cart } from '../../buttons'
-import styled from '@emotion/styled'
-
-const MenuItemLogo = styled('a')``
 
 const MenuItem = () => {
   const history = useHistory()
@@ -65,9 +62,9 @@ const MenuItem = () => {
           style={isBrowser ? null : { position: 'absolute' }}
           title={
             isBrowser ? (
-              <MenuItemLogo onClick={cancel}>
+              <button onClick={cancel}>
                 <Logo />
-              </MenuItemLogo>
+              </button>
             ) : null
           }
           left={<Back text="Close item & return to menu" onClick={cancel} />}

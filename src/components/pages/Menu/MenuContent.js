@@ -8,11 +8,9 @@ import { selectDisplaySettings } from '../../../slices'
 import { NavSticky, PageHero } from '../..'
 import { MenuContext } from './Menu'
 import MenuCategories from './MenuCategories'
-// import MenuLoading from './MenuLoading'
 import MenuError from './MenuError'
-// import MenuHero from './MenuHero'
-
 import MenuDeals from './MenuDeals'
+import MenuLoading from './MenuLoading'
 
 const MenuView = styled('div')`
   position: relative;
@@ -52,7 +50,6 @@ const MenuContent = () => {
     <>
       {revenueCenter && showHero && (
         <div ref={heroRef}>
-          {/* <MenuHero imageUrl={menuConfig.background} /> */}
           <PageHero
             announcements={announcements}
             imageUrl={menuConfig.background}
@@ -61,18 +58,19 @@ const MenuContent = () => {
           />
         </div>
       )}
-      {!error ? (
+      {isLoading ? (
+        <MenuLoading />
+      ) : error ? (
+        <MenuError />
+      ) : (
         <MenuView>
-          {/* <MenuLoading /> */}
           <div ref={topRef}>
             <NavSticky items={navItems} scrollOffset={heroHeight - 60} />
             {!cartGuest && <MenuDeals deals={deals} />}
             <MenuCategories categories={categories} />
           </div>
         </MenuView>
-      ) : !isLoading ? (
-        <MenuError />
-      ) : null}
+      )}
     </>
   )
 }

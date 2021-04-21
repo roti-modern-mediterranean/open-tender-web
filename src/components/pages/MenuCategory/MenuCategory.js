@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { isBrowser } from 'react-device-detect'
@@ -95,9 +95,9 @@ const MenuCategory = () => {
           // style={isBrowser ? null : { position: 'absolute' }}
           title={
             isBrowser ? (
-              <Link to="/">
+              <button onClick={cancel}>
                 <Logo />
-              </Link>
+              </button>
             ) : null
           }
           left={<Back text="Back to menu" onClick={cancel} />}
