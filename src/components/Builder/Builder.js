@@ -466,8 +466,7 @@ const Builder = ({
             </BuilderToggle>
           </BuilderIngredientsTitleWrapper>
           <BuilderIngredientsText>
-            Lorem ipsum dolor sit amet, consecnunc sed velit tempor, laoreet
-            ante eget, vestibulum purus.
+            Go ahead, make it your own. Click to customize.
           </BuilderIngredientsText>
         </BuilderIngredientsHeader>
         {isOpen && (
