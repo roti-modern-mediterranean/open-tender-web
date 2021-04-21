@@ -131,14 +131,18 @@ const BuilderOptionToggleContent = ({
           Single
         </BotButton>
         <BotSeparator />
-        <BotButton
-          as="button"
-          onClick={(evt) => setQuantity(evt, 2)}
-          disabled={max < 2 || remaining < 2}
-        >
-          Double
-        </BotButton>
-        <BotSeparator />
+        {max !== 1 && (
+          <>
+            <BotButton
+              as="button"
+              onClick={(evt) => setQuantity(evt, 2)}
+              disabled={max < 2 || remaining < 2}
+            >
+              Double
+            </BotButton>
+            <BotSeparator />
+          </>
+        )}
         <BotIcon
           as="button"
           onClick={toggleNutrition}

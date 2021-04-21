@@ -18,7 +18,7 @@ const HeaderCheckoutView = styled('div')`
   transition: all 0.25s ease;
   background-color: transparent;
   padding: ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
-  background: ${(props) =>
+  // background: ${(props) =>
     props.stuck
       ? 'radial-gradient(circle, rgba(212,219,228,1) 0%, rgba(212,219,228,0.5) 50%, transparent 100%);'
       : 'none'};

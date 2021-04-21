@@ -9,6 +9,7 @@ const SwitchLabel = styled('label')`
   // padding: ${(props) => props.theme.inputs.padding};
   // padding: 1rem 0;
   margin: 0 0 1rem;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 `
 
 const SwitchText = styled('span')`

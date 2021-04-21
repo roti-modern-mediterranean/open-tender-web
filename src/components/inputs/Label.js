@@ -11,6 +11,7 @@ const LabelView = styled('label')`
   font-family: ${(props) => props.theme.inputs.family};
   font-size: ${(props) => props.theme.inputs.fontSize};
   // overflow: hidden;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   input,
   textarea,
