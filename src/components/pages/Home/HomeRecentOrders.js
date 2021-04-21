@@ -28,7 +28,7 @@ const Order = styled('div')`
   padding: 0 1.2rem 1.2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
     width: 50%;
-    &:nth-child(3) {
+    &:nth-of-type(3) {
       display: none;
     }
   }
@@ -36,7 +36,7 @@ const Order = styled('div')`
     width: 100%;
     padding: 0 0 1.2rem;
     max-width: 40rem;
-    // &:nth-child(3) {
+    // &:nth-of-type(3) {
     //   display: block;
     // }
   }
