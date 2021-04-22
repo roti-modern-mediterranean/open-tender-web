@@ -61,7 +61,7 @@ const guestLinks = [
       },
       {
         title: 'Terms',
-        path: '/terms',
+        path: '/terms-conditions',
       },
     ],
   },
@@ -136,7 +136,7 @@ const userLinks = [
       },
       {
         title: 'Terms',
-        path: '/terms',
+        path: '/terms-conditions',
       },
     ],
   },

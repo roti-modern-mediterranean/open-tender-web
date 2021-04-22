@@ -39,6 +39,7 @@ import Order from './Order'
 import Orders from './Orders'
 import OrderType from './OrderType'
 import Payment from './Payment'
+import Privacy from './Privacy'
 import Profile from './Profile'
 import Rating from './Rating'
 import Refunds from './Refunds'
@@ -93,6 +94,7 @@ export {
   Orders,
   OrderType,
   Payment,
+  Privacy,
   Profile,
   Rating,
   Refunds,

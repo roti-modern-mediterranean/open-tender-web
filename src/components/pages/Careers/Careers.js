@@ -7,6 +7,7 @@ import { handleRespError } from '@open-tender/js'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectAPI, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
+import { ButtonStyled } from '@open-tender/components'
 import { PageHero, PageView } from '../..'
 import {
   Content,
@@ -19,6 +20,72 @@ import {
 import { useCallback } from 'react/cjs/react.development'
 import styled from '@emotion/styled'
 
+const OneMoreThingWrapper = styled('div')`
+  background-color: #C6D0DD;
+  h3{
+    font-weight: normal;
+    font-size: 2em;
+    margin: 0.5rem 0 0.5em 0;
+    color: ${(props) => props.theme.colors.pepper };
+    font-family: ${(props) => props.theme.fonts.preface.family};
+  }
+  > div {
+    display: flex;
+    align-items: center;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      flex-direction: column;
+    }
+  }
+  .one-wrapper {
+    width: 70%;
+    margin-right: 2em;
+  }
+  button {
+    height: 3em;
+  }
+`
+const BenefitsWrapper = styled('ul')`
+  display: flex;
+  flex-wrap: wrap;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  }
+  li{
+    width: calc(25% - 1em);
+    margin: 1em 0.5em 0 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      width: calc(50% - 1em);
+      flex-direction: column;
+    }
+  }
+  h4{
+    font-weight: normal;
+    font-size: 1em;
+    text-align: left;
+    margin: 0.75rem 0 0 1em;
+    color: ${(props) => props.theme.colors.pepper };
+    font-family: ${(props) => props.theme.fonts.preface.family};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: 1.25em;
+      text-align: center;
+    }
+  }
+  img{
+    width: 3.75em;
+    display: inline-block;
+  }
+`
+
+const FrameImage = styled('div')`
+  background-image: ${(props) => `url(${props.src})`};
+  width: 4em;
+  height: 4em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+`
 
 const ContentListOfItems = styled('ul')`
   display: flex;
@@ -60,7 +127,7 @@ const ContentListOfItems = styled('ul')`
 const ContentCards = styled('ul')`
   display: flex;
   flex-direction: row;
-  margin-top: 4em;
+  margin: 4em 0;
 
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     background: transparent
@@ -156,7 +223,6 @@ const Careers = () => {
     const fetchPage = async () => {
       try {
         let page = await api.getPage(slug)
-        console.log(page)
         if (!isCancelled) {
           setPage(page)
         }
@@ -235,40 +301,40 @@ const Careers = () => {
                   </ContentCards>
                   <div>
                     <h3>Benefits</h3>
-                    <ul className='benefits-wrapper'>
+                    <BenefitsWrapper>
                       <li>
-                        <img alt='' src='https://roti.com/images/icons/benefits-medical.png' />
+                        <FrameImage src='https://roti.com/images/icons/benefits-medical.png' />
                         <h4>Medical, dental, vision</h4>
                       </li>
                       <li>
-                        <img alt='' src='https://roti.com/images/icons/benefits-bonus.png' />
+                        <FrameImage src='https://roti.com/images/icons/benefits-bonus.png' />
                         <h4>Bonus opportunities</h4>
                       </li>
                       <li>
-                        <img alt='' src='https://roti.com/images/icons/benefits-tip-pool.png' />
+                        <FrameImage src='https://roti.com/images/icons/benefits-tip-pool.png' />
                         <h4>Tip pool program</h4>
                       </li>
                       <li>
-                        <img alt='' src='https://roti.com/images/icons/benefits-flexible.png' />
+                        <FrameImage src='https://roti.com/images/icons/benefits-flexible.png' />
                         <h4>Flexible schedules</h4>
                       </li>
                       <li>
-                        <img alt='' src='https://roti.com/images/icons/benefits-career.png' />
+                        <FrameImage src='https://roti.com/images/icons/benefits-career.png' />
                         <h4>career &amp; education opportunities</h4>
                       </li>
                       <li>
-                        <img alt='' src='https://roti.com/images/icons/benefits-timeoff.png' />
+                        <FrameImage src='https://roti.com/images/icons/benefits-timeoff.png' />
                         <h4>Paid time off</h4>
                       </li>
                       <li>
-                        <img alt='' src='https://roti.com/images/icons/benefits-401k.png' />
+                        <FrameImage src='https://roti.com/images/icons/benefits-401k.png' />
                         <h4>401k retirement savings</h4>
                       </li>
                       <li>
-                        <img alt='' src='https://roti.com/images/icons/benefits-freefood.png' />
+                        <FrameImage src='https://roti.com/images/icons/benefits-freefood.png' />
                         <h4>discounts &amp; free food</h4>
                       </li>
-                    </ul>
+                    </BenefitsWrapper>
                   </div>
                 </PageContent>
               </>
@@ -281,13 +347,17 @@ const Careers = () => {
               </>
             ) : null}
           </PageContainer>
-          <div>
-            <div>
-              <h3>Hello, 2021. We’re hiring.</h3>
-              <p>We’ve got big plans for this year. Opening restaurants across the country, updating and innovating our menus, and always, always thinking of ways to bring our food to more people. Think you could help us? We hope so. Check out our open roles to see if anything is a match. </p>
-            </div>
-            <a href='.'>Explore roles</a>
-          </div>
+          <OneMoreThingWrapper>
+            <PageContainer style={{ maxWidth: '86.8rem', margin: '3rem auto' }}>
+              <div className='one-wrapper'>
+                <h3>Hello, 2021. We’re hiring.</h3>
+                <p>We’ve got big plans for this year. Opening restaurants across the country, updating and innovating our menus, and always, always thinking of ways to bring our food to more people. Think you could help us? We hope so. Check out our open roles to see if anything is a match. </p>
+              </div>
+              <ButtonStyled onClick={() => {
+                window.open('https://recruiting.ultipro.com/ROT1002/JobBoard/4fc826aa-4426-6136-502d-c0778bee0567/?q=&o=postedDateDesc&w=&wc=&we=&wpst=', '_blank');
+              }} size="big" color="secondary">Explore roles</ButtonStyled>
+            </PageContainer>
+          </OneMoreThingWrapper>
         </Main>
       </Content>
     </>
