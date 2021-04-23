@@ -21,10 +21,14 @@ const BackgroundImageImage = styled(BgImage)`
   z-index: 1;
   top: 0;
   bottom: 0;
+  background-size: ${(props) => props.backgroundSize || 'cover'};
   left: 0;
   right: 0;
   opacity: 1;
   animation: fade-in 0.25s ease-in-out 0s forwards;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    background-size: cover;
+  }
 `
 
 const BackgroundOverlay = styled('div')`
@@ -54,6 +58,8 @@ const BackgroundImage = ({
   overlay_opacity,
   style = {},
   children,
+  background_size,
+  slide_color,
 }) => {
   const { hasLoaded, hasError } = useImage(imageUrl)
   if (!imageUrl) return null
@@ -62,14 +68,16 @@ const BackgroundImage = ({
   const isLoading = !hasLoaded && !hasError
   // const isLoading = true
   const overlayColor = makeOverlayColor(overlay_color, overlay_opacity)
-
+  if(slide_color){
+    style.backgroundColor = slide_color
+  }
   return (
     <BackgroundImageView style={style}>
       {isLoading ? (
         <BackgroundLoading />
       ) : (
         <>
-          <BackgroundImageImage style={bgStyle} />
+          <BackgroundImageImage style={bgStyle} backgroundSize={background_size} />
           {show_overlay && <BackgroundOverlay color={overlayColor} />}
         </>
       )}

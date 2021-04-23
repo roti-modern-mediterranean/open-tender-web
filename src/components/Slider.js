@@ -125,7 +125,12 @@ const Slide = styled('div')`
     }};
   opacity: ${(props) => (props.active ? '1' : '0')};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: 80%;
+    width: ${(props) => {
+      if(props.itemsCount === 1){
+        return 'calc(100% - 1.5em)';
+      }
+      return '80%';
+    }};
     height: calc(100% - 3rem);
     border-radius: 0.15rem;
     opacity: 1;
@@ -178,12 +183,14 @@ const SliderNew = ({ settings = {}, slides }) => {
   // const last = count - 1
 
   const onTouch = useCallback((direction, move, _, position, eventName) => {
+    document.body.style.overflow = 'auto';
     if (eventName !== TouchEvents.end) {
       if (direction && move) {
         if (
           direction === TouchDirection.right ||
           direction === TouchDirection.left
         ) {
+          document.body.style.overflow = 'hidden';
           setTouchMove(position.left * -1 + move)
         }
       }
@@ -262,6 +269,7 @@ const SliderNew = ({ settings = {}, slides }) => {
               index={idx}
               shift={shift}
               active={active}
+              itemsCount={slides.length}
             >
               <BackgroundImage {...slide}>
                 <BackgroundContent {...slide} />

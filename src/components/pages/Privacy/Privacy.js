@@ -7,7 +7,6 @@ import { handleRespError } from '@open-tender/js'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectAPI, selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
-import styled from '@emotion/styled'
 import {
   Content,
   Main,
@@ -17,27 +16,16 @@ import {
   HeaderDefault,
 } from '../..'
 
-export const InternalPageContent = styled('div')`
-  h4{
-    font-weight: normal;
-    font-size: 1.5em;
-    margin: 0.5rem 0 1.25em 0;
-    color: ${(props) => props.theme.colors.pepper };
-    font-family: ${(props) => props.theme.fonts.preface.family};
-  }
-  p{
-    line-height: 1.5em;
-    margin-bottom: 1.5em;
-  }
-`
+import { InternalPageContent } from '../Terms/Terms'
 
-const Terms = () => {
+
+const Privacy = () => {
   const { windowRef } = useContext(AppContext)
   const [page, setPage] = useState(null)
   const [error, setError] = useState(null)
   const { title: siteTitle } = useSelector(selectBrand)
   const api = useSelector(selectAPI)
-  const slug = 'terms-conditions'
+  const slug = 'privacy-policy'
   const pageTitle = page ? page.title : 'Not Found'
 
   useEffect(() => {
@@ -104,5 +92,5 @@ const Terms = () => {
   )
 }
 
-Terms.displayName = 'Terms'
-export default Terms
+Privacy.displayName = 'Privacy'
+export default Privacy

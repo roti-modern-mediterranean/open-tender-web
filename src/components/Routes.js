@@ -34,6 +34,7 @@ import {
   Order,
   Orders,
   Payment,
+  Privacy,
   Profile,
   Rating,
   Refunds,
@@ -187,10 +188,13 @@ const Routes = () => {
       <Route exact path="/contact">
         <Contact />
       </Route>
+      <Route exact path="/privacy-policy">
+        <Privacy />
+      </Route>
       <Route exact path="/location/:name">
         <Location />
       </Route>
-      <Route exact path="/terms">
+      <Route exact path="/terms-conditions">
         <Terms />
       </Route>
       <Route exact path="/refunds">

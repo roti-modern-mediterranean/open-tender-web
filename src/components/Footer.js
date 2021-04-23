@@ -207,10 +207,10 @@ const Footer = ({ hasRouter = true }) => {
               <FooterNav aria-label="Legal Policies Navigation">
                 <ul>
                   <li>
-                    <Link to="/privacy">Privacy Policy</Link>
+                    <Link to="/privacy-policy">Privacy Policy</Link>
                   </li>
                   <li>
-                    <Link to="/terms">Terms & Conditions</Link>
+                    <Link to="/terms-conditions">Terms &amp; Conditions</Link>
                   </li>
                   <li>
                     <Link to="/accessibility">Accessibility</Link>

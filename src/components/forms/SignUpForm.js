@@ -27,8 +27,8 @@ const TermsLabelView = styled('span')`
 const TermsLabel = () => (
   <TermsLabelView>
     By creating an account, you agree to the{' '}
-    <Link to="/terms">Terms & Conditions</Link> and{' '}
-    <Link to="/privacy">Privacy Policy</Link>
+    <Link to="/terms-conditions">Terms & Conditions</Link> and{' '}
+    <Link to="/privacy-policy">Privacy Policy</Link>
   </TermsLabelView>
 )
 
