@@ -148,15 +148,15 @@ const HomeJourneys = () => {
         </>
       ),
     },
-    {
-      title: 'Group Ordering',
-      subtitle: 'Parturient dictumst vitae, arcu posuere massa duis',
-      footer: (
-        <ButtonStyled onClick={() => history.push('/locations')} size="big">
-          Begin Your Order
-        </ButtonStyled>
-      ),
-    },
+    // {
+    //   title: 'Group Ordering',
+    //   subtitle: 'Parturient dictumst vitae, arcu posuere massa duis',
+    //   footer: (
+    //     <ButtonStyled onClick={() => history.push('/locations')} size="big">
+    //       Begin Your Order
+    //     </ButtonStyled>
+    //   ),
+    // },
     {
       title: 'Curbside Pickup',
       subtitle: 'Parturient dictumst vitae, arcu posuere massa duis',

@@ -208,7 +208,7 @@ const MenuItemSmall = React.forwardRef(
                       disabled={isSoldOut}
                       secondary={true}
                     >
-                      View
+                      Customize
                     </CardButton>
 
                     <CardButton
