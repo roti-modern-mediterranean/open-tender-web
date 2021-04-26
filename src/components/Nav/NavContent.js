@@ -1,7 +1,11 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCustomer, logoutCustomer } from '@open-tender/redux'
+import {
+  selectCustomer,
+  logoutCustomer,
+  selectCartQuantity,
+} from '@open-tender/redux'
 import { Heading, Preface } from '@open-tender/components'
 import styled from '@emotion/styled'
 
@@ -32,6 +36,14 @@ const guestLinks = [
       {
         title: 'Cart',
         button: 'cart',
+      },
+      {
+        title: 'Order Now',
+        path: '/locations',
+      },
+      {
+        title: 'Catering',
+        path: '/catering',
       },
     ],
   },
@@ -103,6 +115,14 @@ const userLinks = [
       {
         title: 'Cart',
         button: 'cart',
+      },
+      {
+        title: 'Order Now',
+        path: '/locations',
+      },
+      {
+        title: 'Catering',
+        path: '/catering',
       },
     ],
   },
@@ -235,10 +255,14 @@ const Nav = React.forwardRef((props, ref) => {
   let removed = []
   if (!hasRewards) removed.push('/rewards')
   if (!has_deals) removed.push('/deals')
+  const cartQuantity = useSelector(selectCartQuantity)
+  if (cartQuantity === 0) removed.push('cart')
   const links = profile ? userLinks : guestLinks
   const filteredLinks = links.map((s) => ({
     ...s,
-    links: s.links.filter((i) => !removed.includes(i.path)),
+    links: s.links.filter(
+      (i) => !removed.includes(i.path) && !removed.includes(i.button)
+    ),
   }))
 
   const closeGo = (evt, path) => {

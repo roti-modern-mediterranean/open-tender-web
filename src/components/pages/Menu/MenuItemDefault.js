@@ -180,7 +180,7 @@ const MenuItemDefault = React.forwardRef(
                       disabled={isSoldOut}
                       secondary={true}
                     >
-                      View
+                      Customize
                     </CardButton>
                     <CardButton
                       ref={addRef}

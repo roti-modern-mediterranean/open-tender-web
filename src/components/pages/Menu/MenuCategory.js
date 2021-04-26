@@ -63,7 +63,7 @@ MenuCategory.displayName = 'MenuCategory'
 MenuCategory.propTypes = {
   category: propTypes.object,
   isChild: propTypes.bool,
-  index: propTypes.bool,
+  index: propTypes.number,
 }
 
 export default MenuCategory
