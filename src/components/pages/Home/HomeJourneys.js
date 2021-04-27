@@ -67,6 +67,7 @@ const HomeJourneyContent = styled('div')`
 
   h3 {
     line-height: 1;
+    min-height: 2em;
   }
 
   p {
@@ -120,18 +121,18 @@ const HomeJourneys = () => {
 
   const journeys = [
     {
-      title: 'Build Your Meal',
+      title: 'Build Your Own',
       subtitle:
-        'Start by choosing a meal, then add proteins, sides, toppings, and sauces to make it your own.',
+        'Select your base, choose mains, sides, toppings, and sauces to make it your own.',
       footer: (
         <ButtonStyled onClick={() => history.push('/locations')} size="big">
-          Build Your Own Plate
+          Build Your Own Meal
         </ButtonStyled>
       ),
     },
     {
-      title: 'Catering',
-      subtitle: 'Parturient dictumst vitae, arcu posuere massa duis',
+      title: 'Cater with us',
+      subtitle: 'Let us take care of your event, meeting, or party.',
       footer: (
         <>
           {/* <ButtonStyled
@@ -143,7 +144,7 @@ const HomeJourneys = () => {
             Build Your Experience
           </ButtonStyled> */}
           <ButtonStyled onClick={() => history.push('/catering')} size="big">
-            Recommended Packs
+            Get Started
           </ButtonStyled>
         </>
       ),
@@ -159,10 +160,10 @@ const HomeJourneys = () => {
     // },
     {
       title: 'Curbside Pickup',
-      subtitle: 'Parturient dictumst vitae, arcu posuere massa duis',
+      subtitle: 'Get all your favorites from the safety and convenience of your own car',
       footer: (
         <ButtonStyled onClick={() => history.push('/locations')} size="big">
-          Order Contactless
+          Order Now
         </ButtonStyled>
       ),
     },

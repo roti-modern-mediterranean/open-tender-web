@@ -68,8 +68,8 @@ const DownloadApp = () => {
   return (
     <DownloadAppView>
       <DownloadAppeHeader>
-        <h2>Prefer Mobile Ordering?</h2>
-        <p>Download Our App</p>
+        <h2>Rewards that taste sooo good!</h2>
+        <p>Download the Roti App Today</p>
       </DownloadAppeHeader>
       <DownloadAppButtons>
         <a
