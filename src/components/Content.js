@@ -16,7 +16,7 @@ const Content = ({
   children,
 }) => {
   return (
-    <ContentContainer maxWidth={maxWidth}>
+    <ContentContainer className='main-page-wrapper' maxWidth={maxWidth}>
       <>
         <SkipLink />
         {children}

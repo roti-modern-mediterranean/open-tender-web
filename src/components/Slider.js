@@ -159,6 +159,8 @@ const SliderNew = ({ settings = {}, slides }) => {
   const timer = useRef(null)
   const slider = useRef()
   const [pause, setPause] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragDirection, setDirection] = useState(null)
   const [index, setIndex] = useState(0)
   const [touchMove, setTouchMove] = useState(null)
   const {
@@ -183,36 +185,52 @@ const SliderNew = ({ settings = {}, slides }) => {
   // const last = count - 1
 
   const onTouch = useCallback((direction, move, _, position, eventName) => {
-    document.body.style.overflow = 'auto';
+    const mainWrapper = document.querySelector('.main-page-wrapper')
     if (eventName !== TouchEvents.end) {
       if (direction && move) {
         if (
           direction === TouchDirection.right ||
           direction === TouchDirection.left
         ) {
-          document.body.style.overflow = 'hidden';
+          setDirection(direction)
+          if(mainWrapper){
+            mainWrapper.style.overflow = 'hidden'
+          }
           setTouchMove(position.left * -1 + move)
+          setIsDragging(true)
         }
       }
     } else {
-      const wrapper = sliderWrapper.current
-      const offsetLeft = wrapper.getBoundingClientRect().x
-      if (offsetLeft > 0) {
-        setTouchMove(0)
-      } else {
-        const slides = wrapper.querySelectorAll(':scope > div')
-        let currentIndex = 0
-        slides.forEach((slide, index) => {
-          //console.log(offsetLeft, slide.getBoundingClientRect().left)
-          if (Math.abs(slide.getBoundingClientRect().left) <= 150) {
-            currentIndex = index
-          }
-        })
-        setTouchMove(null)
-        setIndex(currentIndex)
+      if(mainWrapper){
+        mainWrapper.style.overflow = 'auto'
       }
+      if(isDragging){
+        setIsDragging(false)
+        const wrapper = sliderWrapper.current
+        const offsetLeft = wrapper.getBoundingClientRect().x
+        if (offsetLeft > 0) {
+          setTouchMove(0)
+        } else {
+          const slides = wrapper.querySelectorAll(':scope > div')
+          let currentIndex = index
+          slides.forEach((slide, index) => {
+            if(dragDirection === TouchDirection.left) {
+              if (Math.abs(slide.getBoundingClientRect().left) <= (document.body.clientWidth - 50)) {
+                currentIndex = index
+              }
+            } else if (dragDirection === TouchDirection.right){
+              if (slide.getBoundingClientRect().left < -50) {
+                currentIndex = index
+              }
+            }
+          })
+          setTouchMove(null)
+          setIndex(currentIndex)
+        }
+      }
+      
     }
-  }, [])
+  }, [index, isDragging, dragDirection])
 
   const touchProps = useTouchableObject(onTouch, sliderWrapper)
 
