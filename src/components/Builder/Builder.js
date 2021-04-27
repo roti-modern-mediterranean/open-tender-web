@@ -291,14 +291,14 @@ const BuilderGroupsNavButton = styled(ButtonSmall)`
     props.isActive || props.isComplete
       ? '0px 4px 20px rgba(0, 0, 0, 0.25)'
       : 'none'};
-  font-size: 1.6rem;
-  padding: 1.1rem 1.6rem;
+  // font-size: 1.6rem;
+  // padding: 1.1rem 1.6rem;
   display: flex;
   justify-content: center;
   align-items: center;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    font-size: 1.3rem;
-    padding: 0.8rem 1.2rem;
+    // font-size: 1.3rem;
+    // padding: 0.8rem 1.2rem;
   }
 
   &:focus {
@@ -380,6 +380,8 @@ const Builder = ({
     setQuantity,
     setMadeFor,
     setNotes,
+    incrementOption,
+    decrementOption,
     setOptionQuantity,
   } = useBuilder(menuItem, soldOut)
   const ingredientsRef = useRef(null)
@@ -540,13 +542,8 @@ const Builder = ({
                           const show = active ? true : false
                           const props = {
                             show,
-                            group,
                             option: active,
-                            setOptionQuantity,
                             setActiveOption,
-                            setActiveGroup,
-                            index,
-                            lastIndex: groups.length - 1,
                           }
                           return (
                             <>
@@ -561,8 +558,10 @@ const Builder = ({
                                     soldOut,
                                     allergenAlerts,
                                     displaySettings,
-                                    activeOption,
+                                    incrementOption,
+                                    decrementOption,
                                     setOptionQuantity,
+                                    activeOption,
                                     setActiveOption,
                                     setActiveGroup,
                                     index,

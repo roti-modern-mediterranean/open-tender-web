@@ -1,11 +1,11 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { Heading, Preface } from '@open-tender/components'
+import { Heading, Preface, BuilderQuantity } from '@open-tender/components'
 
 import { ImageSpinner } from '..'
 import { makePriceCals } from './Builder'
 import BuilderOptionImage from './BuilderOptionImage'
-import { Checkmark } from '../icons'
+import { Checkmark, MinusSign, PlusSign } from '../icons'
 import MenuItemAllergens from '../pages/Menu/MenuItemAllergens'
 
 const BuilderOptionView = styled('div')`
@@ -77,46 +77,64 @@ const BuilderOptionArrow = styled('span')`
   }
 `
 
-const BuilderOptionCountView = styled('span')`
-  display: block;
-  position: absolute;
-  z-index: 3;
-  top: -0.8rem;
-  right: -0.5rem;
-  width: ${(props) => (props.quantity === 2 ? '4rem' : '2.6rem')};
-  height: ${(props) => (props.quantity === 2 ? '4rem' : '2.6rem')};
-  border-radius: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${(props) => props.theme.colors.light};
-  background-color: ${(props) => props.theme.colors.beet};
-  transition: all 250ms ease;
-  opacity: ${(props) => (props.show ? '1' : '0')};
-  visiblity: ${(props) => (props.show ? 'visible' : 'hidden')};
-  transform: ${(props) => (props.show ? 'scale(1)' : 'scale(0)')};
-  box-shadow: 0 0.4rem 2rem rgba(0, 0, 0, 0.25);
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    top: 1rem;
-    right: 1rem;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    top: 0;
-    right: 0;
-  }
-
-  & > span {
-    display: block;
-    font-family: 'Barlow', sans-serif;
-    font-size: 1.8rem;
-  }
-`
-
 const BuilderOptionSoldOut = styled(Preface)`
   margin: 0.5rem 0 0;
   color: ${(props) => props.theme.colors.alert};
   font-size: 1.6rem;
   font-weight: 500;
+`
+
+const BuilderOptionQuantity = styled('div')`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0.5rem 0 0;
+  }
+
+  & > div {
+    background-color: transparent;
+    border-radius: 0;
+    min-height: 0;
+
+    button {
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      border-radius: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: ${(props) => props.theme.colors.beet};
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: ${(props) => props.theme.colors.primary};
+      }
+    }
+
+    button:first-of-type {
+      svg {
+        min-height: 0.1rem;
+      }
+    }
+
+    input {
+      width: 3rem;
+      height: auto;
+      padding: 0;
+      border: 0;
+      line-height: 1;
+      font-family: ${(props) => props.theme.fonts.preface.family};
+      font-weight: 600;
+      font-size: ${(props) => props.theme.fonts.sizes.main};
+      color: ${(props) => props.theme.colors.primary};
+      background-color: transparent;
+    }
+  }
 `
 
 // const BuilderOptionNutritionalInfo = styled('button')`
@@ -170,10 +188,45 @@ const BuilderOptionNutritionalInfo = styled('button')`
   }
 `
 
+const BuilderOptionCountView = styled('span')`
+  display: block;
+  position: absolute;
+  z-index: 3;
+  top: -0.8rem;
+  right: -0.5rem;
+  width: ${(props) => (props.quantity > 1 ? '4rem' : '2.6rem')};
+  height: ${(props) => (props.quantity > 1 ? '4rem' : '2.6rem')};
+  border-radius: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.beet};
+  transition: all 250ms ease;
+  opacity: ${(props) => (props.show ? '1' : '0')};
+  visiblity: ${(props) => (props.show ? 'visible' : 'hidden')};
+  transform: ${(props) => (props.show ? 'scale(1)' : 'scale(0)')};
+  box-shadow: 0 0.4rem 2rem rgba(0, 0, 0, 0.25);
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    top: 1rem;
+    right: 1rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    top: 0;
+    right: 0;
+  }
+
+  & > span {
+    display: block;
+    font-family: 'Barlow', sans-serif;
+    font-size: 1.8rem;
+  }
+`
+
 const BuilderOptionCount = ({ quantity }) => {
   return (
     <BuilderOptionCountView show={quantity > 0} quantity={quantity}>
-      <span>{quantity === 2 ? '2X' : <Checkmark />}</span>
+      <span>{quantity > 1 ? `${quantity}X` : <Checkmark />}</span>
     </BuilderOptionCountView>
   )
 }
@@ -188,6 +241,11 @@ const checkHasNutritionalInfo = (nutritionalInfo) => {
   return !serving_size || parseFloat(serving_size) === 0 ? false : true
 }
 
+const quantityIconMap = {
+  plus: <PlusSign size={12} />,
+  minus: <MinusSign size={12} />,
+}
+
 const BuilderOption = ({
   perRow,
   group,
@@ -195,8 +253,10 @@ const BuilderOption = ({
   soldOut,
   allergenAlerts,
   displaySettings,
-  activeOption,
+  incrementOption,
+  decrementOption,
   setOptionQuantity,
+  activeOption,
   setActiveOption,
   setActiveGroup,
   index,
@@ -209,7 +269,7 @@ const BuilderOption = ({
     group.included !== 0 &&
     (group.included === group.max || group.quantity < group.included)
   const priceCals = makePriceCals(option, showCals, hidePrice)
-  const { nutritionalInfo, quantity = 0 } = option || {}
+  const { nutritionalInfo, quantity = 0, max = 0 } = option || {}
   const { max: groupMax = 0, quantity: groupQty = 0 } = group
   const remaining = groupMax === 0 ? 1000 : groupMax - groupQty
   const hasNutrition = checkHasNutritionalInfo(nutritionalInfo)
@@ -228,9 +288,17 @@ const BuilderOption = ({
     if (qty > 0 && qty === remaining && index + 1 <= lastIndex) {
       setTimeout(() => {
         setActiveGroup(index + 1)
-      }, 500)
+      }, 650)
     }
     setActiveOption(null)
+  }
+
+  const increment = () => {
+    incrementOption(group.id, option.id)
+  }
+
+  const decrement = () => {
+    decrementOption(group.id, option.id)
   }
 
   const onClick = (evt) => {
@@ -259,6 +327,19 @@ const BuilderOption = ({
           spinner={<ImageSpinner />}
         />
       </BuilderOptionButton>
+      {quantity > 0 && (
+        <BuilderOptionQuantity>
+          <BuilderQuantity
+            item={option}
+            // adjust={setQuantity}
+            increment={increment}
+            decrement={decrement}
+            incrementDisabled={quantity === max}
+            decrementDisabled={quantity === 0}
+            iconMap={quantityIconMap}
+          />
+        </BuilderOptionQuantity>
+      )}
       <BuilderOptionInfo>
         <BuilderOptionName>
           {hasNutrition && (
