@@ -49,7 +49,11 @@ const MenuCategory = ({ category, isChild, index }) => {
           <CardList>
             {category.items.map((item) => (
               <CardListItem key={item.id}>
-                <MenuItem item={item} category={category} />
+                <MenuItem
+                  item={item}
+                  category={category}
+                  isInverted={index % 2 !== 0}
+                />
               </CardListItem>
             ))}
           </CardList>

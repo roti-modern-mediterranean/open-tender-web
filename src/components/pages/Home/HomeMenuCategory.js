@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 import { slugify } from '@open-tender/js'
 
 import MenuItem from '../Menu/MenuItem'
-import { MoreLink } from '../..'
+// import { MoreLink } from '../..'
 
 const HomeMenuCategoryView = styled('div')`
   width: 33.33333%;
@@ -40,19 +40,19 @@ const HomeMenuCategoryItem = styled('div')`
   margin: 1.5rem 0 0;
 `
 
-const HomeMenuCategoryFooter = styled('div')`
-  margin: 1.5rem 0 0;
-  display: flex;
-  justify-content: flex-end;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    margin: 0rem 0 0;
-  }
-`
+// const HomeMenuCategoryFooter = styled('div')`
+//   margin: 1.5rem 0 0;
+//   display: flex;
+//   justify-content: flex-end;
+//   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+//     margin: 0rem 0 0;
+//   }
+// `
 
 const HomeMenuCategory = ({ category, isInverted = false }) => {
-  const history = useHistory()
+  // const history = useHistory()
   const items = category.items.slice(0, 3)
-  const isMore = category.items.length > items.length
+  // const isMore = category.items.length > items.length
 
   return (
     <HomeMenuCategoryView id={slugify(category.name)} isInverted={isInverted}>
@@ -68,14 +68,14 @@ const HomeMenuCategory = ({ category, isInverted = false }) => {
             </HomeMenuCategoryItem>
           ))}
         </div>
-        {isMore && (
+        {/* {isMore && (
           <HomeMenuCategoryFooter>
             <MoreLink
               onClick={() => history.push('/menu')}
               text={`View all ${category.name}`}
             />
           </HomeMenuCategoryFooter>
-        )}
+        )} */}
       </div>
     </HomeMenuCategoryView>
   )
