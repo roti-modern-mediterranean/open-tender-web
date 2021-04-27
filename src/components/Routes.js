@@ -15,6 +15,7 @@ import {
   CheckoutReset,
   Confirmation,
   Contact,
+  CovidPage,
   Deals,
   Donations,
   Favorites,
@@ -187,6 +188,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/contact">
         <Contact />
+      </Route>
+      <Route exact path="/covid-19">
+        <CovidPage />
       </Route>
       <Route exact path="/privacy-policy">
         <Privacy />

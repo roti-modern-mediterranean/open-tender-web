@@ -178,7 +178,7 @@ const Footer = ({ hasRouter = true }) => {
                   <Link to="/contact">Contact & Help</Link>
                 </li>
                 <li>
-                  <Link to="/menu">Menu</Link>
+                  <Link to="/covid-19">Our response to COVID-19</Link>
                 </li>
                 <li>
                   <Link to="/gift-cards">Gift Cards</Link>

@@ -17,6 +17,7 @@ import CheckoutRegister from './CheckoutRegister'
 import CheckoutReset from './CheckoutReset'
 import Confirmation from './Confirmation'
 import Contact from './Contact'
+import CovidPage from './Covid'
 import Deals from './Deals'
 import Donations from './Donations'
 import ErrorReport from './ErrorReport'
@@ -72,6 +73,7 @@ export {
   CheckoutReset,
   Confirmation,
   Contact,
+  CovidPage,
   Deals,
   Donations,
   ErrorReport,
