@@ -327,7 +327,7 @@ const BuilderOption = ({
           spinner={<ImageSpinner />}
         />
       </BuilderOptionButton>
-      {quantity > 0 && (
+      {quantity > 0 && (max > 1 || max === 0) && (
         <BuilderOptionQuantity>
           <BuilderQuantity
             item={option}
