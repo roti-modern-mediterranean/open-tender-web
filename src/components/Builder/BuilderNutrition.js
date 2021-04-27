@@ -6,7 +6,7 @@ import styled from '@emotion/styled'
 export const BuilderNutritionView = styled('div')`
   display: flex;
   justify-content: space-between;
-  padding: 0 2.5rem 2rem;
+  padding: 0rem 2.5rem 2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 1.5rem 1.5rem;
   }

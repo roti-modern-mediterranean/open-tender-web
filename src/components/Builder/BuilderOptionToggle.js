@@ -1,13 +1,13 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { Preface } from '@open-tender/components'
-import { useState } from 'react'
+// import { useState } from 'react'
 import BuilderNutrition from './BuilderNutrition'
+import { X } from 'react-feather'
 
 const BotView = styled('span')`
   display: block;
   position: relative;
-  // z-index: 2;
   border-radius: 1.4rem;
   overflow: hidden;
   transition: all 250ms ease;
@@ -27,54 +27,72 @@ const BotView = styled('span')`
   }
 `
 
-const BotButtons = styled('div')`
-  width: 100%;
-  height: 5rem;
-  padding: 0 1rem 0.2rem;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-`
-
-const BotButton = styled(Preface)`
-  display: block;
-  padding: 0;
-  line-height: 1;
-  font-weight: 500;
-  font-size: 2.4rem;
-  letter-spacing: -0.04em;
-  color: ${(props) => props.theme.colors.beet};
-`
-
-const BotIcon = styled(BotButton)`
+const BotClose = styled('button')`
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
   width: 3rem;
   height: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 1.5rem;
-  border: 0.1rem solid ${(props) => props.theme.colors.beet};
-  color: ${(props) => props.theme.colors[props.isOpen ? 'light' : 'beet']};
-  background-color: ${(props) =>
-    props.theme.colors[props.isOpen ? 'beet' : 'light']};
-
-  span {
-    text-transform: none;
-    display: block;
-    line-height: 0;
+  padding: 0.5rem;
+  color: ${(props) => props.theme.colors.beet};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    right: 0.7rem;
   }
 `
 
-const BotSeparator = styled('div')`
-  width: 0.1rem;
-  height: 1.8rem;
-  background-color: ${(props) => props.theme.colors.beet};
+const BotTitle = styled(Preface)`
+  display: block;
+  width: 100%;
+  padding: 1.5rem 2.5rem 0.5rem 2.4rem;
+  color: ${(props) => props.theme.colors.beet};
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 1rem 1.5rem 0.5rem 1.4rem;
+  }
 `
 
-const checkHasNutritionalInfo = (nutritionalInfo) => {
-  const { serving_size } = nutritionalInfo || {}
-  return !serving_size || parseFloat(serving_size) === 0 ? false : true
-}
+// const BotButtons = styled('div')`
+//   width: 100%;
+//   height: 5rem;
+//   padding: 0 1rem 0.2rem;
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: center;
+// `
+
+// const BotButton = styled(Preface)`
+//   display: block;
+//   padding: 0;
+//   line-height: 1;
+//   font-weight: 500;
+//   font-size: 2.4rem;
+//   letter-spacing: -0.04em;
+//   color: ${(props) => props.theme.colors.beet};
+// `
+
+// const BotIcon = styled(BotButton)`
+//   width: 3rem;
+//   height: 3rem;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   border-radius: 1.5rem;
+//   border: 0.1rem solid ${(props) => props.theme.colors.beet};
+//   color: ${(props) => props.theme.colors[props.isOpen ? 'light' : 'beet']};
+//   background-color: ${(props) =>
+//     props.theme.colors[props.isOpen ? 'beet' : 'light']};
+
+//   span {
+//     text-transform: none;
+//     display: block;
+//     line-height: 0;
+//   }
+// `
+
+// const BotSeparator = styled('div')`
+//   width: 0.1rem;
+//   height: 1.8rem;
+//   background-color: ${(props) => props.theme.colors.beet};
+// `
 
 const BuilderOptionToggleContent = ({
   show,
@@ -86,11 +104,12 @@ const BuilderOptionToggleContent = ({
   index,
   lastIndex,
 }) => {
-  const [showInfo, setShowInfo] = useState(false)
-  const { nutritionalInfo, min = 0, max = 0, quantity: qty = 0 } = option || {}
-  const { max: groupMax = 0, quantity: groupQty = 0 } = group
-  const remaining = groupMax === 0 ? 1000 : groupMax - groupQty + qty
-  const hasNutrition = checkHasNutritionalInfo(nutritionalInfo)
+  // const [showInfo, setShowInfo] = useState(false)
+  // const { nutritionalInfo, min = 0, max = 0, quantity: qty = 0 } = option || {}
+  // const { max: groupMax = 0, quantity: groupQty = 0 } = group
+  // const remaining = groupMax === 0 ? 1000 : groupMax - groupQty + qty
+  // const hasNutrition = checkHasNutritionalInfo(nutritionalInfo)
+  const { nutritionalInfo } = option || {}
 
   // if (show) {
   //   console.log(min, max, qty)
@@ -98,23 +117,23 @@ const BuilderOptionToggleContent = ({
   //   console.log(remaining)
   // }
 
-  const setQuantity = (evt, quantity) => {
-    evt.preventDefault()
-    setOptionQuantity(group.id, option.id, quantity)
-    if (quantity === remaining && index + 1 <= lastIndex) {
-      setActiveGroup(index + 1)
-    }
-    setActiveOption(null)
-  }
+  // const setQuantity = (evt, quantity) => {
+  //   evt.preventDefault()
+  //   setOptionQuantity(group.id, option.id, quantity)
+  //   if (quantity === remaining && index + 1 <= lastIndex) {
+  //     setActiveGroup(index + 1)
+  //   }
+  //   setActiveOption(null)
+  // }
 
   const toggleNutrition = (evt) => {
     evt.preventDefault()
-    if (hasNutrition) setShowInfo(!showInfo)
+    setActiveOption(null)
   }
 
   return (
-    <BotView show={show} showInfo={showInfo}>
-      <BotButtons>
+    <BotView show={show} showInfo={show}>
+      {/* <BotButtons>
         <BotButton
           as="button"
           onClick={(evt) => setQuantity(evt, 0)}
@@ -151,10 +170,12 @@ const BuilderOptionToggleContent = ({
         >
           <span>i</span>
         </BotIcon>
-      </BotButtons>
-      {hasNutrition && (
-        <BuilderNutrition nutritionalInfo={nutritionalInfo} show={true} />
-      )}
+      </BotButtons> */}
+      <BotClose onClick={toggleNutrition}>
+        <X size={null} />
+      </BotClose>
+      <BotTitle>Nutritional Info</BotTitle>
+      <BuilderNutrition nutritionalInfo={nutritionalInfo} show={true} />
     </BotView>
   )
 }

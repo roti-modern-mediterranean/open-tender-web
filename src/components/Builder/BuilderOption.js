@@ -8,7 +8,7 @@ import BuilderOptionImage from './BuilderOptionImage'
 import { Checkmark } from '../icons'
 import MenuItemAllergens from '../pages/Menu/MenuItemAllergens'
 
-const BuilderOptionView = styled('button')`
+const BuilderOptionView = styled('div')`
   position: relative;
   z-index: 1;
   display: block;
@@ -20,7 +20,15 @@ const BuilderOptionView = styled('button')`
   }
 `
 
+const BuilderOptionButton = styled('button')`
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+`
+
 const BuilderOptionInfo = styled('span')`
+  position: relative;
   display: block;
   width: 100%;
   margin: 1rem 0 0;
@@ -33,6 +41,10 @@ const BuilderOptionName = styled(Heading)`
   font-size: 1.4rem;
   font-weight: 600;
   color: ${(props) => props.theme.colors.primary};
+
+  & > span {
+    display: inline;
+  }
 `
 
 const BuilderOptionPrice = styled(Heading)`
@@ -70,7 +82,7 @@ const BuilderOptionCountView = styled('span')`
   position: absolute;
   z-index: 3;
   top: -0.8rem;
-  right: 0;
+  right: -0.5rem;
   width: ${(props) => (props.quantity === 2 ? '4rem' : '2.6rem')};
   height: ${(props) => (props.quantity === 2 ? '4rem' : '2.6rem')};
   border-radius: 2rem;
@@ -107,6 +119,57 @@ const BuilderOptionSoldOut = styled(Preface)`
   font-weight: 500;
 `
 
+// const BuilderOptionNutritionalInfo = styled('button')`
+//   position: absolute;
+//   z-index: 2;
+//   top: 0.6rem;
+//   left: 1rem;
+//   width: 1.8rem;
+//   height: 1.8rem;
+//   border-radius: 1rem;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   border: 0.1rem solid ${(props) => props.theme.colors.beet};
+//   color: ${(props) => props.theme.colors[props.isOpen ? 'light' : 'beet']};
+//   background-color: ${(props) =>
+//     props.theme.colors[props.isOpen ? 'beet' : 'transparent']};
+
+//   span {
+//     text-transform: none;
+//     display: block;
+//     line-height: 0;
+//     font-size: 1.2rem;
+//   }
+// `
+
+const BuilderOptionNutritionalInfo = styled('button')`
+  position: relative;
+  top: -0.1rem;
+  display: inline;
+
+  & > span {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin: 0 0.5rem 0 0;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.1rem solid ${(props) => props.theme.colors.beet};
+    color: ${(props) => props.theme.colors[props.isOpen ? 'light' : 'beet']};
+    background-color: ${(props) =>
+      props.theme.colors[props.isOpen ? 'beet' : 'transparent']};
+
+    & > span {
+      text-transform: none;
+      display: block;
+      line-height: 0;
+      font-size: 1.2rem;
+    }
+  }
+`
+
 const BuilderOptionCount = ({ quantity }) => {
   return (
     <BuilderOptionCountView show={quantity > 0} quantity={quantity}>
@@ -120,6 +183,11 @@ BuilderOptionCount.propTypes = {
   quantity: propTypes.number,
 }
 
+const checkHasNutritionalInfo = (nutritionalInfo) => {
+  const { serving_size } = nutritionalInfo || {}
+  return !serving_size || parseFloat(serving_size) === 0 ? false : true
+}
+
 const BuilderOption = ({
   perRow,
   group,
@@ -128,7 +196,11 @@ const BuilderOption = ({
   allergenAlerts,
   displaySettings,
   activeOption,
+  setOptionQuantity,
   setActiveOption,
+  setActiveGroup,
+  index,
+  lastIndex,
 }) => {
   const { calories: showCals, allergens: showAllergens } = displaySettings
   const optionKey = `${group.id}-${option.id}`
@@ -137,7 +209,10 @@ const BuilderOption = ({
     group.included !== 0 &&
     (group.included === group.max || group.quantity < group.included)
   const priceCals = makePriceCals(option, showCals, hidePrice)
-  const { quantity } = option
+  const { nutritionalInfo, quantity = 0 } = option || {}
+  const { max: groupMax = 0, quantity: groupQty = 0 } = group
+  const remaining = groupMax === 0 ? 1000 : groupMax - groupQty
+  const hasNutrition = checkHasNutritionalInfo(nutritionalInfo)
   const width = `${parseFloat((1 / perRow) * 100).toFixed(5)}%`
   const isSoldOut = soldOut ? soldOut.includes(option.id) : false
   const allergens = showAllergens ? option.allergens : []
@@ -145,17 +220,22 @@ const BuilderOption = ({
     allergenAlerts && allergens.length
       ? allergens.filter((allergen) => allergenAlerts.includes(allergen))
       : []
-  // const isCheckbox = group.options.filter((i) => i.max !== 1).length === 0
-  // const groupAtMax = group.max !== 0 && group.quantity === group.max
-  // const optionAtMax = option.max !== 0 && option.quantity === option.max
-  // const incrementDisabled = groupAtMax || optionAtMax
-  // const groupAtMin = group.min !== 0 && group.quantity === group.min
-  // const optionAtMin = option.min !== 0 && option.quantity === option.min
-  // const decrementDisabled = groupAtMin || optionAtMin || option.quantity === 0
-  // const decrementDisabled = option.quantity === 0
+
+  const setQuantity = (evt) => {
+    evt.preventDefault()
+    const qty = quantity ? 0 : 1
+    setOptionQuantity(group.id, option.id, qty)
+    if (qty > 0 && qty === remaining && index + 1 <= lastIndex) {
+      setTimeout(() => {
+        setActiveGroup(index + 1)
+      }, 500)
+    }
+    setActiveOption(null)
+  }
 
   const onClick = (evt) => {
     evt.preventDefault()
+    evt.stopPropagation()
     if (isSoldOut) return
     if (isActive) {
       setActiveOption(null)
@@ -166,15 +246,30 @@ const BuilderOption = ({
   }
 
   return (
-    <BuilderOptionView onClick={onClick} width={width} disabled={isSoldOut}>
-      <BuilderOptionArrow show={isActive} />
-      <BuilderOptionCount quantity={quantity} />
-      <BuilderOptionImage
-        imageUrl={option.imageUrl}
-        spinner={<ImageSpinner />}
-      />
+    <BuilderOptionView width={width}>
+      <BuilderOptionButton
+        onClick={setQuantity}
+        width={width}
+        disabled={isSoldOut || (remaining === 0 && quantity === 0)}
+      >
+        <BuilderOptionArrow show={isActive} />
+        <BuilderOptionCount quantity={quantity} />
+        <BuilderOptionImage
+          imageUrl={option.imageUrl}
+          spinner={<ImageSpinner />}
+        />
+      </BuilderOptionButton>
       <BuilderOptionInfo>
-        <BuilderOptionName>{option.name}</BuilderOptionName>
+        <BuilderOptionName>
+          {hasNutrition && (
+            <BuilderOptionNutritionalInfo onClick={onClick} isOpen={isActive}>
+              <span>
+                <span>i</span>
+              </span>
+            </BuilderOptionNutritionalInfo>
+          )}
+          <span>{option.name}</span>
+        </BuilderOptionName>
         <BuilderOptionPrice>{priceCals}</BuilderOptionPrice>
         {isSoldOut && (
           <BuilderOptionSoldOut as="p">Sold out</BuilderOptionSoldOut>

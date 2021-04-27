@@ -13,7 +13,7 @@ import {
 
 import { CartFooter, ImageSpinner } from '..'
 import { ButtonSmall } from '../buttons'
-import { ChevronDown, ChevronLeft, ChevronUp } from '../icons'
+import { Checkmark, ChevronDown, ChevronLeft, ChevronUp } from '../icons'
 import BuilderImage from './BuilderImage'
 import BuilderOption from './BuilderOption'
 import BuilderMadeFor from './BuilderMadeFor'
@@ -176,7 +176,8 @@ const BuilderDescription = styled('p')`
 `
 
 const BuilderIngredients = styled('div')`
-  flex: 0 0 50rem;
+  flex: 0 0 63rem;
+  max-width: 63rem;
   margin: 0 0 0 6rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     flex: 1;
@@ -264,18 +265,37 @@ const BuilderGroupsNav = styled('div')`
       margin: 0;
       justify-content: flex-start;
     }
+
+    & > div {
+      padding: 0 0.5rem 0 0;
+
+      &:last-of-type {
+        padding: 0;
+      }
+    }
   }
 `
 
 const BuilderGroupsNavButton = styled(ButtonSmall)`
   color: ${(props) =>
-    props.isActive ? props.theme.colors.light : props.theme.colors.beet};
+    props.isActive || props.isComplete
+      ? props.theme.colors.light
+      : props.theme.colors.beet};
   background-color: ${(props) =>
-    props.isActive ? props.theme.colors.beet : 'transparent'};
+    props.isActive
+      ? props.theme.colors.beet
+      : props.isComplete
+      ? props.theme.colors.pepper
+      : 'transparent'};
   box-shadow: ${(props) =>
-    props.isActive ? '0px 4px 20px rgba(0, 0, 0, 0.25)' : 'none'};
+    props.isActive || props.isComplete
+      ? '0px 4px 20px rgba(0, 0, 0, 0.25)'
+      : 'none'};
   font-size: 1.6rem;
   padding: 1.1rem 1.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     font-size: 1.3rem;
     padding: 0.8rem 1.2rem;
@@ -284,6 +304,14 @@ const BuilderGroupsNavButton = styled(ButtonSmall)`
   &:focus {
     outline: none;
   }
+
+  & > span {
+    display: block;
+  }
+`
+
+const BuilderGroupsNavButtonCheck = styled('span')`
+  margin: 0.2rem -0.2rem 0 0.5rem;
 `
 
 const BuilderGroupContainer = styled('div')`
@@ -476,15 +504,27 @@ const Builder = ({
               <BuilderGroupsContainer>
                 <BuilderGroupsNav>
                   <div>
-                    {groups.map((group, index) => (
-                      <BuilderGroupsNavButton
-                        key={group.name}
-                        onClick={(evt) => toggleGroups(evt, index)}
-                        isActive={index === activeGroup}
-                      >
-                        {group.name}
-                      </BuilderGroupsNavButton>
-                    ))}
+                    {groups.map((group, index) => {
+                      const isComplete =
+                        (group.min > 0 && group.quantity >= group.min) ||
+                        (group.max > 0 && group.quantity === group.max)
+                      return (
+                        <div key={group.name}>
+                          <BuilderGroupsNavButton
+                            onClick={(evt) => toggleGroups(evt, index)}
+                            isActive={index === activeGroup}
+                            isComplete={isComplete}
+                          >
+                            <span>{group.name}</span>
+                            {isComplete && (
+                              <BuilderGroupsNavButtonCheck>
+                                <Checkmark />
+                              </BuilderGroupsNavButtonCheck>
+                            )}
+                          </BuilderGroupsNavButton>
+                        </div>
+                      )
+                    })}
                     {/* <div style={{ width: '3rem' }}>&nbsp;</div> */}
                   </div>
                 </BuilderGroupsNav>
@@ -522,7 +562,11 @@ const Builder = ({
                                     allergenAlerts,
                                     displaySettings,
                                     activeOption,
+                                    setOptionQuantity,
                                     setActiveOption,
+                                    setActiveGroup,
+                                    index,
+                                    lastIndex: groups.length - 1,
                                   }
                                   return <BuilderOption key={key} {...props} />
                                 })}
