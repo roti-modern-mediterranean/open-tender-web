@@ -25,7 +25,7 @@ import {
   SidebarModal,
 } from '../..'
 import { Back, Cart } from '../../buttons'
-import MenuAllergenFilter from '../Menu/MenuAllergenFilter'
+// import MenuAllergenFilter from '../Menu/MenuAllergenFilter'
 import MenuFooter from '../Menu/MenuFooter'
 import {
   MenuCateringView,
@@ -107,7 +107,7 @@ const MenuCategory = () => {
           <MenuCateringView>
             <Container>
               <PageTitle title={name} subtitle={description}>
-                <MenuAllergenFilter />
+                {/* <MenuAllergenFilter /> */}
               </PageTitle>
               <MenuCateringCategories>
                 {items.map((item) => (

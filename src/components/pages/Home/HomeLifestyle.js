@@ -122,7 +122,7 @@ const HomeLifestyleMealsItem = styled('div')`
 `
 
 const homeCategories = ['Bowls', 'Salads', 'Pitas']
-const homeTags = ['keto', 'vegan', 'gluten free']
+const homeTags = ['keto', 'vegan', 'vegetarian']
 
 const HomeLifestyle = () => {
   const { categories } = useSelector(selectMenuDisplay)

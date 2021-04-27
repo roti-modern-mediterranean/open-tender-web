@@ -35,7 +35,7 @@ const MenuCategory = ({ category, isChild, index }) => {
     <MenuCategoryView isChild={isChild} index={index}>
       <Container>
         <PageTitle title={category.name} subtitle={category.description}>
-          <MenuAllergenFilter />
+          {index === 0 && <MenuAllergenFilter />}
         </PageTitle>
         {category.appearance === 'small' ? (
           <CardListSmall>
