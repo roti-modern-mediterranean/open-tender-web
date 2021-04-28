@@ -12,6 +12,9 @@ import {
 } from '../..'
 import MenuItem from './MenuItem'
 import MenuAllergenFilter from './MenuAllergenFilter'
+import BorderBox from '../../BorderBox'
+import { useSelector } from 'react-redux'
+import { selectTheme } from '../../../slices'
 
 export const MenuCategoryView = styled('div')`
   opacity: 0;
@@ -31,8 +34,10 @@ export const MenuCategoryView = styled('div')`
 `
 
 const MenuCategory = ({ category, isChild, index }) => {
+  const theme = useSelector(selectTheme)
   return (
     <MenuCategoryView isChild={isChild} index={index}>
+      <BorderBox color={theme.bgColors[index % 2 === 0 ? 'primary' : 'secondary']} />
       <Container>
         <PageTitle title={category.name} subtitle={category.description}>
           {index === 0 && <MenuAllergenFilter />}
