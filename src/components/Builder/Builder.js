@@ -51,7 +51,7 @@ const BuilderView = styled('form')`
   max-width: ${(props) => props.theme.layout.containerMaxWidth};
   padding: 0 ${(props) => props.theme.layout.padding} 14.5rem;
   margin: ${(props) => props.theme.layout.margin} auto;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
     width: 100%;
     flex-direction: column;
     justify-content: flex-start;
@@ -64,14 +64,16 @@ const BuilderView = styled('form')`
 const BuilderInfo = styled('div')`
   position: relative;
   flex-grow: 1;
-  // width: 100%;
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    width: 100%;
+  }
 `
 
 const BuilderHeader = styled('div')`
   position: relative;
   top: -4rem;
   padding: 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
     top: 0;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
@@ -82,15 +84,14 @@ const BuilderTitle = styled('div')`
   z-index: 1;
   left: 0;
   right: 0;
-  // background-color: #ccc;
   top: -16rem;
   height: 15rem;
   @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
-    top: -10rem;
-    height: 10rem;
+    top: -13rem;
+    height: 14rem;
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    top: -10rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    top: -9rem;
     height: 10rem;
   }
 
@@ -109,14 +110,18 @@ const BuilderTitle = styled('div')`
 const BuilderCategory = styled('h2')`
   display: block;
   line-height: 1;
-  font-size: 18rem;
+  font-size: ${(props) => (props.isSmall ? '12rem' : '18rem')};
   margin: -2rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
-    font-size: 11.5rem;
+    font-size: ${(props) => (props.isSmall ? '14rem' : '14rem')};
     margin: -1rem 0 0;
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    font-size: 11.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => (props.isSmall ? '12rem' : '14rem')};
+    margin: -1rem 0 0;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: ${(props) => (props.isSmall ? '7rem' : '10rem')};
     margin: -1rem 0 0;
   }
 `
@@ -158,9 +163,11 @@ const BuilderPrice = styled(Preface)`
   margin: 0 0 2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
     font-size: 2.6rem;
+    margin-top: 2rem;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     font-size: 2.6rem;
+    margin-top: 0;
   }
 `
 
@@ -169,22 +176,29 @@ const BuilderDescription = styled('p')`
   font-size: 1.8rem;
   @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
     font-size: 1.5rem;
+    display: block;
+    max-width: 62rem;
+    margin: 0 auto;
+    text-align: center;
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    font-size: 1.5rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    max-width: 100%;
+    text-align: left;
   }
 `
 
 const BuilderIngredients = styled('div')`
-  flex: 0 0 63rem;
-  max-width: 63rem;
+  width: 62rem;
+  flex-grow: 0;
+  flex-shrink: 0;
   margin: 0 0 0 6rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    flex: 1;
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
     margin: 0;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex: 1;
     min-width: 100%;
+    max-width: 100%;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     max-width: 100%;
@@ -193,7 +207,7 @@ const BuilderIngredients = styled('div')`
 
 const BuilderIngredientsHeader = styled('div')`
   padding: 2.5rem 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 2.5rem ${(props) => props.theme.layout.paddingMobile};
   }
 `
@@ -342,7 +356,7 @@ const BuilderGroup = styled('div')`
 
 const BuilderNameNotes = styled('div')`
   padding: 3rem 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     background-color: ${(props) => props.theme.bgColors.light};
     padding: 3rem ${(props) => props.theme.layout.paddingMobile};
   }
@@ -465,7 +479,9 @@ const Builder = ({
         <BuilderHeader>
           <BuilderTitle>
             <div>
-              <BuilderCategory>{item.category}</BuilderCategory>
+              <BuilderCategory isSmall={item.category.length > 6}>
+                {item.category}
+              </BuilderCategory>
               <BuilderNameView>
                 <BuilderName as="div">{item.name}</BuilderName>
               </BuilderNameView>

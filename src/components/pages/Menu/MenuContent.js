@@ -54,7 +54,7 @@ const MenuContent = () => {
             announcements={announcements}
             imageUrl={menuConfig.background}
             showHero={showHero}
-            minHeight="44rem"
+            // minHeight="44rem"
           />
         </div>
       )}

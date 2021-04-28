@@ -8,6 +8,9 @@ import { allergenIconMap } from '../icons/allergens'
 
 const BuilderAllergensView = styled('p')`
   margin: 1rem 0 0;
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    text-align: center;
+  }
 
   & > span {
     display: inline-block;

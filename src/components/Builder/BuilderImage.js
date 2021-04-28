@@ -10,12 +10,18 @@ const BuilderImageView = styled('div')`
   width: 100%;
   height: 54rem;
   @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
-    top: -6rem;
-    height: 40rem;
+    top: -2rem;
+    height: 44rem;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    top: -3rem;
+    top: -2rem;
+    height: 44rem;
+    margin: 0 0 2rem;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    top: -2rem;
     height: 32rem;
+    margin: 0;
   }
 `
 
