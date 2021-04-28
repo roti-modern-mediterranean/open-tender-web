@@ -63,10 +63,10 @@ const guestLinks = [
         title: 'Locations',
         path: '/locations',
       },
-      {
-        title: 'About',
-        path: '/about',
-      },
+      // {
+      //   title: 'About',
+      //   path: '/about',
+      // },
       {
         title: 'Careers',
         path: '/careers',
@@ -146,10 +146,10 @@ const userLinks = [
         title: 'Locations',
         path: '/locations',
       },
-      {
-        title: 'About',
-        path: '/about',
-      },
+      // {
+      //   title: 'About',
+      //   path: '/about',
+      // },
       {
         title: 'Careers',
         path: '/careers',
