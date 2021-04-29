@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { animateScroll } from 'react-scroll'
@@ -31,6 +31,7 @@ import { isBrowser } from 'react-device-detect'
 import { selectTheme } from '../../slices'
 import { useSelector } from 'react-redux'
 import BuilderAllergens from './BuilderAllergens'
+import { smoothHorizontalScrolling } from '../NavScroll'
 
 export const makePriceCals = (item, showCals, hidePrice) => {
   const zeroPrice = !!(item.price === '0.00' || item.price === 0)
@@ -265,6 +266,7 @@ const BuilderGroupsContainer = styled('div')`
 `
 
 const BuilderGroupsNav = styled('div')`
+  position: relative;
   padding: 0 0 2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     padding: 3rem 0 2rem;
@@ -480,6 +482,7 @@ const Builder = ({
     setOptionQuantity,
   } = useBuilder(menuItem, soldOut)
   const ingredientsRef = useRef(null)
+  const navRef = useRef(null)
   const [visited, setVisited] = useState([])
   const [isOpen, setIsOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -541,6 +544,26 @@ const Builder = ({
       })
     }
   }, [isOpen, windowRef])
+
+  useEffect(() => {
+    if (activeIndex) {
+      console.log(activeIndex, navRef.current)
+      const navActive = document.getElementById(`nav-${activeIndex}`)
+      if (navActive) {
+        const navOffset = navActive.getBoundingClientRect().x
+        console.log(navActive.offsetParent)
+        const parentOffset = navActive.offsetParent.getBoundingClientRect().x
+        if (navRef.current) {
+          smoothHorizontalScrolling(
+            navRef.current,
+            250,
+            navOffset,
+            -parentOffset
+          )
+        }
+      }
+    }
+  }, [activeIndex])
 
   const toggleIngredients = (evt) => {
     evt.preventDefault()
@@ -616,7 +639,7 @@ const Builder = ({
           <>
             {hasGroups && (
               <BuilderGroupsContainer>
-                <BuilderGroupsNav>
+                <BuilderGroupsNav ref={navRef}>
                   <div>
                     {groups.map((group, index) => {
                       // const isComplete =
@@ -624,7 +647,7 @@ const Builder = ({
                       //   (group.max > 0 && group.quantity === group.max)
                       const isComplete = visited.includes(index) || isEdit
                       return (
-                        <div key={group.name}>
+                        <div key={group.name} id={`nav-${index}`}>
                           <BuilderGroupsNavButton
                             onClick={(evt) => toggleGroups(evt, index)}
                             isActive={index === activeIndex}
@@ -682,8 +705,11 @@ const Builder = ({
                   {groups.map((group, index) => {
                     const chunked = chunkArray(group.options, perRow)
                     return (
-                      <BuilderGroup isActive={index === activeIndex}>
-                        {chunked.map((options) => {
+                      <BuilderGroup
+                        key={group.id}
+                        isActive={index === activeIndex}
+                      >
+                        {chunked.map((options, idx) => {
                           const active = options.find(
                             (i) => `${group.id}-${i.id}` === activeOption
                           )
@@ -694,7 +720,7 @@ const Builder = ({
                             setActiveOption,
                           }
                           return (
-                            <>
+                            <Fragment key={idx}>
                               <BuilderOptionToggle {...props} />
                               <div>
                                 {options.map((option) => {
@@ -718,7 +744,7 @@ const Builder = ({
                                   return <BuilderOption key={key} {...props} />
                                 })}
                               </div>
-                            </>
+                            </Fragment>
                           )
                         })}
                       </BuilderGroup>

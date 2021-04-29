@@ -50,7 +50,7 @@ const NavScrollView = styled('div')`
 `
 
 // https://stackoverflow.com/questions/51229742/javascript-window-scroll-behavior-smooth-not-working-in-safari
-const smoothHorizontalScrolling = (container, time, amount, start) => {
+export const smoothHorizontalScrolling = (container, time, amount, start) => {
   let eAmt = amount / 100
   let curTime = 0
   let scrollCounter = 0
