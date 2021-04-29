@@ -58,6 +58,7 @@ const MenuItem = ({ item, category, isInverted }) => {
   const isIncomplete =
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
   const { appearance } = category || {}
+  const isActive = activeItem === item.id
 
   const handleView = (evt) => {
     evt.preventDefault()
@@ -115,6 +116,7 @@ const MenuItem = ({ item, category, isInverted }) => {
     handleOrder,
     activeItem,
     setActiveItem,
+    isActive,
   }
 
   return appearance === 'small' ? (

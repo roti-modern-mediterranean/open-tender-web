@@ -29,7 +29,7 @@ const MinusSign = ({ size = 16, color = null }) => {
 
 MinusSign.displayName = 'MinusSign'
 MinusSign.propTypes = {
-  size: propTypes.string,
+  size: propTypes.number,
   color: propTypes.string,
 }
 

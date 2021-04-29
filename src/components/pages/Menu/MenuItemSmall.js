@@ -158,10 +158,10 @@ const MenuItemSmall = React.forwardRef(
       menuConfig,
       activeItem,
       setActiveItem,
+      isActive,
     },
     ref
   ) => {
-    const isActive = activeItem === item.id
     return (
       <MenuItemSmallView
         ref={ref}
@@ -201,16 +201,17 @@ const MenuItemSmall = React.forwardRef(
                   </CardButton>
                 ) : (
                   <>
-                    <CardButton
-                      ref={viewRef}
-                      onClick={handleView}
-                      onFocus={() => setActiveItem(item.id)}
-                      disabled={isSoldOut}
-                      secondary={true}
-                    >
-                      Customize
-                    </CardButton>
-
+                    {viewRef && (
+                      <CardButton
+                        ref={viewRef}
+                        onClick={handleView}
+                        onFocus={() => setActiveItem(item.id)}
+                        disabled={isSoldOut}
+                        secondary={true}
+                      >
+                        Customize
+                      </CardButton>
+                    )}
                     <CardButton
                       ref={addRef}
                       onClick={handleAdd}

@@ -27,7 +27,7 @@ const PlusSign = ({ size = 16, color = null }) => {
 
 PlusSign.displayName = 'PlusSign'
 PlusSign.propTypes = {
-  size: propTypes.string,
+  size: propTypes.number,
   color: propTypes.string,
 }
 

@@ -15,6 +15,7 @@ import MenuAllergenFilter from './MenuAllergenFilter'
 import BorderBox from '../../BorderBox'
 import { useSelector } from 'react-redux'
 import { selectTheme } from '../../../slices'
+import MenuItemExpand from './MenuItemExpand'
 
 export const MenuCategoryView = styled('div')`
   opacity: 0;
@@ -37,18 +38,27 @@ const MenuCategory = ({ category, isChild, index }) => {
   const theme = useSelector(selectTheme)
   return (
     <MenuCategoryView isChild={isChild} index={index}>
-      <BorderBox color={theme.bgColors[index % 2 === 0 ? 'primary' : 'secondary']} />
+      <BorderBox
+        color={theme.bgColors[index % 2 === 0 ? 'primary' : 'secondary']}
+      />
       <Container>
         <PageTitle title={category.name} subtitle={category.description}>
           {index === 0 && <MenuAllergenFilter />}
         </PageTitle>
         {category.appearance === 'small' ? (
           <CardListSmall>
-            {category.items.map((item) => (
-              <CardListItemSmall key={item.id}>
-                <MenuItem item={item} category={category} />
-              </CardListItemSmall>
-            ))}
+            {category.items.map((item) => {
+              const optionGroups = item ? item.option_groups || [] : []
+              const isSize =
+                optionGroups.length && optionGroups[0].is_size ? true : false
+              return isSize ? (
+                <MenuItemExpand key={item.id} item={item} />
+              ) : (
+                <CardListItemSmall key={item.id}>
+                  <MenuItem item={item} category={category} />
+                </CardListItemSmall>
+              )
+            })}
           </CardListSmall>
         ) : (
           <CardList>

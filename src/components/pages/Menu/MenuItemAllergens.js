@@ -41,7 +41,7 @@ const MenuItemAllergens = ({ allergens, includeText = true, style = null }) => {
   return (
     <MenuItemAllergensView style={style}>
       {allergens.map((allergen) => (
-        <span>
+        <span key={allergen}>
           <MenuItemAllergensIcon>
             {allergenIconMap[allergen]({ color: theme.colors.alert })}
           </MenuItemAllergensIcon>
