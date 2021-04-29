@@ -141,6 +141,7 @@ const ContentCards = styled('ul')`
   li {
     flex: 1 1 auto;
     margin-right: 1em;
+    width: 50%;
     h3 {
       font-weight: normal;
       font-size: 1.5em;
@@ -204,7 +205,7 @@ const Careers = () => {
               show_overlay: true,
               text_color: 'FBF8EA',
               title: 'JOIN THE ROTEAM',
-              url: 'https://google.com',
+              url: '',
               url_text: 'Apply today',
               vertical: 'BOTTOM',
             },

@@ -15,6 +15,7 @@ import {
   PageContent,
   HeaderDefault,
 } from '../..'
+import { InternalPageContent } from '../Terms/Terms'
 
 const Contact = () => {
   const { windowRef } = useContext(AppContext)
@@ -22,7 +23,7 @@ const Contact = () => {
   const [error, setError] = useState(null)
   const { title: siteTitle } = useSelector(selectBrand)
   const api = useSelector(selectAPI)
-  const slug = 'contact'
+  const slug = 'contact-us'
   const pageTitle = page ? page.title : 'Not Found'
 
   useEffect(() => {
@@ -69,7 +70,9 @@ const Contact = () => {
               <>
                 <PageTitle title={page.title} subtitle={page.subtitle} />
                 <PageContent style={{ textAlign: 'left', marginTop: '3rem' }}>
-                  <p>Page content goes here</p>
+                  <InternalPageContent>
+                    <div dangerouslySetInnerHTML={{__html: page.content}}></div>
+                  </InternalPageContent>
                 </PageContent>
               </>
             ) : error ? (

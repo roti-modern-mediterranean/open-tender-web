@@ -186,7 +186,7 @@ const Routes = () => {
       <Route exact path="/about">
         <About />
       </Route>
-      <Route exact path="/contact">
+      <Route exact path="/contact-us">
         <Contact />
       </Route>
       <Route exact path="/covid-19">
