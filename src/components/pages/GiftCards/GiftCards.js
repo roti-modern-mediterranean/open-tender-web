@@ -40,7 +40,6 @@ const GiftCards = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { profile: customer } = useSelector(selectCustomer) || {}
   const creditCards = useSelector(selectCustomerCreditCardsForPayment)
-  console.log(creditCards)
   const { success, loading, error, giftCards } = useSelector(selectGiftCards)
   const purchase = useCallback(
     (data, callback) => dispatch(purchaseGiftCards(data, callback)),

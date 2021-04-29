@@ -31,7 +31,6 @@ import { isBrowser } from 'react-device-detect'
 import { selectTheme } from '../../slices'
 import { useSelector } from 'react-redux'
 import BuilderAllergens from './BuilderAllergens'
-import { smoothHorizontalScrolling } from '../NavScroll'
 
 export const makePriceCals = (item, showCals, hidePrice) => {
   const zeroPrice = !!(item.price === '0.00' || item.price === 0)
@@ -242,10 +241,6 @@ const BuilderToggle = styled(ButtonSmall)`
   color: ${(props) => props.theme.colors.beet};
   border: 0.1rem solid ${(props) => props.theme.colors.beet};
   background-color: transparent;
-  // display: none;
-  // @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-  //   display: block;
-  // }
 
   span span {
     position: relative;
@@ -266,22 +261,25 @@ const BuilderGroupsContainer = styled('div')`
 `
 
 const BuilderGroupsNav = styled('div')`
-  position: relative;
-  padding: 0 0 2rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    padding: 3rem 0 2rem;
+  height: 8rem;
+  display: flex;
+  align-items: center;
+  margin: -1rem 0 1rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 1rem ${(props) => props.theme.layout.paddingMobile} 0;
+    margin: 0 0 1rem;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 3rem 0 2rem ${(props) => props.theme.layout.paddingMobile};
+    height: 10rem;
+    padding: 0 0 0 ${(props) => props.theme.layout.paddingMobile};
+    margin: 0;
     overflow-x: scroll;
   }
 
   & > div {
     display: flex;
     align-items: center;
-    // margin: 0 -1.6rem;
     @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      // margin: 0 -1.2rem;
       justify-content: center;
     }
     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -484,6 +482,7 @@ const Builder = ({
   const ingredientsRef = useRef(null)
   const navRef = useRef(null)
   const [visited, setVisited] = useState([])
+  const [positions, setPositions] = useState([])
   const [isOpen, setIsOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
   const [activeOption, setActiveOption] = useState(null)
@@ -546,24 +545,20 @@ const Builder = ({
   }, [isOpen, windowRef])
 
   useEffect(() => {
-    if (activeIndex) {
-      console.log(activeIndex, navRef.current)
-      const navActive = document.getElementById(`nav-${activeIndex}`)
-      if (navActive) {
-        const navOffset = navActive.getBoundingClientRect().x
-        console.log(navActive.offsetParent)
-        const parentOffset = navActive.offsetParent.getBoundingClientRect().x
-        if (navRef.current) {
-          smoothHorizontalScrolling(
-            navRef.current,
-            250,
-            navOffset,
-            -parentOffset
-          )
-        }
-      }
+    if (isOpen && hasGroups) {
+      const elements = document.getElementsByClassName('builder-nav')
+      const starting = Array.from(elements).map(
+        (e) => e.getBoundingClientRect().x
+      )
+      setPositions(starting)
     }
-  }, [activeIndex])
+  }, [isOpen, hasGroups])
+
+  useEffect(() => {
+    if (navRef.current) {
+      navRef.current.scrollLeft = positions[activeIndex] - 20
+    }
+  }, [activeIndex, positions])
 
   const toggleIngredients = (evt) => {
     evt.preventDefault()
@@ -647,7 +642,11 @@ const Builder = ({
                       //   (group.max > 0 && group.quantity === group.max)
                       const isComplete = visited.includes(index) || isEdit
                       return (
-                        <div key={group.name} id={`nav-${index}`}>
+                        <div
+                          key={group.name}
+                          id={`nav-${index}`}
+                          className="builder-nav"
+                        >
                           <BuilderGroupsNavButton
                             onClick={(evt) => toggleGroups(evt, index)}
                             isActive={index === activeIndex}
