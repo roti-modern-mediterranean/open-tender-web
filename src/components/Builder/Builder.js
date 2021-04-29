@@ -13,7 +13,14 @@ import {
 
 import { CartFooter, ImageSpinner } from '..'
 import { ButtonSmall } from '../buttons'
-import { Checkmark, ChevronDown, ChevronLeft, ChevronUp } from '../icons'
+import {
+  ArrowLeft,
+  ArrowRight,
+  Checkmark,
+  ChevronDown,
+  ChevronLeft,
+  ChevronUp,
+} from '../icons'
 import BuilderImage from './BuilderImage'
 import BuilderOption from './BuilderOption'
 import BuilderMadeFor from './BuilderMadeFor'
@@ -258,12 +265,12 @@ const BuilderGroupsContainer = styled('div')`
 `
 
 const BuilderGroupsNav = styled('div')`
-  padding: 0 0 3rem;
+  padding: 0 0 2rem;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    padding: 3rem 0;
+    padding: 3rem 0 2rem;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 3rem 0 3rem ${(props) => props.theme.layout.paddingMobile};
+    padding: 3rem 0 2rem ${(props) => props.theme.layout.paddingMobile};
     overflow-x: scroll;
   }
 
@@ -328,6 +335,62 @@ const BuilderGroupsNavButtonCheck = styled('span')`
   margin: 0.2rem -0.2rem 0 0.5rem;
 `
 
+const BuilderGroupsArrows = styled('div')`
+  width: 100%;
+  margin: 0 0 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    padding: 0 ${(props) => props.theme.layout.paddingMobile};
+  }
+`
+
+const BuilderGroupsArrowLeft = styled('button')`
+  cursor: pointer;
+  position: relative;
+  top: 0.1rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  line-height: 1;
+  text-align: center;
+  height: 3rem;
+  margin: 0 0 0 -1.5rem;
+  padding: 0 1.5rem;
+  border: 0;
+  // @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  //   padding-right: 1rem;
+  // }
+`
+
+const BuilderGroupsArrowRight = styled(BuilderGroupsArrowLeft)`
+  justify-content: flex-end;
+  padding: 0 1.5rem;
+  margin: 0 -1.5rem 0 0;
+`
+
+const BuilderGroupsArrowText = styled('span')`
+  display: block;
+  font-weight: 500;
+  font-size: 1.3rem;
+  color: ${(props) => props.theme.colors.beet};
+  margin: 0 1rem 0 0;
+`
+
+const BuilderGroupsArrowsTitle = styled(Preface)`
+  display: block;
+  flex-grow: 1;
+  text-transform: none;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  font-size: 2.8rem;
+  line-height: 1;
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: 2.3rem;
+  }
+`
+
 const BuilderGroupContainer = styled('div')`
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
@@ -377,6 +440,24 @@ const BuilderFooter = styled('div')`
   height: 14.5rem;
 `
 
+const makeMessage = (group) => {
+  if (!group) return null
+  const { min, max, name } = group
+  const lower = name.toLowerCase()
+  const singular = lower.endsWith('s') ? lower.slice(0, -1) : lower
+  const isVowel = 'aeiou'.includes(singular[0])
+  const prefix = isVowel ? 'an' : 'a'
+  if (lower.endsWith('pita')) {
+    return 'Add a pita?'
+  } else if (min === 1 && max === 1) {
+    return `Choose your ${singular}`
+  } else if (max === 1) {
+    return `Add ${prefix} ${singular}?`
+  } else {
+    return `Choose your ${lower}`
+  }
+}
+
 const Builder = ({
   menuItem,
   addItemToCart,
@@ -401,7 +482,7 @@ const Builder = ({
   const ingredientsRef = useRef(null)
   const [visited, setVisited] = useState([])
   const [isOpen, setIsOpen] = useState(false)
-  const [activeGroup, setActiveGroup] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0)
   const [activeOption, setActiveOption] = useState(null)
   const [perRow, setPerRow] = useState(3)
   const { groups, notes, madeFor, totalPrice } = item
@@ -422,12 +503,23 @@ const Builder = ({
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
   const theme = useSelector(selectTheme)
   const mobileWidth = parseInt(theme.breakpoints.mobile.replace('px', ''))
-  // const isEdit = item.index !== undefined
+  const isEdit = item.index !== undefined
   const allergenAlert =
     showAllergens && allergenAlerts && item.allergens.length
       ? item.allergens.filter((allergen) => allergenAlerts.includes(allergen))
       : []
-  console.log(visited)
+  const activeGroup = groups.find((i, idx) => idx === activeIndex)
+  const groupMessage = makeMessage(activeGroup)
+  const prevIndex = activeIndex === 0 ? null : activeIndex - 1
+  const nextIndex = activeIndex === groups.length - 1 ? null : activeIndex + 1
+  const nextGroup = nextIndex
+    ? groups.find((i, idx) => idx === nextIndex)
+    : null
+  const showDone =
+    nextGroup === null &&
+    !isIncomplete &&
+    activeGroup.min === 0 &&
+    activeGroup.quantity === 0
 
   useEffect(() => {
     const width = getWidth()
@@ -436,8 +528,8 @@ const Builder = ({
   }, [mobileWidth])
 
   useEffect(() => {
-    if (isIncomplete) setIsOpen(true)
-  }, [isIncomplete])
+    if (isIncomplete || isEdit) setIsOpen(true)
+  }, [isIncomplete, isEdit])
 
   useEffect(() => {
     if (isOpen && !isBrowser) {
@@ -470,9 +562,9 @@ const Builder = ({
 
   const toggleGroups = (evt, index) => {
     evt.preventDefault()
-    const unique = [...new Set([...visited, activeGroup])]
+    const unique = [...new Set([...visited, activeIndex])]
     setVisited(unique)
-    setActiveGroup(index)
+    setActiveIndex(index)
     setActiveOption(null)
   }
 
@@ -530,12 +622,12 @@ const Builder = ({
                       // const isComplete =
                       //   (group.min > 0 && group.quantity >= group.min) ||
                       //   (group.max > 0 && group.quantity === group.max)
-                      const isComplete = visited.includes(index)
+                      const isComplete = visited.includes(index) || isEdit
                       return (
                         <div key={group.name}>
                           <BuilderGroupsNavButton
                             onClick={(evt) => toggleGroups(evt, index)}
-                            isActive={index === activeGroup}
+                            isActive={index === activeIndex}
                             isComplete={isComplete}
                           >
                             <span>{group.name}</span>
@@ -551,11 +643,46 @@ const Builder = ({
                     {/* <div style={{ width: '3rem' }}>&nbsp;</div> */}
                   </div>
                 </BuilderGroupsNav>
+                <BuilderGroupsArrows>
+                  {prevIndex !== null && (
+                    <BuilderGroupsArrowLeft
+                      onClick={(evt) => toggleGroups(evt, prevIndex)}
+                    >
+                      <ArrowLeft size="1.3rem" color={theme.colors.beet} />
+                    </BuilderGroupsArrowLeft>
+                  )}
+                  <BuilderGroupsArrowsTitle>
+                    {groupMessage}
+                  </BuilderGroupsArrowsTitle>
+                  <BuilderGroupsArrowRight
+                    onClick={
+                      showDone
+                        ? () => addItemToCart(item)
+                        : (evt) => toggleGroups(evt, nextIndex)
+                    }
+                  >
+                    {nextGroup ? (
+                      <>
+                        <BuilderGroupsArrowText>
+                          Next:{' '}
+                          {nextGroup.name.toLowerCase().includes('pita')
+                            ? 'Pitas'
+                            : nextGroup.name}
+                        </BuilderGroupsArrowText>
+                        <ArrowRight size="1.3rem" color={theme.colors.beet} />
+                      </>
+                    ) : showDone ? (
+                      <BuilderGroupsArrowText>
+                        Nah, I'm Good
+                      </BuilderGroupsArrowText>
+                    ) : null}
+                  </BuilderGroupsArrowRight>
+                </BuilderGroupsArrows>
                 <BuilderGroupContainer>
                   {groups.map((group, index) => {
                     const chunked = chunkArray(group.options, perRow)
                     return (
-                      <BuilderGroup isActive={index === activeGroup}>
+                      <BuilderGroup isActive={index === activeIndex}>
                         {chunked.map((options) => {
                           const active = options.find(
                             (i) => `${group.id}-${i.id}` === activeOption
@@ -584,7 +711,7 @@ const Builder = ({
                                     setOptionQuantity,
                                     activeOption,
                                     setActiveOption,
-                                    setActiveGroup,
+                                    setActiveIndex,
                                     index,
                                     lastIndex: groups.length - 1,
                                   }

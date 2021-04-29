@@ -258,7 +258,7 @@ const BuilderOption = ({
   setOptionQuantity,
   activeOption,
   setActiveOption,
-  setActiveGroup,
+  setActiveIndex,
   index,
   lastIndex,
 }) => {
@@ -285,11 +285,11 @@ const BuilderOption = ({
     evt.preventDefault()
     const qty = quantity ? 0 : 1
     setOptionQuantity(group.id, option.id, qty)
-    if (qty > 0 && qty === remaining && index + 1 <= lastIndex) {
-      setTimeout(() => {
-        setActiveGroup(index + 1)
-      }, 650)
-    }
+    // if (qty > 0 && qty === remaining && index + 1 <= lastIndex) {
+    //   setTimeout(() => {
+    //     setActiveIndex(index + 1)
+    //   }, 650)
+    // }
     setActiveOption(null)
   }
 
