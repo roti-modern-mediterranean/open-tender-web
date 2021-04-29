@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import propTypes from 'prop-types'
 // import { useHistory } from 'react-router-dom'
 import { slugify } from '@open-tender/js'
 
@@ -82,4 +83,9 @@ const HomeMenuCategory = ({ category, isInverted = false }) => {
 }
 
 HomeMenuCategory.displayName = 'HomeMenuCategory'
+HomeMenuCategory.propTypes = {
+  category: propTypes.object,
+  isInverted: propTypes.bool,
+}
+
 export default HomeMenuCategory

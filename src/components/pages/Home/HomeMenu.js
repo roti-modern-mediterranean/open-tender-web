@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { isBrowser } from 'react-device-detect'
@@ -16,7 +16,6 @@ import { selectConfig } from '../../../slices'
 import { ButtonToggle } from '../../buttons'
 import HomeMenuCategory from './HomeMenuCategory'
 import HomeMenuNav from './HomeMenuNav'
-import { MenuActiveContext } from '../Menu/Menu'
 
 const homeCategories = ['Bowls', 'Salads', 'Pitas']
 
@@ -98,7 +97,6 @@ const HomeMenuCategories = styled('div')`
 const HomeMenu = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const [activeItem, setActiveItem] = useState(null)
   const { home } = useSelector(selectConfig)
   const { orderType } = useSelector(selectOrder)
   const { title, subtitle } = home
@@ -148,22 +146,15 @@ const HomeMenu = () => {
             <ButtonToggle onClick={handleCatering}>Catering</ButtonToggle>
           </HomeMenuButtons>
         </HomeMenuHeader>
-        <MenuActiveContext.Provider
-          value={{
-            activeItem,
-            setActiveItem,
-          }}
-        >
-          <HomeMenuCategories>
-            {filtered.map((category, index) => (
-              <HomeMenuCategory
-                key={category.id}
-                category={category}
-                isInverted={!isBrowser && index % 2 === 0}
-              />
-            ))}
-          </HomeMenuCategories>
-        </MenuActiveContext.Provider>
+        <HomeMenuCategories>
+          {filtered.map((category, index) => (
+            <HomeMenuCategory
+              key={category.id}
+              category={category}
+              isInverted={!isBrowser && index % 2 === 0}
+            />
+          ))}
+        </HomeMenuCategories>
       </Container>
     </HomeMenuView>
   )

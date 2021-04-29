@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { isBrowser } from 'react-device-detect'
-import { Container } from '../..'
-import DownloadApp from './DownloadApp'
+import { Container, DownloadApp } from '../..'
 
 const HomeAppView = styled('div')`
   display: none;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
@@ -6,6 +6,7 @@ import {
   selectAnnouncementsPage,
   fetchAnnouncementPage,
   selectCustomer,
+  selectMenuDisplay,
 } from '@open-tender/redux'
 import { useGeolocation } from '@open-tender/components'
 
@@ -19,16 +20,24 @@ import {
   setGeoLoading,
 } from '../../../slices'
 import { AppContext } from '../../../App'
-import { Content, HeaderDefault, Main, PageHero, PageView } from '../..'
+import {
+  Content,
+  HeaderDefault,
+  LifestyleMeals,
+  Main,
+  PageHero,
+  PageView,
+} from '../..'
 import HomeMenu from '../Home/HomeMenu'
 import HomeJourneys from '../Home/HomeJourneys'
 import HomeRecentOrders from './HomeRecentOrders'
-import HomeLifestyle from './HomeLifestyle'
 import HomeApp from './HomeApp'
+import { MenuActiveContext } from '../Menu/Menu'
 
 const Home = () => {
   const dispatch = useDispatch()
   const { windowRef } = useContext(AppContext)
+  const [activeItem, setActiveItem] = useState(null)
   const { geoLatLng, geoError } = useGeolocation()
   const { auth } = useSelector(selectCustomer)
   const brand = useSelector(selectBrand)
@@ -36,6 +45,7 @@ const Home = () => {
   const { background, mobile, showHero } = home
   const page = auth ? 'ACCOUNT' : 'HOME'
   const announcements = useSelector(selectAnnouncementsPage(page))
+  const { categories } = useSelector(selectMenuDisplay)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -74,10 +84,17 @@ const Home = () => {
               showHero={showHero}
             />
             {auth && <HomeRecentOrders style={{ marginBottom: '0' }} />}
-            <HomeMenu />
-            <HomeApp />
-            <HomeJourneys />
-            <HomeLifestyle />
+            <MenuActiveContext.Provider
+              value={{
+                activeItem,
+                setActiveItem,
+              }}
+            >
+              <HomeMenu />
+              <HomeApp />
+              <HomeJourneys />
+              <LifestyleMeals categories={categories} />
+            </MenuActiveContext.Provider>
           </PageView>
         </Main>
       </Content>

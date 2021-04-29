@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 
-import apple from '../../../assets/download-app-store.png'
-import google from '../../../assets/download-google-play.png'
+import apple from '../assets/download-app-store.png'
+import google from '../assets/download-google-play.png'
 
 const DownloadAppView = styled('div')`
   display: flex;

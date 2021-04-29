@@ -36,6 +36,7 @@ import Curbside from './Curbside'
 import Deals from './Deals'
 import DealsSection from './DealsSection'
 import DealsScrollable from './DealsScrollable'
+import DownloadApp from './DownloadApp'
 import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
 import GiftCard from './GiftCard'
@@ -59,6 +60,7 @@ import Intercom from './Intercom'
 import ItemCards from './ItemCards'
 import ItemsScrollable from './ItemsScrollable'
 import ItemsStacked from './ItemsStacked'
+import LifestyleMeals from './LifestyleMeals'
 import LinkIcon from './LinkIcon'
 import LinkSeparator from './LinkSeparator'
 import Loading from './Loading'
@@ -160,6 +162,7 @@ export {
   Deals,
   DealsSection,
   DealsScrollable,
+  DownloadApp,
   ErrorBoundary,
   Footer,
   GiftCard,
@@ -183,6 +186,7 @@ export {
   ItemCards,
   ItemsScrollable,
   ItemsStacked,
+  LifestyleMeals,
   LinkIcon,
   LinkSeparator,
   Loading,

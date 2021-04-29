@@ -5,7 +5,7 @@ import { selectGroupOrder } from '@open-tender/redux'
 import styled from '@emotion/styled'
 
 import { selectDisplaySettings } from '../../../slices'
-import { NavSticky, PageHero } from '../..'
+import { LifestyleMeals, NavSticky, PageHero } from '../..'
 import { MenuContext } from './Menu'
 import MenuCategories from './MenuCategories'
 import MenuError from './MenuError'
@@ -68,6 +68,7 @@ const MenuContent = () => {
             <NavSticky items={navItems} scrollOffset={heroHeight - 60} />
             {!cartGuest && <MenuDeals deals={deals} />}
             <MenuCategories categories={categories} />
+            <LifestyleMeals categories={categories} isMenu={true} />
           </div>
         </MenuView>
       )}
