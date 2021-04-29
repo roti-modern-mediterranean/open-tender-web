@@ -56,11 +56,12 @@ const Curbside = ({ handlePickup }) => {
           <CurbsidePickup color={color} />
         </CurbsideHeader>
         <CurbsideContent>
-          <PrefaceTitle as="p">Curbside Explanation</PrefaceTitle>
+          <PrefaceTitle as="p">What You Should Know</PrefaceTitle>
           <p>
-            Viverra aliquam sit hendrerit egestas pretium aliquam. Natoque
-            blandit vitae posuere suspendisse eget eget sed pellentesque ut.
-            Tortor placerat vitae arcu id. Vel morbi plavida.
+            Go Curbside - place your order, enter your vehicle info at
+            check-out, and head to the store. Park in a designated spot, hit the
+            link in your confirmation email and we will be out quicker than you
+            can say falafel. Yup, is that easy, safe and on the go!
           </p>
         </CurbsideContent>
         <ButtonGroupBig>
