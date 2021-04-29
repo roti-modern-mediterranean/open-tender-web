@@ -399,7 +399,8 @@ const Builder = ({
     setOptionQuantity,
   } = useBuilder(menuItem, soldOut)
   const ingredientsRef = useRef(null)
-  const [isOpen, setIsOpen] = useState(true)
+  const [visited, setVisited] = useState([])
+  const [isOpen, setIsOpen] = useState(false)
   const [activeGroup, setActiveGroup] = useState(0)
   const [activeOption, setActiveOption] = useState(null)
   const [perRow, setPerRow] = useState(3)
@@ -426,6 +427,7 @@ const Builder = ({
     showAllergens && allergenAlerts && item.allergens.length
       ? item.allergens.filter((allergen) => allergenAlerts.includes(allergen))
       : []
+  console.log(visited)
 
   useEffect(() => {
     const width = getWidth()
@@ -433,9 +435,9 @@ const Builder = ({
     setPerRow(count)
   }, [mobileWidth])
 
-  // useEffect(() => {
-  //   if (isIncomplete || isEdit) setIsOpen(true)
-  // }, [isIncomplete, isEdit])
+  useEffect(() => {
+    if (isIncomplete) setIsOpen(true)
+  }, [isIncomplete])
 
   useEffect(() => {
     if (isOpen && !isBrowser) {
@@ -468,6 +470,8 @@ const Builder = ({
 
   const toggleGroups = (evt, index) => {
     evt.preventDefault()
+    const unique = [...new Set([...visited, activeGroup])]
+    setVisited(unique)
     setActiveGroup(index)
     setActiveOption(null)
   }
@@ -523,9 +527,10 @@ const Builder = ({
                 <BuilderGroupsNav>
                   <div>
                     {groups.map((group, index) => {
-                      const isComplete =
-                        (group.min > 0 && group.quantity >= group.min) ||
-                        (group.max > 0 && group.quantity === group.max)
+                      // const isComplete =
+                      //   (group.min > 0 && group.quantity >= group.min) ||
+                      //   (group.max > 0 && group.quantity === group.max)
+                      const isComplete = visited.includes(index)
                       return (
                         <div key={group.name}>
                           <BuilderGroupsNavButton
