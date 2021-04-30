@@ -7,6 +7,7 @@ import { BackgroundLoading } from '.'
 
 const BackgroundImageView = styled('div')`
   position: relative;
+  display: block;
   flex-grow: 1;
   background-color: ${(props) => props.theme.bgColors.secondary};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -39,7 +40,11 @@ const BackgroundOverlay = styled('div')`
   left: 0;
   right: 0;
   background: ${(props) => props.color || 'rgba(0, 0, 0, 0.3)'};
-  background: linear-gradient(0deg, ${(props) => props.color || 'rgba(0, 0, 0, 0.3)'} 7%, rgba(0,0,0,0) 100%);
+  background: linear-gradient(
+    0deg,
+    ${(props) => props.color || 'rgba(0, 0, 0, 0.3)'} 7%,
+    rgba(0, 0, 0, 0) 100%
+  );
 `
 
 const makeOverlayColor = (color, opacity) => {
@@ -60,6 +65,7 @@ const BackgroundImage = ({
   children,
   background_size,
   slide_color,
+  url,
 }) => {
   const { hasLoaded, hasError } = useImage(imageUrl)
   if (!imageUrl) return null
@@ -68,16 +74,19 @@ const BackgroundImage = ({
   const isLoading = !hasLoaded && !hasError
   // const isLoading = true
   const overlayColor = makeOverlayColor(overlay_color, overlay_opacity)
-  if(slide_color){
+  if (slide_color) {
     style.backgroundColor = slide_color
   }
   return (
-    <BackgroundImageView style={style}>
+    <BackgroundImageView style={style} as={url ? 'a' : 'div'} href={url}>
       {isLoading ? (
         <BackgroundLoading />
       ) : (
         <>
-          <BackgroundImageImage style={bgStyle} backgroundSize={background_size} />
+          <BackgroundImageImage
+            style={bgStyle}
+            backgroundSize={background_size}
+          />
           {show_overlay && <BackgroundOverlay color={overlayColor} />}
         </>
       )}

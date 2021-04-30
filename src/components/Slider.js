@@ -114,6 +114,7 @@ const Slide = styled('div')`
       return `${props.transition}ms ease`
     }};
   opacity: ${(props) => (props.active ? '1' : '0')};
+  visibility: ${(props) => (props.active ? 'visible' : 'hidden')};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: ${(props) => {
       if (props.itemsCount === 1) {
@@ -124,6 +125,7 @@ const Slide = styled('div')`
     height: calc(100% - 3rem);
     border-radius: 0.15rem;
     opacity: 1;
+    visibility: visible;
     padding: 0.5em 0 0.5em 0.5em;
     transform: translate3D(${(props) => props.index * 100}%, 0, 0);
     transition: transform
