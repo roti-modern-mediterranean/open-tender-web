@@ -239,7 +239,7 @@ const SliderNew = ({ settings = {}, slides }) => {
               itemsCount={slides.length}
             >
               <BackgroundImage {...slide}>
-                <BackgroundContent {...slide} />
+                {!slide.hide_text && <BackgroundContent {...slide} />}
               </BackgroundImage>
             </Slide>
           )
