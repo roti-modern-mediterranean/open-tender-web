@@ -769,6 +769,7 @@ const Builder = ({
       </BuilderIngredients>
       <BuilderFooter>
         <CartFooter
+          rightColor={isBrowser ? 'primary' : 'light'}
           label={
             <BuilderItemQuantity
               item={item}

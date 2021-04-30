@@ -6,28 +6,28 @@ const BorderBoxWrapper = styled('div')`
   width: 2.75em;
   height: 2.75em;
   transform: ${(props) => {
-    if(props.position === 'right') {
+    if (props.position === 'right') {
       return 'rotate(180deg)'
     } else {
       return 'rotate(0deg)'
     }
   }};
   top: ${(props) => {
-    if(props.position === 'left') {
+    if (props.position === 'left') {
       return '-2.75em'
     } else {
       return '0'
     }
   }};
   left: ${(props) => {
-    if(props.position === 'left') {
+    if (props.position === 'left') {
       return '0'
     } else {
       return 'auto'
     }
   }};
   right: ${(props) => {
-    if(props.position === 'left') {
+    if (props.position === 'left') {
       return 'auto'
     } else {
       return '0'
@@ -36,7 +36,7 @@ const BorderBoxWrapper = styled('div')`
 
   svg {
     width: 2.75em;
-    height: 2.75em;
+    height: ${(props) => (props.position === 'right' ? '2.77em' : '2.75em')};
     fill: ${(props) => props.color || 'red'};
   }
 `
@@ -45,7 +45,11 @@ const BorderBox = ({ color = null, position = 'left' }) => {
   return (
     <BorderBoxWrapper color={color} position={position}>
       <svg viewBox="0 0 78 78">
-        <path fillRule="evenodd" clipRule="evenodd" d="M78 77.9936C77.6672 77.9979 77.3338 78 77 78C34.4741 78 0 43.5259 0 1C0 0.666166 0.00212445 0.332829 0.00636056 0H0V1V78H77H78V77.9936Z" />
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M78 77.9936C77.6672 77.9979 77.3338 78 77 78C34.4741 78 0 43.5259 0 1C0 0.666166 0.00212445 0.332829 0.00636056 0H0V1V78H77H78V77.9936Z"
+        />
       </svg>
     </BorderBoxWrapper>
   )
@@ -54,7 +58,7 @@ const BorderBox = ({ color = null, position = 'left' }) => {
 BorderBox.displayName = 'BorderBox'
 BorderBox.propTypes = {
   color: propTypes.string,
-  position: propTypes.string
+  position: propTypes.string,
 }
 
 export default BorderBox

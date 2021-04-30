@@ -3,13 +3,17 @@ import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 import { Container } from '.'
+import BorderBox from './BorderBox'
+import { useTheme } from '@emotion/react'
 
 const CartFooterButtonsView = styled('div')`
+  position: relative;
   width: 100%;
   height: 8rem;
+  border-top-right-radius: ${(props) => (props.useBorderRadius ? '4rem' : '0')};
   background-color: ${(props) => props.theme.bgColors.dark};
 
-  & > div {
+  & > div:last-of-type {
     height: 100%;
     display: flex;
     justify-content: space-between;
@@ -48,9 +52,19 @@ const CartFooterButtonsCheckout = styled('div')`
   }
 `
 
-const CartFooterButtons = ({ back, add }) => {
+const CartFooterButtons = ({
+  back,
+  add,
+  color = 'light',
+  useBorderRadius = false,
+}) => {
+  const theme = useTheme()
   return (
-    <CartFooterButtonsView>
+    <CartFooterButtonsView useBorderRadius={useBorderRadius}>
+      <BorderBox color={theme.bgColors.dark} />
+      {!useBorderRadius && (
+        <BorderBox color={theme.bgColors[color]} position="right" />
+      )}
       <Container>
         <CartFooterButtonsBack>{back}</CartFooterButtonsBack>
         <CartFooterButtonsCheckout>{add}</CartFooterButtonsCheckout>

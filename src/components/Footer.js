@@ -1,13 +1,16 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { Facebook, Instagram, Twitter } from 'react-feather'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
+import { contains } from '@open-tender/js'
 import { ButtonStyled, Preface } from '@open-tender/components'
 
 import packageJson from '../../package.json'
 import apple from '../assets/download-app-store.png'
 import google from '../assets/download-google-play.png'
 import { Container } from '.'
+import BorderBox from './BorderBox'
+import { useTheme } from '@emotion/react'
 
 const FooterView = styled('footer')`
   position: relative;
@@ -160,9 +163,14 @@ const FooterVersion = styled('div')`
 
 const Footer = ({ hasRouter = true }) => {
   const history = useHistory()
+  const theme = useTheme()
+  const { pathname } = useLocation()
+  const rightColor = contains(pathname, ['careers']) ? 'secondary' : 'primary'
 
   return hasRouter ? (
     <FooterView role="contentinfo">
+      <BorderBox color={theme.bgColors.dark} />
+      <BorderBox color={theme.bgColors[rightColor]} position="right" />
       <Container>
         <FooterContainer>
           <div>

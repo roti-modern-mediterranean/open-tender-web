@@ -163,6 +163,7 @@ const Sidebar = React.forwardRef((props, ref) => {
           </Container>
         </SidebarCart>
         <CartFooter
+          rightColor="light"
           label={
             cartCount !== 0 && belowMinimum ? (
               <CartAlert>Below {formatDollars(orderMinimum)} minimum</CartAlert>

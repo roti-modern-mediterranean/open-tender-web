@@ -157,6 +157,7 @@ const Builder = React.forwardRef(({ menuItem, soldOut }, ref) => {
         </BuilderGroups>
         <BuilderFooter>
           <CartFooter
+            rightColor="light"
             label={
               <BuilderItemQuantity
                 item={item}

@@ -44,6 +44,8 @@ import { ErrMsg, FormWrapper } from '../../inputs'
 import CheckoutCart from './CheckoutCart'
 import CheckoutPromoCode from './CheckoutPromoCode'
 import CheckoutTenders from './CheckoutTenders'
+import BorderBox from '../../BorderBox'
+import { useTheme } from '@emotion/react'
 
 const CheckoutPaymentFooter = styled('div')`
   // position: fixed;
@@ -51,11 +53,12 @@ const CheckoutPaymentFooter = styled('div')`
   // bottom: 0;
   // left: 0;
   // right: 0;
+  position: relative;
   width: 100%;
   height: 8rem;
   background-color: ${(props) => props.theme.bgColors.dark};
 
-  & > div {
+  & > div:last-of-type {
     height: 100%;
     display: flex;
     justify-content: center;
@@ -91,6 +94,7 @@ const makeDeviceType = (deviceType) => {
 const CheckoutPayment = () => {
   const history = useHistory()
   const dispatch = useDispatch()
+  const theme = useTheme()
   const submitRef = useRef(null)
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
@@ -187,6 +191,8 @@ const CheckoutPayment = () => {
             )}
           </PageContainer>
           <CheckoutPaymentFooter>
+            <BorderBox color={theme.bgColors.dark} />
+            <BorderBox color={theme.bgColors.primary} position="right" />
             <Container>
               <ButtonStyled
                 btnRef={submitRef}

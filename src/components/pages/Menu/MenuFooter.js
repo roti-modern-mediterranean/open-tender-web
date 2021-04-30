@@ -85,6 +85,7 @@ const MenuFooter = () => {
         >
           <MenuFooterView>
             <CartFooterButtons
+              useBorderRadius={true}
               back={
                 <MenuFooterSubtotal>
                   <span>
