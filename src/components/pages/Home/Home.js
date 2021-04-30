@@ -43,7 +43,7 @@ const Home = () => {
   const brand = useSelector(selectBrand)
   const { home } = useSelector(selectConfig)
   const { background, mobile, showHero } = home
-  const page = auth ? 'ACCOUNT' : 'HOME'
+  const page = auth ? 'HOME' : 'HOME'
   const announcements = useSelector(selectAnnouncementsPage(page))
   const { categories } = useSelector(selectMenuDisplay)
 

@@ -65,6 +65,10 @@ const BuilderTitle = styled(Preface)`
   letter-spacing: 0.01em;
 `
 
+const BuilderDescription = styled('p')`
+  margin: 1rem 0 0;
+`
+
 const BuilderGroups = styled('div')`
   width: 100%;
   flex-grow: 1;
@@ -102,7 +106,7 @@ const Builder = React.forwardRef(({ menuItem, soldOut }, ref) => {
     decrementOption,
     setOptionQuantity,
   } = useBuilder(menuItem, soldOut)
-  const { name, groups, notes, madeFor, totalPrice } = item
+  const { name, description, groups, notes, madeFor, totalPrice } = item
   const priceTotal = formatDollars(item.totalPrice)
   const groupsBelowMin = groups.filter((g) => g.quantity < g.min).length > 0
   const isIncomplete =
@@ -133,6 +137,9 @@ const Builder = React.forwardRef(({ menuItem, soldOut }, ref) => {
           <Container>
             <BuilderHeader>
               <BuilderTitle as="p">{name}</BuilderTitle>
+              {description && (
+                <BuilderDescription>{description}</BuilderDescription>
+              )}
             </BuilderHeader>
             {groups.map((group) => (
               <BuilderGroup
