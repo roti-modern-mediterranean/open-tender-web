@@ -58,7 +58,9 @@ const MenuItem = ({ item, category, isInverted }) => {
   const isIncomplete =
     totalPrice === 0 || item.quantity === '' || groupsBelowMin
   const { appearance } = category || {}
+  const isSmall = appearance === 'small'
   const isActive = activeItem === item.id
+  const hideView = isSmall && !isIncomplete
 
   const handleView = (evt) => {
     evt.preventDefault()
@@ -87,14 +89,15 @@ const MenuItem = ({ item, category, isInverted }) => {
     history.push(`/locations`)
   }
 
-  const handleClick = () => {
+  const handleClick = (evt) => {
     if (isSoldOut) return
     if (activeItem === item.id) {
-      viewRef.current.blur()
-      addRef.current && addRef.current.blur()
-      setActiveItem(null)
+      // viewRef.current.blur()
+      // addRef.current && addRef.current.blur()
+      // setActiveItem(null)
+      handleView(evt)
     } else {
-      viewRef.current.focus()
+      hideView ? addRef.current.focus() : viewRef.current.focus()
     }
   }
 
@@ -109,7 +112,7 @@ const MenuItem = ({ item, category, isInverted }) => {
     allergenAlert,
     price,
     cals,
-    viewRef,
+    viewRef: hideView ? null : viewRef,
     addRef,
     handleView,
     handleAdd,
@@ -119,7 +122,7 @@ const MenuItem = ({ item, category, isInverted }) => {
     isActive,
   }
 
-  return appearance === 'small' ? (
+  return isSmall ? (
     <MenuItemSmall ref={container} {...props} />
   ) : (
     <MenuItemDefault ref={container} {...props} />

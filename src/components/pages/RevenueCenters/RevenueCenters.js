@@ -81,6 +81,18 @@ const RevenueCenters = () => {
   const { windowRef } = useContext(AppContext)
   const navTitle = config.title || 'Ready to lunch?'
   const missingAddress = serviceType === 'DELIVERY' && !address
+  const style = isBrowser
+    ? { boxShadow: 'none' }
+    : {
+        boxShadow: 'none',
+        border: '0',
+        background: `linear-gradient(
+    0deg,
+    rgba(212, 219, 228, 0) 0%,
+    rgb(212, 219, 228) 25%,
+    rgb(212, 219, 228) 100%
+  )`,
+      }
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -142,7 +154,7 @@ const RevenueCenters = () => {
         <Header
           bgColor="transparent"
           borderColor="transparent"
-          style={{ boxShadow: 'none' }}
+          style={style}
           title={navTitle}
           left={<Back onClick={back} />}
           right={<Cart showOrder={false} />}
