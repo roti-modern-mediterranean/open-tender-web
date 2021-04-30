@@ -1,13 +1,17 @@
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 // import { useHistory } from 'react-router-dom'
 import { slugify } from '@open-tender/js'
 
+import { selectTheme } from '../../../slices'
 import MenuItem from '../Menu/MenuItem'
+import BorderBox from '../../BorderBox'
 // import { MoreLink } from '../..'
 
 const HomeMenuCategoryView = styled('div')`
   width: 33.33333%;
+  position: relative;
   padding: 0 1.2rem;
   background-color: ${(props) =>
     props.theme.bgColors[props.isInverted ? 'secondary' : 'primary']};
@@ -50,34 +54,46 @@ const HomeMenuCategoryItem = styled('div')`
 //   }
 // `
 
-const HomeMenuCategory = ({ category, isInverted = false }) => {
+const HomeMenuCategory = ({ category, index, isInverted = false }) => {
   // const history = useHistory()
   const items = category.items.slice(0, 3)
+  const theme = useSelector(selectTheme)
   // const isMore = category.items.length > items.length
 
   return (
-    <HomeMenuCategoryView id={slugify(category.name)} isInverted={isInverted}>
-      <div>
-        <HomeMenuCategoryHeader>
-          <h3>{category.name}</h3>
-          <p>{category.description}</p>
-        </HomeMenuCategoryHeader>
-        <div>
-          {items.map((item) => (
-            <HomeMenuCategoryItem key={item.id}>
-              <MenuItem item={item} isInverted={isInverted} />
-            </HomeMenuCategoryItem>
-          ))}
-        </div>
-        {/* {isMore && (
-          <HomeMenuCategoryFooter>
-            <MoreLink
-              onClick={() => history.push('/menu')}
-              text={`View all ${category.name}`}
+    <HomeMenuCategoryView id={slugify(category.name)} isInverted={!isInverted}>
+      <>
+        <BorderBox
+          color={theme.bgColors[index % 2 === 0 ? 'primary' : 'secondary']}
+        />
+        {
+          index > 0 &&
+            <BorderBox
+              color={theme.bgColors[index % 2 === 0 ? 'secondary' : 'primary']} position='right'
             />
-          </HomeMenuCategoryFooter>
-        )} */}
-      </div>
+        }
+        <div>
+          <HomeMenuCategoryHeader>
+            <h3>{category.name}</h3>
+            <p>{category.description}</p>
+          </HomeMenuCategoryHeader>
+          <div>
+            {items.map((item) => (
+              <HomeMenuCategoryItem key={item.id}>
+                <MenuItem item={item} isInverted={isInverted} />
+              </HomeMenuCategoryItem>
+            ))}
+          </div>
+          {/* {isMore && (
+            <HomeMenuCategoryFooter>
+              <MoreLink
+                onClick={() => history.push('/menu')}
+                text={`View all ${category.name}`}
+              />
+            </HomeMenuCategoryFooter>
+          )} */}
+        </div>
+      </>
     </HomeMenuCategoryView>
   )
 }

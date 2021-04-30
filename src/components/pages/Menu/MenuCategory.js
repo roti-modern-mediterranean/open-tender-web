@@ -41,6 +41,12 @@ const MenuCategory = ({ category, isChild, index }) => {
       <BorderBox
         color={theme.bgColors[index % 2 === 0 ? 'primary' : 'secondary']}
       />
+      {
+        index > 0 &&
+          <BorderBox
+            color={theme.bgColors[index % 2 === 0 ? 'secondary' : 'primary']} position='right'
+          />
+      }
       <Container>
         <PageTitle title={category.name} subtitle={category.description}>
           {index === 0 && <MenuAllergenFilter />}
