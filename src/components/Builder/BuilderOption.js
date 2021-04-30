@@ -49,10 +49,10 @@ const BuilderOptionName = styled(Heading)`
 
 const BuilderOptionPrice = styled(Heading)`
   display: block;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: normal;
   text-transform: none;
-  margin: 0.5rem 0 0;
+  margin: 0.3rem 0 0;
   color: ${(props) => props.theme.colors.primary};
 `
 
