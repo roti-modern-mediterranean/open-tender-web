@@ -41,11 +41,16 @@ const CheckoutCartItem = ({ name, quantity, amount, item }) => {
   const { lookup } = orderContext || {}
   const { signature } = item || {}
   const favoriteId = lookup && signature ? lookup[signature] || null : null
+  // item comes from the /order/validate response so it's 'is_size', not 'isSize'
+  const groups = item ? item.groups || [] : []
+  const isSize = groups.length && groups[0].is_size ? true : false
+  const option = isSize ? groups[0].options.find((i) => i.quantity === 1) : null
+  const itemName = option ? option.name : name
 
   return (
     <CheckoutCartItemView>
       <CheckoutCartItemName>
-        {name}
+        {itemName}
         {signature && (
           <Favorite
             item={item}

@@ -72,9 +72,13 @@ const CartItemEditButton = styled('button')`
 
 const CartItem = ({ item, editItem, children }) => {
   const price = formatDollars(item.totalPrice)
+  const groups = item ? item.groups || [] : []
+  const isSize = groups.length && groups[0].isSize ? true : false
+  const option = isSize ? groups[0].options.find((i) => i.quantity === 1) : null
+  const name = option ? option.name : item.name
   return (
     <CartItemView>
-      <CartItemName>{item.name}</CartItemName>
+      <CartItemName>{name}</CartItemName>
       <CartItemQuantity>{children}</CartItemQuantity>
       <CartItemPrice>{price}</CartItemPrice>
       <CartItemEdit>
