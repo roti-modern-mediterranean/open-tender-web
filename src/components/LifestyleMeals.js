@@ -5,8 +5,11 @@ import { contains } from '@open-tender/js'
 
 import { Container, DownloadApp } from '.'
 import MenuItem from './pages/Menu/MenuItem'
+import BorderBox from './BorderBox'
+import { useTheme } from '@emotion/react'
 
 const LifestyleMealsView = styled('div')`
+  position: relative;
   background-color: ${(props) => props.theme.bgColors.primary};
   padding: 7rem 0;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
@@ -24,6 +27,7 @@ const LifestyleMealsContainer = styled('div')`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    width: 100%;
   }
 `
 
@@ -70,6 +74,7 @@ const LifestyleMealsMeals = styled('div')`
   flex-grow: 1;
   margin: 0 3rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    width: 100%;
     margin: 0;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -82,8 +87,12 @@ const LifestyleMealsMealsItems = styled('div')`
   justify-content: flex-start;
   flex-wrap: wrap;
   margin: 0 -1.2rem;
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    justify-content: center;
+  }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     overflow-x: scroll;
+    justify-content: flex-start;
     flex-wrap: nowrap;
     margin: -2rem -${(props) => props.theme.layout.paddingMobile} 0;
     padding: 2rem 3rem;
@@ -125,6 +134,7 @@ const homeCategories = ['Bowls', 'Salads', 'Pitas']
 const homeTags = ['keto', 'vegan', 'vegetarian']
 
 const LifestyleMeals = ({ categories, isMenu }) => {
+  const theme = useTheme()
   const filtered = categories
     .filter((i) => homeCategories.includes(i.name))
     .reduce((arr, i) => [...arr, ...i.items], [])
@@ -135,6 +145,8 @@ const LifestyleMeals = ({ categories, isMenu }) => {
 
   return (
     <LifestyleMealsView hasMeals={hasMeals}>
+      <BorderBox color={theme.bgColors.primary} />
+      <BorderBox color={theme.bgColors.secondary} position="right" />
       <Container>
         <LifestyleMealsContainer>
           {hasMeals && (

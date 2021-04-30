@@ -4,8 +4,11 @@ import { ButtonStyled } from '@open-tender/components'
 import { useHistory } from 'react-router-dom'
 
 import { Container } from '../..'
+import BorderBox from '../../BorderBox'
+import { useTheme } from '@emotion/react'
 
 const HomeJourneysView = styled('div')`
+  position: relative;
   background-color: ${(props) => props.theme.bgColors.secondary};
   padding: ${(props) => props.theme.layout.margin} 0;
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
@@ -118,6 +121,7 @@ HomeJourney.propTypes = {
 
 const HomeJourneys = () => {
   const history = useHistory()
+  const theme = useTheme()
 
   const journeys = [
     {
@@ -160,7 +164,8 @@ const HomeJourneys = () => {
     // },
     {
       title: 'Curbside Pickup',
-      subtitle: 'Get all your favorites from the safety and convenience of your own car',
+      subtitle:
+        'Get all your favorites from the safety and convenience of your own car',
       footer: (
         <ButtonStyled onClick={() => history.push('/locations')} size="big">
           Order Now
@@ -171,6 +176,8 @@ const HomeJourneys = () => {
 
   return (
     <HomeJourneysView>
+      <BorderBox color={theme.bgColors.secondary} />
+      <BorderBox color={theme.bgColors.primary} position="right" />
       <Container>
         <HomeJourneysItems>
           {journeys.map((journey) => (

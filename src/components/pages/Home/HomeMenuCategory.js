@@ -7,6 +7,7 @@ import { slugify } from '@open-tender/js'
 import { selectTheme } from '../../../slices'
 import MenuItem from '../Menu/MenuItem'
 import BorderBox from '../../BorderBox'
+import { isBrowser } from 'react-device-detect'
 // import { MoreLink } from '../..'
 
 const HomeMenuCategoryView = styled('div')`
@@ -61,17 +62,19 @@ const HomeMenuCategory = ({ category, index, isInverted = false }) => {
   // const isMore = category.items.length > items.length
 
   return (
-    <HomeMenuCategoryView id={slugify(category.name)} isInverted={!isInverted}>
+    <HomeMenuCategoryView id={slugify(category.name)} isInverted={isInverted}>
       <>
-        <BorderBox
-          color={theme.bgColors[index % 2 === 0 ? 'primary' : 'secondary']}
-        />
-        {
-          index > 0 &&
+        {!isBrowser && (
+          <>
             <BorderBox
-              color={theme.bgColors[index % 2 === 0 ? 'secondary' : 'primary']} position='right'
+              color={theme.bgColors[index % 2 === 0 ? 'secondary' : 'primary']}
             />
-        }
+            <BorderBox
+              color={theme.bgColors[index % 2 === 0 ? 'primary' : 'secondary']}
+              position="right"
+            />
+          </>
+        )}
         <div>
           <HomeMenuCategoryHeader>
             <h3>{category.name}</h3>

@@ -152,7 +152,7 @@ const HomeMenu = () => {
               key={category.id}
               category={category}
               index={index}
-              isInverted={ index % 2 === 0}
+              isInverted={!isBrowser && index % 2 === 0}
             />
           ))}
         </HomeMenuCategories>
