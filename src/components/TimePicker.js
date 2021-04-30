@@ -59,13 +59,17 @@ const TimePickerSelect = styled('div')`
     transition: all 0.15s ease;
   }
 
-  span:first-of-type {
+  & > button:first-of-type {
     margin: 0 0 0.5rem;
   }
 
-  span:last-of-type {
+  & > button:last-of-type {
     margin: 0.5rem 0 0;
   }
+`
+
+const TimePickerSelectButton = styled('button')`
+  display: block;
 `
 
 const TimePickerConfirm = styled('div')`
@@ -207,6 +211,7 @@ const TimePicker = ({
     () => makeTimeIntervals(date, minTime, maxTime, interval, excludeTimes),
     [date, minTime, maxTime, interval, excludeTimes]
   )
+  const lastIndex = intervals ? intervals.length - 1 : 0
   const parent = scrollRef.current
 
   const handleClose = (evt) => {
@@ -281,7 +286,12 @@ const TimePicker = ({
                 <TimePickerLabelText>{dateStr}</TimePickerLabelText>
               </TimePickerLabel>
               <TimePickerSelect>
-                <TriangleUp color={!showTop ? theme.colors.light : null} />
+                <TimePickerSelectButton
+                  onClick={() => setActive(Math.max(active - 1, 0))}
+                  disabled={!showTop}
+                >
+                  <TriangleUp color={!showTop ? theme.colors.light : null} />
+                </TimePickerSelectButton>
                 <TimePickerTimes ref={scrollRef}>
                   {intervals.map((t, index) => (
                     <TimePickerTime
@@ -291,7 +301,14 @@ const TimePicker = ({
                     />
                   ))}
                 </TimePickerTimes>
-                <TriangleDown />
+                <TimePickerSelectButton
+                  onClick={() => setActive(Math.min(active + 1, lastIndex))}
+                  disabled={active === lastIndex}
+                >
+                  <TriangleDown
+                    color={active === lastIndex ? theme.colors.light : null}
+                  />
+                </TimePickerSelectButton>
               </TimePickerSelect>
               <TimePickerConfirm>
                 <TimePickerButton
