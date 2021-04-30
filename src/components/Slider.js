@@ -1,11 +1,10 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { useSwipeable } from 'react-swipeable'
 import iconMap from './iconMap'
 import { isBrowser } from 'react-device-detect'
 import { BackgroundContent, BackgroundImage } from '.'
-
-import { useTouchableObject, TouchDirection, TouchEvents } from './SliderEvents'
 
 const ArrowView = styled('div')`
   position: absolute;
@@ -88,24 +87,15 @@ const SliderWrapper = styled('div')`
   height: 100%;
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    transition: transform ${(props) => props.transition}ms ease;
     transform: translate3D(
-      ${(props) => {
-        if (props.moveX) {
-          return `${props.moveX * -1}px`
-        }
-        return props.index > 0 ? `calc(${props.index * -80}% + 4em)` : 0
-      }},
+      ${(props) =>
+        props.index === props.lastIndex
+          ? `calc(${props.index * -80}% + 4em)`
+          : `${props.index * -80}%`},
       0,
       0
     );
-    transition: transform
-      ${(props) => {
-        if (!props.moveX) {
-          return `${props.transition}ms ease`
-        } else {
-          return 'all 0s ease 0s'
-        }
-      }};
   }
 `
 
@@ -126,10 +116,10 @@ const Slide = styled('div')`
   opacity: ${(props) => (props.active ? '1' : '0')};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     width: ${(props) => {
-      if(props.itemsCount === 1){
-        return 'calc(100% - 1.5em)';
+      if (props.itemsCount === 1) {
+        return 'calc(100% - 1.5em)'
       }
-      return '80%';
+      return '80%'
     }};
     height: calc(100% - 3rem);
     border-radius: 0.15rem;
@@ -159,10 +149,7 @@ const SliderNew = ({ settings = {}, slides }) => {
   const timer = useRef(null)
   const slider = useRef()
   const [pause, setPause] = useState(false)
-  const [isDragging, setIsDragging] = useState(false)
-  const [dragDirection, setDirection] = useState(null)
   const [index, setIndex] = useState(0)
-  const [touchMove, setTouchMove] = useState(null)
   const {
     autoplay: autoplayDesktop,
     transition,
@@ -179,60 +166,23 @@ const SliderNew = ({ settings = {}, slides }) => {
   const interval = isBrowser ? duration : duration_mobile
   const showDots = isBrowser ? show_dots : show_dots_mobile
   const count = slides.length
+  const lastIndex = count - 1
   const sliderWrapper = useRef()
   // const showArrows = isBrowser ? show_arrows : show_arrows_mobile
-  // const size = isBrowser ? '3rem' : '2rem'
-  // const last = count - 1
 
-  const onTouch = useCallback((direction, move, _, position, eventName) => {
-    const mainWrapper = document.querySelector('.main-page-wrapper')
-    if (eventName !== TouchEvents.end) {
-      if (direction && move) {
-        if (
-          direction === TouchDirection.right ||
-          direction === TouchDirection.left
-        ) {
-          setDirection(direction)
-          if(mainWrapper){
-            mainWrapper.style.overflow = 'hidden'
-          }
-          setTouchMove(position.left * -1 + move)
-          setIsDragging(true)
-        }
-      }
-    } else {
-      if(mainWrapper){
-        mainWrapper.style.overflow = 'auto'
-      }
-      if(isDragging){
-        setIsDragging(false)
-        const wrapper = sliderWrapper.current
-        const offsetLeft = wrapper.getBoundingClientRect().x
-        if (offsetLeft > 0) {
-          setTouchMove(0)
-        } else {
-          const slides = wrapper.querySelectorAll(':scope > div')
-          let currentIndex = index
-          slides.forEach((slide, index) => {
-            if(dragDirection === TouchDirection.left) {
-              if (Math.abs(slide.getBoundingClientRect().left) <= (document.body.clientWidth - 50)) {
-                currentIndex = index
-              }
-            } else if (dragDirection === TouchDirection.right){
-              if (slide.getBoundingClientRect().left < -50) {
-                currentIndex = index
-              }
-            }
-          })
-          setTouchMove(null)
-          setIndex(currentIndex)
-        }
-      }
-      
-    }
-  }, [index, isDragging, dragDirection])
+  const config = {
+    delta: 10,
+    preventDefaultTouchmoveEvent: true,
+    trackTouch: true,
+    trackMouse: false,
+    rotationAngle: 0,
+  }
 
-  const touchProps = useTouchableObject(onTouch, sliderWrapper)
+  const handlers = useSwipeable({
+    onSwipedLeft: () => setIndex(Math.min(index + 1, lastIndex)),
+    onSwipedRight: () => setIndex(Math.max(index - 1, 0)),
+    ...config,
+  })
 
   useEffect(() => {
     if (autoplay) {
@@ -263,7 +213,6 @@ const SliderNew = ({ settings = {}, slides }) => {
     evt.preventDefault()
     evt.target.blur()
     if (idx >= 0 && idx <= count - 1) {
-      setTouchMove(null)
       setIndex(idx)
     }
   }
@@ -273,9 +222,9 @@ const SliderNew = ({ settings = {}, slides }) => {
       <SliderWrapper
         ref={sliderWrapper}
         index={index}
-        moveX={touchMove}
+        lastIndex={lastIndex}
         transition={transitionSpeed}
-        {...touchProps}
+        {...handlers}
       >
         {slides.map((slide, idx) => {
           const shift = idx
