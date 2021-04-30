@@ -26,7 +26,7 @@ const TimePickerContainer = styled('div')`
 
 const TimePickerView = styled('div')`
   width: 100%;
-  padding: 1.5rem 1rem 1.5rem;
+  padding: 1rem 1rem 1rem;
   border-radius: 1.4rem;
   background-color: ${(props) => props.theme.colors.light};
   display: flex;
@@ -59,17 +59,18 @@ const TimePickerSelect = styled('div')`
     transition: all 0.15s ease;
   }
 
-  & > button:first-of-type {
-    margin: 0 0 0.5rem;
-  }
+  // & > button:first-of-type {
+  //   margin: 0 0 0.5rem;
+  // }
 
-  & > button:last-of-type {
-    margin: 0.5rem 0 0;
-  }
+  // & > button:last-of-type {
+  //   margin: 0.5rem 0 0;
+  // }
 `
 
 const TimePickerSelectButton = styled('button')`
   display: block;
+  padding: 0.5rem 1.5rem;
 `
 
 const TimePickerConfirm = styled('div')`
