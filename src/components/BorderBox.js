@@ -14,9 +14,9 @@ const BorderBoxWrapper = styled('div')`
   }};
   top: ${(props) => {
     if (props.position === 'left') {
-      return '-2.75em'
+      return '-2.73em'
     } else {
-      return '0'
+      return '-0.02em'
     }
   }};
   left: ${(props) => {
@@ -36,7 +36,7 @@ const BorderBoxWrapper = styled('div')`
 
   svg {
     width: 2.75em;
-    height: ${(props) => (props.position === 'right' ? '2.77em' : '2.75em')};
+    height: ${(props) => (props.position === 'right' ? '2.77em' : '2.77em')};
     fill: ${(props) => props.color || 'red'};
   }
 `

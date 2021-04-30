@@ -142,11 +142,12 @@ const LifestyleMeals = ({ categories, isMenu }) => {
     .filter((i) => contains(i.tagsArr, homeTags))
     .slice(0, 5)
   const hasMeals = filtered.length > 0
+  const color = isMenu && categories.length % 2 !== 0 ? 'primary' : 'secondary'
 
   return (
     <LifestyleMealsView hasMeals={hasMeals}>
       <BorderBox color={theme.bgColors.primary} />
-      <BorderBox color={theme.bgColors.secondary} position="right" />
+      <BorderBox color={theme.bgColors[color]} position="right" />
       <Container>
         <LifestyleMealsContainer>
           {hasMeals && (
