@@ -37,14 +37,14 @@ const CheckoutLoginView = styled('div')`
   }
 `
 
-const ForgotPassword = styled('button')`
-  display: inline-block;
-  padding: 0.5rem;
-  margin: 1rem 0 0;
-  color: ${(props) => props.theme.colors.primary};
-  font-weight: 600;
-  font-size: 1.3rem;
-`
+// const ForgotPassword = styled('button')`
+//   display: inline-block;
+//   padding: 0.5rem;
+//   margin: 1rem 0 0;
+//   color: ${(props) => props.theme.colors.primary};
+//   font-weight: 600;
+//   font-size: 1.3rem;
+// `
 
 const CheckoutLogin = () => {
   const history = useHistory()
@@ -107,24 +107,22 @@ const CheckoutLogin = () => {
                 <p>Already a member? This will speed things up.</p>
               </FormHeader>
               <CheckoutLoginView>
-                <LoginForm
-                  loading={loading}
-                  error={error}
-                  login={login}
-                  forgotPassword={
-                    <ForgotPassword onClick={forgotPassword}>
-                      Forgot password?
-                    </ForgotPassword>
-                  }
-                />
+                <LoginForm loading={loading} error={error} login={login} />
+                {/* <ForgotPassword onClick={forgotPassword}>
+                  Forgot password?
+                </ForgotPassword> */}
               </CheckoutLoginView>
               <FormFooter>
                 <p style={{ margin: '2rem 0' }}>
+                  Forget password?{' '}
+                  <ButtonLink onClick={forgotPassword}>
+                    Reset it here.
+                  </ButtonLink>{' '}
                   Don't have an account yet?{' '}
                   <ButtonLink
                     onClick={() => history.push('/checkout/register')}
                   >
-                    Register here
+                    Register here.
                   </ButtonLink>
                 </p>
               </FormFooter>

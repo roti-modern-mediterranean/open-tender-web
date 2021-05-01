@@ -82,7 +82,7 @@ const CheckoutPromoCode = () => {
         submitting={submitting}
         disabled={promoCode === ''}
       >
-        {applied ? 'Rmove' : 'Apply'}
+        {applied ? 'Remove' : 'Apply'}
       </ButtonSubmit>
     </CheckoutPromoCodeView>
   )
