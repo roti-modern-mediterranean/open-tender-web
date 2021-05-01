@@ -226,9 +226,7 @@ const SliderNew = ({ settings = {}, slides }) => {
   return (
     <SliderView ref={slider}>
       <>
-        <BorderBox
-          color={theme.bgColors['primary']}
-          bottom />
+        {isBrowser && <BorderBox color={theme.bgColors['primary']} bottom />}
         <SliderWrapper
           ref={sliderWrapper}
           index={index}

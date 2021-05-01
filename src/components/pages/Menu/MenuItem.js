@@ -60,7 +60,7 @@ const MenuItem = ({ item, category, isInverted }) => {
   const { appearance } = category || {}
   const isSmall = appearance === 'small'
   const isActive = activeItem === item.id
-  const hideView = isSmall && !isIncomplete
+  const hideView = isSmall && !isIncomplete && menuConfig
 
   const handleView = (evt) => {
     evt.preventDefault()
@@ -92,10 +92,13 @@ const MenuItem = ({ item, category, isInverted }) => {
   const handleClick = (evt) => {
     if (isSoldOut) return
     if (activeItem === item.id) {
-      // viewRef.current.blur()
-      // addRef.current && addRef.current.blur()
-      // setActiveItem(null)
-      handleView(evt)
+      if (menuConfig) {
+        handleView(evt)
+      } else {
+        viewRef.current && viewRef.current.blur()
+        addRef.current && addRef.current.blur()
+        setActiveItem(null)
+      }
     } else {
       hideView ? addRef.current.focus() : viewRef.current.focus()
     }
