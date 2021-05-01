@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { Facebook, Instagram, Twitter } from 'react-feather'
-import { Link, useHistory, useLocation } from 'react-router-dom'
-import { contains } from '@open-tender/js'
+import { Link, useHistory } from 'react-router-dom'
+// import { contains } from '@open-tender/js'
 import { ButtonStyled, Preface } from '@open-tender/components'
 
 import packageJson from '../../package.json'
@@ -164,8 +164,9 @@ const FooterVersion = styled('div')`
 const Footer = ({ hasRouter = true }) => {
   const history = useHistory()
   const theme = useTheme()
-  const { pathname } = useLocation()
-  const rightColor = contains(pathname, ['careers']) ? 'secondary' : 'primary'
+  // const { pathname } = useLocation()
+  // const rightColor = contains(pathname, ['careers']) ? 'secondary' : 'primary'
+  const rightColor = 'primary'
 
   return hasRouter ? (
     <FooterView role="contentinfo">
