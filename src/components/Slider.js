@@ -1,10 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react'
 import propTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 import styled from '@emotion/styled'
 import { useSwipeable } from 'react-swipeable'
 import iconMap from './iconMap'
 import { isBrowser } from 'react-device-detect'
 import { BackgroundContent, BackgroundImage } from '.'
+import BorderBox from '../components/BorderBox'
+import { selectTheme } from '../slices'
 
 const ArrowView = styled('div')`
   position: absolute;
@@ -170,6 +173,7 @@ const SliderNew = ({ settings = {}, slides }) => {
   const count = slides.length
   const lastIndex = count - 1
   const sliderWrapper = useRef()
+  const theme = useSelector(selectTheme)
   // const showArrows = isBrowser ? show_arrows : show_arrows_mobile
 
   const config = {
@@ -221,32 +225,37 @@ const SliderNew = ({ settings = {}, slides }) => {
 
   return (
     <SliderView ref={slider}>
-      <SliderWrapper
-        ref={sliderWrapper}
-        index={index}
-        lastIndex={lastIndex}
-        transition={transitionSpeed}
-        {...handlers}
-      >
-        {slides.map((slide, idx) => {
-          const shift = idx
-          const active = idx === index
-          return (
-            <Slide
-              key={slide.imageUrl}
-              transition={transitionSpeed}
-              index={idx}
-              shift={shift}
-              active={active}
-              itemsCount={slides.length}
-            >
-              <BackgroundImage {...slide}>
-                {!slide.hide_text && <BackgroundContent {...slide} />}
-              </BackgroundImage>
-            </Slide>
-          )
-        })}
-      </SliderWrapper>
+      <>
+        <BorderBox
+          color={theme.bgColors['primary']}
+          bottom />
+        <SliderWrapper
+          ref={sliderWrapper}
+          index={index}
+          lastIndex={lastIndex}
+          transition={transitionSpeed}
+          {...handlers}
+        >
+          {slides.map((slide, idx) => {
+            const shift = idx
+            const active = idx === index
+            return (
+              <Slide
+                key={slide.imageUrl}
+                transition={transitionSpeed}
+                index={idx}
+                shift={shift}
+                active={active}
+                itemsCount={slides.length}
+              >
+                <BackgroundImage {...slide}>
+                  {!slide.hide_text && <BackgroundContent {...slide} />}
+                </BackgroundImage>
+              </Slide>
+            )
+          })}
+        </SliderWrapper>
+      </>
       {/* {showArrows && (
         <>
           <Arrow

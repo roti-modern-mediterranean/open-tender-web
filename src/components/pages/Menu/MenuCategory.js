@@ -38,14 +38,16 @@ const MenuCategory = ({ category, isChild, index }) => {
   const theme = useSelector(selectTheme)
   return (
     <MenuCategoryView isChild={isChild} index={index}>
-      <BorderBox
-        color={theme.bgColors[index % 2 === 0 ? 'primary' : 'secondary']}
-      />
       {
         index > 0 &&
-          <BorderBox
-            color={theme.bgColors[index % 2 === 0 ? 'secondary' : 'primary']} position='right'
-          />
+          <>
+            <BorderBox
+              color={theme.bgColors[index % 2 === 0 ? 'primary' : 'secondary']}
+            />
+            <BorderBox
+              color={theme.bgColors[index % 2 === 0 ? 'secondary' : 'primary']} position='right'
+            />
+          </>
       }
       <Container>
         <PageTitle title={category.name} subtitle={category.description}>

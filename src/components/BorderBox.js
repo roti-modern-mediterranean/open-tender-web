@@ -12,7 +12,16 @@ const BorderBoxWrapper = styled('div')`
       return 'rotate(0deg)'
     }
   }};
+  bottom: ${(props) => {
+    if(props.bottom){
+      return '2.73em'
+    }
+    return 'auto'
+  }};
   top: ${(props) => {
+    if(props.bottom){
+      return 'auto'
+    }
     if (props.position === 'left') {
       return '-2.73em'
     } else {
@@ -33,6 +42,7 @@ const BorderBoxWrapper = styled('div')`
       return '0'
     }
   }};
+  z-index: 1;
 
   svg {
     width: 2.75em;
@@ -41,9 +51,9 @@ const BorderBoxWrapper = styled('div')`
   }
 `
 
-const BorderBox = ({ color = null, position = 'left' }) => {
+const BorderBox = ({ color = null, position = 'left', bottom = false }) => {
   return (
-    <BorderBoxWrapper color={color} position={position}>
+    <BorderBoxWrapper color={color} position={position} bottom={bottom}>
       <svg viewBox="0 0 78 78">
         <path
           fillRule="evenodd"
@@ -59,6 +69,7 @@ BorderBox.displayName = 'BorderBox'
 BorderBox.propTypes = {
   color: propTypes.string,
   position: propTypes.string,
+  bottom: propTypes.bool
 }
 
 export default BorderBox
