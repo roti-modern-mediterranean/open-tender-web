@@ -102,9 +102,11 @@ const CheckoutContact = ({ errors = {} }) => {
     : fields
   const formErrors = convertErrors(errors)
   const emptyCustomer = !form.customer || isEmpty(form.customer)
+  const replaceGuest =
+    !emptyCustomer && !form.customer.customer_id && customer_id
 
   useEffect(() => {
-    if (emptyCustomer && first_name) {
+    if ((emptyCustomer && first_name) || replaceGuest) {
       const customer = {
         customer_id,
         first_name,
@@ -119,6 +121,7 @@ const CheckoutContact = ({ errors = {} }) => {
   }, [
     dispatch,
     emptyCustomer,
+    replaceGuest,
     customer_id,
     first_name,
     last_name,
@@ -163,14 +166,23 @@ const CheckoutContact = ({ errors = {} }) => {
     history.push('/profile')
   }
 
+  const login = () => {
+    history.push('/checkout/login')
+  }
+
   return (
     <CheckoutContactView>
       <FormHeader>
         <h2>Contact Info</h2>
-        {profile && (
+        {profile ? (
           <p>
             <InlineLink onClick={logout}>Logout</InlineLink> or{' '}
             <InlineLink onClick={update}>update your contact info</InlineLink>.
+          </p>
+        ) : (
+          <p>
+            Already have an account?{' '}
+            <InlineLink onClick={login}>Login here</InlineLink>
           </p>
         )}
       </FormHeader>

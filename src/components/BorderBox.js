@@ -14,7 +14,7 @@ const BorderBoxWrapper = styled('div')`
   }};
   bottom: ${(props) => {
     if (props.bottom) {
-      return '2.73em'
+      return '2.97em'
     }
     return 'auto'
   }};
