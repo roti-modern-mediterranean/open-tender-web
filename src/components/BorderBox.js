@@ -13,13 +13,13 @@ const BorderBoxWrapper = styled('div')`
     }
   }};
   bottom: ${(props) => {
-    if(props.bottom){
+    if (props.bottom) {
       return '2.73em'
     }
     return 'auto'
   }};
   top: ${(props) => {
-    if(props.bottom){
+    if (props.bottom) {
       return 'auto'
     }
     if (props.position === 'left') {
@@ -42,7 +42,7 @@ const BorderBoxWrapper = styled('div')`
       return '0'
     }
   }};
-  z-index: 1;
+  z-index: 10;
 
   svg {
     width: 2.75em;
@@ -69,7 +69,7 @@ BorderBox.displayName = 'BorderBox'
 BorderBox.propTypes = {
   color: propTypes.string,
   position: propTypes.string,
-  bottom: propTypes.bool
+  bottom: propTypes.bool,
 }
 
 export default BorderBox
