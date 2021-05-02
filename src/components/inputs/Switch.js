@@ -15,7 +15,7 @@ const SwitchLabel = styled('label')`
 const SwitchText = styled('span')`
   display: block;
   padding: 0 0 0.2rem;
-  color: ${(props) => props.theme.colors[props.on ? 'primary' : 'switch']};
+  color: ${(props) => props.theme.colors[props.checked ? 'primary' : 'switch']};
   opacity: ${(props) => (props.disabled ? '0.5' : '1.0')};
 `
 
@@ -90,7 +90,7 @@ const SwitchToggle = styled('span')`
 const Switch = ({ label, name, value, onChange, disabled = false }) => {
   return (
     <SwitchLabel htmlFor={name}>
-      <SwitchText on={value} disabled={disabled}>
+      <SwitchText checked={value} disabled={disabled}>
         {label}
       </SwitchText>
       <SwitchView>

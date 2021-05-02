@@ -115,6 +115,7 @@ const Curbside = ({ fields, data, errors = {}, handleChange }) => {
       )}
       {inputFields.map((field) => (
         <Input
+          key={field.name}
           icon={iconMap[field.name]}
           label={field.label}
           name={field.name}

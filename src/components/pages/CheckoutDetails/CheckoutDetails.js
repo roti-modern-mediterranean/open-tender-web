@@ -94,6 +94,24 @@ const makeOrderTypeName = (order, outpostName) => {
   return `${isCurbside ? 'Curbside ' : ''}${serviceTypeName}`
 }
 
+const validateCustomer = (customer) => {
+  const errors = {}
+  const { first_name, last_name, email, phone } = customer
+  if (!first_name) {
+    errors['$.customer.first_name'] = { message: 'Please enter a first name' }
+  }
+  if (!last_name) {
+    errors['$.customer.last_name'] = { message: 'Please enter a last name' }
+  }
+  if (!email) {
+    errors['$.customer.email'] = { message: 'Please enter an email address' }
+  }
+  if (!phone) {
+    errors['$.customer.phone'] = { message: 'Please enter a phone number' }
+  }
+  return isEmpty(errors) ? null : errors
+}
+
 const CheckoutDetails = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -155,16 +173,26 @@ const CheckoutDetails = () => {
   // }
 
   const handleSubmit = () => {
-    const fullAddress = { ...address, ...form.address }
-    const data = {
-      address: isEmpty(fullAddress) ? null : fullAddress,
-      customer: form.customer,
-      details: form.details,
+    // this is necessary so that missing customer data does not
+    // result in a validation error at the OpenAPI spec level
+    // all errors on this page should come from checkout.check.errors
+    // and not checkout.errors
+    const customerErrors = validateCustomer(form.customer)
+    if (customerErrors) {
+      setErrors(customerErrors)
+      windowRef.current.scrollTop = 0
+    } else {
+      const fullAddress = { ...address, ...form.address }
+      const data = {
+        address: isEmpty(fullAddress) ? null : fullAddress,
+        customer: form.customer,
+        details: form.details,
+      }
+      const order = prepareOrder({ ...cartValidate, ...data })
+      dispatch(validateOrder(order))
+      setDetails(data)
+      submitRef.current.blur()
     }
-    const order = prepareOrder({ ...cartValidate, ...data })
-    dispatch(validateOrder(order))
-    setDetails(data)
-    submitRef.current.blur()
   }
 
   return (
