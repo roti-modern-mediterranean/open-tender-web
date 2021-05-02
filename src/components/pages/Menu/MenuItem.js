@@ -92,7 +92,7 @@ const MenuItem = ({ item, category, isInverted }) => {
   const handleClick = (evt) => {
     if (isSoldOut) return
     if (activeItem === item.id) {
-      if (menuConfig) {
+      if (menuConfig && !isSmall) {
         handleView(evt)
       } else {
         viewRef.current && viewRef.current.blur()

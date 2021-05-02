@@ -78,6 +78,8 @@ const Curbside = ({ fields, data, errors = {}, handleChange }) => {
   useEffect(() => {
     if (!vehicleType && data.vehicle_type) {
       setVehicleType(data.vehicle_type)
+    } else if (data.vehicle_type === undefined) {
+      setVehicleType(null)
     }
   }, [vehicleType, data.vehicle_type])
 

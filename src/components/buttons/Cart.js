@@ -8,6 +8,7 @@ import {
   selectCartQuantity,
   selectOrder,
   setOrderServiceType,
+  // selectMenuSlug,
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
 
@@ -34,6 +35,7 @@ const Cart = ({ text = 'Order Now', showOrder = true }) => {
   const history = useHistory()
   const [className, setClassName] = useState('')
   const { orderType, serviceType } = useSelector(selectOrder)
+  // const menuSlug = useSelector(selectMenuSlug)
   const canOrder = useSelector(selectCanOrder)
   const cartQuantity = useSelector(selectCartQuantity)
   const icon =

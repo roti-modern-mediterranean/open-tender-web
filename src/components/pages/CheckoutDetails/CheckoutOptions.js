@@ -64,6 +64,9 @@ const CheckoutOptions = ({ errors = {} }) => {
     eating_utensils,
     serving_utensils,
     notes,
+    order_fulfillment,
+    vehicle_type,
+    vehicle_color,
   } = checkDetails
   const [details, setDetails] = useState(form.details)
   const config = check ? check.config : {}
@@ -79,12 +82,15 @@ const CheckoutOptions = ({ errors = {} }) => {
 
   useEffect(() => {
     if (emptyDetails && eating_utensils !== undefined) {
-      const details = {
+      let details = {
         person_count,
         tax_exempt_id,
         eating_utensils,
         serving_utensils,
         notes,
+      }
+      if (order_fulfillment !== undefined) {
+        details = { ...details, order_fulfillment, vehicle_type, vehicle_color }
       }
       setDetails(details)
       dispatch(updateForm({ details }))
@@ -97,6 +103,9 @@ const CheckoutOptions = ({ errors = {} }) => {
     eating_utensils,
     serving_utensils,
     notes,
+    order_fulfillment,
+    vehicle_type,
+    vehicle_color,
   ])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

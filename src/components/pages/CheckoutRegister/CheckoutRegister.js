@@ -10,6 +10,7 @@ import {
   selectCartValidate,
   selectCheckout,
   validateOrder,
+  resetSignUp,
 } from '@open-tender/redux'
 import { ButtonLink, ButtonStyled, useCheckout } from '@open-tender/components'
 
@@ -59,7 +60,7 @@ const CheckoutRegister = () => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
     // dispatch(resetSignUp())
-    // return () => dispatch(resetSignUp())
+    return () => dispatch(resetSignUp())
   }, [windowRef, dispatch])
 
   useEffect(() => {
