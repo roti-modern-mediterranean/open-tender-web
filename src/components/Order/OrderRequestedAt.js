@@ -19,7 +19,7 @@ const OrderRequestedAt = ({
   }
   return is_asap && status === 'OPEN' ? (
     <>
-      <p>ASAP</p>
+      {/* <p>ASAP</p> */}
       <p>
         {estimatedAt} {msg}
       </p>

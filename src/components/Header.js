@@ -13,7 +13,7 @@ const HeaderView = styled('div')`
   right: 0;
   width: 100%;
   max-width: ${(props) => props.maxWidth};
-  height: 7.6rem;
+  height: ${(props) => props.theme.layout.navHeight};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,7 +28,7 @@ const HeaderView = styled('div')`
   padding: ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     padding: ${(props) => props.theme.layout.paddingMobile};
-    height: 6.4rem;
+    height: ${(props) => props.theme.layout.navHeightMobile};
   }
 `
 

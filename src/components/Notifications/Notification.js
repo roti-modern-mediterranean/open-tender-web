@@ -8,18 +8,18 @@ const NotificationView = styled('li')`
   display: block;
   float: right;
   clear: right;
-  margin: 1.5rem 0 0;
+  margin: 1rem 0 0;
   line-height: 1.2;
   padding: 0.8rem 1.6rem;
-  transition: all 500ms ease;
+  transition: all 250ms ease;
   border-radius: 0.5rem;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
   font-size: ${(props) => props.theme.fonts.sizes.small};
-  color: ${(props) => props.theme.colors.primary};
-  background-color: ${(props) => props.theme.bgColors.light};
+  color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.paprika};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    float: left;
-    background-color: ${(props) => props.theme.bgColors.light};
+    margin: 1rem 0 0;
+    background-color: ${(props) => props.theme.colors.beet};
   }
 `
 

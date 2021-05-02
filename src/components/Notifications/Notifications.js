@@ -9,12 +9,13 @@ import Notification from './Notification'
 const NotificationsView = styled('div')`
   position: fixed;
   z-index: 15;
-  bottom: 10rem;
+  top: ${(props) => props.theme.layout.navHeight};
   right: ${(props) => props.theme.layout.padding};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    top: ${(props) => props.theme.layout.navHeightMobile};
     left: ${(props) => props.theme.layout.paddingMobile};
-    right: auto;
-    bottom: 2.5rem;
+    right: ${(props) => props.theme.layout.paddingMobile};
+    text-align: center;
   }
 `
 
@@ -29,7 +30,7 @@ const Notifications = () => {
     <NotificationsView>
       <TransitionGroup component={'ul'}>
         {messages.map((message) => (
-          <CSSTransition key={message.id} classNames="flash" timeout={500}>
+          <CSSTransition key={message.id} classNames="flash" timeout={250}>
             <Notification {...message} />
           </CSSTransition>
         ))}

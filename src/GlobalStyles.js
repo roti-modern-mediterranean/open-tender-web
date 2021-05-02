@@ -470,7 +470,7 @@ const makeGlobalStyles = (theme) => css`
 
   .flash-enter {
     opacity: 0;
-    transform: translateY(20%);
+    transform: translateY(-20%);
   }
 
   .flash-enter-active,
