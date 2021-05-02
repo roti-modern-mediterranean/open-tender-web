@@ -58,7 +58,8 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
   const [error, setError] = useState(null)
   const [displayedRevenueCenters, setDisplayedRevenueCenters] = useState([])
   const isLoading = loading === 'pending'
-  const missingAddress = serviceType === 'DELIVERY' && !address
+  const missingStreet = address ? !address.street : true
+  const missingAddress = serviceType === 'DELIVERY' && missingStreet
   const hasCount = displayedRevenueCenters && displayedRevenueCenters.length > 0
   const showRevenueCenters = hasCount && !isLoading && !error && !missingAddress
   const revenueCenterIds = displayedRevenueCenters.map(
@@ -146,7 +147,7 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
       ) : missingAddress ? (
         <RevenueCentersAlert
           title="Please enter an address"
-          subtitle="A full address with street number is required for delivery orders."
+          subtitle="A full address with street number is required for delivery orders. Please try again or switch to pick up."
         >
           <InlineLink onClick={() => dispatch(setServiceType('PICKUP'))}>
             <RevenueCentersSelectLink>
@@ -158,8 +159,7 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
         <RevenueCentersAlert
           title="No locations near you"
           subtitle="Sorry, but we don't have any locations near you. Please
-                    enter a different address or head back to our home page.
-                    orders."
+                    enter a different address or head back to our home page."
         >
           <InlineLink onClick={handleStartOver}>
             <RevenueCentersSelectLink>
