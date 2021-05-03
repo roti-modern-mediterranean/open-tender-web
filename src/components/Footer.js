@@ -210,7 +210,7 @@ const Footer = ({ hasRouter = true }) => {
           <div>
             <FooterCopyright>
               <p>
-                <span>Copyright © 2020 Roti Modern Mediterranean.</span>
+                <span>Copyright © 2021 Roti Modern Mediterranean.</span>
                 <span>All rights reserved.</span>
               </p>
               <FooterNav aria-label="Legal Policies Navigation">

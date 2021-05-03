@@ -142,6 +142,9 @@ const ContentCards = styled('ul')`
     flex: 1 1 auto;
     margin-right: 1em;
     width: 50%;
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      width: 100%;
+    }
     h3 {
       font-weight: normal;
       font-size: 1.5em;
@@ -267,7 +270,7 @@ const Careers = () => {
                     <li>
                       <img
                         alt=""
-                        src="https://roti.com/carousels/careers/small-image-careers-top-1.jpg"
+                        src="https://roti-website.s3.amazonaws.com/carousels/careers/small-image-careers-top-1.jpg"
                       />
                       <h3>Joy.</h3>
                       <p>
@@ -283,7 +286,7 @@ const Careers = () => {
                     <li>
                       <img
                         alt=""
-                        src="https://roti.com/carousels/careers/small-image-careers-top-2.jpg"
+                        src="https://roti-website.s3.amazonaws.com/carousels/careers/small-image-careers-top-2.jpg"
                       />
                       <h3>Pride.</h3>
                       <p>
@@ -298,7 +301,7 @@ const Careers = () => {
                     <li>
                       <img
                         alt=""
-                        src="https://roti.com/carousels/careers/small-image-careers-top-3.png"
+                        src="https://roti-website.s3.amazonaws.com/carousels/careers/small-image-careers-top-3.png"
                       />
                       <h3>Progress.</h3>
                       <p>
@@ -313,7 +316,7 @@ const Careers = () => {
                   </ContentListOfItems>
                   <ContentCards>
                     <li>
-                      <img alt="" src="https://roti.com/images/image-c-1.png" />
+                      <img alt="" src="https://roti-website.s3.amazonaws.com/images/image-c-1.png" />
                       <div className="card-body">
                         <h3>A Career that matters.</h3>
                         <p>
@@ -327,7 +330,7 @@ const Careers = () => {
                       </div>
                     </li>
                     <li>
-                      <img alt="" src="https://roti.com/images/image-c-2.png" />
+                      <img alt="" src="https://roti-website.s3.amazonaws.com/images/image-c-2.png" />
                       <div className="card-body">
                         <h3>Inclusion, diversity &amp; equity.</h3>
                         <p>
@@ -343,35 +346,35 @@ const Careers = () => {
                     <h3>Benefits</h3>
                     <BenefitsWrapper>
                       <li>
-                        <FrameImage src="https://roti.com/images/icons/benefits-medical.png" />
+                        <FrameImage src="https://roti-website.s3.amazonaws.com/images/icons/benefits-medical.png" />
                         <h4>Medical, dental, vision</h4>
                       </li>
                       <li>
-                        <FrameImage src="https://roti.com/images/icons/benefits-bonus.png" />
+                        <FrameImage src="https://roti-website.s3.amazonaws.com/images/icons/benefits-bonus.png" />
                         <h4>Bonus opportunities</h4>
                       </li>
                       <li>
-                        <FrameImage src="https://roti.com/images/icons/benefits-tip-pool.png" />
+                        <FrameImage src="https://roti-website.s3.amazonaws.com/images/icons/benefits-tip-pool.png" />
                         <h4>Tip pool program</h4>
                       </li>
                       <li>
-                        <FrameImage src="https://roti.com/images/icons/benefits-flexible.png" />
+                        <FrameImage src="https://roti-website.s3.amazonaws.com/images/icons/benefits-flexible.png" />
                         <h4>Flexible schedules</h4>
                       </li>
                       <li>
-                        <FrameImage src="https://roti.com/images/icons/benefits-career.png" />
+                        <FrameImage src="https://roti-website.s3.amazonaws.com/images/icons/benefits-career.png" />
                         <h4>career &amp; education opportunities</h4>
                       </li>
                       <li>
-                        <FrameImage src="https://roti.com/images/icons/benefits-timeoff.png" />
+                        <FrameImage src="https://roti-website.s3.amazonaws.com/images/icons/benefits-timeoff.png" />
                         <h4>Paid time off</h4>
                       </li>
                       <li>
-                        <FrameImage src="https://roti.com/images/icons/benefits-401k.png" />
+                        <FrameImage src="https://roti-website.s3.amazonaws.com/images/icons/benefits-401k.png" />
                         <h4>401k retirement savings</h4>
                       </li>
                       <li>
-                        <FrameImage src="https://roti.com/images/icons/benefits-freefood.png" />
+                        <FrameImage src="https://roti-website.s3.amazonaws.com/images/icons/benefits-freefood.png" />
                         <h4>discounts &amp; free food</h4>
                       </li>
                     </BenefitsWrapper>
