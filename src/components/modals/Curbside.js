@@ -61,7 +61,7 @@ const Curbside = ({ handlePickup }) => {
             Go Curbside - place your order, enter your vehicle info at
             check-out, and head to the store. Park in a designated spot, hit the
             link in your confirmation email and we will be out quicker than you
-            can say falafel. Yup, is that easy, safe and on the go!
+            can say falafel. Yup, it’s that easy, safe and on the go!
           </p>
         </CurbsideContent>
         <ButtonGroupBig>
