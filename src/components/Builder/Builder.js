@@ -534,7 +534,7 @@ const Builder = ({
   }, [isIncomplete, isEdit])
 
   useEffect(() => {
-    if (isOpen && !isBrowser) {
+    if (isOpen && !isBrowser && windowRef) {
       const topOffset = ingredientsRef.current.getBoundingClientRect().top
       animateScroll.scrollTo(topOffset, {
         container: windowRef.current,
