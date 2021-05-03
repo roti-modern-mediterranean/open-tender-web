@@ -84,15 +84,7 @@ const SwitchToggleName = styled(Heading)`
   line-height: 1.05;
 `
 
-const Switch = ({
-  label,
-  icon,
-  imageUrl,
-  id,
-  on,
-  onChange,
-  disabled = false,
-}) => {
+const Switch = ({ label, icon, id, on, onChange, disabled = false }) => {
   return (
     <SwitchLabel htmlFor={id}>
       <SwitchInput
@@ -140,12 +132,8 @@ const AllergenForm = ({
   if (!allergens) return null
 
   const displayed = allergens.map((i) => {
-    const smallImg = i.images.find(
-      (img) => img.type === 'SMALL_IMAGE' && img.url
-    )
-    const imageUrl = smallImg ? smallImg.url : null
     const { allergen_id, name } = i
-    return { allergen_id, name, imageUrl }
+    return { allergen_id, name }
   })
 
   return (
@@ -159,7 +147,6 @@ const AllergenForm = ({
               key={allergen.allergen_id}
               label={allergen.name}
               icon={allergenIconMap[allergen.name] || null}
-              imageUrl={allergen.imageUrl}
               id={`${allergen.allergen_id}`}
               on={allergenIds.includes(allergen.allergen_id)}
               onChange={handleChange}
