@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
-import { isBrowser } from 'react-device-detect'
 import { Helmet } from 'react-helmet'
 import {
   selectOrder,
@@ -21,28 +20,35 @@ import {
 } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
-  Background,
-  Container,
   Content,
   HeaderDefault,
   Loading,
   Main,
+  PageContainer,
   RevenueCenter as RevenueCenterCard,
   ScreenreaderTitle,
 } from '../..'
+import styled from '@emotion/styled'
+import { FormWrapper } from '../../inputs'
 
-const makeImageUrl = (images, defaultImageUrl) => {
-  if (!images) return defaultImageUrl || null
-  const largeImage = images
-    ? images.find((i) => i.type === 'LARGE_IMAGE')
-    : null
-  let imageUrl = largeImage ? largeImage.url : null
-  return imageUrl || defaultImageUrl || null
-}
+// const makeImageUrl = (images, defaultImageUrl) => {
+//   if (!images) return defaultImageUrl || null
+//   const largeImage = images
+//     ? images.find((i) => i.type === 'LARGE_IMAGE')
+//     : null
+//   let imageUrl = largeImage ? largeImage.url : null
+//   return imageUrl || defaultImageUrl || null
+// }
+
+const RevenueCenterView = styled('div')`
+  padding: 1.5rem 2rem 2rem;
+  margin: 0 0 1rem;
+  border-radius: ${(props) => props.theme.border.radius};
+  background-color: ${(props) => props.theme.bgColors.secondary};
+`
 
 const RevenueCenter = () => {
   const dispatch = useDispatch()
-  const [imageUrl, setImageUrl] = useState(null)
   const { slug } = useParams()
   const { geoLatLng, geoError } = useGeolocation()
   const { title: siteTitle } = useSelector(selectBrand)
@@ -71,8 +77,7 @@ const RevenueCenter = () => {
 
   useEffect(() => {
     if (revenueCenter) {
-      const { images, settings, revenue_center_type } = revenueCenter
-      setImageUrl(makeImageUrl(images, config.background))
+      const { settings, revenue_center_type } = revenueCenter
       const { service_types } = settings
       let serviceType = service_types.length
         ? service_types.includes('PICKUP')
@@ -83,7 +88,7 @@ const RevenueCenter = () => {
         dispatch(setOrderServiceType(revenue_center_type, serviceType))
       }
     }
-  }, [revenueCenter, config.background, dispatch])
+  }, [revenueCenter, dispatch])
 
   return (
     <>
@@ -92,32 +97,30 @@ const RevenueCenter = () => {
           {title} | {siteTitle}
         </title>
       </Helmet>
-      <Background imageUrl={imageUrl || config.background} />
-      <Content maxWidth="76.8rem">
-        <HeaderDefault
-          maxWidth="76.8rem"
-          title={isBrowser ? null : config.title}
-        />
+      <Content>
+        <HeaderDefault />
         <Main>
-          <Container>
+          <PageContainer>
             <ScreenreaderTitle>{title}</ScreenreaderTitle>
-            <div style={{ margin: '4rem 0 0' }}>
+            {/* <CheckoutHeader title={title} /> */}
+            <FormWrapper>
               {isLoading ? (
-                <Loading text="Retrieving nearest locations..." />
+                <Loading text="Retrieving location..." />
               ) : revenueCenter ? (
-                <RevenueCenterCard
-                  revenueCenter={revenueCenter}
-                  showImage={true}
-                  isLanding={true}
-                />
+                <RevenueCenterView>
+                  <RevenueCenterCard
+                    revenueCenter={revenueCenter}
+                    isLanding={true}
+                  />
+                </RevenueCenterView>
               ) : (
                 <p>
                   Location not found. Please try a different URL or{' '}
                   <Link to="/">head back to our home page</Link>.
                 </p>
               )}
-            </div>
-          </Container>
+            </FormWrapper>
+          </PageContainer>
         </Main>
       </Content>
     </>

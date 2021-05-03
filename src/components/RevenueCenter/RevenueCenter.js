@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import { useHistory } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { stripTags } from '@open-tender/js'
 import { useTheme } from '@emotion/react'
@@ -141,10 +142,12 @@ const RevenueCenter = ({
   setActive,
   activeMarker,
   hasService,
+  isLanding,
   type = null,
   style = null,
 }) => {
   const theme = useTheme()
+  const history = useHistory()
   const { address, images, hours, is_outpost, has_curbside } = revenueCenter
   const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const largeImg = images.find((i) => i.type === 'SMALL_IMAGE')
@@ -157,6 +160,10 @@ const RevenueCenter = ({
   const makeActive = (evt) => {
     evt.target.blur()
     if (setActive) setActive(revenueCenter)
+  }
+
+  const orderNow = (evt) => {
+    history.push('/locations')
   }
 
   return (
@@ -176,7 +183,7 @@ const RevenueCenter = ({
       <RevenueCenterView
         style={style}
         as={type || (isActive ? 'span' : 'button')}
-        onClick={(evt) => makeActive(evt)}
+        onClick={isLanding ? orderNow : makeActive}
       >
         <RevenueCenterHeader>
           <PrefaceTitle as="h2">{revenueCenter.name}</PrefaceTitle>
@@ -215,6 +222,10 @@ RevenueCenter.displayName = 'RevenueCenter'
 RevenueCenter.propTypes = {
   revenueCenter: propTypes.object,
   setActive: propTypes.func,
+  activeMarker: propTypes.number,
+  hasService: propTypes.bool,
+  isLanding: propTypes.bool,
+  type: propTypes.string,
   style: propTypes.object,
 }
 

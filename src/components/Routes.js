@@ -93,7 +93,7 @@ const Routes = () => {
       <Route exact path="/locations">
         <RevenueCenters />
       </Route>
-      <Route exact path="/locations/:slug">
+      <Route exact path="/location/:slug">
         <RevenueCenter />
       </Route>
       <Route exact path="/menu/:slug">
