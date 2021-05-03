@@ -563,7 +563,7 @@ const Builder = ({
   const toggleIngredients = (evt) => {
     evt.preventDefault()
     if (isOpen) {
-      if (!isBrowser) {
+      if (!isBrowser && windowRef) {
         animateScroll.scrollTo(0, {
           container: windowRef.current,
           duration: 500,
