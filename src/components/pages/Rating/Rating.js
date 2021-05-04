@@ -25,6 +25,7 @@ import {
 } from '../..'
 import iconMap from '../../iconMap'
 import { FormHeader, FormWrapper } from '../../inputs'
+import styled from '@emotion/styled'
 
 const makePageTitles = (orderRating, isSubmitted, unsubscribe, isCancelled) => {
   if (unsubscribe) {
@@ -58,6 +59,14 @@ const makePageTitles = (orderRating, isSubmitted, unsubscribe, isCancelled) => {
 const useQuery = () => {
   return new URLSearchParams(useLocation().search)
 }
+
+const RatingView = styled('div')`
+  text-align: center;
+
+  form > div > div:first-of-type {
+    display: inline-block;
+  }
+`
 
 const Rating = () => {
   const dispatch = useDispatch()
@@ -121,33 +130,35 @@ const Rating = () => {
         <Main>
           <PageContainer>
             <CheckoutHeader title={title} />
-            <FormWrapper>
-              {subtitle && <p>{subtitle}</p>}
-              {loading === 'pending' ? (
-                <Loading text="Retrieving order rating..." />
-              ) : submitted ? (
-                <p>
-                  {auth ? (
-                    <Link to="/">Head back to your account page</Link>
-                  ) : (
-                    <Link to="/">Head back to the home page</Link>
-                  )}
-                </p>
-              ) : orderRating ? (
-                <>
-                  <FormHeader>
-                    <h2>Rate Order #{orderRating.order_id}</h2>
-                  </FormHeader>
-                  <OrderRatingForm
-                    orderId={ratingUuid}
-                    orderRating={adjustedRating}
-                    icon={iconMap.Star}
-                    updateRating={updateRating}
-                    callback={callback}
-                  />
-                </>
-              ) : null}
-            </FormWrapper>
+            <RatingView>
+              <FormWrapper>
+                {subtitle && <p>{subtitle}</p>}
+                {loading === 'pending' ? (
+                  <Loading text="Retrieving order rating..." />
+                ) : submitted ? (
+                  <p>
+                    {auth ? (
+                      <Link to="/">Head back to your account page</Link>
+                    ) : (
+                      <Link to="/">Head back to the home page</Link>
+                    )}
+                  </p>
+                ) : orderRating ? (
+                  <>
+                    <FormHeader>
+                      <h2>Rate Order #{orderRating.order_id}</h2>
+                    </FormHeader>
+                    <OrderRatingForm
+                      orderId={ratingUuid}
+                      orderRating={adjustedRating}
+                      icon={iconMap.Star}
+                      updateRating={updateRating}
+                      callback={callback}
+                    />
+                  </>
+                ) : null}
+              </FormWrapper>
+            </RatingView>
           </PageContainer>
         </Main>
       </Content>
