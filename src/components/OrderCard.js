@@ -58,9 +58,11 @@ const OrderCard = ({ order, isLast }) => {
   const imageUrl = items && items.length ? items[0].imageUrl : null
   const cartItems = cart.map((i) => `${i.quantity} ${i.name}`).join(', ')
   const giftCards = gift_cards
-    .map((i) => `${formatDollars(i.amount, '', 0)} gift card`)
-    .join(', ')
-  const title = isMerch ? giftCards : cartItems
+    ? gift_cards
+        .map((i) => `${formatDollars(i.amount, '', 0)} gift card`)
+        .join(', ')
+    : null
+  const title = isMerch && giftCards ? giftCards : cartItems
 
   const handleReorder = () => {
     const { revenue_center_id: revenueCenterId } = revenue_center

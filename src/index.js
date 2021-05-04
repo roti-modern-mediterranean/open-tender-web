@@ -19,6 +19,7 @@ Sentry.init({
     'TypeError: NetworkError when attempting to fetch resource.',
     'TypeError: Cancelled',
     'TypeError: cancelled',
+    'TypeError: Illegal invocation',
   ],
 })
 

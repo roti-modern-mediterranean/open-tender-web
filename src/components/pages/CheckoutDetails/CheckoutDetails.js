@@ -143,6 +143,10 @@ const CheckoutDetails = () => {
   useCheckout(validate, withAddress)
 
   useEffect(() => {
+    if (!serviceType) history.push('/')
+  }, [serviceType, history])
+
+  useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()
   }, [windowRef, dispatch])
@@ -194,6 +198,8 @@ const CheckoutDetails = () => {
       submitRef.current.blur()
     }
   }
+
+  if (!serviceType) return null
 
   return (
     <>

@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect } from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
+import { useTheme } from '@emotion/react'
+import styled from '@emotion/styled'
 import {
   selectOrderFulfillment,
   updateOrderFulfillment,
@@ -8,14 +10,13 @@ import {
   fetchRevenueCenter,
   selectRevenueCenter,
 } from '@open-tender/redux'
+import { timezoneMap } from '@open-tender/js'
 
 import { selectFulfillment } from '../slices'
 import { FormHeader, FormWrapper } from './inputs'
 import { OrderFulfillmentForm } from './forms'
 import { Loading, RevenueCenter } from '.'
-import styled from '@emotion/styled'
 import CheckoutOrderTime from './pages/CheckoutDetails/CheckoutOrderTime'
-import { useTheme } from '@emotion/react'
 
 const OrderFulfillmentRevenueCenter = styled('div')`
   padding: 1.5rem 2rem 2rem;
@@ -35,6 +36,7 @@ const OrderFulfillment = ({ order }) => {
     requested_at,
     timezone,
   } = order
+  const tz = timezoneMap[timezone]
   const { revenue_center_id } = revenue_center
   const fulfillmentSettings = useSelector(selectFulfillment)
   const revenueCenter = useSelector(selectRevenueCenter)
@@ -71,7 +73,7 @@ const OrderFulfillment = ({ order }) => {
       <CheckoutOrderTime
         serviceType={service_type}
         requestedAt={requested_at}
-        tz={timezone}
+        tz={tz}
       />
       <OrderFulfillmentForm
         orderId={order_id}

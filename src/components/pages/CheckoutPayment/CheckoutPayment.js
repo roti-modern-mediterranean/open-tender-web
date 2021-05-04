@@ -98,7 +98,7 @@ const CheckoutPayment = () => {
   const submitRef = useRef(null)
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
-  const { orderId } = useSelector(selectOrder)
+  const { orderId, serviceType } = useSelector(selectOrder)
   const checkout = useSelector(selectCheckout)
   const { check, form, completedOrder, errors, submitting, loading } = checkout
   const total = check && check.totals ? check.totals.total : 0.0
@@ -107,6 +107,10 @@ const CheckoutPayment = () => {
   const submitDisabled =
     submitting || amountRemaining > 0 || loading === 'pending'
   const deviceTypeName = makeDeviceType(deviceType)
+
+  useEffect(() => {
+    if (!serviceType) history.push('/')
+  }, [serviceType, history])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -155,6 +159,8 @@ const CheckoutPayment = () => {
   const editTip = () => {
     dispatch(openModal({ type: 'gratuity', args: { focusFirst: true } }))
   }
+
+  if (!serviceType) return null
 
   return (
     <>
