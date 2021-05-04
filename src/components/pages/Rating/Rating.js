@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { isBrowser } from 'react-device-detect'
 import {
   selectOrderRating,
   fetchOrderRating,
@@ -11,26 +10,21 @@ import {
   resetOrderRating,
   selectCustomer,
 } from '@open-tender/redux'
-import {
-  FormWrapper,
-  Heading,
-  Message,
-  OrderRatingForm,
-} from '@open-tender/components'
+import { OrderRatingForm } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
+  CheckoutHeader,
   Content,
   HeaderDefault,
   Loading,
   Main,
   PageContainer,
-  PageContent,
-  PageTitle,
 } from '../..'
 import iconMap from '../../iconMap'
+import { FormHeader, FormWrapper } from '../../inputs'
 
 const makePageTitles = (orderRating, isSubmitted, unsubscribe, isCancelled) => {
   if (unsubscribe) {
@@ -77,7 +71,7 @@ const Rating = () => {
   const { auth } = useSelector(selectCustomer)
   const errMsg = error ? error || error.message : null
   const isCancelled = errMsg && errMsg.includes('cancelled')
-  const title = orderRating
+  const pageTitle = orderRating
     ? `Rating Order #${orderRating.order_id}`
     : 'Rating Not Found'
   const { windowRef } = useContext(AppContext)
@@ -88,6 +82,7 @@ const Rating = () => {
     unsubscribe,
     isCancelled
   )
+  const { title, subtitle } = pageTitles
   const adjustedRating =
     queryRating && !submitted
       ? { ...orderRating, rating: parseInt(queryRating) }
@@ -118,21 +113,18 @@ const Rating = () => {
     <>
       <Helmet>
         <title>
-          {title} | {siteTitle}
+          {pageTitle} | {siteTitle}
         </title>
       </Helmet>
       <Content>
-        <HeaderDefault title={isBrowser ? null : 'Rate Your Order'} />
+        <HeaderDefault />
         <Main>
-          <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle {...pageTitles} />
-            <PageContent>
+          <PageContainer>
+            <CheckoutHeader title={title} />
+            <FormWrapper>
+              {subtitle && <p>{subtitle}</p>}
               {loading === 'pending' ? (
                 <Loading text="Retrieving order rating..." />
-              ) : errMsg ? (
-                <Message color="error" style={{ width: '100%' }}>
-                  {errMsg}
-                </Message>
               ) : submitted ? (
                 <p>
                   {auth ? (
@@ -142,14 +134,10 @@ const Rating = () => {
                   )}
                 </p>
               ) : orderRating ? (
-                <FormWrapper>
-                  <Heading
-                    as="p"
-                    size="h4"
-                    style={{ textAlign: 'left', margin: '0 0 3rem' }}
-                  >
-                    Rate Order #{orderRating.order_id}
-                  </Heading>
+                <>
+                  <FormHeader>
+                    <h2>Rate Order #{orderRating.order_id}</h2>
+                  </FormHeader>
                   <OrderRatingForm
                     orderId={ratingUuid}
                     orderRating={adjustedRating}
@@ -157,9 +145,9 @@ const Rating = () => {
                     updateRating={updateRating}
                     callback={callback}
                   />
-                </FormWrapper>
+                </>
               ) : null}
-            </PageContent>
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>
