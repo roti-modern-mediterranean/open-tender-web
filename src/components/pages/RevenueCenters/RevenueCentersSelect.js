@@ -147,7 +147,7 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
       ) : missingAddress ? (
         <RevenueCentersAlert
           title="Please enter an address"
-          subtitle="A full address with street number is required for delivery orders. Please try again or switch to pick up."
+          subtitle="A full address with street number is required for delivery orders, or you can switch to pick up."
         >
           <InlineLink onClick={() => dispatch(setServiceType('PICKUP'))}>
             <RevenueCentersSelectLink>

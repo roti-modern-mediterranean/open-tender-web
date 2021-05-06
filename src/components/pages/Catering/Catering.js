@@ -198,7 +198,8 @@ const makeOrderMessage = (orderType, requestedAt, revenueCenter) => {
     revenueCenter
   if (!hasCateringOrder) return null
   const { timezone, name } = revenueCenter
-  const requestedAtStr = makeReadableDateStrFromIso(requestedAt, timezone, true)
+  const tz = timezoneMap[timezone]
+  const requestedAtStr = makeReadableDateStrFromIso(requestedAt, tz, true)
   return `You currently have a catering order in process for ${requestedAtStr} from our ${name} location.`
 }
 

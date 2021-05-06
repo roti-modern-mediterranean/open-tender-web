@@ -93,9 +93,9 @@ const RevenueCenterDetailText = styled('span')`
   width: 100%;
   padding: 0 0 0 1rem;
   line-height: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  // white-space: nowrap;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
 
   span {
     font-size: 1.5rem;
