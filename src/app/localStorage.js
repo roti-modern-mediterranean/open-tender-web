@@ -17,7 +17,7 @@ export const saveState = (state) => {
     // const saveableState = { ...state, config }
     const saveableState = { ...state }
     delete saveableState.config
-    delete saveableState.misc
+    // delete saveableState.misc
     const serializedState = JSON.stringify(saveableState)
     localStorage.setItem('state', serializedState)
   } catch (err) {
