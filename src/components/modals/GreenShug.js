@@ -30,9 +30,11 @@ const GreenShugTitle = styled('div')`
 `
 
 const GreenShugSubtitle = styled(Preface)`
-  font-size: 3.2rem;
+  font-size: 3.6rem;
   line-height: 1 !important;
-  font-weight: 500;
+  font-weight: bold;
+  text-transform: none;
+  color: ${(props) => props.theme.colors.paprika};
   margin: 0 0 1rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: 2.6rem;
