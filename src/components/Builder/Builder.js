@@ -444,7 +444,8 @@ const makeMessage = (group) => {
   if (!group) return null
   const { min, max, name } = group
   const lower = name.toLowerCase()
-  const singular = lower.endsWith('s') ? lower.slice(0, -1) : lower
+  const singular =
+    lower.endsWith('s') && lower !== 'hummus' ? lower.slice(0, -1) : lower
   const isVowel = 'aeiou'.includes(singular[0])
   const prefix = isVowel ? 'an' : 'a'
   if (lower.endsWith('pita')) {
