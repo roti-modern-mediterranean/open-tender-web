@@ -102,7 +102,7 @@ const containerStyleMap = {
   groupOrder: { alignItems: 'flex-start' },
   signUp: { alignItems: 'flex-start' },
   gratuity: { alignItems: 'flex-start' },
-  greenShug: { alignItems: 'flex-start' },
+  // greenShug: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`
