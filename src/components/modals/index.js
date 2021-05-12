@@ -11,6 +11,7 @@ import GiftCard from './GiftCard'
 import GiftCardAssign from './GiftCardAssign'
 import GiftCardAssignOther from './GiftCardAssignOther'
 import Gratuity from './Gratuity'
+import GreenShug from './GreenShug'
 import GroupOrder from './GroupOrder'
 import LevelUp from './LevelUp'
 import Login from './Login'
@@ -37,6 +38,7 @@ export {
   GiftCardAssign,
   GiftCardAssignOther,
   Gratuity,
+  GreenShug,
   GroupOrder,
   LevelUp,
   Login,

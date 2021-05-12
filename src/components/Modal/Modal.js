@@ -32,6 +32,7 @@ import {
   Reward,
   SignUp,
   Working,
+  GreenShug,
 } from '../modals'
 
 const makeModal = (type, windowRef, args = {}) => {
@@ -62,6 +63,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <GroupOrder {...args} />
     case 'gratuity':
       return <Gratuity {...args} />
+    case 'greenShug':
+      return <GreenShug {...args} />
     case 'item':
       return <MenuItem {...args} />
     case 'levelup':
@@ -99,6 +102,7 @@ const containerStyleMap = {
   groupOrder: { alignItems: 'flex-start' },
   signUp: { alignItems: 'flex-start' },
   gratuity: { alignItems: 'flex-start' },
+  greenShug: { alignItems: 'flex-start' },
 }
 
 const ModalContainer = styled('div')`

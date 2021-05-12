@@ -20,6 +20,8 @@ Sentry.init({
     'TypeError: Cancelled',
     'TypeError: cancelled',
     'TypeError: Illegal invocation',
+    'ReferenceError: fbq is not defined',
+    'Error: Extension context invalidated',
   ],
 })
 
