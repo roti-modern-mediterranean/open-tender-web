@@ -87,7 +87,7 @@ const CheckoutOptions = ({ errors = {} }) => {
   useEffect(() => {
     if (emptyDetails && eating_utensils !== undefined) {
       let details = {
-        // person_count,
+        person_count,
         tax_exempt_id,
         eating_utensils,
         serving_utensils,
