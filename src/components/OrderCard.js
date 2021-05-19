@@ -21,6 +21,12 @@ import { DeliveryLink } from '@open-tender/components'
 import iconMap from './iconMap'
 import { Card, CardButton } from '.'
 
+const defaultImages = [
+  'https://s3.amazonaws.com/betterboh/u/img/prod/46/1618535126_Roti_Chicken_Caulipower_Overhead.png',
+  'https://s3.amazonaws.com/betterboh/u/img/prod/46/1618678590_Salads_Keto_Carnivale_Overheada.png',
+  'https://s3.amazonaws.com/betterboh/u/img/prod/46/1603234765_Pita_StreetPita_600x900.png',
+]
+
 const OrderCard = ({ order, isLast }) => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -47,6 +53,7 @@ const OrderCard = ({ order, isLast }) => {
   const streetAddress = makeOrderAddress(address)
   const trackingUrl = isOpen && delivery && delivery.tracking_url
   const items = cart
+    .filter((i) => i.tags.includes('signature'))
     .map((i) =>
       i.images
         .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
@@ -55,7 +62,9 @@ const OrderCard = ({ order, isLast }) => {
     .flat()
     .sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
     .reverse()
-  const imageUrl = items && items.length ? items[0].imageUrl : null
+  const randomImageUrl =
+    defaultImages[Math.floor(Math.random() * defaultImages.length)]
+  const imageUrl = items && items.length ? items[0].imageUrl : randomImageUrl
   const cartItems = cart.map((i) => `${i.quantity} ${i.name}`).join(', ')
   const giftCards = gift_cards
     ? gift_cards

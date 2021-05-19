@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { BgImage, Heading } from '@open-tender/components'
+import { Heading } from '@open-tender/components'
 import { CardButtons, CardImage } from '.'
 import { CardActiveContext } from './pages/Orders/Orders'
 
@@ -33,24 +33,24 @@ const CardImageView = styled('div')`
   }
 `
 
-const CardBgImage = styled(BgImage)`
-  position: absolute;
-  z-index: 1;
-  top: -1rem;
-  left: 1rem;
-  width: 14rem;
-  height: 13.5rem;
-  border-radius: ${(props) => props.theme.border.radius};
-  background-color: ${(props) => props.theme.bgColors.primary};
-  background-image: url(${(props) => props.imageUrl});
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    top: -0.5rem;
-    left: 0.5rem;
-    width: 12rem;
-    height: 12.5rem;
-  }
-`
+// const CardBgImage = styled(BgImage)`
+//   position: absolute;
+//   z-index: 1;
+//   top: -1rem;
+//   left: 1rem;
+//   width: 14rem;
+//   height: 13.5rem;
+//   border-radius: ${(props) => props.theme.border.radius};
+//   background-color: ${(props) => props.theme.bgColors.primary};
+//   background-image: url(${(props) => props.imageUrl});
+//   box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+//   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+//     top: -0.5rem;
+//     left: 0.5rem;
+//     width: 12rem;
+//     height: 12.5rem;
+//   }
+// `
 
 const CardContent = styled('div')`
   height: 14rem;
@@ -198,7 +198,12 @@ const Card = ({
             <CardImage imageUrl={imageUrl} />
           </CardImageView>
         ) : (
-          <CardBgImage imageUrl={imageUrl} />
+          <>
+            <CardImageView>
+              <CardImage imageUrl={imageUrl} />
+            </CardImageView>
+            {/* <CardBgImage imageUrl={imageUrl} /> */}
+          </>
         )
       ) : null}
       <CardContent>
