@@ -51,7 +51,11 @@ const CheckoutOptionsView = styled('div')`
 const checkEmptyDetails = (form) => {
   if (!form.details || isEmpty(form.details)) return true
   const { person_count, tax_exempt_id, notes } = form.details
-  return person_count === null && tax_exempt_id === null && notes == null
+  return (
+    (person_count === null || person_count === undefined) &&
+    (tax_exempt_id === null || tax_exempt_id === undefined) &&
+    (notes === null || notes === undefined)
+  )
 }
 
 const CheckoutOptions = ({ errors = {} }) => {
@@ -83,7 +87,7 @@ const CheckoutOptions = ({ errors = {} }) => {
   useEffect(() => {
     if (emptyDetails && eating_utensils !== undefined) {
       let details = {
-        person_count,
+        // person_count,
         tax_exempt_id,
         eating_utensils,
         serving_utensils,

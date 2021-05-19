@@ -54,6 +54,12 @@ const CheckoutAddressChange = styled('div')`
   }
 `
 
+const checkEmptyAddress = (form) => {
+  if (!form.address || isEmpty(form.address)) return true
+  const { unit, company, contact, phone } = form.address
+  return !unit && !company && !contact && !phone
+}
+
 const CheckoutAddress = ({ orderTypeName, errors = {} }) => {
   const dispatch = useDispatch()
   const history = useHistory()
@@ -71,7 +77,7 @@ const CheckoutAddress = ({ orderTypeName, errors = {} }) => {
     .filter((i) => displayed.includes(i.config) || required.includes(i.config))
     .map((i) => ({ ...i, required: required.includes(i.config) }))
   const errMsg = isString(errors) ? errors : null
-  const emptyAddress = !form.address || isEmpty(form.address)
+  const emptyAddress = checkEmptyAddress(form)
 
   useEffect(() => {
     if (emptyAddress && unit !== undefined) {
