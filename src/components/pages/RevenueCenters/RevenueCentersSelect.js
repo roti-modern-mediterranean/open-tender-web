@@ -20,7 +20,10 @@ import { selectSettings, selectGeoLatLng } from '../../../slices'
 import { InlineLink, Loading, RevenueCenter } from '../..'
 import RevenueCentersAlert from './RevenueCentersAlert'
 
-const RevenueCentersSelectView = styled('div')``
+const RevenueCentersSelectView = styled('div')`
+  background-color: ${(props) => props.theme.bgColors.primary};
+  padding: 0 2.5rem 2.5rem;
+`
 
 const RevenueCentersSelectList = styled('ul')`
   & > li {
@@ -46,13 +49,8 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
   const { maxDistance } = useSelector(selectSettings)
   const geoLatLng = useSelector(selectGeoLatLng)
   const { revenueCenters, loading } = useSelector(selectRevenueCenters)
-  const {
-    serviceType,
-    orderType,
-    isOutpost,
-    address,
-    requestedAt,
-  } = useSelector(selectOrder)
+  const { serviceType, orderType, isOutpost, address, requestedAt } =
+    useSelector(selectOrder)
   const coords = address || geoLatLng
   const autoSelect = useSelector(selectAutoSelect)
   const [error, setError] = useState(null)

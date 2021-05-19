@@ -9,32 +9,32 @@ import iconMap from '../../iconMap'
 import RevenueCentersSelect from './RevenueCentersSelect'
 
 const MapsAutocompleteView = styled('div')`
-  z-index: 2;
-  position: absolute;
-  top: 100%;
-  width: 100%;
-  margin-top: -31rem;
-  transform: translate3D(0, 0, 0);
-  // position: relative;
-  // margin-top: calc(100vh - 30rem);
-  // margin-left: 50%;
-  // transform: translate3D(-50%, 0, 0);
-  margin-left: 5%;
-  min-height: 30rem;
-  max-width: 44rem;
-  padding: 2rem 2.5rem;
+  padding: 2rem 0 0;
   border-radius: 2.1rem;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   background-color: ${(props) => props.theme.bgColors.primary};
+
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  width: 44rem;
+  margin-left: 5%;
+  max-height: 80%;
+  min-height: 30rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    top: 100%;
+    bottom: auto;
+    width: 100%;
+    margin-top: -33rem;
+    min-height: 30rem;
+    max-width: 44rem;
     margin-left: 0;
-    transform: translate3D(0, 0, 0);
   }
 `
 
 const MapsAutocompleteHeader = styled('div')`
-  margin: 0 0 1rem;
+  margin: 0 2.5rem 1rem;
 
   h2 {
     font-size: 2.2rem;
@@ -44,7 +44,7 @@ const MapsAutocompleteHeader = styled('div')`
 `
 
 const MapsAutocompleteInput = styled('div')`
-  margin: 0 0 2.5rem;
+  margin: 0 2.5rem 2.5rem;
 
   // & > div {
   //   border-bottom: 0.1rem solid #7f8692;
