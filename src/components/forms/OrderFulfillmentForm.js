@@ -2,7 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { ButtonSubmit, useOrderFulfillmentForm } from '@open-tender/components'
 import { FormSubmit } from '../inputs'
-import { ButtonGroupBig, Curbside } from '..'
+import { ButtonGroupBig, CurbsideSimple } from '..'
 
 const arrivedText =
   "Thanks for letting us know you've arrived! We'll be out with your order shortly."
@@ -36,7 +36,7 @@ const OrderFulfillmentForm = ({
 
   return (
     <form id="order-fulfillment-form" onSubmit={handleSubmit} noValidate>
-      <Curbside
+      <CurbsideSimple
         fields={fields}
         data={data}
         errors={errors}

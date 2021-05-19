@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import propTypes from 'prop-types'
 
-import { Curbside } from '../..'
+import { CurbsideSimple } from '../..'
 import { FormHeader } from '../../inputs'
 
 const CheckoutCurbsideView = styled('div')`
@@ -29,7 +29,7 @@ const CheckoutCurbside = ({ fields, data, errors = {}, handleChange }) => {
           <span>(could be added later)</span>
         </CheckoutCurbsideHeader>
       </FormHeader>
-      <Curbside
+      <CurbsideSimple
         fields={fields}
         data={data}
         errors={errors}

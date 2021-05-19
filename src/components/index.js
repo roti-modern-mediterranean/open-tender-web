@@ -33,6 +33,7 @@ import Container from './Container'
 import CreditCards from './CreditCards'
 import CreditCard from './CreditCard'
 import Curbside from './Curbside'
+import CurbsideSimple from './CurbsideSimple'
 import Deals from './Deals'
 import DealsSection from './DealsSection'
 import DealsScrollable from './DealsScrollable'
@@ -159,6 +160,7 @@ export {
   CreditCards,
   CreditCard,
   Curbside,
+  CurbsideSimple,
   Deals,
   DealsSection,
   DealsScrollable,
