@@ -11,8 +11,7 @@ const BackgroundContentView = styled('div')`
   left: 0;
   right: 0;
   display: flex;
-  padding: 5rem ${(props) => props.theme.layout.padding};
-  // padding: 5rem;
+  padding: 5rem ${(props) => props.theme.layout.padding} 10rem;
   justify-content: ${(props) => props.justifyContent};
   align-items: ${(props) => props.alignItems};
   text-align: ${(props) => props.textAlign};

@@ -51,9 +51,19 @@ const BorderBoxWrapper = styled('div')`
   }
 `
 
-const BorderBox = ({ color = null, position = 'left', bottom = false }) => {
+const BorderBox = ({
+  color = null,
+  position = 'left',
+  bottom = false,
+  style = null,
+}) => {
   return (
-    <BorderBoxWrapper color={color} position={position} bottom={bottom}>
+    <BorderBoxWrapper
+      color={color}
+      position={position}
+      bottom={bottom}
+      style={style}
+    >
       <svg viewBox="0 0 78 78">
         <path
           fillRule="evenodd"
@@ -70,6 +80,7 @@ BorderBox.propTypes = {
   color: propTypes.string,
   position: propTypes.string,
   bottom: propTypes.bool,
+  style: propTypes.object,
 }
 
 export default BorderBox

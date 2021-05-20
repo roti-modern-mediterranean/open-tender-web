@@ -45,6 +45,7 @@ Arrow.propTypes = {
 
 const Dots = styled('div')`
   position: absolute;
+  z-index: 10;
   bottom: 0;
   left: 0;
   right: 0;
@@ -52,8 +53,10 @@ const Dots = styled('div')`
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  padding: 0 ${(props) => props.theme.layout.padding};
-  height: ${(props) => props.theme.layout.padding};
+  padding: 0;
+  height: 5rem;
+  border-top-right-radius: 4.1rem;
+  background-color: ${(props) => props.theme.bgColors.primary};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     // height: ${(props) => props.theme.layout.paddingMobile};
     height: 3rem;
@@ -105,36 +108,26 @@ const SliderWrapper = styled('div')`
 const Slide = styled('div')`
   position: absolute;
   transform: translate3D(0, 0, 0);
-  height: calc(100% - 4.5rem);
+  height: 100%;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   display: flex;
   z-index: ${(props) => props.index};
-  transition: opacity
-    ${(props) => {
-      return `${props.transition}ms ease`
-    }};
+  transition: ${(props) => `opacity ${props.transition}ms ease`};
   opacity: ${(props) => (props.active ? '1' : '0')};
   visibility: ${(props) => (props.active ? 'visible' : 'hidden')};
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: ${(props) => {
-      if (props.itemsCount === 1) {
-        return 'calc(100% - 1.5em)'
-      }
-      return '80%'
-    }};
+    width: ${(props) =>
+      props.itemsCount === 1 ? 'calc(100% - 1.5em)' : '80%'};
     height: calc(100% - 3rem);
     border-radius: 0.15rem;
     opacity: 1;
     visibility: visible;
     padding: 0.5em 0 0.5em 0.5em;
     transform: translate3D(${(props) => props.index * 100}%, 0, 0);
-    transition: transform
-      ${(props) => {
-        return `${props.transition}ms ease`
-      }};
+    transition: ${(props) => `transform ${props.transition}ms ease`};
   }
 `
 
@@ -226,7 +219,12 @@ const SliderNew = ({ settings = {}, slides }) => {
   return (
     <SliderView ref={slider}>
       <>
-        {isBrowser && <BorderBox color={theme.bgColors['primary']} bottom />}
+        {isBrowser && (
+          <BorderBox
+            color={theme.bgColors['primary']}
+            style={{ top: 'auto', bottom: '4.9rem' }}
+          />
+        )}
         <SliderWrapper
           ref={sliderWrapper}
           index={index}
