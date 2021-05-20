@@ -18,6 +18,7 @@ import {
   ButtonGroupBig,
   Content,
   HeaderCheckout,
+  // InlineLink,
   LoginForm,
   Main,
   PageContainer,
@@ -105,6 +106,12 @@ const CheckoutLogin = () => {
               <FormHeader>
                 <h1>Login</h1>
                 <p>Already a member? This will speed things up.</p>
+                {/* <p style={{ margin: '-1.5rem 0 3rem' }}>
+                  Forget password?{' '}
+                  <InlineLink onClick={forgotPassword}>
+                    Reset it here
+                  </InlineLink>
+                </p> */}
               </FormHeader>
               <CheckoutLoginView>
                 <LoginForm loading={loading} error={error} login={login} />

@@ -39,11 +39,9 @@ const makeInitState = (notes, serviceType) => {
   const optionsText = optionButtons
     .filter((i) => i.serviceTypes.includes(serviceType))
     .map((i) => i.text)
-  console.log(optionsText)
   const options = optionsText.filter((text) => parts.includes(text))
   const allText = optionButtons.map((i) => i.text)
   const text = parts.filter((part) => !allText.includes(part)).join(', ')
-  console.log(options, text)
   return [options, text]
 }
 

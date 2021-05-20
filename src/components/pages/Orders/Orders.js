@@ -81,8 +81,6 @@ const Orders = () => {
   const isLoading = loading === 'pending'
   const { windowRef } = useContext(AppContext)
 
-  console.log(entities.length && JSON.stringify(entities[0], null, 2))
-
   useEffect(() => {
     windowRef.current.scrollTop = 0
     maybeRefreshVersion()

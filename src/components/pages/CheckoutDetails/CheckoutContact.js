@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import debounce from 'lodash/debounce'
+import { useHistory } from 'react-router-dom'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { makePhone, isEmpty } from '@open-tender/js'
@@ -10,11 +11,11 @@ import {
   logoutCustomer,
 } from '@open-tender/redux'
 
+import { selectUpdateAccount, setUpdateAccount } from '../../../slices'
 import { FormHeader, Input } from '../../inputs'
 import { Mail, Phone, User, UserId } from '../../icons'
 import { useCallback, useEffect, useState } from 'react'
 import { InlineLink } from '../..'
-import { useHistory } from 'react-router-dom'
 
 const iconMap = {
   name: <UserId />,
@@ -84,6 +85,7 @@ const CheckoutContact = ({ errors = {} }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { profile } = useSelector(selectCustomer)
+  const updateAccount = useSelector(selectUpdateAccount)
   const { customer_id, first_name, last_name, email, phone, company } =
     profile || {}
   const { check, form } = useSelector(selectCheckout)
@@ -106,7 +108,7 @@ const CheckoutContact = ({ errors = {} }) => {
     !emptyCustomer && !form.customer.customer_id && customer_id
 
   useEffect(() => {
-    if ((emptyCustomer && first_name) || replaceGuest) {
+    if ((emptyCustomer && first_name) || replaceGuest || updateAccount) {
       const customer = {
         customer_id,
         first_name,
@@ -117,6 +119,7 @@ const CheckoutContact = ({ errors = {} }) => {
       }
       setContact(makeContact(customer))
       dispatch(updateForm({ customer }))
+      dispatch(setUpdateAccount(false))
     }
   }, [
     dispatch,
@@ -128,6 +131,7 @@ const CheckoutContact = ({ errors = {} }) => {
     email,
     phone,
     company,
+    updateAccount,
   ])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -163,6 +167,7 @@ const CheckoutContact = ({ errors = {} }) => {
   }
 
   const update = () => {
+    dispatch(setUpdateAccount(true))
     history.push('/profile')
   }
 

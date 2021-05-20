@@ -21,6 +21,7 @@ import {
   ButtonGroupBig,
   Content,
   HeaderCheckout,
+  InlineLink,
   Main,
   PageContainer,
   SignUpForm,
@@ -45,9 +46,10 @@ const CheckoutRegister = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const { check, form, isGuest } = useSelector(selectCheckout)
   const cartValidate = useSelector(selectCartValidate)
-  const validate = useCallback((order) => dispatch(validateOrder(order)), [
-    dispatch,
-  ])
+  const validate = useCallback(
+    (order) => dispatch(validateOrder(order)),
+    [dispatch]
+  )
   const cartWithCustomer = { ...cartValidate, customer: form.customer }
   useCheckout(validate, cartWithCustomer)
   const checkConfig = check ? check.config : {}
@@ -80,6 +82,10 @@ const CheckoutRegister = () => {
     history.push('/checkout/details')
   }
 
+  const login = () => {
+    history.push('/checkout/login')
+  }
+
   return (
     <>
       <Helmet>
@@ -100,6 +106,10 @@ const CheckoutRegister = () => {
               <FormHeader>
                 <h1>{signupConfig.title}</h1>
                 <p>{signupConfig.subtitle}</p>
+                <p style={{ margin: '-1.5rem 0 3rem' }}>
+                  Already have an account?{' '}
+                  <InlineLink onClick={login}>Login here</InlineLink>
+                </p>
               </FormHeader>
               <SignUpForm
                 loading={loading}
