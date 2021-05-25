@@ -101,6 +101,13 @@ const FooterSocial = styled('div')`
       height: 1.6rem;
       color: ${(props) => props.theme.colors.light};
       margin: 0 0 0 1.75rem;
+
+      a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        color: ${(props) => props.theme.colors.light};
+      }
     }
   }
 `
@@ -197,13 +204,31 @@ const Footer = ({ hasRouter = true }) => {
             <FooterSocial>
               <Preface>Follow Us</Preface>
               <span>
-                <Facebook size={null} />
+                <a
+                  href="https://www.facebook.com/Roti/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <Facebook size={null} />
+                </a>
               </span>
               <span>
-                <Instagram size={null} />
+                <a
+                  href="https://www.instagram.com/roti/?hl=en"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <Instagram size={null} />
+                </a>
               </span>
               <span>
-                <Twitter size={null} />
+                <a
+                  href="https://twitter.com/rotimodernmed"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <Twitter size={null} />
+                </a>
               </span>
             </FooterSocial>
           </div>
