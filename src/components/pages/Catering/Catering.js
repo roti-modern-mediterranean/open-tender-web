@@ -39,6 +39,7 @@ import {
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { isBrowser } from 'react-device-detect'
+import CateringAutocomplete from './CateringAutocomplete'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -112,6 +113,8 @@ const CateringMessage = styled('div')`
     }
   }
 `
+
+const CateringMessageLocation = styled('div')``
 
 const CateringCalendar = styled('div')`
   flex: 0 0 36rem;
@@ -210,15 +213,15 @@ const CateringPage = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { catering: config } = useSelector(selectConfig)
   const { title, subtitle, background } = config
-  const { orderType, serviceType, requestedAt, revenueCenter } = useSelector(
-    selectOrder
-  )
+  const { orderType, serviceType, requestedAt, revenueCenter } =
+    useSelector(selectOrder)
   const hasTypes = orderType && serviceType
   const { timezone } = revenueCenter || {}
   const tz = timezone ? timezoneMap[timezone] : getUserTimezone()
   const [date, setDate] = useState(null)
   const [minTime, setMinTime] = useState(new Date())
   const [settings, setSettings] = useState(null)
+  const [hasTime, setHasTime] = useState(false)
   const { entity: validTimes, loading } = useSelector(selectValidTimes)
   const isLoading = loading === 'pending'
   const { windowRef } = useContext(AppContext)
@@ -239,13 +242,8 @@ const CateringPage = () => {
 
   useEffect(() => {
     if (validTimes) {
-      const {
-        first_time,
-        holidays,
-        hours,
-        interval,
-        closed_weekdays,
-      } = validTimes
+      const { first_time, holidays, hours, interval, closed_weekdays } =
+        validTimes
       const firstDate = isoToDate(first_time.utc, tz)
       const closedWeekdays = makeWeekdayIndices(closed_weekdays)
       const isClosed = (date) => {
@@ -281,10 +279,11 @@ const CateringPage = () => {
   const selectTime = (time) => {
     setDate(null)
     setTimeout(() => {
-      dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
       const reqestedAtIso = time ? dateToIso(time, tz) : 'asap'
       dispatch(setRequestedAt(reqestedAtIso))
-      history.push('/locations')
+      setHasTime(true)
+      // dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
+      // history.push('/locations')
     }, 300)
   }
 
@@ -310,25 +309,39 @@ const CateringPage = () => {
           <CateringView>
             <CateringContent>
               <CateringMessage>
-                <h2>{title}</h2>
-                <p>{subtitle}</p>
-                {orderMsg && (
-                  <CateringCurrentOrder>
-                    <CateringCurrentOrderTitle as="h3">
-                      Continue Current Order
-                    </CateringCurrentOrderTitle>
+                {hasTime ? (
+                  <CateringMessageLocation>
+                    <h2>Where are you located?</h2>
                     <p>
-                      {orderMsg}{' '}
-                      <InlineLink onClick={() => history.push(menuSlug)}>
-                        Continue this order.
-                      </InlineLink>
+                      Please enter your address and choose an order type to get
+                      started.
                     </p>
-                  </CateringCurrentOrder>
+                  </CateringMessageLocation>
+                ) : (
+                  <>
+                    <h2>{title}</h2>
+                    <p>{subtitle}</p>
+                    {orderMsg && (
+                      <CateringCurrentOrder>
+                        <CateringCurrentOrderTitle as="h3">
+                          Continue Current Order
+                        </CateringCurrentOrderTitle>
+                        <p>
+                          {orderMsg}{' '}
+                          <InlineLink onClick={() => history.push(menuSlug)}>
+                            Continue this order.
+                          </InlineLink>
+                        </p>
+                      </CateringCurrentOrder>
+                    )}
+                  </>
                 )}
               </CateringMessage>
               <CateringCalendar imageUrl={background}>
                 {isLoading || !settings ? (
                   <Loading type="Clip" color={theme.colors.light} size={50} />
+                ) : hasTime ? (
+                  <CateringAutocomplete />
                 ) : (
                   <RequestedAtPicker
                     date={date}

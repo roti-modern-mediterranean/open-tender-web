@@ -6,6 +6,14 @@ const MainView = styled('main')`
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  ${(props) =>
+    props.imageUrl
+      ? `background-image: url(${props.imageUrl});
+    background-color: ${props.theme.bgColors.dark};`
+      : `background-color: ${(props) => props.theme.bgColors[props.bgColor]};`}
   padding: ${(props) => props.padding || `${props.theme.layout.navHeight} 0 0`};
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     padding: ${(props) =>
