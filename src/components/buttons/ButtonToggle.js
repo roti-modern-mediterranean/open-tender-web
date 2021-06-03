@@ -35,9 +35,11 @@ const ButtonToggleView = styled('div')`
     }
   }
 
-  button: hover {
-    background-color: ${(props) => props.theme.colors.navHover};
-    border-color: ${(props) => props.theme.colors.navHover};
+  button:enabled {
+    &:hover {
+      background-color: ${(props) => props.theme.colors.navHover};
+      border-color: ${(props) => props.theme.colors.navHover};
+    }
   }
 `
 

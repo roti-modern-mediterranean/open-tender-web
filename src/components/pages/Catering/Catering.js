@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
+import propTypes from 'prop-types'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -57,7 +59,7 @@ const CateringView = styled(BgImage)`
   }
 `
 
-const CateringContent = styled('div')`
+const CateringContainer = styled('div')`
   display: flex;
   justify-content: space-between;
   width: 108rem;
@@ -73,7 +75,8 @@ const CateringContent = styled('div')`
   }
 `
 
-const CateringMessage = styled('div')`
+const CateringContent = styled('div')`
+  position: relative;
   flex: 1 1 auto;
   padding: 0 3rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -81,40 +84,7 @@ const CateringMessage = styled('div')`
     padding: 1rem ${(props) => props.theme.layout.paddingMobile} 2rem;
     text-align: center;
   }
-
-  h2 {
-    margin: 0 0 1rem;
-    font-size: 9rem;
-    line-height: 0.9;
-    color: ${(props) => props.theme.colors.light};
-    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      font-size: 6rem;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-family: ${(props) => props.theme.fonts.preface.family};
-      color: ${(props) => props.theme.colors.primary};
-      font-weight: 500;
-      font-size: 2.8rem;
-      letter-spacing: 0.01em;
-    }
-  }
-
-  & > p {
-    font-size: 2.7rem;
-    line-height: 1.33333;
-    color: ${(props) => props.theme.colors.light};
-    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      font-size: 2.3rem;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      color: ${(props) => props.theme.colors.primary};
-      font-size: 1.5rem;
-      line-height: 1.45;
-    }
-  }
 `
-
-const CateringMessageLocation = styled('div')``
 
 const CateringCalendar = styled('div')`
   flex: 0 0 36rem;
@@ -192,6 +162,86 @@ const CateringCurrentOrderTitle = styled(Preface)`
     color: ${(props) => props.theme.colors.primary};
   }
 `
+
+const CateringMessageView = styled('div')`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 3rem;
+  height: 100%;
+  min-height: 35rem;
+
+  &.slide-up-enter,
+  &.slide-up-exit.slide-up-exit-active {
+    transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3D(0, 5rem, 0);
+  }
+
+  &.slide-up-enter.slide-up-enter-active,
+  &.slide-up-exit {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3D(0, 0, 0);
+  }
+
+  h2 {
+    margin: 0 0 1rem;
+    font-size: 9rem;
+    line-height: 0.9;
+    color: ${(props) => props.theme.colors.light};
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      font-size: 6rem;
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-family: ${(props) => props.theme.fonts.preface.family};
+      color: ${(props) => props.theme.colors.primary};
+      font-weight: 500;
+      font-size: 2.8rem;
+      letter-spacing: 0.01em;
+    }
+  }
+
+  & > p {
+    font-size: 2.7rem;
+    line-height: 1.33333;
+    color: ${(props) => props.theme.colors.light};
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      font-size: 2.3rem;
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      color: ${(props) => props.theme.colors.primary};
+      font-size: 1.5rem;
+      line-height: 1.45;
+    }
+  }
+`
+
+const CateringMessage = ({ show, children }) => {
+  return (
+    <TransitionGroup component={null}>
+      {show ? (
+        <CSSTransition
+          key="modal"
+          classNames="slide-up"
+          timeout={{ enter: 250, exit: 250 }}
+        >
+          <CateringMessageView>{children}</CateringMessageView>
+        </CSSTransition>
+      ) : null}
+    </TransitionGroup>
+  )
+}
+
+CateringMessage.displayName = 'CateringMessage'
+CateringMessage.propTypes = {
+  show: propTypes.bool,
+  children: propTypes.oneOfType([
+    propTypes.arrayOf(propTypes.node),
+    propTypes.node,
+  ]),
+}
 
 const makeOrderMessage = (orderType, requestedAt, revenueCenter) => {
   const hasCateringOrder =
@@ -307,36 +357,33 @@ const CateringPage = () => {
           }}
         >
           <CateringView>
-            <CateringContent>
-              <CateringMessage>
-                {hasTime ? (
-                  <CateringMessageLocation>
-                    <h2>Where are you located?</h2>
-                    <p>
-                      Please enter your address and choose an order type to get
-                      started.
-                    </p>
-                  </CateringMessageLocation>
-                ) : (
-                  <>
-                    <h2>{title}</h2>
-                    <p>{subtitle}</p>
-                    {orderMsg && (
-                      <CateringCurrentOrder>
-                        <CateringCurrentOrderTitle as="h3">
-                          Continue Current Order
-                        </CateringCurrentOrderTitle>
-                        <p>
-                          {orderMsg}{' '}
-                          <InlineLink onClick={() => history.push(menuSlug)}>
-                            Continue this order.
-                          </InlineLink>
-                        </p>
-                      </CateringCurrentOrder>
-                    )}
-                  </>
-                )}
-              </CateringMessage>
+            <CateringContainer>
+              <CateringContent>
+                <CateringMessage show={hasTime}>
+                  <h2>Where are you located?</h2>
+                  <p>
+                    Please enter your address and choose an order type to get
+                    started.
+                  </p>
+                </CateringMessage>
+                <CateringMessage show={!hasTime}>
+                  <h2>{title}</h2>
+                  <p>{subtitle}</p>
+                  {orderMsg && (
+                    <CateringCurrentOrder>
+                      <CateringCurrentOrderTitle as="h3">
+                        Continue Current Order
+                      </CateringCurrentOrderTitle>
+                      <p>
+                        {orderMsg}{' '}
+                        <InlineLink onClick={() => history.push(menuSlug)}>
+                          Continue this order.
+                        </InlineLink>
+                      </p>
+                    </CateringCurrentOrder>
+                  )}
+                </CateringMessage>
+              </CateringContent>
               <CateringCalendar imageUrl={background}>
                 {isLoading || !settings ? (
                   <Loading type="Clip" color={theme.colors.light} size={50} />
@@ -358,7 +405,7 @@ const CateringPage = () => {
                   />
                 )}
               </CateringCalendar>
-            </CateringContent>
+            </CateringContainer>
           </CateringView>
         </Main>
       </Content>
