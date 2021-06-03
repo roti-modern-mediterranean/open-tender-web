@@ -45,19 +45,44 @@ const CateringView = styled(BgImage)`
   width: 100%;
   flex-grow: 1;
   min-height: 50rem;
-  // background-color: ${(props) => props.theme.bgColors.secondary};
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    position: relatiive;
     display: block;
     padding: 0;
-    min-height: 0;
+    min-height: 64rem;
+    background-image: url(${(props) => props.imageUrl});
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: ${(props) => props.theme.bgColors.dark};
+  }
+
+  &::after {
+    display: none;
+    position: absolute;
+    content: ' ';
+    z-index: 0;
+    top: 25rem;
+    left: 0;
+    right: 0;
+    bottom: -10rem;
+    background: linear-gradient(
+      0deg,
+      rgba(37, 39, 42, 1) 30%,
+      rgba(37, 39, 42, 0.9) 60%,
+      rgba(37, 39, 42, 0) 100%
+    );
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      display: block;
+    }
   }
 `
 
-const CateringContainerView = styled('div')`
+const CateringContainer = styled('div')`
   display: flex;
   justify-content: space-between;
   width: 108rem;
@@ -67,92 +92,61 @@ const CateringContainerView = styled('div')`
   border-radius: 2.2rem;
   background-color: rgba(37, 39, 42, 0.6);
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    background-color: ${(props) => props.theme.bgColors.primary};
+    position: relative;
+    z-index: 1;
     flex-direction: column;
     padding: 0;
     border-radius: 0;
-  }
-
-  &.catering-slide-up-enter,
-  &.catering-slide-up-exit.catering-slide-up-exit-active {
-    transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
-    opacity: 0;
-    visibility: hidden;
-    transform: translate3D(0, 4rem, 0);
-  }
-
-  &.catering-slide-up-enter.catering-slide-up-enter-active,
-  &.catering-slide-up-exit {
-    opacity: 1;
-    visibility: visible;
-    transform: translate3D(0, 0, 0);
+    background-color: rgba(37, 39, 42, 0.2);
   }
 `
 
-// const CateringContainer = ({ show, children }) => {
-//   return (
-//     <TransitionGroup component={null}>
-//       {show ? (
-//         <CSSTransition
-//           key="modal"
-//           classNames="catering-slide-up"
-//           timeout={{ enter: 250, exit: 250 }}
-//         >
-//           <CateringContainerView>{children}</CateringContainerView>
-//         </CSSTransition>
-//       ) : null}
-//     </TransitionGroup>
-//   )
-// }
-
 const CateringContent = styled('div')`
-  position: relative;
   flex: 1 1 auto;
   padding: 0 3rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex: 0 0 auto;
-    padding: 1rem ${(props) => props.theme.layout.paddingMobile} 2rem;
+    padding: 6rem ${(props) => props.theme.layout.paddingMobile} 0;
     text-align: center;
+    max-width: 44rem;
+    margin: 0 auto;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding-top: 3rem;
   }
 `
 
-const CateringCalendar = styled('div')`
+const CateringMessage = styled('div')`
   opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.5s forwards;
-  flex: 0 0 36rem;
-  min-height: 35rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    position: relative;
-    flex: 1 1 auto;
-    padding: 12rem ${(props) => props.theme.layout.paddingMobile} 5rem;
-    background-image: url(${(props) => props.imageUrl});
-    background-position: center-top;
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-    background-color: ${(props) => props.theme.bgColors.dark};
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+
+  h2 {
+    margin: 0 0 1rem;
+    font-size: 9rem;
+    line-height: 0.9;
+    color: ${(props) => props.theme.colors.light};
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      font-size: 6rem;
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-family: ${(props) => props.theme.fonts.preface.family};
+      font-weight: 500;
+      font-size: 2.8rem;
+      letter-spacing: 0.01em;
+    }
   }
 
-  &::after {
-    display: none;
-    position: absolute;
-    content: ' ';
-    z-index: 0;
-    top: 10rem;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    // height: 23rem;
-    background: linear-gradient(
-      0deg,
-      rgba(37, 39, 42, 1) 30%,
-      rgba(37, 39, 42, 0.9) 60%,
-      rgba(37, 39, 42, 0) 100%
-    );
+  & > p {
+    font-size: 2.7rem;
+    line-height: 1.33333;
+    color: ${(props) => props.theme.colors.light};
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      font-size: 2.3rem;
+    }
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      display: block;
+      font-size: 1.5rem;
+      line-height: 1.45;
+      font-weight: 500;
     }
   }
 `
@@ -172,13 +166,26 @@ const CateringCurrentOrder = styled('div')`
     line-height: 1.4;
     color: ${(props) => props.theme.colors.light};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      color: ${(props) => props.theme.colors.primary};
       font-size: 1.3rem;
+      font-weight: 500;
       line-height: 1.6;
     }
 
     button {
-      color: ${(props) => props.theme.colors.paprika};
+      font-weight: 400;
+      color: ${(props) => props.theme.colors.light};
+      padding-bottom: 0.2rem;
+      border-bottom: 0.1rem solid ${(props) => props.theme.colors.light};
+      @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+        font-size: 1.3rem;
+      }
+
+      &:hover,
+      &:active,
+      &:focus {
+        color: ${(props) => props.theme.colors.paprika};
+        border-color: ${(props) => props.theme.colors.paprika};
+      }
     }
   }
 `
@@ -191,43 +198,25 @@ const CateringCurrentOrderTitle = styled(Preface)`
   margin: 0 0 0.5rem;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     font-size: 2.2rem;
-    color: ${(props) => props.theme.colors.primary};
+    font-weight: 500;
   }
 `
 
-const CateringMessage = styled('div')`
+const CateringCalendar = styled('div')`
   opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-
-  h2 {
-    margin: 0 0 1rem;
-    font-size: 9rem;
-    line-height: 0.9;
-    color: ${(props) => props.theme.colors.light};
-    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      font-size: 6rem;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-family: ${(props) => props.theme.fonts.preface.family};
-      color: ${(props) => props.theme.colors.primary};
-      font-weight: 500;
-      font-size: 2.8rem;
-      letter-spacing: 0.01em;
-    }
-  }
-
-  & > p {
-    font-size: 2.7rem;
-    line-height: 1.33333;
-    color: ${(props) => props.theme.colors.light};
-    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      font-size: 2.3rem;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      color: ${(props) => props.theme.colors.primary};
-      font-size: 1.5rem;
-      line-height: 1.45;
-    }
+  animation: slide-up 0.25s ease-in-out 0.5s forwards;
+  flex: 0 0 36rem;
+  min-height: 35rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    position: relative;
+    flex: 1 1 auto;
+    width: 44rem;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 3rem ${(props) => props.theme.layout.paddingMobile} 3rem;
   }
 `
 
@@ -361,8 +350,8 @@ const CateringPage = () => {
             backgroundColor: theme.bgColors.dark,
           }}
         >
-          <CateringView>
-            <CateringContainerView>
+          <CateringView imageUrl={isBrowser ? null : background}>
+            <CateringContainer>
               {showDate && (
                 <>
                   <CateringContent>
@@ -384,7 +373,7 @@ const CateringPage = () => {
                       )}
                     </CateringMessage>
                   </CateringContent>
-                  <CateringCalendar imageUrl={background}>
+                  <CateringCalendar>
                     {isLoading || !settings ? (
                       <Loading
                         type="Clip"
@@ -420,7 +409,7 @@ const CateringPage = () => {
                       </p>
                     </CateringMessage>
                   </CateringContent>
-                  <CateringCalendar imageUrl={background}>
+                  <CateringCalendar>
                     <CateringAutocomplete
                       requestedAtStr={requestedAtStr}
                       clearTime={clearTime}
@@ -429,7 +418,7 @@ const CateringPage = () => {
                   </CateringCalendar>
                 </>
               )}
-            </CateringContainerView>
+            </CateringContainer>
           </CateringView>
         </Main>
       </Content>
