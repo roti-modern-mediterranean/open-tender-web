@@ -4,7 +4,12 @@ import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { setAddress, selectOrder } from '@open-tender/redux'
-import { GoogleMap, GoogleMapsAutocomplete } from '@open-tender/components'
+import {
+  ButtonLink,
+  GoogleMap,
+  GoogleMapsAutocomplete,
+  Preface,
+} from '@open-tender/components'
 
 import { selectSettings } from '../../../slices'
 import { MapPin } from 'react-feather'
@@ -92,8 +97,8 @@ const CateringAutocompleteView = styled('div')`
   // padding: 2rem;
   border-radius: ${(props) => props.theme.border.radius};
   // background-color: ${(props) => props.theme.colors.light};
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  // opacity: 0;
+  // animation: slide-up 0.25s ease-in-out 0.25s forwards;
 `
 
 const CateringAutocompleteButtons = styled('div')`
@@ -131,7 +136,40 @@ const CateringAutocompleteButtons = styled('div')`
   }
 `
 
-const CateringAutocomplete = ({ handlePickup, handleDelivery }) => {
+const CateringAutocompleteTime = styled('div')`
+  margin: 0 0 3rem;
+  text-align: center;
+
+  p {
+    color: ${(props) => props.theme.colors.light};
+    margin: 0 0 1rem;
+
+    button {
+      color: ${(props) => props.theme.colors.light};
+      font-size: 1.3rem;
+      padding-bottom: 0.2rem;
+      border-bottom: 0.1rem solid ${(props) => props.theme.colors.light};
+
+      &:hover,
+      &:active,
+      &:focus {
+        color: ${(props) => props.theme.colors.paprika};
+        border-color: ${(props) => props.theme.colors.paprika};
+      }
+    }
+  }
+`
+
+const CateringAutocompleteTimeDate = styled(Preface)`
+  color: ${(props) => props.theme.colors.light};
+  font-size: 2.7rem;
+`
+
+const CateringAutocomplete = ({
+  requestedAtStr,
+  clearTime,
+  selectServiceType,
+}) => {
   const dispatch = useDispatch()
   const { address } = useSelector(selectOrder)
   const formattedAddress = address ? address.formatted_address : ''
@@ -149,6 +187,17 @@ const CateringAutocomplete = ({ handlePickup, handleDelivery }) => {
         loader={<ClipLoader size={30} loading={true} />}
         renderMap={(props) => <CateringMap {...props} />}
       >
+        <CateringAutocompleteTime>
+          <p>You selected a date and time of</p>
+          <p>
+            <CateringAutocompleteTimeDate>
+              {requestedAtStr}
+            </CateringAutocompleteTimeDate>
+          </p>
+          <p>
+            <ButtonLink onClick={clearTime}>Choose a different time</ButtonLink>
+          </p>
+        </CateringAutocompleteTime>
         <CateringAutocompleteInput
           formattedAddress={formattedAddress}
           setCenter={setCenter}
@@ -156,13 +205,13 @@ const CateringAutocomplete = ({ handlePickup, handleDelivery }) => {
         />
         <CateringAutocompleteButtons>
           <ButtonToggle
-            onClick={handlePickup}
+            onClick={() => selectServiceType('PICKUP')}
             disabled={address ? false : true}
           >
             Pickup
           </ButtonToggle>
           <ButtonToggle
-            onClick={handleDelivery}
+            onClick={() => selectServiceType('DELIVERY')}
             disabled={address ? false : true}
           >
             Delivery

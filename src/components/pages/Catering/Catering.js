@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import propTypes from 'prop-types'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -59,11 +57,12 @@ const CateringView = styled(BgImage)`
   }
 `
 
-const CateringContainer = styled('div')`
+const CateringContainerView = styled('div')`
   display: flex;
   justify-content: space-between;
   width: 108rem;
   max-width: 100%;
+  min-height: 43rem;
   padding: 4rem 4.5rem;
   border-radius: 2.2rem;
   background-color: rgba(37, 39, 42, 0.6);
@@ -73,7 +72,38 @@ const CateringContainer = styled('div')`
     padding: 0;
     border-radius: 0;
   }
+
+  &.catering-slide-up-enter,
+  &.catering-slide-up-exit.catering-slide-up-exit-active {
+    transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3D(0, 4rem, 0);
+  }
+
+  &.catering-slide-up-enter.catering-slide-up-enter-active,
+  &.catering-slide-up-exit {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3D(0, 0, 0);
+  }
 `
+
+// const CateringContainer = ({ show, children }) => {
+//   return (
+//     <TransitionGroup component={null}>
+//       {show ? (
+//         <CSSTransition
+//           key="modal"
+//           classNames="catering-slide-up"
+//           timeout={{ enter: 250, exit: 250 }}
+//         >
+//           <CateringContainerView>{children}</CateringContainerView>
+//         </CSSTransition>
+//       ) : null}
+//     </TransitionGroup>
+//   )
+// }
 
 const CateringContent = styled('div')`
   position: relative;
@@ -87,6 +117,8 @@ const CateringContent = styled('div')`
 `
 
 const CateringCalendar = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.5s forwards;
   flex: 0 0 36rem;
   min-height: 35rem;
   display: flex;
@@ -163,28 +195,9 @@ const CateringCurrentOrderTitle = styled(Preface)`
   }
 `
 
-const CateringMessageView = styled('div')`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 3rem;
-  height: 100%;
-  min-height: 35rem;
-
-  &.slide-up-enter,
-  &.slide-up-exit.slide-up-exit-active {
-    transition: all 0.5s cubic-bezier(0.17, 0.67, 0.12, 1);
-    opacity: 0;
-    visibility: hidden;
-    transform: translate3D(0, 5rem, 0);
-  }
-
-  &.slide-up-enter.slide-up-enter-active,
-  &.slide-up-exit {
-    opacity: 1;
-    visibility: visible;
-    transform: translate3D(0, 0, 0);
-  }
+const CateringMessage = styled('div')`
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
 
   h2 {
     margin: 0 0 1rem;
@@ -218,31 +231,6 @@ const CateringMessageView = styled('div')`
   }
 `
 
-const CateringMessage = ({ show, children }) => {
-  return (
-    <TransitionGroup component={null}>
-      {show ? (
-        <CSSTransition
-          key="modal"
-          classNames="slide-up"
-          timeout={{ enter: 250, exit: 250 }}
-        >
-          <CateringMessageView>{children}</CateringMessageView>
-        </CSSTransition>
-      ) : null}
-    </TransitionGroup>
-  )
-}
-
-CateringMessage.displayName = 'CateringMessage'
-CateringMessage.propTypes = {
-  show: propTypes.bool,
-  children: propTypes.oneOfType([
-    propTypes.arrayOf(propTypes.node),
-    propTypes.node,
-  ]),
-}
-
 const makeOrderMessage = (orderType, requestedAt, revenueCenter) => {
   const hasCateringOrder =
     orderType === 'CATERING' &&
@@ -271,12 +259,16 @@ const CateringPage = () => {
   const [date, setDate] = useState(null)
   const [minTime, setMinTime] = useState(new Date())
   const [settings, setSettings] = useState(null)
-  const [hasTime, setHasTime] = useState(false)
+  const [showDate, setShowDate] = useState(true)
+  const [showAddress, setShowAddress] = useState(false)
   const { entity: validTimes, loading } = useSelector(selectValidTimes)
   const isLoading = loading === 'pending'
   const { windowRef } = useContext(AppContext)
   const orderMsg = makeOrderMessage(orderType, requestedAt, revenueCenter)
   const menuSlug = useSelector(selectMenuSlug)
+  const requestedAtStr = requestedAt
+    ? makeReadableDateStrFromIso(requestedAt, tz, true)
+    : null
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -328,13 +320,26 @@ const CateringPage = () => {
 
   const selectTime = (time) => {
     setDate(null)
+    setShowDate(false)
     setTimeout(() => {
       const reqestedAtIso = time ? dateToIso(time, tz) : 'asap'
       dispatch(setRequestedAt(reqestedAtIso))
-      setHasTime(true)
-      // dispatch(setOrderServiceType('CATERING', 'DELIVERY'))
-      // history.push('/locations')
-    }, 300)
+      setShowAddress(true)
+    }, 50)
+  }
+
+  const clearTime = () => {
+    setDate(null)
+    setShowAddress(false)
+    setTimeout(() => {
+      dispatch(setRequestedAt(null))
+      setShowDate(true)
+    }, 50)
+  }
+
+  const selectServiceType = (serviceType) => {
+    dispatch(setOrderServiceType('CATERING', serviceType))
+    history.push('/locations')
   }
 
   const startMin = getMinutesfromDate(minTime || settings.minTime)
@@ -357,55 +362,74 @@ const CateringPage = () => {
           }}
         >
           <CateringView>
-            <CateringContainer>
-              <CateringContent>
-                <CateringMessage show={hasTime}>
-                  <h2>Where are you located?</h2>
-                  <p>
-                    Please enter your address and choose an order type to get
-                    started.
-                  </p>
-                </CateringMessage>
-                <CateringMessage show={!hasTime}>
-                  <h2>{title}</h2>
-                  <p>{subtitle}</p>
-                  {orderMsg && (
-                    <CateringCurrentOrder>
-                      <CateringCurrentOrderTitle as="h3">
-                        Continue Current Order
-                      </CateringCurrentOrderTitle>
+            <CateringContainerView>
+              {showDate && (
+                <>
+                  <CateringContent>
+                    <CateringMessage>
+                      <h2>{title}</h2>
+                      <p>{subtitle}</p>
+                      {orderMsg && (
+                        <CateringCurrentOrder>
+                          <CateringCurrentOrderTitle as="h3">
+                            Continue Current Order
+                          </CateringCurrentOrderTitle>
+                          <p>
+                            {orderMsg}{' '}
+                            <InlineLink onClick={() => history.push(menuSlug)}>
+                              Continue this order.
+                            </InlineLink>
+                          </p>
+                        </CateringCurrentOrder>
+                      )}
+                    </CateringMessage>
+                  </CateringContent>
+                  <CateringCalendar imageUrl={background}>
+                    {isLoading || !settings ? (
+                      <Loading
+                        type="Clip"
+                        color={theme.colors.light}
+                        size={50}
+                      />
+                    ) : (
+                      <RequestedAtPicker
+                        date={date}
+                        setDate={(date) => setDate(date)}
+                        selectTime={selectTime}
+                        minDate={settings.minDate}
+                        maxDate={null}
+                        excludeDates={settings.excludeDates}
+                        filterDate={settings.isClosed}
+                        interval={settings.interval || 15}
+                        excludeTimes={[]}
+                        minTime={startMin}
+                        maxTime={endMin}
+                      />
+                    )}
+                  </CateringCalendar>
+                </>
+              )}
+              {showAddress && (
+                <>
+                  <CateringContent>
+                    <CateringMessage>
+                      <h2>Where are you located?</h2>
                       <p>
-                        {orderMsg}{' '}
-                        <InlineLink onClick={() => history.push(menuSlug)}>
-                          Continue this order.
-                        </InlineLink>
+                        Please enter your address and choose an order type to
+                        get started.
                       </p>
-                    </CateringCurrentOrder>
-                  )}
-                </CateringMessage>
-              </CateringContent>
-              <CateringCalendar imageUrl={background}>
-                {isLoading || !settings ? (
-                  <Loading type="Clip" color={theme.colors.light} size={50} />
-                ) : hasTime ? (
-                  <CateringAutocomplete />
-                ) : (
-                  <RequestedAtPicker
-                    date={date}
-                    setDate={(date) => setDate(date)}
-                    selectTime={selectTime}
-                    minDate={settings.minDate}
-                    maxDate={null}
-                    excludeDates={settings.excludeDates}
-                    filterDate={settings.isClosed}
-                    interval={settings.interval || 15}
-                    excludeTimes={[]}
-                    minTime={startMin}
-                    maxTime={endMin}
-                  />
-                )}
-              </CateringCalendar>
-            </CateringContainer>
+                    </CateringMessage>
+                  </CateringContent>
+                  <CateringCalendar imageUrl={background}>
+                    <CateringAutocomplete
+                      requestedAtStr={requestedAtStr}
+                      clearTime={clearTime}
+                      selectServiceType={selectServiceType}
+                    />
+                  </CateringCalendar>
+                </>
+              )}
+            </CateringContainerView>
           </CateringView>
         </Main>
       </Content>
