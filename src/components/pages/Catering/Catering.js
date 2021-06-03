@@ -6,6 +6,9 @@ import {
   selectOrder,
   setRequestedAt,
   setOrderServiceType,
+  setAddress,
+  resetRevenueCenters,
+  resetRevenueCenter,
   fetchValidTimes,
   selectValidTimes,
   selectMenuSlug,
@@ -310,6 +313,7 @@ const CateringPage = () => {
   const selectTime = (time) => {
     setDate(null)
     setShowDate(false)
+    dispatch(setAddress(null))
     setTimeout(() => {
       const reqestedAtIso = time ? dateToIso(time, tz) : 'asap'
       dispatch(setRequestedAt(reqestedAtIso))
@@ -327,6 +331,8 @@ const CateringPage = () => {
   }
 
   const selectServiceType = (serviceType) => {
+    dispatch(resetRevenueCenters())
+    dispatch(resetRevenueCenter())
     dispatch(setOrderServiceType('CATERING', serviceType))
     history.push('/locations')
   }

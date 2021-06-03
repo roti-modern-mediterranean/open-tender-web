@@ -63,15 +63,16 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
   const revenueCenterIds = displayedRevenueCenters.map(
     (i) => i.revenue_center_id
   )
+  const loadingMsg =
+    orderType === 'CATERING'
+      ? 'Finding the closest location...'
+      : 'Retrieving nearest locations...'
 
   useEffect(() => {
     if (orderType) {
       let params = { type: orderType }
       if (isOutpost) params = { ...params, is_outpost: true }
       if (coords) params = { ...params, lat: coords.lat, lng: coords.lng }
-      // if (orderType === 'CATERING' && requestedAt) {
-      //   params = { ...params, requestedAt }
-      // }
       dispatch(fetchRevenueCenters(params))
     }
   }, [orderType, serviceType, isOutpost, coords, requestedAt, dispatch])
@@ -123,10 +124,7 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
   return (
     <RevenueCentersSelectView>
       {isLoading ? (
-        <Loading
-          text="Retrieving nearest locations..."
-          style={{ textAlign: 'left' }}
-        />
+        <Loading text={loadingMsg} style={{ textAlign: 'left' }} />
       ) : showRevenueCenters ? (
         <RevenueCentersSelectList>
           {filtered.map((revenueCenter) => (
