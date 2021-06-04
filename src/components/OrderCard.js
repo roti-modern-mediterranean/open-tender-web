@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -44,6 +44,7 @@ const OrderCard = ({ order, isLast }) => {
     delivery,
     gift_cards,
   } = order
+  const [imageUrl, setImageUrl] = useState(null)
   const isOpen = status === 'OPEN'
   const isMerch = order_type === 'MERCH'
   const orderTypeName = makeOrderTypeName(order_type, service_type)
@@ -62,9 +63,11 @@ const OrderCard = ({ order, isLast }) => {
     .flat()
     .sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
     .reverse()
-  const randomImageUrl =
-    defaultImages[Math.floor(Math.random() * defaultImages.length)]
-  const imageUrl = items && items.length ? items[0].imageUrl : randomImageUrl
+  const randomImageUrl = useMemo(
+    () => defaultImages[Math.floor(Math.random() * defaultImages.length)],
+    []
+  )
+  const itemImageUrl = items && items.length ? items[0].imageUrl : null
   const cartItems = cart.map((i) => `${i.quantity} ${i.name}`).join(', ')
   const giftCards = gift_cards
     ? gift_cards
@@ -80,6 +83,12 @@ const OrderCard = ({ order, isLast }) => {
     dispatch(setAddress(address || null))
     dispatch(reorderPastOrder({ revenueCenterId, serviceType, items: cart }))
   }
+
+  useEffect(() => {
+    if (!imageUrl) {
+      setImageUrl(itemImageUrl || randomImageUrl)
+    }
+  }, [imageUrl, itemImageUrl, randomImageUrl])
 
   return (
     <Card
