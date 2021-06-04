@@ -5,6 +5,7 @@ import {
   selectCustomer,
   logoutCustomer,
   selectCartQuantity,
+  setOrderServiceType,
 } from '@open-tender/redux'
 import { Heading, Preface } from '@open-tender/components'
 import styled from '@emotion/styled'
@@ -39,7 +40,7 @@ const guestLinks = [
       },
       {
         title: 'Order Now',
-        path: '/locations',
+        button: 'orderNow',
       },
       {
         title: 'Catering',
@@ -61,7 +62,7 @@ const guestLinks = [
     links: [
       {
         title: 'Locations',
-        path: '/locations',
+        button: 'orderNow',
       },
       // {
       //   title: 'About',
@@ -118,7 +119,7 @@ const userLinks = [
       },
       {
         title: 'Order Now',
-        path: '/locations',
+        button: 'orderNow',
       },
       {
         title: 'Catering',
@@ -144,7 +145,7 @@ const userLinks = [
     links: [
       {
         title: 'Locations',
-        path: '/locations',
+        button: 'orderNow',
       },
       // {
       //   title: 'About',
@@ -297,9 +298,19 @@ const Nav = React.forwardRef((props, ref) => {
     dispatch(toggleSidebar())
   }
 
+  const orderNow = (evt) => {
+    evt.target.blur()
+    evt.preventDefault()
+    evt.stopPropagation()
+    dispatch(toggleNav())
+    dispatch(setOrderServiceType('OLO', 'PICKUP'))
+    history.push('/locations')
+  }
+
   const buttons = {
     login: login,
     cart: cart,
+    orderNow: orderNow,
   }
 
   return (

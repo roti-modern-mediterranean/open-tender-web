@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { resetOrderType, selectOrder } from '@open-tender/redux'
+import { setServiceType, selectOrder } from '@open-tender/redux'
 import { serviceTypeNamesMap } from '@open-tender/js'
 import { ButtonStyled } from '@open-tender/components'
 
@@ -13,9 +13,11 @@ const OrderType = () => {
   const history = useHistory()
   const { serviceType } = useSelector(selectOrder)
   const serviceTypeName = serviceTypeNamesMap[serviceType]
+  const otherServiceType = serviceType === 'DELIVERY' ? 'PICKUP' : 'DELIVERY'
+  const otherServiceTypeName = serviceTypeNamesMap[otherServiceType]
 
   const changeOrderType = () => {
-    dispatch(resetOrderType())
+    dispatch(setServiceType(otherServiceType))
     dispatch(closeModal())
     history.push(`/locations`)
   }
@@ -39,7 +41,7 @@ const OrderType = () => {
               size="big"
               style={{ backgroundColor: 'transparent' }}
             >
-              Change Order Type
+              Change to {otherServiceTypeName}
             </ButtonStyled>
           </ButtonGroupBig>
         }
