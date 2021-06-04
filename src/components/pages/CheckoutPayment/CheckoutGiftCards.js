@@ -24,17 +24,21 @@ const CheckoutGiftCards = () => {
   const giftCardsApplied = form.tenders
     .filter((i) => i.tender_type === 'GIFT_CARD')
     .reduce((obj, i) => ({ ...obj, [i.card_number]: i.amount }), {})
-  const amountRemaining = checkAmountRemaining(check.totals.total, form.tenders)
-  const isPaid = Math.abs(amountRemaining).toFixed(2) === '0.00'
+  const isZero = check ? check.totals.total === '0.00' : false
 
   const addGiftCard = () => {
     const validate = () => dispatch(validateOrder())
-    dispatch(openModal({ type: 'giftCardAssign', args: { validate } }))
+    const args = { validate, submitText: 'Add Gift Card' }
+    dispatch(openModal({ type: 'giftCardAssign', args }))
   }
 
   const applyGiftCard = (cardNumber, balance) => {
-    const remaining = checkAmountRemaining(check.totals.total, form.tenders)
+    const giftCards = form.tenders.filter((i) => i.tender_type === 'GIFT_CARD')
+    let remaining = giftCards.length
+      ? checkAmountRemaining(check.totals.total, giftCards)
+      : parseFloat(check.totals.total)
     const amount = Math.min(remaining, parseFloat(balance)).toFixed(2)
+    if (parseFloat(amount) <= 0.0) return
     const newGiftCard = {
       tender_type: 'GIFT_CARD',
       card_number: cardNumber,
@@ -45,7 +49,6 @@ const CheckoutGiftCards = () => {
   }
 
   const removeGiftCard = (cardNumber) => {
-    // const removed = form.tenders.find((i) => i.card_number === cardNumber)
     const filtered = form.tenders.filter((i) => i.card_number !== cardNumber)
     const nonGiftCard = filtered.filter((i) => i.tender_type !== 'GIFT_CARD')
     const giftCard = filtered.filter((i) => i.tender_type === 'GIFT_CARD')
@@ -82,7 +85,7 @@ const CheckoutGiftCards = () => {
           const onClick = isApplied
             ? () => removeGiftCard(i.card_number)
             : () => applyGiftCard(i.card_number, i.balance)
-          const disabled = !isApplied && isPaid
+          const disabled = !isApplied && isZero
           const label = isApplied
             ? `Remove gift card ${i.card_number} with amount of ${amount}`
             : `Apply gift card ${i.card_number} with balance of ${i.balance}`
