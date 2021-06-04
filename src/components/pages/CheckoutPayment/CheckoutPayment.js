@@ -46,13 +46,9 @@ import CheckoutPromoCode from './CheckoutPromoCode'
 import CheckoutTenders from './CheckoutTenders'
 import BorderBox from '../../BorderBox'
 import { useTheme } from '@emotion/react'
+import CheckoutGiftCards from './CheckoutGiftCards'
 
 const CheckoutPaymentFooter = styled('div')`
-  // position: fixed;
-  // z-index: 10;
-  // bottom: 0;
-  // left: 0;
-  // right: 0;
   position: relative;
   width: 100%;
   height: 8rem;
@@ -192,6 +188,7 @@ const CheckoutPayment = () => {
                   editTip={has_tip ? editTip : null}
                 />
                 <CheckoutPromoCode />
+                <CheckoutGiftCards />
                 <CheckoutTenders />
               </FormWrapper>
             )}
