@@ -11,7 +11,11 @@ import { closeModal } from '../../slices'
 import { ModalContent, ModalView } from '..'
 import { GiftCardAssignForm } from '../forms'
 
-const GiftCardAssign = ({ windowRef, validate }) => {
+const GiftCardAssign = ({
+  windowRef,
+  validate,
+  submitText = 'Assign Gift Card',
+}) => {
   const dispatch = useDispatch()
   const { loading, error } = useSelector(selectCustomerGiftCards)
   const callback = useCallback(() => {
@@ -49,6 +53,7 @@ const GiftCardAssign = ({ windowRef, validate }) => {
           error={error}
           assign={assign}
           callback={callback}
+          submitText={submitText}
         />
       </ModalContent>
     </ModalView>

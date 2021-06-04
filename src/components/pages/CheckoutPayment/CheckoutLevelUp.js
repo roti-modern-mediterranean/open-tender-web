@@ -6,6 +6,7 @@ import { ButtonStyled } from '@open-tender/components'
 import { FormHeader, FormSubmit } from '../../inputs'
 import { useHistory } from 'react-router-dom'
 import { InlineLink } from '../..'
+import { useMemo } from 'react'
 
 const CheckoutLevelUpView = styled('div')`
   p {
@@ -32,14 +33,20 @@ const CheckoutLevelUp = () => {
   const levelup = check.customer.levelup || {}
   const applied =
     form.tenders.filter((i) => i.tender_type === 'LEVELUP').length > 0
+  const giftTenders = useMemo(
+    () => form.tenders.filter((i) => i.tender_type === 'GIFT_CARD'),
+    [form.tenders]
+  )
 
   const apply = () => {
-    const tender = { tender_type: 'LEVELUP', amount }
-    dispatch(updateForm({ tenders: [tender] }))
+    if (parseFloat(amount) > 0) {
+      const tender = { tender_type: 'LEVELUP', amount }
+      dispatch(updateForm({ tenders: [...giftTenders, tender] }))
+    }
   }
 
   const remove = () => {
-    dispatch(updateForm({ tenders: [] }))
+    dispatch(updateForm({ tenders: giftTenders }))
   }
 
   const goToAccount = () => {

@@ -51,6 +51,9 @@ const CheckoutTenders = () => {
   const customer_card_id =
     hasCards && noTender ? cards[0].customer_card_id : null
   const amount = checkAmountRemaining(total, form.tenders).toFixed(2)
+  const isZero = parseFloat(amount) <= 0.0
+  const nonGift = form.tenders.filter((i) => i.tender_type !== 'GIFT_CARD')
+  const hideTenders = isZero && !nonGift.length
 
   useEffect(() => {
     setHasTender(true)
@@ -60,6 +63,8 @@ const CheckoutTenders = () => {
       setHasTender(true)
     }
   }, [hasTender, customer_card_id, amount, dispatch])
+
+  if (hideTenders) return null
 
   return (
     <CheckoutTendersView>

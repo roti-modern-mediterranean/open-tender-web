@@ -4,7 +4,13 @@ import { ButtonSubmit, useGiftCardAssignForm } from '@open-tender/components'
 import { ErrMsg, FormSubmit, Input } from '../inputs'
 import { CreditCard } from '../icons'
 
-const GiftCardAssignOtherForm = ({ loading, error, assign, callback }) => {
+const GiftCardAssignOtherForm = ({
+  loading,
+  error,
+  assign,
+  callback,
+  submitText = 'Assign Gift Card',
+}) => {
   const {
     submitRef,
     inputRef,
@@ -39,7 +45,7 @@ const GiftCardAssignOtherForm = ({ loading, error, assign, callback }) => {
           submitRef={submitRef}
           submitting={submitting}
         >
-          {submitting ? 'Submitting...' : 'Assign Gift Card'}
+          {submitting ? 'Submitting...' : submitText}
         </ButtonSubmit>
       </FormSubmit>
     </form>
@@ -48,13 +54,11 @@ const GiftCardAssignOtherForm = ({ loading, error, assign, callback }) => {
 
 GiftCardAssignOtherForm.displayName = 'GiftCardAssignOtherForm'
 GiftCardAssignOtherForm.propTypes = {
-  giftCard: propTypes.object,
-  creditCards: propTypes.array,
   loading: propTypes.string,
   error: propTypes.object,
-  update: propTypes.func,
-  add: propTypes.func,
+  assign: propTypes.func,
   callback: propTypes.func,
+  submitText: propTypes.string,
 }
 
 export default GiftCardAssignOtherForm
