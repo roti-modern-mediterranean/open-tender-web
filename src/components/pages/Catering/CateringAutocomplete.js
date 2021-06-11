@@ -2,6 +2,7 @@ import { useState } from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useDispatch, useSelector } from 'react-redux'
+import { useTheme } from '@emotion/react'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { setAddress, selectOrder } from '@open-tender/redux'
 import {
@@ -14,6 +15,7 @@ import {
 import { selectSettings } from '../../../slices'
 import { MapPin } from 'react-feather'
 import { ButtonToggle } from '../../buttons'
+import { Loading } from '../..'
 
 const CateringMapView = styled('div')`
   position: fixed;
@@ -109,11 +111,11 @@ const CateringAutocompleteButtons = styled('div')`
   align-items: center;
   width: 100%;
   max-width: 40rem;
-  margin: 4rem auto 0;
+  margin: 3rem auto 0;
 
   & > div {
     width: 50%;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
 
     button,
     button:hover,
@@ -139,7 +141,7 @@ const CateringAutocompleteButtons = styled('div')`
 `
 
 const CateringAutocompleteTime = styled('div')`
-  margin: 0 0 3rem;
+  margin: 0 0 1rem;
   text-align: center;
 
   p {
@@ -152,11 +154,16 @@ const CateringAutocompleteTime = styled('div')`
       padding-bottom: 0.2rem;
       border-bottom: 0.1rem solid ${(props) => props.theme.colors.light};
 
-      &:hover,
-      &:active,
-      &:focus {
+      &:enabled:hover,
+      &:enabled:active,
+      &:enabled:focus {
         color: ${(props) => props.theme.colors.paprika};
         border-color: ${(props) => props.theme.colors.paprika};
+      }
+
+      &:disabled {
+        color: ${(props) => props.theme.colors.light};
+        border-bottom: 0.1rem solid ${(props) => props.theme.colors.light};
       }
     }
   }
@@ -167,10 +174,19 @@ const CateringAutocompleteTimeDate = styled(Preface)`
   font-size: 2.7rem;
 `
 
+const CateringLoading = styled('div')`
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+`
+
 const CateringAutocomplete = ({
   requestedAtStr,
   clearTime,
   selectServiceType,
+  disabled,
 }) => {
   const dispatch = useDispatch()
   const { address } = useSelector(selectOrder)
@@ -178,6 +194,8 @@ const CateringAutocomplete = ({
   const { googleMaps } = useSelector(selectSettings)
   const { apiKey, defaultCenter, zoom, styles } = googleMaps
   const [, setCenter] = useState(defaultCenter)
+  const serviceTypeDisabled = disabled || !address ? true : false
+  const theme = useTheme()
 
   return (
     <CateringAutocompleteView>
@@ -197,7 +215,9 @@ const CateringAutocomplete = ({
             </CateringAutocompleteTimeDate>
           </p>
           <p>
-            <ButtonLink onClick={clearTime}>Choose a different time</ButtonLink>
+            <ButtonLink disabled={disabled} onClick={clearTime}>
+              Choose a different time
+            </ButtonLink>
           </p>
         </CateringAutocompleteTime>
         <CateringAutocompleteInput
@@ -208,17 +228,25 @@ const CateringAutocomplete = ({
         <CateringAutocompleteButtons>
           <ButtonToggle
             onClick={() => selectServiceType('PICKUP')}
-            disabled={address ? false : true}
+            disabled={serviceTypeDisabled}
           >
             Pickup
           </ButtonToggle>
           <ButtonToggle
             onClick={() => selectServiceType('DELIVERY')}
-            disabled={address ? false : true}
+            disabled={serviceTypeDisabled}
           >
             Delivery
           </ButtonToggle>
         </CateringAutocompleteButtons>
+        <CateringLoading>
+          {disabled && (
+            <Loading
+              color={theme.colors.light}
+              text="Finding location nearest you..."
+            />
+          )}
+        </CateringLoading>
       </GoogleMap>
     </CateringAutocompleteView>
   )
@@ -226,9 +254,9 @@ const CateringAutocomplete = ({
 
 CateringAutocomplete.displayName = 'CateringAutocomplete'
 CateringAutocomplete.propTypes = {
-  maps: propTypes.object,
-  map: propTypes.object,
-  sessionToken: propTypes.object,
-  autocomplete: propTypes.object,
+  requestedAtStr: propTypes.string,
+  clearTime: propTypes.func,
+  selectServiceType: propTypes.func,
+  disabled: propTypes.bool,
 }
 export default CateringAutocomplete

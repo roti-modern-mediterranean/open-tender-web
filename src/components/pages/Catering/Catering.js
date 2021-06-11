@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import { makeDisplayedRevenueCenters } from '@open-tender/js'
 import {
   selectOrder,
   setRequestedAt,
@@ -12,6 +13,9 @@ import {
   fetchValidTimes,
   selectValidTimes,
   selectMenuSlug,
+  fetchRevenueCenters,
+  setRevenueCenter,
+  selectRevenueCenters,
 } from '@open-tender/redux'
 import {
   isoToDate,
@@ -29,7 +33,12 @@ import {
 import { BgImage, Preface } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectBrand, selectConfig } from '../../../slices'
+import {
+  selectBrand,
+  selectConfig,
+  selectSettings,
+  selectGeoLatLng,
+} from '../../../slices'
 import { AppContext } from '../../../App'
 import {
   Content,
@@ -243,8 +252,10 @@ const CateringPage = () => {
   const { title: siteTitle } = useSelector(selectBrand)
   const { catering: config } = useSelector(selectConfig)
   const { title, subtitle, background } = config
-  const { orderType, serviceType, requestedAt, revenueCenter } =
+  const { orderType, serviceType, requestedAt, revenueCenter, address } =
     useSelector(selectOrder)
+  const { maxDistance } = useSelector(selectSettings)
+  const geoLatLng = useSelector(selectGeoLatLng)
   const hasTypes = orderType && serviceType
   const { timezone } = revenueCenter || {}
   const tz = timezone ? timezoneMap[timezone] : getUserTimezone()
@@ -253,8 +264,12 @@ const CateringPage = () => {
   const [settings, setSettings] = useState(null)
   const [showDate, setShowDate] = useState(true)
   const [showAddress, setShowAddress] = useState(false)
+  const [fetching, setFetching] = useState(false)
+  const [error, setError] = useState(null)
   const { entity: validTimes, loading } = useSelector(selectValidTimes)
   const isLoading = loading === 'pending'
+  const { revenueCenters, loading: loadingRCs } =
+    useSelector(selectRevenueCenters)
   const { windowRef } = useContext(AppContext)
   const orderMsg = makeOrderMessage(orderType, requestedAt, revenueCenter)
   const menuSlug = useSelector(selectMenuSlug)
@@ -310,6 +325,42 @@ const CateringPage = () => {
     }
   }, [date, settings])
 
+  const autoRouteCallack = useCallback(
+    (revenueCenter) => {
+      dispatch(setRevenueCenter(revenueCenter))
+      return history.push(`/menu/${revenueCenter.slug}`)
+    },
+    [dispatch, history]
+  )
+
+  useEffect(() => {
+    if (fetching && loadingRCs === 'idle') {
+      setFetching(false)
+      const { error, displayed } = makeDisplayedRevenueCenters(
+        revenueCenters,
+        serviceType,
+        address,
+        geoLatLng,
+        maxDistance
+      )
+      const count = displayed ? displayed.length : 0
+      if (count && !error) {
+        autoRouteCallack(displayed[0])
+      } else {
+        setError(error)
+      }
+    }
+  }, [
+    fetching,
+    loadingRCs,
+    revenueCenters,
+    serviceType,
+    address,
+    geoLatLng,
+    maxDistance,
+    autoRouteCallack,
+  ])
+
   const selectTime = (time) => {
     setDate(null)
     setShowDate(false)
@@ -334,7 +385,13 @@ const CateringPage = () => {
     dispatch(resetRevenueCenters())
     dispatch(resetRevenueCenter())
     dispatch(setOrderServiceType('CATERING', serviceType))
-    history.push('/locations')
+    const { lat, lng } = address
+    const params = { type: 'CATERING', lat, lng }
+    if (lat && lng) {
+      dispatch(fetchRevenueCenters(params))
+      setFetching(true)
+    }
+    // history.push('/locations')
   }
 
   const startMin = getMinutesfromDate(minTime || settings.minTime)
@@ -420,6 +477,7 @@ const CateringPage = () => {
                       requestedAtStr={requestedAtStr}
                       clearTime={clearTime}
                       selectServiceType={selectServiceType}
+                      disabled={fetching}
                     />
                   </CateringCalendar>
                 </>

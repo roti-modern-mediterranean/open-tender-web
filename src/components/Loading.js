@@ -26,6 +26,7 @@ const LoadingLoader = styled('div')`
 const LoadingMessage = styled('p')`
   margin: 1rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
+  color: ${(props) => props.color};
 `
 
 const Loading = ({ type, text, color, size = 100, style = null }) => {
@@ -35,7 +36,9 @@ const Loading = ({ type, text, color, size = 100, style = null }) => {
   return (
     <LoadingView style={style}>
       <LoadingLoader>{loader(type, props)}</LoadingLoader>
-      {text && text.length > 0 && <LoadingMessage>{text}</LoadingMessage>}
+      {text && text.length > 0 && (
+        <LoadingMessage color={props.color}>{text}</LoadingMessage>
+      )}
     </LoadingView>
   )
 }
