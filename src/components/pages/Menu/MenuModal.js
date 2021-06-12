@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { openModal, selectAPI, selectModalPrefs } from '../../../slices'
+import {
+  openModal,
+  selectAPI,
+  selectModalPrefs,
+  setModalPref,
+} from '../../../slices'
 
 const MenuModal = () => {
   const dispatch = useDispatch()
@@ -22,18 +27,19 @@ const MenuModal = () => {
     const fetchPost = async () => {
       try {
         let response = await api.getPost('out-of-stock')
-        if (!isCancelled) {
+        if (!isCancelled && !outOfStock) {
           setPost(response)
         }
       } catch (err) {
-        // okay if post is not found
+        // reset modal preference
+        dispatch(setModalPref({ modal: 'outOfStock', pref: false }))
       }
     }
-    if (!outOfStock && !hasPost) fetchPost()
+    if (!hasPost) fetchPost()
     return () => {
       isCancelled = true
     }
-  }, [api, outOfStock, hasPost])
+  }, [api, outOfStock, hasPost, dispatch])
 
   return null
 }
