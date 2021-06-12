@@ -5,6 +5,7 @@ const initialState = {
   updateAccount: false,
   modalPrefs: {
     greenShug: false,
+    outOfStock: false,
   },
 }
 

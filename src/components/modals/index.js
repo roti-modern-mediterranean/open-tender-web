@@ -16,6 +16,7 @@ import GroupOrder from './GroupOrder'
 import LevelUp from './LevelUp'
 import Login from './Login'
 import MenuItem from './MenuItem'
+import OutOfStock from './OutOfStock'
 import OrderRating from './OrderRating'
 import OrderType from './OrderType'
 import QRCode from './QRCode'
@@ -43,6 +44,7 @@ export {
   LevelUp,
   Login,
   MenuItem,
+  OutOfStock,
   OrderRating,
   OrderType,
   QRCode,

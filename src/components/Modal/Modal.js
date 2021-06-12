@@ -33,6 +33,7 @@ import {
   SignUp,
   Working,
   GreenShug,
+  OutOfStock,
 } from '../modals'
 
 const makeModal = (type, windowRef, args = {}) => {
@@ -65,6 +66,8 @@ const makeModal = (type, windowRef, args = {}) => {
       return <Gratuity {...args} />
     case 'greenShug':
       return <GreenShug {...args} />
+    case 'outOfStock':
+      return <OutOfStock {...args} />
     case 'item':
       return <MenuItem {...args} />
     case 'levelup':
