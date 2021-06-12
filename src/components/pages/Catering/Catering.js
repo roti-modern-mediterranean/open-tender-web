@@ -343,11 +343,16 @@ const CateringPage = () => {
         geoLatLng,
         maxDistance
       )
-      const count = displayed ? displayed.length : 0
-      if (count && !error) {
-        autoRouteCallack(displayed[0])
-      } else {
+      if (error) {
         setError(error)
+      } else if (displayed.length) {
+        autoRouteCallack(displayed[0])
+      } else if (serviceType === 'PICKUP') {
+        const msg = `We're sorry, but we don't have any locations within ${maxDistance} miles of your address.`
+        setError(msg)
+      } else {
+        const msg = `We're sorry, but we don't deliver to your address. Please try switching to pickup.`
+        setError(msg)
       }
     }
   }, [
@@ -382,6 +387,7 @@ const CateringPage = () => {
   }
 
   const selectServiceType = (serviceType) => {
+    setError(null)
     dispatch(resetRevenueCenters())
     dispatch(resetRevenueCenter())
     dispatch(setOrderServiceType('CATERING', serviceType))
@@ -478,6 +484,7 @@ const CateringPage = () => {
                       clearTime={clearTime}
                       selectServiceType={selectServiceType}
                       disabled={fetching}
+                      error={error}
                     />
                   </CateringCalendar>
                 </>

@@ -117,6 +117,11 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
     history.push(`/`)
   }
 
+  const handleCatering = () => {
+    dispatch(resetCheckout())
+    history.push(`/catering`)
+  }
+
   const filtered = activeMarker
     ? revenueCenters.filter((i) => i.revenue_center_id === activeMarker)
     : displayedRevenueCenters
@@ -154,14 +159,29 @@ const RevenueCentersSelect = ({ setActive, activeMarker }) => {
       ) : (
         <RevenueCentersAlert
           title="No locations near you"
-          subtitle="Sorry, but we don't have any locations near you. Please
-                    enter a different address or head back to our home page."
+          subtitle={`Sorry, but we don't ${
+            serviceType === 'DELIVERY'
+              ? `deliver to your address. Please ${
+                  orderType === 'CATERING'
+                    ? 'head back to our catering page and'
+                    : ''
+                } try switching to pickup.`
+              : 'have any locations near you. Please enter a different address or head back to our home page.'
+          }`}
         >
-          <InlineLink onClick={handleStartOver}>
-            <RevenueCentersSelectLink>
-              Return to homepage
-            </RevenueCentersSelectLink>
-          </InlineLink>
+          {orderType === 'CATERING' ? (
+            <InlineLink onClick={handleCatering}>
+              <RevenueCentersSelectLink>
+                Return to catering page
+              </RevenueCentersSelectLink>
+            </InlineLink>
+          ) : (
+            <InlineLink onClick={handleStartOver}>
+              <RevenueCentersSelectLink>
+                Return to homepage
+              </RevenueCentersSelectLink>
+            </InlineLink>
+          )}
         </RevenueCentersAlert>
       )}
     </RevenueCentersSelectView>

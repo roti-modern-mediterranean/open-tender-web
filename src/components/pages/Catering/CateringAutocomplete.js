@@ -180,6 +180,12 @@ const CateringLoading = styled('div')`
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  text-align: center;
+
+  p {
+    color: ${(props) => props.theme.colors.light};
+    font-size: ${(props) => props.theme.fonts.sizes.small};
+  }
 `
 
 const CateringAutocomplete = ({
@@ -187,6 +193,7 @@ const CateringAutocomplete = ({
   clearTime,
   selectServiceType,
   disabled,
+  error,
 }) => {
   const dispatch = useDispatch()
   const { address } = useSelector(selectOrder)
@@ -240,12 +247,14 @@ const CateringAutocomplete = ({
           </ButtonToggle>
         </CateringAutocompleteButtons>
         <CateringLoading>
-          {disabled && (
+          {disabled ? (
             <Loading
               color={theme.colors.light}
               text="Finding location nearest you..."
             />
-          )}
+          ) : error ? (
+            <p>{error}</p>
+          ) : null}
         </CateringLoading>
       </GoogleMap>
     </CateringAutocompleteView>
