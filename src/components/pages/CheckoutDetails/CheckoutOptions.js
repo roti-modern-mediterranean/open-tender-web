@@ -50,8 +50,9 @@ const CheckoutOptionsView = styled('div')`
 
 const checkEmptyDetails = (form) => {
   if (!form.details || isEmpty(form.details)) return true
-  const { person_count, tax_exempt_id, notes } = form.details
+  const { person_count, tax_exempt_id, notes, order_fulfillment } = form.details
   return (
+    order_fulfillment === undefined &&
     (person_count === null || person_count === undefined) &&
     (tax_exempt_id === null || tax_exempt_id === undefined) &&
     (notes === null || notes === undefined)
