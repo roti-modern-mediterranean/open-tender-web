@@ -54,7 +54,7 @@ const OrderCard = ({ order, isLast }) => {
   const streetAddress = makeOrderAddress(address)
   const trackingUrl = isOpen && delivery && delivery.tracking_url
   const items = cart
-    .filter((i) => i.tags.includes('signature'))
+    .filter((i) => i.tags.includes('curated'))
     .map((i) =>
       i.images
         .filter((m) => m.type === 'SMALL_IMAGE' && m.url)
