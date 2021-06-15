@@ -52,6 +52,7 @@ import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { isBrowser } from 'react-device-detect'
 import CateringAutocomplete from './CateringAutocomplete'
+import { ArrowRight } from '../../icons'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -149,6 +150,7 @@ const CateringMessage = styled('div')`
   }
 
   & > p {
+    margin: 0 0 1rem;
     font-size: 2.7rem;
     line-height: 1.33333;
     color: ${(props) => props.theme.colors.light};
@@ -161,6 +163,46 @@ const CateringMessage = styled('div')`
       font-weight: 500;
     }
   }
+`
+
+const SkipSuggestions = styled.button`
+  label: SkipSuggestions;
+
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+
+  text-align: left;
+  color: ${(props) => props.theme.colors.light};
+  margin-top: 2rem;
+  border-top: 1px solid #ffffff50;
+  padding-top: 1rem;
+  width: 80%;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  
+  h2 {
+    font-size: 30px;
+    font-weight: 500;
+  }
+  
+  p {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  
+  span {
+    color: ${(props) => props.theme.colors.paprika};
+  }
+  
+  &:hover {
+    background-color: #ffffff20;
+  }
+`
+
+const SkipIcon = styled.div`
+  display: inline-flex;
+  width: 12px;
+  margin-left: 10px;
 `
 
 const CateringCurrentOrder = styled('div')`
@@ -245,6 +287,13 @@ const makeOrderMessage = (orderType, requestedAt, revenueCenter) => {
   return `You currently have a catering order in process for ${requestedAtStr} from our ${name} location.`
 }
 
+const stages = {
+  date: "date",
+  address: "address",
+  eventType: "eventType",
+  inbetween: "inbetween"
+}
+
 const CateringPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -262,8 +311,7 @@ const CateringPage = () => {
   const [date, setDate] = useState(null)
   const [minTime, setMinTime] = useState(new Date())
   const [settings, setSettings] = useState(null)
-  const [showDate, setShowDate] = useState(true)
-  const [showAddress, setShowAddress] = useState(false)
+  const [stage, setStage] = useState(stages.date)
   const [fetching, setFetching] = useState(false)
   const [error, setError] = useState(null)
   const { entity: validTimes, loading } = useSelector(selectValidTimes)
@@ -368,21 +416,21 @@ const CateringPage = () => {
 
   const selectTime = (time) => {
     setDate(null)
-    setShowDate(false)
+    setStage(stages.inbetween)
     dispatch(setAddress(null))
     setTimeout(() => {
       const reqestedAtIso = time ? dateToIso(time, tz) : 'asap'
       dispatch(setRequestedAt(reqestedAtIso))
-      setShowAddress(true)
+      setStage(stages.address)
     }, 50)
   }
 
   const clearTime = () => {
     setDate(null)
-    setShowAddress(false)
+    setStage(stages.inbetween)
     setTimeout(() => {
       dispatch(setRequestedAt(null))
-      setShowDate(true)
+      setStage(stages.date)
     }, 50)
   }
 
@@ -395,10 +443,14 @@ const CateringPage = () => {
     const params = { type: 'CATERING', lat, lng }
     if (lat && lng) {
       dispatch(fetchRevenueCenters(params))
-      setFetching(true)
+      setStage(stages.eventType)
     }
     // history.push('/locations')
   }
+
+  const skipSuggestionsOnCLick = useCallback(()=>{
+    setFetching(true)
+  }, [setFetching])
 
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
@@ -421,7 +473,7 @@ const CateringPage = () => {
         >
           <CateringView imageUrl={isBrowser ? null : background}>
             <CateringContainer>
-              {showDate && (
+              {stage === stages.date && (
                 <>
                   <CateringContent>
                     <CateringMessage>
@@ -467,7 +519,7 @@ const CateringPage = () => {
                   </CateringCalendar>
                 </>
               )}
-              {showAddress && (
+              {stage === stages.address && (
                 <>
                   <CateringContent>
                     <CateringMessage>
@@ -477,6 +529,34 @@ const CateringPage = () => {
                         get started.
                       </p>
                     </CateringMessage>
+                  </CateringContent>
+                  <CateringCalendar>
+                    <CateringAutocomplete
+                      requestedAtStr={requestedAtStr}
+                      clearTime={clearTime}
+                      selectServiceType={selectServiceType}
+                      disabled={fetching}
+                      error={error}
+                    />
+                  </CateringCalendar>
+                </>
+              )}
+              {stage === stages.eventType && (
+                <>
+                  <CateringContent>
+                    <CateringMessage>
+                      <h2>Build the main event</h2>
+                      <p>
+                        Choose how many people you're serving, when, and where and build your own menu.
+                      </p>
+                    </CateringMessage>
+                    <SkipSuggestions onClick={skipSuggestionsOnCLick}>
+                      <h2>Take a shortcut</h2>
+                      <p>
+                        Skip straight to the <span>menu</span> to browse all our packages and start your order
+                        <SkipIcon><ArrowRight/></SkipIcon>
+                      </p>
+                    </SkipSuggestions>
                   </CateringContent>
                   <CateringCalendar>
                     <CateringAutocomplete
