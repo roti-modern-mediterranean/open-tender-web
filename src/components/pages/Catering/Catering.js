@@ -46,7 +46,7 @@ import {
   Main,
   HeaderDefault,
   RequestedAtPicker,
-  InlineLink
+  InlineLink, ModalContent, AllergenForm
 } from '../..'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
@@ -295,6 +295,13 @@ const stages = {
   inbetween: "inbetween"
 }
 
+const eventTypeOptions = [
+  { allergen_id: 0, name: "Family"}, { allergen_id: 1, name: "Corporate"},
+  { allergen_id: 2, name: "Party"}, { allergen_id: 3, name: "Adult"},
+  { allergen_id: 4, name: "Teens"}, { allergen_id: 5, name: "Kids"},
+  { allergen_id: 6, name: "Indoors"}, { allergen_id: 7, name: "Outdoors"},
+  { allergen_id: 8, name: "Formal"}]
+
 const CateringPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -325,6 +332,7 @@ const CateringPage = () => {
   const requestedAtStr = requestedAt
     ? makeReadableDateStrFromIso(requestedAt, tz, true)
     : null
+  const [selectedEventTypes, setSelectedEventTypes] = useState([])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -456,6 +464,8 @@ const CateringPage = () => {
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
 
+  // TODO refactor HighlightedMenu, ModalContent and Allergens
+
   return (
     <>
       <Helmet>
@@ -559,8 +569,18 @@ const CateringPage = () => {
                       </p>
                     </SkipSuggestions>
                   </CateringContent>
-                  <HighlightedMenu title="Type of event" subtitle="What kind of get together are we having?">
-                    Testing
+                  <HighlightedMenu>
+                    <ModalContent title="Type of event" subtitle="What kind of get together are we having?" close={false}>
+                      <AllergenForm
+                        allergens={eventTypeOptions}
+                        selectedAllergens={selectedEventTypes}
+                        isLoading={false}
+                        error={null}
+                        setAllergens={setSelectedEventTypes}
+                        updateAllergens={()=>{}}
+                        callback={()=> {}}
+                      />
+                    </ModalContent>
                   </HighlightedMenu>
                 </>
               )}
