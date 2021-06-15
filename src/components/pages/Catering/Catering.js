@@ -46,13 +46,14 @@ import {
   Main,
   HeaderDefault,
   RequestedAtPicker,
-  InlineLink,
+  InlineLink
 } from '../..'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { isBrowser } from 'react-device-detect'
 import CateringAutocomplete from './CateringAutocomplete'
 import { ArrowRight } from '../../icons'
+import HighlightedMenu from '../../HighlightedMenu'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -558,15 +559,9 @@ const CateringPage = () => {
                       </p>
                     </SkipSuggestions>
                   </CateringContent>
-                  <CateringCalendar>
-                    <CateringAutocomplete
-                      requestedAtStr={requestedAtStr}
-                      clearTime={clearTime}
-                      selectServiceType={selectServiceType}
-                      disabled={fetching}
-                      error={error}
-                    />
-                  </CateringCalendar>
+                  <HighlightedMenu title="Type of event" subtitle="What kind of get together are we having?">
+                    Testing
+                  </HighlightedMenu>
                 </>
               )}
             </CateringContainer>

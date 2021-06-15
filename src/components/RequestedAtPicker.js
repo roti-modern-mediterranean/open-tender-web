@@ -1,21 +1,8 @@
-import styled from '@emotion/styled'
 import DatePicker from 'react-datepicker'
 
 import { TimePicker } from '.'
+import HighlightedMenu from './HighlightedMenu'
 
-const RequestedAtPickerView = styled('div')`
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 37rem;
-  height: 35rem;
-  padding: 1rem;
-  margin: 0 auto;
-  overflow: hidden;
-  font-size: ${(props) => props.theme.fonts.sizes.small};
-  border-radius: ${(props) => props.theme.border.radius};
-  background-color: ${(props) => props.theme.colors.light};
-`
 
 const RequestedAtPicker = ({
   date,
@@ -31,7 +18,7 @@ const RequestedAtPicker = ({
   maxTime = 1425,
 }) => {
   return (
-    <RequestedAtPickerView>
+    <HighlightedMenu>
       <DatePicker
         inline
         showPopperArrow={false}
@@ -53,7 +40,7 @@ const RequestedAtPicker = ({
         minTime={minTime}
         maxTime={maxTime}
       />
-    </RequestedAtPickerView>
+    </HighlightedMenu>
   )
 }
 
