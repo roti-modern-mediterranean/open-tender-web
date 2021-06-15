@@ -3,26 +3,26 @@ import { useSelector } from 'react-redux'
 import { selectOrder } from '@open-tender/redux'
 
 import { FormHeader, Textarea } from '../../inputs'
-import CheckoutQuickOptions from './CheckoutQuickOptions'
-import { AddCondiments, DressingOnTheSide, LeaveAtDoor } from '../../icons'
+// import CheckoutQuickOptions from './CheckoutQuickOptions'
+// import { AddCondiments, DressingOnTheSide, LeaveAtDoor } from '../../icons'
 import styled from '@emotion/styled'
 
 const optionButtons = [
-  {
-    text: 'Leave at door',
-    icon: <LeaveAtDoor />,
-    serviceTypes: ['DELIVERY'],
-  },
-  {
-    text: 'Add condiments',
-    icon: <AddCondiments />,
-    serviceTypes: ['DELIVERY', 'PICKUP'],
-  },
-  {
-    text: 'Dressing on the side',
-    icon: <DressingOnTheSide />,
-    serviceTypes: ['DELIVERY', 'PICKUP'],
-  },
+  // {
+  //   text: 'Leave at door',
+  //   icon: <LeaveAtDoor />,
+  //   serviceTypes: ['DELIVERY'],
+  // },
+  // {
+  //   text: 'Add condiments',
+  //   icon: <AddCondiments />,
+  //   serviceTypes: ['DELIVERY', 'PICKUP'],
+  // },
+  // {
+  //   text: 'Dressing on the side',
+  //   icon: <DressingOnTheSide />,
+  //   serviceTypes: ['DELIVERY', 'PICKUP'],
+  // },
 ]
 
 const LabelRequired = styled('span')`
@@ -56,9 +56,9 @@ const CheckoutNotes = ({ notes, required, handleChange, errors = {} }) => {
   const [text, setText] = useState(initText)
   const label = `${serviceType.toLowerCase()} Notes`
   const noNotes = !text && options.length === 0
-  const filteredButtons = optionButtons.filter((i) =>
-    i.serviceTypes.includes(serviceType)
-  )
+  // const filteredButtons = optionButtons.filter((i) =>
+  //   i.serviceTypes.includes(serviceType)
+  // )
 
   useEffect(() => {
     if (noNotes && notes) {
@@ -68,19 +68,19 @@ const CheckoutNotes = ({ notes, required, handleChange, errors = {} }) => {
     }
   }, [noNotes, notes, serviceType])
 
-  const handleOption = (evt, option) => {
-    evt.preventDefault()
-    const newOptions = options.includes(option)
-      ? options.filter((i) => i !== option)
-      : [...options, option]
-    setOptions(newOptions)
-    const target = {
-      id: 'notes',
-      type: 'text',
-      value: makeNotes(newOptions, text),
-    }
-    handleChange({ target })
-  }
+  // const handleOption = (evt, option) => {
+  //   evt.preventDefault()
+  //   const newOptions = options.includes(option)
+  //     ? options.filter((i) => i !== option)
+  //     : [...options, option]
+  //   setOptions(newOptions)
+  //   const target = {
+  //     id: 'notes',
+  //     type: 'text',
+  //     value: makeNotes(newOptions, text),
+  //   }
+  //   handleChange({ target })
+  // }
 
   const handleNotes = (evt) => {
     setText(evt.target.value)
@@ -94,11 +94,11 @@ const CheckoutNotes = ({ notes, required, handleChange, errors = {} }) => {
 
   return (
     <CheckoutNotesView>
-      <CheckoutQuickOptions
+      {/* <CheckoutQuickOptions
         buttons={filteredButtons}
         options={options}
         handleOption={handleOption}
-      />
+      /> */}
       <FormHeader style={{ marginBottom: '0' }}>
         <h2>
           {label}

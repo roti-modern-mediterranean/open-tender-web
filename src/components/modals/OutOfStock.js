@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import styled from '@emotion/styled'
-import { BgImage, ButtonStyled, Heading } from '@open-tender/components'
+import { BgImage, ButtonStyled } from '@open-tender/components'
 
 import { closeModal, setModalPref } from '../../slices'
 import { ModalClose, ModalView } from '..'
@@ -15,20 +15,20 @@ const OutOfStockView = styled(BgImage)`
   }
 `
 
-const OutOfStockHeader = styled('div')``
+// const OutOfStockHeader = styled('div')``
 
-const OutOfStockTitle = styled('div')`
-  text-align: center;
+// const OutOfStockTitle = styled('div')`
+//   text-align: center;
 
-  p {
-    font-size: ${(props) => props.theme.fonts.sizes.h2};
-    line-height: 1.05;
-    color: ${(props) => props.theme.colors.paprika};
-    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-      font-size: 3.2rem;
-    }
-  }
-`
+//   p {
+//     font-size: ${(props) => props.theme.fonts.sizes.h2};
+//     line-height: 1.05;
+//     color: ${(props) => props.theme.colors.paprika};
+//     @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+//       font-size: 3.2rem;
+//     }
+//   }
+// `
 
 const OutOfStockContent = styled('div')`
   padding: 1rem 0 1.5rem;
@@ -36,6 +36,23 @@ const OutOfStockContent = styled('div')`
   font-size: 1.8rem;
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: 1.5rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.05;
+    color: ${(props) => props.theme.colors.paprika};
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      font-size: 3.2rem;
+    }
+  }
+
+  h1 {
+    font-size: ${(props) => props.theme.fonts.sizes.h2};
   }
 
   p {
@@ -72,12 +89,12 @@ const OutOfStock = (props) => {
     <ModalView>
       <ModalClose />
       <OutOfStockView style={bgStyle}>
-        <OutOfStockHeader>
+        {/* <OutOfStockHeader>
           <OutOfStockTitle>
             <Heading as="p">Ummm...</Heading>
             <Heading as="p">What's Going On Here?</Heading>
           </OutOfStockTitle>
-        </OutOfStockHeader>
+        </OutOfStockHeader> */}
         <OutOfStockContent>
           <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </OutOfStockContent>
