@@ -149,7 +149,7 @@ const MenuCategory = () => {
       </Content>
       <MenuFooter />
       <SidebarModal>
-        <Builder menuItem={item} soldOut={soldOut} />
+        {item && <Builder menuItem={item} soldOut={soldOut} />}
       </SidebarModal>
     </>
   )
