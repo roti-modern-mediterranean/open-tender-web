@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useMemo, useCallback, useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -302,6 +302,7 @@ const stages = {
   date: "date",
   address: "address",
   eventType: "eventType",
+  numberOfPeople: "numberOfPeople",
   inbetween: "inbetween"
 }
 
@@ -472,24 +473,28 @@ const CateringPage = () => {
     setFetching(true)
   }, [setFetching])
 
-  const highlightedMenuOnBackClick = useCallback(() => {
+  const highlightedMenuOnBackClick = useMemo(() => {
     switch(stage){
       case stages.eventType:
-        setStage(stages.address)
-        break;
+        return () => setStage(stages.address)
+      case stages.numberOfPeople:
+        return () => setStage(stages.eventType)
       default:
-        break;
+        return null
     }
   }, [stage])
 
-  const highlightedMenuOnForwardClick = useCallback(() => {
+  const highlightedMenuOnForwardClick = useMemo(() => {
     switch(stage){
       case stages.eventType:
-        break;
+        if(selectedEventTypes.length === 0) {
+          return null;
+        }
+        return () => setStage(stages.numberOfPeople)
       default:
-        break;
+        return null
     }
-  }, [stage])
+  }, [stage, selectedEventTypes])
 
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
@@ -580,7 +585,7 @@ const CateringPage = () => {
                   </CateringCalendar>
                 </>
               )}
-              {stage === stages.eventType && (
+              {(stage === stages.eventType || stage === stages.numberOfPeople) && (
                 <>
                   <CateringContent>
                     <CateringMessage>
@@ -598,13 +603,20 @@ const CateringPage = () => {
                     </SkipSuggestions>
                   </CateringContent>
                   <AnimatedHighlightedMenu>
-                    <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
-                      <OptionsMenu
-                        options={eventTypeOptions}
-                        selectedOptions={selectedEventTypes}
-                        setSelectedOptions={setSelectedEventTypes}
-                      />
-                    </MenuContent>
+                    {stage === stages.eventType &&
+                      <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
+                        <OptionsMenu
+                          options={eventTypeOptions}
+                          selectedOptions={selectedEventTypes}
+                          setSelectedOptions={setSelectedEventTypes}
+                        />
+                      </MenuContent>
+                    }
+                    {stage === stages.numberOfPeople &&
+                      <MenuContent title="Number of people" subtitle="How big is your group?">
+                        TODO
+                      </MenuContent>
+                    }
                     <BackForwardButtons
                       onBackClick={highlightedMenuOnBackClick}
                       onForwardClick={highlightedMenuOnForwardClick}

@@ -24,16 +24,18 @@ const NavButton = styled.button`
   }
 `
 
+const noop = () => {}
+
 const BackForwardButtons = ({
     onBackClick, onForwardClick,
     backText = '', forwardText = ''
 }) => {
   return <Container>
-    <NavButton onClick={onBackClick}>
+    <NavButton onClick={onBackClick || noop} disabled={onBackClick === null}>
       <ArrowLeft color="#000000" size="16px"/>
       <span>{backText}</span>
     </NavButton>
-    <NavButton onClick={onForwardClick} isForward={true}>
+    <NavButton onClick={onForwardClick || noop} isForward={true} disabled={onForwardClick === null}>
       <span>{forwardText}</span>
       <ArrowRight color="#000000" size="16px"/>
     </NavButton>
