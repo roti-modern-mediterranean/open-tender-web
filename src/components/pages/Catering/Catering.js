@@ -55,6 +55,7 @@ import CateringAutocomplete from './CateringAutocomplete'
 import { ArrowRight } from '../../icons'
 import HighlightedMenu, {MenuContent} from '../../HighlightedMenu'
 import OptionsMenu, { BackForwardButtons } from '../../OptionsMenu'
+import RangeSlider from '../../RangeSlider'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -347,6 +348,7 @@ const CateringPage = () => {
     ? makeReadableDateStrFromIso(requestedAt, tz, true)
     : null
   const [selectedEventTypes, setSelectedEventTypes] = useState([])
+  const [numberOfPeople, setNumberOfPeople] = useState(1)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -623,8 +625,8 @@ const CateringPage = () => {
                       </MenuContent>
                     }
                     {stage === stages.numberOfPeople &&
-                      <MenuContent title="Number of people" subtitle="How big is your group?">
-                        TODO
+                      <MenuContent title="Number of people" subtitle="How big is your group?">{numberOfPeople}
+                        <RangeSlider min={1} max={100} value={numberOfPeople} setValue={setNumberOfPeople}/>
                       </MenuContent>
                     }
                     {stage === stages.dietaryRestrictions &&
