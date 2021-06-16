@@ -46,14 +46,15 @@ import {
   Main,
   HeaderDefault,
   RequestedAtPicker,
-  InlineLink, ModalContent, AllergenForm
+  InlineLink
 } from '../..'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { isBrowser } from 'react-device-detect'
 import CateringAutocomplete from './CateringAutocomplete'
 import { ArrowRight } from '../../icons'
-import HighlightedMenu from '../../HighlightedMenu'
+import HighlightedMenu, {MenuContent} from '../../HighlightedMenu'
+import OptionsMenu from '../../OptionsMenu'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -296,11 +297,11 @@ const stages = {
 }
 
 const eventTypeOptions = [
-  { allergen_id: 0, name: "Family"}, { allergen_id: 1, name: "Corporate"},
-  { allergen_id: 2, name: "Party"}, { allergen_id: 3, name: "Adult"},
-  { allergen_id: 4, name: "Teens"}, { allergen_id: 5, name: "Kids"},
-  { allergen_id: 6, name: "Indoors"}, { allergen_id: 7, name: "Outdoors"},
-  { allergen_id: 8, name: "Formal"}]
+  { id: "Family", name: "Family"}, { id: "Corporate", name: "Corporate"},
+  { id: "Party", name: "Party"}, { id: "Adult", name: "Adult"},
+  { id: "Teens", name: "Teens"}, { id: "Kids", name: "Kids"},
+  { id: "Indoors", name: "Indoors"}, { id: "Outdoors", name: "Outdoors"},
+  { id: "Formal", name: "Formal"}]
 
 const CateringPage = () => {
   const history = useHistory()
@@ -570,17 +571,13 @@ const CateringPage = () => {
                     </SkipSuggestions>
                   </CateringContent>
                   <HighlightedMenu>
-                    <ModalContent title="Type of event" subtitle="What kind of get together are we having?" close={false}>
-                      <AllergenForm
-                        allergens={eventTypeOptions}
-                        selectedAllergens={selectedEventTypes}
-                        isLoading={false}
-                        error={null}
-                        setAllergens={setSelectedEventTypes}
-                        updateAllergens={()=>{}}
-                        callback={()=> {}}
+                    <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
+                      <OptionsMenu
+                        options={eventTypeOptions}
+                        selectedOptions={selectedEventTypes}
+                        setSelectedOptions={setSelectedEventTypes}
                       />
-                    </ModalContent>
+                    </MenuContent>
                   </HighlightedMenu>
                 </>
               )}

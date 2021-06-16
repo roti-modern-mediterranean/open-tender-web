@@ -2,10 +2,8 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-import { ModalClose } from '.'
-
-const ModalContentView = styled('div')`
-  label: ModalContentView;
+const MenuContentView = styled('div')`
+  label: MenuContentView;
   
   padding: 3rem 3rem;
 `
@@ -82,8 +80,7 @@ const ModalFooter = styled('div')`
   }
 `
 
-const ModalContent = ({
-  close = true,
+const MenuContent = ({
   title,
   subtitle,
   footer,
@@ -94,12 +91,11 @@ const ModalContent = ({
 
   return (
     <>
-      <ModalContentView
+      <MenuContentView
         role="dialog"
         aria-labelledby="dialogTitle"
         style={style}
       >
-        {close && <ModalClose />}
         {hasHeader && (
           <ModalHeader>
             {title && <ModalTitle id="dialogTitle">{title}</ModalTitle>}
@@ -108,14 +104,13 @@ const ModalContent = ({
         )}
         <ModalBody>{children}</ModalBody>
         {footer && <ModalFooter>{footer}</ModalFooter>}
-      </ModalContentView>
+      </MenuContentView>
     </>
   )
 }
 
-ModalContent.displayName = 'ModalContent'
-ModalContent.propTypes = {
-  close: propTypes.bool,
+MenuContent.displayName = 'MenuContent'
+MenuContent.propTypes = {
   title: propTypes.oneOfType([propTypes.string, propTypes.element]),
   subtitle: propTypes.oneOfType([propTypes.string, propTypes.element]),
   footer: propTypes.oneOfType([propTypes.string, propTypes.element]),
@@ -126,4 +121,4 @@ ModalContent.propTypes = {
   style: propTypes.object,
 }
 
-export default ModalContent
+export default MenuContent
