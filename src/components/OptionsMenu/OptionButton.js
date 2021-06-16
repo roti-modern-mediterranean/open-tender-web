@@ -25,13 +25,15 @@ const OptionInput = styled('input')`
   white-space: nowrap;
 `
 
-const OptionToggle = styled(`span`)`
+const OptionToggle = styled.span`
+  label: OptionToggle;
+  
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: 4.6rem;
-  padding: 0 0.5rem 0 1.75rem;
+  padding: 0 0.5rem;
   transition: ${(props) => props.theme.links.transition};
   border-radius: ${(props) => props.theme.border.radius};
   background-color: ${(props) =>
