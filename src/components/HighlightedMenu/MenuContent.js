@@ -6,6 +6,9 @@ const MenuContentView = styled('div')`
   label: MenuContentView;
   
   padding: 2rem 2rem;
+  flex-grow: 1;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
 `
 
 const ModalHeader = styled('div')`
