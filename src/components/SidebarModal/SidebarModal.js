@@ -11,6 +11,8 @@ const SidebarModal = ({ children }) => {
   const [active, setActive] = useState(null)
   const [elements, setElements] = useState([])
   const { isOpen } = useSelector(selectSidebarModal)
+  const hasChildren = children !== null
+  const show = isOpen && hasChildren
 
   const handleExit = () => {
     if (active) active.focus()
@@ -57,9 +59,9 @@ const SidebarModal = ({ children }) => {
 
   return (
     <>
-      <SidebarModalOverlay />
+      <SidebarModalOverlay show={show} />
       <TransitionGroup component={null}>
-        {isOpen ? (
+        {show ? (
           <CSSTransition
             key="sidebar"
             classNames="sidebar"
