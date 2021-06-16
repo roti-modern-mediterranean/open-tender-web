@@ -296,6 +296,7 @@ const stages = {
   inbetween: "inbetween"
 }
 
+// TODO should not be hardcoded (?)
 const eventTypeOptions = [
   { id: "Family", name: "Family"}, { id: "Corporate", name: "Corporate"},
   { id: "Party", name: "Party"}, { id: "Adult", name: "Adult"},
@@ -464,8 +465,6 @@ const CateringPage = () => {
 
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
-
-  // TODO refactor HighlightedMenu, ModalContent and Allergens
 
   return (
     <>
