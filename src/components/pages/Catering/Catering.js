@@ -303,6 +303,8 @@ const stages = {
   address: "address",
   eventType: "eventType",
   numberOfPeople: "numberOfPeople",
+  dietaryRestrictions: "dietaryRestrictions",
+  recommendations: "recommendations",
   inbetween: "inbetween"
 }
 
@@ -479,6 +481,8 @@ const CateringPage = () => {
         return () => setStage(stages.address)
       case stages.numberOfPeople:
         return () => setStage(stages.eventType)
+      case stages.dietaryRestrictions:
+        return () => setStage(stages.numberOfPeople)
       default:
         return null
     }
@@ -491,6 +495,10 @@ const CateringPage = () => {
           return null;
         }
         return () => setStage(stages.numberOfPeople)
+      case stages.numberOfPeople:
+        return () => setStage(stages.dietaryRestrictions)
+      case stages.dietaryRestrictions:
+        return () => setStage(stages.recommendations)
       default:
         return null
     }
@@ -585,7 +593,9 @@ const CateringPage = () => {
                   </CateringCalendar>
                 </>
               )}
-              {(stage === stages.eventType || stage === stages.numberOfPeople) && (
+              {(stage === stages.eventType
+                || stage === stages.numberOfPeople
+                || stage === stages.dietaryRestrictions) && (
                 <>
                   <CateringContent>
                     <CateringMessage>
@@ -617,12 +627,29 @@ const CateringPage = () => {
                         TODO
                       </MenuContent>
                     }
+                    {stage === stages.dietaryRestrictions &&
+                      <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
+                        TODO
+                      </MenuContent>
+                    }
                     <BackForwardButtons
                       onBackClick={highlightedMenuOnBackClick}
                       onForwardClick={highlightedMenuOnForwardClick}
                       forwardText="Confirm"
                     />
                   </AnimatedHighlightedMenu>
+                </>
+              )}
+              {stage === stages.recommendations && (
+                <>
+                  <CateringContent>
+                    <CateringMessage>
+                      <h2>Here's what we recommend!</h2>
+                      <p>
+                        TODO
+                      </p>
+                    </CateringMessage>
+                  </CateringContent>
                 </>
               )}
             </CateringContainer>
