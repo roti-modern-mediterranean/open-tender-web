@@ -45,12 +45,6 @@ const OptionToggle = styled.span`
   }
 `
 
-const OptionToggleIcon = styled('span')`
-  display: block;
-  margin: 0 1rem 0 0;
-  line-height: 0;
-`
-
 const OptionToggleName = styled(Heading)`
   display: block;
   font-weight: 600;

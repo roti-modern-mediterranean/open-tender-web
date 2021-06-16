@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 const MenuContentView = styled('div')`
   label: MenuContentView;
   
-  padding: 3rem 3rem;
+  padding: 2rem 2rem;
 `
 
 const ModalHeader = styled('div')`

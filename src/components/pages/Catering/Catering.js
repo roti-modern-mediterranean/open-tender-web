@@ -54,7 +54,7 @@ import { isBrowser } from 'react-device-detect'
 import CateringAutocomplete from './CateringAutocomplete'
 import { ArrowRight } from '../../icons'
 import HighlightedMenu, {MenuContent} from '../../HighlightedMenu'
-import OptionsMenu from '../../OptionsMenu'
+import OptionsMenu, { BackForwardButtons } from '../../OptionsMenu'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -166,6 +166,15 @@ const CateringMessage = styled('div')`
     }
   }
 `
+
+const AnimatedHighlightedMenu = styled(HighlightedMenu)`
+  label: AnimatedHighlightedMenu;
+
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  display: flex;
+  flex-direction: column;
+`;
 
 const SkipSuggestions = styled.button`
   label: SkipSuggestions;
@@ -463,6 +472,25 @@ const CateringPage = () => {
     setFetching(true)
   }, [setFetching])
 
+  const highlightedMenuOnBackClick = useCallback(() => {
+    switch(stage){
+      case stages.eventType:
+        setStage(stages.address)
+        break;
+      default:
+        break;
+    }
+  }, [stage])
+
+  const highlightedMenuOnForwardClick = useCallback(() => {
+    switch(stage){
+      case stages.eventType:
+        break;
+      default:
+        break;
+    }
+  }, [stage])
+
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
 
@@ -569,7 +597,7 @@ const CateringPage = () => {
                       </p>
                     </SkipSuggestions>
                   </CateringContent>
-                  <HighlightedMenu>
+                  <AnimatedHighlightedMenu>
                     <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
                       <OptionsMenu
                         options={eventTypeOptions}
@@ -577,7 +605,12 @@ const CateringPage = () => {
                         setSelectedOptions={setSelectedEventTypes}
                       />
                     </MenuContent>
-                  </HighlightedMenu>
+                    <BackForwardButtons
+                      onBackClick={highlightedMenuOnBackClick}
+                      onForwardClick={highlightedMenuOnForwardClick}
+                      forwardText="Confirm"
+                    />
+                  </AnimatedHighlightedMenu>
                 </>
               )}
             </CateringContainer>
