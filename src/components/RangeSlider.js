@@ -25,21 +25,21 @@ const Container = styled.div`
     top: ${sliderThumbSize/2}px;
     
     &::-webkit-slider-thumb {
-      -webkit-appearance: none; /* Override default look */
+      -webkit-appearance: none;
       appearance: none;
-      width: ${sliderThumbSize}px; /* Set a specific slider handle width */
-      height: ${sliderThumbSize}px; /* Slider handle height */
-      background: #${(props) => props.theme.colors.light}; /* Green background */
+      width: ${sliderThumbSize + 2*sliderThumbBorderSize}px;
+      height: ${sliderThumbSize + 2*sliderThumbBorderSize}px;
+      background: ${(props) => props.theme.colors.light};
       cursor: pointer; /* Cursor on hover */
       border: ${(props) => props.theme.colors.paprika} solid ${sliderThumbBorderSize}px;
       border-radius: 50%;
     }
     
     &::-moz-range-thumb {
-      width: ${sliderThumbSize}px; /* Set a specific slider handle width */
-      height: ${sliderThumbSize}px; /* Slider handle height */
-      background: #${(props) => props.theme.colors.light}; /* Green background */
-      cursor: pointer; /* Cursor on hover */
+      width: ${sliderThumbSize}px;
+      height: ${sliderThumbSize}px;
+      background: ${(props) => props.theme.colors.light};
+      cursor: pointer;
       border: ${(props) => props.theme.colors.paprika} solid ${sliderThumbBorderSize}px;
       border-radius: 50%;
     }
