@@ -57,6 +57,8 @@ import HighlightedMenu, {MenuContent} from '../../HighlightedMenu'
 import OptionsMenu, { BackForwardButtons } from '../../OptionsMenu'
 import RangeSlider from '../../RangeSlider'
 import GroupOf3People from '../../icons/GroupOf3People'
+import Person from '../../icons/Person'
+import GroupOf6People from '../../icons/GroupOf6People'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -335,6 +337,16 @@ const numberOfPeopleMessage = (numberOfPeople) =>{
   return "Wow, it's gonna be a party!"
 }
 
+const NumberOfPeopleImage = ({numberOfPeople, size, color}) => {
+  if(numberOfPeople < 2){
+    return <Person size={size} color={color}/>;
+  }
+  if(numberOfPeople < 31){
+    return <GroupOf3People size={size} color={color}/>;
+  }
+  return <GroupOf6People size={size} color={color}/>
+}
+
 const CateringPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -516,13 +528,16 @@ const CateringPage = () => {
         }
         return () => setStage(stages.numberOfPeople)
       case stages.numberOfPeople:
+        if(numberOfPeople < 2){
+          return null;
+        }
         return () => setStage(stages.dietaryRestrictions)
       case stages.dietaryRestrictions:
         return () => setStage(stages.recommendations)
       default:
         return null
     }
-  }, [stage, selectedEventTypes])
+  }, [stage, selectedEventTypes, numberOfPeople])
 
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
@@ -645,7 +660,7 @@ const CateringPage = () => {
                     {stage === stages.numberOfPeople &&
                       <MenuContent title="Number of people" subtitle="How big is your group?">
                         <RangeSlider min={1} max={100} value={numberOfPeople} setValue={setNumberOfPeople}>
-                          <GroupOf3People size="60px"/>
+                          <NumberOfPeopleImage numberOfPeople={numberOfPeople} size="60px"/>
                         </RangeSlider>
                         <SliderRangeMessage>{numberOfPeopleMessage(numberOfPeople)}</SliderRangeMessage>
                       </MenuContent>
