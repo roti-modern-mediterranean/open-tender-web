@@ -15,7 +15,7 @@ import {
   selectMenuSlug,
   fetchRevenueCenters,
   setRevenueCenter,
-  selectRevenueCenters,
+  selectRevenueCenters, selectAllergens, setSelectedAllergens, updateCustomerAllergens
 } from '@open-tender/redux'
 import {
   isoToDate,
@@ -37,7 +37,7 @@ import {
   selectBrand,
   selectConfig,
   selectSettings,
-  selectGeoLatLng,
+  selectGeoLatLng, closeModal
 } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -46,7 +46,7 @@ import {
   Main,
   HeaderDefault,
   RequestedAtPicker,
-  InlineLink
+  InlineLink, AllergenForm
 } from '../..'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
@@ -542,6 +542,18 @@ const CateringPage = () => {
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
 
+
+  const brandAllergens = useSelector(selectAllergens)
+  const setAllergens = useCallback(
+    (data) => dispatch(setSelectedAllergens(data)),
+    [dispatch]
+  )
+  const updateAllergens = useCallback(
+    (data) => dispatch(updateCustomerAllergens(data)),
+    [dispatch]
+  )
+  const callback = useCallback(() => dispatch(closeModal()), [dispatch])
+
   return (
     <>
       <Helmet>
@@ -667,7 +679,15 @@ const CateringPage = () => {
                     }
                     {stage === stages.dietaryRestrictions &&
                       <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
-                        TODO
+                        <AllergenForm
+                          allergens={brandAllergens.entities}
+                          selectedAllergens={brandAllergens.selectedAllergens}
+                          isLoading={false}
+                          error={null}
+                          setAllergens={setAllergens}
+                          updateAllergens={updateAllergens}
+                          callback={callback}
+                        />
                       </MenuContent>
                     }
                     <BackForwardButtons
