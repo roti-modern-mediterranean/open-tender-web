@@ -56,6 +56,7 @@ import { ArrowRight } from '../../icons'
 import HighlightedMenu, {MenuContent} from '../../HighlightedMenu'
 import OptionsMenu, { BackForwardButtons } from '../../OptionsMenu'
 import RangeSlider from '../../RangeSlider'
+import GroupOf3People from '../../icons/GroupOf3People'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -643,7 +644,9 @@ const CateringPage = () => {
                     }
                     {stage === stages.numberOfPeople &&
                       <MenuContent title="Number of people" subtitle="How big is your group?">
-                        <RangeSlider min={1} max={100} value={numberOfPeople} setValue={setNumberOfPeople}/>
+                        <RangeSlider min={1} max={100} value={numberOfPeople} setValue={setNumberOfPeople}>
+                          <GroupOf3People size="60px"/>
+                        </RangeSlider>
                         <SliderRangeMessage>{numberOfPeopleMessage(numberOfPeople)}</SliderRangeMessage>
                       </MenuContent>
                     }

@@ -6,7 +6,11 @@ const sliderThumbSize = 35;
 const sliderThumbBorderSize = 2;
 
 const Container = styled.div`
-  label: RangeSliderContainer;
+  label: Container;
+`
+
+const Slider = styled.div`
+  label: Slider;
 
   position: relative;
 
@@ -46,6 +50,30 @@ const Container = styled.div`
   }
 `
 
+const SliderImageArea = styled.div`
+  label: SliderImageArea;
+  
+  position: relative;
+
+  display: grid;
+  height: ${sliderThumbSize}px;
+`
+
+const SliderImage = styled.div`
+  label: SliderImage;
+
+  position: absolute;
+  top: 0px;
+  left: ${(props) => props.y}px;
+  width: ${sliderThumbSize + 2*sliderThumbBorderSize}px;
+  height: ${sliderThumbSize + sliderThumbBorderSize}px;
+  pointer-events:none;
+  touch-action:none;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+`
+
 const SliderValue = styled.div`
   label: SliderValue;
   
@@ -65,7 +93,7 @@ const SliderValue = styled.div`
   font-family: 'Barlow', sans-serif;
 `
 
-const RangeSlider = ({min, max, value, setValue}) => {
+const RangeSlider = ({min, max, value, setValue, children}) => {
 
   const $container = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0)
@@ -86,10 +114,17 @@ const RangeSlider = ({min, max, value, setValue}) => {
   const yPosition = useMemo(()=>((value-min)/(max-min)*(containerWidth - sliderThumbSize - 2*sliderThumbBorderSize))
     , [value, min, max, containerWidth]);
 
-  return <Container ref={$container}>
-    <input type="range" min={min} max={max} value={value} onInput={sliderOnInput}/>
-    <SliderValue y={yPosition}>{value}</SliderValue>
-  </Container>
+  return (
+    <Container>
+      {children &&
+        <SliderImageArea>
+          <SliderImage y={yPosition}>{children}</SliderImage>
+        </SliderImageArea>}
+      <Slider ref={$container}>
+        <input type="range" min={min} max={max} value={value} onInput={sliderOnInput}/>
+        <SliderValue y={yPosition}>{value}</SliderValue>
+      </Slider>
+    </Container>)
 }
 
 RangeSlider.displayName = 'RangeSlider'
@@ -98,6 +133,10 @@ RangeSlider.propTypes = {
   max: propTypes.number,
   value: propTypes.number,
   setValue: propTypes.func,
+  children: propTypes.oneOfType([
+    propTypes.arrayOf(propTypes.node),
+    propTypes.node,
+  ]),
 }
 
 export default RangeSlider;
