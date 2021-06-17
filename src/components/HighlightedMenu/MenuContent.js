@@ -11,11 +11,11 @@ const MenuContentView = styled('div')`
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
 `
 
-const ModalHeader = styled('div')`
+const MenuHeader = styled('div')`
   margin: 0 0 2.5rem;
 `
 
-const ModalTitle = styled('p')`
+const MenuTitle = styled('p')`
   margin: 0;
   line-height: 1;
   font-family: ${(props) => props.theme.fonts.preface.family};
@@ -30,14 +30,16 @@ const ModalTitle = styled('p')`
   }
 `
 
-const ModalSubtitle = styled('div')`
+const MenuSubtitle = styled('div')`
   p {
     margin-top: 1rem;
     line-height: ${(props) => props.theme.lineHeight};
   }
 `
 
-const ModalBody = styled('div')`
+const MenuBody = styled('div')`
+  label: MenuBody;
+  
   > div {
     p {
       margin: 1em 0;
@@ -57,7 +59,7 @@ const ModalBody = styled('div')`
   // }
 `
 
-const ModalFooter = styled('div')`
+const MenuFooter = styled('div')`
   margin-top: 2rem;
 
   > {
@@ -100,13 +102,13 @@ const MenuContent = ({
         style={style}
       >
         {hasHeader && (
-          <ModalHeader>
-            {title && <ModalTitle id="dialogTitle">{title}</ModalTitle>}
-            {subtitle && <ModalSubtitle>{subtitle}</ModalSubtitle>}
-          </ModalHeader>
+          <MenuHeader>
+            {title && <MenuTitle id="dialogTitle">{title}</MenuTitle>}
+            {subtitle && <MenuSubtitle>{subtitle}</MenuSubtitle>}
+          </MenuHeader>
         )}
-        <ModalBody>{children}</ModalBody>
-        {footer && <ModalFooter>{footer}</ModalFooter>}
+        <MenuBody>{children}</MenuBody>
+        {footer && <MenuFooter>{footer}</MenuFooter>}
       </MenuContentView>
     </>
   )

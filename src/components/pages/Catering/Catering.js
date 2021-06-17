@@ -625,7 +625,7 @@ const CateringPage = () => {
                       </MenuContent>
                     }
                     {stage === stages.numberOfPeople &&
-                      <MenuContent title="Number of people" subtitle="How big is your group?">{numberOfPeople}
+                      <MenuContent title="Number of people" subtitle="How big is your group?">
                         <RangeSlider min={1} max={100} value={numberOfPeople} setValue={setNumberOfPeople}/>
                       </MenuContent>
                     }
