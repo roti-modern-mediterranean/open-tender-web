@@ -177,6 +177,16 @@ const AnimatedHighlightedMenu = styled(HighlightedMenu)`
   flex-direction: column;
 `;
 
+const SliderRangeMessage = styled.div`
+  label: SliderRangeMessage;
+  
+  width: 100%;
+  text-align: center;
+  color: ${(props) => props.theme.colors.primary};
+  font-size: 24px;
+  font-weight: 700;
+`
+
 const SkipSuggestions = styled.button`
   label: SkipSuggestions;
 
@@ -316,6 +326,13 @@ const eventTypeOptions = [
   { id: "Teens", name: "Teens"}, { id: "Kids", name: "Kids"},
   { id: "Indoors", name: "Indoors"}, { id: "Outdoors", name: "Outdoors"},
   { id: "Formal", name: "Formal"}]
+
+const numberOfPeopleMessage = (numberOfPeople) =>{
+  if(numberOfPeople < 10){
+    return "Zzz!";
+  }
+  return "Wow, it's gonna be a party!"
+}
 
 const CateringPage = () => {
   const history = useHistory()
@@ -627,6 +644,7 @@ const CateringPage = () => {
                     {stage === stages.numberOfPeople &&
                       <MenuContent title="Number of people" subtitle="How big is your group?">
                         <RangeSlider min={1} max={100} value={numberOfPeople} setValue={setNumberOfPeople}/>
+                        <SliderRangeMessage>{numberOfPeopleMessage(numberOfPeople)}</SliderRangeMessage>
                       </MenuContent>
                     }
                     {stage === stages.dietaryRestrictions &&
