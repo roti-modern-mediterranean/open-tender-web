@@ -56,7 +56,7 @@ const SliderImageArea = styled.div`
   position: relative;
 
   display: grid;
-  height: ${sliderThumbSize}px;
+  height: ${(props) => props.imageHeight}px;
 `
 
 const SliderImage = styled.div`
@@ -66,7 +66,7 @@ const SliderImage = styled.div`
   top: 0px;
   left: ${(props) => props.y}px;
   width: ${sliderThumbSize + 2*sliderThumbBorderSize}px;
-  height: ${sliderThumbSize + sliderThumbBorderSize}px;
+  height: 100%;
   pointer-events:none;
   touch-action:none;
   display: grid;
@@ -95,19 +95,28 @@ const SliderValue = styled.div`
 
 const RangeSlider = ({min, max, value, setValue, children}) => {
 
-  const $container = useRef(null);
+  const $slider = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0)
 
   useEffect(()=>{
-    if($container.current){
+    if($slider.current){
       const listener = ()=>{
-        setContainerWidth($container.current.offsetWidth)
+        setContainerWidth($slider.current.offsetWidth)
       };
       listener();
       window.addEventListener("resize", listener)
       return ()=> window.removeEventListener("resize", listener)
     }
-  }, [$container])
+  }, [$slider])
+
+  const $sliderImage = useRef(null)
+  const [imageHeight, setImageHeight] = useState(sliderThumbSize)
+
+  useEffect(()=>{
+    if($sliderImage){
+      setImageHeight(Math.max(...Array.from($sliderImage.current.children).map(child => child.offsetWidth)))
+    }
+  }, [$sliderImage, children])
 
   const sliderOnInput = useCallback((ev) => setValue(ev.currentTarget.value), [setValue])
 
@@ -117,10 +126,10 @@ const RangeSlider = ({min, max, value, setValue, children}) => {
   return (
     <Container>
       {children &&
-        <SliderImageArea>
-          <SliderImage y={yPosition}>{children}</SliderImage>
+        <SliderImageArea imageHeight={imageHeight}>
+          <SliderImage y={yPosition} ref={$sliderImage}>{children}</SliderImage>
         </SliderImageArea>}
-      <Slider ref={$container}>
+      <Slider ref={$slider}>
         <input type="range" min={min} max={max} value={value} onInput={sliderOnInput}/>
         <SliderValue y={yPosition}>{value}</SliderValue>
       </Slider>
