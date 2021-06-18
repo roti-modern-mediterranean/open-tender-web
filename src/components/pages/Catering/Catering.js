@@ -60,6 +60,7 @@ import GroupOf3People from '../../icons/GroupOf3People'
 import Person from '../../icons/Person'
 import GroupOf6People from '../../icons/GroupOf6People'
 import Recommendation from './Recommendation'
+import AllergenOptions from './AllergenOptions'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -554,17 +555,6 @@ const CateringPage = () => {
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
 
 
-  const brandAllergens = useSelector(selectAllergens)
-  const setAllergens = useCallback(
-    (data) => dispatch(setSelectedAllergens(data)),
-    [dispatch]
-  )
-  const updateAllergens = useCallback(
-    (data) => dispatch(updateCustomerAllergens(data)),
-    [dispatch]
-  )
-  const callback = useCallback(() => dispatch(closeModal()), [dispatch])
-
   return (
     <>
       <Helmet>
@@ -690,15 +680,7 @@ const CateringPage = () => {
                     }
                     {stage === stages.dietaryRestrictions &&
                       <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
-                        <AllergenForm
-                          allergens={brandAllergens.entities}
-                          selectedAllergens={brandAllergens.selectedAllergens}
-                          isLoading={false}
-                          error={null}
-                          setAllergens={setAllergens}
-                          updateAllergens={updateAllergens}
-                          callback={callback}
-                        />
+                        <AllergenOptions/>
                       </MenuContent>
                     }
                     <BackForwardButtons
