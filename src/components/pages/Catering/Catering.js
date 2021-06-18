@@ -59,6 +59,7 @@ import RangeSlider from '../../RangeSlider'
 import GroupOf3People from '../../icons/GroupOf3People'
 import Person from '../../icons/Person'
 import GroupOf6People from '../../icons/GroupOf6People'
+import Recommendation from './Recommendation'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -121,6 +122,8 @@ const CateringContainer = styled('div')`
 `
 
 const CateringContent = styled('div')`
+  label: CateringContent;
+  
   flex: 1 1 auto;
   padding: 0 3rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -136,6 +139,8 @@ const CateringContent = styled('div')`
 `
 
 const CateringMessage = styled('div')`
+  label: CateringMessage;
+  
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
 
@@ -699,16 +704,7 @@ const CateringPage = () => {
                 </>
               )}
               {stage === stages.recommendations && (
-                <>
-                  <CateringContent>
-                    <CateringMessage>
-                      <h2>Here's what we recommend!</h2>
-                      <p>
-                        TODO
-                      </p>
-                    </CateringMessage>
-                  </CateringContent>
-                </>
+                <Recommendation/>
               )}
             </CateringContainer>
           </CateringView>
