@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectAllergens, setSelectedAllergens, updateCustomerAllergens } from '@open-tender/redux'
+import { selectAllergens, setSelectedAllergens } from '@open-tender/redux'
 import OptionsMenu from '../../OptionsMenu'
+import { allergenIconMap } from '../../icons/allergens'
 
 const useManageAllergens = () => {
 
@@ -10,7 +11,7 @@ const useManageAllergens = () => {
 
   // Convert from Redux to AllergenOptions array (ids, names)
   const options = useMemo(
-    () => entities.map((allergen) => ({id: `${allergen.allergen_id}`, name: allergen.name})
+    () => entities.map((allergen) => ({id: `${allergen.allergen_id}`, name: allergen.name, icon: allergenIconMap[allergen.name] || null})
     ), [entities])
 
   // Convert from Redux to AllergenOptions array (ids)

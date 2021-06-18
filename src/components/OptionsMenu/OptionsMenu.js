@@ -31,6 +31,7 @@ const OptionsMenu = ({options, selectedOptions, setSelectedOptions}) => {
       <OptionButton
         key={option.id}
         label={option.name}
+        icon={option.icon}
         id={`${option.id}`}
         isChecked={selectedOptions.includes(option.id)}
         onChange={OptionButtonOnChange}

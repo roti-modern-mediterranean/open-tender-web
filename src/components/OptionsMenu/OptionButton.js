@@ -46,14 +46,37 @@ const OptionToggle = styled.span`
 `
 
 const OptionToggleName = styled(Heading)`
+  label: OptionToggleName;
+
   display: block;
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: ${(props) => props.numCharacters < 10 ? `1.4rem` : `1.2rem` };
   line-height: 1.05;
   user-select: none;
 `
 
-const OptionButton = ({ label, id, isChecked, onChange}) => {
+const OptionToggleIconAndName = styled(Heading)`
+  label: OptionToggleIconAndName;
+  
+  display: grid;
+  justify-items: left;
+  align-items: center;
+  grid-template-columns: 25% minmax(min-content, max-content);
+  grid-column-gap: 5px;
+  width: 100%;
+  font-weight: 600;
+  font-size: ${(props) => props.numCharacters < 8 ? `1.4rem` : `1.2rem` };
+  line-height: 1.05;
+  user-select: none;
+  
+  > span:first-of-type{
+    display: grid;
+    justify-items: right;
+    width: 100%;
+  }
+`
+
+const OptionButton = ({ label, id, icon:Icon, isChecked, onChange}) => {
   return (
     <OptionLabel htmlFor={id}>
       <OptionInput
@@ -64,7 +87,14 @@ const OptionButton = ({ label, id, isChecked, onChange}) => {
         onChange={onChange}
       />
       <OptionToggle isChecked={isChecked}>
-        <OptionToggleName>{label}</OptionToggleName>
+        {
+          Icon
+            ? <OptionToggleIconAndName numCharacters={label.length}>
+                <span><Icon/></span>
+                <span>{label}</span>
+              </OptionToggleIconAndName>
+            : <OptionToggleName numCharacters={label.length}>{label}</OptionToggleName>
+        }
       </OptionToggle>
     </OptionLabel>
   )
@@ -74,6 +104,7 @@ OptionButton.displayName = 'OptionButton'
 OptionButton.propTypes = {
   label: propTypes.string,
   id: propTypes.string,
+  icon: propTypes.func,
   isChecked: propTypes.bool,
   onChange: propTypes.func,
 }
