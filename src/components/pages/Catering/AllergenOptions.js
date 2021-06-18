@@ -11,15 +11,17 @@ const useManageAllergens = () => {
 
   // Convert from Redux to AllergenOptions array (ids, names)
   const options = useMemo(
-    () => entities.map((allergen) => ({id: `${allergen.allergen_id}`, name: allergen.name, icon: allergenIconMap[allergen.name] || null})
+    () => (entities || []).map(
+      (allergen) => ({id: `${allergen.allergen_id}`, name: allergen.name, icon: allergenIconMap[allergen.name] || null})
     ), [entities])
 
   // Convert from Redux to AllergenOptions array (ids)
-  const selectedOptions = useMemo(()=>selectedAllergens.map((allergen) => `${allergen.allergen_id}`), [selectedAllergens])
+  const selectedOptions = useMemo(()=>(selectedAllergens || []).map((allergen) => `${allergen.allergen_id}`), [selectedAllergens])
 
   // Convert from AllergenOptions to Redux array, and dispatch
   const setSelectedOptions = useCallback(
-    (data) => dispatch(setSelectedAllergens(data.map((allergenId) => ({allergen_id: parseInt(allergenId, 10)})))),
+    (data) => dispatch(setSelectedAllergens(data.map(
+      (allergenId) => ({allergen_id: parseInt(allergenId, 10)})))),
     [dispatch]
   )
 

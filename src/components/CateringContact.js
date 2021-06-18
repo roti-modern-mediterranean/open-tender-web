@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 import { Preface } from '@open-tender/components'
 import { useState } from 'react'
 import { CallUs, Chat } from './icons'
+import CallUsButton from './pages/Catering/CallUsButton'
+import ChatButton from './pages/Catering/ChatButton'
 
 const CateringContactView = styled('div')`
   width: 100%;
@@ -73,13 +75,6 @@ const CateringContactButtons = styled('div')`
 `
 
 const CateringContact = () => {
-  const [open, setOpen] = useState(false)
-
-  const toggle = (evt) => {
-    evt.preventDefault()
-    setOpen(!open)
-    evt.target.blur()
-  }
 
   return (
     <CateringContactView>
@@ -88,14 +83,8 @@ const CateringContact = () => {
         <Preface as="p">Chat or call a representative</Preface>
       </CateringContactHeader>
       <CateringContactButtons>
-        <a href="tel:8776647684">
-          <Preface>Call Us</Preface>
-          <CallUs />
-        </a>
-        <button id="intercom-launcher" onClick={toggle}>
-          <Preface>{open ? 'Close' : 'Open'} Chat</Preface>
-          <Chat />
-        </button>
+        <CallUsButton/>
+        <ChatButton/>
       </CateringContactButtons>
     </CateringContactView>
   )

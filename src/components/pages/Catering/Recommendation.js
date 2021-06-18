@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import QuestionMark from '../../icons/QuestionMark'
+import CateringContact from '../../CateringContact'
+import { Preface } from '@open-tender/components'
+import CallUsButton from './CallUsButton'
+import ChatButton from './ChatButton'
 
 const Container = styled.div`
   label: RecommendationContainer;
@@ -21,6 +25,14 @@ const Container = styled.div`
   }
 
 `;
+
+const CustomPreface = styled(Preface)`
+  label: CustomPreface;
+  
+  color: ${(props) => props.theme.colors.tahini};
+  font-weight: 500;
+  font-size: 2.2rem;
+`
 
 const Header = styled.h2`
   label: RecommendationHeader;
@@ -59,6 +71,7 @@ const Footer = styled.div`
   display: grid;
   grid-template-columns: fit-content(40%) max-content;
   justify-content: center;
+  margin-bottom: -10px;
 `;
 
 const FooterLeft = styled.div`
@@ -72,7 +85,7 @@ const FooterLeftHighlight = styled.div`
   label: FooterLeftHighlight;
 
   display: grid;
-  grid-template-columns: 30px max-content;
+  grid-template-columns: 27px max-content;
   grid-column-gap: 5px;
   align-items: center;
   font-family: 'Barlow', sans-serif;
@@ -83,7 +96,7 @@ const FooterLeftHighlight = styled.div`
 const FooterLeftBody = styled.div`
   label: FooterLeftBody;
   
-  padding: 5px 0px 0px 35px;
+  padding: 5px 0px 0px 32px;
 `
 
 const FooterRight = styled.div`
@@ -93,6 +106,15 @@ const FooterRight = styled.div`
   font-weight: 400;
   display: grid;
   grid-template-columns: max-content max-content max-content;
+  gap: 10px;
+`;
+
+const FooterRightText = styled.div`
+  label: FooterRightText;
+  
+  display: grid;
+  grid-row-gap: 0.5rem;
+  align-content: start;
 `;
 
 const FooterRightHighlight = styled.div`
@@ -132,18 +154,18 @@ const Recommendation = () => {
       <Footer>
         <FooterLeft>
           <FooterLeftHighlight>
-            <QuestionMark size="25px"/>
-            <div>Craving something else?</div>
+            <QuestionMark size="23px"/>
+            <CustomPreface>Craving something else?</CustomPreface>
           </FooterLeftHighlight>
           <FooterLeftBody>Here's some crowd favourites to make any event the main event</FooterLeftBody>
         </FooterLeft>
         <FooterRight>
-          <div>
+          <FooterRightText>
             <div>Can't find what you are looking for?</div>
-            <FooterRightHighlight>Chat or call a representative</FooterRightHighlight>
-          </div>
-          <TransparentButton>Call Us</TransparentButton>
-          <TransparentButton>Open chat</TransparentButton>
+            <CustomPreface>Chat or call a representative</CustomPreface>
+          </FooterRightText>
+          <CallUsButton/>
+          <ChatButton/>
         </FooterRight>
       </Footer>
     </Container>)
