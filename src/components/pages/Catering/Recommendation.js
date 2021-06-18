@@ -115,6 +115,7 @@ const FooterRightText = styled.div`
   display: grid;
   grid-row-gap: 0.5rem;
   align-content: start;
+  margin: 0px 10px;
 `;
 
 const FooterRightHighlight = styled.div`
@@ -129,16 +130,19 @@ const TransparentButton = styled.button`
   label: TransparentButton;
 `
 
+// TODO remove hardcoded recommendation
 const recommendations = [
   {
-    image: "",
-    title: "",
-    subtitle: ""
+    image: "//s3.amazonaws.com/betterboh/u/img/prod/46/1501600578_Catering_Buffet_mobile.png",
+    title: "Anyway Buffet for 15 + Sandwich Spreads for 10",
+    priceForGroupSize: 195,
+    groupSize: 15
   },
   {
-    image: "",
-    title: "",
-    subtitle: ""
+    image: "//s3.amazonaws.com/betterboh/u/img/prod/46/1501600578_Catering_Buffet_mobile.png",
+    title: "Anyway Buffet for 15 + Sandwich Spreads for 10",
+    priceForGroupSize: 195,
+    groupSize: 15
   },
 ]
 
@@ -149,7 +153,6 @@ const Recommendation = () => {
         Here's what we recommend!
       </Header>
       <Recommendations>
-
       </Recommendations>
       <Footer>
         <FooterLeft>
