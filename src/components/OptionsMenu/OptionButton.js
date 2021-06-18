@@ -74,7 +74,7 @@ OptionButton.displayName = 'OptionButton'
 OptionButton.propTypes = {
   label: propTypes.string,
   id: propTypes.string,
-  isChecked: propTypes.array,
+  isChecked: propTypes.bool,
   onChange: propTypes.func,
 }
 

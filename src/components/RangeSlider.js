@@ -118,7 +118,7 @@ const RangeSlider = ({min, max, value, setValue, children}) => {
     }
   }, [$sliderImage, children])
 
-  const sliderOnInput = useCallback((ev) => setValue(ev.currentTarget.value), [setValue])
+  const sliderOnInput = useCallback((ev) => setValue(parseInt(ev.currentTarget.value, 10)), [setValue])
 
   const yPosition = useMemo(()=>((value-min)/(max-min)*(containerWidth - sliderThumbSize - 2*sliderThumbBorderSize))
     , [value, min, max, containerWidth]);

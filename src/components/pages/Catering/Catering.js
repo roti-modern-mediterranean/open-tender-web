@@ -232,7 +232,7 @@ const SkipSuggestions = styled.button`
   }
 `
 
-const SkipIcon = styled.div`
+const SkipIcon = styled.span`
   display: inline-flex;
   width: 12px;
   margin-left: 10px;
