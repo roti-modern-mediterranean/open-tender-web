@@ -16,7 +16,7 @@ const MenuHeader = styled('div')`
 `
 
 const MenuTitle = styled('p')`
-  margin: 0;
+  margin: 0 0 5px 0;
   line-height: 1;
   font-family: ${(props) => props.theme.fonts.preface.family};
   font-size: 2.2rem;

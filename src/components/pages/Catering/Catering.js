@@ -190,9 +190,12 @@ const SliderRangeMessage = styled.div`
   
   width: 100%;
   text-align: center;
-  color: ${(props) => props.theme.colors.primary};
+  text-transform: uppercase;
+  color: ${(props) => props.theme.colors.pepper};
+  font-family: ${(props) => props.theme.fonts.headings.family};
   font-size: 24px;
-  font-weight: 700;
+  font-weight: ${(props) => props.theme.fonts.headings.weight};
+  margin: 5px 0px;
 `
 
 const SkipSuggestions = styled.button`
@@ -336,7 +339,10 @@ const eventTypeOptions = [
   { id: "Formal", name: "Formal"}]
 
 const numberOfPeopleMessage = (numberOfPeople) =>{
-  if(numberOfPeople < 10){
+  if(numberOfPeople < 2){
+    return "How many are we?";
+  }
+  if(numberOfPeople < 31){
     return "Zzz!";
   }
   return "Wow, it's gonna be a party!"
