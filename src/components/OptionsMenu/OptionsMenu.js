@@ -11,7 +11,7 @@ const MenuArea = styled('div')`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin: 2rem -0.5rem 2rem;
+  margin: 0px -0.5rem;
 `
 
 const OptionsMenu = ({options, selectedOptions, setSelectedOptions}) => {
