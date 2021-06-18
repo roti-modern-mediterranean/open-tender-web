@@ -164,8 +164,8 @@ const Recommendation = () => {
             <div>Can't find what you are looking for?</div>
             <CustomPreface>Chat or call a representative</CustomPreface>
           </FooterRightText>
-          <CallUsButton/>
-          <ChatButton/>
+          <CallUsButton lightMode={true}/>
+          <ChatButton lightMode={true}/>
         </FooterRight>
       </Footer>
     </Container>)

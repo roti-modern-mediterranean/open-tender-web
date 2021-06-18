@@ -11,11 +11,11 @@ const ButtonStyle = styled.button`
   align-items: center;
   padding: 0 1rem 0 1.7rem;
   border-radius: ${(props) => props.theme.border.radius};
-  border: 0.1rem solid ${(props) => props.theme.colors.paprika};
+  border: 0.1rem solid ${(props) => props.lightMode ? props.theme.colors.tahini : props.theme.colors.paprika};
   background-color: transparent;
 
   span {
-    color: ${(props) => props.theme.colors.paprika};
+    color: ${(props) => props.lightMode ? props.theme.colors.tahini : props.theme.colors.paprika};
     line-height: 1;
     transition: ${(props) => props.theme.links.transition};
 
@@ -32,16 +32,16 @@ const ButtonStyle = styled.button`
   &:hover,
   &:active,
   &:focus {
-    border: 0.1rem solid ${(props) => props.theme.links.primary.hover};
-    background-color: ${(props) => props.theme.links.primary.hover};
+    border: 0.1rem solid ${(props) => props.lightMode ? props.theme.colors.tahini : props.theme.links.primary.hover};
+    background-color: ${(props) => props.lightMode ? props.theme.colors.tahini : props.theme.links.primary.hover};
 
     span {
-      color: ${(props) => props.theme.colors.light};
+      color: ${(props) => props.lightMode ? props.theme.colors.pepper : props.theme.colors.light};
     }
 
     span:last-of-type path,
     span:last-of-type circle {
-      stroke: ${(props) => props.theme.colors.light};
+      stroke: ${(props) => props.lightMode ? props.theme.colors.pepper : props.theme.colors.light};
     }
   }
 `
