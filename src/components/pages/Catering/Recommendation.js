@@ -5,6 +5,8 @@ import CateringContact from '../../CateringContact'
 import { Preface } from '@open-tender/components'
 import CallUsButton from './CallUsButton'
 import ChatButton from './ChatButton'
+import MenuCateringCategory from '../Menu/MenuCateringCategory'
+import { MenuCateringCategories, MenuCateringCategoryItem } from '../Menu/MenuCatering'
 
 const Container = styled.div`
   label: RecommendationContainer;
@@ -57,11 +59,22 @@ const Header = styled.h2`
   }
 `;
 
-const Recommendations = styled.div`
+const Recommendations = styled(MenuCateringCategories)`
   label: Recommendations;
-
-
+  
+  margin: 30px 0px 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 `;
+
+const OrBetween = styled(CustomPreface)`
+  label: OrBetween;
+  
+  display: flex;
+  align-items: center;
+  padding: 0 0.6rem 3.2rem;
+`
 
 const Footer = styled.div`
   label: RecommendationFooter;
@@ -133,17 +146,15 @@ const TransparentButton = styled.button`
 // TODO remove hardcoded recommendation
 const recommendations = [
   {
-    image: "//s3.amazonaws.com/betterboh/u/img/prod/46/1501600578_Catering_Buffet_mobile.png",
-    title: "Anyway Buffet for 15 + Sandwich Spreads for 10",
-    priceForGroupSize: 195,
-    groupSize: 15
+    id: 1044,
+    small_image_url: "//s3.amazonaws.com/betterboh/u/img/prod/46/1507125295_600x900_vtsm-boxed.jpg",
+    name: "Lunch Boxes",
   },
   {
-    image: "//s3.amazonaws.com/betterboh/u/img/prod/46/1501600578_Catering_Buffet_mobile.png",
-    title: "Anyway Buffet for 15 + Sandwich Spreads for 10",
-    priceForGroupSize: 195,
-    groupSize: 15
-  },
+    id: 1038,
+    small_image_url: "//s3.amazonaws.com/betterboh/u/img/prod/46/1508336771_600x900_vtsm-anywaybuffet.jpg",
+    name: "Any Way Buffet",
+  }
 ]
 
 const Recommendation = () => {
@@ -153,7 +164,16 @@ const Recommendation = () => {
         Here's what we recommend!
       </Header>
       <Recommendations>
+        {recommendations.map((recommendation, index) => (
+          <>
+            {index !== 0 && <OrBetween>or</OrBetween>}
+            <MenuCateringCategoryItem key={recommendation.id}>
+              <MenuCateringCategory category={recommendation} />
+            </MenuCateringCategoryItem>
+          </>
+        ))}
       </Recommendations>
+
       <Footer>
         <FooterLeft>
           <FooterLeftHighlight>

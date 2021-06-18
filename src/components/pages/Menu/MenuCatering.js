@@ -52,6 +52,7 @@ export const MenuCateringCategoryItem = styled('div')`
 
 const MenuCatering = () => {
   const { categories, isLoading, error } = useContext(MenuContext)
+  console.log(categories)
 
   return isLoading ? (
     <MenuLoading />
