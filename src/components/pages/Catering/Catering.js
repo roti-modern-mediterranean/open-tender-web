@@ -471,6 +471,7 @@ const CateringPage = () => {
         setError(error)
       } else if (displayed.length) {
         selectRevenueCenter(displayed[0])
+        setStage(stages.eventType)
       } else if (serviceType === 'PICKUP') {
         const msg = `We're sorry, but we don't have any locations within ${maxDistance} miles of your address.`
         setError(msg)
@@ -520,7 +521,6 @@ const CateringPage = () => {
     if (lat && lng) {
       dispatch(fetchRevenueCenters(params))
       setFetching(true)
-      setStage(stages.eventType)
     }
     // history.push('/locations')
   }
