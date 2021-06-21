@@ -529,7 +529,7 @@ const CateringPage = () => {
     if(revenueCenter){
       history.push(`/menu/${revenueCenter.slug}`)
     }
-  }, [revenueCenter])
+  }, [history, revenueCenter])
 
   const highlightedMenuOnBackClick = useMemo(() => {
     switch(stage){

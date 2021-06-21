@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from '@emotion/styled'
 import QuestionMark from '../../icons/QuestionMark'
 import { Preface } from '@open-tender/components'
@@ -10,6 +10,7 @@ import { Loading } from '../../index'
 import { useTheme } from '@emotion/react'
 import { useSelector } from 'react-redux'
 import { selectOrder } from '@open-tender/redux'
+import { useHistory } from 'react-router-dom'
 
 const Container = styled.div`
   label: RecommendationContainer;
@@ -93,11 +94,17 @@ const Footer = styled.div`
   margin-bottom: -10px;
 `;
 
-const FooterLeft = styled.div`
+const FooterLeft = styled.button`
   label: FooterLeft;
 
   border-right: 1px solid #FFFFFF44;
   padding: 0px 10px;
+  color: ${(props) => props.theme.colors.tahini};
+  text-align: left;
+  
+  &:hover {
+    background-color: #ffffff20;
+  }
 `;
 
 const FooterLeftHighlight = styled.div`
@@ -203,6 +210,13 @@ const Recommendation = () => {
 
   const { revenueCenter } = useSelector(selectOrder)
   const theme = useTheme()
+  const history = useHistory()
+
+  const skipSuggestionsOnCLick = useCallback(()=>{
+    if(revenueCenter){
+      history.push(`/menu/${revenueCenter.slug}`)
+    }
+  }, [history, revenueCenter])
 
   return (
     <Container>
@@ -230,7 +244,7 @@ const Recommendation = () => {
         }
 
       <Footer>
-        <FooterLeft>
+        <FooterLeft onClick={skipSuggestionsOnCLick}>
           <FooterLeftHighlight>
             <QuestionMark size="23px"/>
             <CustomPreface>Craving something else?</CustomPreface>
