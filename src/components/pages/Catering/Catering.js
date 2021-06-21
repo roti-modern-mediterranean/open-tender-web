@@ -187,6 +187,15 @@ const AnimatedHighlightedMenu = styled(HighlightedMenu)`
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    position: relative;
+    flex: 1 1 auto;
+    width: 44rem;
+    max-width: calc(100% - 2 * ${(props) => props.theme.layout.paddingMobile});
+    margin: 0 auto;
+    margin: 3rem ${(props) => props.theme.layout.paddingMobile} 3rem;
+  }
 `;
 
 const SliderRangeMessage = styled.div`
@@ -214,9 +223,14 @@ const SkipSuggestions = styled.button`
   border-top: 1px solid #ffffff50;
   padding-top: 1rem;
   width: 80%;
-  height: 110px;
   cursor: pointer;
   transition: background-color 0.25s ease;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: auto;
+    padding: 1rem;
+    border: 1px solid #ffffff50;
+  }
   
   h2 {
     opacity: 0;
@@ -301,6 +315,8 @@ const CateringCurrentOrderTitle = styled(Preface)`
 `
 
 const CateringCalendar = styled('div')`
+  label: CateringCalendar;
+  
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.5s forwards;
   flex: 0 0 36rem;
