@@ -101,6 +101,8 @@ const FooterLeft = styled.button`
   padding: 0px 10px;
   color: ${(props) => props.theme.colors.tahini};
   text-align: left;
+  min-width: 300px;
+  min-height: 70px;
   
   &:hover {
     background-color: #ffffff20;
@@ -245,11 +247,18 @@ const Recommendation = () => {
 
       <Footer>
         <FooterLeft onClick={skipSuggestionsOnCLick}>
-          <FooterLeftHighlight>
-            <QuestionMark size="23px"/>
-            <CustomPreface>Craving something else?</CustomPreface>
-          </FooterLeftHighlight>
-          <FooterLeftBody>Here's some crowd favourites to make any event the main event</FooterLeftBody>
+          {
+            revenueCenter
+              ? (
+                <>
+                  <FooterLeftHighlight>
+                    <QuestionMark size="23px"/>
+                    <CustomPreface>Craving something else?</CustomPreface>
+                  </FooterLeftHighlight>
+                  <FooterLeftBody>Here's some crowd favourites to make any event the main event</FooterLeftBody>
+                </>)
+              : <Loading text="Loading store..." color={theme.colors.tahini} />
+          }
         </FooterLeft>
         <FooterRight>
           <FooterRightText>
