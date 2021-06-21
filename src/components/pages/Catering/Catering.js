@@ -104,6 +104,8 @@ const CateringView = styled(BgImage)`
 `
 
 const CateringContainer = styled('div')`
+  label: CateringContainer;
+  
   display: flex;
   justify-content: space-between;
   width: 108rem;
@@ -112,6 +114,7 @@ const CateringContainer = styled('div')`
   padding: 4rem 4.5rem;
   border-radius: 2.2rem;
   background-color: rgba(37, 39, 42, 0.6);
+  
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: relative;
     z-index: 1;
@@ -211,15 +214,22 @@ const SkipSuggestions = styled.button`
   border-top: 1px solid #ffffff50;
   padding-top: 1rem;
   width: 80%;
+  height: 110px;
   cursor: pointer;
   transition: background-color 0.25s ease;
   
   h2 {
+    opacity: 0;
+    animation: slide-up 0.25s ease-in-out 0.25s forwards;
+    
     font-size: 30px;
     font-weight: 500;
   }
   
   p {
+    opacity: 0;
+    animation: slide-up 0.25s ease-in-out 0.25s forwards;
+    
     font-size: 18px;
     line-height: 28px;
   }
@@ -440,12 +450,11 @@ const CateringPage = () => {
     }
   }, [date, settings])
 
-  const autoRouteCallack = useCallback(
+  const selectRevenueCenter = useCallback(
     (revenueCenter) => {
       dispatch(setRevenueCenter(revenueCenter))
-      return history.push(`/menu/${revenueCenter.slug}`)
     },
-    [dispatch, history]
+    [dispatch, setRevenueCenter]
   )
 
   useEffect(() => {
@@ -461,7 +470,7 @@ const CateringPage = () => {
       if (error) {
         setError(error)
       } else if (displayed.length) {
-        autoRouteCallack(displayed[0])
+        selectRevenueCenter(displayed[0])
       } else if (serviceType === 'PICKUP') {
         const msg = `We're sorry, but we don't have any locations within ${maxDistance} miles of your address.`
         setError(msg)
@@ -478,7 +487,7 @@ const CateringPage = () => {
     address,
     geoLatLng,
     maxDistance,
-    autoRouteCallack,
+    selectRevenueCenter,
   ])
 
   const selectTime = (time) => {
@@ -510,14 +519,17 @@ const CateringPage = () => {
     const params = { type: 'CATERING', lat, lng }
     if (lat && lng) {
       dispatch(fetchRevenueCenters(params))
+      setFetching(true)
       setStage(stages.eventType)
     }
     // history.push('/locations')
   }
 
   const skipSuggestionsOnCLick = useCallback(()=>{
-    setFetching(true)
-  }, [setFetching])
+    if(revenueCenter){
+      history.push(`/menu/${revenueCenter.slug}`)
+    }
+  }, [revenueCenter])
 
   const highlightedMenuOnBackClick = useMemo(() => {
     switch(stage){
@@ -653,11 +665,18 @@ const CateringPage = () => {
                       </p>
                     </CateringMessage>
                     <SkipSuggestions onClick={skipSuggestionsOnCLick}>
-                      <h2>Take a shortcut</h2>
-                      <p>
-                        Skip straight to the <span>menu</span> to browse all our packages and start your order
-                        <SkipIcon><ArrowRight/></SkipIcon>
-                      </p>
+                      {
+                        revenueCenter
+                          ? (
+                            <>
+                              <h2>Take a shortcut</h2>
+                              <p>
+                                Skip straight to the <span>menu</span> to browse all our packages and start your order
+                                <SkipIcon><ArrowRight /></SkipIcon>
+                              </p>
+                            </>)
+                          : <Loading text="Loading store..." color={theme.colors.tahini} />
+                      }
                     </SkipSuggestions>
                   </CateringContent>
                   <AnimatedHighlightedMenu>

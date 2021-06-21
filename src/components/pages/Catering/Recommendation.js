@@ -1,12 +1,15 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import QuestionMark from '../../icons/QuestionMark'
-import CateringContact from '../../CateringContact'
 import { Preface } from '@open-tender/components'
 import CallUsButton from './CallUsButton'
 import ChatButton from './ChatButton'
 import MenuCateringCategory from '../Menu/MenuCateringCategory'
 import { MenuCateringCategories, MenuCateringCategoryItem } from '../Menu/MenuCatering'
+import { Loading } from '../../index'
+import { useTheme } from '@emotion/react'
+import { useSelector } from 'react-redux'
+import { selectOrder } from '@open-tender/redux'
 
 const Container = styled.div`
   label: RecommendationContainer;
@@ -61,6 +64,9 @@ const Header = styled.h2`
 
 const Recommendations = styled(MenuCateringCategories)`
   label: Recommendations;
+
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
   
   margin: 30px 0px 25px;
   display: flex;
@@ -158,21 +164,34 @@ const recommendations = [
 ]
 
 const Recommendation = () => {
+
+  const { revenueCenter } = useSelector(selectOrder)
+  const theme = useTheme()
+
   return (
     <Container>
       <Header>
         Here's what we recommend!
       </Header>
-      <Recommendations>
-        {recommendations.map((recommendation, index) => (
-          <>
-            {index !== 0 && <OrBetween>or</OrBetween>}
-            <MenuCateringCategoryItem key={recommendation.id}>
-              <MenuCateringCategory category={recommendation} />
-            </MenuCateringCategoryItem>
-          </>
-        ))}
-      </Recommendations>
+        {
+          revenueCenter
+            ? (
+              <Recommendations key={0}>
+                {
+                  recommendations.map((recommendation, index) => (
+                    <>
+                      { index !== 0 && <OrBetween>or</OrBetween>}
+                      <MenuCateringCategoryItem key={recommendation.id}>
+                        <MenuCateringCategory category={recommendation} />
+                      </MenuCateringCategoryItem>
+                    </>
+                  ))
+                }
+              </Recommendations>)
+            : <Recommendations key={1}>
+              <Loading text="Loading store..." color={theme.colors.tahini} />
+            </Recommendations>
+        }
 
       <Footer>
         <FooterLeft>
