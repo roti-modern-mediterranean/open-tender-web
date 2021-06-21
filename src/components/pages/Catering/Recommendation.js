@@ -152,14 +152,50 @@ const TransparentButton = styled.button`
 // TODO remove hardcoded recommendation
 const recommendations = [
   {
-    id: 1044,
-    small_image_url: "//s3.amazonaws.com/betterboh/u/img/prod/46/1507125295_600x900_vtsm-boxed.jpg",
-    name: "Lunch Boxes",
+    id: 1045,
+    small_image_url: "//s3.amazonaws.com/betterboh/u/img/prod/46/1507125530_600x900_vtsm-platter.jpg",
+    name: "Tasting Platters",
+    items: [
+      {
+        category_id: 1045,
+        id: 18188,
+        name: "Mediterranean Tasting Platter",
+        small_image_url: "//s3.amazonaws.com/betterboh/u/img/prod/46/1598320217_mediterranean-tasting-platter.jpg",
+        price: "155.00",
+        shorthand: ""
+      },
+      {
+        category_id: 1045,
+        id: 18195,
+        name: "Vegetarian Tasting Platter",
+        small_image_url: "//s3.amazonaws.com/betterboh/u/img/prod/46/1598320122_vegetarian-tasting-platter.jpg",
+        price: "70.00",
+        shorthand: ""
+      },
+      {
+        category_id: 1045,
+        id: 18196,
+        name: "Hummus 3 Ways",
+        small_image_url: "//s3.amazonaws.com/betterboh/u/img/prod/46/1598320152_hummus-3-ways.jpg",
+        price: "50.00",
+        shorthand: ""
+      }],
+    children: []
   },
   {
     id: 1038,
     small_image_url: "//s3.amazonaws.com/betterboh/u/img/prod/46/1508336771_600x900_vtsm-anywaybuffet.jpg",
     name: "Any Way Buffet",
+    items: [
+      {
+        category_id: 1038,
+        id: 18116,
+        name: "Any Way Buffet",
+        small_image_url: "//s3.amazonaws.com/betterboh/u/img/prod/46/1501600578_Catering_Buffet_mobile.png",
+        price: "0.00",
+        shorthand: ""
+      }],
+    children: []
   }
 ]
 
