@@ -117,10 +117,6 @@ const FooterLeft = styled.button`
   text-align: left;
   min-width: 300px;
   min-height: 70px;
-  
-  &:hover {
-    background-color: #ffffff20;
-  }
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     grid-template-columns: 100%;

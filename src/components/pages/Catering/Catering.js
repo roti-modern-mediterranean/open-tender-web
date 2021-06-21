@@ -108,7 +108,7 @@ const CateringContainer = styled('div')`
   
   display: flex;
   justify-content: space-between;
-  width: 108rem;
+  width: 112rem;
   max-width: 100%;
   min-height: 43rem;
   padding: 4rem 4.5rem;
@@ -222,7 +222,7 @@ const SkipSuggestions = styled.button`
   margin-top: 2rem;
   border-top: 1px solid #ffffff50;
   padding-top: 1rem;
-  width: 80%;
+  width: 100%;
   cursor: pointer;
   transition: background-color 0.25s ease;
 
@@ -250,10 +250,6 @@ const SkipSuggestions = styled.button`
   
   span {
     color: ${(props) => props.theme.colors.paprika};
-  }
-  
-  &:hover {
-    background-color: #ffffff20;
   }
 `
 
@@ -687,7 +683,7 @@ const CateringPage = () => {
                             <>
                               <h2>Take a shortcut</h2>
                               <p>
-                                Skip straight to the <span>menu</span> to browse all our packages and start your order
+                                Skip straight to the menu to browse all our packages and start your order
                                 <SkipIcon><ArrowRight /></SkipIcon>
                               </p>
                             </>)
