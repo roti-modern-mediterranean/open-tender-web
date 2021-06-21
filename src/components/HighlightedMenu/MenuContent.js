@@ -2,20 +2,21 @@ import React from 'react'
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 
-import { ModalClose } from '.'
-
-const ModalContentView = styled('div')`
-  label: ModalContentView;
+const MenuContentView = styled('div')`
+  label: MenuContentView;
   
-  padding: 3rem 3rem;
+  padding: 2rem 2rem;
+  flex-grow: 1;
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
 `
 
-const ModalHeader = styled('div')`
+const MenuHeader = styled('div')`
   margin: 0 0 2.5rem;
 `
 
-const ModalTitle = styled('p')`
-  margin: 0;
+const MenuTitle = styled('p')`
+  margin: 0 0 5px 0;
   line-height: 1;
   font-family: ${(props) => props.theme.fonts.preface.family};
   font-size: 2.2rem;
@@ -29,14 +30,16 @@ const ModalTitle = styled('p')`
   }
 `
 
-const ModalSubtitle = styled('div')`
+const MenuSubtitle = styled('div')`
   p {
     margin-top: 1rem;
     line-height: ${(props) => props.theme.lineHeight};
   }
 `
 
-const ModalBody = styled('div')`
+const MenuBody = styled('div')`
+  label: MenuBody;
+  
   > div {
     p {
       margin: 1em 0;
@@ -56,7 +59,7 @@ const ModalBody = styled('div')`
   // }
 `
 
-const ModalFooter = styled('div')`
+const MenuFooter = styled('div')`
   margin-top: 2rem;
 
   > {
@@ -82,8 +85,7 @@ const ModalFooter = styled('div')`
   }
 `
 
-const ModalContent = ({
-  close = true,
+const MenuContent = ({
   title,
   subtitle,
   footer,
@@ -94,28 +96,26 @@ const ModalContent = ({
 
   return (
     <>
-      <ModalContentView
+      <MenuContentView
         role="dialog"
         aria-labelledby="dialogTitle"
         style={style}
       >
-        {close && <ModalClose />}
         {hasHeader && (
-          <ModalHeader>
-            {title && <ModalTitle id="dialogTitle">{title}</ModalTitle>}
-            {subtitle && <ModalSubtitle>{subtitle}</ModalSubtitle>}
-          </ModalHeader>
+          <MenuHeader>
+            {title && <MenuTitle id="dialogTitle">{title}</MenuTitle>}
+            {subtitle && <MenuSubtitle>{subtitle}</MenuSubtitle>}
+          </MenuHeader>
         )}
-        <ModalBody>{children}</ModalBody>
-        {footer && <ModalFooter>{footer}</ModalFooter>}
-      </ModalContentView>
+        <MenuBody>{children}</MenuBody>
+        {footer && <MenuFooter>{footer}</MenuFooter>}
+      </MenuContentView>
     </>
   )
 }
 
-ModalContent.displayName = 'ModalContent'
-ModalContent.propTypes = {
-  close: propTypes.bool,
+MenuContent.displayName = 'MenuContent'
+MenuContent.propTypes = {
   title: propTypes.oneOfType([propTypes.string, propTypes.element]),
   subtitle: propTypes.oneOfType([propTypes.string, propTypes.element]),
   footer: propTypes.oneOfType([propTypes.string, propTypes.element]),
@@ -126,4 +126,4 @@ ModalContent.propTypes = {
   style: propTypes.object,
 }
 
-export default ModalContent
+export default MenuContent

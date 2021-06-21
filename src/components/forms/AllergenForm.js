@@ -13,6 +13,7 @@ import { allergenIconMap } from '../icons/allergens'
 import { FormSubmit } from '../inputs'
 
 const AllergenFormView = styled('div')`
+  label: AllergenFormView;
   // label {
   //   padding: 1.25rem 0;
 

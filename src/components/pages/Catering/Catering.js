@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useMemo, useCallback, useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -15,7 +15,7 @@ import {
   selectMenuSlug,
   fetchRevenueCenters,
   setRevenueCenter,
-  selectRevenueCenters,
+  selectRevenueCenters, selectAllergens, setSelectedAllergens, updateCustomerAllergens
 } from '@open-tender/redux'
 import {
   isoToDate,
@@ -37,7 +37,7 @@ import {
   selectBrand,
   selectConfig,
   selectSettings,
-  selectGeoLatLng,
+  selectGeoLatLng, closeModal
 } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -46,12 +46,21 @@ import {
   Main,
   HeaderDefault,
   RequestedAtPicker,
-  InlineLink,
+  InlineLink, AllergenForm
 } from '../..'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { isBrowser } from 'react-device-detect'
 import CateringAutocomplete from './CateringAutocomplete'
+import { ArrowRight } from '../../icons'
+import HighlightedMenu, {MenuContent} from '../../HighlightedMenu'
+import OptionsMenu, { BackForwardButtons } from '../../OptionsMenu'
+import RangeSlider from '../../RangeSlider'
+import GroupOf3People from '../../icons/GroupOf3People'
+import Person from '../../icons/Person'
+import GroupOf6People from '../../icons/GroupOf6People'
+import Recommendation from './Recommendation'
+import AllergenOptions from './AllergenOptions'
 
 const CateringView = styled(BgImage)`
   width: 100%;
@@ -95,14 +104,17 @@ const CateringView = styled(BgImage)`
 `
 
 const CateringContainer = styled('div')`
+  label: CateringContainer;
+  
   display: flex;
   justify-content: space-between;
-  width: 108rem;
+  width: 112rem;
   max-width: 100%;
   min-height: 43rem;
   padding: 4rem 4.5rem;
   border-radius: 2.2rem;
   background-color: rgba(37, 39, 42, 0.6);
+  
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: relative;
     z-index: 1;
@@ -114,6 +126,8 @@ const CateringContainer = styled('div')`
 `
 
 const CateringContent = styled('div')`
+  label: CateringContent;
+  
   flex: 1 1 auto;
   padding: 0 3rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -129,6 +143,8 @@ const CateringContent = styled('div')`
 `
 
 const CateringMessage = styled('div')`
+  label: CateringMessage;
+  
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
 
@@ -149,6 +165,7 @@ const CateringMessage = styled('div')`
   }
 
   & > p {
+    margin: 0 0 1rem;
     font-size: 2.7rem;
     line-height: 1.33333;
     color: ${(props) => props.theme.colors.light};
@@ -161,6 +178,85 @@ const CateringMessage = styled('div')`
       font-weight: 500;
     }
   }
+`
+
+const AnimatedHighlightedMenu = styled(HighlightedMenu)`
+  label: AnimatedHighlightedMenu;
+
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    position: relative;
+    flex: 1 1 auto;
+    width: 44rem;
+    max-width: calc(100% - 2 * ${(props) => props.theme.layout.paddingMobile});
+    margin: 0 auto;
+    margin: 3rem ${(props) => props.theme.layout.paddingMobile} 3rem;
+  }
+`;
+
+const SliderRangeMessage = styled.div`
+  label: SliderRangeMessage;
+  
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  color: ${(props) => props.theme.colors.pepper};
+  font-family: ${(props) => props.theme.fonts.headings.family};
+  font-size: 24px;
+  font-weight: ${(props) => props.theme.fonts.headings.weight};
+  margin: 5px 0px;
+`
+
+const SkipSuggestions = styled.button`
+  label: SkipSuggestions;
+
+  opacity: 0;
+  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+
+  text-align: left;
+  color: ${(props) => props.theme.colors.light};
+  margin-top: 2rem;
+  border-top: 1px solid #ffffff50;
+  padding-top: 1rem;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    width: auto;
+    padding: 1rem;
+    border: 1px solid #ffffff50;
+  }
+  
+  h2 {
+    opacity: 0;
+    animation: slide-up 0.25s ease-in-out 0.25s forwards;
+    
+    font-size: 30px;
+    font-weight: 500;
+  }
+  
+  p {
+    opacity: 0;
+    animation: slide-up 0.25s ease-in-out 0.25s forwards;
+    
+    font-size: 18px;
+    line-height: 28px;
+  }
+  
+  span {
+    color: ${(props) => props.theme.colors.paprika};
+  }
+`
+
+const SkipIcon = styled.span`
+  display: inline-flex;
+  width: 12px;
+  margin-left: 10px;
 `
 
 const CateringCurrentOrder = styled('div')`
@@ -215,6 +311,8 @@ const CateringCurrentOrderTitle = styled(Preface)`
 `
 
 const CateringCalendar = styled('div')`
+  label: CateringCalendar;
+  
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.5s forwards;
   flex: 0 0 36rem;
@@ -245,6 +343,44 @@ const makeOrderMessage = (orderType, requestedAt, revenueCenter) => {
   return `You currently have a catering order in process for ${requestedAtStr} from our ${name} location.`
 }
 
+const stages = {
+  date: "date",
+  address: "address",
+  eventType: "eventType",
+  numberOfPeople: "numberOfPeople",
+  dietaryRestrictions: "dietaryRestrictions",
+  recommendations: "recommendations",
+  inbetween: "inbetween"
+}
+
+// TODO should not be hardcoded (?)
+const eventTypeOptions = [
+  { id: "Family", name: "Family"}, { id: "Corporate", name: "Corporate"},
+  { id: "Party", name: "Party"}, { id: "Adult", name: "Adult"},
+  { id: "Teens", name: "Teens"}, { id: "Kids", name: "Kids"},
+  { id: "Indoors", name: "Indoors"}, { id: "Outdoors", name: "Outdoors"},
+  { id: "Formal", name: "Formal"}]
+
+const numberOfPeopleMessage = (numberOfPeople) =>{
+  if(numberOfPeople < 2){
+    return "How many are we?";
+  }
+  if(numberOfPeople < 31){
+    return "Zzz!";
+  }
+  return "Wow, it's gonna be a party!"
+}
+
+const NumberOfPeopleImage = ({numberOfPeople, size, color}) => {
+  if(numberOfPeople < 2){
+    return <Person size={size} color={color}/>;
+  }
+  if(numberOfPeople < 31){
+    return <GroupOf3People size={size} color={color}/>;
+  }
+  return <GroupOf6People size={size} color={color}/>
+}
+
 const CateringPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -262,8 +398,7 @@ const CateringPage = () => {
   const [date, setDate] = useState(null)
   const [minTime, setMinTime] = useState(new Date())
   const [settings, setSettings] = useState(null)
-  const [showDate, setShowDate] = useState(true)
-  const [showAddress, setShowAddress] = useState(false)
+  const [stage, setStage] = useState(stages.date)
   const [fetching, setFetching] = useState(false)
   const [error, setError] = useState(null)
   const { entity: validTimes, loading } = useSelector(selectValidTimes)
@@ -276,6 +411,8 @@ const CateringPage = () => {
   const requestedAtStr = requestedAt
     ? makeReadableDateStrFromIso(requestedAt, tz, true)
     : null
+  const [selectedEventTypes, setSelectedEventTypes] = useState([])
+  const [numberOfPeople, setNumberOfPeople] = useState(1)
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -325,12 +462,11 @@ const CateringPage = () => {
     }
   }, [date, settings])
 
-  const autoRouteCallack = useCallback(
+  const selectRevenueCenter = useCallback(
     (revenueCenter) => {
       dispatch(setRevenueCenter(revenueCenter))
-      return history.push(`/menu/${revenueCenter.slug}`)
     },
-    [dispatch, history]
+    [dispatch, setRevenueCenter]
   )
 
   useEffect(() => {
@@ -346,7 +482,8 @@ const CateringPage = () => {
       if (error) {
         setError(error)
       } else if (displayed.length) {
-        autoRouteCallack(displayed[0])
+        selectRevenueCenter(displayed[0])
+        setStage(stages.eventType)
       } else if (serviceType === 'PICKUP') {
         const msg = `We're sorry, but we don't have any locations within ${maxDistance} miles of your address.`
         setError(msg)
@@ -363,26 +500,26 @@ const CateringPage = () => {
     address,
     geoLatLng,
     maxDistance,
-    autoRouteCallack,
+    selectRevenueCenter,
   ])
 
   const selectTime = (time) => {
     setDate(null)
-    setShowDate(false)
+    setStage(stages.inbetween)
     dispatch(setAddress(null))
     setTimeout(() => {
       const reqestedAtIso = time ? dateToIso(time, tz) : 'asap'
       dispatch(setRequestedAt(reqestedAtIso))
-      setShowAddress(true)
+      setStage(stages.address)
     }, 50)
   }
 
   const clearTime = () => {
     setDate(null)
-    setShowAddress(false)
+    setStage(stages.inbetween)
     setTimeout(() => {
       dispatch(setRequestedAt(null))
-      setShowDate(true)
+      setStage(stages.date)
     }, 50)
   }
 
@@ -400,8 +537,47 @@ const CateringPage = () => {
     // history.push('/locations')
   }
 
+  const skipSuggestionsOnCLick = useCallback(()=>{
+    if(revenueCenter){
+      history.push(`/menu/${revenueCenter.slug}`)
+    }
+  }, [history, revenueCenter])
+
+  const highlightedMenuOnBackClick = useMemo(() => {
+    switch(stage){
+      case stages.eventType:
+        return () => setStage(stages.address)
+      case stages.numberOfPeople:
+        return () => setStage(stages.eventType)
+      case stages.dietaryRestrictions:
+        return () => setStage(stages.numberOfPeople)
+      default:
+        return null
+    }
+  }, [stage])
+
+  const highlightedMenuOnForwardClick = useMemo(() => {
+    switch(stage){
+      case stages.eventType:
+        if(selectedEventTypes.length === 0) {
+          return null;
+        }
+        return () => setStage(stages.numberOfPeople)
+      case stages.numberOfPeople:
+        if(numberOfPeople < 2){
+          return null;
+        }
+        return () => setStage(stages.dietaryRestrictions)
+      case stages.dietaryRestrictions:
+        return () => setStage(stages.recommendations)
+      default:
+        return null
+    }
+  }, [stage, selectedEventTypes, numberOfPeople])
+
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
+
 
   return (
     <>
@@ -421,7 +597,7 @@ const CateringPage = () => {
         >
           <CateringView imageUrl={isBrowser ? null : background}>
             <CateringContainer>
-              {showDate && (
+              {stage === stages.date && (
                 <>
                   <CateringContent>
                     <CateringMessage>
@@ -467,7 +643,7 @@ const CateringPage = () => {
                   </CateringCalendar>
                 </>
               )}
-              {showAddress && (
+              {stage === stages.address && (
                 <>
                   <CateringContent>
                     <CateringMessage>
@@ -488,6 +664,66 @@ const CateringPage = () => {
                     />
                   </CateringCalendar>
                 </>
+              )}
+              {(stage === stages.eventType
+                || stage === stages.numberOfPeople
+                || stage === stages.dietaryRestrictions) && (
+                <>
+                  <CateringContent>
+                    <CateringMessage>
+                      <h2>Build the main event</h2>
+                      <p>
+                        Choose how many people you're serving, when, and where and build your own menu.
+                      </p>
+                    </CateringMessage>
+                    <SkipSuggestions onClick={skipSuggestionsOnCLick}>
+                      {
+                        revenueCenter
+                          ? (
+                            <>
+                              <h2>Take a shortcut</h2>
+                              <p>
+                                Skip straight to the menu to browse all our packages and start your order
+                                <SkipIcon><ArrowRight /></SkipIcon>
+                              </p>
+                            </>)
+                          : <Loading text="Loading store..." color={theme.colors.tahini} />
+                      }
+                    </SkipSuggestions>
+                  </CateringContent>
+                  <AnimatedHighlightedMenu>
+                    {stage === stages.eventType &&
+                      <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
+                        <OptionsMenu
+                          options={eventTypeOptions}
+                          selectedOptions={selectedEventTypes}
+                          setSelectedOptions={setSelectedEventTypes}
+                        />
+                      </MenuContent>
+                    }
+                    {stage === stages.numberOfPeople &&
+                      <MenuContent title="Number of people" subtitle="How big is your group?">
+                        <RangeSlider min={1} max={100} value={numberOfPeople} setValue={setNumberOfPeople}>
+                          <NumberOfPeopleImage numberOfPeople={numberOfPeople} size="60px"/>
+                        </RangeSlider>
+                        <SliderRangeMessage>{numberOfPeopleMessage(numberOfPeople)}</SliderRangeMessage>
+                      </MenuContent>
+                    }
+                    {stage === stages.dietaryRestrictions &&
+                      <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
+                        <AllergenOptions/>
+                      </MenuContent>
+                    }
+                    <BackForwardButtons
+                      onBackClick={highlightedMenuOnBackClick}
+                      onForwardClick={highlightedMenuOnForwardClick}
+                      forwardText="Confirm"
+                    />
+                  </AnimatedHighlightedMenu>
+                </>
+              )}
+              {stage === stages.recommendations && (
+                <Recommendation/>
               )}
             </CateringContainer>
           </CateringView>
