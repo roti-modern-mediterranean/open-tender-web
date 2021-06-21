@@ -30,6 +30,10 @@ const Container = styled.div`
     padding-top: 3rem;
   }
 
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 5px 0px 15px;
+  }
+
 `;
 
 const CustomPreface = styled(Preface)`
@@ -73,6 +77,10 @@ const Recommendations = styled(MenuCateringCategories)`
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0px;
+  }
 `;
 
 const OrBetween = styled(CustomPreface)`
@@ -92,6 +100,12 @@ const Footer = styled.div`
   grid-template-columns: fit-content(40%) max-content;
   justify-content: center;
   margin-bottom: -10px;
+  
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    grid-template-columns: 100%;
+    border-top: none;
+    padding-top: 0px;
+  }
 `;
 
 const FooterLeft = styled.button`
@@ -106,6 +120,15 @@ const FooterLeft = styled.button`
   
   &:hover {
     background-color: #ffffff20;
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    grid-template-columns: 100%;
+    text-align: left;
+    width: auto;
+    padding: 1rem;
+    border: 1px solid #ffffff50;
+    margin: 5px 0px;
   }
 `;
 
@@ -135,6 +158,15 @@ const FooterRight = styled.div`
   display: grid;
   grid-template-columns: max-content max-content max-content;
   gap: 10px;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    grid-template-columns: 100%;
+    text-align: left;
+    width: auto;
+    padding: 1rem;
+    border: 1px solid #ffffff50;
+    margin: 5px 0px;
+  }
 `;
 
 const FooterRightText = styled.div`
