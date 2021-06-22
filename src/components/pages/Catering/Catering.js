@@ -73,15 +73,16 @@ const CateringView = styled(BgImage)`
   align-items: center;
   padding: 0 ${(props) => props.theme.layout.padding};
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    position: relatiive;
+    position: relative;
     display: block;
-    padding: 0;
+    padding: ${(props) => props.theme.border.radius} 0 0;
+    margin-top: -${(props) => props.theme.border.radiusLarge};
     min-height: 64rem;
     background-image: linear-gradient(
             0deg,
             rgba(37, 39, 42, 1) 30%,
             rgba(37, 39, 42, 0.9) 60%,
-            rgba(37, 39, 42, 0) 100%
+            rgba(37, 39, 42, 0.1) 100%
     ), url(${(props) => props.imageUrl});
     background-position: center top;
     background-repeat: no-repeat;
@@ -100,7 +101,6 @@ const CateringContainer = styled('div')`
   min-height: 44rem;
   padding: 4rem 4.5rem;
   border-radius: 2.2rem;
-  background-color: rgba(37, 39, 42, 0.6);
   
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: relative;
@@ -108,7 +108,6 @@ const CateringContainer = styled('div')`
     flex-direction: column;
     padding: 0;
     border-radius: 0;
-    background-color: rgba(37, 39, 42, 0.2);
   }
 `
 

@@ -55,6 +55,10 @@ const decorateTheme = (theme) => {
       ...theme.layout,
       navHeightMobile: '6.4rem',
     },
+    border: {
+      ...theme.border,
+      radiusLarge: "3rem"
+    }
   }
 }
 
