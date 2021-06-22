@@ -57,11 +57,25 @@ const HeaderView = styled('div')`
 
 const HeaderTitle = styled('div')`
   label: HeaderTitle;
-  
+
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}){
+    margin-bottom: ${(props) => {
+      const normal = props.theme.layout.paddingMobile
+      const bottom = props.theme.border.radiusLarge
+      return `calc(${bottom} - ${normal})`
+    }};
+  }
 
   > span {
     display: block;
