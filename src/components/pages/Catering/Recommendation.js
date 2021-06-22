@@ -64,6 +64,7 @@ const Header = styled.h2`
     font-weight: 500;
     font-size: 2.8rem;
     letter-spacing: 0.01em;
+    margin: 0 0 3rem;
   }
 `;
 

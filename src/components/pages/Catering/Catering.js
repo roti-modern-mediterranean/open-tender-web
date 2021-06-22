@@ -63,6 +63,8 @@ import Recommendation from './Recommendation'
 import AllergenOptions from './AllergenOptions'
 
 const CateringView = styled(BgImage)`
+  label: CateringView;
+  
   width: 100%;
   flex-grow: 1;
   min-height: 50rem;
@@ -75,31 +77,16 @@ const CateringView = styled(BgImage)`
     display: block;
     padding: 0;
     min-height: 64rem;
-    background-image: url(${(props) => props.imageUrl});
+    background-image: linear-gradient(
+            0deg,
+            rgba(37, 39, 42, 1) 30%,
+            rgba(37, 39, 42, 0.9) 60%,
+            rgba(37, 39, 42, 0) 100%
+    ), url(${(props) => props.imageUrl});
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
     background-color: ${(props) => props.theme.bgColors.dark};
-  }
-
-  &::after {
-    display: none;
-    position: absolute;
-    content: ' ';
-    z-index: 0;
-    top: 25rem;
-    left: 0;
-    right: 0;
-    bottom: -10rem;
-    background: linear-gradient(
-      0deg,
-      rgba(37, 39, 42, 1) 30%,
-      rgba(37, 39, 42, 0.9) 60%,
-      rgba(37, 39, 42, 0) 100%
-    );
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      display: block;
-    }
   }
 `
 
