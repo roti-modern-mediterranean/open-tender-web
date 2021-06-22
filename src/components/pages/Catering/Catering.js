@@ -15,7 +15,7 @@ import {
   selectMenuSlug,
   fetchRevenueCenters,
   setRevenueCenter,
-  selectRevenueCenters, selectAllergens, setSelectedAllergens, updateCustomerAllergens
+  selectRevenueCenters
 } from '@open-tender/redux'
 import {
   isoToDate,
@@ -37,7 +37,7 @@ import {
   selectBrand,
   selectConfig,
   selectSettings,
-  selectGeoLatLng, closeModal
+  selectGeoLatLng
 } from '../../../slices'
 import { AppContext } from '../../../App'
 import {
@@ -46,7 +46,7 @@ import {
   Main,
   HeaderDefault,
   RequestedAtPicker,
-  InlineLink, AllergenForm
+  InlineLink
 } from '../..'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
@@ -466,7 +466,7 @@ const CateringPage = () => {
     (revenueCenter) => {
       dispatch(setRevenueCenter(revenueCenter))
     },
-    [dispatch, setRevenueCenter]
+    [dispatch]
   )
 
   useEffect(() => {

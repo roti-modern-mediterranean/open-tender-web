@@ -1,5 +1,5 @@
 import { Preface } from '@open-tender/components'
-import { CallUs, Chat } from '../../icons'
+import { Chat } from '../../icons'
 import ButtonStyle from './ButtonStyle'
 import propTypes from 'prop-types'
 import { useTheme } from '@emotion/react'

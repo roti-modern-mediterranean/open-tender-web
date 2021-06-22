@@ -174,18 +174,6 @@ const FooterRightText = styled.div`
   margin: 0px 10px;
 `;
 
-const FooterRightHighlight = styled.div`
-  label: FooterRightHighlight;
-
-  font-family: 'Barlow', sans-serif;
-  font-size: 20px;
-  text-transform: uppercase;
-`
-
-const TransparentButton = styled.button`
-  label: TransparentButton;
-`
-
 // TODO remove hardcoded recommendation
 const recommendations = [
   {

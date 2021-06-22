@@ -1,7 +1,5 @@
 import styled from '@emotion/styled'
 import { Preface } from '@open-tender/components'
-import { useState } from 'react'
-import { CallUs, Chat } from './icons'
 import CallUsButton from './pages/Catering/CallUsButton'
 import ChatButton from './pages/Catering/ChatButton'
 
