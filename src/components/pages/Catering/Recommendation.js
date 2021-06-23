@@ -291,7 +291,7 @@ const Recommendation = () => {
   const theme = useTheme()
   const history = useHistory()
 
-  const skipSuggestionsOnCLick = useCallback(()=>{
+  const skipRecommendationsOnCLick = useCallback(()=>{
     if(revenueCenter){
       history.push(`/menu/${revenueCenter.slug}`)
     }
@@ -323,7 +323,7 @@ const Recommendation = () => {
         }
 
       <Footer>
-        <FooterLeft onClick={skipSuggestionsOnCLick}>
+        <FooterLeft onClick={skipRecommendationsOnCLick}>
           {
             revenueCenter
               ? (
