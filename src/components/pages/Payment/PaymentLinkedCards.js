@@ -50,7 +50,7 @@ const PaymentLinkedCards = ({ linkedCards = [] }) => {
 }
 
 PaymentLinkedCards.displayName = 'PaymentLinkedCards'
-PaymentLinkedCards.prototypes = {
+PaymentLinkedCards.propTypes = {
   savedCards: propTypes.array,
 }
 

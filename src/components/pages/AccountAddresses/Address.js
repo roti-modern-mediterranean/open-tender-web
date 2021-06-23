@@ -53,7 +53,7 @@ const AddressCheckmark = ({ isDefault, makeDefault }) => {
 }
 
 AddressCheckmark.displayName = 'AddressCheckmark'
-AddressCheckmark.prototypes = {
+AddressCheckmark.propTypes = {
   isDefault: propTypes.bool,
   makeDefault: propTypes.func,
 }
@@ -213,7 +213,7 @@ const Address = ({ address, isLoading }) => {
 }
 
 Address.displayName = 'Address'
-Address.prototypes = {
+Address.propTypes = {
   address: propTypes.object,
   isLoading: propTypes.bool,
 }

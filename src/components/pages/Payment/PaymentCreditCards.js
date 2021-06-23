@@ -58,7 +58,7 @@ const PaymentCreditCards = ({ savedCards = [] }) => {
 }
 
 PaymentCreditCards.displayName = 'PaymentCreditCards'
-PaymentCreditCards.prototypes = {
+PaymentCreditCards.propTypes = {
   savedCards: propTypes.array,
 }
 
