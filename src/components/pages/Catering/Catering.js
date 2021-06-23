@@ -100,6 +100,7 @@ const CateringContainer = styled('div')`
   min-height: 44rem;
   padding: 4rem 4.5rem;
   border-radius: 2.2rem;
+  background-color: rgba(37, 39, 42, 0.6);
   
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: relative;
@@ -107,20 +108,33 @@ const CateringContainer = styled('div')`
     flex-direction: column;
     padding: 0;
     border-radius: 0;
+    background-color: transparent;
   }
 `
 
 const CateringContent = styled('div')`
   label: CateringContent;
   
-  flex: 1 1 auto;
-  padding: 0 3rem 0 0;
+  display: grid;
+  grid-template-areas: ${(props) => props.hasNoShortcut 
+          ? `"cateringMessage options"`
+          : `"cateringMessage options" "shortcut options"`};
+  
+  grid-template-columns: minmax(10%, auto) minmax(36%, 36rem);
+  column-gap: 4.2rem;
+  row-gap: 3rem;
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex: 0 0 auto;
     padding: calc(3rem + ${(props) => props.theme.border.radiusLarge}) ${(props) => props.theme.layout.paddingMobile} 0;
     text-align: center;
     max-width: 44rem;
     margin: 0 auto;
+
+    grid-template-areas: "cateringMessage"
+                        "options"
+                        ${(props) => !props.hasNoShortcut && `"shortcut"`};
+    grid-template-columns: auto;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding-top: calc(3rem + ${(props) => props.theme.border.radiusLarge});
@@ -132,6 +146,8 @@ const CateringMessage = styled('div')`
   
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  
+  grid-area: cateringMessage;
 
   h2 {
     margin: 0 0 1rem;
@@ -172,13 +188,13 @@ const AnimatedHighlightedMenu = styled(HighlightedMenu)`
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   display: flex;
   flex-direction: column;
+  
+  grid-area: options;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: relative;
     flex: 1 1 auto;
-    width: 44rem;
-    max-width: calc(100% - 2 * ${(props) => props.theme.layout.paddingMobile});
-    margin: ${(props) => props.theme.layout.paddingMobile} auto;
+    max-width: none;
   }
 `;
 
@@ -209,6 +225,8 @@ const SkipSuggestions = styled.button`
   width: 100%;
   cursor: pointer;
   transition: background-color 0.25s ease;
+  
+  grid-area: shortcut;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: auto;
@@ -244,9 +262,14 @@ const SkipIcon = styled.span`
 `
 
 const CateringCurrentOrder = styled('div')`
-  margin: 2.5rem 0 0;
+  label: CateringCurrentOrder;
+  
+  margin: 0;
   border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
   padding: 2.5rem 0 0;
+  
+  grid-area: shortcut;
+  
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 1.5rem 0 0;
     border: 0;
@@ -304,13 +327,22 @@ const CateringCalendar = styled('div')`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  
+  grid-area: options;
+  
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: relative;
     flex: 1 1 auto;
-    width: 44rem;
     max-width: 100%;
-    margin: 0 auto;
-    padding: 3rem ${(props) => props.theme.layout.paddingMobile} 3rem;
+  }
+`
+
+const CateringPlace = styled(CateringCalendar)`
+  label: CateringPlace;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0 3rem;
   }
 `
 
@@ -582,26 +614,24 @@ const CateringPage = () => {
           <CateringView imageUrl={isBrowser ? null : background}>
             <CateringContainer>
               {stage === stages.date && (
-                <>
-                  <CateringContent>
-                    <CateringMessage>
-                      <h2>{title}</h2>
-                      <p>{subtitle}</p>
-                      {orderMsg && (
-                        <CateringCurrentOrder>
-                          <CateringCurrentOrderTitle as="h3">
-                            Continue Current Order
-                          </CateringCurrentOrderTitle>
-                          <p>
-                            {orderMsg}{' '}
-                            <InlineLink onClick={() => history.push(menuSlug)}>
-                              Continue this order.
-                            </InlineLink>
-                          </p>
-                        </CateringCurrentOrder>
-                      )}
-                    </CateringMessage>
-                  </CateringContent>
+                <CateringContent hasNoShortcut={!orderMsg}>
+                  <CateringMessage>
+                    <h2>{title}</h2>
+                    <p>{subtitle}</p>
+                  </CateringMessage>
+                  {orderMsg && (
+                    <CateringCurrentOrder>
+                      <CateringCurrentOrderTitle as="h3">
+                        Continue Current Order
+                      </CateringCurrentOrderTitle>
+                      <p>
+                        {orderMsg}{' '}
+                        <InlineLink onClick={() => history.push(menuSlug)}>
+                          Continue this order.
+                        </InlineLink>
+                      </p>
+                    </CateringCurrentOrder>
+                  )}
                   <CateringCalendar>
                     {isLoading || !settings ? (
                       <Loading
@@ -625,20 +655,18 @@ const CateringPage = () => {
                       />
                     )}
                   </CateringCalendar>
-                </>
+                </CateringContent>
               )}
               {stage === stages.address && (
-                <>
-                  <CateringContent>
-                    <CateringMessage>
-                      <h2>Where are you located?</h2>
-                      <p>
-                        Please enter your address and choose an order type to
-                        get started.
-                      </p>
-                    </CateringMessage>
-                  </CateringContent>
-                  <CateringCalendar>
+                <CateringContent hasNoShortcut={true}>
+                  <CateringMessage>
+                    <h2>Where are you located?</h2>
+                    <p>
+                      Please enter your address and choose an order type to
+                      get started.
+                    </p>
+                  </CateringMessage>
+                  <CateringPlace>
                     <CateringAutocomplete
                       requestedAtStr={requestedAtStr}
                       clearTime={clearTime}
@@ -646,13 +674,12 @@ const CateringPage = () => {
                       disabled={fetching}
                       error={error}
                     />
-                  </CateringCalendar>
-                </>
+                  </CateringPlace>
+                </CateringContent>
               )}
               {(stage === stages.eventType
                 || stage === stages.numberOfPeople
                 || stage === stages.dietaryRestrictions) && (
-                <>
                   <CateringContent>
                     <CateringMessage>
                       <h2>Build the main event</h2>
@@ -674,9 +701,8 @@ const CateringPage = () => {
                           : <Loading text="Loading store..." color={theme.colors.tahini} />
                       }
                     </SkipSuggestions>
-                  </CateringContent>
-                  <AnimatedHighlightedMenu>
-                    {stage === stages.eventType &&
+                    <AnimatedHighlightedMenu>
+                      {stage === stages.eventType &&
                       <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
                         <OptionsMenu
                           options={eventTypeOptions}
@@ -684,27 +710,27 @@ const CateringPage = () => {
                           setSelectedOptions={setSelectedEventTypes}
                         />
                       </MenuContent>
-                    }
-                    {stage === stages.numberOfPeople &&
+                      }
+                      {stage === stages.numberOfPeople &&
                       <MenuContent title="Number of people" subtitle="How big is your group?">
                         <RangeSlider min={1} max={100} value={numberOfPeople} setValue={setNumberOfPeople}>
                           <NumberOfPeopleImage numberOfPeople={numberOfPeople} size="60px"/>
                         </RangeSlider>
                         <SliderRangeMessage>{numberOfPeopleMessage(numberOfPeople)}</SliderRangeMessage>
                       </MenuContent>
-                    }
-                    {stage === stages.dietaryRestrictions &&
+                      }
+                      {stage === stages.dietaryRestrictions &&
                       <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
                         <AllergenOptions/>
                       </MenuContent>
-                    }
-                    <BackForwardButtons
-                      onBackClick={highlightedMenuOnBackClick}
-                      onForwardClick={highlightedMenuOnForwardClick}
-                      forwardText="Confirm"
-                    />
-                  </AnimatedHighlightedMenu>
-                </>
+                      }
+                      <BackForwardButtons
+                        onBackClick={highlightedMenuOnBackClick}
+                        onForwardClick={highlightedMenuOnForwardClick}
+                        forwardText="Confirm"
+                      />
+                    </AnimatedHighlightedMenu>
+                  </CateringContent>
               )}
               {stage === stages.recommendations && (
                 <Recommendation/>
