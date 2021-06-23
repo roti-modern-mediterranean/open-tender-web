@@ -126,7 +126,7 @@ const CateringContent = styled('div')`
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex: 0 0 auto;
-    padding: calc(3rem + ${(props) => props.theme.border.radiusLarge}) ${(props) => props.theme.layout.paddingMobile} 0;
+    padding: calc(4rem + ${(props) => props.theme.border.radiusLarge}) ${(props) => props.theme.layout.paddingMobile} 0;
     text-align: center;
     max-width: 44rem;
     margin: 0 auto;
@@ -135,9 +135,6 @@ const CateringContent = styled('div')`
                         "options"
                         ${(props) => !props.hasNoShortcut && `"shortcut"`};
     grid-template-columns: auto;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding-top: calc(3rem + ${(props) => props.theme.border.radiusLarge});
   }
 `
 
@@ -211,8 +208,8 @@ const SliderRangeMessage = styled.div`
   margin: 5px 0px;
 `
 
-const SkipSuggestions = styled.button`
-  label: SkipSuggestions;
+const SkipRecommendations = styled.button`
+  label: SkipRecommendations;
 
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
@@ -230,8 +227,8 @@ const SkipSuggestions = styled.button`
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     width: auto;
-    padding: 1rem;
-    border: 1px solid #ffffff50;
+    border: none;
+    margin-top: 0;
   }
   
   h2 {
@@ -240,6 +237,17 @@ const SkipSuggestions = styled.button`
     
     font-size: 30px;
     font-weight: 500;
+    
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      font-size: 6rem;
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-family: ${(props) => props.theme.fonts.preface.family};
+      font-weight: 500;
+      font-size: 2.8rem;
+      letter-spacing: 0.01em;
+      margin: 0 0 1rem;
+    }
   }
   
   p {
@@ -248,6 +256,15 @@ const SkipSuggestions = styled.button`
     
     font-size: 18px;
     line-height: 28px;
+    
+    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+      font-size: 2.3rem;
+    }
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      font-size: 1.5rem;
+      line-height: 1.45;
+      font-weight: 500;
+    }
   }
   
   span {
@@ -553,7 +570,7 @@ const CateringPage = () => {
     // history.push('/locations')
   }
 
-  const skipSuggestionsOnCLick = useCallback(()=>{
+  const skipRecommendationsOnCLick = useCallback(()=>{
     if(revenueCenter){
       history.push(`/menu/${revenueCenter.slug}`)
     }
@@ -687,7 +704,7 @@ const CateringPage = () => {
                         Choose how many people you're serving, when, and where and build your own menu.
                       </p>
                     </CateringMessage>
-                    <SkipSuggestions onClick={skipSuggestionsOnCLick}>
+                    <SkipRecommendations onClick={skipRecommendationsOnCLick}>
                       {
                         revenueCenter
                           ? (
@@ -700,7 +717,7 @@ const CateringPage = () => {
                             </>)
                           : <Loading text="Loading store..." color={theme.colors.tahini} />
                       }
-                    </SkipSuggestions>
+                    </SkipRecommendations>
                     <AnimatedHighlightedMenu>
                       {stage === stages.eventType &&
                       <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
