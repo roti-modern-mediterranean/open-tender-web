@@ -18,13 +18,19 @@ const Container = styled.div`
   width: 100%;
   display: grid;
   grid-template-rows: max-content auto max-content;
-  color: ${(props) => props.theme.colors.light};
+  color: ${(props) => props.theme.colors.tahini};
   
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    color: ${(props) => props.theme.colors.pepper};
     padding: calc(4rem + ${(props) => props.theme.border.radiusLarge}) ${(props) => props.theme.layout.paddingMobile} 0;
     text-align: center;
     max-width: 44rem;
     margin: 0 auto;
+    background-color: ${(props) => props.theme.bgColors.primary};
+    
+    h2 {
+      color: ${(props) => props.theme.colors.pepper};
+    }
   }
 
 `;
@@ -35,6 +41,10 @@ const CustomPreface = styled(Preface)`
   color: ${(props) => props.theme.colors.tahini};
   font-weight: 500;
   font-size: 2.2rem;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    color: ${(props) => props.theme.colors.pepper};
+  }
 `
 
 const Header = styled.h2`
@@ -103,6 +113,10 @@ const Footer = styled.div`
     grid-template-columns: 100%;
     border-top: none;
     padding-top: 0px;
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 5px 0px 20px;
+    gap: 3rem;
   }
 `;
 
@@ -121,8 +135,10 @@ const FooterLeft = styled.button`
     text-align: left;
     width: auto;
     padding: 1rem;
-    border: 1px solid #ffffff50;
+    border: 1px solid ${(props) => props.theme.colors.pepper};
     margin: 5px 0px;
+    color: ${(props) => props.theme.colors.pepper};
+    border-radius: ${(props) => props.theme.border.radius};
   }
 `;
 
@@ -136,6 +152,17 @@ const FooterLeftHighlight = styled.div`
   font-family: 'Barlow', sans-serif;
   font-size: 20px;
   text-transform: uppercase;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    span > svg {
+      circle {
+        stroke: ${(props) => props.theme.colors.pepper};
+      }
+      path {
+        fill: ${(props) => props.theme.colors.pepper};
+      }
+    }
+  }
 `
 
 const FooterLeftBody = styled.div`
@@ -150,16 +177,46 @@ const FooterRight = styled.div`
   padding: 0px 10px;
   font-weight: 400;
   display: grid;
+  grid-template-areas: "repText callUsButton openChatButton";
   grid-template-columns: max-content max-content max-content;
   gap: 10px;
 
+  > a {
+    grid-area: callUsButton;
+  }
+
+  > button {
+    grid-area: openChatButton;
+  }
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    grid-template-columns: 100%;
+    grid-template-areas: "repText repText" "callUsButton openChatButton";
+    grid-template-columns: minmax(max-content, 50%) minmax(max-content, 50%);
     text-align: left;
     width: auto;
-    padding: 1rem;
-    border: 1px solid #ffffff50;
-    margin: 5px 0px;
+    padding: 0;
+    border: none;
+
+    > a {
+      width: auto;
+    }
+
+    > button {
+      width: auto;
+    }
+    
+    a, button {
+      border: 0.1rem solid ${(props) => props.theme.colors.paprika};
+      > span {
+        color: ${(props) => props.theme.colors.paprika};
+      }
+    }
+
+    span > svg {
+      path {
+        stroke: ${(props) => props.theme.colors.paprika};
+      }
+    }
   }
 `;
 
@@ -170,6 +227,12 @@ const FooterRightText = styled.div`
   grid-row-gap: 0.5rem;
   align-content: start;
   margin: 0px 10px;
+  
+  grid-area: repText;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0;
+  }
 `;
 
 // TODO remove hardcoded recommendation
@@ -271,7 +334,7 @@ const Recommendation = () => {
                   </FooterLeftHighlight>
                   <FooterLeftBody>Here's some crowd favourites to make any event the main event</FooterLeftBody>
                 </>)
-              : <Loading text="Loading store..." color={theme.colors.tahini} />
+              : <Loading text="Loading store..." color={theme.colors.pepper} />
           }
         </FooterLeft>
         <FooterRight>
