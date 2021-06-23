@@ -7,7 +7,7 @@ const HouseAccounts = ({ houseAccounts }) => {
   return (
     <div>
       {houseAccounts.map((houseAccount) => {
-        const orderType = orderTypeNamesMap[houseAccount.revenue_center_type]
+        const orderType = orderTypeNamesMap[houseAccount.order_type]
         const orderTypes = orderType ? `${orderType} orders` : 'all order types'
         const serviceType = serviceTypeNamesMap[houseAccount.service_type]
         const serviceTypes = serviceType

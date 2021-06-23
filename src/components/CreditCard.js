@@ -48,14 +48,16 @@ const MaskedCardNumber = ({ acct }) => {
   return (
     <MaskedCardNumberView>
       {groups.map((group, index) => (
-        <MaskedCardNumberGroup>
-          {group.split('').map((digit) =>
+        <MaskedCardNumberGroup key={`${group}-${index}`}>
+          {group.split('').map((digit, digitIndex) =>
             !acct || index < 3 ? (
-              <span>
+              <span key={`${index}-${digitIndex}`}>
                 <Ellipsis />
               </span>
             ) : (
-              <CreditCardText>{digit}</CreditCardText>
+              <CreditCardText key={`${index}-${digitIndex}`}>
+                {digit}
+              </CreditCardText>
             )
           )}
         </MaskedCardNumberGroup>
