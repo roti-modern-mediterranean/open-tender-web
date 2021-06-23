@@ -206,6 +206,10 @@ const SliderRangeMessage = styled.div`
   font-size: 24px;
   font-weight: ${(props) => props.theme.fonts.headings.weight};
   margin: 5px 0px;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: 20px;
+  }
 `
 
 const SkipRecommendations = styled.button`

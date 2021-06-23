@@ -21,17 +21,10 @@ const Container = styled.div`
   color: ${(props) => props.theme.colors.light};
   
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 6rem ${(props) => props.theme.layout.paddingMobile} 0;
+    padding: calc(4rem + ${(props) => props.theme.border.radiusLarge}) ${(props) => props.theme.layout.paddingMobile} 0;
     text-align: center;
     max-width: 44rem;
     margin: 0 auto;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding-top: 3rem;
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 5px 0px 15px;
   }
 
 `;
@@ -81,6 +74,10 @@ const Recommendations = styled(MenuCateringCategories)`
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0px;
+    
+    > div {
+      max-width: none;
+    }
   }
 `;
 
