@@ -61,6 +61,12 @@ import Person from '../../icons/Person'
 import GroupOf6People from '../../icons/GroupOf6People'
 import Recommendation from './Recommendation'
 import AllergenOptions from './AllergenOptions'
+import {
+  eventTypeOptions,
+  selectEventType,
+  selectNumberOfPeople,
+  setEventType, setNumberOfPeople
+} from '../../../slices/recommendationSlice'
 
 const CateringView = styled(BgImage)`
   label: CateringView;
@@ -389,14 +395,6 @@ const stages = {
   inbetween: "inbetween"
 }
 
-// TODO should not be hardcoded (?)
-const eventTypeOptions = [
-  { id: "Family", name: "Family"}, { id: "Corporate", name: "Corporate"},
-  { id: "Party", name: "Party"}, { id: "Adult", name: "Adult"},
-  { id: "Teens", name: "Teens"}, { id: "Kids", name: "Kids"},
-  { id: "Indoors", name: "Indoors"}, { id: "Outdoors", name: "Outdoors"},
-  { id: "Formal", name: "Formal"}]
-
 const numberOfPeopleMessage = (numberOfPeople) =>{
   if(numberOfPeople < 2){
     return "How many are we?";
@@ -447,8 +445,10 @@ const CateringPage = () => {
   const requestedAtStr = requestedAt
     ? makeReadableDateStrFromIso(requestedAt, tz, true)
     : null
-  const [selectedEventTypes, setSelectedEventTypes] = useState([])
-  const [numberOfPeople, setNumberOfPeople] = useState(1)
+  const selectedEventTypes = useSelector(selectEventType)
+  const setSelectedEventTypes = useCallback((eventType) => dispatch(setEventType(eventType)), [dispatch, setEventType])
+  const amountOfPeople = useSelector(selectNumberOfPeople)
+  const setAmountOfPeople = useCallback((numberOfPeople) => dispatch(setNumberOfPeople(numberOfPeople)), [dispatch, setNumberOfPeople])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -600,7 +600,7 @@ const CateringPage = () => {
         }
         return () => setStage(stages.numberOfPeople)
       case stages.numberOfPeople:
-        if(numberOfPeople < 2){
+        if(amountOfPeople < 2){
           return null;
         }
         return () => setStage(stages.dietaryRestrictions)
@@ -609,7 +609,7 @@ const CateringPage = () => {
       default:
         return null
     }
-  }, [stage, selectedEventTypes, numberOfPeople])
+  }, [stage, selectedEventTypes, amountOfPeople])
 
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
@@ -733,10 +733,10 @@ const CateringPage = () => {
                       }
                       {stage === stages.numberOfPeople &&
                       <MenuContent title="Number of people" subtitle="How big is your group?">
-                        <RangeSlider min={1} max={100} value={numberOfPeople} setValue={setNumberOfPeople}>
-                          <NumberOfPeopleImage numberOfPeople={numberOfPeople} size="60px"/>
+                        <RangeSlider min={1} max={100} value={amountOfPeople} setValue={setAmountOfPeople}>
+                          <NumberOfPeopleImage numberOfPeople={amountOfPeople} size="60px"/>
                         </RangeSlider>
-                        <SliderRangeMessage>{numberOfPeopleMessage(numberOfPeople)}</SliderRangeMessage>
+                        <SliderRangeMessage>{numberOfPeopleMessage(amountOfPeople)}</SliderRangeMessage>
                       </MenuContent>
                       }
                       {stage === stages.dietaryRestrictions &&
