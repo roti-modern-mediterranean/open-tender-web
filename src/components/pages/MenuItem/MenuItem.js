@@ -14,7 +14,7 @@ import {
 } from '@open-tender/redux'
 
 import { maybeRefreshVersion } from '../../../app/version'
-import { selectDisplaySettings } from '../../../slices'
+import { selectDisplaySettings, toggleSidebar } from '../../../slices'
 import { AppContext } from '../../../App'
 import { Builder, Content, Header, Logo, Main, ScreenreaderTitle } from '../..'
 import { Back, Cart } from '../../buttons'
@@ -45,7 +45,8 @@ const MenuItem = () => {
 
   const addItem = (item) => {
     dispatch(addItemToCart(item))
-    dispatch(setCurrentItem(null))
+    dispatch(toggleSidebar())
+    // dispatch(setCurrentItem(null))
   }
 
   if (!item) return null

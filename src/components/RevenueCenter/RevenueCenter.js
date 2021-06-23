@@ -148,6 +148,7 @@ const RevenueCenter = ({
 }) => {
   const theme = useTheme()
   const history = useHistory()
+  if (!revenueCenter) return null
   const { address, images, hours, is_outpost, has_curbside } = revenueCenter
   const smallImg = images.find((i) => i.type === 'SMALL_IMAGE')
   const largeImg = images.find((i) => i.type === 'SMALL_IMAGE')

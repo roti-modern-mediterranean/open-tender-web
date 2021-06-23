@@ -581,6 +581,11 @@ const Builder = ({
     }
   }
 
+  const addItemDone = (evt, item) => {
+    evt.preventDefault()
+    addItemToCart(item)
+  }
+
   const toggleGroups = (evt, index) => {
     evt.preventDefault()
     const unique = [...new Set([...visited, activeIndex])]
@@ -682,7 +687,7 @@ const Builder = ({
                   <BuilderGroupsArrowRight
                     onClick={
                       showDone
-                        ? () => addItemToCart(item)
+                        ? (evt) => addItemDone(evt, item)
                         : (evt) => toggleGroups(evt, nextIndex)
                     }
                   >
