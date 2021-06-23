@@ -220,7 +220,6 @@ const SkipRecommendations = styled.button`
 
   text-align: left;
   color: ${(props) => props.theme.colors.light};
-  margin-top: 2rem;
   border-top: 1px solid #ffffff50;
   padding-top: 1rem;
   width: 100%;
