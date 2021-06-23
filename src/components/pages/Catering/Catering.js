@@ -77,7 +77,6 @@ const CateringView = styled(BgImage)`
     display: block;
     padding: ${(props) => props.theme.border.radius} 0 0;
     margin-top: -${(props) => props.theme.border.radiusLarge};
-    min-height: 64rem;
     background-image: linear-gradient(
             0deg,
             rgba(37, 39, 42, 1) 30%,
@@ -118,13 +117,13 @@ const CateringContent = styled('div')`
   padding: 0 3rem 0 0;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex: 0 0 auto;
-    padding: 6rem ${(props) => props.theme.layout.paddingMobile} 0;
+    padding: calc(3rem + ${(props) => props.theme.border.radiusLarge}) ${(props) => props.theme.layout.paddingMobile} 0;
     text-align: center;
     max-width: 44rem;
     margin: 0 auto;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding-top: 3rem;
+    padding-top: calc(3rem + ${(props) => props.theme.border.radiusLarge});
   }
 `
 
@@ -179,8 +178,7 @@ const AnimatedHighlightedMenu = styled(HighlightedMenu)`
     flex: 1 1 auto;
     width: 44rem;
     max-width: calc(100% - 2 * ${(props) => props.theme.layout.paddingMobile});
-    margin: 0 auto;
-    margin: 3rem ${(props) => props.theme.layout.paddingMobile} 3rem;
+    margin: ${(props) => props.theme.layout.paddingMobile} auto;
   }
 `;
 
