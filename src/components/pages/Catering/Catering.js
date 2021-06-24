@@ -447,9 +447,9 @@ const CateringPage = () => {
     ? makeReadableDateStrFromIso(requestedAt, tz, true)
     : null
   const selectedEventTypes = useSelector(selectEventType)
-  const setSelectedEventTypes = useCallback((eventType) => dispatch(setEventType(eventType)), [dispatch, setEventType])
+  const setSelectedEventTypes = useCallback((eventType) => dispatch(setEventType(eventType)), [dispatch])
   const amountOfPeople = useSelector(selectNumberOfPeople)
-  const setAmountOfPeople = useCallback((numberOfPeople) => dispatch(setNumberOfPeople(numberOfPeople)), [dispatch, setNumberOfPeople])
+  const setAmountOfPeople = useCallback((numberOfPeople) => dispatch(setNumberOfPeople(numberOfPeople)), [dispatch])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
