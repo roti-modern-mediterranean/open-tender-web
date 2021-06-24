@@ -20,7 +20,11 @@ const Container = styled.div`
   grid-template-rows: max-content auto max-content;
   grid-template-columns: 100%;
   color: ${(props) => props.theme.colors.tahini};
-  
+
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    justify-items: center;
+  }
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     color: ${(props) => props.theme.colors.pepper};
     padding: calc(4rem + ${(props) => props.theme.border.radiusLarge}) ${(props) => props.theme.layout.paddingMobile} 0;
@@ -83,9 +87,16 @@ const Recommendations = styled(MenuCateringCategories)`
   flex-direction: row;
   justify-content: center;
 
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    max-width: 44rem;
+    > div {
+      width: 44rem;
+    }
+  }
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 0px;
-    
+
     > div {
       max-width: none;
     }

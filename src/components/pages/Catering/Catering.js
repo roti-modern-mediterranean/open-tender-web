@@ -120,7 +120,7 @@ const CateringContainer = styled('div')`
     flex-direction: column;
     padding: 0;
     border-radius: 0;
-    background-color: transparent;
+    background-color: ${(props) => props.theme.bgColors.primary};
   }
 `
 
