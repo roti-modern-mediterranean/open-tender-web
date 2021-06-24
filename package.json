@@ -1,6 +1,6 @@
 {
   "name": "roti-web",
-  "version": "2.0.51",
+  "version": "2.0.52",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.1.4",
