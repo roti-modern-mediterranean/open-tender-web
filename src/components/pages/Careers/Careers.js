@@ -206,7 +206,8 @@ const Careers = () => {
               overlay_color: '25272A',
               overlay_opacity: 0.5,
               show_overlay: true,
-              text_color: 'FBF8EA',
+              title_color: 'FBF8EA',
+              subtitle_color: 'FBF8EA',
               title: 'JOIN THE ROTEAM',
               url: '',
               url_text: 'Apply today',
@@ -316,7 +317,10 @@ const Careers = () => {
                   </ContentListOfItems>
                   <ContentCards>
                     <li>
-                      <img alt="" src="https://roti-website.s3.amazonaws.com/images/image-c-1.png" />
+                      <img
+                        alt=""
+                        src="https://roti-website.s3.amazonaws.com/images/image-c-1.png"
+                      />
                       <div className="card-body">
                         <h3>A Career that matters.</h3>
                         <p>
@@ -330,7 +334,10 @@ const Careers = () => {
                       </div>
                     </li>
                     <li>
-                      <img alt="" src="https://roti-website.s3.amazonaws.com/images/image-c-2.png" />
+                      <img
+                        alt=""
+                        src="https://roti-website.s3.amazonaws.com/images/image-c-2.png"
+                      />
                       <div className="card-body">
                         <h3>Inclusion, diversity &amp; equity.</h3>
                         <p>

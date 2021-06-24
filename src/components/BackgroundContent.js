@@ -75,7 +75,8 @@ const makeAlignment = (alignment) => {
 const BackgroundContent = ({
   title,
   subtitle,
-  text_color = 'ffffff',
+  title_color = 'ffffff',
+  subtitle_color = 'ffffff',
   vertical = 'BOTTOM',
   horizontal = 'CENTER',
 }) => {
@@ -91,11 +92,11 @@ const BackgroundContent = ({
     >
       <BackgroundContentText>
         {title && (
-          <Heading as="p" style={{ color: `#${text_color}` }}>
+          <Heading as="p" style={{ color: `#${title_color}` }}>
             {title}
           </Heading>
         )}
-        {subtitle && <p style={{ color: `#${text_color}` }}>{subtitle}</p>}
+        {subtitle && <p style={{ color: `#${subtitle_color}` }}>{subtitle}</p>}
       </BackgroundContentText>
     </BackgroundContentView>
   )
@@ -105,7 +106,8 @@ BackgroundContent.displayName = 'BackgroundContent'
 BackgroundContent.propTypes = {
   title: propTypes.string,
   subtitle: propTypes.string,
-  text_color: propTypes.string,
+  title_color: propTypes.string,
+  subtitle_color: propTypes.string,
   vertical: propTypes.string,
   horizontal: propTypes.string,
 }
