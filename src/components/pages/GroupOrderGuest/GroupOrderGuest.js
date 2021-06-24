@@ -16,7 +16,7 @@ import {
   selectCustomer,
   logoutCustomer,
 } from '@open-tender/redux'
-import { CartGuestForm, ButtonStyled } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
@@ -30,6 +30,7 @@ import {
   Main,
   PageContainer,
 } from '../..'
+import { CartGuestForm } from '../../forms'
 import { FormWrapper } from '../../inputs'
 import GroupOrderError from './GroupOrderError'
 
