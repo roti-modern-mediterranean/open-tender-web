@@ -33,6 +33,7 @@ import CheckoutHeader from '../../CheckoutHeader'
 import ButtonGroupBig from '../../ButtonGroupBig'
 import CheckoutCartItem from '../CheckoutPayment/CheckoutCartItem'
 import InlineLink from '../../InlineLink'
+import styled from '@emotion/styled'
 
 const usePrevious = (value) => {
   const ref = useRef()
@@ -41,6 +42,12 @@ const usePrevious = (value) => {
   })
   return ref.current
 }
+
+const GroupOrderReviewOwnerNotice = styled(Preface)`
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: 1.8rem !important;
+  }
+`
 
 const GroupOrderReviewOwner = () => {
   const [guestCart, setGuestCart] = useState([])
@@ -145,10 +152,10 @@ const GroupOrderReviewOwner = () => {
                   Use this page to review the orders that have been submitted
                   before checking out.
                 </p>
-                <Preface as="p">
+                <GroupOrderReviewOwnerNotice as="p">
                   This group order will remain open for editing until you to
                   proceed to the checkout page.
-                </Preface>
+                </GroupOrderReviewOwnerNotice>
                 <p>
                   Orders will be appear below as they're added by your friends.{' '}
                   {guestCount} {guestCount > 1 ? 'orders have' : 'order has'}{' '}

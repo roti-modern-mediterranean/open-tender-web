@@ -7,7 +7,7 @@ import { useTheme } from '@emotion/react'
 import { selectOrder, selectGroupOrder } from '@open-tender/redux'
 
 import { openModal } from '../../slices'
-import { People6 } from '../icons'
+import { People6, People3 } from '../icons'
 import { ButtonIcon } from '.'
 
 const GroupOrder = () => {
@@ -18,7 +18,7 @@ const GroupOrder = () => {
   const { revenueCenter } = useSelector(selectOrder)
   const hasGroupOrdering =
     revenueCenter && revenueCenter.settings.group_ordering
-  const size = isBrowser ? 44 : 24
+  const size = isBrowser ? 44 : 36
   const color = isBrowser ? theme.colors.paprika : theme.colors.beet
 
   const onClick = () => {
@@ -30,7 +30,13 @@ const GroupOrder = () => {
 
   return (
     <ButtonIcon
-      icon={(props) => <People6 color={color} {...props} />}
+      icon={(props) =>
+        isBrowser ? (
+          <People6 color={color} {...props} />
+        ) : (
+          <People3 color={color} {...props} />
+        )
+      }
       size={size}
       offset="right"
       label="Start A Group Order"

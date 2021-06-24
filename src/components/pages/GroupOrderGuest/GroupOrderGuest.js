@@ -21,7 +21,6 @@ import { ButtonStyled } from '@open-tender/components'
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
-import iconMap from '../../iconMap'
 import {
   CheckoutHeader,
   Content,
@@ -112,6 +111,7 @@ const makeTitle = (
 
 const GroupOrderGuestIntro = styled('div')`
   margin: ${(props) => props.theme.layout.padding} 0;
+  text-align: center;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
   }
@@ -232,12 +232,12 @@ const GroupOrderGuest = () => {
           <PageContainer>
             <CheckoutHeader title={title} />
             <FormWrapper>
-              {subtitle && <p>{subtitle}</p>}
               <GroupOrderGuestIntro>
                 {isLoading ? (
                   <Loading text="Retrieving group order info..." />
                 ) : showForm ? (
                   <>
+                    {subtitle && <p>{subtitle}</p>}
                     <p>
                       {spotsRemaining && (
                         <span>Only {spotsRemaining} spots left! </span>
@@ -253,6 +253,7 @@ const GroupOrderGuest = () => {
                   </>
                 ) : (
                   <>
+                    {subtitle && <p>{subtitle}</p>}
                     <GroupOrderError
                       cartId={cartId}
                       error={error}
@@ -262,10 +263,7 @@ const GroupOrderGuest = () => {
                       cartOwnerName={cartOwnerName}
                     />
                     <p>
-                      <ButtonStyled
-                        icon={iconMap.RefreshCw}
-                        onClick={startOver}
-                      >
+                      <ButtonStyled onClick={startOver}>
                         Start A New Order
                       </ButtonStyled>
                     </p>

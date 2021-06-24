@@ -74,6 +74,10 @@ const HomeJourneyContent = styled('div')`
   h3 {
     line-height: 1;
     min-height: 2em;
+    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+      min-height: 0;
+      margin: 0 0 1rem;
+    }
   }
 
   p {
