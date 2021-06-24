@@ -18,6 +18,7 @@ const Container = styled.div`
   width: 100%;
   display: grid;
   grid-template-rows: max-content auto max-content;
+  grid-template-columns: 100%;
   color: ${(props) => props.theme.colors.tahini};
   
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -189,9 +190,12 @@ const FooterRight = styled.div`
     grid-area: openChatButton;
   }
 
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
     grid-template-areas: "repText repText" "callUsButton openChatButton";
-    grid-template-columns: minmax(max-content, 50%) minmax(max-content, 50%);
+    grid-template-columns: minmax(max-content, ${(props) => props.theme.buttons.sizes.default.width}) minmax(max-content, ${(props) => props.theme.buttons.sizes.default.width});
+  }
+    
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     text-align: left;
     width: auto;
     padding: 0;

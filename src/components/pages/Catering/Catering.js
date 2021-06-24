@@ -107,7 +107,13 @@ const CateringContainer = styled('div')`
   padding: 4rem 4.5rem;
   border-radius: 2.2rem;
   background-color: rgba(37, 39, 42, 0.6);
-  
+  margin: ${(props) => props.theme.layout.padding} 0;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    margin: calc(${(props) => props.theme.layout.padding} + ${(props) => props.theme.border.radiusLarge}) 
+      0 ${(props) => props.theme.layout.padding};
+  }
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: relative;
     z-index: 1;

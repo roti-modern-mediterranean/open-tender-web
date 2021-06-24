@@ -58,6 +58,16 @@ const decorateTheme = (theme) => {
     border: {
       ...theme.border,
       radiusLarge: "3rem"
+    },
+    buttons: {
+      ...theme.buttons,
+      sizes: {
+        ...theme.buttons.sizes,
+        default: {
+          ...theme.buttons.sizes.default,
+          width: "16.4rem"
+        }
+      }
     }
   }
 }
