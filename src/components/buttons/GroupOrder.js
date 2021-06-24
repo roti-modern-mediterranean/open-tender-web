@@ -2,24 +2,24 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { isBrowser } from 'react-device-detect'
+import { useTheme } from '@emotion/react'
 import { selectOrder, selectGroupOrder } from '@open-tender/redux'
 
 import { openModal } from '../../slices'
-import iconMap from '../iconMap'
-import { ButtonBoth } from '.'
+import { People6 } from '../icons'
+import { ButtonIcon } from '.'
 
-const GroupOrder = ({
-  text = 'Group Order',
-  icon = iconMap.Users,
-  style = { paddingLeft: '1.5rem', paddingRight: '1.5rem' },
-  useButton = false,
-}) => {
+const GroupOrder = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const { isCartOwner, cartGuest } = useSelector(selectGroupOrder)
+  const theme = useTheme()
+  const { cartGuest } = useSelector(selectGroupOrder)
   const { revenueCenter } = useSelector(selectOrder)
   const hasGroupOrdering =
     revenueCenter && revenueCenter.settings.group_ordering
+  const size = isBrowser ? 44 : 24
+  const color = isBrowser ? theme.colors.paprika : theme.colors.beet
 
   const onClick = () => {
     const reviewOrders = () => history.push(`/review`)
@@ -29,14 +29,12 @@ const GroupOrder = ({
   if (!hasGroupOrdering || cartGuest) return null
 
   return (
-    <ButtonBoth
-      text={text}
+    <ButtonIcon
+      icon={(props) => <People6 color={color} {...props} />}
+      size={size}
+      offset="right"
       label="Start A Group Order"
-      icon={icon}
       onClick={onClick}
-      color={isCartOwner ? 'cart' : 'header'}
-      style={isCartOwner ? style : null}
-      useButton={useButton}
     />
   )
 }

@@ -6,9 +6,9 @@ import {
   selectTimezone,
   selectGroupOrderPrepTimes,
 } from '@open-tender/redux'
-import { ButtonLink } from '@open-tender/components'
 
 import { openModal } from '../slices'
+import InlineLink from './InlineLink'
 
 const GroupOrderTime = () => {
   const dispatch = useDispatch()
@@ -28,7 +28,7 @@ const GroupOrderTime = () => {
         ? `Please note that this group order is currently scheduled for ASAP and will be ready about ${prepTime} minutes from the time it gets submitted.`
         : `Please note that this order must be submitted by ${cutoffTime} in order to
       be ready by the scheduled time of ${orderTime}.`}{' '}
-      <ButtonLink onClick={adjustTime}>Choose a different time.</ButtonLink>
+      <InlineLink onClick={adjustTime}>Choose a different time.</InlineLink>
     </p>
   )
 }

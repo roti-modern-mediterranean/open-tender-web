@@ -5,38 +5,65 @@ import {
   selectGroupOrder,
   addCustomerGroupOrder,
 } from '@open-tender/redux'
+import styled from '@emotion/styled'
 import { makeGroupOrderTime } from '@open-tender/js'
-import { ButtonLink, ButtonStyled, Input, Text } from '@open-tender/components'
+import {
+  ButtonLink,
+  ButtonStyled,
+  Preface,
+  Text,
+} from '@open-tender/components'
 
 import { openModal, closeModal } from '../../../slices'
-import iconMap from '../../iconMap'
 import GroupOrderSteps from './GroupOrderSteps'
 import { ModalContent } from '../../Modal'
-import styled from '@emotion/styled'
+
+import { Input } from '../../inputs'
+import { Cash } from '../../icons'
+import ButtonGroupBig from '../../ButtonGroupBig'
 
 const formatOrderTime = (s) =>
   s.replace('Today', 'today').replace('Tomorrow', 'tomorrow')
 
-const SpendingLimitForm = styled('form')`
-  margin: 0;
+const SpendingLimitForm = styled('form')``
 
-  label {
-    padding: 0;
+const GroupOrderStartIntro = styled(Preface)`
+  margin: 1rem 0;
+  font-weight: 500;
+  line-height: 1.2;
 
-    span span:first-of-type {
-      width: auto;
-      flex-grow: 1;
+  button {
+    background-color: transparent;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: ${(props) => props.theme.colors.light};
+      background-color: ${(props) => props.theme.colors.paprika};
+      border-color: ${(props) => props.theme.colors.paprika};
+    }
+  }
+`
+
+const GroupOrderStartTime = styled('p')`
+  margin: 1rem 0 3rem;
+
+  button {
+    background-color: transparent;
+
+    span {
+      color: ${(props) => props.theme.colors.paprika};
     }
 
-    span span:last-of-type {
-      flex-grow: 0;
-      input {
-        width: 12rem;
-        text-align: right;
-        @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-          width: 100%;
-          text-align: left;
-        }
+    &:hover,
+    &:active,
+    &:focus {
+      // color: ${(props) => props.theme.colors.light};
+      // background-color: ${(props) => props.theme.colors.paprika};
+      // border-color: ${(props) => props.theme.colors.paprika};
+
+      span {
+        color: ${(props) => props.theme.colors.primary};
       }
     }
   }
@@ -50,6 +77,7 @@ const GroupOrderStart = () => {
   const { revenueCenter, serviceType, requestedAt } = useSelector(selectOrder)
   const { loading } = useSelector(selectGroupOrder)
   const isLoading = loading === 'pending'
+  console.log(orderTime)
 
   useEffect(() => {
     const groupOrderTime = makeGroupOrderTime(
@@ -91,17 +119,14 @@ const GroupOrderStart = () => {
         <p>Please confirm your order date & time before you share your cart</p>
       }
       footer={
-        <div>
-          <ButtonStyled
-            icon={iconMap.Users}
-            onClick={start}
-            color="cart"
-            disabled={isLoading}
-          >
+        <ButtonGroupBig>
+          <ButtonStyled onClick={start} size="big" disabled={isLoading}>
             {isLoading ? 'Starting Group Order...' : 'Start a Group Order'}
           </ButtonStyled>
-          <ButtonStyled onClick={cancel}>Nevermind</ButtonStyled>
-        </div>
+          <ButtonStyled onClick={cancel} size="big" color="secondary">
+            Nevermind
+          </ButtonStyled>
+        </ButtonGroupBig>
       }
     >
       {orderTime && (
@@ -117,28 +142,35 @@ const GroupOrderStart = () => {
               </Text>
             </div>
           ) : (
-            <div>
-              <Text as="p" color="primary" bold={true}>
+            <>
+              <GroupOrderStartIntro as="p">
                 {orderTime.isAdjusted
                   ? 'The first available group order time is'
                   : 'Your currently selected group order time is'}{' '}
-                {formatOrderTime(orderTime.dateStr)}, which means that{' '}
-                <Text color="alert">
-                  all orders must be submitted by{' '}
-                  {formatOrderTime(orderTime.cutoffDateStr)}
-                </Text>
-                .{' '}
+                {formatOrderTime(orderTime.dateStr)}, which means that all
+                orders must be submitted by{' '}
+                {formatOrderTime(orderTime.cutoffDateStr)}.{' '}
+              </GroupOrderStartIntro>
+              <GroupOrderStartTime>
                 <ButtonLink onClick={adjust}>
-                  Choose a different time.
+                  <GroupOrderStartIntro>
+                    Choose a different time
+                  </GroupOrderStartIntro>
                 </ButtonLink>
-              </Text>
-            </div>
+              </GroupOrderStartTime>
+              {/* <GroupOrderStartTime>
+                <ButtonStyled onClick={adjust} color="secondary" size="small">
+                  Choose a different time
+                </ButtonStyled>
+              </GroupOrderStartTime> */}
+            </>
           )}
         </>
       )}
       <SpendingLimitForm noValidate>
         <Input
-          label="Set a guest spending Limit (optional)"
+          icon={<Cash />}
+          label=" spending limit (optional)"
           name="spending_limit"
           type="number"
           value={spendingLimit || ''}
@@ -146,9 +178,7 @@ const GroupOrderStart = () => {
           error={null}
         />
       </SpendingLimitForm>
-      <Text as="div" size="small">
-        <GroupOrderSteps />
-      </Text>
+      <GroupOrderSteps />
     </ModalContent>
   )
 }

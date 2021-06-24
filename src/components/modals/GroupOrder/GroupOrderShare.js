@@ -9,9 +9,10 @@ import {
 import { ButtonStyled } from '@open-tender/components'
 
 import { closeModal } from '../../../slices'
-import iconMap from '../../iconMap'
 import { GroupOrderLink, GroupOrderTime } from '../..'
 import { ModalContent } from '../../Modal'
+import ButtonGroupBig from '../../ButtonGroupBig'
+import InlineLink from '../../InlineLink'
 
 const GroupOrderShare = () => {
   const history = useHistory()
@@ -48,16 +49,10 @@ const GroupOrderShare = () => {
       footer={
         <>
           <p>
-            Change your mind? Save this order for later or cancel it altogether.
+            Change your mind?{' '}
+            <InlineLink onClick={save}>Save this order for later</InlineLink> or{' '}
+            <InlineLink onClick={cancel}>cancel it altogether.</InlineLink>
           </p>
-          <div>
-            <ButtonStyled icon={iconMap.Save} onClick={save} size="small">
-              Save for Later
-            </ButtonStyled>
-            <ButtonStyled icon={iconMap.Trash2} onClick={cancel} size="small">
-              Delete Forever
-            </ButtonStyled>
-          </div>
         </>
       }
     >
@@ -68,18 +63,14 @@ const GroupOrderShare = () => {
           Once you've added your own items, proceed to the next page to review
           the orders that have been submitted by others.
         </p>
-        <p>
-          <ButtonStyled icon={iconMap.ShoppingBag} onClick={proceed}>
+        <ButtonGroupBig>
+          <ButtonStyled onClick={proceed} size="big">
             Review All Orders
           </ButtonStyled>
-          <ButtonStyled
-            icon={iconMap.Map}
-            onClick={backToMenu}
-            color="secondary"
-          >
+          <ButtonStyled onClick={backToMenu} size="big" color="secondary">
             Back To Menu
           </ButtonStyled>
-        </p>
+        </ButtonGroupBig>
       </div>
     </ModalContent>
   )
