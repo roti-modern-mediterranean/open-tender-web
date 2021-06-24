@@ -29,6 +29,8 @@ import MapMarker from './MapMarker'
 import MinusSign from './MinusSign'
 import Motorcycle from './Motorcycle'
 import Palette from './Palette'
+import People3 from './People3'
+import People6 from './People6'
 import Phone from './Phone'
 import PlusSign from './PlusSign'
 import Roti from './Roti'
@@ -72,6 +74,8 @@ export {
   MinusSign,
   Motorcycle,
   Palette,
+  People3,
+  People6,
   Phone,
   PlusSign,
   Roti,

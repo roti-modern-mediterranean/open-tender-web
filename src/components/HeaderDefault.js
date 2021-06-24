@@ -4,9 +4,9 @@ import { isBrowser } from 'react-device-detect'
 import { Link } from 'react-router-dom'
 
 import { Header, Logo } from '.'
-import { Cart, NavMenu, Locations } from './buttons'
+import { Cart, NavMenu, Locations, GroupOrder } from './buttons'
 
-const HeaderDefault = ({ path = '/' }) => {
+const HeaderDefault = ({ path = '/', showGroup = false }) => {
   return (
     <Header
       left={<NavMenu />}
@@ -22,6 +22,7 @@ const HeaderDefault = ({ path = '/' }) => {
       right={
         <>
           {isBrowser && <Locations />}
+          {showGroup && <GroupOrder />}
           <Cart />
         </>
       }

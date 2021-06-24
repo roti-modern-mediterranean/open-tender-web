@@ -6,6 +6,25 @@ import { ButtonStyled } from '@open-tender/components'
 import iconMap from './iconMap'
 import styled from '@emotion/styled'
 
+const GroupOrderLinkView = styled('p')`
+  button {
+    width: 100%;
+    font-size: ${(props) => props.theme.fonts.sizes.main};
+    text-transform: lowercase;
+    color: ${(props) => props.theme.colors.paprika};
+    background-color: transparent;
+    border-color: ${(props) => props.theme.colors.paprika};
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: ${(props) => props.theme.colors.light};
+      background-color: ${(props) => props.theme.colors.paprika};
+      border-color: ${(props) => props.theme.colors.paprika};
+    }
+  }
+`
+
 const CopyResult = styled('p')`
   margin: 1rem 0 0;
   font-size: ${(props) => props.theme.fonts.sizes.small};
@@ -29,22 +48,13 @@ const GroupOrderLink = ({
 
   return (
     <>
-      <p>
+      <GroupOrderLinkView>
         <CopyToClipboard text={url} onCopy={() => setCopied(true)}>
-          <ButtonStyled
-            icon={iconMap.Clipboard}
-            onClick={copy}
-            size="small"
-            color="cart"
-            style={{
-              textAlign: 'left',
-              padding: '1rem 1rem',
-            }}
-          >
+          <ButtonStyled icon={iconMap.Clipboard} onClick={copy}>
             {url}
           </ButtonStyled>
         </CopyToClipboard>
-      </p>
+      </GroupOrderLinkView>
       {copied ? (
         <CopyResult copied={copied}>Copied to clipboard!</CopyResult>
       ) : (

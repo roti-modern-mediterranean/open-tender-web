@@ -18,6 +18,7 @@ import {
   validateOrder,
   selectCartTotal,
   selectCustomer,
+  selectGroupOrder,
 } from '@open-tender/redux'
 import {
   makeServiceTypeName,
@@ -42,7 +43,7 @@ import {
   Main,
   PageContainer,
 } from '../..'
-import { Back } from '../../buttons'
+import { Back, Reopen } from '../../buttons'
 import styled from '@emotion/styled'
 import {} from '../../forms'
 import { ErrMsg, FormWrapper } from '../../inputs'
@@ -121,6 +122,7 @@ const CheckoutDetails = () => {
   const [errors, setErrors] = useState(null)
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
+  const { cartId } = useSelector(selectGroupOrder)
   const { profile: customer } = useSelector(selectCustomer) || {}
   const cartTotal = useSelector(selectCartTotal)
   const menuSlug = useSelector(selectMenuSlug)
@@ -135,9 +137,10 @@ const CheckoutDetails = () => {
   const hasDetails = !isEmpty(details)
   const formErrors = errors ? handleCheckoutErrors({ params: errors }) : {}
   const cartValidate = useSelector(selectCartValidate)
-  const validate = useCallback((order) => dispatch(validateOrder(order)), [
-    dispatch,
-  ])
+  const validate = useCallback(
+    (order) => dispatch(validateOrder(order)),
+    [dispatch]
+  )
   const withCustomer = customer ? { ...cartValidate, customer } : cartValidate
   const withAddress = address ? { ...withCustomer, address } : withCustomer
   useCheckout(validate, withAddress)
@@ -208,7 +211,13 @@ const CheckoutDetails = () => {
       </Helmet>
       <Content hasFooter={false}>
         <HeaderCheckout
-          left={<Back onClick={() => history.push(menuSlug)} />}
+          left={
+            cartId ? (
+              <Reopen />
+            ) : (
+              <Back onClick={() => history.push(menuSlug)} />
+            )
+          }
         />
         <Main>
           <PageContainer style={{ margin: '0 auto' }}>

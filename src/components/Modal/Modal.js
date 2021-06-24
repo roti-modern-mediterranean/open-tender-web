@@ -21,6 +21,7 @@ import {
   GiftCardAssign,
   GiftCardAssignOther,
   GroupOrder,
+  GroupOrderInfo,
   Gratuity,
   LevelUp,
   Login,
@@ -60,12 +61,14 @@ const makeModal = (type, windowRef, args = {}) => {
       return <GiftCardAssign windowRef={windowRef} {...args} />
     case 'giftCardAssignOther':
       return <GiftCardAssignOther windowRef={windowRef} {...args} />
-    case 'groupOrder':
-      return <GroupOrder {...args} />
     case 'gratuity':
       return <Gratuity {...args} />
     case 'greenShug':
       return <GreenShug {...args} />
+    case 'groupOrder':
+      return <GroupOrder {...args} />
+    case 'groupOrderInfo':
+      return <GroupOrderInfo {...args} />
     case 'outOfStock':
       return <OutOfStock {...args} />
     case 'item':

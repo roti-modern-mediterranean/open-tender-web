@@ -1,5 +1,6 @@
 import AddressForm from './AddressForm'
 import AllergenForm from './AllergenForm'
+import CartGuestForm from './CartGuestForm'
 import CreditCardForm from './CreditCardForm'
 import CreditCardInputs from './CreditCardInputs'
 import GiftCardForm from './GiftCardForm'
@@ -17,6 +18,7 @@ import SignUpForm from './SignUpForm'
 export {
   AddressForm,
   AllergenForm,
+  CartGuestForm,
   CreditCardForm,
   CreditCardInputs,
   GiftCardForm,

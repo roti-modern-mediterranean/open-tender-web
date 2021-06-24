@@ -9,10 +9,9 @@ import {
   closeGroupOrder,
 } from '@open-tender/redux'
 
-import iconMap from '../iconMap'
-import { ButtonBoth } from '.'
+import Back from './Back'
 
-const Reopen = ({ text = 'Reopen Group Order', icon = iconMap.ArrowLeft }) => {
+const Reopen = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { cart } = useSelector(selectOrder)
@@ -26,7 +25,7 @@ const Reopen = ({ text = 'Reopen Group Order', icon = iconMap.ArrowLeft }) => {
     })
   }
 
-  return <ButtonBoth text={text} icon={icon} onClick={reopen} />
+  return <Back onClick={reopen} />
 }
 
 Reopen.displayName = 'Reopen'

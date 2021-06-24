@@ -121,7 +121,7 @@ const Menu = () => {
         <title>Menu | {siteTitle}</title>
       </Helmet>
       <Content>
-        <HeaderDefault path={menuSlug} />
+        <HeaderDefault path={menuSlug} showGroup={true} />
         <Main>
           <MenuContext.Provider
             value={{

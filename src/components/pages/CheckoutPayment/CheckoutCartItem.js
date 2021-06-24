@@ -62,7 +62,9 @@ const CheckoutCartItem = ({ name, quantity, amount, item }) => {
       {quantity && (
         <CheckoutCartItemQuantity>{quantity}</CheckoutCartItemQuantity>
       )}
-      <CheckoutCartItemPrice>{formatDollars(amount)}</CheckoutCartItemPrice>
+      {amount && (
+        <CheckoutCartItemPrice>{formatDollars(amount)}</CheckoutCartItemPrice>
+      )}
     </CheckoutCartItemView>
   )
 }

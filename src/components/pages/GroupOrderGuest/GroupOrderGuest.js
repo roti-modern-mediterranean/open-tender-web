@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import styled from '@emotion/styled'
 import { isoToDate, makeReadableDateStrFromIso } from '@open-tender/js'
 import {
   fetchGroupOrder,
@@ -15,28 +16,22 @@ import {
   selectCustomer,
   logoutCustomer,
 } from '@open-tender/redux'
-import {
-  CartGuestForm,
-  FormWrapper,
-  ButtonStyled,
-} from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectBrand } from '../../../slices'
 import { AppContext } from '../../../App'
-import iconMap from '../../iconMap'
 import {
+  CheckoutHeader,
   Content,
-  HeaderLogo,
-  Header,
+  HeaderContent,
   Loading,
   Main,
-  PageTitle,
   PageContainer,
 } from '../..'
-
+import { CartGuestForm } from '../../forms'
+import { FormWrapper } from '../../inputs'
 import GroupOrderError from './GroupOrderError'
-import styled from '@emotion/styled'
 
 const formatTime = (time) => {
   return time
@@ -115,13 +110,15 @@ const makeTitle = (
 }
 
 const GroupOrderGuestIntro = styled('div')`
-  margin: ${(props) => props.theme.layout.padding};
+  margin: ${(props) => props.theme.layout.padding} 0;
+  text-align: center;
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
   }
 
   p {
     margin: 1em 0;
+    line-height: ${(props) => props.theme.lineHeight};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-size: ${(props) => props.theme.fonts.sizes.small};
     }
@@ -230,15 +227,17 @@ const GroupOrderGuest = () => {
         <title>Join Group Order | {siteTitle}</title>
       </Helmet>
       <Content>
-        <Header title={<HeaderLogo />} />
+        <HeaderContent />
         <Main>
-          <PageContainer style={{ maxWidth: '76.8rem' }}>
-            <PageTitle title={title} subtitle={subtitle}>
+          <PageContainer>
+            <CheckoutHeader title={title} />
+            <FormWrapper>
               <GroupOrderGuestIntro>
                 {isLoading ? (
                   <Loading text="Retrieving group order info..." />
                 ) : showForm ? (
                   <>
+                    {subtitle && <p>{subtitle}</p>}
                     <p>
                       {spotsRemaining && (
                         <span>Only {spotsRemaining} spots left! </span>
@@ -249,11 +248,12 @@ const GroupOrderGuest = () => {
                           order.
                         </span>
                       )}
+                      Please enter a first and last name to get started.
                     </p>
-                    <p>Please enter a first and last name to get started.</p>
                   </>
                 ) : (
                   <>
+                    {subtitle && <p>{subtitle}</p>}
                     <GroupOrderError
                       cartId={cartId}
                       error={error}
@@ -263,27 +263,22 @@ const GroupOrderGuest = () => {
                       cartOwnerName={cartOwnerName}
                     />
                     <p>
-                      <ButtonStyled
-                        icon={iconMap.RefreshCw}
-                        onClick={startOver}
-                      >
+                      <ButtonStyled onClick={startOver}>
                         Start A New Order
                       </ButtonStyled>
                     </p>
                   </>
                 )}
               </GroupOrderGuestIntro>
-            </PageTitle>
-            {showForm && !isLoading && (
-              <FormWrapper>
+              {showForm && !isLoading && (
                 <CartGuestForm
                   cartId={cartId}
                   joinCart={joinCart}
                   loading={loading}
                   errMsg={errMsg}
                 />
-              </FormWrapper>
-            )}
+              )}
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>
