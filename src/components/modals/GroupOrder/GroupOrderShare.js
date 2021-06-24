@@ -47,13 +47,11 @@ const GroupOrderShare = () => {
         </p>
       }
       footer={
-        <>
-          <p>
-            Change your mind?{' '}
-            <InlineLink onClick={save}>Save this order for later</InlineLink> or{' '}
-            <InlineLink onClick={cancel}>cancel it altogether.</InlineLink>
-          </p>
-        </>
+        <p>
+          Change your mind?{' '}
+          <InlineLink onClick={save}>Save this order for later</InlineLink> or{' '}
+          <InlineLink onClick={cancel}>cancel it altogether.</InlineLink>
+        </p>
       }
     >
       <div>

@@ -1,10 +1,11 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { ButtonLink, ButtonStyled } from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { openModal, closeModal } from '../../../slices'
-import iconMap from '../../iconMap'
 import { ModalContent } from '../../Modal'
+import ButtonGroupBig from '../../ButtonGroupBig'
+import InlineLink from '../../InlineLink'
 
 const GroupOrderGuest = () => {
   const dispatch = useDispatch()
@@ -20,32 +21,28 @@ const GroupOrderGuest = () => {
     <ModalContent
       title="Start a group order"
       footer={
-        <div>
-          <ButtonStyled onClick={() => dispatch(closeModal())}>
-            Nevermind
-          </ButtonStyled>
-        </div>
+        <p>
+          Don't have an account?{' '}
+          <InlineLink onClick={() => login('signUp')}>
+            Click here to create one.
+          </InlineLink>
+        </p>
       }
     >
       <div>
         <p>You must be logged into your accout to start a group order.</p>
-        <p>
-          <ButtonStyled
-            icon={iconMap.User}
-            onClick={() => login('login')}
-            color="cart"
-          >
-            Click here to login
+        <ButtonGroupBig>
+          <ButtonStyled onClick={() => login('login')} size="big">
+            Log into your account
           </ButtonStyled>
-        </p>
-      </div>
-      <div style={{ margin: '3rem 0 0' }}>
-        <p>
-          Don't have an account?{' '}
-          <ButtonLink icon={iconMap.User} onClick={() => login('signUp')}>
-            Click here to create one.
-          </ButtonLink>
-        </p>
+          <ButtonStyled
+            onClick={() => dispatch(closeModal())}
+            size="big"
+            color="secondary"
+          >
+            Nevermind
+          </ButtonStyled>
+        </ButtonGroupBig>
       </div>
     </ModalContent>
   )

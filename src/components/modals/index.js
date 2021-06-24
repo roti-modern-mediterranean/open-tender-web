@@ -13,6 +13,7 @@ import GiftCardAssignOther from './GiftCardAssignOther'
 import Gratuity from './Gratuity'
 import GreenShug from './GreenShug'
 import GroupOrder from './GroupOrder'
+import GroupOrderInfo from './GroupOrderInfo'
 import LevelUp from './LevelUp'
 import Login from './Login'
 import MenuItem from './MenuItem'
@@ -41,6 +42,7 @@ export {
   Gratuity,
   GreenShug,
   GroupOrder,
+  GroupOrderInfo,
   LevelUp,
   Login,
   MenuItem,

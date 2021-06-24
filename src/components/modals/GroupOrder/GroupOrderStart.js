@@ -7,65 +7,27 @@ import {
 } from '@open-tender/redux'
 import styled from '@emotion/styled'
 import { makeGroupOrderTime } from '@open-tender/js'
-import {
-  ButtonLink,
-  ButtonStyled,
-  Preface,
-  Text,
-} from '@open-tender/components'
+import { ButtonStyled } from '@open-tender/components'
 
 import { openModal, closeModal } from '../../../slices'
-import GroupOrderSteps from './GroupOrderSteps'
 import { ModalContent } from '../../Modal'
-
 import { Input } from '../../inputs'
 import { Cash } from '../../icons'
 import ButtonGroupBig from '../../ButtonGroupBig'
+import InlineLink from '../../InlineLink'
+import GroupOrderSteps from './GroupOrderSteps'
 
 const formatOrderTime = (s) =>
   s.replace('Today', 'today').replace('Tomorrow', 'tomorrow')
 
 const SpendingLimitForm = styled('form')``
 
-const GroupOrderStartIntro = styled(Preface)`
-  margin: 1rem 0;
-  font-weight: 500;
-  line-height: 1.2;
+const GroupOrderStartIntro = styled('p')`
+  margin: 1rem 0 2rem;
+  line-height: 1.5;
 
-  button {
-    background-color: transparent;
-
-    &:hover,
-    &:active,
-    &:focus {
-      color: ${(props) => props.theme.colors.light};
-      background-color: ${(props) => props.theme.colors.paprika};
-      border-color: ${(props) => props.theme.colors.paprika};
-    }
-  }
-`
-
-const GroupOrderStartTime = styled('p')`
-  margin: 1rem 0 3rem;
-
-  button {
-    background-color: transparent;
-
-    span {
-      color: ${(props) => props.theme.colors.paprika};
-    }
-
-    &:hover,
-    &:active,
-    &:focus {
-      // color: ${(props) => props.theme.colors.light};
-      // background-color: ${(props) => props.theme.colors.paprika};
-      // border-color: ${(props) => props.theme.colors.paprika};
-
-      span {
-        color: ${(props) => props.theme.colors.primary};
-      }
-    }
+  span {
+    color: ${(props) => props.theme.colors.paprika};
   }
 `
 
@@ -132,45 +94,29 @@ const GroupOrderStart = () => {
       {orderTime && (
         <>
           {orderTime.prepTime ? (
-            <div>
-              <Text as="p" color="primary" bold={true}>
-                The current wait time for group orders is {orderTime.prepTime}{' '}
-                minutes from the time the order is submitted.{' '}
-                <ButtonLink onClick={adjust}>
-                  Choose a specific order time.
-                </ButtonLink>
-              </Text>
-            </div>
+            <GroupOrderStartIntro>
+              The current wait time for group orders is {orderTime.prepTime}{' '}
+              minutes from the time the order is submitted.{' '}
+              <InlineLink onClick={adjust}>
+                Choose a specific order time.
+              </InlineLink>
+            </GroupOrderStartIntro>
           ) : (
-            <>
-              <GroupOrderStartIntro as="p">
-                {orderTime.isAdjusted
-                  ? 'The first available group order time is'
-                  : 'Your currently selected group order time is'}{' '}
-                {formatOrderTime(orderTime.dateStr)}, which means that all
-                orders must be submitted by{' '}
-                {formatOrderTime(orderTime.cutoffDateStr)}.{' '}
-              </GroupOrderStartIntro>
-              <GroupOrderStartTime>
-                <ButtonLink onClick={adjust}>
-                  <GroupOrderStartIntro>
-                    Choose a different time
-                  </GroupOrderStartIntro>
-                </ButtonLink>
-              </GroupOrderStartTime>
-              {/* <GroupOrderStartTime>
-                <ButtonStyled onClick={adjust} color="secondary" size="small">
-                  Choose a different time
-                </ButtonStyled>
-              </GroupOrderStartTime> */}
-            </>
+            <GroupOrderStartIntro>
+              {orderTime.isAdjusted
+                ? 'The first available group order time is'
+                : 'Your currently selected group order time is'}{' '}
+              {formatOrderTime(orderTime.dateStr)}, which means that all orders
+              must be submitted by {formatOrderTime(orderTime.cutoffDateStr)}.{' '}
+              <InlineLink onClick={adjust}>Choose a different time.</InlineLink>
+            </GroupOrderStartIntro>
           )}
         </>
       )}
       <SpendingLimitForm noValidate>
         <Input
           icon={<Cash />}
-          label=" spending limit (optional)"
+          label="set a spending limit (optional)"
           name="spending_limit"
           type="number"
           value={spendingLimit || ''}

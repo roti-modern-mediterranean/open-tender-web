@@ -1,11 +1,13 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   selectCustomer,
   logoutCustomer,
   selectCartQuantity,
   setOrderServiceType,
+  selectGroupOrder,
+  selectMenuSlug,
 } from '@open-tender/redux'
 import { Heading, Preface } from '@open-tender/components'
 import styled from '@emotion/styled'
@@ -41,6 +43,10 @@ const guestLinks = [
       {
         title: 'Order Now',
         button: 'orderNow',
+      },
+      {
+        title: 'Group Order',
+        button: 'groupOrder',
       },
       {
         title: 'Catering',
@@ -120,6 +126,10 @@ const userLinks = [
       {
         title: 'Order Now',
         button: 'orderNow',
+      },
+      {
+        title: 'Group Order',
+        button: 'groupOrder',
       },
       {
         title: 'Catering',
@@ -249,7 +259,10 @@ const NavFooter = styled('div')`
 const Nav = React.forwardRef((props, ref) => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const { pathname } = useLocation()
   const { profile } = useSelector(selectCustomer)
+  const { cartId } = useSelector(selectGroupOrder)
+  const menuSlug = useSelector(selectMenuSlug)
   const brand = useSelector(selectBrand)
   const { has_rewards, has_thanx, has_levelup, has_deals } = brand
   const hasRewards = has_rewards || has_thanx || has_levelup
@@ -307,10 +320,28 @@ const Nav = React.forwardRef((props, ref) => {
     history.push('/locations')
   }
 
+  const groupOrder = (evt) => {
+    evt.target.blur()
+    evt.preventDefault()
+    evt.stopPropagation()
+    dispatch(toggleNav())
+    if (pathname.includes('/menu/')) {
+      const reviewOrders = () => history.push(`/review`)
+      dispatch(openModal({ type: 'groupOrder', args: { reviewOrders } }))
+    } else if (cartId) {
+      const reviewOrders = () => history.push(`/review`)
+      dispatch(openModal({ type: 'groupOrder', args: { reviewOrders } }))
+      history.push(menuSlug)
+    } else {
+      dispatch(openModal({ type: 'groupOrderInfo' }))
+    }
+  }
+
   const buttons = {
     login: login,
     cart: cart,
     orderNow: orderNow,
+    groupOrder: groupOrder,
   }
 
   return (
