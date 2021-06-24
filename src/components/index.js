@@ -55,6 +55,7 @@ import HeaderUser from './HeaderUser'
 import Hero from './Hero'
 import HeroContent from './HeroContent'
 import HeroSlides from './HeroSlides'
+import HouseAccounts from './HouseAccounts'
 import ImageSpinner from './ImageSpinner'
 import InlineLink from './InlineLink'
 import Intercom from './Intercom'
@@ -182,6 +183,7 @@ export {
   Hero,
   HeroContent,
   HeroSlides,
+  HouseAccounts,
   ImageSpinner,
   InlineLink,
   Intercom,

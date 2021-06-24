@@ -2,16 +2,17 @@ import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  closeGroupOrder,
+  checkout,
+  selectCanOrder,
   selectCartQuantity,
   selectCartTotal,
-  selectMenuSlug,
-  selectCanOrder,
   selectGroupOrder,
+  selectMenuSlug,
   selectOrder,
   selectOrderLimits,
   setCart,
-  closeGroupOrder,
-  checkout,
+  setCurrentItem,
 } from '@open-tender/redux'
 import { formatDollars } from '@open-tender/js'
 import {
@@ -114,16 +115,19 @@ const Sidebar = React.forwardRef((props, ref) => {
 
   const handleBack = () => {
     dispatch(toggleSidebar())
+    dispatch(setCurrentItem(null))
     if (!isMenu) history.push(menuSlug)
   }
 
   const handleReview = () => {
     dispatch(toggleSidebar())
+    dispatch(setCurrentItem(null))
     if (!isReview) history.push(`/review`)
   }
 
   const handleCheckout = () => {
     dispatch(toggleSidebar())
+    dispatch(setCurrentItem(null))
     if (!isCheckout) {
       dispatch(checkout())
       history.push(`/checkout/register`)
@@ -134,6 +138,7 @@ const Sidebar = React.forwardRef((props, ref) => {
     const customerCart = cart.filter((i) => i.customer_id)
     dispatch(setCart(customerCart))
     dispatch(toggleSidebar())
+    dispatch(setCurrentItem(null))
     dispatch(closeGroupOrder(cartId, false)).then(() => {
       history.push('/review')
     })

@@ -3,12 +3,14 @@ import styled from '@emotion/styled'
 import { selectCheckout, updateForm } from '@open-tender/redux'
 import { checkAmountRemaining } from '@open-tender/js'
 import { Preface } from '@open-tender/components'
+import { Home } from 'react-feather'
 
 import { CreditCard, Roti } from '../../icons'
 import CheckoutCreditCard from './CheckoutCreditCard'
 import CheckoutLevelUp from './CheckoutLevelUp'
 import { useDispatch, useSelector } from 'react-redux'
 import { PaymentTypes } from '../..'
+import CheckoutHouseAccounts from './CheckoutHouseAccounts'
 
 const allTenderTypes = [
   {
@@ -17,6 +19,11 @@ const allTenderTypes = [
     tenderType: 'CREDIT',
   },
   { icon: <Roti />, text: 'Roti', tenderType: 'LEVELUP' },
+  {
+    icon: <Home size={26} color="#FBF8EA" />,
+    text: 'House Account',
+    tenderType: 'HOUSE_ACCOUNT',
+  },
 ]
 
 const CheckoutTendersView = styled('div')`
@@ -80,6 +87,8 @@ const CheckoutTenders = () => {
         <CheckoutCreditCard />
       ) : tenderType === 'LEVELUP' ? (
         <CheckoutLevelUp />
+      ) : tenderType === 'HOUSE_ACCOUNT' ? (
+        <CheckoutHouseAccounts />
       ) : null}
     </CheckoutTendersView>
   )

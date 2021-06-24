@@ -109,7 +109,7 @@ const CreditCards = ({ creditCards, selectedId, apply, remove }) => {
 }
 
 CreditCards.displayName = 'CreditCards'
-CreditCards.prototypes = {
+CreditCards.propTypes = {
   creditCards: propTypes.array,
   selectedId: propTypes.number,
   apply: propTypes.func,

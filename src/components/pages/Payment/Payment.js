@@ -8,6 +8,7 @@ import {
   selectCustomerCreditCards,
 } from '@open-tender/redux'
 import { Helmet } from 'react-helmet'
+import { Home } from 'react-feather'
 
 import { maybeRefreshVersion } from '../../../app/version'
 import { selectAccountConfig, selectBrand } from '../../../slices'
@@ -26,6 +27,7 @@ import { CreditCard, Roti } from '../../icons'
 import LevelUpLoyalty from '../Rewards/LevelUpLoyalty'
 import PaymentCreditCards from './PaymentCreditCards'
 import PaymentLinkedCards from './PaymentLinkedCards'
+import PaymentHouseAccounts from './PaymentHouseAccounts'
 
 const tenderTypes = [
   {
@@ -34,6 +36,11 @@ const tenderTypes = [
     tenderType: 'CREDIT',
   },
   { icon: <Roti />, text: 'Roti', tenderType: 'LEVELUP' },
+  {
+    icon: <Home size={26} color="#FBF8EA" />,
+    text: 'House Account',
+    tenderType: 'HOUSE_ACCOUNT',
+  },
 ]
 
 const Payment = () => {
@@ -42,9 +49,11 @@ const Payment = () => {
   const theme = useTheme()
   const [tenderType, setTenderType] = useState('CREDIT')
   const { windowRef } = useContext(AppContext)
-  const { title: siteTitle, applePayMerchantId, has_levelup } = useSelector(
-    selectBrand
-  )
+  const {
+    title: siteTitle,
+    applePayMerchantId,
+    has_levelup,
+  } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
   const account = useSelector(selectAccountConfig)
   const { title, subtitle } = account.creditCards
@@ -104,6 +113,8 @@ const Payment = () => {
                 )
               ) : tenderType === 'LEVELUP' ? (
                 <LevelUpLoyalty />
+              ) : tenderType === 'HOUSE_ACCOUNT' ? (
+                <PaymentHouseAccounts />
               ) : null}
             </FormWrapper>
           </PageContainer>

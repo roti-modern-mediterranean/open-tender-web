@@ -9,6 +9,7 @@ import {
   removeItemFromCart,
   selectMenuSlug,
   selectOrder,
+  selectCurrentItem,
 } from '@open-tender/redux'
 import { BuilderQuantity } from '@open-tender/components'
 import { slugify } from '@open-tender/js'
@@ -33,6 +34,7 @@ const Cart = () => {
   const cart = useSelector(selectCart)
   const displaySettings = useSelector(selectDisplaySettings)
   const menuSlug = useSelector(selectMenuSlug)
+  const currentItem = useSelector(selectCurrentItem)
 
   const editItem = (item) => {
     dispatch(setCurrentItem(item))
@@ -54,7 +56,7 @@ const Cart = () => {
             <CartItem
               item={item}
               showModifiers={true}
-              editItem={() => editItem(item)}
+              editItem={currentItem ? null : () => editItem(item)}
               removeItem={() => removeItem(item)}
               displaySettings={displaySettings}
             >

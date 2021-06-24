@@ -55,11 +55,15 @@ const CartItemEditButton = styled('button')`
   color: ${(props) => props.theme.colors.beet};
   border: 0.1rem solid ${(props) => props.theme.colors.beet};
 
-  &:hover,
-  &:active,
-  &:focus {
+  &:enabled:hover,
+  &:enabled:active,
+  &:enabled:focus {
     color: ${(props) => props.theme.colors.primary};
     border: 0.1rem solid ${(props) => props.theme.colors.primary};
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 
   span {
@@ -76,13 +80,14 @@ const CartItem = ({ item, editItem, children }) => {
   const isSize = groups.length && groups[0].isSize ? true : false
   const option = isSize ? groups[0].options.find((i) => i.quantity === 1) : null
   const name = option ? option.name : item.name
+  const canEdit = editItem ? true : false
   return (
     <CartItemView>
       <CartItemName>{name}</CartItemName>
       <CartItemQuantity>{children}</CartItemQuantity>
       <CartItemPrice>{price}</CartItemPrice>
       <CartItemEdit>
-        <CartItemEditButton onClick={editItem}>
+        <CartItemEditButton disabled={!canEdit} onClick={editItem}>
           <span>{iconMap.Edit2}</span>
         </CartItemEditButton>
       </CartItemEdit>
