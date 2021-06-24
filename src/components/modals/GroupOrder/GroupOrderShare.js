@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   selectGroupOrder,
-  resetGroupOrder,
+  // resetGroupOrder,
   removeCustomerGroupOrder,
 } from '@open-tender/redux'
 import { ButtonStyled } from '@open-tender/components'
@@ -12,7 +12,7 @@ import { closeModal } from '../../../slices'
 import { GroupOrderLink, GroupOrderTime } from '../..'
 import { ModalContent } from '../../Modal'
 import ButtonGroupBig from '../../ButtonGroupBig'
-import InlineLink from '../../InlineLink'
+// import InlineLink from '../../InlineLink'
 
 const GroupOrderShare = () => {
   const history = useHistory()
@@ -28,10 +28,10 @@ const GroupOrderShare = () => {
     dispatch(closeModal())
   }
 
-  const save = () => {
-    dispatch(resetGroupOrder())
-    dispatch(closeModal())
-  }
+  // const save = () => {
+  //   dispatch(resetGroupOrder())
+  //   dispatch(closeModal())
+  // }
 
   const cancel = () => {
     dispatch(removeCustomerGroupOrder(cartId))
@@ -46,13 +46,14 @@ const GroupOrderShare = () => {
           Share the link below with your friends so they can add their orders
         </p>
       }
-      footer={
-        <p>
-          Change your mind?{' '}
-          <InlineLink onClick={save}>Save this order for later</InlineLink> or{' '}
-          <InlineLink onClick={cancel}>cancel it altogether.</InlineLink>
-        </p>
-      }
+      // footer={
+      //   <p>
+      //     Change your mind?{' '}
+      //     {/* <InlineLink onClick={save}>Save this order for later</InlineLink> or{' '}
+      //     <InlineLink onClick={cancel}>cancel it altogether.</InlineLink> */}
+      //     <InlineLink onClick={cancel}>Delete forever.</InlineLink>
+      //   </p>
+      // }
     >
       <div>
         <GroupOrderLink token={token} />
@@ -67,6 +68,9 @@ const GroupOrderShare = () => {
           </ButtonStyled>
           <ButtonStyled onClick={backToMenu} size="big" color="secondary">
             Back To Menu
+          </ButtonStyled>
+          <ButtonStyled onClick={cancel} size="big" color="secondary">
+            Cancel & Delete Forever
           </ButtonStyled>
         </ButtonGroupBig>
       </div>

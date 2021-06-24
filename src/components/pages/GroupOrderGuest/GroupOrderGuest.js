@@ -118,6 +118,7 @@ const GroupOrderGuestIntro = styled('div')`
 
   p {
     margin: 1em 0;
+    line-height: ${(props) => props.theme.lineHeight};
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-size: ${(props) => props.theme.fonts.sizes.small};
     }

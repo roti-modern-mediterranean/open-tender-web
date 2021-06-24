@@ -15,6 +15,7 @@ import {
   selectCheckout,
   validateOrder,
   updateForm,
+  selectGroupOrder,
 } from '@open-tender/redux'
 import { isEmpty, handleCheckoutErrors } from '@open-tender/js'
 import {
@@ -37,7 +38,7 @@ import {
   Input,
 } from '../../inputs'
 import { Lock, Mail, Phone, User } from '../../icons'
-import { Back, Cart } from '../../buttons'
+import { Back, Cart, Reopen } from '../../buttons'
 
 const iconMap = {
   first_name: <User />,
@@ -56,6 +57,7 @@ const CheckoutGuest = () => {
   const { windowRef } = useContext(AppContext)
   const { title: siteTitle } = useSelector(selectBrand)
   const { auth } = useSelector(selectCustomer)
+  const { cartId } = useSelector(selectGroupOrder)
   const menuSlug = useSelector(selectMenuSlug)
   const { check, form, loading } = useSelector(selectCheckout)
   const errors = handleCheckoutErrors({ params: check.errors })
@@ -72,9 +74,10 @@ const CheckoutGuest = () => {
 
   // validate cart whenever form.customer changes
   const cartValidate = useSelector(selectCartValidate)
-  const validate = useCallback((order) => dispatch(validateOrder(order)), [
-    dispatch,
-  ])
+  const validate = useCallback(
+    (order) => dispatch(validateOrder(order)),
+    [dispatch]
+  )
   const cartWithCustomer = { ...cartValidate, customer: form.customer }
   useCheckout(validate, cartWithCustomer)
 
@@ -113,7 +116,13 @@ const CheckoutGuest = () => {
       </Helmet>
       <Content>
         <Header
-          left={<Back onClick={() => history.push(menuSlug)} />}
+          left={
+            cartId ? (
+              <Reopen />
+            ) : (
+              <Back onClick={() => history.push(menuSlug)} />
+            )
+          }
           right={<Cart />}
         />
         <Main>

@@ -6,7 +6,7 @@ import { useHistory, Link } from 'react-router-dom'
 import {
   selectOrder,
   selectGroupOrder,
-  resetGroupOrder,
+  // resetGroupOrder,
   selectMenuSlug,
   updateCustomerGroupOrder,
   closeGroupOrder,
@@ -16,71 +16,23 @@ import {
   setCart,
   fetchMenuItems,
   checkout,
+  selectCartTotal,
+  selectCartQuantity,
 } from '@open-tender/redux'
 import { rehydrateCart, isEmpty, combineCarts } from '@open-tender/js'
-import {
-  CartItem,
-  ButtonLink,
-  ButtonStyled,
-  Heading,
-} from '@open-tender/components'
-import styled from '@emotion/styled'
+import { ButtonStyled, Preface } from '@open-tender/components'
 
-import { selectDisplaySettings } from '../../../slices'
-import iconMap from '../../iconMap'
-import {
-  Content,
-  Main,
-  OrderQuantity,
-  PageTitle,
-  PageContent,
-  PageContainer,
-  Header,
-  LinkSeparator,
-} from '../..'
-import {
-  Account,
-  Menu,
-  RequestedAt,
-  RevenueCenter,
-  ServiceType,
-} from '../../buttons'
+import { Content, Main, PageContainer, Header } from '../..'
+import { Back } from '../../buttons'
 import GroupOrderLink from '../../GroupOrderLink'
 import GroupOrderTime from '../../GroupOrderTime'
-import { GroupOrderCartView } from './GroupOrderReview'
-
-const GuestSection = styled('div')`
-  & + div {
-    margin: 3rem 0 0;
-  }
-
-  > p {
-    // margin: 1em 0;
-    line-height: ${(props) => props.theme.lineHeight};
-    font-size: ${(props) => props.theme.fonts.sizes.small};
-  }
-
-  & > p:first-of-type {
-    margin: 0;
-    font-size: ${(props) => props.theme.fonts.sizes.h3};
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.h4};
-    }
-  }
-`
-
-const GuestList = styled('div')`
-  ul {
-    margin: 1em 0 0;
-  }
-  ul li {
-    margin: 0.5em 0;
-
-    &:last-child {
-      margin: 0;
-    }
-  }
-`
+import { GroupOrderReviewIntro, GroupOrderReviewCart } from './GroupOrderReview'
+import Logo from '../../Logo'
+import { FormWrapper } from '../../inputs'
+import CheckoutHeader from '../../CheckoutHeader'
+import ButtonGroupBig from '../../ButtonGroupBig'
+import CheckoutCartItem from '../CheckoutPayment/CheckoutCartItem'
+import InlineLink from '../../InlineLink'
 
 const usePrevious = (value) => {
   const ref = useRef()
@@ -91,7 +43,6 @@ const usePrevious = (value) => {
 }
 
 const GroupOrderReviewOwner = () => {
-  const [showGuestItems, setShowGuestItems] = useState(true)
   const [guestCart, setGuestCart] = useState([])
   const [guestCartLookup, setGuestCartLookup] = useState({})
   const dispatch = useDispatch()
@@ -99,7 +50,8 @@ const GroupOrderReviewOwner = () => {
   const menuSlug = useSelector(selectMenuSlug)
   const order = useSelector(selectOrder)
   const { entities: menuItems } = useSelector(selectMenuItems)
-  const displaySettings = useSelector(selectDisplaySettings)
+  const cartTotal = useSelector(selectCartTotal)
+  const cartQuantity = useSelector(selectCartQuantity)
   const groupOrder = useSelector(selectGroupOrder)
   const {
     cartId,
@@ -113,6 +65,9 @@ const GroupOrderReviewOwner = () => {
     serviceType,
   } = groupOrder
   const prevGroupCart = usePrevious(groupCart)
+  const guestCartTotal = guestCart.reduce((t, i) => (t += i.totalPrice), 0.0)
+  const grandTotal = cartTotal + guestCartTotal
+  const hasOrders = !isEmpty(guestCartLookup)
 
   useEffect(() => {
     dispatch(fetchMenuItems({ revenueCenterId, serviceType }))
@@ -151,12 +106,12 @@ const GroupOrderReviewOwner = () => {
     dispatch(setCart(combinedCart))
     dispatch(closeGroupOrder(cartId, true))
     dispatch(checkout())
-    history.push('/checkout')
+    history.push('/checkout/register')
   }
 
-  const save = () => {
-    dispatch(resetGroupOrder())
-  }
+  // const save = () => {
+  //   dispatch(resetGroupOrder())
+  // }
 
   const cancel = () => {
     dispatch(removeCustomerGroupOrder(cartId))
@@ -167,184 +122,158 @@ const GroupOrderReviewOwner = () => {
     dispatch(showNotification('Guest items refreshed'))
   }
 
-  const toggleGuestItems = () => {
-    setShowGuestItems(!showGuestItems)
-  }
-
   return (
     <>
       <Content>
         <Header
-          title={isBrowser ? null : 'Review Group Order'}
-          left={<Menu />}
-          right={
-            <>
-              {isBrowser ? (
-                <>
-                  <Account />
-                  <RevenueCenter />
-                  <ServiceType />
-                  <RequestedAt />
-                </>
-              ) : null}
-            </>
+          left={<Back onClick={() => history.push(menuSlug)} />}
+          title={
+            <Link to="/">
+              <Logo />
+            </Link>
           }
+          right={null}
+          bgColor={isBrowser ? 'dark' : 'primary'}
+          borderColor={isBrowser ? 'dark' : 'primary'}
         />
         <Main>
           <PageContainer>
-            <PageTitle
-              title="Review your group order"
-              subtitle="Use this page to review the orders that have been submitted before checking out."
-            />
-            <PageContent>
-              <div>
+            <CheckoutHeader title="Review your group order" />
+            <FormWrapper>
+              <GroupOrderReviewIntro>
                 <p>
-                  <Heading size="h5">
-                    This group order will remain open for editing until you to
-                    proceed to the checkout page.
-                  </Heading>
+                  Use this page to review the orders that have been submitted
+                  before checking out.
                 </p>
-              </div>
-              <p>
-                Orders will be appear below as they're added by your friends.{' '}
-                {guestCount} {guestCount > 1 ? 'orders have' : 'order has'} been
-                submitted so far
-                {guestLimit &&
-                  `, and there is a limit of ${guestLimit} orders in total (not including your own)`}
-                .
-              </p>
-              <GroupOrderTime />
-              <p>Need to share this group order with orders?</p>
-              <GroupOrderLink token={token} instructions={null} />
-              <div>
+                <Preface as="p">
+                  This group order will remain open for editing until you to
+                  proceed to the checkout page.
+                </Preface>
                 <p>
-                  <Heading size="h3">Ready to submit your order?</Heading>
+                  Orders will be appear below as they're added by your friends.{' '}
+                  {guestCount} {guestCount > 1 ? 'orders have' : 'order has'}{' '}
+                  been submitted so far
+                  {guestLimit &&
+                    `, and there is a limit of ${guestLimit} orders in total (not including your own)`}
+                  .
                 </p>
-              </div>
-              <p>
-                <ButtonStyled onClick={handleCheckout}>
-                  Proceed To Checkout
-                </ButtonStyled>
-              </p>
-              <p>
-                Change your mind? Save this group order for another day or
-                delete it altogether.
-              </p>
-              <p>
-                <ButtonStyled
-                  icon={iconMap.Save}
-                  onClick={save}
-                  size="small"
-                  color="secondary"
-                >
-                  Save for Later
-                </ButtonStyled>{' '}
-                <ButtonStyled
-                  icon={iconMap.Trash2}
-                  onClick={cancel}
-                  size="small"
-                  color="secondary"
-                >
-                  Delete Forever
-                </ButtonStyled>
-              </p>
-            </PageContent>
-            <GroupOrderCartView>
-              <GuestSection>
-                <Heading as="p">Your Items</Heading>
-                <p>
-                  <Link to={menuSlug}>
-                    Click here to get back to the menu if you need to make any
-                    changes to your own order.
-                  </Link>
-                </p>
-                {order.cart.length > 0 ? (
-                  <ul>
-                    {order.cart.map((item, index) => {
-                      return (
-                        <li key={`${item.id}-${index}`}>
-                          <CartItem
-                            item={item}
-                            showModifiers={true}
-                            displaySettings={displaySettings}
-                          >
-                            <OrderQuantity item={item} show={false} />
-                          </CartItem>
-                        </li>
-                      )
-                    })}
-                  </ul>
+                <GroupOrderTime />
+                <p>Need to share this group order with orders?</p>
+                <GroupOrderLink token={token} instructions={null} />
+                {grandTotal > 0 ? (
+                  <>
+                    <CheckoutHeader title="Ready to submit your order?" />
+                    <ButtonGroupBig>
+                      <ButtonStyled onClick={handleCheckout} size="big">
+                        Proceed To Checkout
+                      </ButtonStyled>
+                      {/* <ButtonStyled onClick={save} size="big" color="secondary">
+                        Save for Later
+                      </ButtonStyled> */}
+                      <ButtonStyled
+                        onClick={() => history.push(menuSlug)}
+                        size="big"
+                        color="secondary"
+                      >
+                        Back To Menu
+                      </ButtonStyled>
+                      <ButtonStyled
+                        onClick={cancel}
+                        size="big"
+                        color="secondary"
+                      >
+                        Cancel & Delete Forever
+                      </ButtonStyled>
+                    </ButtonGroupBig>
+                    {!hasOrders && (
+                      <div style={{ margin: '6rem 0 0' }}>
+                        <p>
+                          Your guests haven't added any orders yet.{' '}
+                          <InlineLink onClick={refresh}>
+                            Click here to refresh.
+                          </InlineLink>
+                        </p>
+                      </div>
+                    )}
+                  </>
                 ) : (
-                  <p style={{ margin: '1em 0 0' }}>
-                    You haven't added any items for yourself yet.
-                  </p>
+                  <>
+                    <CheckoutHeader title="No Orders Have Been Submitted" />
+                    <p>
+                      At least one order needs to be submitted by you or one of
+                      your guests.
+                    </p>
+                    <p>
+                      <InlineLink onClick={() => history.push(menuSlug)}>
+                        Head back to the menu
+                      </InlineLink>{' '}
+                      or{' '}
+                      <InlineLink onClick={refresh}>
+                        refresh your guests' orders
+                      </InlineLink>
+                      .
+                    </p>
+                  </>
                 )}
-              </GuestSection>
-              <GuestSection>
-                <Heading as="p">Items added by your guests</Heading>
-                <p>
-                  <ButtonLink onClick={refresh}>
-                    Click here to refresh
-                  </ButtonLink>
-                  <LinkSeparator />
-                  <ButtonLink onClick={toggleGuestItems}>
-                    {showGuestItems
-                      ? 'show guest names only'
-                      : 'show guest names & items'}
-                  </ButtonLink>
-                </p>
-                {!isEmpty(guestCartLookup) ? (
-                  showGuestItems ? (
+              </GroupOrderReviewIntro>
+              {grandTotal > 0 && (
+                <GroupOrderReviewCart>
+                  {order.cart.length > 0 && (
+                    <div>
+                      <CheckoutCartItem name="Your Items" />
+                      {order.cart.map((item, index) => (
+                        <CheckoutCartItem
+                          key={`${item.id}-${index}`}
+                          name={item.name}
+                          quantity={item.quantity}
+                          amount={item.totalPrice}
+                        />
+                      ))}
+                      <CheckoutCartItem
+                        name="Your Total"
+                        quantity={cartQuantity}
+                        amount={cartTotal}
+                      />
+                    </div>
+                  )}
+                  {hasOrders &&
                     cartGuests.map((guest) => {
                       const guestItems = guestCartLookup[guest.cart_guest_id]
-                      return (
-                        guestItems && (
-                          <div
-                            key={guest.cart_guest_id}
-                            style={{ margin: '1.5rem 0 0' }}
-                          >
-                            <p>
-                              <Heading size="h6">
-                                {guest.first_name} {guest.last_name}
-                              </Heading>
-                            </p>
-                            <ul>
-                              {guestItems.map((item, index) => {
-                                return (
-                                  <li key={`${item.id}-${index}`}>
-                                    <CartItem
-                                      item={item}
-                                      showModifiers={true}
-                                      displaySettings={displaySettings}
-                                    >
-                                      <OrderQuantity item={item} show={false} />
-                                    </CartItem>
-                                  </li>
-                                )
-                              })}
-                            </ul>
-                          </div>
-                        )
+                      if (!guestItems) return null
+                      const guestName = `${guest.first_name} ${guest.last_name}`
+                      const guestQuantity = guestItems.reduce(
+                        (t, i) => (t += i.quantity),
+                        0
                       )
-                    })
-                  ) : (
-                    <GuestList>
-                      <ul>
-                        {cartGuests.map((guest) => (
-                          <li key={guest.cart_guest_id}>
-                            <Heading size="h6">
-                              {guest.first_name} {guest.last_name}
-                            </Heading>
-                          </li>
-                        ))}
-                      </ul>
-                    </GuestList>
-                  )
-                ) : (
-                  <p>Your guests haven't added any orders yet.</p>
-                )}
-              </GuestSection>
-            </GroupOrderCartView>
+                      const guestTotal = guestItems.reduce(
+                        (t, i) => (t += i.totalPrice),
+                        0.0
+                      )
+                      return (
+                        <div>
+                          <CheckoutCartItem name={guestName} />
+                          {guestItems.map((item, index) => (
+                            <CheckoutCartItem
+                              key={`${item.id}-${index}`}
+                              name={item.name}
+                              quantity={item.quantity}
+                              amount={item.totalPrice}
+                            />
+                          ))}
+                          <CheckoutCartItem
+                            name="Guest Total"
+                            quantity={guestQuantity}
+                            amount={guestTotal}
+                          />
+                        </div>
+                      )
+                    })}
+                  <div>
+                    <CheckoutCartItem name="Grand Total" amount={grandTotal} />
+                  </div>
+                </GroupOrderReviewCart>
+              )}
+            </FormWrapper>
           </PageContainer>
         </Main>
       </Content>

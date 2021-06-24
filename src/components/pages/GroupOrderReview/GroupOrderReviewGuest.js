@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { isBrowser } from 'react-device-detect'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, Link } from 'react-router-dom'
-import styled from '@emotion/styled'
 import {
   selectOrder,
   selectGroupOrder,
@@ -22,6 +21,7 @@ import CheckoutHeader from '../../CheckoutHeader'
 import { FormWrapper } from '../../inputs'
 import InlineLink from '../../InlineLink'
 import CheckoutCartItem from '../CheckoutPayment/CheckoutCartItem'
+import { GroupOrderReviewIntro, GroupOrderReviewCart } from './GroupOrderReview'
 
 const makeSubtitle = (error, cart, firstName, config) => {
   if (!error) {
@@ -34,61 +34,6 @@ const makeSubtitle = (error, cart, firstName, config) => {
     }
   }
 }
-
-const GroupOrderGuestGuestIntro = styled('div')`
-  text-align: center;
-  margin: ${(props) => props.theme.layout.padding} 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: ${(props) => props.theme.layout.paddingMobile} 0 0;
-  }
-
-  p {
-    margin: 1em 0;
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: ${(props) => props.theme.fonts.sizes.small};
-    }
-  }
-`
-
-const GroupOrderGuestGuestCart = styled('div')`
-  margin: 0 auto;
-  max-width: ${(props) => props.theme.breakpoints.tablet};
-  padding: ${(props) => props.theme.layout.padding};
-  border-radius: ${(props) => props.theme.border.radius};
-  background-color: ${(props) => props.theme.bgColors.light};
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: 100%;
-    padding: ${(props) => props.theme.layout.paddingMobile};
-    margin: 3rem auto;
-  }
-
-  & > div {
-    border: 0;
-    border-style: solid;
-    border-color: ${(props) => props.theme.colors.line};
-    border-top-width: 0.1rem;
-    padding-top: 1.1rem;
-    margin-top: 0.6rem;
-
-    &:first-of-type {
-      border: 0;
-      padding-top: 0.8rem;
-      margin: 0;
-    }
-
-    &:last-of-type {
-      span {
-        font-weight: 500;
-      }
-    }
-  }
-
-  & > span + div {
-    border: 0;
-    padding-top: 0.8rem;
-    margin: 0;
-  }
-`
 
 const GroupOrderReviewGuest = () => {
   const dispatch = useDispatch()
@@ -153,7 +98,7 @@ const GroupOrderReviewGuest = () => {
                 <Loading text="Submitting your order to the group..." />
               ) : (
                 <>
-                  <GroupOrderGuestGuestIntro>
+                  <GroupOrderReviewIntro>
                     {subtitle && <p>{subtitle}</p>}
                     {!error ? (
                       <p>
@@ -179,19 +124,25 @@ const GroupOrderReviewGuest = () => {
                         Start A New Order
                       </ButtonStyled>
                     </p>
-                  </GroupOrderGuestGuestIntro>
+                  </GroupOrderReviewIntro>
                   {cart.length > 0 && (
-                    <GroupOrderGuestGuestCart>
-                      {cart.map((item, index) => (
+                    <GroupOrderReviewCart>
+                      <div>
+                        <CheckoutCartItem name="Your Items" />
+                        {cart.map((item, index) => (
+                          <CheckoutCartItem
+                            key={`${item.id}-${index}`}
+                            name={item.name}
+                            quantity={item.quantity}
+                            amount={item.totalPrice}
+                          />
+                        ))}
                         <CheckoutCartItem
-                          key={`${item.id}-${index}`}
-                          name={item.name}
-                          quantity={item.quantity}
-                          amount={item.totalPrice}
+                          name="Cart Total"
+                          amount={cartTotal}
                         />
-                      ))}
-                      <CheckoutCartItem name="Cart Total" amount={cartTotal} />
-                    </GroupOrderGuestGuestCart>
+                      </div>
+                    </GroupOrderReviewCart>
                   )}
                 </>
               )}

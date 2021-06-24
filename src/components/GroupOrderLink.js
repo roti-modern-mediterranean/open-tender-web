@@ -11,6 +11,17 @@ const GroupOrderLinkView = styled('p')`
     width: 100%;
     font-size: ${(props) => props.theme.fonts.sizes.main};
     text-transform: lowercase;
+    color: ${(props) => props.theme.colors.paprika};
+    background-color: transparent;
+    border-color: ${(props) => props.theme.colors.paprika};
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: ${(props) => props.theme.colors.light};
+      background-color: ${(props) => props.theme.colors.paprika};
+      border-color: ${(props) => props.theme.colors.paprika};
+    }
   }
 `
 
