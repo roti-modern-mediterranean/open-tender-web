@@ -49,6 +49,7 @@ const OptionToggleName = styled(Heading)`
   label: OptionToggleName;
 
   display: block;
+  text-align: center;
   font-weight: 600;
   font-size: ${(props) => props.numCharacters < 10 ? `1.4rem` : `1.2rem` };
   line-height: 1.05;

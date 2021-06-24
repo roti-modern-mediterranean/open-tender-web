@@ -62,10 +62,10 @@ import GroupOf6People from '../../icons/GroupOf6People'
 import Recommendation from './Recommendation'
 import AllergenOptions from './AllergenOptions'
 import {
-  eventTypeOptions,
+  eventTypeOptions, numberOfPeopleOptions,
   selectEventType,
-  selectNumberOfPeople,
-  setEventType, setNumberOfPeople
+  selectNumberOfPeople, selectNumberOfPeopleIndex,
+  setEventType, setNumberOfPeople, setNumberOfPeopleIndex
 } from '../../../slices/recommendationSlice'
 
 const CateringView = styled(BgImage)`
@@ -402,21 +402,21 @@ const stages = {
   inbetween: "inbetween"
 }
 
-const numberOfPeopleMessage = (numberOfPeople) =>{
-  if(numberOfPeople < 2){
+const numberOfPeopleMessage = (index) =>{
+  if(index < 1){
     return "How many are we?";
   }
-  if(numberOfPeople < 31){
+  if(index < 4){
     return "Zzz!";
   }
   return "Wow, it's gonna be a party!"
 }
 
-const NumberOfPeopleImage = ({numberOfPeople, size, color}) => {
-  if(numberOfPeople < 2){
+const NumberOfPeopleImage = ({index, size, color}) => {
+  if(index < 1){
     return <Person size={size} color={color}/>;
   }
-  if(numberOfPeople < 31){
+  if(index < 4){
     return <GroupOf3People size={size} color={color}/>;
   }
   return <GroupOf6People size={size} color={color}/>
@@ -454,8 +454,8 @@ const CateringPage = () => {
     : null
   const selectedEventTypes = useSelector(selectEventType)
   const setSelectedEventTypes = useCallback((eventType) => dispatch(setEventType(eventType)), [dispatch])
-  const amountOfPeople = useSelector(selectNumberOfPeople)
-  const setAmountOfPeople = useCallback((numberOfPeople) => dispatch(setNumberOfPeople(numberOfPeople)), [dispatch])
+  const _numberOfPeopleIndex = useSelector(selectNumberOfPeopleIndex)
+  const _setNumberOfPeopleIndex = useCallback((numberOfPeopleIndex) => dispatch(setNumberOfPeopleIndex(numberOfPeopleIndex)), [dispatch])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -607,7 +607,7 @@ const CateringPage = () => {
         }
         return () => setStage(stages.numberOfPeople)
       case stages.numberOfPeople:
-        if(amountOfPeople < 2){
+        if(_numberOfPeopleIndex < 1){
           return null;
         }
         return () => setStage(stages.dietaryRestrictions)
@@ -616,7 +616,7 @@ const CateringPage = () => {
       default:
         return null
     }
-  }, [stage, selectedEventTypes, amountOfPeople])
+  }, [stage, selectedEventTypes, _numberOfPeopleIndex])
 
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
@@ -740,10 +740,10 @@ const CateringPage = () => {
                       }
                       {stage === stages.numberOfPeople &&
                       <MenuContent title="Number of people" subtitle="How big is your group?">
-                        <RangeSlider min={1} max={100} value={amountOfPeople} setValue={setAmountOfPeople}>
-                          <NumberOfPeopleImage numberOfPeople={amountOfPeople} size="60px"/>
+                        <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
+                          <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
                         </RangeSlider>
-                        <SliderRangeMessage>{numberOfPeopleMessage(amountOfPeople)}</SliderRangeMessage>
+                        <SliderRangeMessage>{numberOfPeopleMessage(_numberOfPeopleIndex)}</SliderRangeMessage>
                       </MenuContent>
                       }
                       {stage === stages.dietaryRestrictions &&

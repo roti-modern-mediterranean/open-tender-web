@@ -3,15 +3,18 @@ import { createSlice } from '@reduxjs/toolkit'
 
 // TODO should not be hardcoded (?)
 export const eventTypeOptions = [
-  { id: "Family", name: "Family"}, { id: "Corporate", name: "Corporate"},
-  { id: "Party", name: "Party"}, { id: "Adult", name: "Adult"},
+  { id: "Family / Home", name: "Family / Home"}, { id: "Corporate / Office", name: "Corporate / Office"},
+  { id: "Party / Venue", name: "Party / Venue"}, { id: "Adult", name: "Adult"},
   { id: "Teens", name: "Teens"}, { id: "Kids", name: "Kids"},
   { id: "Indoors", name: "Indoors"}, { id: "Outdoors", name: "Outdoors"},
   { id: "Formal", name: "Formal"}]
 
+// TODO should not be hardcoded (?)
+export const numberOfPeopleOptions = ["1", "10", "20", "30", "50", "75", "100+"]
+
 const initialState = {
   eventType: [],
-  numberOfPeople: 1,
+  numberOfPeopleIndex: 0,
 }
 
 const recommendationSlice = createSlice({
@@ -21,16 +24,16 @@ const recommendationSlice = createSlice({
     setEventType: (state, action) => {
       state.eventType = action.payload
     },
-    setNumberOfPeople: (state, action) => {
-      state.numberOfPeople = action.payload
+    setNumberOfPeopleIndex: (state, action) => {
+      state.numberOfPeopleIndex = action.payload
     }
   },
 })
 
-export const { setEventType, setNumberOfPeople } =
+export const { setEventType, setNumberOfPeopleIndex } =
   recommendationSlice.actions
 
 export const selectEventType = (state) => state.recommendation.eventType
-export const selectNumberOfPeople = (state) => state.recommendation.numberOfPeople
+export const selectNumberOfPeopleIndex = (state) => state.recommendation.numberOfPeopleIndex
 
 export default recommendationSlice.reducer
