@@ -1,11 +1,14 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { ButtonStyled } from '@open-tender/components'
 import { useHistory } from 'react-router-dom'
+import { selectGroupOrder, selectMenuSlug } from '@open-tender/redux'
+import { ButtonStyled } from '@open-tender/components'
 
 import { Container } from '../..'
 import BorderBox from '../../BorderBox'
 import { useTheme } from '@emotion/react'
+import { useDispatch, useSelector } from 'react-redux'
+import { openModal } from '../../../slices'
 
 const HomeJourneysView = styled('div')`
   position: relative;
@@ -122,6 +125,19 @@ HomeJourney.propTypes = {
 const HomeJourneys = () => {
   const history = useHistory()
   const theme = useTheme()
+  const dispatch = useDispatch()
+  const { cartId } = useSelector(selectGroupOrder)
+  const menuSlug = useSelector(selectMenuSlug)
+
+  const groupOrder = () => {
+    if (cartId) {
+      const reviewOrders = () => history.push(`/review`)
+      dispatch(openModal({ type: 'groupOrder', args: { reviewOrders } }))
+      history.push(menuSlug)
+    } else {
+      dispatch(openModal({ type: 'groupOrderInfo' }))
+    }
+  }
 
   const journeys = [
     {
@@ -153,15 +169,16 @@ const HomeJourneys = () => {
         </>
       ),
     },
-    // {
-    //   title: 'Group Ordering',
-    //   subtitle: 'Parturient dictumst vitae, arcu posuere massa duis',
-    //   footer: (
-    //     <ButtonStyled onClick={() => history.push('/locations')} size="big">
-    //       Begin Your Order
-    //     </ButtonStyled>
-    //   ),
-    // },
+    {
+      title: 'Group Ordering',
+      subtitle:
+        'Allow your friends, family, or colleagues to order their own items as part of a single pickup or delivery order',
+      footer: (
+        <ButtonStyled onClick={groupOrder} size="big">
+          Begin Your Order
+        </ButtonStyled>
+      ),
+    },
     {
       title: 'Curbside Pickup',
       subtitle:
