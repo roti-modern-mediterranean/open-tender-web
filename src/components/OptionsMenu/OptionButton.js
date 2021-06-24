@@ -7,7 +7,7 @@ const OptionLabel = styled('label')`
   width: 33.33333%;
   padding: 0.5rem;
   cursor: pointer;
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (max-width: 370px) {
     width: 50%;
   }
 `
@@ -61,13 +61,17 @@ const OptionToggleIconAndName = styled(Heading)`
   display: grid;
   justify-items: left;
   align-items: center;
-  grid-template-columns: 25% minmax(min-content, max-content);
+  grid-template-columns: 22% minmax(min-content, max-content);
   grid-column-gap: 5px;
   width: 100%;
   font-weight: 600;
   font-size: ${(props) => props.numCharacters < 8 ? `1.4rem` : `1.2rem` };
   line-height: 1.05;
   user-select: none;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    font-size: ${(props) => props.numCharacters < 10 ? `1.4rem` : `1rem` };
+  }
   
   > span:first-of-type{
     display: grid;
