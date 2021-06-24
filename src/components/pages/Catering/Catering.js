@@ -124,7 +124,8 @@ const CateringContent = styled('div')`
   display: grid;
   grid-template-areas: ${(props) => props.hasNoShortcut 
           ? `"cateringMessage options"`
-          : `"cateringMessage options" "shortcut options"`};
+          : `"cateringMessage options" 
+             "shortcut        options"`};
   
   grid-template-columns: minmax(10%, auto) minmax(36%, 36rem);
   column-gap: 4.2rem;
