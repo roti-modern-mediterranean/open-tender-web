@@ -234,10 +234,10 @@ const FooterRight = styled.div`
 
         span {
           color: ${(props) => props.theme.colors.light};
-        }
-
-        span:last-of-type path {
-          stroke: ${(props) => props.theme.colors.light};
+          
+          :last-of-type path {
+            stroke: ${(props) => props.theme.colors.light};
+          }
         }
       }
       
