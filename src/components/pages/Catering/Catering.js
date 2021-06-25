@@ -137,12 +137,16 @@ const CateringContent = styled('div')`
   column-gap: 4.2rem;
   row-gap: 3rem;
 
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    padding: ${(props) => props.theme.layout.paddingMobile};
+  }
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     flex: 0 0 auto;
-    padding: calc(4rem + ${(props) => props.theme.border.radiusLarge}) ${(props) => props.theme.layout.paddingMobile} 0;
+    padding-top:  0;
     text-align: center;
     max-width: 44rem;
-    margin: 0 auto;
+    margin: 0 auto 1rem;
 
     grid-template-areas: "cateringMessage"
                         "options"
@@ -254,9 +258,6 @@ const SkipRecommendations = styled.button`
     font-size: 30px;
     font-weight: 500;
     
-    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      font-size: 6rem;
-    }
     @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
       font-family: ${(props) => props.theme.fonts.preface.family};
       font-weight: 500;

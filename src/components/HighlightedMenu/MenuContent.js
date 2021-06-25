@@ -9,6 +9,10 @@ const MenuContentView = styled('div')`
   flex-grow: 1;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0;
+  }
 `
 
 const MenuHeader = styled('div')`
