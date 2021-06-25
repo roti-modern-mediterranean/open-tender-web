@@ -225,6 +225,22 @@ const FooterRight = styled.div`
     
     a, button {
       border: 0.1rem solid ${(props) => props.theme.colors.paprika};
+
+      &:hover,
+      &:active,
+      &:focus {
+        border: 0.1rem solid ${(props) => props.theme.links.primary.hover};
+        background-color: ${(props) => props.theme.links.primary.hover};
+
+        span {
+          color: ${(props) => props.theme.colors.light};
+        }
+
+        span:last-of-type path {
+          stroke: ${(props) => props.theme.colors.light};
+        }
+      }
+      
       > span {
         color: ${(props) => props.theme.colors.paprika};
       }
