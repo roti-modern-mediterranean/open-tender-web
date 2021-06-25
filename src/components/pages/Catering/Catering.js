@@ -67,6 +67,8 @@ import {
   selectNumberOfPeople, selectNumberOfPeopleIndex,
   setEventType, setNumberOfPeople, setNumberOfPeopleIndex
 } from '../../../slices/recommendationSlice'
+import CallUsButton from './CallUsButton'
+import ChatButton from './ChatButton'
 
 const CateringView = styled(BgImage)`
   label: CateringView;
@@ -403,14 +405,51 @@ const stages = {
   recommendations: "recommendations"
 }
 
+const SliderRangeMessageContainer = styled.div`
+  label: NumberOfPeopleCTAContainer;
+`;
+
+const SliderRangeSubMessage = styled.div`
+  label: SliderRangeSubMessage;
+  
+  text-align: center;
+`;
+
+const SliderRangeMessageButtons = styled.div`
+  label: SliderRangeMessageButtons;
+  
+  display: grid;
+  grid-template-columns: 48% 48%;
+  gap: 4%;
+  justify-content: center;
+  margin-top: 1rem;
+  
+  
+  > button, > a {
+    width: 100%
+  }
+`;
+
 const numberOfPeopleMessage = (index) =>{
   if(index < 1){
-    return "How many are we?";
+    return <SliderRangeMessage>How many are we?</SliderRangeMessage>;
   }
   if(index < 4){
-    return "Zzz!";
+    return <SliderRangeMessage>Zzz!</SliderRangeMessage>;
   }
-  return "Wow, it's gonna be a party!"
+  if(index < 6){
+    return <SliderRangeMessage>Wow, it's gonna be a party!</SliderRangeMessage>;
+  }
+  return (
+    <SliderRangeMessageContainer>
+      <SliderRangeMessage>Nice, let's get it going!</SliderRangeMessage>
+      <SliderRangeSubMessage>Contact us directly for big orders</SliderRangeSubMessage>
+      <SliderRangeMessageButtons>
+        <CallUsButton/>
+        <ChatButton/>
+      </SliderRangeMessageButtons>
+    </SliderRangeMessageContainer>
+  )
 }
 
 const NumberOfPeopleImage = ({index, size, color}) => {
@@ -609,6 +648,9 @@ const CateringPage = () => {
         if(_numberOfPeopleIndex < 1){
           return null;
         }
+        if(_numberOfPeopleIndex > 5){
+          return null;
+        }
         return () => setStage(stages.dietaryRestrictions)
       case stages.dietaryRestrictions:
         return () => setStage(stages.recommendations)
@@ -742,7 +784,7 @@ const CateringPage = () => {
                         <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
                           <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
                         </RangeSlider>
-                        <SliderRangeMessage>{numberOfPeopleMessage(_numberOfPeopleIndex)}</SliderRangeMessage>
+                        {numberOfPeopleMessage(_numberOfPeopleIndex)}
                       </MenuContent>
                       }
                       {stage === stages.dietaryRestrictions &&
