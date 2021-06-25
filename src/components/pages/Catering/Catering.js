@@ -120,7 +120,8 @@ const CateringContainer = styled('div')`
     flex-direction: column;
     padding: 0;
     border-radius: 0;
-    background-color: ${(props) => props.theme.bgColors.primary};
+    background-color: transparent;
+    margin-bottom: 0;
   }
 `
 
@@ -633,7 +634,7 @@ const CateringPage = () => {
           imageUrl={isBrowser ? background : null}
           style={{
             backgroundPosition: 'center top',
-            backgroundColor: theme.bgColors.dark,
+            backgroundColor: theme.bgColors.dark
           }}
         >
           <CateringView imageUrl={isBrowser ? null : background}>

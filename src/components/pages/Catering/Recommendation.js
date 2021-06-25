@@ -27,10 +27,10 @@ const Container = styled.div`
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     color: ${(props) => props.theme.colors.pepper};
-    padding: calc(4rem + ${(props) => props.theme.border.radiusLarge}) ${(props) => props.theme.layout.paddingMobile} 0;
+    padding: ${(props) => props.theme.border.radiusLarge} ${(props) => props.theme.layout.paddingMobile} 0;
     text-align: center;
     max-width: 44rem;
-    margin: 0 auto;
+    margin: -${(props) => props.theme.border.radiusLarge} auto 0;
     background-color: ${(props) => props.theme.bgColors.primary};
     
     h2 {
@@ -95,10 +95,12 @@ const Recommendations = styled(MenuCateringCategories)`
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0px;
+    margin: 0;
+    width: 100%;
 
     > div {
       max-width: none;
+      width: 100%;
     }
   }
 `;
