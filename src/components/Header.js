@@ -51,6 +51,7 @@ const HeaderView = styled('div')`
       width: ${(props) => props.theme.border.radiusLarge};
       border-top-right-radius: ${(props) => props.theme.border.radiusLarge};
       box-shadow: 0 -${(props) => props.theme.border.radiusLarge} 0 0 ${(props) => props.theme.bgColors[props.bgColor]};
+      pointer-events: none;
     }
   }
 `
