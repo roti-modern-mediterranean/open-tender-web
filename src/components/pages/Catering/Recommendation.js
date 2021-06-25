@@ -116,6 +116,7 @@ const OrBetween = styled(CustomPreface)`
 const Footer = styled.div`
   label: RecommendationFooter;
 
+  width: 100%;
   border-top: 1px solid #FFFFFF44;
   padding-top: 20px;
   display: grid;

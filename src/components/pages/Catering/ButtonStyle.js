@@ -4,8 +4,7 @@ import styled from '@emotion/styled'
 const ButtonStyle = styled.button`
   label: ButtonStyle;
 
-  width: 100%;
-  max-width: ${(props) => props.theme.buttons.sizes.default.width};
+  width: ${(props) => props.theme.buttons.sizes.default.width};
   height: 4.7rem;
   display: flex;
   justify-content: space-between;
