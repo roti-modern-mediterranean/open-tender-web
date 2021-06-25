@@ -63,9 +63,8 @@ import Recommendation from './Recommendation'
 import AllergenOptions from './AllergenOptions'
 import {
   eventTypeOptions, numberOfPeopleOptions,
-  selectEventType,
-  selectNumberOfPeople, selectNumberOfPeopleIndex,
-  setEventType, setNumberOfPeople, setNumberOfPeopleIndex
+  selectEventType, selectNumberOfPeopleIndex,
+  setEventType, setNumberOfPeopleIndex
 } from '../../../slices/recommendationSlice'
 import CallUsButton from './CallUsButton'
 import ChatButton from './ChatButton'
