@@ -58,7 +58,7 @@ const BuilderView = styled('form')`
   max-width: ${(props) => props.theme.layout.containerMaxWidth};
   padding: 0 ${(props) => props.theme.layout.padding} 14.5rem;
   margin: ${(props) => props.theme.layout.margin} auto;
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     width: 100%;
     flex-direction: column;
     justify-content: flex-start;
@@ -71,7 +71,7 @@ const BuilderView = styled('form')`
 const BuilderInfo = styled('div')`
   position: relative;
   flex-grow: 1;
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     width: 100%;
   }
 `
@@ -80,7 +80,7 @@ const BuilderHeader = styled('div')`
   position: relative;
   top: -4rem;
   padding: 0;
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     top: 0;
     padding: 0 ${(props) => props.theme.layout.paddingMobile};
   }
@@ -93,7 +93,7 @@ const BuilderTitle = styled('div')`
   right: 0;
   top: -16rem;
   height: 15rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     top: -13rem;
     height: 14rem;
   }
@@ -123,8 +123,8 @@ const BuilderCategory = styled('h2')`
     font-size: ${(props) => (props.isSmall ? '14rem' : '14rem')};
     margin: -1rem 0 0;
   }
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    font-size: ${(props) => (props.isSmall ? '12rem' : '14rem')};
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
+    font-size: ${(props) => (props.isSmall ? '10rem' : '12rem')};
     margin: -1rem 0 0;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
@@ -168,7 +168,7 @@ const BuilderPrice = styled(Preface)`
   letter-spacing: 0.03em;
   text-transform: none;
   margin: 0 0 2rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     font-size: 2.6rem;
     margin-top: 2rem;
   }
@@ -181,7 +181,7 @@ const BuilderPrice = styled(Preface)`
 const BuilderDescription = styled('p')`
   line-height: ${(props) => props.theme.lineHeight};
   font-size: 1.8rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     font-size: 1.5rem;
     display: block;
     max-width: 62rem;
@@ -199,7 +199,7 @@ const BuilderIngredients = styled('div')`
   flex-grow: 0;
   flex-shrink: 0;
   margin: 0 0 0 6rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     margin: 0;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {

@@ -17,7 +17,7 @@ export const CardList = styled('div')`
 export const CardListItem = styled('div')`
   width: 33.33333%;
   padding: 0 1.2rem 1.2rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     width: 50%;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {

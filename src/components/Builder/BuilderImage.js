@@ -9,10 +9,10 @@ const BuilderImageView = styled('div')`
   z-index: 2;
   width: 100%;
   height: 54rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
-    top: -2rem;
-    height: 44rem;
-  }
+  // @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+  //   top: -2rem;
+  //   height: 44rem;
+  // }
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     top: -2rem;
     height: 44rem;
