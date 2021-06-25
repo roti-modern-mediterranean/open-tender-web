@@ -25,7 +25,7 @@ const NavButton = styled.button`
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 2rem 0;
+    margin: 1rem 0;
   }
 `
 

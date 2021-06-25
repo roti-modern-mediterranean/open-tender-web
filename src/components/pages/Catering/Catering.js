@@ -104,7 +104,7 @@ const CateringContainer = styled('div')`
   justify-content: space-between;
   width: 112rem;
   max-width: 100%;
-  min-height: 44rem;
+  min-height: 53rem;
   padding: 4rem 4.5rem;
   border-radius: 2.2rem;
   background-color: rgba(37, 39, 42, 0.6);
@@ -214,8 +214,8 @@ const AnimatedHighlightedMenu = styled(HighlightedMenu)`
   }
 `;
 
-const SliderRangeMessage = styled.div`
-  label: SliderRangeMessage;
+const RangeSliderMessage = styled.div`
+  label: RangeSliderMessage;
   
   width: 100%;
   text-align: center;
@@ -404,18 +404,24 @@ const stages = {
   recommendations: "recommendations"
 }
 
-const SliderRangeMessageContainer = styled.div`
-  label: NumberOfPeopleCTAContainer;
+const RangeSliderContainer = styled.div`
+  label: RangeSliderContainer;
+  
+  height: 22rem;
+`
+
+const RangeSliderMessageContainer = styled.div`
+  label: RangeSliderMessageContainer;
 `;
 
-const SliderRangeSubMessage = styled.div`
-  label: SliderRangeSubMessage;
+const RangeSliderSubMessage = styled.div`
+  label: RangeSliderSubMessage;
   
   text-align: center;
 `;
 
-const SliderRangeMessageButtons = styled.div`
-  label: SliderRangeMessageButtons;
+const RangeSliderMessageButtons = styled.div`
+  label: RangeSliderMessageButtons;
   
   display: grid;
   grid-template-columns: 48% 48%;
@@ -431,23 +437,23 @@ const SliderRangeMessageButtons = styled.div`
 
 const numberOfPeopleMessage = (index) =>{
   if(index < 1){
-    return <SliderRangeMessage>How many are we?</SliderRangeMessage>;
+    return <RangeSliderMessage>How many are we?</RangeSliderMessage>;
   }
   if(index < 4){
-    return <SliderRangeMessage>Zzz!</SliderRangeMessage>;
+    return <RangeSliderMessage>Zzz!</RangeSliderMessage>;
   }
   if(index < 6){
-    return <SliderRangeMessage>Wow, it's gonna be a party!</SliderRangeMessage>;
+    return <RangeSliderMessage>Wow, it's gonna be a party!</RangeSliderMessage>;
   }
   return (
-    <SliderRangeMessageContainer>
-      <SliderRangeMessage>Nice, let's get it going!</SliderRangeMessage>
-      <SliderRangeSubMessage>Contact us directly for big orders</SliderRangeSubMessage>
-      <SliderRangeMessageButtons>
+    <RangeSliderMessageContainer>
+      <RangeSliderMessage>Nice, let's get it going!</RangeSliderMessage>
+      <RangeSliderSubMessage>Contact us directly for big orders</RangeSliderSubMessage>
+      <RangeSliderMessageButtons>
         <CallUsButton/>
         <ChatButton/>
-      </SliderRangeMessageButtons>
-    </SliderRangeMessageContainer>
+      </RangeSliderMessageButtons>
+    </RangeSliderMessageContainer>
   )
 }
 
@@ -780,10 +786,12 @@ const CateringPage = () => {
                       }
                       {stage === stages.numberOfPeople &&
                       <MenuContent title="Number of people" subtitle="How big is your group?">
-                        <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
-                          <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
-                        </RangeSlider>
-                        {numberOfPeopleMessage(_numberOfPeopleIndex)}
+                        <RangeSliderContainer>
+                          <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
+                            <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
+                          </RangeSlider>
+                          {numberOfPeopleMessage(_numberOfPeopleIndex)}
+                        </RangeSliderContainer>
                       </MenuContent>
                       }
                       {stage === stages.dietaryRestrictions &&
