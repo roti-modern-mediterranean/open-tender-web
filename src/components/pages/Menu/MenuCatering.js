@@ -40,7 +40,7 @@ export const MenuCateringCategories = styled('div')`
 export const MenuCateringCategoryItem = styled('div')`
   width: 33.33333%;
   padding: 0 1.6rem 3.2rem;
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     width: 50%;
   }
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
