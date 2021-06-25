@@ -399,8 +399,7 @@ const stages = {
   eventType: "eventType",
   numberOfPeople: "numberOfPeople",
   dietaryRestrictions: "dietaryRestrictions",
-  recommendations: "recommendations",
-  inbetween: "inbetween"
+  recommendations: "recommendations"
 }
 
 const numberOfPeopleMessage = (index) =>{
@@ -549,7 +548,6 @@ const CateringPage = () => {
 
   const selectTime = (time) => {
     setDate(null)
-    setStage(stages.inbetween)
     dispatch(setAddress(null))
     setTimeout(() => {
       const reqestedAtIso = time ? dateToIso(time, tz) : 'asap'
@@ -560,7 +558,6 @@ const CateringPage = () => {
 
   const clearTime = () => {
     setDate(null)
-    setStage(stages.inbetween)
     setTimeout(() => {
       dispatch(setRequestedAt(null))
       setStage(stages.date)
