@@ -1,6 +1,6 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { ArrowLeft, ArrowRight } from '../icons'
+import { ArrowLeft, ArrowRight } from '../../icons'
 import React from 'react'
 import { useTheme } from '@emotion/react'
 

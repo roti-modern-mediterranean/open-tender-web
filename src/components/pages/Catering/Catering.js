@@ -54,7 +54,7 @@ import { isBrowser } from 'react-device-detect'
 import CateringAutocomplete from './CateringAutocomplete'
 import { ArrowRight } from '../../icons'
 import HighlightedMenu, {MenuContent} from '../../HighlightedMenu'
-import OptionsMenu, { BackForwardButtons } from '../../OptionsMenu'
+import OptionsMenu from '../../OptionsMenu'
 import RangeSlider from '../../RangeSlider'
 import GroupOf3People from '../../icons/GroupOf3People'
 import Person from '../../icons/Person'
@@ -68,6 +68,7 @@ import {
 } from '../../../slices/recommendationSlice'
 import CallUsButton from './CallUsButton'
 import ChatButton from './ChatButton'
+import BackForwardButtons from './BackForwardButtons'
 
 const CateringView = styled(BgImage)`
   label: CateringView;

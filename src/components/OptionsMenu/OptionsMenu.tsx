@@ -1,7 +1,7 @@
-import propTypes from 'prop-types'
 import styled from '@emotion/styled'
 import OptionButton from './OptionButton'
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
+import { FCNoChildren, IconProps } from '../utils/types'
 
 
 
@@ -14,7 +14,19 @@ const MenuArea = styled('div')`
   margin: 0px -0.5rem;
 `
 
-const OptionsMenu = ({options, selectedOptions, setSelectedOptions}) => {
+interface Option {id: string, name: string, icon?: FCNoChildren<IconProps> | null}
+
+interface OptionsMenuProps {
+  options: Option[],
+  selectedOptions: string[],
+  setSelectedOptions: (value:string[]) => void
+}
+
+const OptionsMenu = (
+  {options,
+    selectedOptions,
+    setSelectedOptions
+  }: OptionsMenuProps) => {
 
   const OptionButtonOnChange = useCallback((event) => {
     const option = event.target
@@ -38,13 +50,6 @@ const OptionsMenu = ({options, selectedOptions, setSelectedOptions}) => {
       />
     ))}
   </MenuArea>;
-}
-
-OptionsMenu.displayName = 'OptionsMenu'
-OptionsMenu.propTypes = {
-  options: propTypes.array,
-  selectedOptions: propTypes.array,
-  setSelectedOptions: propTypes.func,
 }
 
 export default OptionsMenu;

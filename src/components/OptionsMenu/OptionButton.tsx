@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { Heading } from '@open-tender/components'
-import propTypes from 'prop-types'
+import { FCNoChildren, IconProps } from '../utils/types'
+import React from 'react'
 
 const OptionLabel = styled('label')`
   display: block;
@@ -25,7 +26,7 @@ const OptionInput = styled('input')`
   white-space: nowrap;
 `
 
-const OptionToggle = styled.span`
+const OptionToggle = styled.span<{isChecked: boolean}>`
   label: OptionToggle;
   
   display: flex;
@@ -45,7 +46,7 @@ const OptionToggle = styled.span`
   }
 `
 
-const OptionToggleName = styled(Heading)`
+const OptionToggleName = styled(Heading)<{numCharacters: number}>`
   label: OptionToggleName;
 
   display: block;
@@ -56,7 +57,7 @@ const OptionToggleName = styled(Heading)`
   user-select: none;
 `
 
-const OptionToggleIconAndName = styled(Heading)`
+const OptionToggleIconAndName = styled(Heading)<{numCharacters: number}>`
   label: OptionToggleIconAndName;
   
   display: grid;
@@ -81,7 +82,15 @@ const OptionToggleIconAndName = styled(Heading)`
   }
 `
 
-const OptionButton = ({ label, id, icon:Icon, isChecked, onChange}) => {
+interface OptionButtonProps {
+  label: string,
+  id: string,
+  icon?: FCNoChildren<IconProps> | null,
+  isChecked: boolean,
+  onChange: React.InputHTMLAttributes<HTMLInputElement>["onChange"]
+}
+
+const OptionButton = ({ label, id, icon:Icon, isChecked, onChange}:OptionButtonProps) => {
   return (
     <OptionLabel htmlFor={id}>
       <OptionInput
@@ -103,15 +112,6 @@ const OptionButton = ({ label, id, icon:Icon, isChecked, onChange}) => {
       </OptionToggle>
     </OptionLabel>
   )
-}
-
-OptionButton.displayName = 'OptionButton'
-OptionButton.propTypes = {
-  label: propTypes.string,
-  id: propTypes.string,
-  icon: propTypes.func,
-  isChecked: propTypes.bool,
-  onChange: propTypes.func,
 }
 
 export default OptionButton

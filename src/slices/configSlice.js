@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { capitalize } from '@open-tender/js'
 import { OpenTenderAPI } from '@open-tender/redux'
+import { decorateTheme } from './utils/decorateTheme'
 
 // for testing
 // const baseUrl = 'http://httpstat.us'
@@ -35,42 +36,6 @@ export const fetchConfig = createAsyncThunk(
     }
   }
 )
-
-const decorateTheme = (theme) => {
-  return {
-    ...theme,
-    colors: {
-      ...theme.colors,
-      pepper: '#25272A',
-      tahini: '#FBF8EA',
-      paprika: '#E73C3E',
-      beet: '#621C27',
-      line: '#E3DFC9',
-      cardHover: '#ADB8C6',
-      navHover: '#F3EDD2',
-      switch: '#979EA7',
-      blue: '#36AFFC',
-    },
-    layout: {
-      ...theme.layout,
-      navHeightMobile: '6.4rem',
-    },
-    border: {
-      ...theme.border,
-      radiusLarge: "3rem"
-    },
-    buttons: {
-      ...theme.buttons,
-      sizes: {
-        ...theme.buttons.sizes,
-        default: {
-          ...theme.buttons.sizes.default,
-          width: "16.4rem"
-        }
-      }
-    }
-  }
-}
 
 const configSlice = createSlice({
   name: 'config',
