@@ -271,7 +271,7 @@ export type ThemeType = {
 }
 
 // Considering theme parameter of ThemeType to avoid undesired complexity
-export const decorateTheme = (theme:DeepPartial<ThemeType>):DeepPartial<ThemeType> => {
+export const decorateTheme = (theme:ThemeType):ThemeType => {
   return {
     ...theme,
     colors: {
@@ -308,5 +308,5 @@ export const decorateTheme = (theme:DeepPartial<ThemeType>):DeepPartial<ThemeTyp
 }
 
 declare module "@emotion/react" {
-  export interface Theme extends DeepPartial<ThemeType> {}
+  export interface Theme extends ThemeType {}
 }
