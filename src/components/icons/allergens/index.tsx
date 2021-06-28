@@ -11,6 +11,7 @@ import Shellfish from './Shellfish'
 import SoybeanOil from './SoybeanOil'
 import SoyProtein from './SoyProtein'
 import Wheat from './Wheat'
+import { IconProps } from '../../utils/types'
 
 export {
   Cilantro,
@@ -28,7 +29,9 @@ export {
   Wheat,
 }
 
-export const allergenIconMap = {
+type AllergenIconMap = {[key:string]: (props:IconProps)=>JSX.Element}
+
+export const allergenIconMap:AllergenIconMap = {
   'cilantro / coriander': (props) => <Cilantro {...props} />,
   dairy: (props) => <Dairy {...props} />,
   eggs: (props) => <Eggs {...props} />,

@@ -21,7 +21,7 @@ const useManageAllergens = () => {
   // Convert from AllergenOptions to Redux array, and dispatch
   const setSelectedOptions = useCallback(
     (data) => dispatch(setSelectedAllergens(data.map(
-      (allergenId) => ({allergen_id: parseInt(allergenId, 10)})))),
+      (allergenId:string) => ({allergen_id: parseInt(allergenId, 10)})))),
     [dispatch]
   )
 

@@ -35,14 +35,14 @@ const OptionToggle = styled.span<{isChecked: boolean}>`
   width: 100%;
   height: 4.6rem;
   padding: 0 0.5rem;
-  transition: ${(props) => props.theme.links.transition};
-  border-radius: ${(props) => props.theme.border.radius};
+  transition: ${(props) => props.theme?.links?.transition ?? "none"};
+  border-radius: ${(props) => props.theme?.border?.radius ?? "none"};
   background-color: ${(props) =>
-  props.theme.bgColors[props.isChecked ? 'dark' : 'secondary']};
+  (props.theme?.bgColors && props.theme.bgColors[props.isChecked ? 'dark' : 'secondary']) ?? "none"};
 
   &:hover {
     background-color: ${(props) =>
-  props.theme.colors[props.isChecked ? 'dark' : 'cardHover']};
+  (props.theme?.colors && props.theme.colors[props.isChecked ? 'dark' : 'cardHover']) ?? "none"};
   }
 `
 
@@ -71,7 +71,7 @@ const OptionToggleIconAndName = styled(Heading)<{numCharacters: number}>`
   line-height: 1.05;
   user-select: none;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme?.breakpoints?.tablet || "768px"}) {
     font-size: ${(props) => props.numCharacters < 10 ? `1.4rem` : `1rem` };
   }
   
