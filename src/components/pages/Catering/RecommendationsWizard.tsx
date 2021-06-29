@@ -11,7 +11,7 @@ import {
 import RangeSlider from '../../RangeSlider'
 import AllergenOptions from './AllergenOptions'
 import BackForwardButtons from './BackForwardButtons'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { ChangeEventHandler, useCallback, useMemo, useState } from 'react'
 import { CateringContent, CateringMessage } from './common'
 import styled from '@emotion/styled'
 import CallUsButton from './CallUsButton'
@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectRevenueCenter } from '@open-tender/redux'
 import { useTheme } from '@emotion/react'
 import RecommendationsResult from './RecommendationsResult'
+import RadioButton from '../../inputs/RadioButton'
 
 const SkipRecommendations = styled.button`
   label: SkipRecommendations;
@@ -216,6 +217,13 @@ interface RecommendationsWizardProps{
   goBack: () => void
 }
 
+const servingStyles = [
+  {value: "individual", name: "indie"},
+  {value: "buffet", name: "buff"},
+] as const
+
+type ServingStyles = typeof servingStyles[number]["value"]
+
 const RecommendationsWizard = ({
   goBack
 }:RecommendationsWizardProps) => {
@@ -231,8 +239,18 @@ const RecommendationsWizard = ({
 
   const selectedEventTypes = useSelector(selectEventType)
   const setSelectedEventTypes = useCallback((eventType) => dispatch(setEventType(eventType)), [dispatch])
+
   const _numberOfPeopleIndex = useSelector(selectNumberOfPeopleIndex)
   const _setNumberOfPeopleIndex = useCallback((numberOfPeopleIndex) => dispatch(setNumberOfPeopleIndex(numberOfPeopleIndex)), [dispatch])
+
+  const [selectedServingStyle, setSelectedServingStyle] = useState< ServingStyles | null>(null)
+  const servingStyleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (event)=> {
+      if(event.target.value === "individual" || event.target.value === "buffet"){
+        setSelectedServingStyle(event.target.value)
+      }
+      return null;
+    }, [setSelectedServingStyle])
 
   const skipRecommendationsOnCLick = useCallback(()=>{
     if(revenueCenter){
@@ -347,6 +365,15 @@ const RecommendationsWizard = ({
               }
               {stage === "servingStyle" &&
                 <MenuContent title="Serving style" subtitle="Which serving format do you prefer?">
+                  {servingStyles.map(servingStyle => (
+                    <RadioButton
+                      name="serving_style"
+                      value={selectedServingStyle}
+                      option={servingStyle}
+                      onChange={servingStyleOnChange}
+                      key={servingStyle.value}
+                    />
+                  ))}
                 </MenuContent>
               }
               {stage === "selectMains" &&
