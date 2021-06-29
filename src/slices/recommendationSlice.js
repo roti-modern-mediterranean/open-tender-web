@@ -8,7 +8,7 @@ export const eventTypeOptions = [
   { id: "Party / Venue", name: "Party / Venue"}]
 
 // TODO should not be hardcoded (?)
-export const numberOfPeopleOptions = ["1", "10", "20", "30", "50", "75", "100+"]
+export const numberOfPeopleOptions = ["", "10", "20", "30", "50", "75", "100+"]
 
 const initialState = {
   eventType: [],

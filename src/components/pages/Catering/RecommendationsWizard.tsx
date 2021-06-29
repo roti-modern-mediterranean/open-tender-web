@@ -16,7 +16,6 @@ import { CateringContent, CateringMessage, cateringStages } from './common'
 import styled from '@emotion/styled'
 import CallUsButton from './CallUsButton'
 import ChatButton from './ChatButton'
-import Person from '../../icons/Person'
 import GroupOf3People from '../../icons/GroupOf3People'
 import GroupOf6People from '../../icons/GroupOf6People'
 import { useHistory } from 'react-router-dom'
@@ -178,6 +177,14 @@ const numberOfPeopleMessage = (index:number) =>{
   )
 }
 
+const EmptyImage = styled.span<{size?:string}>`
+  label: EmptyImage;
+  
+  display: block;
+  height: ${(props) => props.size ?? `30px`};
+  width: ${(props) => props.size ?? `30px`};
+`;
+
 interface NumberOfPeopleImageProps {
   index: number,
   size?: string,
@@ -188,7 +195,7 @@ const NumberOfPeopleImage = ({
   index, size, color
 }:NumberOfPeopleImageProps) => {
   if(index < 1){
-    return <Person size={size} color={color}/>;
+    return <EmptyImage size={size}/>;
   }
   if(index < 4){
     return <GroupOf3People size={size} color={color}/>;
@@ -284,29 +291,29 @@ const RecommendationsWizard = ({
         </SkipRecommendations>
         <AnimatedHighlightedMenu>
           {stage === "eventType" &&
-          <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
-            <OptionsMenu
-              options={eventTypeOptions}
-              selectedOptions={selectedEventTypes}
-              setSelectedOptions={setSelectedEventTypes}
-              widthPercentagePerButton={100}
-            />
-          </MenuContent>
+            <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
+              <OptionsMenu
+                options={eventTypeOptions}
+                selectedOptions={selectedEventTypes}
+                setSelectedOptions={setSelectedEventTypes}
+                widthPercentagePerButton={100}
+              />
+            </MenuContent>
           }
           {stage === "numberOfPeople" &&
-          <MenuContent title="Number of people" subtitle="How big is your group?">
-            <RangeSliderContainer>
-              <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
-                <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
-              </RangeSlider>
-              {numberOfPeopleMessage(_numberOfPeopleIndex)}
-            </RangeSliderContainer>
-          </MenuContent>
+            <MenuContent title="Number of people" subtitle="How big is your group?">
+              <RangeSliderContainer>
+                <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
+                  <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
+                </RangeSlider>
+                {numberOfPeopleMessage(_numberOfPeopleIndex)}
+              </RangeSliderContainer>
+            </MenuContent>
           }
           {stage === "dietaryRestrictions" &&
-          <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
-            <AllergenOptions/>
-          </MenuContent>
+            <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
+              <AllergenOptions/>
+            </MenuContent>
           }
           <BackForwardButtons
             onBackClick={highlightedMenuOnBackClick}
