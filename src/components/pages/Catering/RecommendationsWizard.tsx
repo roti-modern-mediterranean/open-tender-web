@@ -23,6 +23,7 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectRevenueCenter } from '@open-tender/redux'
 import { useTheme } from '@emotion/react'
+import RecommendationsResult from './RecommendationsResult'
 
 const SkipRecommendations = styled.button`
   label: SkipRecommendations;
@@ -200,7 +201,7 @@ interface RecommendationWizardProps {
   setStage: Dispatch<SetStateAction<cateringStages>>
 }
 
-const RecommendationWizard = ({
+const RecommendationsWizard = ({
   stage,
   setStage
 }:RecommendationWizardProps) => {
@@ -259,60 +260,65 @@ const RecommendationWizard = ({
   }, [stage, setStage, selectedEventTypes, _numberOfPeopleIndex])
 
   return (
-    <CateringContent>
-      <CateringMessage>
-        <h2>Build the main event</h2>
-        <p>
-          Choose how many people you're serving, when, and where and build your own menu.
-        </p>
-      </CateringMessage>
-      <SkipRecommendations onClick={skipRecommendationsOnCLick}>
-        {
-          revenueCenter
-            ? (
-              <>
-                <h2>Take a shortcut</h2>
-                <p>
-                  Skip straight to the menu to browse all our packages and start your order
-                  <SkipIcon><ArrowRight /></SkipIcon>
-                </p>
-              </>)
-            : <Loading text="Loading store..." color={theme.colors.tahini} />
-        }
-      </SkipRecommendations>
-      <AnimatedHighlightedMenu>
-        {stage === "eventType" &&
-        <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
-          <OptionsMenu
-            options={eventTypeOptions}
-            selectedOptions={selectedEventTypes}
-            setSelectedOptions={setSelectedEventTypes}
-          />
-        </MenuContent>
-        }
-        {stage === "numberOfPeople" &&
-        <MenuContent title="Number of people" subtitle="How big is your group?">
-          <RangeSliderContainer>
-            <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
-              <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
-            </RangeSlider>
-            {numberOfPeopleMessage(_numberOfPeopleIndex)}
-          </RangeSliderContainer>
-        </MenuContent>
-        }
-        {stage === "dietaryRestrictions" &&
+    <>
+      <CateringContent>
+        <CateringMessage>
+          <h2>Build the main event</h2>
+          <p>
+            Choose how many people you're serving, when, and where and build your own menu.
+          </p>
+        </CateringMessage>
+        <SkipRecommendations onClick={skipRecommendationsOnCLick}>
+          {
+            revenueCenter
+              ? (
+                <>
+                  <h2>Take a shortcut</h2>
+                  <p>
+                    Skip straight to the menu to browse all our packages and start your order
+                    <SkipIcon><ArrowRight /></SkipIcon>
+                  </p>
+                </>)
+              : <Loading text="Loading store..." color={theme.colors.tahini} />
+          }
+        </SkipRecommendations>
+        <AnimatedHighlightedMenu>
+          {stage === "eventType" &&
+          <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
+            <OptionsMenu
+              options={eventTypeOptions}
+              selectedOptions={selectedEventTypes}
+              setSelectedOptions={setSelectedEventTypes}
+            />
+          </MenuContent>
+          }
+          {stage === "numberOfPeople" &&
+          <MenuContent title="Number of people" subtitle="How big is your group?">
+            <RangeSliderContainer>
+              <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
+                <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
+              </RangeSlider>
+              {numberOfPeopleMessage(_numberOfPeopleIndex)}
+            </RangeSliderContainer>
+          </MenuContent>
+          }
+          {stage === "dietaryRestrictions" &&
           <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
             <AllergenOptions/>
           </MenuContent>
-        }
-        <BackForwardButtons
-          onBackClick={highlightedMenuOnBackClick}
-          onForwardClick={highlightedMenuOnForwardClick}
-          forwardText="Confirm"
-        />
-      </AnimatedHighlightedMenu>
-    </CateringContent>
+          }
+          <BackForwardButtons
+            onBackClick={highlightedMenuOnBackClick}
+            onForwardClick={highlightedMenuOnForwardClick}
+            forwardText="Confirm"
+          />
+        </AnimatedHighlightedMenu>
+      </CateringContent>
+      {stage === "recommendations" && (
+        <RecommendationsResult/>
+      )}
+    </>
   )
 }
 
-export default RecommendationWizard;
+export default RecommendationsWizard;

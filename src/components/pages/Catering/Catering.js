@@ -52,9 +52,8 @@ import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { isBrowser } from 'react-device-detect'
 import CateringAutocomplete from './CateringAutocomplete'
-import RecommendationResult from './RecommendationResult'
 import { CateringContent, CateringMessage } from './common'
-import RecommendationWizard from './RecommendationWizard'
+import RecommendationsWizard from './RecommendationsWizard'
 
 const CateringView = styled(BgImage)`
   label: CateringView;
@@ -460,11 +459,9 @@ const CateringPage = () => {
               )}
               {(stage === stages.eventType
                 || stage === stages.numberOfPeople
-                || stage === stages.dietaryRestrictions) && (
-                  <RecommendationWizard stage={stage} setStage={setStage} />
-              )}
-              {stage === stages.recommendations && (
-                <RecommendationResult/>
+                || stage === stages.dietaryRestrictions
+                || stage === stages.recommendations) && (
+                  <RecommendationsWizard stage={stage} setStage={setStage} />
               )}
             </CateringContainer>
           </CateringView>

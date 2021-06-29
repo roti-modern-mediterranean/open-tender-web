@@ -319,7 +319,7 @@ const recommendations = [
   }
 ]
 
-const RecommendationResult = () => {
+const RecommendationsResult = () => {
 
   const { revenueCenter } = useSelector(selectOrder)
   const theme = useTheme()
@@ -383,4 +383,4 @@ const RecommendationResult = () => {
     </Container>)
 }
 
-export default RecommendationResult;
+export default RecommendationsResult;
