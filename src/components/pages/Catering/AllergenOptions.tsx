@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectAllergens, setSelectedAllergens } from '@open-tender/redux'
+import { fetchAllergens, selectAllergens, setSelectedAllergens } from '@open-tender/redux'
 import OptionsMenu from '../../OptionsMenu'
 import { allergenIconMap } from '../../icons/allergens'
 
@@ -9,6 +9,10 @@ const useManageAllergens = () => {
   const dispatch = useDispatch();
   const { entities, selectedAllergens } = useSelector(selectAllergens)
 
+  useEffect(()=>{
+    dispatch(fetchAllergens())
+  }, [dispatch])
+
   // Convert from Redux to AllergenOptions array (ids, names)
   const options = useMemo(
     () => (entities || []).map(
@@ -16,7 +20,10 @@ const useManageAllergens = () => {
     ), [entities])
 
   // Convert from Redux to AllergenOptions array (ids)
-  const selectedOptions = useMemo(()=>(selectedAllergens || []).map((allergen) => `${allergen.allergen_id}`), [selectedAllergens])
+  const selectedOptions = useMemo(()=>
+    (selectedAllergens || [])
+      .map((allergen) => `${allergen.allergen_id}`)
+    , [selectedAllergens])
 
   // Convert from AllergenOptions to Redux array, and dispatch
   const setSelectedOptions = useCallback(

@@ -26,4 +26,7 @@ declare module "@open-tender/redux" {
     timezone: string,
     slug: string
   });
+  export const fetchAllergens: () => ({
+    loading: string
+  })
 }
