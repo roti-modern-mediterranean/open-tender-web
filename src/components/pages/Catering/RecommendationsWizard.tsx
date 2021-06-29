@@ -206,8 +206,10 @@ const NumberOfPeopleImage = ({
 export type wizardStages =
   | "eventType"
   | "numberOfPeople"
+  | "bigEventForm"
   | "dietaryRestrictions"
   | "servingStyle"
+  | "selectMains"
   | "recommendationsResult";
 
 interface RecommendationsWizardProps{
@@ -244,8 +246,14 @@ const RecommendationsWizard = ({
         return goBack
       case "numberOfPeople":
         return () => setStage("eventType")
+      case "bigEventForm":
+        return () => setStage("numberOfPeople")
       case "dietaryRestrictions":
         return () => setStage("numberOfPeople")
+      case "servingStyle":
+        return () => setStage("dietaryRestrictions")
+      case "selectMains":
+        return () => setStage("servingStyle")
       default:
         return null
     }
@@ -263,10 +271,16 @@ const RecommendationsWizard = ({
           return null;
         }
         if(_numberOfPeopleIndex > 5){
-          return null;
+          return () => setStage("bigEventForm");
         }
         return () => setStage("dietaryRestrictions")
+      case "bigEventForm":
+        return null
       case "dietaryRestrictions":
+        return () => setStage("servingStyle")
+      case "servingStyle":
+        return () => setStage("selectMains")
+      case "selectMains":
         return () => setStage("recommendationsResult")
       default:
         return null
@@ -300,34 +314,44 @@ const RecommendationsWizard = ({
             </SkipRecommendations>
             <AnimatedHighlightedMenu>
               {stage === "eventType" &&
-              <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
-                <OptionsMenu
-                  options={eventTypeOptions}
-                  selectedOptions={selectedEventTypes}
-                  setSelectedOptions={setSelectedEventTypes}
-                  widthPercentagePerButton={100}
-                />
-              </MenuContent>
+                <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
+                  <OptionsMenu
+                    options={eventTypeOptions}
+                    selectedOptions={selectedEventTypes}
+                    setSelectedOptions={setSelectedEventTypes}
+                    widthPercentagePerButton={100}
+                  />
+                </MenuContent>
               }
               {stage === "numberOfPeople" &&
-              <MenuContent title="Number of people" subtitle="How big is your group?">
-                <RangeSliderContainer>
-                  <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
-                    <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
-                  </RangeSlider>
-                  {numberOfPeopleMessage(_numberOfPeopleIndex)}
-                </RangeSliderContainer>
-              </MenuContent>
+                <MenuContent title="Number of people" subtitle="How big is your group?">
+                  <RangeSliderContainer>
+                    <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
+                      <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
+                    </RangeSlider>
+                    {numberOfPeopleMessage(_numberOfPeopleIndex)}
+                  </RangeSliderContainer>
+                </MenuContent>
+              }
+              {stage === "bigEventForm" &&
+                <MenuContent
+                  title="We want to get in touch with you!"
+                  subtitle="Leave us your details so we can contact you as soon as possible"
+                >
+                </MenuContent>
               }
               {stage === "dietaryRestrictions" &&
-              <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
-                <AllergenOptions/>
-              </MenuContent>
+                <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
+                  <AllergenOptions/>
+                </MenuContent>
               }
               {stage === "servingStyle" &&
-              <MenuContent title="Serving style" subtitle="Which serving format do you prefer?">
-                <AllergenOptions/>
-              </MenuContent>
+                <MenuContent title="Serving style" subtitle="Which serving format do you prefer?">
+                </MenuContent>
+              }
+              {stage === "selectMains" &&
+                <MenuContent title="Select the mains" subtitle="How many of each mains do you want?">
+                </MenuContent>
               }
               <BackForwardButtons
                 onBackClick={highlightedMenuOnBackClick}
