@@ -6,7 +6,12 @@ import {
   eventTypeOptions,
   numberOfPeopleOptions,
   selectEventType,
-  selectNumberOfPeopleIndex, setEventType, setNumberOfPeopleIndex
+  selectNumberOfPeopleIndex,
+  selectServingStyle,
+  servingStyleOptions,
+  setEventType,
+  setNumberOfPeopleIndex,
+  setServingStyle
 } from '../../../slices/recommendationsSlice'
 import RangeSlider from '../../RangeSlider'
 import AllergenOptions from './AllergenOptions'
@@ -217,13 +222,6 @@ interface RecommendationsWizardProps{
   goBack: () => void
 }
 
-const servingStyles = [
-  {value: "individual", name: "Individually packaged meals"},
-  {value: "buffet", name: "Family/Buffet style"},
-] as const
-
-type ServingStyles = typeof servingStyles[number]["value"]
-
 const RecommendationsWizard = ({
   goBack
 }:RecommendationsWizardProps) => {
@@ -243,14 +241,10 @@ const RecommendationsWizard = ({
   const _numberOfPeopleIndex = useSelector(selectNumberOfPeopleIndex)
   const _setNumberOfPeopleIndex = useCallback((numberOfPeopleIndex) => dispatch(setNumberOfPeopleIndex(numberOfPeopleIndex)), [dispatch])
 
-  const [selectedServingStyle, setSelectedServingStyle] = useState< ServingStyles | null>(null)
+  const selectedServingStyle = useSelector(selectServingStyle)
   const servingStyleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
-    (event)=> {
-      if(event.target.value === "individual" || event.target.value === "buffet"){
-        setSelectedServingStyle(event.target.value)
-      }
-      return null;
-    }, [setSelectedServingStyle])
+    (event)=> dispatch(setServingStyle(event.target.value))
+    , [dispatch])
 
   const skipRecommendationsOnCLick = useCallback(()=>{
     if(revenueCenter){
@@ -275,7 +269,7 @@ const RecommendationsWizard = ({
       default:
         return null
     }
-  }, [stage, setStage])
+  }, [stage, setStage, goBack])
 
   const highlightedMenuOnForwardClick = useMemo(() => {
     switch(stage){
@@ -365,7 +359,7 @@ const RecommendationsWizard = ({
               }
               {stage === "servingStyle" &&
                 <MenuContent title="Serving style" subtitle="Which serving format do you prefer?">
-                  {servingStyles.map(servingStyle => (
+                  {servingStyleOptions.map(servingStyle => (
                     <RadioButton
                       name="serving_style"
                       value={selectedServingStyle}
