@@ -1,4 +1,3 @@
-import { DeepPartial } from '../../utils/types'
 
 export type ThemeType = {
   bgColors:{

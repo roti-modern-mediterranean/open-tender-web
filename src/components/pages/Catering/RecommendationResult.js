@@ -319,7 +319,7 @@ const recommendations = [
   }
 ]
 
-const Recommendation = () => {
+const RecommendationResult = () => {
 
   const { revenueCenter } = useSelector(selectOrder)
   const theme = useTheme()
@@ -342,12 +342,12 @@ const Recommendation = () => {
               <Recommendations key={0}>
                 {
                   recommendations.map((recommendation, index) => (
-                    <>
+                    <React.Fragment key={recommendation.id}>
                       { index !== 0 && <OrBetween>or</OrBetween>}
-                      <MenuCateringCategoryItem key={recommendation.id}>
+                      <MenuCateringCategoryItem>
                         <MenuCateringCategory category={recommendation} />
                       </MenuCateringCategoryItem>
-                    </>
+                    </React.Fragment>
                   ))
                 }
               </Recommendations>)
@@ -383,4 +383,4 @@ const Recommendation = () => {
     </Container>)
 }
 
-export default Recommendation;
+export default RecommendationResult;

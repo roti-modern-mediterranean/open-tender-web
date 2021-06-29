@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -52,23 +52,9 @@ import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 import { isBrowser } from 'react-device-detect'
 import CateringAutocomplete from './CateringAutocomplete'
-import { ArrowRight } from '../../icons'
-import HighlightedMenu, {MenuContent} from '../../HighlightedMenu'
-import OptionsMenu from '../../OptionsMenu'
-import RangeSlider from '../../RangeSlider'
-import GroupOf3People from '../../icons/GroupOf3People'
-import Person from '../../icons/Person'
-import GroupOf6People from '../../icons/GroupOf6People'
-import Recommendation from './Recommendation'
-import AllergenOptions from './AllergenOptions'
-import {
-  eventTypeOptions, numberOfPeopleOptions,
-  selectEventType, selectNumberOfPeopleIndex,
-  setEventType, setNumberOfPeopleIndex
-} from '../../../slices/recommendationSlice'
-import CallUsButton from './CallUsButton'
-import ChatButton from './ChatButton'
-import BackForwardButtons from './BackForwardButtons'
+import RecommendationResult from './RecommendationResult'
+import { CateringContent, CateringMessage } from './common'
+import RecommendationWizard from './RecommendationWizard'
 
 const CateringView = styled(BgImage)`
   label: CateringView;
@@ -125,177 +111,6 @@ const CateringContainer = styled('div')`
     background-color: transparent;
     margin-bottom: 0;
   }
-`
-
-const CateringContent = styled('div')`
-  label: CateringContent;
-  
-  display: grid;
-  grid-template-areas: ${(props) => props.hasNoShortcut 
-          ? `"cateringMessage options"`
-          : `"cateringMessage options" 
-             "shortcut        options"`};
-  
-  grid-template-columns: minmax(10%, auto) minmax(36%, 36rem);
-  column-gap: 4.2rem;
-  row-gap: 3rem;
-
-  @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    padding: ${(props) => props.theme.layout.paddingMobile};
-  }
-
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    flex: 0 0 auto;
-    padding-top:  0;
-    text-align: center;
-    max-width: 44rem;
-    margin: 0 auto 1rem;
-
-    grid-template-areas: "cateringMessage"
-                        "options"
-                        ${(props) => !props.hasNoShortcut && `"shortcut"`};
-    grid-template-columns: auto;
-  }
-`
-
-const CateringMessage = styled('div')`
-  label: CateringMessage;
-  
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  
-  grid-area: cateringMessage;
-
-  h2 {
-    margin: 0 0 1rem;
-    font-size: 9rem;
-    line-height: 0.9;
-    color: ${(props) => props.theme.colors.light};
-    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      font-size: 6rem;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-family: ${(props) => props.theme.fonts.preface.family};
-      font-weight: 500;
-      font-size: 2.8rem;
-      letter-spacing: 0.01em;
-    }
-  }
-
-  & > p {
-    margin: 0 0 1rem;
-    font-size: 2.7rem;
-    line-height: 1.33333;
-    color: ${(props) => props.theme.colors.light};
-    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      font-size: 2.3rem;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: 1.5rem;
-      line-height: 1.45;
-      font-weight: 500;
-    }
-  }
-`
-
-const AnimatedHighlightedMenu = styled(HighlightedMenu)`
-  label: AnimatedHighlightedMenu;
-
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-  display: flex;
-  flex-direction: column;
-  
-  grid-area: options;
-
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    position: relative;
-    flex: 1 1 auto;
-    max-width: none;
-  }
-`;
-
-const RangeSliderMessage = styled.div`
-  label: RangeSliderMessage;
-  
-  width: 100%;
-  text-align: center;
-  text-transform: uppercase;
-  color: ${(props) => props.theme.colors.pepper};
-  font-family: ${(props) => props.theme.fonts.headings.family};
-  font-size: 24px;
-  font-weight: ${(props) => props.theme.fonts.headings.weight};
-  margin: 5px 0px;
-
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    font-size: 20px;
-  }
-`
-
-const SkipRecommendations = styled.button`
-  label: SkipRecommendations;
-
-  opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
-
-  text-align: left;
-  color: ${(props) => props.theme.colors.light};
-  border-top: 1px solid #ffffff50;
-  padding-top: 1rem;
-  width: 100%;
-  cursor: pointer;
-  transition: background-color 0.25s ease;
-  
-  grid-area: shortcut;
-
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    width: auto;
-    border: none;
-    margin-top: 0;
-  }
-  
-  h2 {
-    opacity: 0;
-    animation: slide-up 0.25s ease-in-out 0.25s forwards;
-    
-    font-size: 30px;
-    font-weight: 500;
-    
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-family: ${(props) => props.theme.fonts.preface.family};
-      font-weight: 500;
-      font-size: 2.8rem;
-      letter-spacing: 0.01em;
-      margin: 0 0 1rem;
-    }
-  }
-  
-  p {
-    opacity: 0;
-    animation: slide-up 0.25s ease-in-out 0.25s forwards;
-    
-    font-size: 18px;
-    line-height: 28px;
-    
-    @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-      font-size: 2.3rem;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-      font-size: 1.5rem;
-      line-height: 1.45;
-      font-weight: 500;
-    }
-  }
-  
-  span {
-    color: ${(props) => props.theme.colors.paprika};
-  }
-`
-
-const SkipIcon = styled.span`
-  display: inline-flex;
-  width: 12px;
-  margin-left: 10px;
 `
 
 const CateringCurrentOrder = styled('div')`
@@ -405,69 +220,6 @@ const stages = {
   recommendations: "recommendations"
 }
 
-const RangeSliderContainer = styled.div`
-  label: RangeSliderContainer;
-  
-  height: 22rem;
-`
-
-const RangeSliderMessageContainer = styled.div`
-  label: RangeSliderMessageContainer;
-`;
-
-const RangeSliderSubMessage = styled.div`
-  label: RangeSliderSubMessage;
-  
-  text-align: center;
-`;
-
-const RangeSliderMessageButtons = styled.div`
-  label: RangeSliderMessageButtons;
-  
-  display: grid;
-  grid-template-columns: 48% 48%;
-  gap: 4%;
-  justify-content: center;
-  margin-top: 1rem;
-  
-  
-  > button, > a {
-    width: 100%
-  }
-`;
-
-const numberOfPeopleMessage = (index) =>{
-  if(index < 1){
-    return <RangeSliderMessage>How many are we?</RangeSliderMessage>;
-  }
-  if(index < 4){
-    return <RangeSliderMessage>Zzz!</RangeSliderMessage>;
-  }
-  if(index < 6){
-    return <RangeSliderMessage>Wow, it's gonna be a party!</RangeSliderMessage>;
-  }
-  return (
-    <RangeSliderMessageContainer>
-      <RangeSliderMessage>Nice, let's get it going!</RangeSliderMessage>
-      <RangeSliderSubMessage>Contact us directly for big orders</RangeSliderSubMessage>
-      <RangeSliderMessageButtons>
-        <CallUsButton/>
-        <ChatButton/>
-      </RangeSliderMessageButtons>
-    </RangeSliderMessageContainer>
-  )
-}
-
-const NumberOfPeopleImage = ({index, size, color}) => {
-  if(index < 1){
-    return <Person size={size} color={color}/>;
-  }
-  if(index < 4){
-    return <GroupOf3People size={size} color={color}/>;
-  }
-  return <GroupOf6People size={size} color={color}/>
-}
-
 const CateringPage = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -498,10 +250,6 @@ const CateringPage = () => {
   const requestedAtStr = requestedAt
     ? makeReadableDateStrFromIso(requestedAt, tz, true)
     : null
-  const selectedEventTypes = useSelector(selectEventType)
-  const setSelectedEventTypes = useCallback((eventType) => dispatch(setEventType(eventType)), [dispatch])
-  const _numberOfPeopleIndex = useSelector(selectNumberOfPeopleIndex)
-  const _setNumberOfPeopleIndex = useCallback((numberOfPeopleIndex) => dispatch(setNumberOfPeopleIndex(numberOfPeopleIndex)), [dispatch])
 
   useEffect(() => {
     windowRef.current.scrollTop = 0
@@ -624,47 +372,6 @@ const CateringPage = () => {
     // history.push('/locations')
   }
 
-  const skipRecommendationsOnCLick = useCallback(()=>{
-    if(revenueCenter){
-      history.push(`/menu/${revenueCenter.slug}`)
-    }
-  }, [history, revenueCenter])
-
-  const highlightedMenuOnBackClick = useMemo(() => {
-    switch(stage){
-      case stages.eventType:
-        return () => setStage(stages.address)
-      case stages.numberOfPeople:
-        return () => setStage(stages.eventType)
-      case stages.dietaryRestrictions:
-        return () => setStage(stages.numberOfPeople)
-      default:
-        return null
-    }
-  }, [stage])
-
-  const highlightedMenuOnForwardClick = useMemo(() => {
-    switch(stage){
-      case stages.eventType:
-        if(selectedEventTypes.length === 0) {
-          return null;
-        }
-        return () => setStage(stages.numberOfPeople)
-      case stages.numberOfPeople:
-        if(_numberOfPeopleIndex < 1){
-          return null;
-        }
-        if(_numberOfPeopleIndex > 5){
-          return null;
-        }
-        return () => setStage(stages.dietaryRestrictions)
-      case stages.dietaryRestrictions:
-        return () => setStage(stages.recommendations)
-      default:
-        return null
-    }
-  }, [stage, selectedEventTypes, _numberOfPeopleIndex])
-
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
 
@@ -754,62 +461,10 @@ const CateringPage = () => {
               {(stage === stages.eventType
                 || stage === stages.numberOfPeople
                 || stage === stages.dietaryRestrictions) && (
-                  <CateringContent>
-                    <CateringMessage>
-                      <h2>Build the main event</h2>
-                      <p>
-                        Choose how many people you're serving, when, and where and build your own menu.
-                      </p>
-                    </CateringMessage>
-                    <SkipRecommendations onClick={skipRecommendationsOnCLick}>
-                      {
-                        revenueCenter
-                          ? (
-                            <>
-                              <h2>Take a shortcut</h2>
-                              <p>
-                                Skip straight to the menu to browse all our packages and start your order
-                                <SkipIcon><ArrowRight /></SkipIcon>
-                              </p>
-                            </>)
-                          : <Loading text="Loading store..." color={theme.colors.tahini} />
-                      }
-                    </SkipRecommendations>
-                    <AnimatedHighlightedMenu>
-                      {stage === stages.eventType &&
-                      <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
-                        <OptionsMenu
-                          options={eventTypeOptions}
-                          selectedOptions={selectedEventTypes}
-                          setSelectedOptions={setSelectedEventTypes}
-                        />
-                      </MenuContent>
-                      }
-                      {stage === stages.numberOfPeople &&
-                      <MenuContent title="Number of people" subtitle="How big is your group?">
-                        <RangeSliderContainer>
-                          <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
-                            <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
-                          </RangeSlider>
-                          {numberOfPeopleMessage(_numberOfPeopleIndex)}
-                        </RangeSliderContainer>
-                      </MenuContent>
-                      }
-                      {stage === stages.dietaryRestrictions &&
-                      <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
-                        <AllergenOptions/>
-                      </MenuContent>
-                      }
-                      <BackForwardButtons
-                        onBackClick={highlightedMenuOnBackClick}
-                        onForwardClick={highlightedMenuOnForwardClick}
-                        forwardText="Confirm"
-                      />
-                    </AnimatedHighlightedMenu>
-                  </CateringContent>
+                  <RecommendationWizard stage={stage} setStage={setStage} />
               )}
               {stage === stages.recommendations && (
-                <Recommendation/>
+                <RecommendationResult/>
               )}
             </CateringContainer>
           </CateringView>

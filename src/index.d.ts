@@ -20,4 +20,10 @@ declare module "@open-tender/redux" {
     type: string,
     payload: SelectedAllergens,
   });
+  export const selectRevenueCenter: (state:any) => ({
+    revenue_center_id: number,
+    name: string,
+    timezone: string,
+    slug: string
+  });
 }
