@@ -13,7 +13,7 @@ import { selectOrder } from '@open-tender/redux'
 import { useHistory } from 'react-router-dom'
 
 const Container = styled.div`
-  label: RecommendationContainer;
+  label: RecommendationsContainer;
 
   width: 100%;
   display: grid;
@@ -53,7 +53,7 @@ const CustomPreface = styled(Preface)`
 `
 
 const Header = styled.h2`
-  label: RecommendationHeader;
+  label: RecommendationsHeader;
   
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
@@ -114,7 +114,7 @@ const OrBetween = styled(CustomPreface)`
 `
 
 const Footer = styled.div`
-  label: RecommendationFooter;
+  label: RecommendationsFooter;
 
   width: 100%;
   border-top: 1px solid #FFFFFF44;
@@ -269,7 +269,7 @@ const FooterRightText = styled.div`
   }
 `;
 
-// TODO remove hardcoded recommendation
+// TODO remove hardcoded recommendations
 const recommendations = [
   {
     id: 1045,

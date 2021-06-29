@@ -7,7 +7,7 @@ import {
   numberOfPeopleOptions,
   selectEventType,
   selectNumberOfPeopleIndex, setEventType, setNumberOfPeopleIndex
-} from '../../../slices/recommendationSlice'
+} from '../../../slices/recommendationsSlice'
 import RangeSlider from '../../RangeSlider'
 import AllergenOptions from './AllergenOptions'
 import BackForwardButtons from './BackForwardButtons'
@@ -218,8 +218,8 @@ interface RecommendationsWizardProps{
 }
 
 const servingStyles = [
-  {value: "individual", name: "indie"},
-  {value: "buffet", name: "buff"},
+  {value: "individual", name: "Individually packaged meals"},
+  {value: "buffet", name: "Family/Buffet style"},
 ] as const
 
 type ServingStyles = typeof servingStyles[number]["value"]

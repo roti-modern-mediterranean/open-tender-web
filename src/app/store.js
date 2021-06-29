@@ -13,7 +13,7 @@ import sidebarReducer from '../slices/sidebarSlice'
 import sidebarModalReducer from '../slices/sidebarModalSlice'
 import navReducer from '../slices/navSlice'
 import miscReducer from '../slices/miscSlice'
-import recommendationSlice from '../slices/recommendationSlice'
+import recommendationsSlice from '../slices/recommendationsSlice'
 import { openTenderReducer } from '@open-tender/redux'
 
 const rootReducer = combineReducers({
@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
   nav: navReducer,
   misc: miscReducer,
   data: openTenderReducer,
-  recommendation: recommendationSlice
+  recommendations: recommendationsSlice
 })
 
 const persistedState = loadState()

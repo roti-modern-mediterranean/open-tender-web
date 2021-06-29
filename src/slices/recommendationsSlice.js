@@ -15,8 +15,8 @@ const initialState = {
   numberOfPeopleIndex: 0,
 }
 
-const recommendationSlice = createSlice({
-  name: 'recommendation',
+const recommendationsSlice = createSlice({
+  name: 'recommendations',
   initialState,
   reducers: {
     setEventType: (state, action) => {
@@ -29,9 +29,9 @@ const recommendationSlice = createSlice({
 })
 
 export const { setEventType, setNumberOfPeopleIndex } =
-  recommendationSlice.actions
+  recommendationsSlice.actions
 
-export const selectEventType = (state) => state.recommendation.eventType
-export const selectNumberOfPeopleIndex = (state) => state.recommendation.numberOfPeopleIndex
+export const selectEventType = (state) => state.recommendations.eventType
+export const selectNumberOfPeopleIndex = (state) => state.recommendations.numberOfPeopleIndex
 
-export default recommendationSlice.reducer
+export default recommendationsSlice.reducer
