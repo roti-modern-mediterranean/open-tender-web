@@ -3,9 +3,13 @@ import { Heading } from '@open-tender/components'
 import { FCNoChildren, IconProps } from '../utils/types'
 import React from 'react'
 
-const OptionLabel = styled('label')`
+const OptionLabel = styled.label<{widthPercentage?: number}>`
   display: block;
-  width: 33.33333%;
+  width: ${props => props.widthPercentage 
+          && props.widthPercentage > 0 
+          && props.widthPercentage <= 100 
+                  ? props.widthPercentage 
+                  : `33.33333`}%;
   padding: 0.5rem;
   cursor: pointer;
   @media (max-width: 370px) {
@@ -13,7 +17,7 @@ const OptionLabel = styled('label')`
   }
 `
 
-const OptionInput = styled('input')`
+const OptionInput = styled.input`
   position: absolute;
   border: 0;
   clip: rect(0 0 0 0);
@@ -46,18 +50,22 @@ const OptionToggle = styled.span<{isChecked: boolean}>`
   }
 `
 
-const OptionToggleName = styled(Heading)<{numCharacters: number}>`
+const OptionToggleName = styled(Heading)<{numCharacters: number, widthPercentage?: number}>`
   label: OptionToggleName;
 
   display: block;
   text-align: center;
   font-weight: 600;
-  font-size: ${(props) => props.numCharacters < 10 ? `1.4rem` : `1.2rem` };
+  font-size: ${(props) => props.numCharacters < 10
+                || (props.widthPercentage
+                        && props.widthPercentage >= 40
+                        && props.widthPercentage <= 100)
+                        ? `1.4rem` : `1.2rem` };
   line-height: 1.05;
   user-select: none;
 `
 
-const OptionToggleIconAndName = styled(Heading)<{numCharacters: number}>`
+const OptionToggleIconAndName = styled(Heading)<{numCharacters: number, widthPercentage?: number}>`
   label: OptionToggleIconAndName;
   
   display: grid;
@@ -67,7 +75,11 @@ const OptionToggleIconAndName = styled(Heading)<{numCharacters: number}>`
   grid-column-gap: 5px;
   width: 100%;
   font-weight: 600;
-  font-size: ${(props) => props.numCharacters < 8 ? `1.4rem` : `1.2rem` };
+  font-size: ${(props) => props.numCharacters < 8 
+                || (props.widthPercentage 
+                  && props.widthPercentage >= 40 
+                    && props.widthPercentage <= 100) 
+                      ? `1.4rem` : `1.2rem` };
   line-height: 1.05;
   user-select: none;
 
@@ -87,12 +99,20 @@ interface OptionButtonProps {
   id: string,
   icon?: FCNoChildren<IconProps> | null,
   isChecked: boolean,
-  onChange: React.InputHTMLAttributes<HTMLInputElement>["onChange"]
+  onChange: React.InputHTMLAttributes<HTMLInputElement>["onChange"],
+  widthPercentage?: number
 }
 
-const OptionButton = ({ label, id, icon:Icon, isChecked, onChange}:OptionButtonProps) => {
+const OptionButton = ({
+  label,
+  id,
+  icon:Icon,
+  isChecked,
+  onChange,
+  widthPercentage
+}:OptionButtonProps) => {
   return (
-    <OptionLabel htmlFor={id}>
+    <OptionLabel htmlFor={id} widthPercentage={widthPercentage}>
       <OptionInput
         aria-label={label}
         id={id}
@@ -103,11 +123,13 @@ const OptionButton = ({ label, id, icon:Icon, isChecked, onChange}:OptionButtonP
       <OptionToggle isChecked={isChecked}>
         {
           Icon
-            ? <OptionToggleIconAndName numCharacters={label.length}>
+            ? <OptionToggleIconAndName numCharacters={label.length} widthPercentage={widthPercentage}>
                 <span><Icon/></span>
                 <span>{label}</span>
               </OptionToggleIconAndName>
-            : <OptionToggleName numCharacters={label.length}>{label}</OptionToggleName>
+            : <OptionToggleName numCharacters={label.length} widthPercentage={widthPercentage}>
+                {label}
+              </OptionToggleName>
         }
       </OptionToggle>
     </OptionLabel>

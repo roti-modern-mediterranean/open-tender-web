@@ -3,11 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 
 // TODO should not be hardcoded (?)
 export const eventTypeOptions = [
-  { id: "Family / Home", name: "Family / Home"}, { id: "Corporate / Office", name: "Corporate / Office"},
-  { id: "Party / Venue", name: "Party / Venue"}, { id: "Adult", name: "Adult"},
-  { id: "Teens", name: "Teens"}, { id: "Kids", name: "Kids"},
-  { id: "Indoors", name: "Indoors"}, { id: "Outdoors", name: "Outdoors"},
-  { id: "Formal", name: "Formal"}]
+  { id: "Family / Home", name: "Family / Home"},
+  { id: "Corporate / Office", name: "Corporate / Office"},
+  { id: "Party / Venue", name: "Party / Venue"}]
 
 // TODO should not be hardcoded (?)
 export const numberOfPeopleOptions = ["1", "10", "20", "30", "50", "75", "100+"]

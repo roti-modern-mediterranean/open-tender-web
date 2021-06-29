@@ -19,13 +19,15 @@ interface Option {id: string, name: string, icon?: FCNoChildren<IconProps> | nul
 interface OptionsMenuProps {
   options: Option[],
   selectedOptions: string[],
-  setSelectedOptions: (value:string[]) => void
+  setSelectedOptions: (value:string[]) => void,
+  widthPercentagePerButton?: number
 }
 
 const OptionsMenu = (
   {options,
     selectedOptions,
-    setSelectedOptions
+    setSelectedOptions,
+    widthPercentagePerButton
   }: OptionsMenuProps) => {
 
   const OptionButtonOnChange = useCallback((event) => {
@@ -47,6 +49,7 @@ const OptionsMenu = (
         id={`${option.id}`}
         isChecked={selectedOptions.includes(option.id)}
         onChange={OptionButtonOnChange}
+        widthPercentage={widthPercentagePerButton}
       />
     ))}
   </MenuArea>;

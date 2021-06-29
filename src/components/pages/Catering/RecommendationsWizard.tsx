@@ -289,6 +289,7 @@ const RecommendationsWizard = ({
               options={eventTypeOptions}
               selectedOptions={selectedEventTypes}
               setSelectedOptions={setSelectedEventTypes}
+              widthPercentagePerButton={100}
             />
           </MenuContent>
           }
