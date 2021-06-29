@@ -213,10 +213,7 @@ const makeOrderMessage = (orderType, requestedAt, revenueCenter) => {
 const stages = {
   date: "date",
   address: "address",
-  eventType: "eventType",
-  numberOfPeople: "numberOfPeople",
-  dietaryRestrictions: "dietaryRestrictions",
-  recommendations: "recommendations"
+  recommendationsWizard: "recommendationsWizard"
 }
 
 const CateringPage = () => {
@@ -319,7 +316,7 @@ const CateringPage = () => {
         setError(error)
       } else if (displayed.length) {
         selectRevenueCenter(displayed[0])
-        setStage(stages.eventType)
+        setStage(stages.recommendationsWizard)
       } else if (serviceType === 'PICKUP') {
         const msg = `We're sorry, but we don't have any locations within ${maxDistance} miles of your address.`
         setError(msg)
@@ -373,6 +370,8 @@ const CateringPage = () => {
 
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
+
+  const recommendationsWizardGoBack = useCallback(()=>setStage(stages.address), [setStage])
 
 
   return (
@@ -457,11 +456,8 @@ const CateringPage = () => {
                   </CateringPlace>
                 </CateringContent>
               )}
-              {(stage === stages.eventType
-                || stage === stages.numberOfPeople
-                || stage === stages.dietaryRestrictions
-                || stage === stages.recommendations) && (
-                  <RecommendationsWizard stage={stage} setStage={setStage} />
+              {(stage === stages.recommendationsWizard) && (
+                  <RecommendationsWizard goBack={recommendationsWizardGoBack} />
               )}
             </CateringContainer>
           </CateringView>

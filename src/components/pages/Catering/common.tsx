@@ -1,13 +1,5 @@
 import styled from '@emotion/styled'
 
-export type cateringStages =
-  | "date"
-  | "address"
-  | "eventType"
-  | "numberOfPeople"
-  | "dietaryRestrictions"
-  | "recommendations";
-
 export const CateringContent = styled.div<{hasNoShortcut?:boolean}>`
   label: CateringContent;
   

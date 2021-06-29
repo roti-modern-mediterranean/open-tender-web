@@ -11,8 +11,8 @@ import {
 import RangeSlider from '../../RangeSlider'
 import AllergenOptions from './AllergenOptions'
 import BackForwardButtons from './BackForwardButtons'
-import React, { Dispatch, SetStateAction, useCallback, useMemo } from 'react'
-import { CateringContent, CateringMessage, cateringStages } from './common'
+import React, { useCallback, useMemo, useState } from 'react'
+import { CateringContent, CateringMessage } from './common'
 import styled from '@emotion/styled'
 import CallUsButton from './CallUsButton'
 import ChatButton from './ChatButton'
@@ -203,19 +203,26 @@ const NumberOfPeopleImage = ({
   return <GroupOf6People size={size} color={color}/>
 }
 
-interface RecommendationWizardProps {
-  stage: cateringStages,
-  setStage: Dispatch<SetStateAction<cateringStages>>
+export type wizardStages =
+  | "eventType"
+  | "numberOfPeople"
+  | "dietaryRestrictions"
+  | "servingStyle"
+  | "recommendationsResult";
+
+interface RecommendationsWizardProps{
+  goBack: () => void
 }
 
 const RecommendationsWizard = ({
-  stage,
-  setStage
-}:RecommendationWizardProps) => {
+  goBack
+}:RecommendationsWizardProps) => {
 
   const history = useHistory()
   const dispatch = useDispatch()
   const theme = useTheme()
+
+  const [stage, setStage] = useState<wizardStages>("eventType")
 
   const revenueCenter =
     useSelector(selectRevenueCenter)
@@ -234,7 +241,7 @@ const RecommendationsWizard = ({
   const highlightedMenuOnBackClick = useMemo(() => {
     switch(stage){
       case "eventType":
-        return () => setStage("address")
+        return goBack
       case "numberOfPeople":
         return () => setStage("eventType")
       case "dietaryRestrictions":
@@ -260,7 +267,7 @@ const RecommendationsWizard = ({
         }
         return () => setStage("dietaryRestrictions")
       case "dietaryRestrictions":
-        return () => setStage("recommendations")
+        return () => setStage("recommendationsResult")
       default:
         return null
     }
@@ -268,63 +275,69 @@ const RecommendationsWizard = ({
 
   return (
     <>
-      <CateringContent>
-        <CateringMessage>
-          <h2>Build the main event</h2>
-          <p>
-            Choose how many people you're serving, when, and where and build your own menu.
-          </p>
-        </CateringMessage>
-        <SkipRecommendations onClick={skipRecommendationsOnCLick}>
-          {
-            revenueCenter
-              ? (
-                <>
-                  <h2>Take a shortcut</h2>
-                  <p>
-                    Skip straight to the menu to browse all our packages and start your order
-                    <SkipIcon><ArrowRight /></SkipIcon>
-                  </p>
-                </>)
-              : <Loading text="Loading store..." color={theme.colors.tahini} />
-          }
-        </SkipRecommendations>
-        <AnimatedHighlightedMenu>
-          {stage === "eventType" &&
-            <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
-              <OptionsMenu
-                options={eventTypeOptions}
-                selectedOptions={selectedEventTypes}
-                setSelectedOptions={setSelectedEventTypes}
-                widthPercentagePerButton={100}
+      {stage !== "recommendationsResult"
+        ? (
+          <CateringContent>
+            <CateringMessage>
+              <h2>Build the main event</h2>
+              <p>
+                Choose how many people you're serving, when, and where and build your own menu.
+              </p>
+            </CateringMessage>
+            <SkipRecommendations onClick={skipRecommendationsOnCLick}>
+              {
+                revenueCenter
+                  ? (
+                    <>
+                      <h2>Take a shortcut</h2>
+                      <p>
+                        Skip straight to the menu to browse all our packages and start your order
+                        <SkipIcon><ArrowRight /></SkipIcon>
+                      </p>
+                    </>)
+                  : <Loading text="Loading store..." color={theme.colors.tahini} />
+              }
+            </SkipRecommendations>
+            <AnimatedHighlightedMenu>
+              {stage === "eventType" &&
+              <MenuContent title="Type of event" subtitle="What kind of get together are we having?">
+                <OptionsMenu
+                  options={eventTypeOptions}
+                  selectedOptions={selectedEventTypes}
+                  setSelectedOptions={setSelectedEventTypes}
+                  widthPercentagePerButton={100}
+                />
+              </MenuContent>
+              }
+              {stage === "numberOfPeople" &&
+              <MenuContent title="Number of people" subtitle="How big is your group?">
+                <RangeSliderContainer>
+                  <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
+                    <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
+                  </RangeSlider>
+                  {numberOfPeopleMessage(_numberOfPeopleIndex)}
+                </RangeSliderContainer>
+              </MenuContent>
+              }
+              {stage === "dietaryRestrictions" &&
+              <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
+                <AllergenOptions/>
+              </MenuContent>
+              }
+              {stage === "servingStyle" &&
+              <MenuContent title="Serving style" subtitle="Which serving format do you prefer?">
+                <AllergenOptions/>
+              </MenuContent>
+              }
+              <BackForwardButtons
+                onBackClick={highlightedMenuOnBackClick}
+                onForwardClick={highlightedMenuOnForwardClick}
+                forwardText="Confirm"
               />
-            </MenuContent>
-          }
-          {stage === "numberOfPeople" &&
-            <MenuContent title="Number of people" subtitle="How big is your group?">
-              <RangeSliderContainer>
-                <RangeSlider options={numberOfPeopleOptions} index={_numberOfPeopleIndex} setIndex={_setNumberOfPeopleIndex}>
-                  <NumberOfPeopleImage index={_numberOfPeopleIndex} size="60px"/>
-                </RangeSlider>
-                {numberOfPeopleMessage(_numberOfPeopleIndex)}
-              </RangeSliderContainer>
-            </MenuContent>
-          }
-          {stage === "dietaryRestrictions" &&
-            <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
-              <AllergenOptions/>
-            </MenuContent>
-          }
-          <BackForwardButtons
-            onBackClick={highlightedMenuOnBackClick}
-            onForwardClick={highlightedMenuOnForwardClick}
-            forwardText="Confirm"
-          />
-        </AnimatedHighlightedMenu>
-      </CateringContent>
-      {stage === "recommendations" && (
-        <RecommendationsResult/>
-      )}
+            </AnimatedHighlightedMenu>
+          </CateringContent>)
+        : <RecommendationsResult/>
+      }
     </>
   )
 }
