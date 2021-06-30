@@ -29,6 +29,7 @@ import { selectRevenueCenter } from '@open-tender/redux'
 import { useTheme } from '@emotion/react'
 import RecommendationsResult from './RecommendationsResult'
 import RadioButton from '../../inputs/RadioButton'
+import { Input } from '../../inputs'
 
 const SkipRecommendations = styled.button`
   label: SkipRecommendations;
