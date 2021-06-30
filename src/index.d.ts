@@ -1,10 +1,12 @@
 
 interface HeadingProps {
-  size?: string
+  size?: string,
+  children: React.ReactNode
 }
 
 interface PrefaceProps {
-  size?: string
+  size?: string,
+  children: React.ReactNode
 }
 
 declare module "@open-tender/components" {

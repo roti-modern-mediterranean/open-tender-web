@@ -1,7 +1,12 @@
 import styled from '@emotion/styled'
 
 
-const ButtonStyle = styled.button`
+export interface ButtonProps {
+  lightMode?: boolean,
+  href?: string
+}
+
+const ButtonCommon = styled.button<ButtonProps>`
   label: ButtonStyle;
 
   width: ${(props) => props.theme.buttons.sizes.default.width};
@@ -46,4 +51,4 @@ const ButtonStyle = styled.button`
   }
 `
 
-export default ButtonStyle;
+export default ButtonCommon;
