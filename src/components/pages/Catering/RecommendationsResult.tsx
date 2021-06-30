@@ -82,7 +82,7 @@ const Recommendations = styled(MenuCateringCategories)`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   
-  margin: 30px 0px 25px;
+  margin: 30px 0 25px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -127,10 +127,10 @@ const Footer = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     grid-template-columns: 100%;
     border-top: none;
-    padding-top: 0px;
+    padding-top: 0;
     display: flex;
     flex-direction: column-reverse;
-    margin: 5px 0px 20px;
+    margin: 5px 0 20px;
     gap: 3rem;
   }
 `;
@@ -139,7 +139,7 @@ const FooterLeft = styled.button`
   label: FooterLeft;
 
   border-right: 1px solid #FFFFFF44;
-  padding: 0px 10px;
+  padding: 0 10px;
   color: ${(props) => props.theme.colors.tahini};
   text-align: left;
   min-width: 300px;
@@ -151,7 +151,7 @@ const FooterLeft = styled.button`
     width: auto;
     padding: 1rem;
     border: 1px solid ${(props) => props.theme.colors.pepper};
-    margin: 5px 0px;
+    margin: 5px 0;
     color: ${(props) => props.theme.colors.pepper};
     border-radius: ${(props) => props.theme.border.radius};
   }
@@ -183,13 +183,13 @@ const FooterLeftHighlight = styled.div`
 const FooterLeftBody = styled.div`
   label: FooterLeftBody;
   
-  padding: 5px 0px 0px 32px;
+  padding: 5px 0 0 32px;
 `
 
 const FooterRight = styled.div`
   label: FooterRight;
 
-  padding: 0px 10px;
+  padding: 0 10px;
   font-weight: 400;
   display: grid;
   grid-template-areas: "repText callUsButton openChatButton";
@@ -260,7 +260,7 @@ const FooterRightText = styled.div`
   display: grid;
   grid-row-gap: 0.5rem;
   align-content: start;
-  margin: 0px 10px;
+  margin: 0 10px;
   
   grid-area: repText;
 
