@@ -30,6 +30,8 @@ import { useTheme } from '@emotion/react'
 import RecommendationsResult from './RecommendationsResult'
 import RadioButton from '../../inputs/RadioButton'
 import { Input } from '../../inputs'
+import iconMap from '../../iconMap'
+import BigEventForm from '../../inputs/BigEventForm'
 
 const SkipRecommendations = styled.button`
   label: SkipRecommendations;
@@ -351,13 +353,7 @@ const RecommendationsWizard = ({
                   title="We want to get in touch with you!"
                   subtitle="Leave us your details so we can contact you as soon as possible"
                 >
-                  <form id="big-event-form" noValidate>
-                    <input placeholder="name" />
-                    <input placeholder="email" />
-                    <input placeholder="phone" />
-                    <input placeholder="number of people" />
-                    <textarea placeholder="Any notes?" rows={4} />
-                  </form>
+                  <BigEventForm/>
                 </MenuContent>
               }
               {stage === "dietaryRestrictions" &&
