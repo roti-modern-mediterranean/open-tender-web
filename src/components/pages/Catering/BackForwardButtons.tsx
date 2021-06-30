@@ -11,7 +11,7 @@ const Container = styled.div`
   display: flex;
 `
 
-const NavButton = styled.button`
+const NavButton = styled.button<{isForward?: boolean}>`
   label: NavButton;
 
   flex: 1;
@@ -19,6 +19,7 @@ const NavButton = styled.button`
   justify-content: ${(props) => props.isForward ? 'flex-end' : 'flex-start'};
   align-items: center;
   margin: 2rem;
+  color: ${(props) => props.theme.colors.beet};
   
   > span {
     margin: 0 0.5rem;
@@ -31,10 +32,19 @@ const NavButton = styled.button`
 
 const noop = () => {}
 
+interface BackForwardButtonsProps {
+  onBackClick: (()=>void) | null,
+  onForwardClick: (()=>void) | null,
+  backText?: string,
+  forwardText?: string
+}
+
 const BackForwardButtons = ({
-    onBackClick, onForwardClick,
-    backText = '', forwardText = ''
-}) => {
+    onBackClick,
+    onForwardClick,
+    backText = '',
+    forwardText = ''
+}:BackForwardButtonsProps) => {
   const theme = useTheme();
 
   return <Container>
