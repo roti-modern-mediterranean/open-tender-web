@@ -1,4 +1,8 @@
 import styled from '@emotion/styled'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllergens, selectAllergens, setSelectedAllergens } from '@open-tender/redux'
+import { useCallback, useEffect, useMemo } from 'react'
+import { allergenIconMap } from '../../icons/allergens'
 
 export const CateringContent = styled.div<{hasNoShortcut?:boolean}>`
   label: CateringContent;
@@ -70,6 +74,36 @@ export const CateringMessage = styled('div')`
     }
   }
 `
+export const useManageAllergens = () => {
+
+  const dispatch = useDispatch();
+  const { entities, selectedAllergens } = useSelector(selectAllergens)
+
+  useEffect(()=>{
+    dispatch(fetchAllergens())
+  }, [dispatch])
+
+  // Convert from Redux to AllergenOptions array (ids, names)
+  const options = useMemo(
+    () => (entities || []).map(
+      (allergen) => ({id: `${allergen.allergen_id}`, name: allergen.name, icon: allergenIconMap[allergen.name] || null})
+    ), [entities])
+
+  // Convert from Redux to AllergenOptions array (ids)
+  const selectedOptions = useMemo(()=>
+      (selectedAllergens || [])
+        .map((allergen) => `${allergen.allergen_id}`)
+    , [selectedAllergens])
+
+  // Convert from AllergenOptions to Redux array, and dispatch
+  const setSelectedOptions = useCallback(
+    (data) => dispatch(setSelectedAllergens(data.map(
+      (allergenId:string) => ({allergen_id: parseInt(allergenId, 10)})))),
+    [dispatch]
+  )
+
+  return {options, selectedOptions, setSelectedOptions};
+}
 export type wizardStages =
   | 'eventType'
   | 'numberOfPeople'
