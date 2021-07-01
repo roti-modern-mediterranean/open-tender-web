@@ -225,7 +225,7 @@ const SelectMainsStage = ({
           activeOption={null}
           setActiveOption={()=>{}}
           setActiveIndex={()=>{}}
-          index={0}
+          index={1}
           lastIndex={2}
         />
         <BuilderOption
@@ -241,7 +241,7 @@ const SelectMainsStage = ({
           activeOption={null}
           setActiveOption={()=>{}}
           setActiveIndex={()=>{}}
-          index={0}
+          index={2}
           lastIndex={2}
         />
       </MenuContent>
