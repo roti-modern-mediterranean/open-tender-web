@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react'
-import Input from './Input'
-import { Mail, Phone, User } from '../icons'
-import { useEmailFieldState, useNumberFieldState, usePhoneFieldState, useRequiredFieldState } from '../../hooks'
-import { Textarea } from './index'
+import Input from '../../inputs/Input'
+import { Mail, Phone, User } from '../../icons'
+import { useEmailFieldState, useNumberFieldState, usePhoneFieldState, useRequiredFieldState } from '../../../hooks'
+import { Textarea } from '../../inputs'
 
 const BigEventForm = () => {
 

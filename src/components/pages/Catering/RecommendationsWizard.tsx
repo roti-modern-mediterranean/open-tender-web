@@ -17,6 +17,7 @@ import RangeSlider from '../../RangeSlider'
 import AllergenOptions from './AllergenOptions'
 import BackForwardButtons from './BackForwardButtons'
 import React, { ChangeEventHandler, useCallback, useMemo, useState } from 'react'
+import { Link } from "react-router-dom"
 import { CateringContent, CateringMessage } from './common'
 import styled from '@emotion/styled'
 import CallUsButton from './CallUsButton'
@@ -29,9 +30,7 @@ import { selectRevenueCenter } from '@open-tender/redux'
 import { useTheme } from '@emotion/react'
 import RecommendationsResult from './RecommendationsResult'
 import RadioButton from '../../inputs/RadioButton'
-import { Input } from '../../inputs'
-import iconMap from '../../iconMap'
-import BigEventForm from '../../inputs/BigEventForm'
+import BigEventForm from './BigEventForm'
 
 const SkipRecommendations = styled.button`
   label: SkipRecommendations;
@@ -216,6 +215,7 @@ export type wizardStages =
   | "eventType"
   | "numberOfPeople"
   | "bigEventForm"
+  | "sentBigEventForm"
   | "dietaryRestrictions"
   | "servingStyle"
   | "selectMains"
@@ -263,6 +263,8 @@ const RecommendationsWizard = ({
         return () => setStage("eventType")
       case "bigEventForm":
         return () => setStage("numberOfPeople")
+      case "sentBigEventForm":
+        return null
       case "dietaryRestrictions":
         return () => setStage("numberOfPeople")
       case "servingStyle":
@@ -290,6 +292,8 @@ const RecommendationsWizard = ({
         }
         return () => setStage("dietaryRestrictions")
       case "bigEventForm":
+        return () => setStage("sentBigEventForm")
+      case "sentBigEventForm":
         return null
       case "dietaryRestrictions":
         return () => setStage("servingStyle")
@@ -299,6 +303,15 @@ const RecommendationsWizard = ({
         return () => setStage("recommendationsResult")
       default:
         return null
+    }
+  }, [stage, setStage, selectedEventTypes, _numberOfPeopleIndex])
+
+  const highlightedMenuForwardText = useMemo(() => {
+    switch(stage){
+      case "bigEventForm":
+        return "Send!"
+      default:
+        return "Confirm"
     }
   }, [stage, setStage, selectedEventTypes, _numberOfPeopleIndex])
 
@@ -356,6 +369,14 @@ const RecommendationsWizard = ({
                   <BigEventForm/>
                 </MenuContent>
               }
+              {stage === "sentBigEventForm" &&
+                <MenuContent
+                  title="Request sent!"
+                  subtitle="We will contact you shortly!"
+                >
+                  <Link to={`/menu/${revenueCenter.slug}`}>Back to your Roti!</Link>
+                </MenuContent>
+              }
               {stage === "dietaryRestrictions" &&
                 <MenuContent title="Dietary restrictions" subtitle="Any ingredients we should rule out?">
                   <AllergenOptions/>
@@ -381,7 +402,7 @@ const RecommendationsWizard = ({
               <BackForwardButtons
                 onBackClick={highlightedMenuOnBackClick}
                 onForwardClick={highlightedMenuOnForwardClick}
-                forwardText="Confirm"
+                forwardText={highlightedMenuForwardText}
               />
             </AnimatedHighlightedMenu>
           </CateringContent>)
