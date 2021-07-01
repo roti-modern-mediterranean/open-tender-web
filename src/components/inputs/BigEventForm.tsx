@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import Input from './Input'
 import { Mail, Phone, User } from '../icons'
 import { useEmailFieldState, useNumberFieldState, usePhoneFieldState, useRequiredFieldState } from '../../hooks'
+import { Textarea } from './index'
 
 const BigEventForm = () => {
 
@@ -17,6 +18,9 @@ const BigEventForm = () => {
   const [numberOfPeople, setNumberOfPeople, numberOfPeopleError] = useNumberFieldState("", true)
   const numberOfPeopleOnChange = useCallback((event)=>setNumberOfPeople(event.target.value), [setName])
 
+  const [notes, setNotes] = useState("");
+  const notesOnChange = useCallback((event)=>setNotes(event.target.value), [setNotes])
+
   return (
     <form id="big-event-form" noValidate>
       <Input
@@ -25,7 +29,6 @@ const BigEventForm = () => {
         name="name"
         type="text"
         value={name}
-        placeholder="Name"
         onChange={nameOnChange}
         error={nameError.message}
         required={true}
@@ -36,7 +39,6 @@ const BigEventForm = () => {
         name="email"
         type="email"
         value={email}
-        placeholder="Email"
         onChange={emailOnChange}
         error={emailError.message}
         required={true}
@@ -48,7 +50,6 @@ const BigEventForm = () => {
         name="phone"
         type="tel"
         value={phone}
-        placeholder="Phone"
         onChange={phoneOnChange}
         error={phoneError.message}
         required={true}
@@ -59,12 +60,16 @@ const BigEventForm = () => {
         name="number-of-people"
         type="number"
         value={numberOfPeople}
-        placeholder="Number of People"
         onChange={numberOfPeopleOnChange}
         error={numberOfPeopleError.message}
         required={true}
       />
-      <textarea placeholder="Any notes?" rows={4} />
+      <Textarea
+        label="Any notes?"
+        name="notes"
+        value={notes}
+        onChange={notesOnChange}
+      />
     </form>
   )
 }
