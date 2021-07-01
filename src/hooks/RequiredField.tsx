@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useMemo, useState } from 'react'
-import { StateError } from './common'
-
+import { fieldRequiredError, noError, StateError } from './common'
 
 const useRequiredFieldState = <T extends any>(
   initialState: T | (() => T)
@@ -9,11 +8,8 @@ const useRequiredFieldState = <T extends any>(
 
   const error = useMemo(
     () => (value === ""
-      ? {
-        hasError: true,
-        message: "This field is required",
-      }
-      : { hasError: false, message: undefined }),
+      ? fieldRequiredError
+      : noError),
     [value],
   );
 

@@ -1,11 +1,16 @@
 import { Dispatch, SetStateAction, useMemo, useState } from 'react'
-import { StateError } from './common'
+import { fieldRequiredError, noError, StateError } from './common'
 
 
 export const isPhoneValid = (value: string) => {
   const regExp = /^\+?[\s.\d]{9,20}$/;
   return regExp.test(value);
 };
+
+const invalidPhoneError:StateError = {
+  hasError: true,
+  message: "Invalid phone",
+}
 
 const usePhoneFieldState = (
   initialState: string | (() => string),
@@ -15,21 +20,12 @@ const usePhoneFieldState = (
 
   const error = useMemo(() => {
     if (required && !value) {
-      return {
-        hasError: true,
-        message: "This field is required",
-      };
+      return fieldRequiredError;
     }
     if (isPhoneValid(value)) {
-      return {
-        hasError: false,
-        message: undefined,
-      };
+      return noError;
     }
-    return {
-      hasError: true,
-      message: "Invalid phone",
-    };
+    return invalidPhoneError;
   }, [required, value]);
 
   return [value, setValue, error];

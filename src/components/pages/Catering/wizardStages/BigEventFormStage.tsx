@@ -1,5 +1,5 @@
 import BackForwardButtons from '../BackForwardButtons'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { MenuContent } from '../../../HighlightedMenu'
 import { wizardStages } from '../common'
 import BigEventForm from '../BigEventForm'
@@ -12,13 +12,18 @@ const BigEventFormStage = ({
   setStage
 }:BigEventFormStageProps) => {
 
+  const [formValidated, setFormValidated] = useState(false)
+
   const bigEventFormOnBackClick = useMemo(()=>{
     return () => setStage("numberOfPeople")
   }, [setStage])
 
   const bigEventFormOnForwardClick = useMemo(()=>{
-    return () => setStage("sentBigEventForm")
-  }, [setStage])
+    if(formValidated) {
+      return () => setStage("sentBigEventForm")
+    }
+    return null
+  }, [formValidated, setStage])
 
   return (
     <>
@@ -26,7 +31,7 @@ const BigEventFormStage = ({
         title="We want to get in touch with you!"
         subtitle="Leave us your details so we can contact you as soon as possible"
       >
-        <BigEventForm/>
+        <BigEventForm setFormValidated={setFormValidated} />
       </MenuContent>
       <BackForwardButtons
         onBackClick={bigEventFormOnBackClick}

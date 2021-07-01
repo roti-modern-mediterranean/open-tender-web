@@ -1,11 +1,16 @@
 import { Dispatch, SetStateAction, useMemo, useState } from 'react'
-import { StateError } from './common'
+import { fieldRequiredError, noError, StateError } from './common'
 
 
 export const isEmailValid = (email: string) => {
   const regExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regExp.test(email.toLowerCase());
 };
+
+const invalidEmailError:StateError = {
+  hasError: true,
+  message: "Invalid email",
+}
 
 const useEmailFieldState = (
   initialState: string | (() => string),
@@ -15,21 +20,12 @@ const useEmailFieldState = (
 
   const error = useMemo(() => {
     if (required && !value) {
-      return {
-        hasError: true,
-        message: "This field is required",
-      };
+      return fieldRequiredError;
     }
     if (isEmailValid(value)) {
-      return {
-        hasError: false,
-        message: undefined,
-      };
+      return noError;
     }
-    return {
-      hasError: true,
-      message: "Invalid email",
-    };
+    return invalidEmailError;
   }, [value]);
 
   return [value, setValue, error];

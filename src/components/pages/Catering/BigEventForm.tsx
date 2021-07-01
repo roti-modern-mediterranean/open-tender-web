@@ -1,10 +1,14 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Input from '../../inputs/Input'
 import { Mail, Phone, User } from '../../icons'
 import { useEmailFieldState, useNumberFieldState, usePhoneFieldState, useRequiredFieldState } from '../../../hooks'
 import { Textarea } from '../../inputs'
 
-const BigEventForm = () => {
+interface BigEventFormProps {
+  setFormValidated: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const BigEventForm = ({setFormValidated}:BigEventFormProps) => {
 
   const [name, setName, nameError] = useRequiredFieldState("")
   const nameOnChange = useCallback((event)=>setName(event.target.value), [setName])
@@ -28,6 +32,13 @@ const BigEventForm = () => {
 
   const [notes, setNotes] = useState("");
   const notesOnChange = useCallback((event)=>setNotes(event.target.value), [setNotes])
+
+  useEffect(()=>setFormValidated(
+    !nameError.hasError &&
+    !emailError.hasError &&
+    !phoneError.hasError &&
+    !numberOfPeopleError.hasError)
+  , [nameError, emailError, phoneError, numberOfPeopleError])
 
   return (
     <form id="big-event-form" noValidate>
