@@ -8,15 +8,23 @@ const BigEventForm = () => {
 
   const [name, setName, nameError] = useRequiredFieldState("")
   const nameOnChange = useCallback((event)=>setName(event.target.value), [setName])
+  const [showNameError, setShowNameError] = useState(false)
+  const nameOnBlur = useCallback(()=>setShowNameError(true), [setShowNameError])
 
   const [email, setEmail, emailError] = useEmailFieldState("", true)
   const emailOnChange = useCallback((event)=>setEmail(event.target.value), [setName])
+  const [showEmailError, setShowEmailError] = useState(false)
+  const emailOnBlur = useCallback(()=>setShowEmailError(true), [setShowEmailError])
 
   const [phone, setPhone, phoneError] = usePhoneFieldState("", true)
   const phoneOnChange = useCallback((event)=>setPhone(event.target.value), [setName])
+  const [showPhoneError, setShowPhoneError] = useState(false)
+  const phoneOnBlur = useCallback(()=>setShowPhoneError(true), [setShowPhoneError])
 
   const [numberOfPeople, setNumberOfPeople, numberOfPeopleError] = useNumberFieldState("", true)
   const numberOfPeopleOnChange = useCallback((event)=>setNumberOfPeople(event.target.value), [setName])
+  const [showNumberOfPeopleError, setShowNumberOfPeopleError] = useState(false)
+  const numberOfPeopleOnBlur = useCallback(()=>setShowNumberOfPeopleError(true), [setShowNumberOfPeopleError])
 
   const [notes, setNotes] = useState("");
   const notesOnChange = useCallback((event)=>setNotes(event.target.value), [setNotes])
@@ -30,7 +38,8 @@ const BigEventForm = () => {
         type="text"
         value={name}
         onChange={nameOnChange}
-        error={nameError.message}
+        onBlur={nameOnBlur}
+        error={showNameError ? nameError.message : undefined}
         required={true}
       />
       <Input
@@ -40,7 +49,8 @@ const BigEventForm = () => {
         type="email"
         value={email}
         onChange={emailOnChange}
-        error={emailError.message}
+        onBlur={emailOnBlur}
+        error={showEmailError ? emailError.message : undefined}
         required={true}
         autoComplete="email"
       />
@@ -51,7 +61,8 @@ const BigEventForm = () => {
         type="tel"
         value={phone}
         onChange={phoneOnChange}
-        error={phoneError.message}
+        onBlur={phoneOnBlur}
+        error={showPhoneError ? phoneError.message : undefined}
         required={true}
       />
       <Input
@@ -61,7 +72,8 @@ const BigEventForm = () => {
         type="number"
         value={numberOfPeople}
         onChange={numberOfPeopleOnChange}
-        error={numberOfPeopleError.message}
+        onBlur={numberOfPeopleOnBlur}
+        error={showNumberOfPeopleError ? numberOfPeopleError.message : undefined}
         required={true}
       />
       <Textarea

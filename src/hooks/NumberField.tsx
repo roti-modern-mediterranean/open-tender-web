@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
+import { Dispatch, SetStateAction, useMemo, useState } from 'react'
 import { StateError } from './common'
 
 
@@ -12,40 +12,25 @@ const useNumberFieldState = (
   required: boolean = true
 ): [string, Dispatch<SetStateAction<string>>, StateError] => {
   const [value, setValue] = useState(initialState);
-  const startState = useMemo(() => initialState, []);
-  const [hasChanged, setHasChanged] = useState(false);
-  const forceShowError = useCallback(() => setHasChanged(true), [
-    setHasChanged,
-  ]);
+
   const error = useMemo(() => {
     if (required && !value) {
       return {
         hasError: true,
-        message: hasChanged
-          ? "This field is required"
-          : undefined,
-        forceShowError,
+        message: "This field is required",
       };
     }
     if (isNumberValid(value)) {
       return {
         hasError: false,
         message: undefined,
-        forceShowError,
       };
     }
     return {
       hasError: true,
-      message: hasChanged ? "Invalid number" : undefined,
-      forceShowError,
+      message: "Invalid number",
     };
-  }, [required, hasChanged, value, forceShowError]);
-
-  useEffect(() => {
-    if (value !== startState) {
-      setHasChanged(true);
-    }
-  }, [value !== startState]);
+  }, [required, value]);
 
   return [value, setValue, error];
 };

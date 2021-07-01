@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, CSSProperties } from 'react'
+import React, { ChangeEventHandler, CSSProperties, FocusEventHandler } from 'react'
 import { Label } from '.'
 
 interface InputProps {
@@ -9,6 +9,7 @@ interface InputProps {
   type: string,
   value: string | number,
   onChange: ChangeEventHandler<HTMLInputElement>,
+  onBlur?: FocusEventHandler<HTMLInputElement>,
   error?: string,
   disabled?: boolean,
   readOnly?: boolean,
@@ -30,6 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       type,
       value,
       onChange,
+      onBlur,
       error = "",
       showLabel = true,
       placeholder = '',
@@ -72,6 +74,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           readOnly={readOnly}
           required={required}
           onChange={onChange}
+          onBlur={onBlur}
           ref={ref}
         />
         {children}
