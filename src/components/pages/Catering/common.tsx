@@ -70,3 +70,14 @@ export const CateringMessage = styled('div')`
     }
   }
 `
+export type wizardStages =
+  | 'eventType'
+  | 'numberOfPeople'
+  | 'bigEventForm'
+  | 'sentBigEventForm'
+  | 'dietaryRestrictions'
+  | 'servingStyle'
+  | 'selectMains'
+  | 'recommendationsResult';
+
+export const defaultForwardText = "Confirm"
