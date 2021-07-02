@@ -14,6 +14,9 @@ export const CateringContent = styled.div<{hasNoShortcut?:boolean}>`
              "shortcut        options"`};
   
   grid-template-columns: minmax(10%, auto) minmax(36%, 36rem);
+  grid-template-rows: ${(props) => props.hasNoShortcut
+          ? `auto`
+          : `auto 120px`};
   column-gap: 4.2rem;
   row-gap: 3rem;
 
@@ -32,6 +35,7 @@ export const CateringContent = styled.div<{hasNoShortcut?:boolean}>`
                         "options"
                         ${(props) => !props.hasNoShortcut && `"shortcut"`};
     grid-template-columns: auto;
+    grid-template-rows: auto;
   }
 `
 

@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import {
   selectNumberOfPeople,
 } from '../../../../slices/recommendationsSlice'
+import BuilderOptionToggle from '../../../Builder/BuilderOptionToggle'
 
 const incrementSteps = 1;
 
@@ -17,7 +18,8 @@ const OptionsRow = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 0 -0.5rem;
+  margin: 1rem -0.5rem;
+  align-self: flex-start;
 `
 
 const MainsMissing = styled.div<{mainsMissing: number}>`
@@ -260,7 +262,26 @@ const SelectMainsStage = ({
     return () => setStage("recommendationsResult")
   }, [numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity, setStage])
 
+  const active = useMemo(()=>{
+    switch(activeOption) {
+      case "0-0":
+        return chickenOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople);
+      case "0-1":
+        return steakOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople);
+      case "0-2":
+        return falafelOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople);
+      default:
+        return null;
+    }
+  }, [activeOption])
+
   const mainsMissing = numberOfPeople-chickenQuantity-steakQuantity-falafelQuantity
+
+  const builderOptionToggleProps = useMemo(()=>({
+      show: !!active,
+      option: active,
+      setActiveOption
+    }), [active, setActiveOption])
 
   return (
     <>
@@ -318,6 +339,7 @@ const SelectMainsStage = ({
         <MainsMissing mainsMissing={mainsMissing} >
           Mains missing: {numberOfPeople-chickenQuantity-steakQuantity-falafelQuantity}
         </MainsMissing>
+        <BuilderOptionToggle {...builderOptionToggleProps}/>
       </MenuContent>
       <BackForwardButtons
         onBackClick={selectMainsOnBackClick}
