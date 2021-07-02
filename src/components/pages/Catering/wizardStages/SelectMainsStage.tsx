@@ -4,6 +4,10 @@ import { MenuContent } from '../../../HighlightedMenu'
 import { defaultForwardText, useManageAllergens, wizardStages } from '../common'
 import BuilderOption from '../../../Builder/BuilderOption'
 import styled from '@emotion/styled'
+import { useSelector } from 'react-redux'
+import {
+  selectNumberOfPeople,
+} from '../../../../slices/recommendationsSlice'
 
 const incrementSteps = 1;
 
@@ -14,6 +18,15 @@ const OptionsRow = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   margin: 0 -0.5rem;
+`
+
+const MainsMissing = styled.div`
+  label: MainsMissing;
+
+  font-family: ${(props) => props.theme.fonts.preface.family};
+  font-size: ${(props) => props.theme.fonts.preface.fontSize};
+  text-transform: ${(props) => props.theme.fonts.preface.textTransform};
+  font-weight: ${(props) => props.theme.fonts.preface.weight};
 `
 
 interface OptionsGroup {
@@ -176,7 +189,7 @@ const SelectMainsStage = ({
   setStage
 }:SelectMainsStageProps) => {
 
-  const numberOfPeople = 75; // TODO get from redux
+  const numberOfPeople = useSelector(selectNumberOfPeople)
 
   const {options, selectedOptions} = useManageAllergens()
   const selectedOptionsByName = useMemo(
@@ -193,7 +206,9 @@ const SelectMainsStage = ({
     setSteakQuantity(initialNumberOfSteak)
     setFalafelQuantity(initialNumberOfFalafel)
     setChickenQuantity(numberOfPeople-initialNumberOfSteak-initialNumberOfFalafel)
-  }, [])
+  }, [numberOfPeople, setSteakQuantity, setFalafelQuantity, setChickenQuantity])
+
+  const [activeOption, setActiveOption] = useState<string|null>(null)
 
   const chickenIncrementOption = useCallback(
     ()=>setChickenQuantity(chickenQuantity+1)
@@ -256,8 +271,8 @@ const SelectMainsStage = ({
             incrementOption={chickenIncrementOption}
             decrementOption={chickenDecrementOption}
             setOptionQuantity={chickenSetOptionQuantity}
-            activeOption={null}
-            setActiveOption={()=>{}}
+            activeOption={activeOption}
+            setActiveOption={setActiveOption}
             setActiveIndex={()=>{}}
             index={0}
             lastIndex={2}
@@ -272,8 +287,8 @@ const SelectMainsStage = ({
             incrementOption={steakIncrementOption}
             decrementOption={steakDecrementOption}
             setOptionQuantity={steakSetOptionQuantity}
-            activeOption={null}
-            setActiveOption={()=>{}}
+            activeOption={activeOption}
+            setActiveOption={setActiveOption}
             setActiveIndex={()=>{}}
             index={1}
             lastIndex={2}
@@ -288,13 +303,16 @@ const SelectMainsStage = ({
             incrementOption={falafelIncrementOption}
             decrementOption={falafelDecrementOption}
             setOptionQuantity={falafelSetOptionQuantity}
-            activeOption={null}
-            setActiveOption={()=>{}}
+            activeOption={activeOption}
+            setActiveOption={setActiveOption}
             setActiveIndex={()=>{}}
             index={2}
             lastIndex={2}
           />
         </OptionsRow>
+        <MainsMissing>
+          Mains missing: {numberOfPeople-chickenQuantity-steakQuantity-falafelQuantity}
+        </MainsMissing>
       </MenuContent>
       <BackForwardButtons
         onBackClick={selectMainsOnBackClick}

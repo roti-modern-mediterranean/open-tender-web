@@ -8,7 +8,10 @@ export const eventTypeOptions = [
   { id: "Party / Venue", name: "Party / Venue"}]
 
 // TODO should not be hardcoded (?)
-export const numberOfPeopleOptions = ["", "10", "20", "30", "50", "75", "100+"]
+export const validNumberOfPeopleOptions = [10, 20, 30, 50, 75]
+
+// TODO should not be hardcoded (?)
+export const numberOfPeopleOptions = ["", ...validNumberOfPeopleOptions.map(value => `${value}`), "100+"]
 
 // TODO should not be hardcoded (?)
 export const servingStyleOptions = [
@@ -42,6 +45,7 @@ export const { setEventType, setNumberOfPeopleIndex, setServingStyle } =
 
 export const selectEventType = (state) => state.recommendations.eventType
 export const selectNumberOfPeopleIndex = (state) => state.recommendations.numberOfPeopleIndex
+export const selectNumberOfPeople = (state) => validNumberOfPeopleOptions[selectNumberOfPeopleIndex(state)-1]
 export const selectServingStyle = (state) => state.recommendations.servingStyle
 
 export default recommendationsSlice.reducer
