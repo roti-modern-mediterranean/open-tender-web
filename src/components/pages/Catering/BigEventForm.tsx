@@ -3,6 +3,7 @@ import Input from '../../inputs/Input'
 import { Mail, Phone, User } from '../../icons'
 import { useEmailFieldState, useNumberFieldState, usePhoneFieldState, useRequiredFieldState } from '../../../hooks'
 import { Textarea } from '../../inputs'
+import { makePhone } from '@open-tender/js'
 
 interface BigEventFormProps {
   setFormValidated: React.Dispatch<React.SetStateAction<boolean>>
@@ -70,7 +71,7 @@ const BigEventForm = ({setFormValidated}:BigEventFormProps) => {
         label="Phone"
         name="phone"
         type="tel"
-        value={phone}
+        value={makePhone(phone)}
         onChange={phoneOnChange}
         onBlur={phoneOnBlur}
         error={showPhoneError ? phoneError.message : undefined}

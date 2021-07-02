@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { fieldRequiredError, noError, StateError } from './common'
+import { makePhone } from '@open-tender/js'
 
 
 export const isPhoneValid = (value: string) => {
@@ -15,8 +16,9 @@ const invalidPhoneError:StateError = {
 const usePhoneFieldState = (
   initialState: string | (() => string),
   required: boolean = true
-): [string, Dispatch<SetStateAction<string>>, StateError] => {
-  const [value, setValue] = useState(initialState);
+): [string, (newValue:string)=>void, StateError] => {
+  const [value, _setValue] = useState(initialState);
+  const setValue = useCallback((newValue:string)=>_setValue(newValue.split("-").join("")), [_setValue])
 
   const error = useMemo(() => {
     if (required && !value) {
@@ -28,7 +30,7 @@ const usePhoneFieldState = (
     return invalidPhoneError;
   }, [required, value]);
 
-  return [value, setValue, error];
+  return [makePhone(value), setValue, error];
 };
 
 export default usePhoneFieldState;

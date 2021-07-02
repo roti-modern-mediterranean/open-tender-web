@@ -42,3 +42,7 @@ declare module "@open-tender/redux" {
     revenueCenter: RevenueCenter
   });
 }
+
+declare module "@open-tender/js" {
+  export const makePhone: (props:string) => string
+}
