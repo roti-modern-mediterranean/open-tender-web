@@ -20,13 +20,16 @@ const OptionsRow = styled.div`
   margin: 0 -0.5rem;
 `
 
-const MainsMissing = styled.div`
+const MainsMissing = styled.div<{mainsMissing: number}>`
   label: MainsMissing;
 
   font-family: ${(props) => props.theme.fonts.preface.family};
   font-size: ${(props) => props.theme.fonts.preface.fontSize};
   text-transform: ${(props) => props.theme.fonts.preface.textTransform};
   font-weight: ${(props) => props.theme.fonts.preface.weight};
+  color: ${(props) => props.mainsMissing === 0 
+          ? props.theme.colors.pepper 
+          : props.theme.colors.paprika};
 `
 
 interface OptionsGroup {
@@ -257,6 +260,8 @@ const SelectMainsStage = ({
     return () => setStage("recommendationsResult")
   }, [numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity, setStage])
 
+  const mainsMissing = numberOfPeople-chickenQuantity-steakQuantity-falafelQuantity
+
   return (
     <>
       <MenuContent title="Select the mains" subtitle="How many of each mains do you want?">
@@ -310,7 +315,7 @@ const SelectMainsStage = ({
             lastIndex={2}
           />
         </OptionsRow>
-        <MainsMissing>
+        <MainsMissing mainsMissing={mainsMissing} >
           Mains missing: {numberOfPeople-chickenQuantity-steakQuantity-falafelQuantity}
         </MainsMissing>
       </MenuContent>
