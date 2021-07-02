@@ -1,5 +1,5 @@
 import BackForwardButtons from '../BackForwardButtons'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { MenuContent } from '../../../HighlightedMenu'
 import { defaultForwardText, useManageAllergens, wizardStages } from '../common'
 import BuilderOption from '../../../Builder/BuilderOption'
@@ -129,9 +129,9 @@ const falafelOption = (chickenQuantity:number, steakQuantity:number, falafelQuan
     trans_fat:0
   },
   cals: 222,
-  quantity: steakQuantity,
+  quantity: falafelQuantity,
   increment: incrementSteps,
-  max: numberOfPeople-chickenQuantity-falafelQuantity,
+  max: numberOfPeople-chickenQuantity-steakQuantity,
   min:0,
   isSoldOut:false,
 })
@@ -185,13 +185,52 @@ const SelectMainsStage = ({
     setChickenQuantity(numberOfPeople-initialNumberOfSteak-initialNumberOfFalafel)
   }, [])
 
+  const chickenIncrementOption = useCallback(
+    ()=>setChickenQuantity(chickenQuantity+1)
+    , [setChickenQuantity, chickenQuantity])
+
+  const chickenDecrementOption = useCallback(
+    ()=>setChickenQuantity(chickenQuantity-1)
+    , [setChickenQuantity, chickenQuantity])
+
+  const chickenSetOptionQuantity = useCallback(
+    (_groupId:number, _optionId:number, quantity:number)=>setChickenQuantity(quantity)
+    , [setChickenQuantity])
+
+  const steakIncrementOption = useCallback(
+    ()=>setSteakQuantity(steakQuantity+1)
+    , [setSteakQuantity, steakQuantity])
+
+  const steakDecrementOption = useCallback(
+    ()=>setSteakQuantity(steakQuantity-1)
+    , [setSteakQuantity, steakQuantity])
+
+  const steakSetOptionQuantity = useCallback(
+    (_groupId:number, _optionId:number, quantity:number)=>setSteakQuantity(quantity)
+    , [setSteakQuantity])
+
+  const falafelIncrementOption = useCallback(
+    ()=>setFalafelQuantity(falafelQuantity+1)
+    , [setFalafelQuantity, falafelQuantity])
+
+  const falafelDecrementOption = useCallback(
+    ()=>setFalafelQuantity(falafelQuantity-1)
+    , [setFalafelQuantity, falafelQuantity])
+
+  const falafelSetOptionQuantity = useCallback(
+    (_groupId:number, _optionId:number, quantity:number)=>setFalafelQuantity(quantity)
+    , [setFalafelQuantity])
+
   const selectMainsOnBackClick = useMemo(()=>{
     return () => setStage("servingStyle")
   }, [setStage])
 
   const selectMainsOnForwardClick = useMemo(()=>{
+    if(numberOfPeople !== chickenQuantity + steakQuantity + falafelQuantity){
+      return null;
+    }
     return () => setStage("recommendationsResult")
-  }, [setStage])
+  }, [numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity, setStage])
 
   return (
     <>
@@ -203,9 +242,9 @@ const SelectMainsStage = ({
           soldOut={emptyNumberArray}
           allergenAlerts={selectedOptionsByName}
           displaySettings={displaySettings}
-          incrementOption={()=>{}}
-          decrementOption={()=>{}}
-          setOptionQuantity={()=>{}}
+          incrementOption={chickenIncrementOption}
+          decrementOption={chickenDecrementOption}
+          setOptionQuantity={chickenSetOptionQuantity}
           activeOption={null}
           setActiveOption={()=>{}}
           setActiveIndex={()=>{}}
@@ -219,9 +258,9 @@ const SelectMainsStage = ({
           soldOut={emptyNumberArray}
           allergenAlerts={selectedOptionsByName}
           displaySettings={displaySettings}
-          incrementOption={()=>{}}
-          decrementOption={()=>{}}
-          setOptionQuantity={()=>{}}
+          incrementOption={steakIncrementOption}
+          decrementOption={steakDecrementOption}
+          setOptionQuantity={steakSetOptionQuantity}
           activeOption={null}
           setActiveOption={()=>{}}
           setActiveIndex={()=>{}}
@@ -235,9 +274,9 @@ const SelectMainsStage = ({
           soldOut={emptyNumberArray}
           allergenAlerts={selectedOptionsByName}
           displaySettings={displaySettings}
-          incrementOption={()=>{}}
-          decrementOption={()=>{}}
-          setOptionQuantity={()=>{}}
+          incrementOption={falafelIncrementOption}
+          decrementOption={falafelDecrementOption}
+          setOptionQuantity={falafelSetOptionQuantity}
           activeOption={null}
           setActiveOption={()=>{}}
           setActiveIndex={()=>{}}
