@@ -190,6 +190,8 @@ interface SelectMainsStageProps {
   setStage: React.Dispatch<React.SetStateAction<wizardStages>>
 }
 
+const noop = ()=>{}
+
 const SelectMainsStage = ({
   setStage
 }:SelectMainsStageProps) => {
@@ -299,7 +301,7 @@ const SelectMainsStage = ({
             setOptionQuantity={chickenSetOptionQuantity}
             activeOption={activeOption}
             setActiveOption={setActiveOption}
-            setActiveIndex={()=>{}}
+            setActiveIndex={noop}
             index={0}
             lastIndex={2}
           />
@@ -315,7 +317,7 @@ const SelectMainsStage = ({
             setOptionQuantity={steakSetOptionQuantity}
             activeOption={activeOption}
             setActiveOption={setActiveOption}
-            setActiveIndex={()=>{}}
+            setActiveIndex={noop}
             index={1}
             lastIndex={2}
           />
@@ -331,7 +333,7 @@ const SelectMainsStage = ({
             setOptionQuantity={falafelSetOptionQuantity}
             activeOption={activeOption}
             setActiveOption={setActiveOption}
-            setActiveIndex={()=>{}}
+            setActiveIndex={noop}
             index={2}
             lastIndex={2}
           />
