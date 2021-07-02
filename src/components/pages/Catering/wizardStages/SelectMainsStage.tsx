@@ -3,8 +3,18 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { MenuContent } from '../../../HighlightedMenu'
 import { defaultForwardText, useManageAllergens, wizardStages } from '../common'
 import BuilderOption from '../../../Builder/BuilderOption'
+import styled from '@emotion/styled'
 
 const incrementSteps = 1;
+
+const OptionsRow = styled.div`
+  label: OptionsRow;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0 -0.5rem;
+`
 
 interface OptionsGroup {
   id: number,
@@ -235,54 +245,56 @@ const SelectMainsStage = ({
   return (
     <>
       <MenuContent title="Select the mains" subtitle="How many of each mains do you want?">
-        <BuilderOption
-          perRow={3}
-          group={optionsGroup(numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity)}
-          option={chickenOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople)}
-          soldOut={emptyNumberArray}
-          allergenAlerts={selectedOptionsByName}
-          displaySettings={displaySettings}
-          incrementOption={chickenIncrementOption}
-          decrementOption={chickenDecrementOption}
-          setOptionQuantity={chickenSetOptionQuantity}
-          activeOption={null}
-          setActiveOption={()=>{}}
-          setActiveIndex={()=>{}}
-          index={0}
-          lastIndex={2}
-        />
-        <BuilderOption
-          perRow={3}
-          group={optionsGroup(numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity)}
-          option={steakOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople)}
-          soldOut={emptyNumberArray}
-          allergenAlerts={selectedOptionsByName}
-          displaySettings={displaySettings}
-          incrementOption={steakIncrementOption}
-          decrementOption={steakDecrementOption}
-          setOptionQuantity={steakSetOptionQuantity}
-          activeOption={null}
-          setActiveOption={()=>{}}
-          setActiveIndex={()=>{}}
-          index={1}
-          lastIndex={2}
-        />
-        <BuilderOption
-          perRow={3}
-          group={optionsGroup(numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity)}
-          option={falafelOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople)}
-          soldOut={emptyNumberArray}
-          allergenAlerts={selectedOptionsByName}
-          displaySettings={displaySettings}
-          incrementOption={falafelIncrementOption}
-          decrementOption={falafelDecrementOption}
-          setOptionQuantity={falafelSetOptionQuantity}
-          activeOption={null}
-          setActiveOption={()=>{}}
-          setActiveIndex={()=>{}}
-          index={2}
-          lastIndex={2}
-        />
+        <OptionsRow>
+          <BuilderOption
+            perRow={3}
+            group={optionsGroup(numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity)}
+            option={chickenOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople)}
+            soldOut={emptyNumberArray}
+            allergenAlerts={selectedOptionsByName}
+            displaySettings={displaySettings}
+            incrementOption={chickenIncrementOption}
+            decrementOption={chickenDecrementOption}
+            setOptionQuantity={chickenSetOptionQuantity}
+            activeOption={null}
+            setActiveOption={()=>{}}
+            setActiveIndex={()=>{}}
+            index={0}
+            lastIndex={2}
+          />
+          <BuilderOption
+            perRow={3}
+            group={optionsGroup(numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity)}
+            option={steakOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople)}
+            soldOut={emptyNumberArray}
+            allergenAlerts={selectedOptionsByName}
+            displaySettings={displaySettings}
+            incrementOption={steakIncrementOption}
+            decrementOption={steakDecrementOption}
+            setOptionQuantity={steakSetOptionQuantity}
+            activeOption={null}
+            setActiveOption={()=>{}}
+            setActiveIndex={()=>{}}
+            index={1}
+            lastIndex={2}
+          />
+          <BuilderOption
+            perRow={3}
+            group={optionsGroup(numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity)}
+            option={falafelOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople)}
+            soldOut={emptyNumberArray}
+            allergenAlerts={selectedOptionsByName}
+            displaySettings={displaySettings}
+            incrementOption={falafelIncrementOption}
+            decrementOption={falafelDecrementOption}
+            setOptionQuantity={falafelSetOptionQuantity}
+            activeOption={null}
+            setActiveOption={()=>{}}
+            setActiveIndex={()=>{}}
+            index={2}
+            lastIndex={2}
+          />
+        </OptionsRow>
       </MenuContent>
       <BackForwardButtons
         onBackClick={selectMainsOnBackClick}
