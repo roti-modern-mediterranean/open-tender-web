@@ -88,6 +88,17 @@ const RangeSliderMessageButtons = styled.div`
   }
 `;
 
+const BigEventCTA = () => (
+  <RangeSliderMessageContainer>
+    <RangeSliderMessage>Nice, let's get it going!</RangeSliderMessage>
+    <RangeSliderSubMessage>Contact us directly for big orders</RangeSliderSubMessage>
+    <RangeSliderMessageButtons>
+      <CallUsButton/>
+      <ChatButton/>
+    </RangeSliderMessageButtons>
+  </RangeSliderMessageContainer>
+)
+
 const numberOfPeopleMessage = (index:number) =>{
   if(index < 1){
     return <RangeSliderMessage>How many are we?</RangeSliderMessage>;
@@ -98,16 +109,7 @@ const numberOfPeopleMessage = (index:number) =>{
   if(index < 6){
     return <RangeSliderMessage>Wow, it's gonna be a party!</RangeSliderMessage>;
   }
-  return (
-    <RangeSliderMessageContainer>
-      <RangeSliderMessage>Nice, let's get it going!</RangeSliderMessage>
-      <RangeSliderSubMessage>Contact us directly for big orders</RangeSliderSubMessage>
-      <RangeSliderMessageButtons>
-        <CallUsButton/>
-        <ChatButton/>
-      </RangeSliderMessageButtons>
-    </RangeSliderMessageContainer>
-  )
+  return <RangeSliderMessage>Big, big event!!</RangeSliderMessage>
 }
 
 interface NumberOfPeopleStageProps {
