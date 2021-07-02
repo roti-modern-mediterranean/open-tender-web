@@ -13,6 +13,8 @@ import GroupOf3People from '../../../icons/GroupOf3People'
 import GroupOf6People from '../../../icons/GroupOf6People'
 import CallUsButton from '../CallUsButton'
 import ChatButton from '../ChatButton'
+import ThickArrowDown from '../../../icons/ThickArrowDown'
+import { useTheme } from '@emotion/react'
 
 const RangeSliderContainer = styled.div`
   label: RangeSliderContainer;
@@ -20,12 +22,16 @@ const RangeSliderContainer = styled.div`
   height: 22rem;
 `
 
-const EmptyImage = styled.span<{size?:string}>`
-  label: EmptyImage;
+const InitialImage = styled.span<{size?:string}>`
+  label: InitialImage;
   
-  display: block;
   height: ${(props) => props.size ?? `30px`};
   width: ${(props) => props.size ?? `30px`};
+  
+  display: grid;
+  grid-template-rows: max-content auto;
+  align-items: center;
+  justify-items: center;
 `;
 
 interface NumberOfPeopleImageProps {
@@ -35,10 +41,16 @@ interface NumberOfPeopleImageProps {
 }
 
 const NumberOfPeopleImage = ({
-                               index, size, color
-                             }:NumberOfPeopleImageProps) => {
+  index, size, color
+}:NumberOfPeopleImageProps) => {
+  const theme = useTheme()
+
   if(index < 1){
-    return <EmptyImage size={size}/>;
+    return (
+      <InitialImage size={size}>
+        Drag me!
+        <ThickArrowDown color={theme.colors.pepper}/>
+      </InitialImage>);
   }
   if(index < 4){
     return <GroupOf3People size={size} color={color}/>;
