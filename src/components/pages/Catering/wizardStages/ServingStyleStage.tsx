@@ -26,8 +26,11 @@ const ServingStyleStage = ({
   }, [setStage])
 
   const servingStyleOnForwardClick = useMemo(()=>{
+    if(selectedServingStyle === null){
+      return null
+    }
     return () => setStage("selectMains")
-  }, [setStage])
+  }, [selectedServingStyle, setStage])
 
   return (
     <>

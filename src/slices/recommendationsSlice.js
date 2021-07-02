@@ -21,7 +21,13 @@ export const servingStyleOptions = [
 const initialState = {
   eventType: [],
   numberOfPeopleIndex: 0,
-  servingStyle: null
+  servingStyle: null,
+  mainsQuantities: {
+    chicken: 0,
+    steak: 0,
+    falafel: 0,
+    total: 0,
+  }
 }
 
 const recommendationsSlice = createSlice({
@@ -36,16 +42,39 @@ const recommendationsSlice = createSlice({
     },
     setServingStyle: (state, action) => {
       state.servingStyle = action.payload
+    },
+    setChickenQuantity: (state, action) => {
+      state.mainsQuantities.chicken = action.payload
+    },
+    setSteakQuantity: (state, action) => {
+      state.mainsQuantities.steak = action.payload
+    },
+    setFalafelQuantity: (state, action) => {
+      state.mainsQuantities.falafel = action.payload
+    },
+    setTotalQuantity: (state, action) => {
+      state.mainsQuantities.total = action.payload
     }
   },
 })
 
-export const { setEventType, setNumberOfPeopleIndex, setServingStyle } =
-  recommendationsSlice.actions
+export const {
+  setEventType,
+  setNumberOfPeopleIndex,
+  setServingStyle,
+  setChickenQuantity,
+  setSteakQuantity,
+  setFalafelQuantity,
+  setTotalQuantity
+} = recommendationsSlice.actions
 
 export const selectEventType = (state) => state.recommendations.eventType
 export const selectNumberOfPeopleIndex = (state) => state.recommendations.numberOfPeopleIndex
 export const selectNumberOfPeople = (state) => validNumberOfPeopleOptions[selectNumberOfPeopleIndex(state)-1]
 export const selectServingStyle = (state) => state.recommendations.servingStyle
+export const selectChickenQuantity = (state) => state.recommendations.mainsQuantities.chicken
+export const selectSteakQuantity = (state) => state.recommendations.mainsQuantities.steak
+export const selectFalafelQuantity = (state) => state.recommendations.mainsQuantities.falafel
+export const selectTotalQuantity = (state) => state.recommendations.mainsQuantities.total
 
 export default recommendationsSlice.reducer

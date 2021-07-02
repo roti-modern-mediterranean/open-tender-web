@@ -4,9 +4,16 @@ import { MenuContent } from '../../../HighlightedMenu'
 import { defaultForwardText, useManageAllergens, wizardStages } from '../common'
 import BuilderOption from '../../../Builder/BuilderOption'
 import styled from '@emotion/styled'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
+  selectChickenQuantity,
+  selectFalafelQuantity,
   selectNumberOfPeople,
+  selectSteakQuantity, selectTotalQuantity,
+  setChickenQuantity,
+  setFalafelQuantity,
+  setNumberOfPeopleIndex,
+  setSteakQuantity, setTotalQuantity
 } from '../../../../slices/recommendationsSlice'
 import BuilderOptionToggle from '../../../Builder/BuilderOptionToggle'
 
@@ -196,6 +203,8 @@ const SelectMainsStage = ({
   setStage
 }:SelectMainsStageProps) => {
 
+  const dispatch = useDispatch()
+
   const numberOfPeople = useSelector(selectNumberOfPeople)
 
   const {options, selectedOptions} = useManageAllergens()
@@ -203,81 +212,91 @@ const SelectMainsStage = ({
     ()=>selectedOptions.map(id => options.find(option => option.id === id)?.name || "")
     , [options, selectedOptions])
 
-  const [chickenQuantity, setChickenQuantity] = useState(0)
-  const [steakQuantity, setSteakQuantity] = useState(0)
-  const [falafelQuantity, setFalafelQuantity] = useState(0)
+  const _chickenQuantity = useSelector(selectChickenQuantity)
+  const _setChickenQuantity = useCallback((quantity) => dispatch(setChickenQuantity(quantity)), [dispatch])
+  const _steakQuantity = useSelector(selectSteakQuantity)
+  const _setSteakQuantity = useCallback((quantity) => dispatch(setSteakQuantity(quantity)), [dispatch])
+  const _falafelQuantity = useSelector(selectFalafelQuantity)
+  const _setFalafelQuantity = useCallback((quantity) => dispatch(setFalafelQuantity(quantity)), [dispatch])
+  const _totalQuantity = useSelector(selectTotalQuantity)
+  const _setTotalQuantity = useCallback((quantity) => dispatch(setTotalQuantity(quantity)), [dispatch])
 
   useEffect(()=>{
-    const initialNumberOfSteak = Math.floor(numberOfPeople * 0.2)
-    const initialNumberOfFalafel = Math.floor(numberOfPeople * 0.2)
-    setSteakQuantity(initialNumberOfSteak)
-    setFalafelQuantity(initialNumberOfFalafel)
-    setChickenQuantity(numberOfPeople-initialNumberOfSteak-initialNumberOfFalafel)
-  }, [numberOfPeople, setSteakQuantity, setFalafelQuantity, setChickenQuantity])
+    if(_totalQuantity !== numberOfPeople){
+      _setTotalQuantity(numberOfPeople)
+
+      const initialNumberOfSteak = Math.floor(numberOfPeople * 0.2)
+      const initialNumberOfFalafel = Math.floor(numberOfPeople * 0.2)
+
+      _setSteakQuantity(initialNumberOfSteak)
+      _setFalafelQuantity(initialNumberOfFalafel)
+      _setChickenQuantity(numberOfPeople-initialNumberOfSteak-initialNumberOfFalafel)
+    }
+  }, [numberOfPeople, _totalQuantity, _setChickenQuantity, _setSteakQuantity, _setFalafelQuantity, _setTotalQuantity])
 
   const [activeOption, setActiveOption] = useState<string|null>(null)
 
   const chickenIncrementOption = useCallback(
-    ()=>setChickenQuantity(chickenQuantity+1)
-    , [setChickenQuantity, chickenQuantity])
+    ()=>_setChickenQuantity(_chickenQuantity+1)
+    , [_setChickenQuantity, _chickenQuantity])
 
   const chickenDecrementOption = useCallback(
-    ()=>setChickenQuantity(chickenQuantity-1)
-    , [setChickenQuantity, chickenQuantity])
+    ()=>_setChickenQuantity(_chickenQuantity-1)
+    , [_setChickenQuantity, _chickenQuantity])
 
   const chickenSetOptionQuantity = useCallback(
-    (_groupId:number, _optionId:number, quantity:number)=>setChickenQuantity(quantity)
-    , [setChickenQuantity])
+    (_groupId:number, _optionId:number, quantity:number)=>_setChickenQuantity(quantity)
+    , [_setChickenQuantity])
 
   const steakIncrementOption = useCallback(
-    ()=>setSteakQuantity(steakQuantity+1)
-    , [setSteakQuantity, steakQuantity])
+    ()=>_setSteakQuantity(_steakQuantity+1)
+    , [_setSteakQuantity, _steakQuantity])
 
   const steakDecrementOption = useCallback(
-    ()=>setSteakQuantity(steakQuantity-1)
-    , [setSteakQuantity, steakQuantity])
+    ()=>_setSteakQuantity(_steakQuantity-1)
+    , [_setSteakQuantity, _steakQuantity])
 
   const steakSetOptionQuantity = useCallback(
-    (_groupId:number, _optionId:number, quantity:number)=>setSteakQuantity(quantity)
-    , [setSteakQuantity])
+    (_groupId:number, _optionId:number, quantity:number)=>_setSteakQuantity(quantity)
+    , [_setSteakQuantity])
 
   const falafelIncrementOption = useCallback(
-    ()=>setFalafelQuantity(falafelQuantity+1)
-    , [setFalafelQuantity, falafelQuantity])
+    ()=>_setFalafelQuantity(_falafelQuantity+1)
+    , [_setFalafelQuantity, _falafelQuantity])
 
   const falafelDecrementOption = useCallback(
-    ()=>setFalafelQuantity(falafelQuantity-1)
-    , [setFalafelQuantity, falafelQuantity])
+    ()=>_setFalafelQuantity(_falafelQuantity-1)
+    , [_setFalafelQuantity, _falafelQuantity])
 
   const falafelSetOptionQuantity = useCallback(
-    (_groupId:number, _optionId:number, quantity:number)=>setFalafelQuantity(quantity)
-    , [setFalafelQuantity])
+    (_groupId:number, _optionId:number, quantity:number)=>_setFalafelQuantity(quantity)
+    , [_setFalafelQuantity])
 
   const selectMainsOnBackClick = useMemo(()=>{
     return () => setStage("servingStyle")
   }, [setStage])
 
   const selectMainsOnForwardClick = useMemo(()=>{
-    if(numberOfPeople !== chickenQuantity + steakQuantity + falafelQuantity){
+    if(numberOfPeople !== _chickenQuantity + _steakQuantity + _falafelQuantity){
       return null;
     }
     return () => setStage("recommendationsResult")
-  }, [numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity, setStage])
+  }, [numberOfPeople, _chickenQuantity, _steakQuantity, _falafelQuantity, setStage])
 
   const active = useMemo(()=>{
     switch(activeOption) {
       case "0-0":
-        return chickenOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople);
+        return chickenOption(_chickenQuantity, _steakQuantity, _falafelQuantity, numberOfPeople);
       case "0-1":
-        return steakOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople);
+        return steakOption(_chickenQuantity, _steakQuantity, _falafelQuantity, numberOfPeople);
       case "0-2":
-        return falafelOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople);
+        return falafelOption(_chickenQuantity, _steakQuantity, _falafelQuantity, numberOfPeople);
       default:
         return null;
     }
   }, [activeOption])
 
-  const mainsMissing = numberOfPeople-chickenQuantity-steakQuantity-falafelQuantity
+  const mainsMissing = numberOfPeople-_chickenQuantity-_steakQuantity-_falafelQuantity
 
   const builderOptionToggleProps = useMemo(()=>({
       show: !!active,
@@ -291,8 +310,8 @@ const SelectMainsStage = ({
         <OptionsRow>
           <BuilderOption
             perRow={3}
-            group={optionsGroup(numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity)}
-            option={chickenOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople)}
+            group={optionsGroup(numberOfPeople, _chickenQuantity, _steakQuantity, _falafelQuantity)}
+            option={chickenOption(_chickenQuantity, _steakQuantity, _falafelQuantity, numberOfPeople)}
             soldOut={emptyNumberArray}
             allergenAlerts={selectedOptionsByName}
             displaySettings={displaySettings}
@@ -307,8 +326,8 @@ const SelectMainsStage = ({
           />
           <BuilderOption
             perRow={3}
-            group={optionsGroup(numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity)}
-            option={steakOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople)}
+            group={optionsGroup(numberOfPeople, _chickenQuantity, _steakQuantity, _falafelQuantity)}
+            option={steakOption(_chickenQuantity, _steakQuantity, _falafelQuantity, numberOfPeople)}
             soldOut={emptyNumberArray}
             allergenAlerts={selectedOptionsByName}
             displaySettings={displaySettings}
@@ -323,8 +342,8 @@ const SelectMainsStage = ({
           />
           <BuilderOption
             perRow={3}
-            group={optionsGroup(numberOfPeople, chickenQuantity, steakQuantity, falafelQuantity)}
-            option={falafelOption(chickenQuantity, steakQuantity, falafelQuantity, numberOfPeople)}
+            group={optionsGroup(numberOfPeople, _chickenQuantity, _steakQuantity, _falafelQuantity)}
+            option={falafelOption(_chickenQuantity, _steakQuantity, _falafelQuantity, numberOfPeople)}
             soldOut={emptyNumberArray}
             allergenAlerts={selectedOptionsByName}
             displaySettings={displaySettings}
@@ -339,7 +358,7 @@ const SelectMainsStage = ({
           />
         </OptionsRow>
         <MainsMissing mainsMissing={mainsMissing} >
-          Mains missing: {numberOfPeople-chickenQuantity-steakQuantity-falafelQuantity}
+          Mains missing: {numberOfPeople-_chickenQuantity-_steakQuantity-_falafelQuantity}
         </MainsMissing>
         <BuilderOptionToggle {...builderOptionToggleProps}/>
       </MenuContent>
