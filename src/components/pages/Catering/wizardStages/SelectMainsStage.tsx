@@ -29,6 +29,14 @@ const OptionsRow = styled.div`
   align-self: flex-start;
 `
 
+const CustomBuilderOption = styled(BuilderOption)`
+  label: CustomBuilderOption;
+  
+  button > span:nth-of-type(2) {
+    visibility: hidden;
+  }
+`;
+
 const MainsMissing = styled.div<{mainsMissing: number}>`
   label: MainsMissing;
 
@@ -175,7 +183,7 @@ const displaySettings = {
   allergens: true,
     builderImages: true,
     builderType: "DEFAULT",
-    calories: true,
+    calories: false,
     madeFor: true,
     menuHero: true,
     menuHeroChild: true,
@@ -308,7 +316,7 @@ const SelectMainsStage = ({
     <>
       <MenuContent title="Select the mains" subtitle="How many of each mains do you want?">
         <OptionsRow>
-          <BuilderOption
+          <CustomBuilderOption
             perRow={3}
             group={optionsGroup(numberOfPeople, _chickenQuantity, _steakQuantity, _falafelQuantity)}
             option={chickenOption(_chickenQuantity, _steakQuantity, _falafelQuantity, numberOfPeople)}
@@ -323,8 +331,9 @@ const SelectMainsStage = ({
             setActiveIndex={noop}
             index={0}
             lastIndex={2}
+            isQuantityAlwaysShown={true}
           />
-          <BuilderOption
+          <CustomBuilderOption
             perRow={3}
             group={optionsGroup(numberOfPeople, _chickenQuantity, _steakQuantity, _falafelQuantity)}
             option={steakOption(_chickenQuantity, _steakQuantity, _falafelQuantity, numberOfPeople)}
@@ -339,8 +348,9 @@ const SelectMainsStage = ({
             setActiveIndex={noop}
             index={1}
             lastIndex={2}
+            isQuantityAlwaysShown={true}
           />
-          <BuilderOption
+          <CustomBuilderOption
             perRow={3}
             group={optionsGroup(numberOfPeople, _chickenQuantity, _steakQuantity, _falafelQuantity)}
             option={falafelOption(_chickenQuantity, _steakQuantity, _falafelQuantity, numberOfPeople)}
@@ -355,6 +365,7 @@ const SelectMainsStage = ({
             setActiveIndex={noop}
             index={2}
             lastIndex={2}
+            isQuantityAlwaysShown={true}
           />
         </OptionsRow>
         <MainsMissing mainsMissing={mainsMissing} >
