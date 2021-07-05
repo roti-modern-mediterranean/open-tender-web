@@ -56,10 +56,6 @@ const NumberOfPeopleImage = ({
   return <GroupOf6People size={size} color={color}/>
 }
 
-const RangeSliderMessageContainer = styled.div`
-  label: RangeSliderMessageContainer;
-`;
-
 const RangeSliderMessage = styled.div`
   label: RangeSliderMessage;
   
@@ -76,38 +72,6 @@ const RangeSliderMessage = styled.div`
     font-size: 20px;
   }
 `
-
-const RangeSliderSubMessage = styled.div`
-  label: RangeSliderSubMessage;
-  
-  text-align: center;
-`;
-
-const RangeSliderMessageButtons = styled.div`
-  label: RangeSliderMessageButtons;
-  
-  display: grid;
-  grid-template-columns: 48% 48%;
-  gap: 4%;
-  justify-content: center;
-  margin-top: 1rem;
-  
-  
-  > button, > a {
-    width: 100%
-  }
-`;
-
-const BigEventCTA = () => (
-  <RangeSliderMessageContainer>
-    <RangeSliderMessage>Nice, let's get it going!</RangeSliderMessage>
-    <RangeSliderSubMessage>Contact us directly for big orders</RangeSliderSubMessage>
-    <RangeSliderMessageButtons>
-      <CallUsButton/>
-      <ChatButton/>
-    </RangeSliderMessageButtons>
-  </RangeSliderMessageContainer>
-)
 
 const numberOfPeopleMessage = (index:number) =>{
   if(index < 1){
