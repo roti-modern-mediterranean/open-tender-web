@@ -1,10 +1,14 @@
 import BackForwardButtons from '../BackForwardButtons'
-import React, { ChangeEventHandler, useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { MenuContent } from '../../../HighlightedMenu'
 import { defaultForwardText, wizardStages } from '../common'
-import { selectServingStyle, servingStyleOptions, setServingStyle } from '../../../../slices/recommendationsSlice'
-import RadioButton from '../../../inputs/RadioButton'
+import {
+  selectServingStyle,
+  servingStyleOptions,
+  setServingStyle
+} from '../../../../slices/recommendationsSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import OptionsMenu from '../../../OptionsMenu'
 
 interface ServingStyleStageProps {
   setStage: React.Dispatch<React.SetStateAction<wizardStages>>
@@ -17,16 +21,16 @@ const ServingStyleStage = ({
   const dispatch = useDispatch()
 
   const selectedServingStyle = useSelector(selectServingStyle)
-  const servingStyleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
-    (event)=> dispatch(setServingStyle(event.target.value))
-    , [dispatch])
+  const setSelectedServingStyle = useCallback<React.Dispatch<React.SetStateAction<string[]>>>(
+    (value)=> dispatch(setServingStyle(value))
+    , [dispatch, setServingStyle])
 
   const servingStyleOnBackClick = useMemo(()=>{
     return () => setStage("dietaryRestrictions")
   }, [setStage])
 
   const servingStyleOnForwardClick = useMemo(()=>{
-    if(selectedServingStyle === null){
+    if(selectedServingStyle.length === 0){
       return null
     }
     return () => setStage("selectMains")
@@ -35,15 +39,13 @@ const ServingStyleStage = ({
   return (
     <>
       <MenuContent title="Serving style" subtitle="Which serving format do you prefer?">
-        {servingStyleOptions.map(servingStyle => (
-          <RadioButton
-            name="serving_style"
-            value={selectedServingStyle}
-            option={servingStyle}
-            onChange={servingStyleOnChange}
-            key={servingStyle.value}
-          />
-        ))}
+        <OptionsMenu
+          options={servingStyleOptions}
+          selectedOptions={selectedServingStyle}
+          setSelectedOptions={setSelectedServingStyle}
+          widthPercentagePerButton={100}
+          hasMultiOptions={false}
+        />
       </MenuContent>
       <BackForwardButtons
         onBackClick={servingStyleOnBackClick}

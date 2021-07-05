@@ -15,13 +15,13 @@ export const numberOfPeopleOptions = ["", ...validNumberOfPeopleOptions.map(valu
 
 // TODO should not be hardcoded (?)
 export const servingStyleOptions = [
-  {value: "individual", name: "Individually packaged meals"},
-  {value: "buffet", name: "Family/Buffet style"}]
+  {id: "individual", name: "Individually packaged meals"},
+  {id: "buffet", name: "Family/Buffet style"}]
 
 const initialState = {
   eventType: [],
   numberOfPeopleIndex: 0,
-  servingStyle: null,
+  servingStyle: [],
   mainsQuantities: {
     chicken: 0,
     steak: 0,

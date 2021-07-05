@@ -20,14 +20,16 @@ interface OptionsMenuProps {
   options: Option[],
   selectedOptions: string[],
   setSelectedOptions: (value:string[]) => void,
-  widthPercentagePerButton?: number
+  widthPercentagePerButton?: number,
+  hasMultiOptions?: boolean
 }
 
 const OptionsMenu = (
   {options,
     selectedOptions,
     setSelectedOptions,
-    widthPercentagePerButton
+    widthPercentagePerButton,
+    hasMultiOptions=true
   }: OptionsMenuProps) => {
 
   const OptionButtonOnChange = useCallback((event) => {
@@ -36,7 +38,12 @@ const OptionsMenu = (
       setSelectedOptions(selectedOptions.filter(optionId => optionId !== option.id))
     }
     else {
-      setSelectedOptions([...selectedOptions, option.id])
+      if(hasMultiOptions){
+        setSelectedOptions([...selectedOptions, option.id])
+      }
+      else {
+        setSelectedOptions([option.id])
+      }
     }
   }, [selectedOptions, setSelectedOptions])
 

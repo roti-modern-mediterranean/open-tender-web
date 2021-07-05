@@ -39,6 +39,7 @@ const EventTypeStage = ({
           selectedOptions={selectedEventTypes}
           setSelectedOptions={setSelectedEventTypes}
           widthPercentagePerButton={100}
+          hasMultiOptions={false}
         />
       </MenuContent>
       <BackForwardButtons
