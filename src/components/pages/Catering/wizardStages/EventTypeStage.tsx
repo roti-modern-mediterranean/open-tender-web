@@ -1,10 +1,14 @@
 import OptionsMenu from '../../../OptionsMenu'
-import { eventTypeOptions, selectEventType, setEventType } from '../../../../slices/recommendationsSlice'
+import {
+  eventTypeOptions,
+  selectEventType,
+  setEventType
+} from '../../../../slices/recommendationsSlice'
 import BackForwardButtons from '../BackForwardButtons'
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { MenuContent } from '../../../HighlightedMenu'
 import { defaultForwardText, wizardStages } from '../common'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSetSingleOption, useSingleOption } from '../../../../slices/utils/hooks'
 
 interface EventTypeStageProps {
   goBack: () => void,
@@ -15,10 +19,8 @@ const EventTypeStage = ({
   goBack, setStage
 }:EventTypeStageProps) => {
 
-  const dispatch = useDispatch()
-
-  const selectedEventTypes = useSelector(selectEventType)
-  const setSelectedEventTypes = useCallback((eventType) => dispatch(setEventType(eventType)), [dispatch])
+  const selectedEventTypes = useSingleOption(selectEventType)
+  const setSelectedEventTypes = useSetSingleOption(setEventType)
 
   const eventTypeOnBackClick = useMemo(()=>{
     return goBack

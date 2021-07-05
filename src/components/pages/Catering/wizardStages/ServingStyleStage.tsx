@@ -9,6 +9,7 @@ import {
 } from '../../../../slices/recommendationsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import OptionsMenu from '../../../OptionsMenu'
+import { useSetSingleOption, useSingleOption } from '../../../../slices/utils/hooks'
 
 interface ServingStyleStageProps {
   setStage: React.Dispatch<React.SetStateAction<wizardStages>>
@@ -20,10 +21,8 @@ const ServingStyleStage = ({
 
   const dispatch = useDispatch()
 
-  const selectedServingStyle = useSelector(selectServingStyle)
-  const setSelectedServingStyle = useCallback<React.Dispatch<React.SetStateAction<string[]>>>(
-    (value)=> dispatch(setServingStyle(value))
-    , [dispatch, setServingStyle])
+  const selectedServingStyle = useSingleOption(selectServingStyle)
+  const setSelectedServingStyle = useSetSingleOption(setServingStyle)
 
   const servingStyleOnBackClick = useMemo(()=>{
     return () => setStage("dietaryRestrictions")
