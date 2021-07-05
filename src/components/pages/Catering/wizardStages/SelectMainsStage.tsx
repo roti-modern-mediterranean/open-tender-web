@@ -358,7 +358,7 @@ const SelectMainsStage = ({
           />
         </OptionsRow>
         <MainsMissing mainsMissing={mainsMissing} >
-          Mains missing: {numberOfPeople-_chickenQuantity-_steakQuantity-_falafelQuantity}
+          {mainsMissing === 0 ? `Happy with the distribution?` : `You can select ${mainsMissing} more main${mainsMissing === 1 ? "" : "s"}`}
         </MainsMissing>
         <BuilderOptionToggle {...builderOptionToggleProps}/>
       </MenuContent>
