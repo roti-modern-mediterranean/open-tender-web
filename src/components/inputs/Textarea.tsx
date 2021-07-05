@@ -12,7 +12,8 @@ interface TextareaProps {
   disabled?: boolean,
   readOnly?: boolean,
   required?: boolean,
-  placeholder?: string
+  placeholder?: string,
+  className?: string
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -29,6 +30,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       readOnly = false,
       required = false,
       placeholder = '',
+      className=undefined
     },
     ref
   ) => {
@@ -52,6 +54,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           readOnly={readOnly}
           required={required}
           onChange={onChange}
+          className={className}
           ref={ref}
         />
       </Label>
