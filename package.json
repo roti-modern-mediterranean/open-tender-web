@@ -57,7 +57,8 @@
     "lint:check": "eslint --ext .ts,.tsx,.js,.jsx,json ./src",
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx,json ./src",
     "prettier:check": "prettier --check ./src/**/*.{js,jsx,ts,tsx,json,md}",
-    "prettier:fix": "prettier --write ./src/**/*.{js,jsx,ts,tsx,json,md}"
+    "prettier:fix": "prettier --write ./src/**/*.{js,jsx,ts,tsx,json,md}",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "react-app"
