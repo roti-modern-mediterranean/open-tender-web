@@ -53,10 +53,20 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prebuild": "node generate-version",
-    "deploy": "yarn build && node ./deploy/upload.js && node ./deploy/invalidate.js"
+    "deploy": "yarn build && node ./deploy/upload.js && node ./deploy/invalidate.js",
+    "lint:check": "eslint --ext .ts,.tsx,.js,.jsx,json ./src",
+    "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx,json ./src",
+    "prettier:check": "prettier --check ./src/**/*.{js,jsx,ts,tsx,json,md}",
+    "prettier:fix": "prettier --write ./src/**/*.{js,jsx,ts,tsx,json,md}"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "lint-staged": {
+    "./src/**/*.{js,jsx,ts,tsx,json}": [
+      "eslint",
+      "prettier --write"
+    ]
   },
   "browserslist": {
     "production": [
@@ -73,6 +83,8 @@
   "devDependencies": {
     "aws-sdk": "^2.883.0",
     "dotenv": "^8.2.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^11.0.0",
     "rimraf": "^3.0.2",
     "s3-uploading": "^0.0.6"
   }
