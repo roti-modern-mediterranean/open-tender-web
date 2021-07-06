@@ -90,6 +90,7 @@
     "dotenv": "^8.2.0",
     "husky": "^7.0.0",
     "lint-staged": "^11.0.0",
+    "prettier": "2.3.2",
     "rimraf": "^3.0.2",
     "s3-uploading": "^0.0.6"
   }
