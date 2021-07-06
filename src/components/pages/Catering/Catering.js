@@ -90,7 +90,7 @@ const CateringContainer = styled('div')`
   justify-content: space-between;
   width: 112rem;
   max-width: 100%;
-  min-height: 53rem;
+  min-height: ${(props) => props.theme.layout.catering.minHeight};
   padding: 4rem 4.5rem;
   border-radius: 2.2rem;
   background-color: rgba(37, 39, 42, 0.6);

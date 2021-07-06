@@ -243,7 +243,10 @@ export type ThemeType = {
     navHeight: string,
     navHeightMobile: string,
     padding: string,
-    paddingMobile: string
+    paddingMobile: string,
+    catering: {
+      minHeight: string
+    }
   },
   lineHeight: string,
   links:{
@@ -288,6 +291,9 @@ export const decorateTheme = (theme:ThemeType):ThemeType => {
     layout: {
       ...theme.layout,
       navHeightMobile: '6.4rem',
+      catering: {
+        minHeight: '53rem'
+      }
     },
     border: {
       ...theme.border,
