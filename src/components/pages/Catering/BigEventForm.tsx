@@ -31,7 +31,7 @@ const BigEventForm = ({setFormValidated}:BigEventFormProps) => {
   const [showNameError, setShowNameError] = useState(false)
   const nameOnBlur = useCallback(()=>setShowNameError(true), [setShowNameError])
 
-  const [email, setEmail, emailError] = useEmailFieldState("", true)
+  const [email, setEmail, emailError] = useEmailFieldState('', true)
   const emailOnChange = useCallback((event)=>setEmail(event.target.value), [setEmail])
   const [showEmailError, setShowEmailError] = useState(false)
   const emailOnBlur = useCallback(()=>setShowEmailError(true), [setShowEmailError])
