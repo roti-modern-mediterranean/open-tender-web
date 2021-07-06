@@ -60,7 +60,7 @@ const CateringView = styled(BgImage)`
   
   width: 100%;
   flex-grow: 1;
-  min-height: 50rem;
+  min-height: ${(props) => props.theme.layout.catering.minHeight};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,12 +70,8 @@ const CateringView = styled(BgImage)`
     display: block;
     padding: ${(props) => props.theme.border.radius} 0 0;
     margin-top: -${(props) => props.theme.border.radiusLarge};
-    background-image: linear-gradient(
-            0deg,
-            rgba(37, 39, 42, 1) 30%,
-            rgba(37, 39, 42, 0.9) 60%,
-            rgba(37, 39, 42, 0.1) 100%
-    ), url(${(props) => props.imageUrl});
+    background-image: ${(props) => props.theme.layout.catering.bgGradientMobile},
+      url(${(props) => props.imageUrl});
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
@@ -85,20 +81,23 @@ const CateringView = styled(BgImage)`
 
 const CateringContainer = styled('div')`
   label: CateringContainer;
-  
+
   display: flex;
   justify-content: space-between;
   width: ${(props) => props.theme.layout.catering.containerWidth};
   max-width: 100%;
-  min-height: ${(props) => props.theme.layout.catering.containerMinHeight};
+  min-height: ${(props) => props.theme.layout.catering.minHeight};
   padding: ${(props) => props.theme.layout.catering.containerPadding};
   border-radius: ${(props) =>
     props.theme.layout.catering.containerBorderRadius};
-  background-color: rgba(37, 39, 42, 0.6);
+  background-color: ${(props) => props.theme.layout.catering.containerBgColor};
   margin: ${(props) => props.theme.layout.padding} 0;
 
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    margin: calc(${(props) => props.theme.layout.padding} + ${(props) => props.theme.border.radiusLarge}) 
+    margin: calc(
+        ${(props) => props.theme.layout.padding} +
+          ${(props) => props.theme.border.radiusLarge}
+      )
       0 ${(props) => props.theme.layout.padding};
   }
 
@@ -115,13 +114,13 @@ const CateringContainer = styled('div')`
 
 const CateringCurrentOrder = styled('div')`
   label: CateringCurrentOrder;
-  
+
   margin: 0;
   border-top: 0.1rem solid rgba(255, 255, 255, 0.3);
   padding: 2.5rem 0 0;
-  
+
   grid-area: shortcut;
-  
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     margin: 1.5rem 0 0;
     border: 0;
@@ -175,7 +174,7 @@ const CateringCurrentOrderTitle = styled(Preface)`
 
 const CateringCalendar = styled('div')`
   label: CateringCalendar;
-  
+
   opacity: 0;
   animation: ${(props) => props.theme.animations.default};
   flex: 0 0 36rem;
@@ -184,9 +183,9 @@ const CateringCalendar = styled('div')`
   justify-content: center;
   align-items: center;
   width: 100%;
-  
+
   grid-area: options;
-  
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     position: relative;
     flex: 1 1 auto;
@@ -216,9 +215,9 @@ const makeOrderMessage = (orderType, requestedAt, revenueCenter) => {
 }
 
 const stages = {
-  date: "date",
-  address: "address",
-  recommendationsWizard: "recommendationsWizard"
+  date: 'date',
+  address: 'address',
+  recommendationsWizard: 'recommendationsWizard',
 }
 
 const CateringPage = () => {
@@ -376,8 +375,10 @@ const CateringPage = () => {
   const startMin = getMinutesfromDate(minTime || settings.minTime)
   const endMin = settings ? getMinutesfromDate(settings.maxTime) : null
 
-  const recommendationsWizardGoBack = useCallback(()=>setStage(stages.address), [setStage])
-
+  const recommendationsWizardGoBack = useCallback(
+    () => setStage(stages.address),
+    [setStage]
+  )
 
   return (
     <>
@@ -392,7 +393,7 @@ const CateringPage = () => {
           imageUrl={isBrowser ? background : null}
           style={{
             backgroundPosition: 'center top',
-            backgroundColor: theme.bgColors.dark
+            backgroundColor: theme.bgColors.dark,
           }}
         >
           <CateringView imageUrl={isBrowser ? null : background}>
@@ -446,8 +447,8 @@ const CateringPage = () => {
                   <CateringMessage>
                     <h2>Where are you located?</h2>
                     <p>
-                      Please enter your address and choose an order type to
-                      get started.
+                      Please enter your address and choose an order type to get
+                      started.
                     </p>
                   </CateringMessage>
                   <CateringPlace>
@@ -461,8 +462,8 @@ const CateringPage = () => {
                   </CateringPlace>
                 </CateringContent>
               )}
-              {(stage === stages.recommendationsWizard) && (
-                  <RecommendationsWizard goBack={recommendationsWizardGoBack} />
+              {stage === stages.recommendationsWizard && (
+                <RecommendationsWizard goBack={recommendationsWizardGoBack} />
               )}
             </CateringContainer>
           </CateringView>

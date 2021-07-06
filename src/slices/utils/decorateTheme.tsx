@@ -254,10 +254,12 @@ export type ThemeType = {
     padding: string
     paddingMobile: string
     catering: {
-      containerMinHeight: string
+      minHeight: string
       containerWidth: string
       containerBorderRadius: string
       containerPadding: string
+      containerBgColor: string
+      bgGradientMobile: string
     }
   }
   lineHeight: string
@@ -321,10 +323,17 @@ export const decorateTheme = (theme: ThemeType): ThemeType => {
       ...theme.layout,
       navHeightMobile: '6.4rem',
       catering: {
-        containerMinHeight: '53rem',
+        minHeight: '53rem',
         containerWidth: '112rem',
         containerBorderRadius: '2.2rem',
         containerPadding: '4rem 4.5rem',
+        containerBgColor: 'rgba(37, 39, 42, 0.6)',
+        bgGradientMobile: `linear-gradient(
+          0deg,
+          rgba(37, 39, 42, 1) 30%,
+          rgba(37, 39, 42, 0.9) 60%,
+          rgba(37, 39, 42, 0.1) 100%
+        )`,
       },
     },
     border: {
