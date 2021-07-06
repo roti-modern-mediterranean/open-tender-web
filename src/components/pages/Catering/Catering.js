@@ -340,8 +340,8 @@ const CateringPage = () => {
     setDate(null)
     dispatch(setAddress(null))
     setTimeout(() => {
-      const reqestedAtIso = time ? dateToIso(time, tz) : 'asap'
-      dispatch(setRequestedAt(reqestedAtIso))
+      const requestedAtIso = time ? dateToIso(time, tz) : 'asap'
+      dispatch(setRequestedAt(requestedAtIso))
       setStage(stages.address)
     }, 50)
   }
