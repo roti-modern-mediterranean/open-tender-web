@@ -47,7 +47,6 @@
     "typescript": "^4.1.6"
   },
   "scripts": {
-    "prepare": "npx husky-init",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build:staging": "env-cmd -f .env.staging yarn build",
@@ -59,9 +58,6 @@
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx,json ./src",
     "prettier:check": "prettier --check ./src/**/*.{js,jsx,ts,tsx,json,md}",
     "prettier:fix": "prettier --write ./src/**/*.{js,jsx,ts,tsx,json,md}"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "lint-staged": {
     "./src/**/*.{js,jsx,ts,tsx,json}": [
@@ -84,6 +80,7 @@
   "devDependencies": {
     "aws-sdk": "^2.883.0",
     "dotenv": "^8.2.0",
+    "eslint": "^7.30.0",
     "husky": "^7.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "2.3.2",
