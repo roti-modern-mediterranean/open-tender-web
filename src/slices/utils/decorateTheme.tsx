@@ -1,279 +1,295 @@
-
 export type ThemeType = {
-  bgColors:{
-    alert: string,
-    dark: string,
-    error: string,
-    light: string,
-    primary: string,
-    secondary: string,
-    success: string,
-    tertiary: string,
+  bgColors: {
+    alert: string
+    dark: string
+    error: string
+    light: string
+    primary: string
+    secondary: string
+    success: string
+    tertiary: string
     transparent: string
-  },
-  boldWeight: string,
-  border:{
-    color: string,
-    radius: string,
-    radiusSmall: string,
-    width: string,
+  }
+  boldWeight: string
+  border: {
+    color: string
+    radius: string
+    radiusSmall: string
+    width: string
     radiusLarge: string
-  },
-  boxShadow:{
-    inset: string,
+  }
+  boxShadow: {
+    inset: string
     outer: string
-  },
-  breakpoints:{
-    laptop: string,
-    mobile: string,
-    narrow: string,
+  }
+  breakpoints: {
+    laptop: string
+    mobile: string
+    narrow: string
     tablet: string
-  },
-  buttons:{
-    colors:{
-      cart:{
-        bgColor: string,
-        borderColor: string,
-        color: string
-      },
-      cartHover:{
-        bgColor: string,
-        borderColor: string,
-        color: string
-      },
-      header:{
-        bgColor: string,
-        borderColor: string,
-        color: string
-      },
-      headerHover:{
-        bgColor: string,
-        borderColor: string,
-        color: string
-      },
-      primary:{
-        bgColor: string,
-        borderColor: string,
-        color: string
-      },
-      primaryHover:{
-        bgColor: string,
-        borderColor: string,
-        color: string
-      },
-      secondary:{
-        bgColor: string,
-        borderColor: string,
-        color: string
-      },
-      secondaryHover:{
-        bgColor: string,
-        borderColor: string,
+  }
+  buttons: {
+    colors: {
+      cart: {
+        bgColor: string
+        borderColor: string
         color: string
       }
-    },
-    sizes:{
-      big:{
-        borderRadius: string,
-        borderWidth: string,
-        family: string,
-        fontSize: string,
-        fontSmoothing: string,
-        letterSpacing: string,
-        padding: string,
-        textTransform: string,
+      cartHover: {
+        bgColor: string
+        borderColor: string
+        color: string
+      }
+      header: {
+        bgColor: string
+        borderColor: string
+        color: string
+      }
+      headerHover: {
+        bgColor: string
+        borderColor: string
+        color: string
+      }
+      primary: {
+        bgColor: string
+        borderColor: string
+        color: string
+      }
+      primaryHover: {
+        bgColor: string
+        borderColor: string
+        color: string
+      }
+      secondary: {
+        bgColor: string
+        borderColor: string
+        color: string
+      }
+      secondaryHover: {
+        bgColor: string
+        borderColor: string
+        color: string
+      }
+    }
+    sizes: {
+      big: {
+        borderRadius: string
+        borderWidth: string
+        family: string
+        fontSize: string
+        fontSmoothing: string
+        letterSpacing: string
+        padding: string
+        textTransform: string
         weight: string
-      },
-      default:{
-        borderRadius: string,
-        borderWidth: string,
-        family: string,
-        fontSize: string,
-        fontSmoothing: string,
-        letterSpacing: string,
-        padding: string,
-        textTransform: string,
-        weight: string,
+      }
+      default: {
+        borderRadius: string
+        borderWidth: string
+        family: string
+        fontSize: string
+        fontSmoothing: string
+        letterSpacing: string
+        padding: string
+        textTransform: string
+        weight: string
         width: string
-      },
-      header:{
-        borderRadius: string,
-        borderWidth: string,
-        family: string,
-        fontSize: string,
-        fontSmoothing: string,
-        letterSpacing: string,
-        padding: string,
-        textTransform: string,
+      }
+      header: {
+        borderRadius: string
+        borderWidth: string
+        family: string
+        fontSize: string
+        fontSmoothing: string
+        letterSpacing: string
+        padding: string
+        textTransform: string
         weight: string
-      },
-      small:{
-        borderRadius: string,
-        borderWidth: string,
-        family: string,
-        fontSize: string,
-        fontSmoothing: string,
-        letterSpacing: string,
-        padding: string,
-        textTransform: string,
+      }
+      small: {
+        borderRadius: string
+        borderWidth: string
+        family: string
+        fontSize: string
+        fontSmoothing: string
+        letterSpacing: string
+        padding: string
+        textTransform: string
         weight: string
       }
     }
-  },
-  colors:{
-    alert: string,
-    dark: string,
-    error: string,
-    light: string,
-    primary: string,
-    secondary: string,
-    success: string,
-    title: string,
-    pepper: string,
-    tahini: string,
-    paprika: string,
-    beet: string,
-    line: string,
-    cardHover: string,
-    navHover: string,
-    switch: string,
+  }
+  colors: {
+    alert: string
+    dark: string
+    error: string
+    light: string
+    primary: string
+    secondary: string
+    success: string
+    title: string
+    pepper: string
+    tahini: string
+    paprika: string
+    beet: string
+    line: string
+    cardHover: string
+    navHover: string
+    switch: string
     blue: string
-  },
-  counts:{
-    alerts:{
-      bgColor: string,
-      borderColor: string,
-      borderWidth: string,
-      color: string,
-      family: string,
-      fontSize: string,
-      fontSizeMobile: string,
-      fontSmoothing: string,
-      paddingBottom: string,
-      paddingTop: string,
-      weight: string
-    },
-    quantity:{
-      family: string,
-      fontSize: string,
-      fontSizeMobile: string,
-      fontSmoothing: string,
-      paddingBottom: string,
-      paddingTop: string,
+  }
+  counts: {
+    alerts: {
+      bgColor: string
+      borderColor: string
+      borderWidth: string
+      color: string
+      family: string
+      fontSize: string
+      fontSizeMobile: string
+      fontSmoothing: string
+      paddingBottom: string
+      paddingTop: string
       weight: string
     }
-  },
-  favorite:{
-    iconSize: string,
+    quantity: {
+      family: string
+      fontSize: string
+      fontSizeMobile: string
+      fontSmoothing: string
+      paddingBottom: string
+      paddingTop: string
+      weight: string
+    }
+  }
+  favorite: {
+    iconSize: string
     size: string
-  },
-  fonts:{
-    body:{
-      color: string,
-      family: string,
-      fontSmoothing: string,
-      letterSpacing: string,
-      textTransform: string,
-      url: string,
-      weight: string,
-    },
-    headings:{
-      color: string,
-      family: string,
-      fontSmoothing: string,
-      letterSpacing: string,
-      textTransform: string,
-      url: string,
-      weight: string,
-    },
-    preface:{
-      family: string,
-      fontSize: string,
-      fontSmoothing: string,
-      letterSpacing: string,
-      textTransform: string,
-      weight: string,
-    },
-    sizes:{
-      big: string,
-      giga: string,
-      h1: string,
-      h2: string,
-      h3: string,
-      h4: string,
-      h5: string,
-      h6: string,
-      main: string,
-      mega: string,
-      small: string,
-      tera: string,
-      xBig: string,
+  }
+  fonts: {
+    body: {
+      color: string
+      family: string
+      fontSmoothing: string
+      letterSpacing: string
+      textTransform: string
+      url: string
+      weight: string
+    }
+    headings: {
+      color: string
+      family: string
+      fontSmoothing: string
+      letterSpacing: string
+      textTransform: string
+      url: string
+      weight: string
+    }
+    preface: {
+      family: string
+      fontSize: string
+      fontSmoothing: string
+      letterSpacing: string
+      textTransform: string
+      weight: string
+    }
+    sizes: {
+      big: string
+      giga: string
+      h1: string
+      h2: string
+      h3: string
+      h4: string
+      h5: string
+      h6: string
+      main: string
+      mega: string
+      small: string
+      tera: string
+      xBig: string
       xSmall: string
     }
-  },
-  header:{
-    primary: string,
-    stuck: string,
-  },
-  inputs:{
-    bgColor: string,
-    bgColorFocus: string,
-    borderColor: string,
-    borderColorFocus: string,
-    borderWidth: string,
-    boxShadow: string,
-    color: string,
-    colorFocus: string,
-    family: string,
-    fontSize: string,
-    fontSmoothing: string,
-    letterSpacing: string,
-    lineHeight: string,
-    padding: string,
-    placeholderColor: string,
-    radius: string,
-    textTransform: string,
-    weight: string
-  },
-  layout:{
-    containerMaxWidth: string,
-    margin: string,
-    marginMobile: string,
-    maxWidth: string,
-    navHeight: string,
-    navHeightMobile: string,
-    padding: string,
-    paddingMobile: string,
     catering: {
-      minHeight: string
+      currentOrder: {
+        title: {
+          fontSize: string
+          weight: string
+          fontSizeMobile: string
+          weightMobile: string
+        }
+      }
     }
-  },
-  lineHeight: string,
-  links:{
-    dark:{
-      color: string,
+  }
+  header: {
+    primary: string
+    stuck: string
+  }
+  inputs: {
+    bgColor: string
+    bgColorFocus: string
+    borderColor: string
+    borderColorFocus: string
+    borderWidth: string
+    boxShadow: string
+    color: string
+    colorFocus: string
+    family: string
+    fontSize: string
+    fontSmoothing: string
+    letterSpacing: string
+    lineHeight: string
+    padding: string
+    placeholderColor: string
+    radius: string
+    textTransform: string
+    weight: string
+  }
+  layout: {
+    containerMaxWidth: string
+    margin: string
+    marginMobile: string
+    maxWidth: string
+    navHeight: string
+    navHeightMobile: string
+    padding: string
+    paddingMobile: string
+    catering: {
+      containerMinHeight: string
+      containerWidth: string
+      containerBorderRadius: string
+      containerPadding: string
+    }
+  }
+  lineHeight: string
+  links: {
+    dark: {
+      color: string
       hover: string
-    },
-    light:{
-      color: string,
+    }
+    light: {
+      color: string
       hover: string
-    },
-    primary:{
-      color: string,
+    }
+    primary: {
+      color: string
       hover: string
-    },
-    textDecoration: string,
+    }
+    textDecoration: string
     transition: string
-  },
-  overlay:{
-    alert: string,
-    dark: string,
+  }
+  overlay: {
+    alert: string
+    dark: string
     light: string
+  }
+  animations: {
+    default: string
+    fast: string
   }
 }
 
 // Considering theme parameter of ThemeType to avoid undesired complexity
-export const decorateTheme = (theme:ThemeType):ThemeType => {
+export const decorateTheme = (theme: ThemeType): ThemeType => {
   return {
     ...theme,
     colors: {
@@ -288,16 +304,32 @@ export const decorateTheme = (theme:ThemeType):ThemeType => {
       switch: '#979EA7',
       blue: '#36AFFC',
     },
+    fonts: {
+      ...theme.fonts,
+      catering: {
+        currentOrder: {
+          title: {
+            fontSize: '3rem',
+            weight: '500',
+            fontSizeMobile: '2.2rem',
+            weightMobile: '500',
+          },
+        },
+      },
+    },
     layout: {
       ...theme.layout,
       navHeightMobile: '6.4rem',
       catering: {
-        minHeight: '53rem'
-      }
+        containerMinHeight: '53rem',
+        containerWidth: '112rem',
+        containerBorderRadius: '2.2rem',
+        containerPadding: '4rem 4.5rem',
+      },
     },
     border: {
       ...theme.border,
-      radiusLarge: "3rem"
+      radiusLarge: '3rem',
     },
     buttons: {
       ...theme.buttons,
@@ -305,13 +337,17 @@ export const decorateTheme = (theme:ThemeType):ThemeType => {
         ...theme.buttons?.sizes,
         default: {
           ...theme.buttons?.sizes?.default,
-          width: "16.4rem"
-        }
-      }
-    }
+          width: '16.4rem',
+        },
+      },
+    },
+    animations: {
+      default: 'slide-up 0.25s ease-in-out 0.5s forwards',
+      fast: 'slide-up 0.25s ease-in-out 0.5s forwards',
+    },
   }
 }
 
-declare module "@emotion/react" {
+declare module '@emotion/react' {
   export interface Theme extends ThemeType {}
 }

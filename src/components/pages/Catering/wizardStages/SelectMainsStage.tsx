@@ -367,8 +367,12 @@ const SelectMainsStage = ({
             isQuantityAlwaysShown={true}
           />
         </OptionsRow>
-        <MainsMissing mainsMissing={mainsMissing} >
-          {mainsMissing === 0 ? `Happy with the distribution?` : `You can select ${mainsMissing} more main${mainsMissing === 1 ? "" : "s"}`}
+        <MainsMissing mainsMissing={mainsMissing}>
+          {mainsMissing === 0
+            ? `Happy with the mains distribution?`
+            : `You can select ${mainsMissing} more main${
+                mainsMissing === 1 ? '' : 's'
+              }`}
         </MainsMissing>
         <BuilderOptionToggle {...builderOptionToggleProps}/>
       </MenuContent>
