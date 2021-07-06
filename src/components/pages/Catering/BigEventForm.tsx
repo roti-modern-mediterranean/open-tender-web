@@ -1,60 +1,96 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Input from '../../inputs/Input'
 import { Mail, Phone, User } from '../../icons'
-import { useEmailFieldState, useNumberFieldState, usePhoneFieldState, useRequiredFieldState } from '../../../hooks'
+import {
+  useEmailFieldState,
+  useNumberFieldState,
+  usePhoneFieldState,
+  useRequiredFieldState,
+} from '../../../hooks'
 import { Textarea } from '../../inputs'
 import { makePhone } from '@open-tender/js'
 import styled from '@emotion/styled'
 
 const Container = styled.div`
   label: BigEventFormContainer;
-  
+
   overflow-y: auto;
   display: grid;
-  grid-template-rows: minmax(100px,250px);
-`;
+  grid-template-rows: minmax(100px, 250px);
+`
 
 const CustomTextarea = styled(Textarea)`
   label: CustomTextarea;
-  
+
   height: 100px;
-`;
+`
 
 interface BigEventFormProps {
   setFormValidated: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const BigEventForm = ({setFormValidated}:BigEventFormProps) => {
-
-  const [name, setName, nameError] = useRequiredFieldState("")
-  const nameOnChange = useCallback((event)=>setName(event.target.value), [setName])
+const BigEventForm = ({ setFormValidated }: BigEventFormProps) => {
+  const [name, setName, nameError] = useRequiredFieldState('')
+  const nameOnChange = useCallback(
+    (event) => setName(event.target.value),
+    [setName]
+  )
   const [showNameError, setShowNameError] = useState(false)
-  const nameOnBlur = useCallback(()=>setShowNameError(true), [setShowNameError])
+  const nameOnBlur = useCallback(
+    () => setShowNameError(true),
+    [setShowNameError]
+  )
 
   const [email, setEmail, emailError] = useEmailFieldState('', true)
-  const emailOnChange = useCallback((event)=>setEmail(event.target.value), [setEmail])
+  const emailOnChange = useCallback(
+    (event) => setEmail(event.target.value),
+    [setEmail]
+  )
   const [showEmailError, setShowEmailError] = useState(false)
-  const emailOnBlur = useCallback(()=>setShowEmailError(true), [setShowEmailError])
+  const emailOnBlur = useCallback(
+    () => setShowEmailError(true),
+    [setShowEmailError]
+  )
 
-  const [phone, setPhone, phoneError] = usePhoneFieldState("", true)
-  const phoneOnChange = useCallback((event)=>setPhone(event.target.value), [setPhone])
+  const [phone, setPhone, phoneError] = usePhoneFieldState('', true)
+  const phoneOnChange = useCallback(
+    (event) => setPhone(event.target.value),
+    [setPhone]
+  )
   const [showPhoneError, setShowPhoneError] = useState(false)
-  const phoneOnBlur = useCallback(()=>setShowPhoneError(true), [setShowPhoneError])
+  const phoneOnBlur = useCallback(
+    () => setShowPhoneError(true),
+    [setShowPhoneError]
+  )
 
-  const [numberOfPeople, setNumberOfPeople, numberOfPeopleError] = useNumberFieldState("", true)
-  const numberOfPeopleOnChange = useCallback((event)=>setNumberOfPeople(event.target.value), [setNumberOfPeople])
+  const [numberOfPeople, setNumberOfPeople, numberOfPeopleError] =
+    useNumberFieldState('', true)
+  const numberOfPeopleOnChange = useCallback(
+    (event) => setNumberOfPeople(event.target.value),
+    [setNumberOfPeople]
+  )
   const [showNumberOfPeopleError, setShowNumberOfPeopleError] = useState(false)
-  const numberOfPeopleOnBlur = useCallback(()=>setShowNumberOfPeopleError(true), [setShowNumberOfPeopleError])
+  const numberOfPeopleOnBlur = useCallback(
+    () => setShowNumberOfPeopleError(true),
+    [setShowNumberOfPeopleError]
+  )
 
-  const [notes, setNotes] = useState("");
-  const notesOnChange = useCallback((event)=>setNotes(event.target.value), [setNotes])
+  const [notes, setNotes] = useState('')
+  const notesOnChange = useCallback(
+    (event) => setNotes(event.target.value),
+    [setNotes]
+  )
 
-  useEffect(()=>setFormValidated(
-    !nameError.hasError &&
-    !emailError.hasError &&
-    !phoneError.hasError &&
-    !numberOfPeopleError.hasError)
-  , [setFormValidated, nameError, emailError, phoneError, numberOfPeopleError])
+  useEffect(
+    () =>
+      setFormValidated(
+        !nameError.hasError &&
+          !emailError.hasError &&
+          !phoneError.hasError &&
+          !numberOfPeopleError.hasError
+      ),
+    [setFormValidated, nameError, emailError, phoneError, numberOfPeopleError]
+  )
 
   return (
     <Container>
@@ -101,7 +137,9 @@ const BigEventForm = ({setFormValidated}:BigEventFormProps) => {
           value={numberOfPeople}
           onChange={numberOfPeopleOnChange}
           onBlur={numberOfPeopleOnBlur}
-          error={showNumberOfPeopleError ? numberOfPeopleError.message : undefined}
+          error={
+            showNumberOfPeopleError ? numberOfPeopleError.message : undefined
+          }
           required={true}
         />
         <CustomTextarea
@@ -115,4 +153,4 @@ const BigEventForm = ({setFormValidated}:BigEventFormProps) => {
   )
 }
 
-export default BigEventForm;
+export default BigEventForm
