@@ -7,9 +7,6 @@ import CallUsButton from '../CallUsButton'
 import ChatButton from '../ChatButton'
 import styled from '@emotion/styled'
 
-interface SentBigEventFormStageProps {
-}
-
 const ContactsContainer = styled.div`
   label: ContactsMessageContainer;
 `;
@@ -63,7 +60,7 @@ const ContactsCTA = () => (
   </ContactsContainer>
 )
 
-const SentBigEventFormStage = ({}:SentBigEventFormStageProps) => {
+const SentBigEventFormStage = () => {
 
   const revenueCenter =
     useSelector(selectRevenueCenter)

@@ -1,5 +1,5 @@
 import BackForwardButtons from '../BackForwardButtons'
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { MenuContent } from '../../../HighlightedMenu'
 import { defaultForwardText, wizardStages } from '../common'
 import {
@@ -7,7 +7,6 @@ import {
   servingStyleOptions,
   setServingStyle
 } from '../../../../slices/recommendationsSlice'
-import { useDispatch, useSelector } from 'react-redux'
 import OptionsMenu from '../../../OptionsMenu'
 import { useSetSingleOption, useSingleOption } from '../../../../slices/utils/hooks'
 
@@ -18,8 +17,6 @@ interface ServingStyleStageProps {
 const ServingStyleStage = ({
   setStage
 }:ServingStyleStageProps) => {
-
-  const dispatch = useDispatch()
 
   const selectedServingStyle = useSingleOption(selectServingStyle)
   const setSelectedServingStyle = useSetSingleOption(setServingStyle)

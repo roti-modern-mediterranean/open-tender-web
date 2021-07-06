@@ -26,7 +26,7 @@ const useEmailFieldState = (
       return noError;
     }
     return invalidEmailError;
-  }, [value]);
+  }, [required, value]);
 
   return [value, setValue, error];
 };

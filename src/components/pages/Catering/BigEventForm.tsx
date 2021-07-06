@@ -32,17 +32,17 @@ const BigEventForm = ({setFormValidated}:BigEventFormProps) => {
   const nameOnBlur = useCallback(()=>setShowNameError(true), [setShowNameError])
 
   const [email, setEmail, emailError] = useEmailFieldState("", true)
-  const emailOnChange = useCallback((event)=>setEmail(event.target.value), [setName])
+  const emailOnChange = useCallback((event)=>setEmail(event.target.value), [setEmail])
   const [showEmailError, setShowEmailError] = useState(false)
   const emailOnBlur = useCallback(()=>setShowEmailError(true), [setShowEmailError])
 
   const [phone, setPhone, phoneError] = usePhoneFieldState("", true)
-  const phoneOnChange = useCallback((event)=>setPhone(event.target.value), [setName])
+  const phoneOnChange = useCallback((event)=>setPhone(event.target.value), [setPhone])
   const [showPhoneError, setShowPhoneError] = useState(false)
   const phoneOnBlur = useCallback(()=>setShowPhoneError(true), [setShowPhoneError])
 
   const [numberOfPeople, setNumberOfPeople, numberOfPeopleError] = useNumberFieldState("", true)
-  const numberOfPeopleOnChange = useCallback((event)=>setNumberOfPeople(event.target.value), [setName])
+  const numberOfPeopleOnChange = useCallback((event)=>setNumberOfPeople(event.target.value), [setNumberOfPeople])
   const [showNumberOfPeopleError, setShowNumberOfPeopleError] = useState(false)
   const numberOfPeopleOnBlur = useCallback(()=>setShowNumberOfPeopleError(true), [setShowNumberOfPeopleError])
 
@@ -54,7 +54,7 @@ const BigEventForm = ({setFormValidated}:BigEventFormProps) => {
     !emailError.hasError &&
     !phoneError.hasError &&
     !numberOfPeopleError.hasError)
-  , [nameError, emailError, phoneError, numberOfPeopleError])
+  , [setFormValidated, nameError, emailError, phoneError, numberOfPeopleError])
 
   return (
     <Container>

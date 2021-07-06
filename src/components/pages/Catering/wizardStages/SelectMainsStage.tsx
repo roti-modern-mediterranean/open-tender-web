@@ -12,7 +12,6 @@ import {
   selectSteakQuantity, selectTotalQuantity,
   setChickenQuantity,
   setFalafelQuantity,
-  setNumberOfPeopleIndex,
   setSteakQuantity, setTotalQuantity
 } from '../../../../slices/recommendationsSlice'
 import BuilderOptionToggle from '../../../Builder/BuilderOptionToggle'
@@ -302,7 +301,7 @@ const SelectMainsStage = ({
       default:
         return null;
     }
-  }, [activeOption])
+  }, [activeOption, _chickenQuantity, _steakQuantity, _falafelQuantity, numberOfPeople])
 
   const mainsMissing = numberOfPeople-_chickenQuantity-_steakQuantity-_falafelQuantity
 

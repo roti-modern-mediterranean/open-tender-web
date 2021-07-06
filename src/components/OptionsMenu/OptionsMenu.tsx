@@ -45,7 +45,7 @@ const OptionsMenu = (
         setSelectedOptions([option.id])
       }
     }
-  }, [selectedOptions, setSelectedOptions])
+  }, [selectedOptions, setSelectedOptions, hasMultiOptions])
 
   return <MenuArea>
     {options.map((option) => (
