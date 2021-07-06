@@ -57,7 +57,8 @@
     "lint:check": "eslint --ext .ts,.tsx,.js,.jsx,json ./src",
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx,json ./src",
     "prettier:check": "prettier --check ./src/**/*.{js,jsx,ts,tsx,json,md}",
-    "prettier:fix": "prettier --write ./src/**/*.{js,jsx,ts,tsx,json,md}"
+    "prettier:fix": "prettier --write ./src/**/*.{js,jsx,ts,tsx,json,md}",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -88,7 +89,7 @@
   "devDependencies": {
     "aws-sdk": "^2.883.0",
     "dotenv": "^8.2.0",
-    "husky": "4",
+    "husky": "^7.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "2.3.2",
     "rimraf": "^3.0.2",
