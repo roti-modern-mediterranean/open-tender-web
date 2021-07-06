@@ -13,25 +13,29 @@ import { selectOrder } from '@open-tender/redux'
 import { useHistory } from 'react-router-dom'
 
 const Container = styled.div`
-  label: RecommendationContainer;
+  label: RecommendationsContainer;
 
   width: 100%;
   display: grid;
   grid-template-rows: max-content auto max-content;
-  color: ${(props) => props.theme.colors.light};
-  
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding: 6rem ${(props) => props.theme.layout.paddingMobile} 0;
-    text-align: center;
-    max-width: 44rem;
-    margin: 0 auto;
-  }
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding-top: 3rem;
+  grid-template-columns: 100%;
+  color: ${(props) => props.theme.colors.tahini};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    justify-items: center;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 5px 0px 15px;
+    color: ${(props) => props.theme.colors.pepper};
+    padding: ${(props) => props.theme.border.radiusLarge} ${(props) => props.theme.layout.paddingMobile} 0;
+    text-align: center;
+    max-width: 44rem;
+    margin: -${(props) => props.theme.border.radiusLarge} auto 0;
+    background-color: ${(props) => props.theme.bgColors.primary};
+    
+    h2 {
+      color: ${(props) => props.theme.colors.pepper};
+    }
   }
 
 `;
@@ -42,10 +46,14 @@ const CustomPreface = styled(Preface)`
   color: ${(props) => props.theme.colors.tahini};
   font-weight: 500;
   font-size: 2.2rem;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    color: ${(props) => props.theme.colors.pepper};
+  }
 `
 
 const Header = styled.h2`
-  label: RecommendationHeader;
+  label: RecommendationsHeader;
   
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
@@ -64,6 +72,7 @@ const Header = styled.h2`
     font-weight: 500;
     font-size: 2.8rem;
     letter-spacing: 0.01em;
+    margin: 0 0 3rem;
   }
 `;
 
@@ -73,13 +82,26 @@ const Recommendations = styled(MenuCateringCategories)`
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
   
-  margin: 30px 0px 25px;
+  margin: 30px 0 25px;
   display: flex;
   flex-direction: row;
   justify-content: center;
 
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    max-width: 44rem;
+    > div {
+      width: 44rem;
+    }
+  }
+
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    margin: 0px;
+    margin: 0;
+    width: 100%;
+
+    > div {
+      max-width: none;
+      width: 100%;
+    }
   }
 `;
 
@@ -92,8 +114,9 @@ const OrBetween = styled(CustomPreface)`
 `
 
 const Footer = styled.div`
-  label: RecommendationFooter;
+  label: RecommendationsFooter;
 
+  width: 100%;
   border-top: 1px solid #FFFFFF44;
   padding-top: 20px;
   display: grid;
@@ -104,7 +127,11 @@ const Footer = styled.div`
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     grid-template-columns: 100%;
     border-top: none;
-    padding-top: 0px;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 5px 0 20px;
+    gap: 3rem;
   }
 `;
 
@@ -112,7 +139,7 @@ const FooterLeft = styled.button`
   label: FooterLeft;
 
   border-right: 1px solid #FFFFFF44;
-  padding: 0px 10px;
+  padding: 0 10px;
   color: ${(props) => props.theme.colors.tahini};
   text-align: left;
   min-width: 300px;
@@ -123,8 +150,10 @@ const FooterLeft = styled.button`
     text-align: left;
     width: auto;
     padding: 1rem;
-    border: 1px solid #ffffff50;
-    margin: 5px 0px;
+    border: 1px solid ${(props) => props.theme.colors.pepper};
+    margin: 5px 0;
+    color: ${(props) => props.theme.colors.pepper};
+    border-radius: ${(props) => props.theme.border.radius};
   }
 `;
 
@@ -138,30 +167,90 @@ const FooterLeftHighlight = styled.div`
   font-family: 'Barlow', sans-serif;
   font-size: 20px;
   text-transform: uppercase;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    span > svg {
+      circle {
+        stroke: ${(props) => props.theme.colors.pepper};
+      }
+      path {
+        fill: ${(props) => props.theme.colors.pepper};
+      }
+    }
+  }
 `
 
 const FooterLeftBody = styled.div`
   label: FooterLeftBody;
   
-  padding: 5px 0px 0px 32px;
+  padding: 5px 0 0 32px;
 `
 
 const FooterRight = styled.div`
   label: FooterRight;
 
-  padding: 0px 10px;
+  padding: 0 10px;
   font-weight: 400;
   display: grid;
+  grid-template-areas: "repText callUsButton openChatButton";
   grid-template-columns: max-content max-content max-content;
   gap: 10px;
 
+  > a {
+    grid-area: callUsButton;
+  }
+
+  > button {
+    grid-area: openChatButton;
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}) {
+    grid-template-areas: "repText repText" "callUsButton openChatButton";
+    grid-template-columns: minmax(max-content, ${(props) => props.theme.buttons.sizes.default.width}) minmax(max-content, ${(props) => props.theme.buttons.sizes.default.width});
+  }
+    
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    grid-template-columns: 100%;
     text-align: left;
     width: auto;
-    padding: 1rem;
-    border: 1px solid #ffffff50;
-    margin: 5px 0px;
+    padding: 0;
+    border: none;
+
+    > a {
+      width: auto;
+    }
+
+    > button {
+      width: auto;
+    }
+    
+    a, button {
+      border: 0.1rem solid ${(props) => props.theme.colors.paprika};
+
+      &:hover,
+      &:active,
+      &:focus {
+        border: 0.1rem solid ${(props) => props.theme.links.primary.hover};
+        background-color: ${(props) => props.theme.links.primary.hover};
+
+        span {
+          color: ${(props) => props.theme.colors.light};
+          
+          :last-of-type path {
+            stroke: ${(props) => props.theme.colors.light};
+          }
+        }
+      }
+      
+      > span {
+        color: ${(props) => props.theme.colors.paprika};
+      }
+    }
+
+    span > svg {
+      path {
+        stroke: ${(props) => props.theme.colors.paprika};
+      }
+    }
   }
 `;
 
@@ -171,22 +260,16 @@ const FooterRightText = styled.div`
   display: grid;
   grid-row-gap: 0.5rem;
   align-content: start;
-  margin: 0px 10px;
+  margin: 0 10px;
+  
+  grid-area: repText;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 0;
+  }
 `;
 
-const FooterRightHighlight = styled.div`
-  label: FooterRightHighlight;
-
-  font-family: 'Barlow', sans-serif;
-  font-size: 20px;
-  text-transform: uppercase;
-`
-
-const TransparentButton = styled.button`
-  label: TransparentButton;
-`
-
-// TODO remove hardcoded recommendation
+// TODO remove hardcoded recommendations
 const recommendations = [
   {
     id: 1045,
@@ -236,13 +319,13 @@ const recommendations = [
   }
 ]
 
-const Recommendation = () => {
+const RecommendationsResult = () => {
 
   const { revenueCenter } = useSelector(selectOrder)
   const theme = useTheme()
   const history = useHistory()
 
-  const skipSuggestionsOnCLick = useCallback(()=>{
+  const skipRecommendationsOnCLick = useCallback(()=>{
     if(revenueCenter){
       history.push(`/menu/${revenueCenter.slug}`)
     }
@@ -259,12 +342,12 @@ const Recommendation = () => {
               <Recommendations key={0}>
                 {
                   recommendations.map((recommendation, index) => (
-                    <>
+                    <React.Fragment key={recommendation.id}>
                       { index !== 0 && <OrBetween>or</OrBetween>}
-                      <MenuCateringCategoryItem key={recommendation.id}>
+                      <MenuCateringCategoryItem>
                         <MenuCateringCategory category={recommendation} />
                       </MenuCateringCategoryItem>
-                    </>
+                    </React.Fragment>
                   ))
                 }
               </Recommendations>)
@@ -274,7 +357,7 @@ const Recommendation = () => {
         }
 
       <Footer>
-        <FooterLeft onClick={skipSuggestionsOnCLick}>
+        <FooterLeft onClick={skipRecommendationsOnCLick}>
           {
             revenueCenter
               ? (
@@ -285,7 +368,7 @@ const Recommendation = () => {
                   </FooterLeftHighlight>
                   <FooterLeftBody>Here's some crowd favourites to make any event the main event</FooterLeftBody>
                 </>)
-              : <Loading text="Loading store..." color={theme.colors.tahini} />
+              : <Loading text="Loading store..." color={theme.colors.pepper} />
           }
         </FooterLeft>
         <FooterRight>
@@ -300,4 +383,4 @@ const Recommendation = () => {
     </Container>)
 }
 
-export default Recommendation;
+export default RecommendationsResult;

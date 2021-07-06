@@ -5,10 +5,18 @@ import styled from '@emotion/styled'
 const MenuContentView = styled('div')`
   label: MenuContentView;
   
-  padding: 2rem 2rem;
+  padding: 2rem 2rem 0;
   flex-grow: 1;
   opacity: 0;
   animation: slide-up 0.25s ease-in-out 0.25s forwards;
+
+  display: grid;
+  grid-template-rows: max-content auto;
+  align-items: center;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding: 0;
+  }
 `
 
 const MenuHeader = styled('div')`

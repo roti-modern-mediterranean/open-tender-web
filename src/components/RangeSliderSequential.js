@@ -93,10 +93,7 @@ const SliderValue = styled.div`
   font-family: 'Barlow', sans-serif;
 `
 
-const RangeSlider = ({options, index, setIndex, children}) => {
-
-  const min = 0;
-  const max = options.length - 1;
+const RangeSlider = ({min, max, value, setValue, children}) => {
 
   const $slider = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0)
@@ -121,10 +118,10 @@ const RangeSlider = ({options, index, setIndex, children}) => {
     }
   }, [$sliderImage, children])
 
-  const sliderOnInput = useCallback((ev) => setIndex(parseInt(ev.currentTarget.value, 10)), [setIndex])
+  const sliderOnInput = useCallback((ev) => setValue(parseInt(ev.currentTarget.value, 10)), [setValue])
 
-  const yPosition = useMemo(()=>((index-min)/(max-min)*(containerWidth - sliderThumbSize - 2*sliderThumbBorderSize))
-    , [index, min, max, containerWidth]);
+  const yPosition = useMemo(()=>((value-min)/(max-min)*(containerWidth - sliderThumbSize - 2*sliderThumbBorderSize))
+    , [value, min, max, containerWidth]);
 
   return (
     <Container>
@@ -133,17 +130,18 @@ const RangeSlider = ({options, index, setIndex, children}) => {
           <SliderImage y={yPosition} ref={$sliderImage}>{children}</SliderImage>
         </SliderImageArea>}
       <Slider ref={$slider}>
-        <input type="range" min={min} max={max} value={index} onInput={sliderOnInput}/>
-        <SliderValue y={yPosition}>{options.length > index ? options[index] : ""}</SliderValue>
+        <input type="range" min={min} max={max} value={value} onInput={sliderOnInput}/>
+        <SliderValue y={yPosition}>{value}</SliderValue>
       </Slider>
     </Container>)
 }
 
 RangeSlider.displayName = 'RangeSlider'
 RangeSlider.propTypes = {
-  options: propTypes.arrayOf(propTypes.string),
-  index: propTypes.number,
-  setIndex: propTypes.func,
+  min: propTypes.number,
+  max: propTypes.number,
+  value: propTypes.number,
+  setValue: propTypes.func,
   children: propTypes.oneOfType([
     propTypes.arrayOf(propTypes.node),
     propTypes.node,

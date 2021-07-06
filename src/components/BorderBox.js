@@ -49,6 +49,10 @@ const BorderBoxWrapper = styled('div')`
     height: ${(props) => (props.position === 'right' ? '2.77em' : '2.77em')};
     fill: ${(props) => props.color || 'red'};
   }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}){
+    visibility: hidden;
+  }
 `
 
 const BorderBox = ({

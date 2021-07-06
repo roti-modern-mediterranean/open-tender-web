@@ -261,6 +261,8 @@ const BuilderOption = ({
   setActiveIndex,
   index,
   lastIndex,
+  isQuantityAlwaysShown=false,
+  className=undefined
 }) => {
   const { calories: showCals, allergens: showAllergens } = displaySettings
   const optionKey = `${group.id}-${option.id}`
@@ -314,7 +316,7 @@ const BuilderOption = ({
   }
 
   return (
-    <BuilderOptionView width={width}>
+    <BuilderOptionView width={width} className={className}>
       <BuilderOptionButton
         onClick={setQuantity}
         width={width}
@@ -327,7 +329,7 @@ const BuilderOption = ({
           spinner={<ImageSpinner />}
         />
       </BuilderOptionButton>
-      {quantity > 0 && (max > 1 || max === 0) && (
+      {(isQuantityAlwaysShown || (quantity > 0 && (max > 1 || max === 0))) && (
         <BuilderOptionQuantity>
           <BuilderQuantity
             item={option}

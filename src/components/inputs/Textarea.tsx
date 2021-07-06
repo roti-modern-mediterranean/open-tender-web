@@ -1,21 +1,36 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import React, { ChangeEventHandler } from 'react'
 import { Label } from '.'
 
-const Textarea = React.forwardRef(
+interface TextareaProps {
+  icon?: JSX.Element,
+  showLabel?: boolean,
+  label: string,
+  name: string,
+  value: string | number,
+  onChange: ChangeEventHandler<HTMLTextAreaElement>,
+  error?: string,
+  disabled?: boolean,
+  readOnly?: boolean,
+  required?: boolean,
+  placeholder?: string,
+  className?: string
+}
+
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
     {
       icon = null,
+      showLabel = true,
       label,
       name,
       value,
       onChange,
-      error,
-      showLabel = true,
-      placeholder = '',
+      error = "",
       disabled = false,
       readOnly = false,
       required = false,
+      placeholder = '',
+      className=undefined
     },
     ref
   ) => {
@@ -39,31 +54,12 @@ const Textarea = React.forwardRef(
           readOnly={readOnly}
           required={required}
           onChange={onChange}
+          className={className}
           ref={ref}
         />
       </Label>
     )
   }
 )
-
-Textarea.displayName = 'Textarea'
-Textarea.propTypes = {
-  icon: propTypes.element,
-  showLabel: propTypes.bool,
-  label: propTypes.string,
-  name: propTypes.string,
-  type: propTypes.string,
-  value: propTypes.oneOfType([propTypes.string, propTypes.number]),
-  onChange: propTypes.func,
-  error: propTypes.string,
-  disabled: propTypes.bool,
-  readOnly: propTypes.bool,
-  required: propTypes.bool,
-  placeholder: propTypes.string,
-  children: propTypes.oneOfType([
-    propTypes.arrayOf(propTypes.node),
-    propTypes.node,
-  ]),
-}
 
 export default Textarea

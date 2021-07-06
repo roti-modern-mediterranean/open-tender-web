@@ -85,6 +85,7 @@ const LabelRequired = styled('span')`
 `
 
 const Label = ({
+  htmlFor,
   icon,
   text,
   required,
@@ -96,7 +97,7 @@ const Label = ({
   style = null,
 }) => {
   return (
-    <LabelView style={style} icon={icon}>
+    <LabelView htmlFor={htmlFor} style={style} icon={icon}>
       {icon && (
         <LabelIcon hasValue={!!value} disabled={disabled}>
           {icon}

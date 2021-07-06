@@ -17,7 +17,10 @@ const MainView = styled('main')`
   padding: ${(props) => props.padding || `${props.theme.layout.navHeight} 0 0`};
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
     padding: ${(props) =>
-      props.padding || `${props.theme.layout.navHeightMobile} 0 0`};
+            props.padding || `${props.theme.layout.navHeightMobile} 0 0`};
+  }
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    min-height: auto;
   }
 `
 

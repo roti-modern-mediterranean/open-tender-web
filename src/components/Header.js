@@ -6,7 +6,12 @@ import { Preface } from '@open-tender/components'
 import { AppContext } from '../App'
 import { isBrowser, isMobile } from 'react-device-detect'
 
+//TODO add to configSlice
+const headerBorderBottomWidth = "0.1rem"
+
 const HeaderView = styled('div')`
+  label: HeaderView;
+  
   position: fixed;
   z-index: 14;
   top: 0;
@@ -22,17 +27,38 @@ const HeaderView = styled('div')`
   box-shadow: ${(props) =>
     props.stuck ? props.theme.boxShadow.outer : 'none'};
   border: 0;
-  border-bottom-width: 0.1rem;
+  border-bottom-width: ${headerBorderBottomWidth};
   border-style: solid;
   border-color: ${(props) => props.theme.bgColors[props.borderColor]};
   padding: ${(props) => (props.isMobile ? '0' : props.theme.layout.padding)};
   @media (max-width: ${(props) => props.theme.breakpoints.narrow}) {
-    padding: ${(props) => props.theme.layout.paddingMobile};
-    height: ${(props) => props.theme.layout.navHeightMobile};
+    padding: ${(props) => {
+      const normal = props.theme.layout.paddingMobile
+      const bottom = props.theme.border.radiusLarge
+      return `${normal} ${normal} ${bottom}`
+    }} ;
+    border-radius: 0 0 0 ${(props) => props.theme.border.radiusLarge};
+    height: auto;
+    
+    &::after {
+      content: "";
+      position: absolute;
+
+      background-color: transparent;
+      bottom: calc(-2 * ${(props) => props.theme.border.radiusLarge} - ${headerBorderBottomWidth});
+      right: 0;
+      height: calc(2 * ${(props) => props.theme.border.radiusLarge});
+      width: ${(props) => props.theme.border.radiusLarge};
+      border-top-right-radius: ${(props) => props.theme.border.radiusLarge};
+      box-shadow: 0 -${(props) => props.theme.border.radiusLarge} 0 0 ${(props) => props.theme.bgColors[props.bgColor]};
+      pointer-events: none;
+    }
   }
 `
 
 const HeaderTitle = styled('div')`
+  label: HeaderTitle;
+
   position: absolute;
   z-index: 1;
   top: 0;
@@ -43,6 +69,14 @@ const HeaderTitle = styled('div')`
   justify-content: center;
   align-items: center;
   text-align: center;
+  
+  @media (max-width: ${(props) => props.theme.breakpoints.narrow}){
+    margin-bottom: ${(props) => {
+      const normal = props.theme.layout.paddingMobile
+      const bottom = props.theme.border.radiusLarge
+      return `calc(${bottom} - ${normal})`
+    }};
+  }
 
   > span {
     display: block;

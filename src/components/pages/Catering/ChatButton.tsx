@@ -1,12 +1,11 @@
 import { Preface } from '@open-tender/components'
 import { Chat } from '../../icons'
 import { useCallback, useState } from 'react'
-import ButtonStyle from './ButtonStyle'
-import propTypes from 'prop-types'
+import ButtonCommon, { ButtonProps } from './ButtonCommon'
 import { useTheme } from '@emotion/react'
 
 
-const ChatButton = ({lightMode}) => {
+const ChatButton = ({lightMode}:ButtonProps) => {
 
   const theme = useTheme();
 
@@ -19,19 +18,14 @@ const ChatButton = ({lightMode}) => {
   }, [open, setOpen])
 
   return (
-    <ButtonStyle lightMode={lightMode} id="intercom-launcher" onClick={toggle}>
+    <ButtonCommon lightMode={lightMode} id="intercom-launcher" onClick={toggle}>
       <Preface>{open ? 'Close' : 'Open'} Chat</Preface>
       {
         lightMode
           ? <Chat color={theme.colors.tahini} />
           : <Chat />
       }
-    </ButtonStyle>)
-}
-
-ChatButton.displayName = 'ChatButton'
-ChatButton.propTypes = {
-  lightMode: propTypes.bool,
+    </ButtonCommon>)
 }
 
 export default ChatButton;

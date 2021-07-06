@@ -1,7 +1,8 @@
 import propTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { ArrowLeft, ArrowRight } from '../icons'
+import { ArrowLeft, ArrowRight } from '../../icons'
 import React from 'react'
+import { useTheme } from '@emotion/react'
 
 
 const Container = styled.div`
@@ -10,7 +11,7 @@ const Container = styled.div`
   display: flex;
 `
 
-const NavButton = styled.button`
+const NavButton = styled.button<{isForward?: boolean}>`
   label: NavButton;
 
   flex: 1;
@@ -18,26 +19,42 @@ const NavButton = styled.button`
   justify-content: ${(props) => props.isForward ? 'flex-end' : 'flex-start'};
   align-items: center;
   margin: 2rem;
+  color: ${(props) => props.theme.colors.beet};
   
   > span {
     margin: 0 0.5rem;
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    margin: 1rem 0;
   }
 `
 
 const noop = () => {}
 
+interface BackForwardButtonsProps {
+  onBackClick: (()=>void) | null,
+  onForwardClick: (()=>void) | null,
+  backText?: string,
+  forwardText?: string
+}
+
 const BackForwardButtons = ({
-    onBackClick, onForwardClick,
-    backText = '', forwardText = ''
-}) => {
+    onBackClick,
+    onForwardClick,
+    backText = '',
+    forwardText = ''
+}:BackForwardButtonsProps) => {
+  const theme = useTheme();
+
   return <Container>
     <NavButton onClick={onBackClick || noop} disabled={onBackClick === null}>
-      <ArrowLeft color="#000000" size="16px"/>
+      <ArrowLeft color={theme.colors.beet} size="16px"/>
       <span>{backText}</span>
     </NavButton>
     <NavButton onClick={onForwardClick || noop} isForward={true} disabled={onForwardClick === null}>
       <span>{forwardText}</span>
-      <ArrowRight color="#000000" size="16px"/>
+      <ArrowRight color={theme.colors.beet} size="16px"/>
     </NavButton>
   </Container>
 }

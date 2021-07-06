@@ -1,8 +1,28 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import React, { ChangeEventHandler, CSSProperties, FocusEventHandler } from 'react'
 import { Label } from '.'
 
-const Input = React.forwardRef(
+interface InputProps {
+  icon?: JSX.Element,
+  label: string,
+  showLabel?: boolean,
+  name: string,
+  type: string,
+  value: string | number,
+  onChange: ChangeEventHandler<HTMLInputElement>,
+  onBlur?: FocusEventHandler<HTMLInputElement>,
+  error?: string,
+  disabled?: boolean,
+  readOnly?: boolean,
+  required?: boolean,
+  autoComplete?: string,
+  pattern?: string,
+  min?: number,
+  max?: number,
+  placeholder?: string,
+  style?: CSSProperties,
+}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
       icon = null,
@@ -11,16 +31,17 @@ const Input = React.forwardRef(
       type,
       value,
       onChange,
-      error,
+      onBlur,
+      error = "",
       showLabel = true,
       placeholder = '',
       disabled = false,
       readOnly = false,
       required = false,
-      autoComplete = null,
-      pattern = null,
-      min = null,
-      max = null,
+      autoComplete,
+      pattern,
+      min,
+      max,
       children,
       style = null,
     },
@@ -46,13 +67,14 @@ const Input = React.forwardRef(
           pattern={pattern}
           min={min}
           max={max}
-          autoComplete={autoComplete || null}
+          autoComplete={autoComplete || undefined}
           value={value || ''}
           placeholder={placeholder || ''}
           disabled={disabled}
           readOnly={readOnly}
           required={required}
           onChange={onChange}
+          onBlur={onBlur}
           ref={ref}
         />
         {children}
@@ -60,30 +82,5 @@ const Input = React.forwardRef(
     )
   }
 )
-
-Input.displayName = 'Input'
-Input.propTypes = {
-  icon: propTypes.element,
-  label: propTypes.string,
-  showLabel: propTypes.bool,
-  name: propTypes.string,
-  type: propTypes.string,
-  value: propTypes.oneOfType([propTypes.string, propTypes.number]),
-  onChange: propTypes.func,
-  error: propTypes.string,
-  disabled: propTypes.bool,
-  readOnly: propTypes.bool,
-  required: propTypes.bool,
-  autoComplete: propTypes.string,
-  pattern: propTypes.string,
-  min: propTypes.number,
-  max: propTypes.number,
-  placeholder: propTypes.string,
-  children: propTypes.oneOfType([
-    propTypes.arrayOf(propTypes.node),
-    propTypes.node,
-  ]),
-  style: propTypes.object,
-}
 
 export default Input
