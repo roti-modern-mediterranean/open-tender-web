@@ -54,7 +54,7 @@ const LabelIcon = styled('span')`
 const LabelText = styled('span')`
   position: absolute;
   top: 0;
-  left: 3.4rem;
+  left: ${(props) => props.theme.inputs.labelTextLeftMargin};
   // width: 90%;
   font-size: inherit;
   color: ${(props) => props.theme.inputs.borderColor};
@@ -95,9 +95,15 @@ const Label = ({
   disabled = false,
   children,
   style = null,
+  className = undefined,
 }) => {
   return (
-    <LabelView htmlFor={htmlFor} style={style} icon={icon}>
+    <LabelView
+      htmlFor={htmlFor}
+      style={style}
+      icon={icon}
+      className={className}
+    >
       {icon && (
         <LabelIcon hasValue={!!value} disabled={disabled}>
           {icon}
@@ -132,6 +138,7 @@ Label.propTypes = {
     propTypes.node,
   ]),
   style: propTypes.object,
+  className: propTypes.string,
 }
 
 export default Label

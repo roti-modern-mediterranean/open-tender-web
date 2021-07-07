@@ -243,6 +243,7 @@ export type ThemeType = {
     radius: string
     textTransform: string
     weight: string
+    labelTextLeftMargin: string
   }
   layout: {
     containerMaxWidth: string
@@ -318,6 +319,10 @@ export const decorateTheme = (theme: ThemeType): ThemeType => {
           },
         },
       },
+    },
+    inputs: {
+      ...theme.inputs,
+      labelTextLeftMargin: '3.4rem',
     },
     layout: {
       ...theme.layout,

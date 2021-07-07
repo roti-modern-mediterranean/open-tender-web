@@ -19,10 +19,48 @@ const Container = styled.div`
   grid-template-rows: minmax(100px, 250px);
 `
 
+const ExpandingTextareaContainer = styled.span`
+  label: ExpandingTextareaContainer;
+
+  display: grid;
+
+  > label {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  &::after {
+    /* Note the weird space! Needed to prevent jumpy behavior */
+    content: attr(data-notes) ' ';
+
+    /* This is how textarea text behaves */
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+
+    /* Hidden from view, clicks, and screen readers */
+    visibility: hidden;
+
+    grid-area: 1 / 1 / 2 / 2;
+    line-height: ${(props) => props.theme.inputs.lineHeight};
+    padding: ${(props) => props.theme.inputs.padding};
+    width: calc(100% - ${(props) => props.theme.inputs.labelTextLeftMargin});
+    border: 0;
+    border-bottom: ${(props) => props.theme.inputs.borderWidth} solid #7f8692;
+    border-radius: 0;
+    font-family: ${(props) => props.theme.inputs.family};
+    font-size: ${(props) => props.theme.inputs.fontSize};
+    font-weight: ${(props) => props.theme.inputs.weight};
+  }
+`
+
 const CustomTextarea = styled(Textarea)`
   label: CustomTextarea;
 
-  height: 100px;
+  height: 100%;
+
+  textarea {
+    height: 100%;
+    overflow-y: hidden;
+  }
 `
 
 interface BigEventFormProps {
@@ -142,13 +180,15 @@ const BigEventForm = ({ setFormValidated }: BigEventFormProps) => {
           }
           required={true}
         />
-        <CustomTextarea
-          icon={<Edit />}
-          label="Any notes?"
-          name="notes"
-          value={notes}
-          onChange={notesOnChange}
-        />
+        <ExpandingTextareaContainer data-notes={notes}>
+          <CustomTextarea
+            icon={<Edit />}
+            label="Any notes?"
+            name="notes"
+            value={notes}
+            onChange={notesOnChange}
+          />
+        </ExpandingTextareaContainer>
       </form>
     </Container>
   )

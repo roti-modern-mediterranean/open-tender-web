@@ -2,17 +2,17 @@ import React, { ChangeEventHandler } from 'react'
 import { Label } from '.'
 
 interface TextareaProps {
-  icon?: JSX.Element,
-  showLabel?: boolean,
-  label: string,
-  name: string,
-  value: string | number,
-  onChange: ChangeEventHandler<HTMLTextAreaElement>,
-  error?: string,
-  disabled?: boolean,
-  readOnly?: boolean,
-  required?: boolean,
-  placeholder?: string,
+  icon?: JSX.Element
+  showLabel?: boolean
+  label: string
+  name: string
+  value: string | number
+  onChange: ChangeEventHandler<HTMLTextAreaElement>
+  error?: string
+  disabled?: boolean
+  readOnly?: boolean
+  required?: boolean
+  placeholder?: string
   className?: string
 }
 
@@ -25,12 +25,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       name,
       value,
       onChange,
-      error = "",
+      error = '',
       disabled = false,
       readOnly = false,
       required = false,
       placeholder = '',
-      className=undefined
+      className = undefined,
     },
     ref
   ) => {
@@ -43,6 +43,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         required={required}
         errMsg={error}
         showLabel={showLabel}
+        className={className}
       >
         <textarea
           aria-label={label}
@@ -54,7 +55,6 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           readOnly={readOnly}
           required={required}
           onChange={onChange}
-          className={className}
           ref={ref}
         />
       </Label>
