@@ -19,9 +19,9 @@ export const servingStyleOptions = [
   {id: "buffet", name: "Family/Buffet style"}]
 
 const initialState = {
-  eventType: [],
+  eventType: null,
   numberOfPeopleIndex: 0,
-  servingStyle: [],
+  servingStyle: null,
   mainsQuantities: {
     chicken: 0,
     steak: 0,
