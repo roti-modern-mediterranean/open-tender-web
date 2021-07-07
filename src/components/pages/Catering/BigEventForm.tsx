@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Input from '../../inputs/Input'
-import { Mail, Phone, User } from '../../icons'
+import { Mail, Phone, User, Edit } from '../../icons'
 import {
   useEmailFieldState,
   useNumberFieldState,
@@ -143,6 +143,7 @@ const BigEventForm = ({ setFormValidated }: BigEventFormProps) => {
           required={true}
         />
         <CustomTextarea
+          icon={<Edit />}
           label="Any notes?"
           name="notes"
           value={notes}
