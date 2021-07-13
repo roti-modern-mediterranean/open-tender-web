@@ -12,5 +12,5 @@ export const useSingleOption = <T,>(optionsSelector:(state:State)=>T|null):T[] =
 export const useSetSingleOption = <T,>(action:(option:T|null)=>State) => {
   const dispatch = useDispatch()
 
-  return useCallback((payload:T[]) => dispatch(action(payload.length === 0 ? null : payload[0])), [dispatch])
+  return useCallback((payload:T[]) => dispatch(action(payload.length === 0 ? null : payload[0])), [dispatch, action])
 }

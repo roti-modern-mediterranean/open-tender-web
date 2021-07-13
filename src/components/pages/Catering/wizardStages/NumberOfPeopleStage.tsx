@@ -11,9 +11,6 @@ import RangeSlider from '../../../RangeSlider'
 import styled from '@emotion/styled'
 import GroupOf3People from '../../../icons/GroupOf3People'
 import GroupOf6People from '../../../icons/GroupOf6People'
-import CallUsButton from '../CallUsButton'
-import ChatButton from '../ChatButton'
-import { useTheme } from '@emotion/react'
 
 const RangeSliderContainer = styled.div`
   label: RangeSliderContainer;
@@ -42,7 +39,6 @@ interface NumberOfPeopleImageProps {
 const NumberOfPeopleImage = ({
   index, size, color
 }:NumberOfPeopleImageProps) => {
-  const theme = useTheme()
 
   if(index < 1){
     return (

@@ -21,7 +21,7 @@ const SkipRecommendations = styled.button`
   label: SkipRecommendations;
 
   opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  animation: ${(props) => props.theme.animations.fast};
 
   text-align: left;
   color: ${(props) => props.theme.colors.light};
@@ -41,7 +41,7 @@ const SkipRecommendations = styled.button`
   
   h2 {
     opacity: 0;
-    animation: slide-up 0.25s ease-in-out 0.25s forwards;
+    animation: ${(props) => props.theme.animations.fast};
     
     font-size: 30px;
     font-weight: 500;
@@ -57,7 +57,7 @@ const SkipRecommendations = styled.button`
   
   p {
     opacity: 0;
-    animation: slide-up 0.25s ease-in-out 0.25s forwards;
+    animation: ${(props) => props.theme.animations.fast};
     
     font-size: 18px;
     line-height: 28px;
@@ -81,7 +81,7 @@ const AnimatedHighlightedMenu = styled(HighlightedMenu)`
   label: AnimatedHighlightedMenu;
 
   opacity: 0;
-  animation: slide-up 0.25s ease-in-out 0.25s forwards;
+  animation: ${(props) => props.theme.animations.fast};
   display: flex;
   flex-direction: column;
   

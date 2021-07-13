@@ -12,7 +12,6 @@ import {
   selectSteakQuantity, selectTotalQuantity,
   setChickenQuantity,
   setFalafelQuantity,
-  setNumberOfPeopleIndex,
   setSteakQuantity, setTotalQuantity
 } from '../../../../slices/recommendationsSlice'
 import BuilderOptionToggle from '../../../Builder/BuilderOptionToggle'
@@ -302,7 +301,7 @@ const SelectMainsStage = ({
       default:
         return null;
     }
-  }, [activeOption])
+  }, [activeOption, _chickenQuantity, _steakQuantity, _falafelQuantity, numberOfPeople])
 
   const mainsMissing = numberOfPeople-_chickenQuantity-_steakQuantity-_falafelQuantity
 
@@ -368,8 +367,12 @@ const SelectMainsStage = ({
             isQuantityAlwaysShown={true}
           />
         </OptionsRow>
-        <MainsMissing mainsMissing={mainsMissing} >
-          {mainsMissing === 0 ? `Happy with the distribution?` : `You can select ${mainsMissing} more main${mainsMissing === 1 ? "" : "s"}`}
+        <MainsMissing mainsMissing={mainsMissing}>
+          {mainsMissing === 0
+            ? `Happy with the mains distribution?`
+            : `You can select ${mainsMissing} more main${
+                mainsMissing === 1 ? '' : 's'
+              }`}
         </MainsMissing>
         <BuilderOptionToggle {...builderOptionToggleProps}/>
       </MenuContent>
